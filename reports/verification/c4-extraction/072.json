@@ -1,2942 +1,2942 @@
 {
-  "schema_version": "1.1",
-  "extracted_at": "2026-08-03T00:00:00Z",
-  "source_document": {
-    "file": "results/55maps-cross-track-comparison/report.md",
-    "git_blob": "8bb2dc62f997",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-opus-5",
-    "instrument_version": "1.2"
-  },
-  "claims": [
+ "schema_version": "1.1",
+ "extracted_at": "2026-08-03T00:00:00Z",
+ "source_document": {
+  "file": "results/55maps-cross-track-comparison/report.md",
+  "git_blob": "8bb2dc62f997",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5",
+  "instrument_version": "1.2"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     271,
+     271
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "the 8 new paired permutation tests (see §5.2, §5.3) resolve the earlier cross-modality significance gap",
+   "values": [
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          271,
-          271
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "the 8 new paired permutation tests (see §5.2, §5.3) resolve the earlier cross-modality significance gap",
-      "values": [
-        {
-          "quantity": "count of new paired image-vs-text permutation tests added by the cross-track comparison",
-          "value_verbatim": "8",
-          "value_parsed": 8,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "[BATCH NOTE b072] Batch b072 covers lines 268-410 (EOF) of results/55maps-cross-track-comparison/report.md. Scope decisions logged rather than left silent: (a) section numbers (§3.5, §5.2, 9.1...), Session numbers, dates, the commit hash `42ed1d32`, Obs 272, and version strings (script version 1.0.0, adversarial v1/v2, Python >= 3.11, GeoPandas >= 0.14 on line 410) are excluded per instrument rule 5; (b) numerals inside file paths and directory names (`paired-vs-min-20m`, `bounds/384/`, `{20,30,40,50}m`) are excluded as names, as are model names (`gemini-3-flash-preview`) and run labels (`image-K5-PV`); (c) the counterfactual '2 × 2 modality × thinking factorial' on line 274 is INCLUDED but flagged, since it describes a design that was not run; (d) 'the three tracks' / 'the 55-map corpus' ARE extracted as counts, following the instrument's '487-tile Era 2 corpus' example. Method policy: statistical quantities (bootstrap CI bounds, permutation p-values, ΔF1) that sit VERBATIM in a committed sibling JSON are given method 'read' with the exact locator, because that is mechanically resolvable by the harness; 'recompute-script' is reserved for statistical assertions with no stored scalar (convergence/plateau boundaries, the attractor-pull cap, the '3× lower buffer sensitivity' claim). Count is of result directories, not of a value inside any artefact: results/55maps-cross-track-comparison/paired-image-vs-text-{high,min}-{20,30,40,50}m/ (each holding one pairwise_permutation_result.json)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          271,
-          271
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "The residual caveat is that the three pairwise tests at a given buffer do not use a joint FDR correction; raw p-values are reported.",
-      "values": [
-        {
-          "quantity": "count of pairwise cross-track contrasts tested at a given buffer",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Spelled-out count. The three contrasts are image-vs-text-HIGH, image-vs-text-MIN, and text-HIGH-vs-text-MIN; no artefact stores the count itself."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          271,
-          271
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "the Bonferroni-corrected α would be 0.017 (3 tests); all significant results at α = 0.05 (p ≤ 0.001 for the image-vs-text-HIGH tests) comfortably survive this tighter threshold",
-      "values": [
-        {
-          "quantity": "Bonferroni-corrected significance threshold α for 3 pairwise tests",
-          "value_verbatim": "0.017",
-          "value_parsed": 0.017,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of pairwise tests entering the Bonferroni correction",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "uncorrected significance level α",
-          "value_verbatim": "0.05",
-          "value_parsed": 0.05,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "upper bound on permutation p across the four image-vs-text-HIGH paired tests",
-          "value_verbatim": "0.001",
-          "value_parsed": 0.001,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "0.017 is 0.05/3 by hand; neither α nor the corrected threshold is stored in any artefact, hence anchor-unknown for those values. The p ≤ 0.001 bound spans four files — results/55maps-cross-track-comparison/paired-image-vs-text-high-{20,30,40,50}m/pairwise_permutation_result.json — each at $.permutation_test.p_value; the 50 m file is anchored as the representative."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          272,
-          272
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "corrected-F1 now exists for all three tracks",
-      "values": [
-        {
-          "quantity": "count of tracks with a corrected-F1 artefact",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Count of results/55maps-{image,text-high,text-min}-generalisation/corrected-f1-multi-buffer/summary.json artefacts; no artefact stores the count."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          272,
-          272
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "Image vs text-HIGH corrected F1 at 50 m converges at ≈ 0.83 (§4.2); text-MIN sits below at 0.797.",
-      "values": [
-        {
-          "quantity": "matching buffer for the corrected-F1 convergence claim",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.results[?(@.R_m==50)].R_m",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, image and text-HIGH tracks (converged, approximate)",
-          "value_verbatim": "≈ 0.83",
-          "value_parsed": 0.83,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, text-MIN track",
-          "value_verbatim": "0.797",
-          "value_parsed": 0.797,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Approx marker '≈' retained verbatim (instrument v1.2 amendment 5). The ≈ 0.83 figure is asserted for BOTH the image and text-HIGH tracks; the image summary.json is anchored, the text-HIGH counterpart is at results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          273,
-          273
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "text-HIGH and text-MIN evaluations at 75 / 100 / 125 m are at `outputs/55maps-text-{high,min}-generalisation/extended-buffer-eval/evaluation.json`",
-      "values": [
-        {
-          "quantity": "extended matching buffer 1, text-track extended-buffer evaluations",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[0].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "extended matching buffer 2, text-track extended-buffer evaluations",
-          "value_verbatim": "100",
-          "value_parsed": 100,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[1].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "extended matching buffer 3, text-track extended-buffer evaluations",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[2].buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Same three buffers asserted for the text-MIN sibling at outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          274,
-          274
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "a 2 × 2 modality × thinking factorial would be directly testable",
-      "values": [
-        {
-          "quantity": "levels of the modality factor in the hypothetical factorial design",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "levels of the thinking factor in the hypothetical factorial design",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Counterfactual: the sentence is conditional ('If a text-MIN image-track variant existed') and the document states the design is not in scope, so no artefact can decide it. Included per the instrument's when-in-doubt rule and flagged for pruning at triage."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          275,
-          275
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "5. **PV threshold identical (prob_t = 0.15) across tracks** but not centrally recalibrated per track.",
-      "values": [
-        {
-          "quantity": "probability-vote threshold prob_t, all three tracks",
-          "value_verbatim": "0.15",
-          "value_parsed": 0.15,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.evaluate.prob_threshold",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/resolved_config.yaml",
-        "path": "$.evaluate.prob_threshold",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The leading '5.' is the ordered-list marker, not a claim. Identity across tracks is also checkable at outputs/55maps-text-high-generalisation/resolved_config.yaml and outputs/55maps-text-min-generalisation/resolved_config.yaml, same key."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          276,
-          276
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "6. **All three tracks use the same verifier prompt (adversarial v1)**.",
-      "values": [
-        {
-          "quantity": "count of tracks sharing the adversarial-v1 verifier prompt",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "The leading '6.' is the ordered-list marker and 'v1' a version string, both out of scope. The count itself has no artefact locator; the shared verifier prompt is checkable at $.verify.config in each of outputs/55maps-image-generalisation/resolved_config.yaml, outputs/55maps-text-high-generalisation/resolved_config.yaml, and outputs/55maps-text-min-generalisation/resolved_config.yaml."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          277,
-          277
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "the corrected-F1 ≥ 0.830 headline is at 50 m, inside the 125 m attractor-pull cap",
-      "values": [
-        {
-          "quantity": "corrected-F1 headline floor, image track @ 50 m",
-          "value_verbatim": "0.830",
-          "value_parsed": 0.83,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer for the corrected-F1 headline",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.results[?(@.R_m==50)].R_m",
-          "method": "read"
-        },
-        {
-          "quantity": "outer radius of the largest shell with a significant attractor-pull lift (Obs 272 cap)",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": "results/55maps-attractor-pull-v2/attractor-pull-v2.json#$.runs[*].shell[?(@.R_outer_m==125)].significant",
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The 125 m cap is a significance boundary across shells rather than a stored scalar, hence recompute-script; the shell edges themselves are at results/55maps-attractor-pull-v2/attractor-pull-v2.json#$.shell_edges_m."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          278,
-          278
-        ],
-        "section": "8. Caveats / risk register"
-      },
-      "claim_text": "image uses `vote_t = 3` (of K = 5); text-HIGH and text-MIN use `vote_t = 4` (confirmed from `outputs/<track>/resolved_config.yaml`)",
-      "values": [
-        {
-          "quantity": "consensus vote threshold vote_t, image track",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.consensus.vote_threshold",
-          "method": "read"
-        },
-        {
-          "quantity": "number of consensus passes K, image track",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.proposer.passes",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus vote threshold vote_t, text-HIGH and text-MIN tracks",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "parameter",
-          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.consensus.vote_threshold",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/resolved_config.yaml",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "text-MIN's vote_t is the same key at outputs/55maps-text-min-generalisation/resolved_config.yaml."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          284,
-          284
-        ],
-        "section": "9.1 Track selection decision tree"
-      },
-      "claim_text": "the three-track selection maps to three deployment scenarios",
-      "values": [
-        {
-          "quantity": "count of tracks compared",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "count of deployment scenarios the tracks map to",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Structural counts with no artefact locator; included per the instrument's when-in-doubt rule and flagged as low-value."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          286,
-          286
-        ],
-        "section": "9.1 Track selection decision tree"
-      },
-      "claim_text": "text-HIGH (F1 = 0.792 @ 50 m, post-recovery)",
-      "values": [
-        {
-          "quantity": "raw F1 @ 50 m, text-HIGH track (post-recovery)",
-          "value_verbatim": "0.792",
-          "value_parsed": 0.792,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          286,
-          286
-        ],
-        "section": "9.1 Track selection decision tree"
-      },
-      "claim_text": "Cost $126.81 for the 55-map corpus (post-recovery total).",
-      "values": [
-        {
-          "quantity": "cost USD, text-HIGH 55-map production run (post-recovery total)",
-          "value_verbatim": "126.81",
-          "value_parsed": 126.81,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.totals.cost_usd",
-          "method": "read"
-        },
-        {
-          "quantity": "count of maps in the generalisation corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The 55-map count is a filesystem count (55 .tif rasters under inputs/rasters/Russian1981_32635/), not a value in any JSON, hence anchor-unknown for that value."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          287,
-          287
-        ],
-        "section": "9.1 Track selection decision tree"
-      },
-      "claim_text": "text-MIN (raw F1 = 0.762 @ 50 m, corrected 0.797)",
-      "values": [
-        {
-          "quantity": "raw F1 @ 50 m, text-MIN track",
-          "value_verbatim": "0.762",
-          "value_parsed": 0.762,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, text-MIN track",
-          "value_verbatim": "0.797",
-          "value_parsed": 0.797,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          287,
-          287
-        ],
-        "section": "9.1 Track selection decision tree"
-      },
-      "claim_text": "Sacrifices 0.030 raw F1 vs text-HIGH for a $66.02 / 52 % cost reduction and 4.4× fewer total tokens.",
-      "values": [
-        {
-          "quantity": "raw-F1 deficit @ 50 m, text-MIN vs text-HIGH",
-          "value_verbatim": "0.030",
-          "value_parsed": 0.03,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
-              "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
-            },
-            {
-              "name": "b",
-              "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
-              "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
-            }
-          ]
-        },
-        {
-          "quantity": "cost saving USD, text-MIN vs text-HIGH",
-          "value_verbatim": "66.02",
-          "value_parsed": 66.02,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            },
-            {
-              "name": "b",
-              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            }
-          ]
-        },
-        {
-          "quantity": "cost reduction, text-MIN vs text-HIGH",
-          "value_verbatim": "52",
-          "value_parsed": 52.0,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * (a - b) / a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            },
-            {
-              "name": "b",
-              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            }
-          ]
-        },
-        {
-          "quantity": "total-token ratio, text-HIGH / text-MIN",
-          "value_verbatim": "4.4",
-          "value_parsed": 4.4,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-              "path": "$.totals.total_tokens"
-            },
-            {
-              "name": "b",
-              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
-              "path": "$.totals.total_tokens"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "arithmetic",
-      "notes": "Four separate derivations, one expression per value (instrument v1.2 amendment 1). The operand values themselves are read claims elsewhere in this batch and are deliberately not re-declared as arithmetic here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          288,
-          288
-        ],
-        "section": "9.1 Track selection decision tree"
-      },
-      "claim_text": "image (corrected F1 = 0.833 [0.824, 0.842] @ 50 m, post-recovery) or text-HIGH (corrected F1 = 0.827 [0.817, 0.837] @ 50 m, post-recovery)",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 50 m, image track",
-          "value_verbatim": "0.833",
-          "value_parsed": 0.833,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 bootstrap CI lower bound @ 50 m, image track",
-          "value_verbatim": "0.824",
-          "value_parsed": 0.824,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 bootstrap CI upper bound @ 50 m, image track",
-          "value_verbatim": "0.842",
-          "value_parsed": 0.842,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer, image track",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.results[?(@.R_m==50)].R_m",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, text-HIGH track",
-          "value_verbatim": "0.827",
-          "value_parsed": 0.827,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 bootstrap CI lower bound @ 50 m, text-HIGH track",
-          "value_verbatim": "0.817",
-          "value_parsed": 0.817,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 bootstrap CI upper bound @ 50 m, text-HIGH track",
-          "value_verbatim": "0.837",
-          "value_parsed": 0.837,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer, text-HIGH track",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].R_m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "CI bounds are stored scalars in the sibling summary.json (bootstrap n = 10,000, seed 42 per $.metadata), so method 'read' with an exact locator rather than 'recompute-script'."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          288,
-          288
-        ],
-        "section": "9.1 Track selection decision tree"
-      },
-      "claim_text": "Requires a 630 – 1,028-candidate human review step",
-      "values": [
-        {
-          "quantity": "count of human-reviewed candidates, text-HIGH track (range lower bound)",
-          "value_verbatim": "630",
-          "value_parsed": 630,
-          "unit": null,
-          "kind": "count",
-          "path": "len:rows (excluding header)",
-          "method": "read"
-        },
-        {
-          "quantity": "count of human-reviewed candidates, image track (range upper bound)",
-          "value_verbatim": "1,028",
-          "value_parsed": 1028,
-          "unit": null,
-          "kind": "count",
-          "path": "results/55maps-image-generalisation/human-review.csv#len:rows (excluding header)",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Non-JSON (CSV) anchors, legitimate per instrument v1.1 — count is data rows excluding the header. Flagging without adjudicating: §7 (line 263) and §9.3 (line 296) give the image-track review count as 1,029, not 1,028."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          288,
-          288
-        ],
-        "section": "9.1 Track selection decision tree"
-      },
-      "claim_text": "text-HIGH offers the same corrected-F1 ceiling at 2.9× lower API cost ($126.81 vs $364.70, post-recovery)",
-      "values": [
-        {
-          "quantity": "API-cost ratio, image / text-HIGH",
-          "value_verbatim": "2.9",
-          "value_parsed": 2.9,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            },
-            {
-              "name": "b",
-              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            }
-          ]
-        },
-        {
-          "quantity": "cost USD, text-HIGH 55-map production run",
-          "value_verbatim": "126.81",
-          "value_parsed": 126.81,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.totals.cost_usd",
-          "method": "read"
-        },
-        {
-          "quantity": "cost USD, image 55-map production run",
-          "value_verbatim": "364.70",
-          "value_parsed": 364.7,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          292,
-          292
-        ],
-        "section": "9.2 Methodological contribution — raw vs corrected F1 gap is a track-specific property"
-      },
-      "claim_text": "The image track's raw-to-corrected F1 gap (+0.059 from 0.771 to 0.830 at 50 m) is larger than any plausible cross-track raw F1 gap within the three tracks.",
-      "values": [
-        {
-          "quantity": "raw-to-corrected F1 gap @ 50 m, image track",
-          "value_verbatim": "+0.059",
-          "value_parsed": 0.059,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==50)].F1"
-            },
-            {
-              "name": "b",
-              "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
-              "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
-            }
-          ]
-        },
-        {
-          "quantity": "raw F1 @ 50 m, image track",
-          "value_verbatim": "0.771",
-          "value_parsed": 0.771,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, image track",
-          "value_verbatim": "0.830",
-          "value_parsed": 0.83,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "count of tracks compared",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Flagging without adjudicating: §9.3 (line 296) gives the image-track raw F1 @ 50 m as 0.774, this span gives 0.771."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          292,
-          292
-        ],
-        "section": "9.2 Methodological contribution — raw vs corrected F1 gap is a track-specific property"
-      },
-      "claim_text": "This suggests that the student-GT incompleteness on the 55-map corpus affects all three tracks but is currently quantified only for the image track.",
-      "values": [
-        {
-          "quantity": "count of maps in the generalisation corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "count of tracks compared",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Naming-adjacent counts inside a hedged interpretive sentence; included per the when-in-doubt rule. Map count is a filesystem count (55 .tif rasters under inputs/rasters/Russian1981_32635/)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          292,
-          292
-        ],
-        "section": "9.2 Methodological contribution — raw vs corrected F1 gap is a track-specific property"
-      },
-      "claim_text": "Paper text should make this asymmetry explicit rather than imply the 0.830 corrected F1 is achievable only by the image track.",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 50 m, image track",
-          "value_verbatim": "0.830",
-          "value_parsed": 0.83,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": "$.results[?(@.R_m==50)].F1",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          296,
-          296
-        ],
-        "section": "9.3 Suggested paper text (Results — cross-track)"
-      },
-      "claim_text": "On the 55-map generalisation corpus (8,541 Era 2 tiles, `gemini-3-flash-preview` proposer, `gemini-3-flash` verifier, K = 5 consensus at prob_t = 0.15; vote_t = 3 for the image track and vote_t = 4 for both text tracks), the raw F1 at a 50 m matching buffer is 0.774 (image), 0.792 (text-HIGH), and 0.762 (text-MIN).",
-      "values": [
-        {
-          "quantity": "count of maps in the generalisation corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "tile count, Era 2 55-map evaluation corpus",
-          "value_verbatim": "8,541",
-          "value_parsed": 8541,
-          "unit": null,
-          "kind": "count",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].coverage.n_tiles",
-          "method": "read"
-        },
-        {
-          "quantity": "number of consensus passes K",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": "outputs/55maps-image-generalisation/resolved_config.yaml#$.proposer.passes",
-          "method": "read"
-        },
-        {
-          "quantity": "probability-vote threshold prob_t",
-          "value_verbatim": "0.15",
-          "value_parsed": 0.15,
-          "unit": null,
-          "kind": "parameter",
-          "path": "outputs/55maps-image-generalisation/resolved_config.yaml#$.evaluate.prob_threshold",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus vote threshold vote_t, image track",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "outputs/55maps-image-generalisation/resolved_config.yaml#$.consensus.vote_threshold",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus vote threshold vote_t, both text tracks",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "parameter",
-          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.consensus.vote_threshold",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer for the raw-F1 figures",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "raw F1 @ 50 m, image track",
-          "value_verbatim": "0.774",
-          "value_parsed": 0.774,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "raw F1 @ 50 m, text-HIGH track",
-          "value_verbatim": "0.792",
-          "value_parsed": 0.792,
-          "unit": null,
-          "kind": "metric",
-          "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "raw F1 @ 50 m, text-MIN track",
-          "value_verbatim": "0.762",
-          "value_parsed": 0.762,
-          "unit": null,
-          "kind": "metric",
-          "path": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Suggested paper text (blockquote) — still a claim made by this document. The 55-map count is a filesystem count (inputs/rasters/Russian1981_32635/, 55 .tif rasters); the bounds file inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson carries the tile count, not the map count. text-MIN's vote_t is the same key at outputs/55maps-text-min-generalisation/resolved_config.yaml."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          296,
-          296
-        ],
-        "section": "9.3 Suggested paper text (Results — cross-track)"
-      },
-      "claim_text": "After per-candidate human review (1,029 candidates image; 630 candidates text-HIGH; 586 candidates text-MIN), the corrected F1 at 50 m is 0.833 [0.824, 0.842] (image), 0.827 [0.817, 0.837] (text-HIGH), and 0.797 [0.786, 0.808] (text-MIN).",
-      "values": [
-        {
-          "quantity": "count of human-reviewed candidates, image track",
-          "value_verbatim": "1,029",
-          "value_parsed": 1029,
-          "unit": null,
-          "kind": "count",
-          "path": "results/55maps-image-generalisation/human-review.csv#len:rows (excluding header)",
-          "method": "read"
-        },
-        {
-          "quantity": "count of human-reviewed candidates, text-HIGH track",
-          "value_verbatim": "630",
-          "value_parsed": 630,
-          "unit": null,
-          "kind": "count",
-          "path": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv#len:rows (excluding header)",
-          "method": "read"
-        },
-        {
-          "quantity": "count of human-reviewed candidates, text-MIN track",
-          "value_verbatim": "586",
-          "value_parsed": 586,
-          "unit": null,
-          "kind": "count",
-          "path": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv#len:rows (excluding header)",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer for the corrected-F1 figures",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.results[?(@.R_m==50)].R_m",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, image track",
-          "value_verbatim": "0.833",
-          "value_parsed": 0.833,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI lower bound @ 50 m, image track",
-          "value_verbatim": "0.824",
-          "value_parsed": 0.824,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI upper bound @ 50 m, image track",
-          "value_verbatim": "0.842",
-          "value_parsed": 0.842,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, text-HIGH track",
-          "value_verbatim": "0.827",
-          "value_parsed": 0.827,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI lower bound @ 50 m, text-HIGH track",
-          "value_verbatim": "0.817",
-          "value_parsed": 0.817,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI upper bound @ 50 m, text-HIGH track",
-          "value_verbatim": "0.837",
-          "value_parsed": 0.837,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, text-MIN track",
-          "value_verbatim": "0.797",
-          "value_parsed": 0.797,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI lower bound @ 50 m, text-MIN track",
-          "value_verbatim": "0.786",
-          "value_parsed": 0.786,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI upper bound @ 50 m, text-MIN track",
-          "value_verbatim": "0.808",
-          "value_parsed": 0.808,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Candidate counts anchored to the human-review CSVs (data rows excluding header) — non-JSON anchors are expected per instrument v1.1."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          296,
-          296
-        ],
-        "section": "9.3 Suggested paper text (Results — cross-track)"
-      },
-      "claim_text": "find image and text-HIGH statistically indistinguishable at R = 50 m (ΔF1 = −0.0060 ns); both significantly exceed text-MIN (ΔF1 = +0.0365 \\*\\*\\* image vs text-MIN; ΔF1 = +0.0305 \\*\\*\\* text-HIGH vs text-MIN)",
-      "values": [
-        {
-          "quantity": "matching radius R for the cross-track-v2 paired tests",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "observed corrected-F1 difference @ 50 m, text-HIGH vs image (cross-track-v2)",
-          "value_verbatim": "−0.0060",
-          "value_parsed": -0.006,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        },
-        {
-          "quantity": "observed corrected-F1 difference @ 50 m, image vs text-MIN (cross-track-v2)",
-          "value_verbatim": "+0.0365",
-          "value_parsed": 0.0365,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-pairwise-permutation-v2/paired-image-vs-tmin/permutation-R50m.json#$.permutation_test.observed_f1_diff",
-          "method": "read"
-        },
-        {
-          "quantity": "observed corrected-F1 difference @ 50 m, text-HIGH vs text-MIN (cross-track-v2)",
-          "value_verbatim": "+0.0305",
-          "value_parsed": 0.0305,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-tmin/permutation-R50m.json#$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/permutation-R50m.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The document cites results/55maps-pairwise-permutation-v2/summary.md, which is prose; anchored instead to the sibling per-buffer permutation JSONs (instrument rule 2). Sign convention for the harness, not adjudicated here: in paired-t0.7-vs-image, condition_a = t0.7 (text-HIGH) and condition_b = image, so the stored diff is text-HIGH − image. The 'ns' / '\\*\\*\\*' significance verdicts themselves are recompute-script judgements over $.permutation_test.p_value in the same three files."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          296,
-          296
-        ],
-        "section": "9.3 Suggested paper text (Results — cross-track)"
-      },
-      "claim_text": "Cost per track: image $364.70 (2.9 × the text-HIGH cost of $126.81 and 6.0 × the text-MIN cost of $60.79; image cache-hit rate 91 % offsets some of the gap).",
-      "values": [
-        {
-          "quantity": "cost USD, image 55-map production run",
-          "value_verbatim": "364.70",
-          "value_parsed": 364.7,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.totals.cost_usd",
-          "method": "read"
-        },
-        {
-          "quantity": "API-cost ratio, image / text-HIGH",
-          "value_verbatim": "2.9",
-          "value_parsed": 2.9,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            },
-            {
-              "name": "b",
-              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            }
-          ]
-        },
-        {
-          "quantity": "cost USD, text-HIGH 55-map production run",
-          "value_verbatim": "126.81",
-          "value_parsed": 126.81,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
-          "method": "read"
-        },
-        {
-          "quantity": "API-cost ratio, image / text-MIN",
-          "value_verbatim": "6.0",
-          "value_parsed": 6.0,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            },
-            {
-              "name": "b",
-              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
-              "path": "$.totals.cost_usd"
-            }
-          ]
-        },
-        {
-          "quantity": "cost USD, text-MIN 55-map production run",
-          "value_verbatim": "60.79",
-          "value_parsed": 60.79,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
-          "method": "read"
-        },
-        {
-          "quantity": "prompt cache-hit rate, image track",
-          "value_verbatim": "91",
-          "value_parsed": 91.0,
-          "unit": "%",
-          "kind": "percentage",
-          "path": "$.totals.cache_hit_rate",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "cache_hit_rate is stored as a 0-1 fraction in the manifest; the document quotes it as a percentage (unit field set to '%' so the harness can bridge scales, instrument v1.2 amendment 6)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          300,
-          300
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "If one follow-up evaluation budget is available for the 55-map corpus:",
-      "values": [
-        {
-          "quantity": "count of maps in the generalisation corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Filesystem count (55 .tif rasters under inputs/rasters/Russian1981_32635/), not a value in any JSON. The spelled 'one follow-up evaluation budget' is a hypothetical framing, not a count, and is not extracted."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          302,
-          302
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "All 8 image-vs-text tests at 20 / 30 / 40 / 50 m now exist under `paired-image-vs-text-{high,min}-{20,30,40,50}m/`.",
-      "values": [
-        {
-          "quantity": "count of image-vs-text paired permutation tests",
-          "value_verbatim": "8",
-          "value_parsed": 8,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "matching buffer 1, image-vs-text paired tests",
-          "value_verbatim": "20",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.metadata.buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer 2, image-vs-text paired tests",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-30m/pairwise_permutation_result.json#$.metadata.buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer 3, image-vs-text paired tests",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": "m",
-          "kind": "physical",
-          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-40m/pairwise_permutation_result.json#$.metadata.buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "matching buffer 4, image-vs-text paired tests",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json#$.metadata.buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The count of 8 is a directory count (four buffers × two text tracks) with no artefact locator. Numerals inside the directory glob `{20,30,40,50}m` are names, not claims; the buffer values extracted are from the asserted '20 / 30 / 40 / 50 m' list."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          302,
-          302
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "Outcome: text-HIGH significantly beats image at every buffer; image and text-MIN converge at ≥ 40 m.",
-      "values": [
-        {
-          "quantity": "matching buffer at which image and text-MIN converge (no significant difference)",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Convergence boundary is a significance judgement across the image-vs-text-MIN tests at 40 m and 50 m ($.permutation_test.p_value in results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json and results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json), not a stored scalar."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          303,
-          303
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "630 candidates reviewed; multi-buffer corrected-F1 artefact at `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`.",
-      "values": [
-        {
-          "quantity": "count of human-reviewed candidates, text-HIGH track",
-          "value_verbatim": "630",
-          "value_parsed": 630,
-          "unit": null,
-          "kind": "count",
-          "path": "len:rows (excluding header)",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
-        "path": "len:rows (excluding header)",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Non-JSON (CSV) anchor: data rows excluding header."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          303,
-          303
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "Text-HIGH corrected F1 at 50 m = 0.826 [0.816, 0.836], converging with image-track corrected 0.832 [0.822, 0.841] (ΔF1 = +0.006, overlapping CIs).",
-      "values": [
-        {
-          "quantity": "matching buffer",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.results[?(@.R_m==50)].R_m",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, text-HIGH track",
-          "value_verbatim": "0.826",
-          "value_parsed": 0.826,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI lower bound @ 50 m, text-HIGH track",
-          "value_verbatim": "0.816",
-          "value_parsed": 0.816,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI upper bound @ 50 m, text-HIGH track",
-          "value_verbatim": "0.836",
-          "value_parsed": 0.836,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, image track",
-          "value_verbatim": "0.832",
-          "value_parsed": 0.832,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI lower bound @ 50 m, image track",
-          "value_verbatim": "0.822",
-          "value_parsed": 0.822,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 CI upper bound @ 50 m, image track",
-          "value_verbatim": "0.841",
-          "value_parsed": 0.841,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected-F1 difference @ 50 m, image minus text-HIGH",
-          "value_verbatim": "+0.006",
-          "value_parsed": 0.006,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==50)].F1"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==50)].F1"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Flagging without adjudicating: §9.1 (line 288) and §9.3 (line 296) quote the same two quantities as 0.827 [0.817, 0.837] and 0.833 [0.824, 0.842]; this span quotes 0.826 [0.816, 0.836] and 0.832 [0.822, 0.841]."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          303,
-          303
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "Outcome confirmed the a priori estimate of 0.82 – 0.85 from the image-track gap.",
-      "values": [
-        {
-          "quantity": "a priori corrected-F1 estimate for text-HIGH, lower bound",
-          "value_verbatim": "0.82",
-          "value_parsed": 0.82,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "a priori corrected-F1 estimate for text-HIGH, upper bound",
-          "value_verbatim": "0.85",
-          "value_parsed": 0.85,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "A prior expectation stated in the document, not a value recorded in any artefact; looked for it in the text-HIGH corrected-F1 summary.json and the cross-track comparison directory without success."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          304,
-          304
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "Text-HIGH and text-MIN at 75 / 100 / 125 m now exist at `outputs/55maps-text-{high,min}-generalisation/extended-buffer-eval/`.",
-      "values": [
-        {
-          "quantity": "extended matching buffer 1, text-track extended-buffer sweep",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[0].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "extended matching buffer 2, text-track extended-buffer sweep",
-          "value_verbatim": "100",
-          "value_parsed": 100,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[1].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "extended matching buffer 3, text-track extended-buffer sweep",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[2].buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Same buffers asserted for text-MIN at outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          304,
-          304
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "Outcome: both text tracks plateau by 75 m; buffer sensitivity is 3× lower than image track's corrected multi-buffer curve.",
-      "values": [
-        {
-          "quantity": "matching buffer at which both text-track F1 curves plateau",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "ratio of image-track to text-track buffer sensitivity",
-          "value_verbatim": "3",
-          "value_parsed": 3.0,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Plateau and relative-sensitivity claims are derived from the shape of the F1-vs-buffer curves ($.summary.buffers[].f1 in outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json and outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json, versus results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json), not stored scalars."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          306,
-          306
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "Remaining outstanding follow-up: none for the three tracks covered here.",
-      "values": [
-        {
-          "quantity": "count of tracks covered by this report",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Structural count with no artefact locator."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          306,
-          306
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "text-MIN human review (586-row multi-buffer; corrected F1 = 0.797) was added in cross-track-v2 commit `42ed1d32` (2026-05-03), closing the cross-track corrected-F1 parity gap.",
-      "values": [
-        {
-          "quantity": "row count, text-MIN multi-buffer human-review sheet",
-          "value_verbatim": "586",
-          "value_parsed": 586,
-          "unit": null,
-          "kind": "count",
-          "path": "len:rows (excluding header)",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, text-MIN track",
-          "value_verbatim": "0.797",
-          "value_parsed": 0.797,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Commit hash and date excluded per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          306,
-          306
-        ],
-        "section": "9.4 Follow-up priority ordering"
-      },
-      "claim_text": "the fourth corrected run (T=0.3 text-HIGH; corrected F1 = 0.844) — the canonical 4-run cross-track artefacts at `results/55maps-{mcc-v2-summary,pairwise-permutation-v2,attractor-pull-v2,ds-summary-v2,fp-classification}/` cover the temperature axis",
-      "values": [
-        {
-          "quantity": "proposer temperature, T=0.3 text-HIGH run",
-          "value_verbatim": "0.3",
-          "value_parsed": 0.3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "outputs/55maps-text-high-t0.3-generalisation/resolved_config.yaml#$.proposer.temperature",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 50 m, T=0.3 text-HIGH run",
-          "value_verbatim": "0.844",
-          "value_parsed": 0.844,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "count of runs in the canonical cross-track comparison",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "'T=0.3' functions both as a condition name and as an assertion of the run's proposer temperature, so it is extracted (instrument rule 5, '487-tile Era 2 corpus' precedent) and anchored to the run's resolved config. The ordinal 'fourth' is not extracted; the '4-run' count has no artefact locator."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          316,
-          316
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "image track F1 / P / R at 20 / 30 / 40 / 50 m",
-      "values": [
-        {
-          "quantity": "evaluation buffer 1, image track",
-          "value_verbatim": "20",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[0].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "evaluation buffer 2, image track",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[1].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "evaluation buffer 3, image track",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[2].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "evaluation buffer 4, image track",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[3].buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          320,
-          320
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "(12 tests: 3 contrasts × 4 buffers; all 10,000 permutations seed 42)",
-      "values": [
-        {
-          "quantity": "count of paired permutation tests catalogued",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of pairwise contrasts",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of matching buffers per contrast",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "permutation count per paired test",
-          "value_verbatim": "10,000",
-          "value_parsed": 10000,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.metadata.n_permutations",
-          "method": "read"
-        },
-        {
-          "quantity": "random seed for the paired permutation tests",
-          "value_verbatim": "42",
-          "value_parsed": 42,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.metadata.seed",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The 12 = 3 × 4 test count is a directory count across results/55maps-text-high-generalisation/paired-vs-min-{20,30,40,50}m/ and results/55maps-cross-track-comparison/paired-image-vs-text-{high,min}-{20,30,40,50}m/; no artefact stores it. n_permutations and seed are asserted for all 12 files; the 20 m text-HIGH-vs-text-MIN file is anchored as the representative."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          324,
-          324
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json` — p = 0.4647 (n.s.).",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 20 m, text-HIGH vs text-MIN",
-          "value_verbatim": "0.4647",
-          "value_parsed": 0.4647,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json",
-        "path": "$.permutation_test.p_value",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          325,
-          325
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-text-high-generalisation/paired-vs-min-30m/pairwise_permutation_result.json` — p = 0.0.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 30 m, text-HIGH vs text-MIN",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/paired-vs-min-30m/pairwise_permutation_result.json",
-        "path": "$.permutation_test.p_value",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          326,
-          326
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-text-high-generalisation/paired-vs-min-40m/pairwise_permutation_result.json` — p = 0.0.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 40 m, text-HIGH vs text-MIN",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/paired-vs-min-40m/pairwise_permutation_result.json",
-        "path": "$.permutation_test.p_value",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          327,
-          327
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json` — p = 0.0.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 50 m, text-HIGH vs text-MIN",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json",
-        "path": "$.permutation_test.p_value",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          331,
-          331
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.1178.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 20 m, image vs text-HIGH",
-          "value_verbatim": "0.0000",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "observed F1 difference @ 20 m, image vs text-HIGH",
-          "value_verbatim": "−0.1178",
-          "value_parsed": -0.1178,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          332,
-          332
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-high-30m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0683.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 30 m, image vs text-HIGH",
-          "value_verbatim": "0.0000",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "observed F1 difference @ 30 m, image vs text-HIGH",
-          "value_verbatim": "−0.0683",
-          "value_parsed": -0.0683,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-30m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          333,
-          333
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-high-40m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0351.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 40 m, image vs text-HIGH",
-          "value_verbatim": "0.0000",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "observed F1 difference @ 40 m, image vs text-HIGH",
-          "value_verbatim": "−0.0351",
-          "value_parsed": -0.0351,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-40m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          334,
-          334
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json` — p = 0.0008 (***); ΔF1 = −0.0177.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 50 m, image vs text-HIGH",
-          "value_verbatim": "0.0008",
-          "value_parsed": 0.0008,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "observed F1 difference @ 50 m, image vs text-HIGH",
-          "value_verbatim": "−0.0177",
-          "value_parsed": -0.0177,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          338,
-          338
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.1129.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 20 m, image vs text-MIN",
-          "value_verbatim": "0.0000",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "observed F1 difference @ 20 m, image vs text-MIN",
-          "value_verbatim": "−0.1129",
-          "value_parsed": -0.1129,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          339,
-          339
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0424.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 30 m, image vs text-MIN",
-          "value_verbatim": "0.0000",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "observed F1 difference @ 30 m, image vs text-MIN",
-          "value_verbatim": "−0.0424",
-          "value_parsed": -0.0424,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          340,
-          340
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json` — p = 0.3412 (n.s.); ΔF1 = −0.0059.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 40 m, image vs text-MIN",
-          "value_verbatim": "0.3412",
-          "value_parsed": 0.3412,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "observed F1 difference @ 40 m, image vs text-MIN",
-          "value_verbatim": "−0.0059",
-          "value_parsed": -0.0059,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          341,
-          341
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json` — p = 0.0543 (n.s.); ΔF1 = +0.0115.",
-      "values": [
-        {
-          "quantity": "paired permutation p-value @ 50 m, image vs text-MIN",
-          "value_verbatim": "0.0543",
-          "value_parsed": 0.0543,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "observed F1 difference @ 50 m, image vs text-MIN",
-          "value_verbatim": "+0.0115",
-          "value_parsed": 0.0115,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          345,
-          345
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.{json,csv,md}` — text-HIGH at 75 / 100 / 125 m.",
-      "values": [
-        {
-          "quantity": "extended evaluation buffer 1, text-HIGH track",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[0].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "extended evaluation buffer 2, text-HIGH track",
-          "value_verbatim": "100",
-          "value_parsed": 100,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[1].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "extended evaluation buffer 3, text-HIGH track",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[2].buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          346,
-          346
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.{json,csv,md}` — text-MIN at 75 / 100 / 125 m.",
-      "values": [
-        {
-          "quantity": "extended evaluation buffer 1, text-MIN track",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[0].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "extended evaluation buffer 2, text-MIN track",
-          "value_verbatim": "100",
-          "value_parsed": 100,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[1].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "extended evaluation buffer 3, text-MIN track",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[2].buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          350,
-          350
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `outputs/55maps-image-generalisation/cost_manifest.json` — $364.70.",
-      "values": [
-        {
-          "quantity": "cost USD, image 55-map production run (cost manifest total)",
-          "value_verbatim": "364.70",
-          "value_parsed": 364.7,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.totals.cost_usd",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
-        "path": "$.totals.cost_usd",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          351,
-          351
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `outputs/55maps-text-high-generalisation/cost_manifest.json` — $69.60.",
-      "values": [
-        {
-          "quantity": "cost USD, text-HIGH 55-map production run (cost manifest total)",
-          "value_verbatim": "69.60",
-          "value_parsed": 69.6,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.totals.cost_usd",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
-        "path": "$.totals.cost_usd",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Flagging without adjudicating: §9.1 (line 286/288) and §9.3 (line 296) give the text-HIGH cost as $126.81; this manifest line gives $69.60."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          352,
-          352
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `outputs/55maps-text-min-generalisation/cost_manifest.json` — $60.79.",
-      "values": [
-        {
-          "quantity": "cost USD, text-MIN 55-map production run (cost manifest total)",
-          "value_verbatim": "60.79",
-          "value_parsed": 60.79,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.totals.cost_usd",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
-        "path": "$.totals.cost_usd",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          362,
-          362
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "- `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` — image-track corrected F1 @ 50 m.",
-      "values": [
-        {
-          "quantity": "matching buffer for the image-track corrected-F1 artefact",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "The referenced artefact results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md is not present in the working tree (checked to confirm anchor existence only, per instrument rule 4); the nearest live artefact is results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json. Rule 2 forbids anchoring prose to prose, so this is left for triage."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          364,
-          364
-        ],
-        "section": "10. Files manifest"
-      },
-      "claim_text": "text-HIGH cross-corpus comparison (4-map GS vs 55-map student GT)",
-      "values": [
-        {
-          "quantity": "count of maps in the gold-standard corpus",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "count of maps in the student-GT generalisation corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "The only named source is another markdown report (results/gold-standard-extended-buffer-sweep/extended-buffer-report.md), so rule 2 forbids anchoring; the 55-map count is a filesystem count (55 .tif rasters under inputs/rasters/Russian1981_32635/)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          375,
-          375
-        ],
-        "section": "11. Reproducibility"
-      },
-      "claim_text": "The 12 paired permutation tests were produced by `scripts/pairwise_permutation_test.py`",
-      "values": [
-        {
-          "quantity": "count of paired permutation tests produced by scripts/pairwise_permutation_test.py",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Directory count as for line 320; the script version string 1.0.0 in the same sentence is excluded per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          388,
-          390
-        ],
-        "section": "11. Reproducibility"
-      },
-      "claim_text": "    --buffer-metres 50 \\\n    --n-permutations 10000 \\\n    --seed 42 \\",
-      "values": [
-        {
-          "quantity": "matching buffer passed to the paired permutation test",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.metadata.buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "permutation count passed to the paired permutation test",
-          "value_verbatim": "10000",
-          "value_parsed": 10000,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.metadata.n_permutations",
-          "method": "read"
-        },
-        {
-          "quantity": "random seed passed to the paired permutation test",
-          "value_verbatim": "42",
-          "value_parsed": 42,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.metadata.seed",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Reproducibility code block. Framed as an 'invocation pattern for a new paired test', but it names the 50 m image-vs-text-HIGH output directory, so the parameters are treated as what-was-run and anchored to that run's result JSON."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          400,
-          400
-        ],
-        "section": "11. Reproducibility"
-      },
-      "claim_text": "    --buffers 75 100 125 \\",
-      "values": [
-        {
-          "quantity": "extended evaluation buffer 1 passed on the CLI",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$._metadata.cli_args.buffers[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "extended evaluation buffer 2 passed on the CLI",
-          "value_verbatim": "100",
-          "value_parsed": 100,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$._metadata.cli_args.buffers[1]",
-          "method": "read"
-        },
-        {
-          "quantity": "extended evaluation buffer 3 passed on the CLI",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$._metadata.cli_args.buffers[2]",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          403,
-          403
-        ],
-        "section": "11. Reproducibility"
-      },
-      "claim_text": "    --bootstrap 1000 --seed 42 \\",
-      "values": [
-        {
-          "quantity": "bootstrap iteration count passed to the extended-buffer evaluation",
-          "value_verbatim": "1000",
-          "value_parsed": 1000,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$._metadata.cli_args.bootstrap",
-          "method": "read"
-        },
-        {
-          "quantity": "random seed passed to the extended-buffer evaluation",
-          "value_verbatim": "42",
-          "value_parsed": 42,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$._metadata.cli_args.seed",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          408,
-          408
-        ],
-        "section": "11. Reproducibility"
-      },
-      "claim_text": "Compute: ~4 minutes on sapphire for all 8 image-vs-text paired tests; ~1 minute for both extended-buffer evaluations. Zero API cost.",
-      "values": [
-        {
-          "quantity": "wall-clock compute time on sapphire for all 8 image-vs-text paired tests (approximate)",
-          "value_verbatim": "~4",
-          "value_parsed": 4,
-          "unit": "minutes",
-          "kind": "other",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "count of image-vs-text paired tests timed",
-          "value_verbatim": "8",
-          "value_parsed": 8,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "wall-clock compute time for both extended-buffer evaluations (approximate)",
-          "value_verbatim": "~1",
-          "value_parsed": 1,
-          "unit": "minutes",
-          "kind": "other",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "API cost of the recomputations",
-          "value_verbatim": "Zero",
-          "value_parsed": 0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Approx markers retained verbatim (instrument v1.2 amendment 5). Wall-clock duration is not recorded in the pairwise_permutation_result JSONs or the extended-buffer evaluation metadata (checked $.metadata / $._metadata for a duration field); the zero-API-cost claim has no cost manifest because no API call was made."
+     "quantity": "count of new paired image-vs-text permutation tests added by the cross-track comparison",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
     }
-  ]
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "[BATCH NOTE b072] Batch b072 covers lines 268-410 (EOF) of results/55maps-cross-track-comparison/report.md. Scope decisions logged rather than left silent: (a) section numbers (§3.5, §5.2, 9.1...), Session numbers, dates, the commit hash `42ed1d32`, Obs 272, and version strings (script version 1.0.0, adversarial v1/v2, Python >= 3.11, GeoPandas >= 0.14 on line 410) are excluded per instrument rule 5; (b) numerals inside file paths and directory names (`paired-vs-min-20m`, `bounds/384/`, `{20,30,40,50}m`) are excluded as names, as are model names (`gemini-3-flash-preview`) and run labels (`image-K5-PV`); (c) the counterfactual '2 × 2 modality × thinking factorial' on line 274 is INCLUDED but flagged, since it describes a design that was not run; (d) 'the three tracks' / 'the 55-map corpus' ARE extracted as counts, following the instrument's '487-tile Era 2 corpus' example. Method policy: statistical quantities (bootstrap CI bounds, permutation p-values, ΔF1) that sit VERBATIM in a committed sibling JSON are given method 'read' with the exact locator, because that is mechanically resolvable by the harness; 'recompute-script' is reserved for statistical assertions with no stored scalar (convergence/plateau boundaries, the attractor-pull cap, the '3× lower buffer sensitivity' claim). Count is of result directories, not of a value inside any artefact: results/55maps-cross-track-comparison/paired-image-vs-text-{high,min}-{20,30,40,50}m/ (each holding one pairwise_permutation_result.json)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     271,
+     271
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "The residual caveat is that the three pairwise tests at a given buffer do not use a joint FDR correction; raw p-values are reported.",
+   "values": [
+    {
+     "quantity": "count of pairwise cross-track contrasts tested at a given buffer",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Spelled-out count. The three contrasts are image-vs-text-HIGH, image-vs-text-MIN, and text-HIGH-vs-text-MIN; no artefact stores the count itself."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     271,
+     271
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "the Bonferroni-corrected α would be 0.017 (3 tests); all significant results at α = 0.05 (p ≤ 0.001 for the image-vs-text-HIGH tests) comfortably survive this tighter threshold",
+   "values": [
+    {
+     "quantity": "Bonferroni-corrected significance threshold α for 3 pairwise tests",
+     "value_verbatim": "0.017",
+     "value_parsed": 0.017,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of pairwise tests entering the Bonferroni correction",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "uncorrected significance level α",
+     "value_verbatim": "0.05",
+     "value_parsed": 0.05,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "upper bound on permutation p across the four image-vs-text-HIGH paired tests",
+     "value_verbatim": "0.001",
+     "value_parsed": 0.001,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "0.017 is 0.05/3 by hand; neither α nor the corrected threshold is stored in any artefact, hence anchor-unknown for those values. The p ≤ 0.001 bound spans four files — results/55maps-cross-track-comparison/paired-image-vs-text-high-{20,30,40,50}m/pairwise_permutation_result.json — each at $.permutation_test.p_value; the 50 m file is anchored as the representative."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     272,
+     272
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "corrected-F1 now exists for all three tracks",
+   "values": [
+    {
+     "quantity": "count of tracks with a corrected-F1 artefact",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Count of results/55maps-{image,text-high,text-min}-generalisation/corrected-f1-multi-buffer/summary.json artefacts; no artefact stores the count."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     272,
+     272
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "Image vs text-HIGH corrected F1 at 50 m converges at ≈ 0.83 (§4.2); text-MIN sits below at 0.797.",
+   "values": [
+    {
+     "quantity": "matching buffer for the corrected-F1 convergence claim",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.results[?(@.R_m==50)].R_m",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, image and text-HIGH tracks (converged, approximate)",
+     "value_verbatim": "≈ 0.83",
+     "value_parsed": 0.83,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, text-MIN track",
+     "value_verbatim": "0.797",
+     "value_parsed": 0.797,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Approx marker '≈' retained verbatim (instrument v1.2 amendment 5). The ≈ 0.83 figure is asserted for BOTH the image and text-HIGH tracks; the image summary.json is anchored, the text-HIGH counterpart is at results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     273,
+     273
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "text-HIGH and text-MIN evaluations at 75 / 100 / 125 m are at `outputs/55maps-text-{high,min}-generalisation/extended-buffer-eval/evaluation.json`",
+   "values": [
+    {
+     "quantity": "extended matching buffer 1, text-track extended-buffer evaluations",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[0].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "extended matching buffer 2, text-track extended-buffer evaluations",
+     "value_verbatim": "100",
+     "value_parsed": 100,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[1].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "extended matching buffer 3, text-track extended-buffer evaluations",
+     "value_verbatim": "125",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[2].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Same three buffers asserted for the text-MIN sibling at outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     274,
+     274
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "a 2 × 2 modality × thinking factorial would be directly testable",
+   "values": [
+    {
+     "quantity": "levels of the modality factor in the hypothetical factorial design",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "levels of the thinking factor in the hypothetical factorial design",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Counterfactual: the sentence is conditional ('If a text-MIN image-track variant existed') and the document states the design is not in scope, so no artefact can decide it. Included per the instrument's when-in-doubt rule and flagged for pruning at triage."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     275,
+     275
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "5. **PV threshold identical (prob_t = 0.15) across tracks** but not centrally recalibrated per track.",
+   "values": [
+    {
+     "quantity": "probability-vote threshold prob_t, all three tracks",
+     "value_verbatim": "0.15",
+     "value_parsed": 0.15,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.evaluate.prob_threshold",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/resolved_config.yaml",
+    "path": "$.evaluate.prob_threshold",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The leading '5.' is the ordered-list marker, not a claim. Identity across tracks is also checkable at outputs/55maps-text-high-generalisation/resolved_config.yaml and outputs/55maps-text-min-generalisation/resolved_config.yaml, same key."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     276,
+     276
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "6. **All three tracks use the same verifier prompt (adversarial v1)**.",
+   "values": [
+    {
+     "quantity": "count of tracks sharing the adversarial-v1 verifier prompt",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "The leading '6.' is the ordered-list marker and 'v1' a version string, both out of scope. The count itself has no artefact locator; the shared verifier prompt is checkable at $.verify.config in each of outputs/55maps-image-generalisation/resolved_config.yaml, outputs/55maps-text-high-generalisation/resolved_config.yaml, and outputs/55maps-text-min-generalisation/resolved_config.yaml."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     277,
+     277
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "the corrected-F1 ≥ 0.830 headline is at 50 m, inside the 125 m attractor-pull cap",
+   "values": [
+    {
+     "quantity": "corrected-F1 headline floor, image track @ 50 m",
+     "value_verbatim": "0.830",
+     "value_parsed": 0.83,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer for the corrected-F1 headline",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.results[?(@.R_m==50)].R_m",
+     "method": "read"
+    },
+    {
+     "quantity": "outer radius of the largest shell with a significant attractor-pull lift (Obs 272 cap)",
+     "value_verbatim": "125",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": "results/55maps-attractor-pull-v2/attractor-pull-v2.json#$.runs[*].shell[?(@.R_outer_m==125)].significant",
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The 125 m cap is a significance boundary across shells rather than a stored scalar, hence recompute-script; the shell edges themselves are at results/55maps-attractor-pull-v2/attractor-pull-v2.json#$.shell_edges_m."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     278,
+     278
+    ],
+    "section": "8. Caveats / risk register"
+   },
+   "claim_text": "image uses `vote_t = 3` (of K = 5); text-HIGH and text-MIN use `vote_t = 4` (confirmed from `outputs/<track>/resolved_config.yaml`)",
+   "values": [
+    {
+     "quantity": "consensus vote threshold vote_t, image track",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.consensus.vote_threshold",
+     "method": "read"
+    },
+    {
+     "quantity": "number of consensus passes K, image track",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.proposer.passes",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus vote threshold vote_t, text-HIGH and text-MIN tracks",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "parameter",
+     "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.consensus.vote_threshold",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/resolved_config.yaml",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "text-MIN's vote_t is the same key at outputs/55maps-text-min-generalisation/resolved_config.yaml."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     284,
+     284
+    ],
+    "section": "9.1 Track selection decision tree"
+   },
+   "claim_text": "the three-track selection maps to three deployment scenarios",
+   "values": [
+    {
+     "quantity": "count of tracks compared",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "count of deployment scenarios the tracks map to",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Structural counts with no artefact locator; included per the instrument's when-in-doubt rule and flagged as low-value."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     286,
+     286
+    ],
+    "section": "9.1 Track selection decision tree"
+   },
+   "claim_text": "text-HIGH (F1 = 0.792 @ 50 m, post-recovery)",
+   "values": [
+    {
+     "quantity": "raw F1 @ 50 m, text-HIGH track (post-recovery)",
+     "value_verbatim": "0.792",
+     "value_parsed": 0.792,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     286,
+     286
+    ],
+    "section": "9.1 Track selection decision tree"
+   },
+   "claim_text": "Cost $126.81 for the 55-map corpus (post-recovery total).",
+   "values": [
+    {
+     "quantity": "cost USD, text-HIGH 55-map production run (post-recovery total)",
+     "value_verbatim": "126.81",
+     "value_parsed": 126.81,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.totals.cost_usd",
+     "method": "read"
+    },
+    {
+     "quantity": "count of maps in the generalisation corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The 55-map count is a filesystem count (55 .tif rasters under inputs/rasters/Russian1981_32635/), not a value in any JSON, hence anchor-unknown for that value."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     287,
+     287
+    ],
+    "section": "9.1 Track selection decision tree"
+   },
+   "claim_text": "text-MIN (raw F1 = 0.762 @ 50 m, corrected 0.797)",
+   "values": [
+    {
+     "quantity": "raw F1 @ 50 m, text-MIN track",
+     "value_verbatim": "0.762",
+     "value_parsed": 0.762,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, text-MIN track",
+     "value_verbatim": "0.797",
+     "value_parsed": 0.797,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     287,
+     287
+    ],
+    "section": "9.1 Track selection decision tree"
+   },
+   "claim_text": "Sacrifices 0.030 raw F1 vs text-HIGH for a $66.02 / 52 % cost reduction and 4.4× fewer total tokens.",
+   "values": [
+    {
+     "quantity": "raw-F1 deficit @ 50 m, text-MIN vs text-HIGH",
+     "value_verbatim": "0.030",
+     "value_parsed": 0.03,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
+      },
+      {
+       "name": "b",
+       "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
+      }
+     ]
+    },
+    {
+     "quantity": "cost saving USD, text-MIN vs text-HIGH",
+     "value_verbatim": "66.02",
+     "value_parsed": 66.02,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      },
+      {
+       "name": "b",
+       "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      }
+     ]
+    },
+    {
+     "quantity": "cost reduction, text-MIN vs text-HIGH",
+     "value_verbatim": "52",
+     "value_parsed": 52.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * (a - b) / a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      },
+      {
+       "name": "b",
+       "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      }
+     ]
+    },
+    {
+     "quantity": "total-token ratio, text-HIGH / text-MIN",
+     "value_verbatim": "4.4",
+     "value_parsed": 4.4,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+       "path": "$.totals.total_tokens"
+      },
+      {
+       "name": "b",
+       "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+       "path": "$.totals.total_tokens"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "arithmetic",
+   "notes": "Four separate derivations, one expression per value (instrument v1.2 amendment 1). The operand values themselves are read claims elsewhere in this batch and are deliberately not re-declared as arithmetic here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     288,
+     288
+    ],
+    "section": "9.1 Track selection decision tree"
+   },
+   "claim_text": "image (corrected F1 = 0.833 [0.824, 0.842] @ 50 m, post-recovery) or text-HIGH (corrected F1 = 0.827 [0.817, 0.837] @ 50 m, post-recovery)",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 50 m, image track",
+     "value_verbatim": "0.833",
+     "value_parsed": 0.833,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 bootstrap CI lower bound @ 50 m, image track",
+     "value_verbatim": "0.824",
+     "value_parsed": 0.824,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 bootstrap CI upper bound @ 50 m, image track",
+     "value_verbatim": "0.842",
+     "value_parsed": 0.842,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer, image track",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.results[?(@.R_m==50)].R_m",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, text-HIGH track",
+     "value_verbatim": "0.827",
+     "value_parsed": 0.827,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 bootstrap CI lower bound @ 50 m, text-HIGH track",
+     "value_verbatim": "0.817",
+     "value_parsed": 0.817,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 bootstrap CI upper bound @ 50 m, text-HIGH track",
+     "value_verbatim": "0.837",
+     "value_parsed": 0.837,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer, text-HIGH track",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].R_m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "CI bounds are stored scalars in the sibling summary.json (bootstrap n = 10,000, seed 42 per $.metadata), so method 'read' with an exact locator rather than 'recompute-script'."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     288,
+     288
+    ],
+    "section": "9.1 Track selection decision tree"
+   },
+   "claim_text": "Requires a 630 – 1,028-candidate human review step",
+   "values": [
+    {
+     "quantity": "count of human-reviewed candidates, text-HIGH track (range lower bound)",
+     "value_verbatim": "630",
+     "value_parsed": 630,
+     "unit": null,
+     "kind": "count",
+     "path": "len:rows (excluding header)",
+     "method": "read"
+    },
+    {
+     "quantity": "count of human-reviewed candidates, image track (range upper bound)",
+     "value_verbatim": "1,028",
+     "value_parsed": 1028,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-image-generalisation/human-review.csv#len:rows (excluding header)",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Non-JSON (CSV) anchors, legitimate per instrument v1.1 — count is data rows excluding the header. Flagging without adjudicating: §7 (line 263) and §9.3 (line 296) give the image-track review count as 1,029, not 1,028."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     288,
+     288
+    ],
+    "section": "9.1 Track selection decision tree"
+   },
+   "claim_text": "text-HIGH offers the same corrected-F1 ceiling at 2.9× lower API cost ($126.81 vs $364.70, post-recovery)",
+   "values": [
+    {
+     "quantity": "API-cost ratio, image / text-HIGH",
+     "value_verbatim": "2.9",
+     "value_parsed": 2.9,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      },
+      {
+       "name": "b",
+       "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      }
+     ]
+    },
+    {
+     "quantity": "cost USD, text-HIGH 55-map production run",
+     "value_verbatim": "126.81",
+     "value_parsed": 126.81,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.totals.cost_usd",
+     "method": "read"
+    },
+    {
+     "quantity": "cost USD, image 55-map production run",
+     "value_verbatim": "364.70",
+     "value_parsed": 364.7,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     292,
+     292
+    ],
+    "section": "9.2 Methodological contribution — raw vs corrected F1 gap is a track-specific property"
+   },
+   "claim_text": "The image track's raw-to-corrected F1 gap (+0.059 from 0.771 to 0.830 at 50 m) is larger than any plausible cross-track raw F1 gap within the three tracks.",
+   "values": [
+    {
+     "quantity": "raw-to-corrected F1 gap @ 50 m, image track",
+     "value_verbatim": "+0.059",
+     "value_parsed": 0.059,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==50)].F1"
+      },
+      {
+       "name": "b",
+       "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
+      }
+     ]
+    },
+    {
+     "quantity": "raw F1 @ 50 m, image track",
+     "value_verbatim": "0.771",
+     "value_parsed": 0.771,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, image track",
+     "value_verbatim": "0.830",
+     "value_parsed": 0.83,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json#$.corrected.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "count of tracks compared",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Flagging without adjudicating: §9.3 (line 296) gives the image-track raw F1 @ 50 m as 0.774, this span gives 0.771. [TRIAGE REPAIR 2026-08-03 wave-6] [v2] Blind pass P2: 0.830 is the Approach-A single-buffer corrected F1 (0.8295129; the doc arithmetic 0.830-0.771=+0.059 confirms Approach A); path deleted from HEAD, resolves at git-era 08d5aef64 per ruling 9. The prior anchor was the Approach-B extension (0.8332)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     292,
+     292
+    ],
+    "section": "9.2 Methodological contribution — raw vs corrected F1 gap is a track-specific property"
+   },
+   "claim_text": "This suggests that the student-GT incompleteness on the 55-map corpus affects all three tracks but is currently quantified only for the image track.",
+   "values": [
+    {
+     "quantity": "count of maps in the generalisation corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "count of tracks compared",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Naming-adjacent counts inside a hedged interpretive sentence; included per the when-in-doubt rule. Map count is a filesystem count (55 .tif rasters under inputs/rasters/Russian1981_32635/)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     292,
+     292
+    ],
+    "section": "9.2 Methodological contribution — raw vs corrected F1 gap is a track-specific property"
+   },
+   "claim_text": "Paper text should make this asymmetry explicit rather than imply the 0.830 corrected F1 is achievable only by the image track.",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 50 m, image track",
+     "value_verbatim": "0.830",
+     "value_parsed": 0.83,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json#$.corrected.f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": "$.results[?(@.R_m==50)].F1",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "[TRIAGE REPAIR 2026-08-03 wave-6] [v0] Blind pass P2: 0.830 is the Approach-A single-buffer corrected F1 (0.8295129; the doc arithmetic 0.830-0.771=+0.059 confirms Approach A); path deleted from HEAD, resolves at git-era 08d5aef64 per ruling 9. The prior anchor was the Approach-B extension (0.8332)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     296,
+     296
+    ],
+    "section": "9.3 Suggested paper text (Results — cross-track)"
+   },
+   "claim_text": "On the 55-map generalisation corpus (8,541 Era 2 tiles, `gemini-3-flash-preview` proposer, `gemini-3-flash` verifier, K = 5 consensus at prob_t = 0.15; vote_t = 3 for the image track and vote_t = 4 for both text tracks), the raw F1 at a 50 m matching buffer is 0.774 (image), 0.792 (text-HIGH), and 0.762 (text-MIN).",
+   "values": [
+    {
+     "quantity": "count of maps in the generalisation corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "tile count, Era 2 55-map evaluation corpus",
+     "value_verbatim": "8,541",
+     "value_parsed": 8541,
+     "unit": null,
+     "kind": "count",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].coverage.n_tiles",
+     "method": "read"
+    },
+    {
+     "quantity": "number of consensus passes K",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": "outputs/55maps-image-generalisation/resolved_config.yaml#$.proposer.passes",
+     "method": "read"
+    },
+    {
+     "quantity": "probability-vote threshold prob_t",
+     "value_verbatim": "0.15",
+     "value_parsed": 0.15,
+     "unit": null,
+     "kind": "parameter",
+     "path": "outputs/55maps-image-generalisation/resolved_config.yaml#$.evaluate.prob_threshold",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus vote threshold vote_t, image track",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "outputs/55maps-image-generalisation/resolved_config.yaml#$.consensus.vote_threshold",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus vote threshold vote_t, both text tracks",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "parameter",
+     "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.consensus.vote_threshold",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer for the raw-F1 figures",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "raw F1 @ 50 m, image track",
+     "value_verbatim": "0.774",
+     "value_parsed": 0.774,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "raw F1 @ 50 m, text-HIGH track",
+     "value_verbatim": "0.792",
+     "value_parsed": 0.792,
+     "unit": null,
+     "kind": "metric",
+     "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "raw F1 @ 50 m, text-MIN track",
+     "value_verbatim": "0.762",
+     "value_parsed": 0.762,
+     "unit": null,
+     "kind": "metric",
+     "path": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Suggested paper text (blockquote) — still a claim made by this document. The 55-map count is a filesystem count (inputs/rasters/Russian1981_32635/, 55 .tif rasters); the bounds file inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson carries the tile count, not the map count. text-MIN's vote_t is the same key at outputs/55maps-text-min-generalisation/resolved_config.yaml."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     296,
+     296
+    ],
+    "section": "9.3 Suggested paper text (Results — cross-track)"
+   },
+   "claim_text": "After per-candidate human review (1,029 candidates image; 630 candidates text-HIGH; 586 candidates text-MIN), the corrected F1 at 50 m is 0.833 [0.824, 0.842] (image), 0.827 [0.817, 0.837] (text-HIGH), and 0.797 [0.786, 0.808] (text-MIN).",
+   "values": [
+    {
+     "quantity": "count of human-reviewed candidates, image track",
+     "value_verbatim": "1,029",
+     "value_parsed": 1029,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-image-generalisation/human-review.csv#len:rows (excluding header)",
+     "method": "read"
+    },
+    {
+     "quantity": "count of human-reviewed candidates, text-HIGH track",
+     "value_verbatim": "630",
+     "value_parsed": 630,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv#len:rows (excluding header)",
+     "method": "read"
+    },
+    {
+     "quantity": "count of human-reviewed candidates, text-MIN track",
+     "value_verbatim": "586",
+     "value_parsed": 586,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv#len:rows (excluding header)",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer for the corrected-F1 figures",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.results[?(@.R_m==50)].R_m",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, image track",
+     "value_verbatim": "0.833",
+     "value_parsed": 0.833,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI lower bound @ 50 m, image track",
+     "value_verbatim": "0.824",
+     "value_parsed": 0.824,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI upper bound @ 50 m, image track",
+     "value_verbatim": "0.842",
+     "value_parsed": 0.842,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, text-HIGH track",
+     "value_verbatim": "0.827",
+     "value_parsed": 0.827,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI lower bound @ 50 m, text-HIGH track",
+     "value_verbatim": "0.817",
+     "value_parsed": 0.817,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI upper bound @ 50 m, text-HIGH track",
+     "value_verbatim": "0.837",
+     "value_parsed": 0.837,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, text-MIN track",
+     "value_verbatim": "0.797",
+     "value_parsed": 0.797,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI lower bound @ 50 m, text-MIN track",
+     "value_verbatim": "0.786",
+     "value_parsed": 0.786,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI upper bound @ 50 m, text-MIN track",
+     "value_verbatim": "0.808",
+     "value_parsed": 0.808,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Candidate counts anchored to the human-review CSVs (data rows excluding header) — non-JSON anchors are expected per instrument v1.1."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     296,
+     296
+    ],
+    "section": "9.3 Suggested paper text (Results — cross-track)"
+   },
+   "claim_text": "find image and text-HIGH statistically indistinguishable at R = 50 m (ΔF1 = −0.0060 ns); both significantly exceed text-MIN (ΔF1 = +0.0365 \\*\\*\\* image vs text-MIN; ΔF1 = +0.0305 \\*\\*\\* text-HIGH vs text-MIN)",
+   "values": [
+    {
+     "quantity": "matching radius R for the cross-track-v2 paired tests",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "observed corrected-F1 difference @ 50 m, text-HIGH vs image (cross-track-v2)",
+     "value_verbatim": "−0.0060",
+     "value_parsed": -0.006,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    },
+    {
+     "quantity": "observed corrected-F1 difference @ 50 m, image vs text-MIN (cross-track-v2)",
+     "value_verbatim": "+0.0365",
+     "value_parsed": 0.0365,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-pairwise-permutation-v2/paired-image-vs-tmin/permutation-R50m.json#$.permutation_test.observed_f1_diff",
+     "method": "read"
+    },
+    {
+     "quantity": "observed corrected-F1 difference @ 50 m, text-HIGH vs text-MIN (cross-track-v2)",
+     "value_verbatim": "+0.0305",
+     "value_parsed": 0.0305,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-tmin/permutation-R50m.json#$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/permutation-R50m.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The document cites results/55maps-pairwise-permutation-v2/summary.md, which is prose; anchored instead to the sibling per-buffer permutation JSONs (instrument rule 2). Sign convention for the harness, not adjudicated here: in paired-t0.7-vs-image, condition_a = t0.7 (text-HIGH) and condition_b = image, so the stored diff is text-HIGH − image. The 'ns' / '\\*\\*\\*' significance verdicts themselves are recompute-script judgements over $.permutation_test.p_value in the same three files."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     296,
+     296
+    ],
+    "section": "9.3 Suggested paper text (Results — cross-track)"
+   },
+   "claim_text": "Cost per track: image $364.70 (2.9 × the text-HIGH cost of $126.81 and 6.0 × the text-MIN cost of $60.79; image cache-hit rate 91 % offsets some of the gap).",
+   "values": [
+    {
+     "quantity": "cost USD, image 55-map production run",
+     "value_verbatim": "364.70",
+     "value_parsed": 364.7,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.totals.cost_usd",
+     "method": "read"
+    },
+    {
+     "quantity": "API-cost ratio, image / text-HIGH",
+     "value_verbatim": "2.9",
+     "value_parsed": 2.9,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      },
+      {
+       "name": "b",
+       "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      }
+     ]
+    },
+    {
+     "quantity": "cost USD, text-HIGH 55-map production run",
+     "value_verbatim": "126.81",
+     "value_parsed": 126.81,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
+     "method": "read"
+    },
+    {
+     "quantity": "API-cost ratio, image / text-MIN",
+     "value_verbatim": "6.0",
+     "value_parsed": 6.0,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      },
+      {
+       "name": "b",
+       "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+       "path": "$.totals.cost_usd"
+      }
+     ]
+    },
+    {
+     "quantity": "cost USD, text-MIN 55-map production run",
+     "value_verbatim": "60.79",
+     "value_parsed": 60.79,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+     "method": "read"
+    },
+    {
+     "quantity": "prompt cache-hit rate, image track",
+     "value_verbatim": "91",
+     "value_parsed": 91.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": "$.totals.cache_hit_rate",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "cache_hit_rate is stored as a 0-1 fraction in the manifest; the document quotes it as a percentage (unit field set to '%' so the harness can bridge scales, instrument v1.2 amendment 6)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     300,
+     300
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "If one follow-up evaluation budget is available for the 55-map corpus:",
+   "values": [
+    {
+     "quantity": "count of maps in the generalisation corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Filesystem count (55 .tif rasters under inputs/rasters/Russian1981_32635/), not a value in any JSON. The spelled 'one follow-up evaluation budget' is a hypothetical framing, not a count, and is not extracted."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     302,
+     302
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "All 8 image-vs-text tests at 20 / 30 / 40 / 50 m now exist under `paired-image-vs-text-{high,min}-{20,30,40,50}m/`.",
+   "values": [
+    {
+     "quantity": "count of image-vs-text paired permutation tests",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "matching buffer 1, image-vs-text paired tests",
+     "value_verbatim": "20",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.metadata.buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer 2, image-vs-text paired tests",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-30m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer 3, image-vs-text paired tests",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": "m",
+     "kind": "physical",
+     "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-40m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "matching buffer 4, image-vs-text paired tests",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The count of 8 is a directory count (four buffers × two text tracks) with no artefact locator. Numerals inside the directory glob `{20,30,40,50}m` are names, not claims; the buffer values extracted are from the asserted '20 / 30 / 40 / 50 m' list."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     302,
+     302
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "Outcome: text-HIGH significantly beats image at every buffer; image and text-MIN converge at ≥ 40 m.",
+   "values": [
+    {
+     "quantity": "matching buffer at which image and text-MIN converge (no significant difference)",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Convergence boundary is a significance judgement across the image-vs-text-MIN tests at 40 m and 50 m ($.permutation_test.p_value in results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json and results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json), not a stored scalar."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     303,
+     303
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "630 candidates reviewed; multi-buffer corrected-F1 artefact at `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`.",
+   "values": [
+    {
+     "quantity": "count of human-reviewed candidates, text-HIGH track",
+     "value_verbatim": "630",
+     "value_parsed": 630,
+     "unit": null,
+     "kind": "count",
+     "path": "len:rows (excluding header)",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
+    "path": "len:rows (excluding header)",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Non-JSON (CSV) anchor: data rows excluding header."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     303,
+     303
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "Text-HIGH corrected F1 at 50 m = 0.826 [0.816, 0.836], converging with image-track corrected 0.832 [0.822, 0.841] (ΔF1 = +0.006, overlapping CIs).",
+   "values": [
+    {
+     "quantity": "matching buffer",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.results[?(@.R_m==50)].R_m",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, text-HIGH track",
+     "value_verbatim": "0.826",
+     "value_parsed": 0.826,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI lower bound @ 50 m, text-HIGH track",
+     "value_verbatim": "0.816",
+     "value_parsed": 0.816,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI upper bound @ 50 m, text-HIGH track",
+     "value_verbatim": "0.836",
+     "value_parsed": 0.836,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, image track",
+     "value_verbatim": "0.832",
+     "value_parsed": 0.832,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI lower bound @ 50 m, image track",
+     "value_verbatim": "0.822",
+     "value_parsed": 0.822,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 CI upper bound @ 50 m, image track",
+     "value_verbatim": "0.841",
+     "value_parsed": 0.841,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected-F1 difference @ 50 m, image minus text-HIGH",
+     "value_verbatim": "+0.006",
+     "value_parsed": 0.006,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==50)].F1"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==50)].F1"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Flagging without adjudicating: §9.1 (line 288) and §9.3 (line 296) quote the same two quantities as 0.827 [0.817, 0.837] and 0.833 [0.824, 0.842]; this span quotes 0.826 [0.816, 0.836] and 0.832 [0.822, 0.841]."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     303,
+     303
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "Outcome confirmed the a priori estimate of 0.82 – 0.85 from the image-track gap.",
+   "values": [
+    {
+     "quantity": "a priori corrected-F1 estimate for text-HIGH, lower bound",
+     "value_verbatim": "0.82",
+     "value_parsed": 0.82,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "a priori corrected-F1 estimate for text-HIGH, upper bound",
+     "value_verbatim": "0.85",
+     "value_parsed": 0.85,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "A prior expectation stated in the document, not a value recorded in any artefact; looked for it in the text-HIGH corrected-F1 summary.json and the cross-track comparison directory without success."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     304,
+     304
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "Text-HIGH and text-MIN at 75 / 100 / 125 m now exist at `outputs/55maps-text-{high,min}-generalisation/extended-buffer-eval/`.",
+   "values": [
+    {
+     "quantity": "extended matching buffer 1, text-track extended-buffer sweep",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[0].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "extended matching buffer 2, text-track extended-buffer sweep",
+     "value_verbatim": "100",
+     "value_parsed": 100,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[1].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "extended matching buffer 3, text-track extended-buffer sweep",
+     "value_verbatim": "125",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[2].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Same buffers asserted for text-MIN at outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     304,
+     304
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "Outcome: both text tracks plateau by 75 m; buffer sensitivity is 3× lower than image track's corrected multi-buffer curve.",
+   "values": [
+    {
+     "quantity": "matching buffer at which both text-track F1 curves plateau",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "ratio of image-track to text-track buffer sensitivity",
+     "value_verbatim": "3",
+     "value_parsed": 3.0,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Plateau and relative-sensitivity claims are derived from the shape of the F1-vs-buffer curves ($.summary.buffers[].f1 in outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json and outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json, versus results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json), not stored scalars."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     306,
+     306
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "Remaining outstanding follow-up: none for the three tracks covered here.",
+   "values": [
+    {
+     "quantity": "count of tracks covered by this report",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Structural count with no artefact locator."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     306,
+     306
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "text-MIN human review (586-row multi-buffer; corrected F1 = 0.797) was added in cross-track-v2 commit `42ed1d32` (2026-05-03), closing the cross-track corrected-F1 parity gap.",
+   "values": [
+    {
+     "quantity": "row count, text-MIN multi-buffer human-review sheet",
+     "value_verbatim": "586",
+     "value_parsed": 586,
+     "unit": null,
+     "kind": "count",
+     "path": "len:rows (excluding header)",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, text-MIN track",
+     "value_verbatim": "0.797",
+     "value_parsed": 0.797,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Commit hash and date excluded per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     306,
+     306
+    ],
+    "section": "9.4 Follow-up priority ordering"
+   },
+   "claim_text": "the fourth corrected run (T=0.3 text-HIGH; corrected F1 = 0.844) — the canonical 4-run cross-track artefacts at `results/55maps-{mcc-v2-summary,pairwise-permutation-v2,attractor-pull-v2,ds-summary-v2,fp-classification}/` cover the temperature axis",
+   "values": [
+    {
+     "quantity": "proposer temperature, T=0.3 text-HIGH run",
+     "value_verbatim": "0.3",
+     "value_parsed": 0.3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "outputs/55maps-text-high-t0.3-generalisation/resolved_config.yaml#$.proposer.temperature",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 50 m, T=0.3 text-HIGH run",
+     "value_verbatim": "0.844",
+     "value_parsed": 0.844,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "count of runs in the canonical cross-track comparison",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "'T=0.3' functions both as a condition name and as an assertion of the run's proposer temperature, so it is extracted (instrument rule 5, '487-tile Era 2 corpus' precedent) and anchored to the run's resolved config. The ordinal 'fourth' is not extracted; the '4-run' count has no artefact locator."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     316,
+     316
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "image track F1 / P / R at 20 / 30 / 40 / 50 m",
+   "values": [
+    {
+     "quantity": "evaluation buffer 1, image track",
+     "value_verbatim": "20",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[0].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "evaluation buffer 2, image track",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[1].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "evaluation buffer 3, image track",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[2].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "evaluation buffer 4, image track",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[3].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     320,
+     320
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "(12 tests: 3 contrasts × 4 buffers; all 10,000 permutations seed 42)",
+   "values": [
+    {
+     "quantity": "count of paired permutation tests catalogued",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of pairwise contrasts",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of matching buffers per contrast",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "permutation count per paired test",
+     "value_verbatim": "10,000",
+     "value_parsed": 10000,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.metadata.n_permutations",
+     "method": "read"
+    },
+    {
+     "quantity": "random seed for the paired permutation tests",
+     "value_verbatim": "42",
+     "value_parsed": 42,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.metadata.seed",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The 12 = 3 × 4 test count is a directory count across results/55maps-text-high-generalisation/paired-vs-min-{20,30,40,50}m/ and results/55maps-cross-track-comparison/paired-image-vs-text-{high,min}-{20,30,40,50}m/; no artefact stores it. n_permutations and seed are asserted for all 12 files; the 20 m text-HIGH-vs-text-MIN file is anchored as the representative."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     324,
+     324
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json` — p = 0.4647 (n.s.).",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 20 m, text-HIGH vs text-MIN",
+     "value_verbatim": "0.4647",
+     "value_parsed": 0.4647,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json",
+    "path": "$.permutation_test.p_value",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     325,
+     325
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-text-high-generalisation/paired-vs-min-30m/pairwise_permutation_result.json` — p = 0.0.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 30 m, text-HIGH vs text-MIN",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-generalisation/paired-vs-min-30m/pairwise_permutation_result.json",
+    "path": "$.permutation_test.p_value",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     326,
+     326
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-text-high-generalisation/paired-vs-min-40m/pairwise_permutation_result.json` — p = 0.0.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 40 m, text-HIGH vs text-MIN",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-generalisation/paired-vs-min-40m/pairwise_permutation_result.json",
+    "path": "$.permutation_test.p_value",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     327,
+     327
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json` — p = 0.0.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 50 m, text-HIGH vs text-MIN",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json",
+    "path": "$.permutation_test.p_value",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     331,
+     331
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.1178.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 20 m, image vs text-HIGH",
+     "value_verbatim": "0.0000",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "observed F1 difference @ 20 m, image vs text-HIGH",
+     "value_verbatim": "−0.1178",
+     "value_parsed": -0.1178,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     332,
+     332
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-high-30m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0683.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 30 m, image vs text-HIGH",
+     "value_verbatim": "0.0000",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "observed F1 difference @ 30 m, image vs text-HIGH",
+     "value_verbatim": "−0.0683",
+     "value_parsed": -0.0683,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-30m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     333,
+     333
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-high-40m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0351.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 40 m, image vs text-HIGH",
+     "value_verbatim": "0.0000",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "observed F1 difference @ 40 m, image vs text-HIGH",
+     "value_verbatim": "−0.0351",
+     "value_parsed": -0.0351,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-40m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     334,
+     334
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json` — p = 0.0008 (***); ΔF1 = −0.0177.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 50 m, image vs text-HIGH",
+     "value_verbatim": "0.0008",
+     "value_parsed": 0.0008,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "observed F1 difference @ 50 m, image vs text-HIGH",
+     "value_verbatim": "−0.0177",
+     "value_parsed": -0.0177,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     338,
+     338
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.1129.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 20 m, image vs text-MIN",
+     "value_verbatim": "0.0000",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "observed F1 difference @ 20 m, image vs text-MIN",
+     "value_verbatim": "−0.1129",
+     "value_parsed": -0.1129,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     339,
+     339
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json` — p = 0.0000 (***); ΔF1 = −0.0424.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 30 m, image vs text-MIN",
+     "value_verbatim": "0.0000",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "observed F1 difference @ 30 m, image vs text-MIN",
+     "value_verbatim": "−0.0424",
+     "value_parsed": -0.0424,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     340,
+     340
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json` — p = 0.3412 (n.s.); ΔF1 = −0.0059.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 40 m, image vs text-MIN",
+     "value_verbatim": "0.3412",
+     "value_parsed": 0.3412,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "observed F1 difference @ 40 m, image vs text-MIN",
+     "value_verbatim": "−0.0059",
+     "value_parsed": -0.0059,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     341,
+     341
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json` — p = 0.0543 (n.s.); ΔF1 = +0.0115.",
+   "values": [
+    {
+     "quantity": "paired permutation p-value @ 50 m, image vs text-MIN",
+     "value_verbatim": "0.0543",
+     "value_parsed": 0.0543,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "observed F1 difference @ 50 m, image vs text-MIN",
+     "value_verbatim": "+0.0115",
+     "value_parsed": 0.0115,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     345,
+     345
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.{json,csv,md}` — text-HIGH at 75 / 100 / 125 m.",
+   "values": [
+    {
+     "quantity": "extended evaluation buffer 1, text-HIGH track",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[0].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "extended evaluation buffer 2, text-HIGH track",
+     "value_verbatim": "100",
+     "value_parsed": 100,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[1].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "extended evaluation buffer 3, text-HIGH track",
+     "value_verbatim": "125",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[2].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     346,
+     346
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.{json,csv,md}` — text-MIN at 75 / 100 / 125 m.",
+   "values": [
+    {
+     "quantity": "extended evaluation buffer 1, text-MIN track",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[0].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "extended evaluation buffer 2, text-MIN track",
+     "value_verbatim": "100",
+     "value_parsed": 100,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[1].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "extended evaluation buffer 3, text-MIN track",
+     "value_verbatim": "125",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[2].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     350,
+     350
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `outputs/55maps-image-generalisation/cost_manifest.json` — $364.70.",
+   "values": [
+    {
+     "quantity": "cost USD, image 55-map production run (cost manifest total)",
+     "value_verbatim": "364.70",
+     "value_parsed": 364.7,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.totals.cost_usd",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+    "path": "$.totals.cost_usd",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     351,
+     351
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `outputs/55maps-text-high-generalisation/cost_manifest.json` — $69.60.",
+   "values": [
+    {
+     "quantity": "cost USD, text-HIGH 55-map production run (cost manifest total)",
+     "value_verbatim": "69.60",
+     "value_parsed": 69.6,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.totals.cost_usd",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+    "path": "$.totals.cost_usd",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Flagging without adjudicating: §9.1 (line 286/288) and §9.3 (line 296) give the text-HIGH cost as $126.81; this manifest line gives $69.60."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     352,
+     352
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `outputs/55maps-text-min-generalisation/cost_manifest.json` — $60.79.",
+   "values": [
+    {
+     "quantity": "cost USD, text-MIN 55-map production run (cost manifest total)",
+     "value_verbatim": "60.79",
+     "value_parsed": 60.79,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.totals.cost_usd",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+    "path": "$.totals.cost_usd",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     362,
+     362
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "- `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` — image-track corrected F1 @ 50 m.",
+   "values": [
+    {
+     "quantity": "matching buffer for the image-track corrected-F1 artefact",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "The referenced artefact results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md is not present in the working tree (checked to confirm anchor existence only, per instrument rule 4); the nearest live artefact is results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json. Rule 2 forbids anchoring prose to prose, so this is left for triage."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     364,
+     364
+    ],
+    "section": "10. Files manifest"
+   },
+   "claim_text": "text-HIGH cross-corpus comparison (4-map GS vs 55-map student GT)",
+   "values": [
+    {
+     "quantity": "count of maps in the gold-standard corpus",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "count of maps in the student-GT generalisation corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "The only named source is another markdown report (results/gold-standard-extended-buffer-sweep/extended-buffer-report.md), so rule 2 forbids anchoring; the 55-map count is a filesystem count (55 .tif rasters under inputs/rasters/Russian1981_32635/)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     375,
+     375
+    ],
+    "section": "11. Reproducibility"
+   },
+   "claim_text": "The 12 paired permutation tests were produced by `scripts/pairwise_permutation_test.py`",
+   "values": [
+    {
+     "quantity": "count of paired permutation tests produced by scripts/pairwise_permutation_test.py",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Directory count as for line 320; the script version string 1.0.0 in the same sentence is excluded per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     388,
+     390
+    ],
+    "section": "11. Reproducibility"
+   },
+   "claim_text": "    --buffer-metres 50 \\\n    --n-permutations 10000 \\\n    --seed 42 \\",
+   "values": [
+    {
+     "quantity": "matching buffer passed to the paired permutation test",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.metadata.buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "permutation count passed to the paired permutation test",
+     "value_verbatim": "10000",
+     "value_parsed": 10000,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.metadata.n_permutations",
+     "method": "read"
+    },
+    {
+     "quantity": "random seed passed to the paired permutation test",
+     "value_verbatim": "42",
+     "value_parsed": 42,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.metadata.seed",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Reproducibility code block. Framed as an 'invocation pattern for a new paired test', but it names the 50 m image-vs-text-HIGH output directory, so the parameters are treated as what-was-run and anchored to that run's result JSON."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     400,
+     400
+    ],
+    "section": "11. Reproducibility"
+   },
+   "claim_text": "    --buffers 75 100 125 \\",
+   "values": [
+    {
+     "quantity": "extended evaluation buffer 1 passed on the CLI",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$._metadata.cli_args.buffers[0]",
+     "method": "read"
+    },
+    {
+     "quantity": "extended evaluation buffer 2 passed on the CLI",
+     "value_verbatim": "100",
+     "value_parsed": 100,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$._metadata.cli_args.buffers[1]",
+     "method": "read"
+    },
+    {
+     "quantity": "extended evaluation buffer 3 passed on the CLI",
+     "value_verbatim": "125",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$._metadata.cli_args.buffers[2]",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     403,
+     403
+    ],
+    "section": "11. Reproducibility"
+   },
+   "claim_text": "    --bootstrap 1000 --seed 42 \\",
+   "values": [
+    {
+     "quantity": "bootstrap iteration count passed to the extended-buffer evaluation",
+     "value_verbatim": "1000",
+     "value_parsed": 1000,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$._metadata.cli_args.bootstrap",
+     "method": "read"
+    },
+    {
+     "quantity": "random seed passed to the extended-buffer evaluation",
+     "value_verbatim": "42",
+     "value_parsed": 42,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$._metadata.cli_args.seed",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     408,
+     408
+    ],
+    "section": "11. Reproducibility"
+   },
+   "claim_text": "Compute: ~4 minutes on sapphire for all 8 image-vs-text paired tests; ~1 minute for both extended-buffer evaluations. Zero API cost.",
+   "values": [
+    {
+     "quantity": "wall-clock compute time on sapphire for all 8 image-vs-text paired tests (approximate)",
+     "value_verbatim": "~4",
+     "value_parsed": 4,
+     "unit": "minutes",
+     "kind": "other",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "count of image-vs-text paired tests timed",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "wall-clock compute time for both extended-buffer evaluations (approximate)",
+     "value_verbatim": "~1",
+     "value_parsed": 1,
+     "unit": "minutes",
+     "kind": "other",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "API cost of the recomputations",
+     "value_verbatim": "Zero",
+     "value_parsed": 0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Approx markers retained verbatim (instrument v1.2 amendment 5). Wall-clock duration is not recorded in the pairwise_permutation_result JSONs or the extended-buffer evaluation metadata (checked $.metadata / $._metadata for a duration field); the zero-API-cost claim has no cost manifest because no API call was made."
+  }
+ ]
 }

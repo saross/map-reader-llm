@@ -29,7 +29,7 @@
      "unit": null,
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     }
    ],
    "anchor": {
@@ -37,7 +37,7 @@
     "path": "len:$.analyses[?(@.manually_verified_at==null)]"
    },
    "method": "read",
-   "notes": "[BATCH NOTE b051] Scope decisions for this document, applied throughout: dates, session numbers (S111/S113/S106), Obs identifiers (357-364), commit hashes, findings/dossier section numbers (§ 11, § 14, § 15, § 16(c), § 5.4), model version strings (Flash 3.5, gemini-3.5-flash, gemini-3-flash-preview) and numbers inside condition/rung/pool names (min6, min11, high31, high35, T03-k3, TH7-k3, TM-k3, IM-k3, 4of5, 3of10, t0.3, pv-diag-384, Track-2, 55map-canonical-leaderboard-50m) are excluded per instrument rule 5. The corpus descriptor '55-map' recurs ~10 times; extracted once at line 7 as a map-count claim (instrument rule 5, '487-tile Era 2 corpus' precedent) and not re-extracted at each later mention. Several cost figures in § 5.4 are sourced by the document to reports/token-load-audit-2026-06-12.md, a hand-written markdown document; per rule 2 those are anchor-unknown rather than prose-anchored. This first claim also carries the batch note. The count is a filter count over the analyses array (instrument v1.2 amendment 7); the document names results/run-analyses.json as its source in the following line."
+   "notes": "[BATCH NOTE b051] Scope decisions for this document, applied throughout: dates, session numbers (S111/S113/S106), Obs identifiers (357-364), commit hashes, findings/dossier section numbers (§ 11, § 14, § 15, § 16(c), § 5.4), model version strings (Flash 3.5, gemini-3.5-flash, gemini-3-flash-preview) and numbers inside condition/rung/pool names (min6, min11, high31, high35, T03-k3, TH7-k3, TM-k3, IM-k3, 4of5, 3of10, t0.3, pv-diag-384, Track-2, 55map-canonical-leaderboard-50m) are excluded per instrument rule 5. The corpus descriptor '55-map' recurs ~10 times; extracted once at line 7 as a map-count claim (instrument rule 5, '487-tile Era 2 corpus' precedent) and not re-extracted at each later mention. Several cost figures in § 5.4 are sourced by the document to reports/token-load-audit-2026-06-12.md, a hand-written markdown document; per rule 2 those are anchor-unknown rather than prose-anchored. This first claim also carries the batch note. The count is a filter count over the analyses array (instrument v1.2 amendment 7); the document names results/run-analyses.json as its source in the following line. [TRIAGE REPAIR 2026-08-03 wave-6] [v0] Blind pass P3 (RE-3): 'awaiting sign-off' excludes the by-design calibration analysis the document names; registered json-subset-count spec (null minus exclusion). Era 7; document vindicated."
   },
   {
    "claim_id": null,

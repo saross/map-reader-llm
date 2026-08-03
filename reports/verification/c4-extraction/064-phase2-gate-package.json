@@ -1,1642 +1,1642 @@
 {
-  "schema_version": "1.1",
-  "extracted_at": "2026-08-03T00:00:00Z",
-  "source_document": {
-    "file": "reports/verification/phase2-gate-package.md",
-    "git_blob": "e332f3dfa6e0",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-opus-5",
-    "instrument_version": "1.2"
-  },
-  "claims": [
+ "schema_version": "1.1",
+ "extracted_at": "2026-08-03T00:00:00Z",
+ "source_document": {
+  "file": "reports/verification/phase2-gate-package.md",
+  "git_blob": "e332f3dfa6e0",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5",
+  "instrument_version": "1.2"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     16,
+     17
+    ],
+    "section": "§ 1 Headline"
+   },
+   "claim_text": "**C3 provenance: 1,514 of 1,534 ledger rows VERIFIED, 20 FLAGGED — and\nevery FLAGGED row now has a landed or registered disposition.**",
+   "values": [
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          16,
-          17
-        ],
-        "section": "§ 1 Headline"
-      },
-      "claim_text": "**C3 provenance: 1,514 of 1,534 ledger rows VERIFIED, 20 FLAGGED — and\nevery FLAGGED row now has a landed or registered disposition.**",
-      "values": [
-        {
-          "quantity": "ledger rows VERIFIED, C3 provenance ledger",
-          "value_verbatim": "1,514",
-          "value_parsed": 1514,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$[?(@.verdict=='VERIFIED')]",
-          "method": "read"
-        },
-        {
-          "quantity": "total ledger rows, C3 provenance ledger",
-          "value_verbatim": "1,534",
-          "value_parsed": 1534,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$",
-          "method": "read"
-        },
-        {
-          "quantity": "ledger rows FLAGGED, C3 provenance ledger",
-          "value_verbatim": "20",
-          "value_parsed": 20,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$[?(@.verdict=='FLAGGED')]",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/ledgers/c3-provenance.jsonl",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b064] Scope decisions applied across both b064 documents (instrument v1.2 rule 5): dates, session numbers, git hashes, erratum/commitment/claim/Obs/ruling identifiers (E62-E71, CMT-0106, c3-0093, Obs 187, GAP-8, rule 10, option (iv), 'authority 1'), version strings (v0.6.0), line-number citations (preregistration.md:2110, generate_post_run_report.py:368), section references, and numbers inside condition or pool names (pv-diag-384, t0.0, 3of10, r3-hp-heavy) were NOT extracted; numbers used as asserted facts about the study or the verification corpus were. || Anchor is JSON Lines: '$' denotes the array of parsed lines."
+     "quantity": "ledger rows VERIFIED, C3 provenance ledger",
+     "value_verbatim": "1,514",
+     "value_parsed": 1514,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$[?(@.verdict=='VERIFIED')]",
+     "method": "read"
     },
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          17,
-          18
-        ],
-        "section": "§ 1 Headline"
-      },
-      "claim_text": "The\nconditions manifest verified 100 % clean.",
-      "values": [
-        {
-          "quantity": "condition-row clean rate, C3 re-derivation",
-          "value_verbatim": "100",
-          "value_parsed": 100,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/c3-rederivation/rederivation-report.json",
-        "path": null
-      },
-      "method": "anchor-unknown",
-      "notes": "Asserts zero MISMATCH verdicts among the condition rows; $.summary.conditions_verdicts in the re-derivation report carries only STRUCTURAL and MATCH keys, so there is no scalar to read — triage must decide whether the absence of a MISMATCH key is the check. $.summary.n_conditions gives the denominator."
+     "quantity": "total ledger rows, C3 provenance ledger",
+     "value_verbatim": "1,534",
+     "value_parsed": 1534,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$",
+     "method": "read"
     },
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          18,
-          22
-        ],
-        "section": "§ 1 Headline"
-      },
-      "claim_text": "Of the 147 field-level\nmismatches the re-derivation surfaced, 127 vindicated the manifest (the\npreviously-undisclosed `--patch-tiles` recovery campaign, now E70), 17\nwere genuine (the `n_tiles_processed` dual semantics + GAP-8 + segment\nscoping, now E71, generator fixed), and 3 sided with the source.",
-      "values": [
-        {
-          "quantity": "field-level mismatches surfaced by the C3 re-derivation",
-          "value_verbatim": "147",
-          "value_parsed": 147,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$",
-          "method": "read"
-        },
-        {
-          "quantity": "triage rows ruled MANIFEST_CORRECT (manifest vindicated)",
-          "value_verbatim": "127",
-          "value_parsed": 127,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$[?(@.ruling=='MANIFEST_CORRECT')]",
-          "method": "read"
-        },
-        {
-          "quantity": "triage rows ruled GENUINE_DISCREPANCY",
-          "value_verbatim": "17",
-          "value_parsed": 17,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$[?(@.ruling=='GENUINE_DISCREPANCY')]",
-          "method": "read"
-        },
-        {
-          "quantity": "triage rows ruled SOURCE_CORRECT (source vindicated)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$[?(@.ruling=='SOURCE_CORRECT')]",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/c3-rederivation/c3-triage-tiles.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The triage artefact is one row per field-level mismatch; the three rulings partition it."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          26,
-          27
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "**Errata wave E62–E71** + five dated correction/clarification blocks\n   (E36, E16, E20, E40, E55)",
-      "values": [
-        {
-          "quantity": "dated correction/clarification blocks landed in the Session 121 sequence",
-          "value_verbatim": "five",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/protocol-errata.md",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Count of dated correction/clarification blocks added under errata E36, E16, E20, E40 and E55 in the errata register of record. Non-JSON anchor (v1.1: legitimate, routed to triage). The decomposed register reports/verification/c2-census/errata-licence-register.json is a sibling artefact but § 5 item 3 of this document states it has not been re-decomposed for this wave."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          30,
-          34
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "E64(iii) cites the **computed** materiality\n   figure: **2.21 %** cluster-level label heterogeneity (153,102\n   clusters, 47 pools;\n   `reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.md`),\n   superseding the 17.2 %/~21 % subtype-share proxies.",
-      "values": [
-        {
-          "quantity": "cluster-level subtype label heterogeneity, all pools",
-          "value_verbatim": "2.21",
-          "value_parsed": 2.21,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
-              "path": "$.aggregate.all.heterogeneous_share"
-            }
-          ]
-        },
-        {
-          "quantity": "spatial (20 m) clusters, all pools",
-          "value_verbatim": "153,102",
-          "value_parsed": 153102,
-          "unit": null,
-          "kind": "count",
-          "path": "$.aggregate.all.total_clusters",
-          "method": "read"
-        },
-        {
-          "quantity": "detection pools in the heterogeneity analysis",
-          "value_verbatim": "47",
-          "value_parsed": 47,
-          "unit": null,
-          "kind": "count",
-          "path": "$.aggregate.all.n_pools",
-          "method": "read"
-        },
-        {
-          "quantity": "superseded subtype-share proxy (draft figure)",
-          "value_verbatim": "17.2",
-          "value_parsed": 17.2,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "superseded subtype-share proxy (defence-pass figure)",
-          "value_verbatim": "~21",
-          "value_parsed": 21,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "historical"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The heterogeneity artefact stores a fraction (0.0221…), hence the per-value arithmetic form for 2.21 %. The two proxies are explicitly marked superseded by this sentence, so they are recorded as historical, not live claims."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          36,
-          38
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "and the two report corrections\n   (`experimental-progression.md`, `gs-tile-pool-mapping-2026-05-28.md`)\n   for the \"1 of 10 survived FDR\" misreport (correct figure 0).",
-      "values": [
-        {
-          "quantity": "report corrections landed for the E36 misreport",
-          "value_verbatim": "two",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "Phase 2a pairwise comparisons surviving FDR (misreported figure)",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "Phase 2a pairwise comparisons corrected (misreported denominator)",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "Phase 2a pairwise comparisons surviving FDR correction (correct figure)",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "$.n_fdr_significant",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/phase2a-analysis-report.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The '1 of 10' pair is the quoted misreport (historical); the corrected figure 0 is the live claim. The denominator 10 is $.n_comparisons in the same artefact. The count of report corrections is a document-internal bookkeeping count — the two targets named are reports/experimental-progression.md and reports/gs-tile-pool-mapping-2026-05-28.md (prose; no artefact anchor)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          39,
-          40
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "**Census closure**: all 13 UNLICENSED pairs carry dated `resolution`\n   objects",
-      "values": [
-        {
-          "quantity": "UNLICENSED factor=level pairs in the C2 licence census",
-          "value_verbatim": "13",
-          "value_parsed": 13,
-          "unit": null,
-          "kind": "count",
-          "path": "$.summary.UNLICENSED",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/c2-census/licence-census.json",
-        "path": "$.summary.UNLICENSED"
-      },
-      "method": "read",
-      "notes": "$.summary['UNLICENSED_resolved_2026-07-30'] records the resolved count; len:$.pairs[?(@.verdict=='UNLICENSED')] is the equivalent row-level locator."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          40,
-          42
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "Commitment ledger:\n   CMT-0109 waived (E68); CMT-0047 and CMT-0106 **discharged** — now\n   **404 discharged / 90 waived / 208 open**.",
-      "values": [
-        {
-          "quantity": "commitments with status discharged",
-          "value_verbatim": "404",
-          "value_parsed": 404,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.commitments[?(@.status=='discharged')]",
-          "method": "read"
-        },
-        {
-          "quantity": "commitments with status waived",
-          "value_verbatim": "90",
-          "value_parsed": 90,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.commitments[?(@.status=='waived')]",
-          "method": "read"
-        },
-        {
-          "quantity": "commitments with status open",
-          "value_verbatim": "208",
-          "value_parsed": 208,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.commitments[?(@.status=='open')]",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/commitments.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "results/commitments.json is the assembled commitment registry; reports/verification/ledgers/c1-commitments.jsonl is the C1 ledger sibling."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          47,
-          48
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "Regen diff audited:\n   exactly 19 rows changed, zero status changes, ALL VALID",
-      "values": [
-        {
-          "quantity": "manifest rows changed by the v0.6.0 regeneration diff",
-          "value_verbatim": "19",
-          "value_parsed": 19,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "manifest rows changing status in the regeneration diff",
-          "value_verbatim": "zero",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Looked for a committed regen-diff artefact under reports/verification/ (apparatus/regen-manifests/ holds C4 regen manifests, not the v0.6.0 generator diff) and found none; the diff appears to have been an in-session audit. results/passes-manifest.json $.generator_version pins the generator that produced the current rows. Same 19-row figure recurs at § 5 item 1."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          48,
-          49
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "58 tier-1\n   tests green.",
-      "values": [
-        {
-          "quantity": "tier-1 marked tests passing",
-          "value_verbatim": "58",
-          "value_parsed": 58,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "tests",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Count of tests carrying the tier1 pytest marker (pytest.ini registers the marker); requires a collection run (`pytest -m tier1 --collect-only`). Non-JSON anchor is expected per instrument v1.1."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          54,
-          55
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "Δ = +0.0238 text-over-image, CI95 [−0.0104, +0.0585],\n   **p = 0.1774 — null**.",
-      "values": [
-        {
-          "quantity": "Δ mean F1, text-only minus image-using (CMT-0106 pooled modality)",
-          "value_verbatim": "+0.0238",
-          "value_parsed": 0.0238,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.point_estimate.delta_text_minus_image",
-          "method": "read"
-        },
-        {
-          "quantity": "95 % CI lower bound, pooled modality Δ F1",
-          "value_verbatim": "−0.0104",
-          "value_parsed": -0.0104,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.bootstrap.ci95.lower",
-          "method": "read"
-        },
-        {
-          "quantity": "95 % CI upper bound, pooled modality Δ F1",
-          "value_verbatim": "+0.0585",
-          "value_parsed": 0.0585,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.bootstrap.ci95.upper",
-          "method": "read"
-        },
-        {
-          "quantity": "two-sided bootstrap p, pooled modality contrast",
-          "value_verbatim": "0.1774",
-          "value_parsed": 0.1774,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "First execution of registered contrast CMT-0106; the CI is percentile over B = 10 000 paired tile bootstrap resamples."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          55,
-          56
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "**Rejection set {H2, H3, H7}** — the smaller\n   of the two pre-committed possibilities.",
-      "values": [
-        {
-          "quantity": "pre-committed rejection-set possibilities registered for the BH family",
-          "value_verbatim": "two",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "The two pre-committed possibilities are registered in reports/verification/family-fdr-registration.md (prose — rule 2 forbids anchoring prose to prose). The realised rejection set is recorded at results/family-fdr/family_fdr.json $.rejected_at_q (len 3)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          58,
-          59
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "the draft's default (the p = 0.006 level pair) H1 would have\n   survived.",
-      "values": [
-        {
-          "quantity": "bootstrap p, Phase 2a H1 contrast brief-text-image vs image-only",
-          "value_verbatim": "0.006",
-          "value_parsed": 0.006,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.comparisons[4].f1_p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/retest/pairwise-bootstrap-comparisons.json",
-        "path": "$.comparisons[4].f1_p_value"
-      },
-      "method": "read",
-      "notes": "Index 4 of the retest pairwise bootstrap comparisons is the Phase 2a H1 Modality contrast brief-text-image vs image-only, the 'level pair' the family-FDR results document names for p = 0.006; triage should confirm the intended pair."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          62,
-          63
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "first pass 255/288, then sweep A (10+10\n   ladder) **+10 more — final 265/288 (92.0 %)**",
-      "values": [
-        {
-          "quantity": "dead tiles recovered, first recovery pass",
-          "value_verbatim": "255",
-          "value_parsed": 255,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "reports/verification/recovery-rerun-results.json",
-              "path": "$.totals.recovered"
-            },
-            {
-              "name": "b",
-              "file": "reports/verification/recovery-rerun-results.json",
-              "path": "$.totals.recovered_safe_mode"
-            }
-          ]
-        },
-        {
-          "quantity": "registered dead tiles in the E71 rerun worklists",
-          "value_verbatim": "288",
-          "value_parsed": 288,
-          "unit": null,
-          "kind": "count",
-          "path": "$.registered_total",
-          "method": "read"
-        },
-        {
-          "quantity": "max attempts at original parameters, sweep A ladder",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "parameter",
-          "path": "reports/verification/recovery-rerun-results-deep.json#$.max_attempts_override",
-          "method": "read"
-        },
-        {
-          "quantity": "max attempts at safe mode, sweep A ladder",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "parameter",
-          "path": "reports/verification/recovery-rerun-results-deep.json#$.max_attempts_override",
-          "method": "read"
-        },
-        {
-          "quantity": "additional tiles recovered, sweep A",
-          "value_verbatim": "+10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "reports/verification/recovery-rerun-results-deep.json#$.totals.recovered",
-          "method": "read"
-        },
-        {
-          "quantity": "dead tiles recovered, final (first pass + sweep A)",
-          "value_verbatim": "265",
-          "value_parsed": 265,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c",
-          "operands": [
-            {
-              "name": "a",
-              "file": "reports/verification/recovery-rerun-results.json",
-              "path": "$.totals.recovered"
-            },
-            {
-              "name": "b",
-              "file": "reports/verification/recovery-rerun-results.json",
-              "path": "$.totals.recovered_safe_mode"
-            },
-            {
-              "name": "c",
-              "file": "reports/verification/recovery-rerun-results-deep.json",
-              "path": "$.totals.recovered"
-            }
-          ]
-        },
-        {
-          "quantity": "registered dead tiles in the E71 rerun worklists",
-          "value_verbatim": "288",
-          "value_parsed": 288,
-          "unit": null,
-          "kind": "count",
-          "path": "$.registered_total",
-          "method": "read"
-        },
-        {
-          "quantity": "final recovery rate, E71 dead-tile rerun",
-          "value_verbatim": "92.0",
-          "value_parsed": 92.0,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * (a + b + c) / d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "reports/verification/recovery-rerun-results.json",
-              "path": "$.totals.recovered"
-            },
-            {
-              "name": "b",
-              "file": "reports/verification/recovery-rerun-results.json",
-              "path": "$.totals.recovered_safe_mode"
-            },
-            {
-              "name": "c",
-              "file": "reports/verification/recovery-rerun-results-deep.json",
-              "path": "$.totals.recovered"
-            },
-            {
-              "name": "d",
-              "file": "reports/verification/recovery-rerun-results.json",
-              "path": "$.registered_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/recovery-rerun-results.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "'10+10 ladder' = ten attempts at original parameters then ten at safe mode; the deep-sweep artefact records a single $.max_attempts_override applied to both tiers, so both 10s share that locator. reports/verification/recovery-rerun-worklists.json $.total_dead_tiles is the sibling locator for 288."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          63,
-          64
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "sweep B (safe mode\n   halved to 1024) recovered nothing.",
-      "values": [
-        {
-          "quantity": "safe-mode max_output_tokens, sweep B",
-          "value_verbatim": "1024",
-          "value_parsed": 1024,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.safe_tokens_override",
-          "method": "read"
-        },
-        {
-          "quantity": "tiles recovered, sweep B",
-          "value_verbatim": "nothing",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "$.totals.recovered",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/recovery-rerun-results-deep-b.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "$.totals.recovered_safe_mode is the companion zero in the same artefact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          64,
-          67
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "The PI's pre-gate\n   model-consistency check caught that the six \"pro-*\" shortfall\n   passes are the E57 mis-dispatched FLASH corners (all-Flash run,\n   ~US$3–5 total incl. sweeps).",
-      "values": [
-        {
-          "quantity": "n1-outstanding 'pro-*' shortfall passes (E57 mis-dispatched Flash corners)",
-          "value_verbatim": "six",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.passes[?(@.group=='n1-outstanding-flash-corners')]",
-          "method": "read"
-        },
-        {
-          "quantity": "total API spend, recovery rerun incl. deep sweeps (approximate, lower bound)",
-          "value_verbatim": "~US$3",
-          "value_parsed": 3,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "total API spend, recovery rerun incl. deep sweeps (approximate, upper bound)",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/recovery-rerun-worklists.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The approximate all-in spend has no repo artefact (attestation material only); the '~' is preserved on the lower bound per instrument v1.2 amendment 5 and the shared US$ unit is carried on both values per amendment 6. The registration reports/verification/recovery-rerun-registration.md § 5 estimated ~US$2–4 pre-launch."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          67,
-          70
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "**The permanent residue is 6 unique\n   tiles** (23 pass-level failures; the worst fails in 9 independent\n   passes across pools and modalities) — tile-intrinsic truncation\n   pathology after ~33–48 cumulative attempts each.",
-      "values": [
-        {
-          "quantity": "unique tiles permanently failing after both deep sweeps",
-          "value_verbatim": "6",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "count",
-          "path": "$.results[*].still_failed (distinct count)",
-          "method": "read"
-        },
-        {
-          "quantity": "pass-level tile failures remaining after sweep B",
-          "value_verbatim": "23",
-          "value_parsed": 23,
-          "unit": null,
-          "kind": "count",
-          "path": "$.totals.still_failed",
-          "method": "read"
-        },
-        {
-          "quantity": "independent passes in which the worst residue tile fails",
-          "value_verbatim": "9",
-          "value_parsed": 9,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "cumulative recovery attempts per residue tile (approximate, lower bound)",
-          "value_verbatim": "~33",
-          "value_parsed": 33,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "cumulative recovery attempts per residue tile (approximate, upper bound)",
-          "value_verbatim": "48",
-          "value_parsed": 48,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/recovery-rerun-results-deep-b.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The 9-pass figure needs a count of $.results entries whose still_failed list contains the worst tile (K-35-053-3_Elenovo_x672_y2352 per the rerun registration changelog). The ~33–48 cumulative attempts span four campaigns (original run ladder, 3+3 first rerun, 10+10, 5+5@1024) and are not totalled in any single committed artefact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          73,
-          74
-        ],
-        "section": "§ 2 What landed in the Session 121 sequence"
-      },
-      "claim_text": "**At final coverage F1 rose in BOTH\n   live cells** (image +0.0087, text +0.0058 @20 m)",
-      "values": [
-        {
-          "quantity": "Δ F1@20 m, pv-diag-384 image 1of3 consensus, post-recovery minus pre-recovery",
-          "value_verbatim": "+0.0087",
-          "value_parsed": 0.0087,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
-              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
-            },
-            {
-              "name": "b",
-              "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
-              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
-            }
-          ]
-        },
-        {
-          "quantity": "Δ F1@20 m, pv-diag-384 text 3of3 consensus, post-recovery minus pre-recovery",
-          "value_verbatim": "+0.0058",
-          "value_parsed": 0.0058,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
-              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
-            },
-            {
-              "name": "b",
-              "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
-              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
-            }
-          ]
-        },
-        {
-          "quantity": "evaluation buffer at which the deltas are quoted",
-          "value_verbatim": "20",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[?(@.buffer_metres==20)].buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Pre-recovery evaluations are the 2026-06-05 rescore set (preserved per the preserve-and-compare policy); post-recovery evaluations are results/recovery-reeval-2026-07-30/. The rerun registration changelog carries the full three-state (pre / post-sweep-1 / final) table."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          84,
-          84
-        ],
-        "section": "§ 3 The 20-row correction queue — dispositions"
-      },
-      "claim_text": "| c3-0003 | 55maps `detect_brief-text::run3` (one-tile recovery segment) | Bookkeeping only — tile covered at run_4; generator v0.6.0 now reports 0 completed for the segment; disclosed in E71. No rerun needed |",
-      "values": [
-        {
-          "quantity": "tiles in the 55maps detect_brief-text run3 recovery segment",
-          "value_verbatim": "one",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "completed tiles the v0.6.0 generator reports for the recovery segment",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "$.passes[?(@.pass_id=='55maps-generalisation::detect_brief-text::run3')].n_tiles_processed",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The manifest grain is the pass, not the segment: the row asserts a segment-level count of 0 while the pass row carries the merged pass total. Flagged for triage — the anchor may not be the right grain for the '0'."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          85,
-          85
-        ],
-        "section": "§ 3 The 20-row correction queue — dispositions"
-      },
-      "claim_text": "| c3-0093 | e47 `propose_brief-text::run4` | E71; **rerun** (7 tiles — GeoJSON governs over the dual-listed sidecar) |",
-      "values": [
-        {
-          "quantity": "dead tiles rerun for e47 propose_brief-text run4",
-          "value_verbatim": "7",
-          "value_parsed": 7,
-          "unit": null,
-          "kind": "count",
-          "path": "$.passes[?(@.pass_id=='e47-propose-brief::propose_brief-text::run4')].n_dead",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/recovery-rerun-worklists.json",
-        "path": "$.passes[?(@.pass_id=='e47-propose-brief::propose_brief-text::run4')].n_dead"
-      },
-      "method": "read",
-      "notes": "The rerun registration § 1 records the same 7 as the GeoJSON-governed dead count for this pass."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          86,
-          86
-        ],
-        "section": "§ 3 The 20-row correction queue — dispositions"
-      },
-      "claim_text": "| c3-0104–0109 | n1-outstanding `pro-*-high-t0` ×6 | E71; manifests corrected (v0.6.0: 487→458–472); **rerun** (136 tiles); E57 quarantine unchanged |",
-      "values": [
-        {
-          "quantity": "n1-outstanding pro-*-high-t0 passes in the correction queue",
-          "value_verbatim": "×6",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.passes[?(@.group=='n1-outstanding-flash-corners')]",
-          "method": "read"
-        },
-        {
-          "quantity": "pre-correction manifest tile count for the six passes",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "v0.6.0-corrected manifest tile count, range minimum over the six passes",
-          "value_verbatim": "458",
-          "value_parsed": 458,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "v0.6.0-corrected manifest tile count, range maximum over the six passes",
-          "value_verbatim": "472",
-          "value_parsed": 472,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "dead tiles rerun for the six n1-outstanding passes",
-          "value_verbatim": "136",
-          "value_parsed": 136,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d + e + f",
-          "operands": [
-            {
-              "name": "a",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run1')].n_dead"
-            },
-            {
-              "name": "b",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run2')].n_dead"
-            },
-            {
-              "name": "c",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run3')].n_dead"
-            },
-            {
-              "name": "d",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run1')].n_dead"
-            },
-            {
-              "name": "e",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run2')].n_dead"
-            },
-            {
-              "name": "f",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run3')].n_dead"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/recovery-rerun-worklists.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The 458–472 range is the min/max of n_tiles_processed across the six n1-outstanding-384 pro-*-high-t0 rows of results/passes-manifest.json as regenerated by generator v0.6.0; the manifest has since been regenerated again after the recovery rerun, so triage must read the manifest state as of this document's commit."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          87,
-          87
-        ],
-        "section": "§ 3 The 20-row correction queue — dispositions"
-      },
-      "claim_text": "| c3-0133–0135, 0166–0168 | pv-diag-384 t0.0 ×6 | E71; manifests corrected; **rerun** (143 tiles); the two LIVE conditions re-evaluated post-recovery under preserve-and-compare |",
-      "values": [
-        {
-          "quantity": "pv-diag-384 t0.0 passes in the correction queue",
-          "value_verbatim": "×6",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.passes[?(@.group=='live-pv-diag-t0.0')]",
-          "method": "read"
-        },
-        {
-          "quantity": "dead tiles rerun for the six pv-diag-384 t0.0 passes",
-          "value_verbatim": "143",
-          "value_parsed": 143,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d + e + f",
-          "operands": [
-            {
-              "name": "a",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run1')].n_dead"
-            },
-            {
-              "name": "b",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run2')].n_dead"
-            },
-            {
-              "name": "c",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run3')].n_dead"
-            },
-            {
-              "name": "d",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run1')].n_dead"
-            },
-            {
-              "name": "e",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run2')].n_dead"
-            },
-            {
-              "name": "f",
-              "file": "reports/verification/recovery-rerun-worklists.json",
-              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run3')].n_dead"
-            }
-          ]
-        },
-        {
-          "quantity": "LIVE conditions re-evaluated post-recovery",
-          "value_verbatim": "two",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/recovery-rerun-worklists.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The two re-evaluated live conditions are the consensus cells under results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/ (directory count)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          88,
-          88
-        ],
-        "section": "§ 3 The 20-row correction queue — dispositions"
-      },
-      "claim_text": "| c3-0318, c3-0321 | pro-medium baselines ×2 (resume-merge segment scoping) | **Fixed** — v0.6.0 union rule restores the C3-correct 487 (was 26) |",
-      "values": [
-        {
-          "quantity": "pro-medium baseline passes in the correction queue",
-          "value_verbatim": "×2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "C3-correct tile count restored by the v0.6.0 union rule",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": null,
-          "kind": "count",
-          "path": "$.passes[?(@.pass_id=='pv-diag-384::pro-medium-image-baseline-image-t0.0::run1')].n_tiles_processed",
-          "method": "read"
-        },
-        {
-          "quantity": "pre-fix manifest tile count for the two resume-merged passes",
-          "value_verbatim": "26",
-          "value_parsed": 26,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The sibling pass pv-diag-384::pro-medium-text-baseline-text-t0.0::run1 carries the same 487. The superseded 26 is now recorded at n_tiles_dispatched on the same rows under the v0.6.0 schema. The '×2' count is the number of ledger rows named in the row's own first cell (self-referential; no artefact locator)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          89,
-          89
-        ],
-        "section": "§ 3 The 20-row correction queue — dispositions"
-      },
-      "claim_text": "| c3-0440, c3-0442 | h12-v2 `r3-hp-heavy` ×2 | E71; manifests corrected (327→326); **rerun** (1 tile each) |",
-      "values": [
-        {
-          "quantity": "h12-v2 r3-hp-heavy passes in the correction queue",
-          "value_verbatim": "×2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "pre-correction manifest tile count, h12-v2 r3-hp-heavy",
-          "value_verbatim": "327",
-          "value_parsed": 327,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "v0.6.0-corrected manifest tile count, h12-v2 r3-hp-heavy",
-          "value_verbatim": "326",
-          "value_parsed": 326,
-          "unit": null,
-          "kind": "count",
-          "path": "$.passes[?(@.pass_id=='h12-v2::r3-hp-heavy::run3')].n_tiles_processed",
-          "method": "read"
-        },
-        {
-          "quantity": "dead tiles rerun per affected h12-v2 pass",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": "reports/verification/recovery-rerun-worklists.json#$.passes[?(@.pass_id=='h12-v2::r3-hp-heavy::run3')].n_dead",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The two affected passes are h12-v2::r3-hp-heavy::run3 and ::run5 per the rerun worklists; the manifest was regenerated again after the recovery rerun, so triage must read the manifest state as of this document's commit."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          90,
-          90
-        ],
-        "section": "§ 3 The 20-row correction queue — dispositions"
-      },
-      "claim_text": "| c3-1117 | flash35 `min-text-1of10::run3` | Dropped from rerun (second segment covers the tile). **Residual**: manifest reads 486 (meta `completed_items` lacks the segment-recovered tile) vs true GeoJSON coverage 487 — meta merge-repair queued with the rerun's bookkeeping pass |",
-      "values": [
-        {
-          "quantity": "manifest tile count, flash35 min-text-1of10 run3",
-          "value_verbatim": "486",
-          "value_parsed": 486,
-          "unit": null,
-          "kind": "count",
-          "path": "$.passes[?(@.pass_id=='flash35-pv-2x2::flash35-min-text-1of10::run3')].n_tiles_processed",
-          "method": "read"
-        },
-        {
-          "quantity": "true GeoJSON coverage, flash35 min-text-1of10 run3",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": null,
-          "kind": "count",
-          "path": "outputs/flash35-pv-2x2/proposer/run_3/detections-detect_brief-text-3.5-flash-2026-06-11.geojson#len:$.processed_tiles",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "run_3 holds two segment GeoJSONs (2026-06-10 and 2026-06-11); the cross-file locator names the second (segment-recovered) one, which the row calls the true coverage. The manifest was regenerated again after the recovery rerun."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          91,
-          91
-        ],
-        "section": "§ 3 The 20-row correction queue — dispositions"
-      },
-      "claim_text": "| c3-1132 | 55maps uplift `verified-3of10` | **Fixed** — GAP-8 resolved (16,484→16,482) |",
-      "values": [
-        {
-          "quantity": "pre-fix manifest count, 55maps uplift verified-3of10 (GAP-8 placeholder)",
-          "value_verbatim": "16,484",
-          "value_parsed": 16484,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "candidates verified, 55maps uplift verified-3of10 (GAP-8 resolved)",
-          "value_verbatim": "16,482",
-          "value_parsed": 16482,
-          "unit": null,
-          "kind": "count",
-          "path": "$.passes[?(@.pass_id=='55maps-text-min-n10-uplift::verified-3of10::run1')].n_candidates_verified",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The superseded 16,484 is also recorded as the 'manifest' side of the corresponding row in reports/verification/c3-rederivation/c3-triage-tiles.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          97,
-          97
-        ],
-        "section": "§ 4 Per-era field-verifiability map"
-      },
-      "claim_text": "| retest era (phase2a–3c, batch shape, no `per_item_metadata`) | verifiable (config + meta) | **UNVERIFIABLE — wholesale unpopulated** (E63's wall; 225 phase3c + phase3a siblings) | scalar `items_processed` reliable; `completed_items[]` lists STALE on the 127 patch-tiles passes (E70) | token-level corroboration impossible for this era |",
-      "values": [
-        {
-          "quantity": "phase3c passes in the retest era",
-          "value_verbatim": "225",
-          "value_parsed": 225,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.passes[?(@.run_id=='retest-phase3c')]",
-          "method": "read"
-        },
-        {
-          "quantity": "passes whose completed_items[] lists are stale (patch-tiles campaign)",
-          "value_verbatim": "127",
-          "value_parsed": 127,
-          "unit": null,
-          "kind": "count",
-          "path": "reports/verification/c3-rederivation/c3-triage-tiles.json#len:$[?(@.ruling=='MANIFEST_CORRECT')]",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "This row is the per-era verifiability map itself: it asserts that retest-era usage_stats are wholesale unpopulated (the basis for the instrument's 'unverifiable-era' method) while scalar items_processed and tile counts remain verifiable. The phase3a sibling runs are retest-phase3a / -phase3a-high / -phase3a-replication in the same manifest."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          98,
-          98
-        ],
-        "section": "§ 4 Per-era field-verifiability map"
-      },
-      "claim_text": "| gs-v2 / 55maps era (`per_item_metadata` present) | verifiable (per-item identity authoritative — E57) | verifiable | `items_processed` scalar **attempts-inclusive** (~2× tiles); union of `completed_items` is the correct completed count (v0.6.0 rule) | the first-cut generator fix rediscovered this the hard way (§ 5) |",
-      "values": [
-        {
-          "quantity": "ratio of items_processed scalar to completed tiles, gs-v2/55maps era",
-          "value_verbatim": "~2×",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Needs the ratio of each meta's execution_stats.items_processed to the union-of-completed_items count for gs-v2/55maps-era passes; the manifest carries the union-rule counts (n_tiles_processed) but not the raw scalar."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          99,
-          99
-        ],
-        "section": "§ 4 Per-era field-verifiability map"
-      },
-      "claim_text": "| resume-merged metas (`recovery_history` present) | verifiable | verifiable | union of `completed_items` correct; `per_item_metadata` and `.tiles.json` may be **segment-scoped** (E71 defect 3) | one pass has BOTH values wrong (pv-diag image-t0.0 run_1; true coverage only in the GeoJSON) |",
-      "values": [
-        {
-          "quantity": "passes with both per_item_metadata and .tiles.json segment-scoped",
-          "value_verbatim": "one",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Identifies the pass in prose (pv-diag image-t0.0 run_1); no committed artefact enumerates the both-values-wrong class. The corresponding triage row lives in reports/verification/c3-rederivation/c3-triage-tiles.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          107,
-          108
-        ],
-        "section": "§ 5 Apparatus incidents"
-      },
-      "claim_text": "so preferring the scalar\n   silently corrupted 60+ rows (8,541→17,057 class).",
-      "values": [
-        {
-          "quantity": "manifest rows corrupted by the first-cut generator fix",
-          "value_verbatim": "60+",
-          "value_parsed": 60,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "union-rule tile count, 55maps-text-high-generalisation detect_brief-text run1",
-          "value_verbatim": "8,541",
-          "value_parsed": 8541,
-          "unit": null,
-          "kind": "count",
-          "path": "$.passes[?(@.pass_id=='55maps-text-high-generalisation::detect_brief-text::run1')].n_tiles_processed",
-          "method": "read"
-        },
-        {
-          "quantity": "attempts-inclusive items_processed scalar for the same pass",
-          "value_verbatim": "17,057",
-          "value_parsed": 17057,
-          "unit": null,
-          "kind": "count",
-          "path": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json#$.execution_stats.items_processed",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The document does not name the pass behind the 8,541→17,057 illustration; the cross-file locator was identified by matching the quoted attempts-inclusive scalar in a committed run meta whose manifest row carries 8,541. Triage should confirm the intended pass. The '60+' first-cut diff is not committed as an artefact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          109,
-          110
-        ],
-        "section": "§ 5 Apparatus incidents"
-      },
-      "claim_text": "final\n   diff exactly the 19 intended rows.",
-      "values": [
-        {
-          "quantity": "manifest rows changed by the final v0.6.0 regeneration diff",
-          "value_verbatim": "19",
-          "value_parsed": 19,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Same figure as § 2 item 4; no committed regen-diff artefact was found."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          122,
-          123
-        ],
-        "section": "§ 5 Apparatus incidents"
-      },
-      "claim_text": "the 20 FLAGGED c3 rows\n   carry disposition \"Phase 2 correction queue\"",
-      "values": [
-        {
-          "quantity": "C3 ledger rows carrying the Phase 2 correction-queue disposition",
-          "value_verbatim": "20",
-          "value_parsed": 20,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$[?(@.disposition=='Phase 2 correction queue')]",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/ledgers/c3-provenance.jsonl",
-        "path": "len:$[?(@.disposition=='Phase 2 correction queue')]"
-      },
-      "method": "read",
-      "notes": "JSON Lines anchor: '$' denotes the array of parsed lines. len:$[?(@.verdict=='FLAGGED')] is the equivalent locator."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          131,
-          131
-        ],
-        "section": "§ 6 Spend"
-      },
-      "claim_text": "**US$0.00 API this session.**",
-      "values": [
-        {
-          "quantity": "API spend, Session 121 (asserted)",
-          "value_verbatim": "0.00",
-          "value_parsed": 0.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "external",
-      "notes": "A zero-spend attestation for the session; no repo artefact records per-session billing. Attestation material only."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          131,
-          132
-        ],
-        "section": "§ 6 Spend"
-      },
-      "claim_text": "All computation on sapphire (cluster\nheterogeneity: 153k clusters; family-FDR: gates + 10k bootstrap).",
-      "values": [
-        {
-          "quantity": "spatial clusters in the label-heterogeneity analysis",
-          "value_verbatim": "153k",
-          "value_parsed": 153000,
-          "unit": null,
-          "kind": "count",
-          "path": "$.aggregate.all.total_clusters",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap iterations, family-FDR / CMT-0106 compute",
-          "value_verbatim": "10k",
-          "value_parsed": 10000,
-          "unit": null,
-          "kind": "parameter",
-          "path": "results/family-fdr/h1_cmt0106_pooled_modality.json#$.n_iterations",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Both figures are quoted to the nearest thousand ('153k', '10k'); the artefacts hold exact values (153,102 and 10,000). Recorded at quoted precision per the instrument's precision rule — the harness owns the tolerance."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          133,
-          133
-        ],
-        "section": "§ 6 Spend"
-      },
-      "claim_text": "registered recovery rerun (~US$10–25 est.) is blocked on its gate.",
-      "values": [
-        {
-          "quantity": "estimated API cost of the registered recovery rerun (lower bound)",
-          "value_verbatim": "~US$10",
-          "value_parsed": 10,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "estimated API cost of the registered recovery rerun (upper bound)",
-          "value_verbatim": "25",
-          "value_parsed": 25,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "[BATCH NOTE b064] Internal inconsistency recorded, not adjudicated: § 6 describes the recovery rerun as blocked on its gate while § 2 item 6 records it as EXECUTED, and the estimate here (~US$10–25) differs from the ~US$2–4 estimate in reports/verification/recovery-rerun-registration.md § 5 and from the ~US$3–5 actual quoted at § 2 item 6. The only visible source is that registration markdown (prose), hence anchor-unknown."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          141,
-          142
-        ],
-        "section": "§ 7 Queued next"
-      },
-      "claim_text": "Phase 4 / 4b carry-forwards unchanged (Sol first target: the ~150\n  Session-119 corrections; cross-model cap US$150).",
-      "values": [
-        {
-          "quantity": "Session-119 corrections queued as the Phase 4 first target (approximate)",
-          "value_verbatim": "~150",
-          "value_parsed": 150,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "cross-model verification cost cap",
-          "value_verbatim": "US$150",
-          "value_parsed": 150,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "The cap is a budget parameter set in planning/audit-charter.md (prose; rule 2 forbids anchoring prose to prose). The ~150 corrections are a Session-119 carry-forward with no committed enumeration found under reports/verification/."
+     "quantity": "ledger rows FLAGGED, C3 provenance ledger",
+     "value_verbatim": "20",
+     "value_parsed": 20,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$[?(@.verdict=='FLAGGED')]",
+     "method": "read"
     }
-  ]
+   ],
+   "anchor": {
+    "file": "reports/verification/ledgers/c3-provenance.jsonl",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b064] Scope decisions applied across both b064 documents (instrument v1.2 rule 5): dates, session numbers, git hashes, erratum/commitment/claim/Obs/ruling identifiers (E62-E71, CMT-0106, c3-0093, Obs 187, GAP-8, rule 10, option (iv), 'authority 1'), version strings (v0.6.0), line-number citations (preregistration.md:2110, generate_post_run_report.py:368), section references, and numbers inside condition or pool names (pv-diag-384, t0.0, 3of10, r3-hp-heavy) were NOT extracted; numbers used as asserted facts about the study or the verification corpus were. || Anchor is JSON Lines: '$' denotes the array of parsed lines."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     17,
+     18
+    ],
+    "section": "§ 1 Headline"
+   },
+   "claim_text": "The\nconditions manifest verified 100 % clean.",
+   "values": [
+    {
+     "quantity": "condition-row clean rate, C3 re-derivation",
+     "value_verbatim": "100",
+     "value_parsed": 100,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/c3-rederivation/rederivation-report.json",
+    "path": null
+   },
+   "method": "anchor-unknown",
+   "notes": "Asserts zero MISMATCH verdicts among the condition rows; $.summary.conditions_verdicts in the re-derivation report carries only STRUCTURAL and MATCH keys, so there is no scalar to read — triage must decide whether the absence of a MISMATCH key is the check. $.summary.n_conditions gives the denominator."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     18,
+     22
+    ],
+    "section": "§ 1 Headline"
+   },
+   "claim_text": "Of the 147 field-level\nmismatches the re-derivation surfaced, 127 vindicated the manifest (the\npreviously-undisclosed `--patch-tiles` recovery campaign, now E70), 17\nwere genuine (the `n_tiles_processed` dual semantics + GAP-8 + segment\nscoping, now E71, generator fixed), and 3 sided with the source.",
+   "values": [
+    {
+     "quantity": "field-level mismatches surfaced by the C3 re-derivation",
+     "value_verbatim": "147",
+     "value_parsed": 147,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$",
+     "method": "read"
+    },
+    {
+     "quantity": "triage rows ruled MANIFEST_CORRECT (manifest vindicated)",
+     "value_verbatim": "127",
+     "value_parsed": 127,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$[?(@.ruling=='MANIFEST_CORRECT')]",
+     "method": "read"
+    },
+    {
+     "quantity": "triage rows ruled GENUINE_DISCREPANCY",
+     "value_verbatim": "17",
+     "value_parsed": 17,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$[?(@.ruling=='GENUINE_DISCREPANCY')]",
+     "method": "read"
+    },
+    {
+     "quantity": "triage rows ruled SOURCE_CORRECT (source vindicated)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$[?(@.ruling=='SOURCE_CORRECT')]",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/c3-rederivation/c3-triage-tiles.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The triage artefact is one row per field-level mismatch; the three rulings partition it."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     26,
+     27
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "**Errata wave E62–E71** + five dated correction/clarification blocks\n   (E36, E16, E20, E40, E55)",
+   "values": [
+    {
+     "quantity": "dated correction/clarification blocks landed in the Session 121 sequence",
+     "value_verbatim": "five",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Count of dated correction/clarification blocks added under errata E36, E16, E20, E40 and E55 in the errata register of record. Non-JSON anchor (v1.1: legitimate, routed to triage). The decomposed register reports/verification/c2-census/errata-licence-register.json is a sibling artefact but § 5 item 3 of this document states it has not been re-decomposed for this wave."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     30,
+     34
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "E64(iii) cites the **computed** materiality\n   figure: **2.21 %** cluster-level label heterogeneity (153,102\n   clusters, 47 pools;\n   `reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.md`),\n   superseding the 17.2 %/~21 % subtype-share proxies.",
+   "values": [
+    {
+     "quantity": "cluster-level subtype label heterogeneity, all pools",
+     "value_verbatim": "2.21",
+     "value_parsed": 2.21,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+       "path": "$.aggregate.all.heterogeneous_share"
+      }
+     ]
+    },
+    {
+     "quantity": "spatial (20 m) clusters, all pools",
+     "value_verbatim": "153,102",
+     "value_parsed": 153102,
+     "unit": null,
+     "kind": "count",
+     "path": "$.aggregate.all.total_clusters",
+     "method": "read"
+    },
+    {
+     "quantity": "detection pools in the heterogeneity analysis",
+     "value_verbatim": "47",
+     "value_parsed": 47,
+     "unit": null,
+     "kind": "count",
+     "path": "$.aggregate.all.n_pools",
+     "method": "read"
+    },
+    {
+     "quantity": "superseded subtype-share proxy (draft figure)",
+     "value_verbatim": "17.2",
+     "value_parsed": 17.2,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "superseded subtype-share proxy (defence-pass figure)",
+     "value_verbatim": "~21",
+     "value_parsed": 21,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "historical"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The heterogeneity artefact stores a fraction (0.0221…), hence the per-value arithmetic form for 2.21 %. The two proxies are explicitly marked superseded by this sentence, so they are recorded as historical, not live claims."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     36,
+     38
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "and the two report corrections\n   (`experimental-progression.md`, `gs-tile-pool-mapping-2026-05-28.md`)\n   for the \"1 of 10 survived FDR\" misreport (correct figure 0).",
+   "values": [
+    {
+     "quantity": "report corrections landed for the E36 misreport",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "Phase 2a pairwise comparisons surviving FDR (misreported figure)",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "Phase 2a pairwise comparisons corrected (misreported denominator)",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "Phase 2a pairwise comparisons surviving FDR correction (correct figure)",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "$.n_fdr_significant",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/phase2a-analysis-report.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The '1 of 10' pair is the quoted misreport (historical); the corrected figure 0 is the live claim. The denominator 10 is $.n_comparisons in the same artefact. The count of report corrections is a document-internal bookkeeping count — the two targets named are reports/experimental-progression.md and reports/gs-tile-pool-mapping-2026-05-28.md (prose; no artefact anchor)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     39,
+     40
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "**Census closure**: all 13 UNLICENSED pairs carry dated `resolution`\n   objects",
+   "values": [
+    {
+     "quantity": "UNLICENSED factor=level pairs in the C2 licence census",
+     "value_verbatim": "13",
+     "value_parsed": 13,
+     "unit": null,
+     "kind": "count",
+     "path": "$.summary.UNLICENSED",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/c2-census/licence-census.json",
+    "path": "$.summary.UNLICENSED"
+   },
+   "method": "read",
+   "notes": "$.summary['UNLICENSED_resolved_2026-07-30'] records the resolved count; len:$.pairs[?(@.verdict=='UNLICENSED')] is the equivalent row-level locator."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     40,
+     42
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "Commitment ledger:\n   CMT-0109 waived (E68); CMT-0047 and CMT-0106 **discharged** — now\n   **404 discharged / 90 waived / 208 open**.",
+   "values": [
+    {
+     "quantity": "commitments with status discharged",
+     "value_verbatim": "404",
+     "value_parsed": 404,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.commitments[?(@.status=='discharged')]",
+     "method": "read"
+    },
+    {
+     "quantity": "commitments with status waived",
+     "value_verbatim": "90",
+     "value_parsed": 90,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.commitments[?(@.status=='waived')]",
+     "method": "read"
+    },
+    {
+     "quantity": "commitments with status open",
+     "value_verbatim": "208",
+     "value_parsed": 208,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.commitments[?(@.status=='open')]",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/commitments.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "results/commitments.json is the assembled commitment registry; reports/verification/ledgers/c1-commitments.jsonl is the C1 ledger sibling."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     47,
+     48
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "Regen diff audited:\n   exactly 19 rows changed, zero status changes, ALL VALID",
+   "values": [
+    {
+     "quantity": "manifest rows changed by the v0.6.0 regeneration diff",
+     "value_verbatim": "19",
+     "value_parsed": 19,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "manifest rows changing status in the regeneration diff",
+     "value_verbatim": "zero",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Looked for a committed regen-diff artefact under reports/verification/ (apparatus/regen-manifests/ holds C4 regen manifests, not the v0.6.0 generator diff) and found none; the diff appears to have been an in-session audit. results/passes-manifest.json $.generator_version pins the generator that produced the current rows. Same 19-row figure recurs at § 5 item 1."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     48,
+     49
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "58 tier-1\n   tests green.",
+   "values": [
+    {
+     "quantity": "tier-1 marked tests passing",
+     "value_verbatim": "58",
+     "value_parsed": 58,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "tests",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Count of tests carrying the tier1 pytest marker (pytest.ini registers the marker); requires a collection run (`pytest -m tier1 --collect-only`). Non-JSON anchor is expected per instrument v1.1."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     54,
+     55
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "Δ = +0.0238 text-over-image, CI95 [−0.0104, +0.0585],\n   **p = 0.1774 — null**.",
+   "values": [
+    {
+     "quantity": "Δ mean F1, text-only minus image-using (CMT-0106 pooled modality)",
+     "value_verbatim": "+0.0238",
+     "value_parsed": 0.0238,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.point_estimate.delta_text_minus_image",
+     "method": "read"
+    },
+    {
+     "quantity": "95 % CI lower bound, pooled modality Δ F1",
+     "value_verbatim": "−0.0104",
+     "value_parsed": -0.0104,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.bootstrap.ci95.lower",
+     "method": "read"
+    },
+    {
+     "quantity": "95 % CI upper bound, pooled modality Δ F1",
+     "value_verbatim": "+0.0585",
+     "value_parsed": 0.0585,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.bootstrap.ci95.upper",
+     "method": "read"
+    },
+    {
+     "quantity": "two-sided bootstrap p, pooled modality contrast",
+     "value_verbatim": "0.1774",
+     "value_parsed": 0.1774,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "First execution of registered contrast CMT-0106; the CI is percentile over B = 10 000 paired tile bootstrap resamples."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     55,
+     56
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "**Rejection set {H2, H3, H7}** — the smaller\n   of the two pre-committed possibilities.",
+   "values": [
+    {
+     "quantity": "pre-committed rejection-set possibilities registered for the BH family",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "The two pre-committed possibilities are registered in reports/verification/family-fdr-registration.md (prose — rule 2 forbids anchoring prose to prose). The realised rejection set is recorded at results/family-fdr/family_fdr.json $.rejected_at_q (len 3)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     58,
+     59
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "the draft's default (the p = 0.006 level pair) H1 would have\n   survived.",
+   "values": [
+    {
+     "quantity": "bootstrap p, Phase 2a H1 contrast brief-text-image vs image-only",
+     "value_verbatim": "0.006",
+     "value_parsed": 0.006,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.comparisons[4].f1_p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/retest/pairwise-bootstrap-comparisons.json",
+    "path": "$.comparisons[4].f1_p_value"
+   },
+   "method": "read",
+   "notes": "Index 4 of the retest pairwise bootstrap comparisons is the Phase 2a H1 Modality contrast brief-text-image vs image-only, the 'level pair' the family-FDR results document names for p = 0.006; triage should confirm the intended pair."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     62,
+     63
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "first pass 255/288, then sweep A (10+10\n   ladder) **+10 more — final 265/288 (92.0 %)**",
+   "values": [
+    {
+     "quantity": "dead tiles recovered, first recovery pass",
+     "value_verbatim": "255",
+     "value_parsed": 255,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "reports/verification/recovery-rerun-results.json",
+       "path": "$.totals.recovered"
+      },
+      {
+       "name": "b",
+       "file": "reports/verification/recovery-rerun-results.json",
+       "path": "$.totals.recovered_safe_mode"
+      }
+     ]
+    },
+    {
+     "quantity": "registered dead tiles in the E71 rerun worklists",
+     "value_verbatim": "288",
+     "value_parsed": 288,
+     "unit": null,
+     "kind": "count",
+     "path": "$.registered_total",
+     "method": "read"
+    },
+    {
+     "quantity": "max attempts at original parameters, sweep A ladder",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "parameter",
+     "path": "reports/verification/recovery-rerun-results-deep.json#$.max_attempts_override",
+     "method": "read"
+    },
+    {
+     "quantity": "max attempts at safe mode, sweep A ladder",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "parameter",
+     "path": "reports/verification/recovery-rerun-results-deep.json#$.max_attempts_override",
+     "method": "read"
+    },
+    {
+     "quantity": "additional tiles recovered, sweep A",
+     "value_verbatim": "+10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "reports/verification/recovery-rerun-results-deep.json#$.totals.recovered",
+     "method": "read"
+    },
+    {
+     "quantity": "dead tiles recovered, final (first pass + sweep A)",
+     "value_verbatim": "265",
+     "value_parsed": 265,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c",
+     "operands": [
+      {
+       "name": "a",
+       "file": "reports/verification/recovery-rerun-results.json",
+       "path": "$.totals.recovered"
+      },
+      {
+       "name": "b",
+       "file": "reports/verification/recovery-rerun-results.json",
+       "path": "$.totals.recovered_safe_mode"
+      },
+      {
+       "name": "c",
+       "file": "reports/verification/recovery-rerun-results-deep.json",
+       "path": "$.totals.recovered"
+      }
+     ]
+    },
+    {
+     "quantity": "registered dead tiles in the E71 rerun worklists",
+     "value_verbatim": "288",
+     "value_parsed": 288,
+     "unit": null,
+     "kind": "count",
+     "path": "$.registered_total",
+     "method": "read"
+    },
+    {
+     "quantity": "final recovery rate, E71 dead-tile rerun",
+     "value_verbatim": "92.0",
+     "value_parsed": 92.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * (a + b + c) / d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "reports/verification/recovery-rerun-results.json",
+       "path": "$.totals.recovered"
+      },
+      {
+       "name": "b",
+       "file": "reports/verification/recovery-rerun-results.json",
+       "path": "$.totals.recovered_safe_mode"
+      },
+      {
+       "name": "c",
+       "file": "reports/verification/recovery-rerun-results-deep.json",
+       "path": "$.totals.recovered"
+      },
+      {
+       "name": "d",
+       "file": "reports/verification/recovery-rerun-results.json",
+       "path": "$.registered_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/recovery-rerun-results.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "'10+10 ladder' = ten attempts at original parameters then ten at safe mode; the deep-sweep artefact records a single $.max_attempts_override applied to both tiers, so both 10s share that locator. reports/verification/recovery-rerun-worklists.json $.total_dead_tiles is the sibling locator for 288."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     63,
+     64
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "sweep B (safe mode\n   halved to 1024) recovered nothing.",
+   "values": [
+    {
+     "quantity": "safe-mode max_output_tokens, sweep B",
+     "value_verbatim": "1024",
+     "value_parsed": 1024,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.safe_tokens_override",
+     "method": "read"
+    },
+    {
+     "quantity": "tiles recovered, sweep B",
+     "value_verbatim": "nothing",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "$.totals.recovered",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/recovery-rerun-results-deep-b.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "$.totals.recovered_safe_mode is the companion zero in the same artefact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     64,
+     67
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "The PI's pre-gate\n   model-consistency check caught that the six \"pro-*\" shortfall\n   passes are the E57 mis-dispatched FLASH corners (all-Flash run,\n   ~US$3–5 total incl. sweeps).",
+   "values": [
+    {
+     "quantity": "n1-outstanding 'pro-*' shortfall passes (E57 mis-dispatched Flash corners)",
+     "value_verbatim": "six",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.passes[?(@.group=='n1-outstanding-flash-corners')]",
+     "method": "read"
+    },
+    {
+     "quantity": "total API spend, recovery rerun incl. deep sweeps (approximate, lower bound)",
+     "value_verbatim": "~US$3",
+     "value_parsed": 3,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "total API spend, recovery rerun incl. deep sweeps (approximate, upper bound)",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/recovery-rerun-worklists.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The approximate all-in spend has no repo artefact (attestation material only); the '~' is preserved on the lower bound per instrument v1.2 amendment 5 and the shared US$ unit is carried on both values per amendment 6. The registration reports/verification/recovery-rerun-registration.md § 5 estimated ~US$2–4 pre-launch."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     67,
+     70
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "**The permanent residue is 6 unique\n   tiles** (23 pass-level failures; the worst fails in 9 independent\n   passes across pools and modalities) — tile-intrinsic truncation\n   pathology after ~33–48 cumulative attempts each.",
+   "values": [
+    {
+     "quantity": "unique tiles permanently failing after both deep sweeps",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "count",
+     "path": "$.results[*].still_failed (distinct count)",
+     "method": "read"
+    },
+    {
+     "quantity": "pass-level tile failures remaining after sweep B",
+     "value_verbatim": "23",
+     "value_parsed": 23,
+     "unit": null,
+     "kind": "count",
+     "path": "$.totals.still_failed",
+     "method": "read"
+    },
+    {
+     "quantity": "independent passes in which the worst residue tile fails",
+     "value_verbatim": "9",
+     "value_parsed": 9,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "cumulative recovery attempts per residue tile (approximate, lower bound)",
+     "value_verbatim": "~33",
+     "value_parsed": 33,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "cumulative recovery attempts per residue tile (approximate, upper bound)",
+     "value_verbatim": "48",
+     "value_parsed": 48,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/recovery-rerun-results-deep-b.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The 9-pass figure needs a count of $.results entries whose still_failed list contains the worst tile (K-35-053-3_Elenovo_x672_y2352 per the rerun registration changelog). The ~33–48 cumulative attempts span four campaigns (original run ladder, 3+3 first rerun, 10+10, 5+5@1024) and are not totalled in any single committed artefact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     73,
+     74
+    ],
+    "section": "§ 2 What landed in the Session 121 sequence"
+   },
+   "claim_text": "**At final coverage F1 rose in BOTH\n   live cells** (image +0.0087, text +0.0058 @20 m)",
+   "values": [
+    {
+     "quantity": "Δ F1@20 m, pv-diag-384 image 1of3 consensus, post-recovery minus pre-recovery",
+     "value_verbatim": "+0.0087",
+     "value_parsed": 0.0087,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      },
+      {
+       "name": "b",
+       "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      }
+     ]
+    },
+    {
+     "quantity": "Δ F1@20 m, pv-diag-384 text 3of3 consensus, post-recovery minus pre-recovery",
+     "value_verbatim": "+0.0058",
+     "value_parsed": 0.0058,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      },
+      {
+       "name": "b",
+       "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      }
+     ]
+    },
+    {
+     "quantity": "evaluation buffer at which the deltas are quoted",
+     "value_verbatim": "20",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Pre-recovery evaluations are the 2026-06-05 rescore set (preserved per the preserve-and-compare policy); post-recovery evaluations are results/recovery-reeval-2026-07-30/. The rerun registration changelog carries the full three-state (pre / post-sweep-1 / final) table."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     84,
+     84
+    ],
+    "section": "§ 3 The 20-row correction queue — dispositions"
+   },
+   "claim_text": "| c3-0003 | 55maps `detect_brief-text::run3` (one-tile recovery segment) | Bookkeeping only — tile covered at run_4; generator v0.6.0 now reports 0 completed for the segment; disclosed in E71. No rerun needed |",
+   "values": [
+    {
+     "quantity": "tiles in the 55maps detect_brief-text run3 recovery segment",
+     "value_verbatim": "one",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "completed tiles the v0.6.0 generator reports for the recovery segment",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "outputs/55maps-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.meta.json#len:$.execution_stats.completed_items",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The manifest grain is the pass, not the segment: the row asserts a segment-level count of 0 while the pass row carries the merged pass total. Flagged for triage — the anchor may not be the right grain for the '0'. [TRIAGE REPAIR 2026-08-03 wave-6] [v1] Blind pass P3 (RE-1): '0 completed' is the meta's execution_stats.completed_items (an empty array at every era); the manifest's n_tiles_processed was 1 at v0.6.0 and today, so the bound locator could never return 0."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     85,
+     85
+    ],
+    "section": "§ 3 The 20-row correction queue — dispositions"
+   },
+   "claim_text": "| c3-0093 | e47 `propose_brief-text::run4` | E71; **rerun** (7 tiles — GeoJSON governs over the dual-listed sidecar) |",
+   "values": [
+    {
+     "quantity": "dead tiles rerun for e47 propose_brief-text run4",
+     "value_verbatim": "7",
+     "value_parsed": 7,
+     "unit": null,
+     "kind": "count",
+     "path": "$.passes[?(@.pass_id=='e47-propose-brief::propose_brief-text::run4')].n_dead",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/recovery-rerun-worklists.json",
+    "path": "$.passes[?(@.pass_id=='e47-propose-brief::propose_brief-text::run4')].n_dead"
+   },
+   "method": "read",
+   "notes": "The rerun registration § 1 records the same 7 as the GeoJSON-governed dead count for this pass."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     86,
+     86
+    ],
+    "section": "§ 3 The 20-row correction queue — dispositions"
+   },
+   "claim_text": "| c3-0104–0109 | n1-outstanding `pro-*-high-t0` ×6 | E71; manifests corrected (v0.6.0: 487→458–472); **rerun** (136 tiles); E57 quarantine unchanged |",
+   "values": [
+    {
+     "quantity": "n1-outstanding pro-*-high-t0 passes in the correction queue",
+     "value_verbatim": "×6",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.passes[?(@.group=='n1-outstanding-flash-corners')]",
+     "method": "read"
+    },
+    {
+     "quantity": "pre-correction manifest tile count for the six passes",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "v0.6.0-corrected manifest tile count, range minimum over the six passes",
+     "value_verbatim": "458",
+     "value_parsed": 458,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "v0.6.0-corrected manifest tile count, range maximum over the six passes",
+     "value_verbatim": "472",
+     "value_parsed": 472,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "dead tiles rerun for the six n1-outstanding passes",
+     "value_verbatim": "136",
+     "value_parsed": 136,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d + e + f",
+     "operands": [
+      {
+       "name": "a",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run1')].n_dead"
+      },
+      {
+       "name": "b",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run2')].n_dead"
+      },
+      {
+       "name": "c",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run3')].n_dead"
+      },
+      {
+       "name": "d",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run1')].n_dead"
+      },
+      {
+       "name": "e",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run2')].n_dead"
+      },
+      {
+       "name": "f",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run3')].n_dead"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/recovery-rerun-worklists.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The 458–472 range is the min/max of n_tiles_processed across the six n1-outstanding-384 pro-*-high-t0 rows of results/passes-manifest.json as regenerated by generator v0.6.0; the manifest has since been regenerated again after the recovery rerun, so triage must read the manifest state as of this document's commit."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     87,
+     87
+    ],
+    "section": "§ 3 The 20-row correction queue — dispositions"
+   },
+   "claim_text": "| c3-0133–0135, 0166–0168 | pv-diag-384 t0.0 ×6 | E71; manifests corrected; **rerun** (143 tiles); the two LIVE conditions re-evaluated post-recovery under preserve-and-compare |",
+   "values": [
+    {
+     "quantity": "pv-diag-384 t0.0 passes in the correction queue",
+     "value_verbatim": "×6",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.passes[?(@.group=='live-pv-diag-t0.0')]",
+     "method": "read"
+    },
+    {
+     "quantity": "dead tiles rerun for the six pv-diag-384 t0.0 passes",
+     "value_verbatim": "143",
+     "value_parsed": 143,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d + e + f",
+     "operands": [
+      {
+       "name": "a",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run1')].n_dead"
+      },
+      {
+       "name": "b",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run2')].n_dead"
+      },
+      {
+       "name": "c",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run3')].n_dead"
+      },
+      {
+       "name": "d",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run1')].n_dead"
+      },
+      {
+       "name": "e",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run2')].n_dead"
+      },
+      {
+       "name": "f",
+       "file": "reports/verification/recovery-rerun-worklists.json",
+       "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run3')].n_dead"
+      }
+     ]
+    },
+    {
+     "quantity": "LIVE conditions re-evaluated post-recovery",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/recovery-rerun-worklists.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The two re-evaluated live conditions are the consensus cells under results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/ (directory count)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     88,
+     88
+    ],
+    "section": "§ 3 The 20-row correction queue — dispositions"
+   },
+   "claim_text": "| c3-0318, c3-0321 | pro-medium baselines ×2 (resume-merge segment scoping) | **Fixed** — v0.6.0 union rule restores the C3-correct 487 (was 26) |",
+   "values": [
+    {
+     "quantity": "pro-medium baseline passes in the correction queue",
+     "value_verbatim": "×2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "C3-correct tile count restored by the v0.6.0 union rule",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": null,
+     "kind": "count",
+     "path": "$.passes[?(@.pass_id=='pv-diag-384::pro-medium-image-baseline-image-t0.0::run1')].n_tiles_processed",
+     "method": "read"
+    },
+    {
+     "quantity": "pre-fix manifest tile count for the two resume-merged passes",
+     "value_verbatim": "26",
+     "value_parsed": 26,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The sibling pass pv-diag-384::pro-medium-text-baseline-text-t0.0::run1 carries the same 487. The superseded 26 is now recorded at n_tiles_dispatched on the same rows under the v0.6.0 schema. The '×2' count is the number of ledger rows named in the row's own first cell (self-referential; no artefact locator)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     89,
+     89
+    ],
+    "section": "§ 3 The 20-row correction queue — dispositions"
+   },
+   "claim_text": "| c3-0440, c3-0442 | h12-v2 `r3-hp-heavy` ×2 | E71; manifests corrected (327→326); **rerun** (1 tile each) |",
+   "values": [
+    {
+     "quantity": "h12-v2 r3-hp-heavy passes in the correction queue",
+     "value_verbatim": "×2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "pre-correction manifest tile count, h12-v2 r3-hp-heavy",
+     "value_verbatim": "327",
+     "value_parsed": 327,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "v0.6.0-corrected manifest tile count, h12-v2 r3-hp-heavy",
+     "value_verbatim": "326",
+     "value_parsed": 326,
+     "unit": null,
+     "kind": "count",
+     "path": "$.passes[?(@.pass_id=='h12-v2::r3-hp-heavy::run3')].n_tiles_processed",
+     "method": "read"
+    },
+    {
+     "quantity": "dead tiles rerun per affected h12-v2 pass",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": "reports/verification/recovery-rerun-worklists.json#$.passes[?(@.pass_id=='h12-v2::r3-hp-heavy::run3')].n_dead",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The two affected passes are h12-v2::r3-hp-heavy::run3 and ::run5 per the rerun worklists; the manifest was regenerated again after the recovery rerun, so triage must read the manifest state as of this document's commit."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     90,
+     90
+    ],
+    "section": "§ 3 The 20-row correction queue — dispositions"
+   },
+   "claim_text": "| c3-1117 | flash35 `min-text-1of10::run3` | Dropped from rerun (second segment covers the tile). **Residual**: manifest reads 486 (meta `completed_items` lacks the segment-recovered tile) vs true GeoJSON coverage 487 — meta merge-repair queued with the rerun's bookkeeping pass |",
+   "values": [
+    {
+     "quantity": "manifest tile count, flash35 min-text-1of10 run3",
+     "value_verbatim": "486",
+     "value_parsed": 486,
+     "unit": null,
+     "kind": "count",
+     "path": "$.passes[?(@.pass_id=='flash35-pv-2x2::flash35-min-text-1of10::run3')].n_tiles_processed",
+     "method": "read"
+    },
+    {
+     "quantity": "true GeoJSON coverage, flash35 min-text-1of10 run3",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": null,
+     "kind": "count",
+     "path": "outputs/flash35-pv-2x2/proposer/run_3/detections-detect_brief-text-3.5-flash-2026-06-11.geojson#len:$.processed_tiles",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "run_3 holds two segment GeoJSONs (2026-06-10 and 2026-06-11); the cross-file locator names the second (segment-recovered) one, which the row calls the true coverage. The manifest was regenerated again after the recovery rerun."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     91,
+     91
+    ],
+    "section": "§ 3 The 20-row correction queue — dispositions"
+   },
+   "claim_text": "| c3-1132 | 55maps uplift `verified-3of10` | **Fixed** — GAP-8 resolved (16,484→16,482) |",
+   "values": [
+    {
+     "quantity": "pre-fix manifest count, 55maps uplift verified-3of10 (GAP-8 placeholder)",
+     "value_verbatim": "16,484",
+     "value_parsed": 16484,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "candidates verified, 55maps uplift verified-3of10 (GAP-8 resolved)",
+     "value_verbatim": "16,482",
+     "value_parsed": 16482,
+     "unit": null,
+     "kind": "count",
+     "path": "$.passes[?(@.pass_id=='55maps-text-min-n10-uplift::verified-3of10::run1')].n_candidates_verified",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The superseded 16,484 is also recorded as the 'manifest' side of the corresponding row in reports/verification/c3-rederivation/c3-triage-tiles.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     97,
+     97
+    ],
+    "section": "§ 4 Per-era field-verifiability map"
+   },
+   "claim_text": "| retest era (phase2a–3c, batch shape, no `per_item_metadata`) | verifiable (config + meta) | **UNVERIFIABLE — wholesale unpopulated** (E63's wall; 225 phase3c + phase3a siblings) | scalar `items_processed` reliable; `completed_items[]` lists STALE on the 127 patch-tiles passes (E70) | token-level corroboration impossible for this era |",
+   "values": [
+    {
+     "quantity": "phase3c passes in the retest era",
+     "value_verbatim": "225",
+     "value_parsed": 225,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.passes[?(@.run_id=='retest-phase3c')]",
+     "method": "read"
+    },
+    {
+     "quantity": "passes whose completed_items[] lists are stale (patch-tiles campaign)",
+     "value_verbatim": "127",
+     "value_parsed": 127,
+     "unit": null,
+     "kind": "count",
+     "path": "reports/verification/c3-rederivation/c3-triage-tiles.json#len:$[?(@.ruling=='MANIFEST_CORRECT')]",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "This row is the per-era verifiability map itself: it asserts that retest-era usage_stats are wholesale unpopulated (the basis for the instrument's 'unverifiable-era' method) while scalar items_processed and tile counts remain verifiable. The phase3a sibling runs are retest-phase3a / -phase3a-high / -phase3a-replication in the same manifest."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     98,
+     98
+    ],
+    "section": "§ 4 Per-era field-verifiability map"
+   },
+   "claim_text": "| gs-v2 / 55maps era (`per_item_metadata` present) | verifiable (per-item identity authoritative — E57) | verifiable | `items_processed` scalar **attempts-inclusive** (~2× tiles); union of `completed_items` is the correct completed count (v0.6.0 rule) | the first-cut generator fix rediscovered this the hard way (§ 5) |",
+   "values": [
+    {
+     "quantity": "ratio of items_processed scalar to completed tiles, gs-v2/55maps era",
+     "value_verbatim": "~2×",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Needs the ratio of each meta's execution_stats.items_processed to the union-of-completed_items count for gs-v2/55maps-era passes; the manifest carries the union-rule counts (n_tiles_processed) but not the raw scalar."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     99,
+     99
+    ],
+    "section": "§ 4 Per-era field-verifiability map"
+   },
+   "claim_text": "| resume-merged metas (`recovery_history` present) | verifiable | verifiable | union of `completed_items` correct; `per_item_metadata` and `.tiles.json` may be **segment-scoped** (E71 defect 3) | one pass has BOTH values wrong (pv-diag image-t0.0 run_1; true coverage only in the GeoJSON) |",
+   "values": [
+    {
+     "quantity": "passes with both per_item_metadata and .tiles.json segment-scoped",
+     "value_verbatim": "one",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Identifies the pass in prose (pv-diag image-t0.0 run_1); no committed artefact enumerates the both-values-wrong class. The corresponding triage row lives in reports/verification/c3-rederivation/c3-triage-tiles.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     107,
+     108
+    ],
+    "section": "§ 5 Apparatus incidents"
+   },
+   "claim_text": "so preferring the scalar\n   silently corrupted 60+ rows (8,541→17,057 class).",
+   "values": [
+    {
+     "quantity": "manifest rows corrupted by the first-cut generator fix",
+     "value_verbatim": "60+",
+     "value_parsed": 60,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "union-rule tile count, 55maps-text-high-generalisation detect_brief-text run1",
+     "value_verbatim": "8,541",
+     "value_parsed": 8541,
+     "unit": null,
+     "kind": "count",
+     "path": "$.passes[?(@.pass_id=='55maps-text-high-generalisation::detect_brief-text::run1')].n_tiles_processed",
+     "method": "read"
+    },
+    {
+     "quantity": "attempts-inclusive items_processed scalar for the same pass",
+     "value_verbatim": "17,057",
+     "value_parsed": 17057,
+     "unit": null,
+     "kind": "count",
+     "path": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json#$.execution_stats.items_processed",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The document does not name the pass behind the 8,541→17,057 illustration; the cross-file locator was identified by matching the quoted attempts-inclusive scalar in a committed run meta whose manifest row carries 8,541. Triage should confirm the intended pass. The '60+' first-cut diff is not committed as an artefact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     109,
+     110
+    ],
+    "section": "§ 5 Apparatus incidents"
+   },
+   "claim_text": "final\n   diff exactly the 19 intended rows.",
+   "values": [
+    {
+     "quantity": "manifest rows changed by the final v0.6.0 regeneration diff",
+     "value_verbatim": "19",
+     "value_parsed": 19,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Same figure as § 2 item 4; no committed regen-diff artefact was found."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     122,
+     123
+    ],
+    "section": "§ 5 Apparatus incidents"
+   },
+   "claim_text": "the 20 FLAGGED c3 rows\n   carry disposition \"Phase 2 correction queue\"",
+   "values": [
+    {
+     "quantity": "C3 ledger rows carrying the Phase 2 correction-queue disposition",
+     "value_verbatim": "20",
+     "value_parsed": 20,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$[?(@.disposition=='Phase 2 correction queue')]",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/ledgers/c3-provenance.jsonl",
+    "path": "len:$[?(@.disposition=='Phase 2 correction queue')]"
+   },
+   "method": "read",
+   "notes": "JSON Lines anchor: '$' denotes the array of parsed lines. len:$[?(@.verdict=='FLAGGED')] is the equivalent locator."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     131,
+     131
+    ],
+    "section": "§ 6 Spend"
+   },
+   "claim_text": "**US$0.00 API this session.**",
+   "values": [
+    {
+     "quantity": "API spend, Session 121 (asserted)",
+     "value_verbatim": "0.00",
+     "value_parsed": 0.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "external",
+   "notes": "A zero-spend attestation for the session; no repo artefact records per-session billing. Attestation material only."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     131,
+     132
+    ],
+    "section": "§ 6 Spend"
+   },
+   "claim_text": "All computation on sapphire (cluster\nheterogeneity: 153k clusters; family-FDR: gates + 10k bootstrap).",
+   "values": [
+    {
+     "quantity": "spatial clusters in the label-heterogeneity analysis",
+     "value_verbatim": "153k",
+     "value_parsed": 153000,
+     "unit": null,
+     "kind": "count",
+     "path": "$.aggregate.all.total_clusters",
+     "method": "read"
+    },
+    {
+     "quantity": "bootstrap iterations, family-FDR / CMT-0106 compute",
+     "value_verbatim": "10k",
+     "value_parsed": 10000,
+     "unit": null,
+     "kind": "parameter",
+     "path": "results/family-fdr/h1_cmt0106_pooled_modality.json#$.n_iterations",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Both figures are quoted to the nearest thousand ('153k', '10k'); the artefacts hold exact values (153,102 and 10,000). Recorded at quoted precision per the instrument's precision rule — the harness owns the tolerance."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     133,
+     133
+    ],
+    "section": "§ 6 Spend"
+   },
+   "claim_text": "registered recovery rerun (~US$10–25 est.) is blocked on its gate.",
+   "values": [
+    {
+     "quantity": "estimated API cost of the registered recovery rerun (lower bound)",
+     "value_verbatim": "~US$10",
+     "value_parsed": 10,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "estimated API cost of the registered recovery rerun (upper bound)",
+     "value_verbatim": "25",
+     "value_parsed": 25,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "[BATCH NOTE b064] Internal inconsistency recorded, not adjudicated: § 6 describes the recovery rerun as blocked on its gate while § 2 item 6 records it as EXECUTED, and the estimate here (~US$10–25) differs from the ~US$2–4 estimate in reports/verification/recovery-rerun-registration.md § 5 and from the ~US$3–5 actual quoted at § 2 item 6. The only visible source is that registration markdown (prose), hence anchor-unknown."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     141,
+     142
+    ],
+    "section": "§ 7 Queued next"
+   },
+   "claim_text": "Phase 4 / 4b carry-forwards unchanged (Sol first target: the ~150\n  Session-119 corrections; cross-model cap US$150).",
+   "values": [
+    {
+     "quantity": "Session-119 corrections queued as the Phase 4 first target (approximate)",
+     "value_verbatim": "~150",
+     "value_parsed": 150,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "cross-model verification cost cap",
+     "value_verbatim": "US$150",
+     "value_parsed": 150,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "The cap is a budget parameter set in planning/audit-charter.md (prose; rule 2 forbids anchoring prose to prose). The ~150 corrections are a Session-119 carry-forward with no committed enumeration found under reports/verification/."
+  }
+ ]
 }

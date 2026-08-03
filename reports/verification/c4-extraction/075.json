@@ -1,2558 +1,2558 @@
 {
-  "schema_version": "1.1",
-  "extracted_at": "2026-08-03T00:00:00Z",
-  "source_document": {
-    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/report.md",
-    "git_blob": "bbadec3ed547",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-opus-5",
-    "instrument_version": "1.2"
-  },
-  "claims": [
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          3,
-          3
-        ],
-        "section": "Front matter — Study"
-      },
-      "claim_text": "**Study**: 55-map image generalisation",
-      "values": [
-        {
-          "quantity": "map-sheet count, 55-map image-generalisation corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_maps",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Scope decisions applied throughout this file: (a) buffer metres (50/75/100/125/150 m) are treated as quantity labels identifying which metric is meant and are carried in `quantity` rather than duplicated as values, EXCEPT where the document asserts them as run parameters (Reproducibility table, line 195), as a registration specification (line 173), or as a derived finding (the 125 m attractor-pull ceiling, lines 209 and 216); (b) candidate IDs 5641/5777 and map-sheet names on lines 154-155 are identifiers, excluded per instrument rule 5; (c) percentages quoted in the prose are stored as FRACTIONS in the sibling summary.json (e.g. 0.16775 for '16.78 %'), so they are extracted as `arithmetic` (100 * a) rather than `read`, to avoid manufacturing a scale-only mismatch. '55-map' here is both a study name and an asserted count (rule 5, the 487-tile precedent), so it is extracted."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          5,
-          5
-        ],
-        "section": "Front matter — Evaluation scope"
-      },
-      "claim_text": "**Evaluation scope**: 55 map sheets, 4,665 verified detections, 5,216 reviewer-extended ground truth mounds (= 4,744 student mounds + 472 reviewer-promoted phantoms)",
-      "values": [
-        {
-          "quantity": "map-sheet count, evaluation scope",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_maps",
-          "method": "read"
-        },
-        {
-          "quantity": "verified detection count",
-          "value_verbatim": "4,665",
-          "value_parsed": 4665,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_detections",
-          "method": "read"
-        },
-        {
-          "quantity": "reviewer-extended ground-truth mound count",
-          "value_verbatim": "5,216",
-          "value_parsed": 5216,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_extended_gt",
-          "method": "read"
-        },
-        {
-          "quantity": "student-labelled ground-truth mound count",
-          "value_verbatim": "4,744",
-          "value_parsed": 4744,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_student_gt",
-          "method": "read"
-        },
-        {
-          "quantity": "reviewer-promoted phantom count",
-          "value_verbatim": "472",
-          "value_parsed": 472,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_reviewer_phantoms",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          6,
-          6
-        ],
-        "section": "Front matter — Purpose"
-      },
-      "claim_text": "**Purpose**: decompose the +0.020 F1 lift from 50 m buffer to 100 m buffer (corrected-F1 curve 0.832 → 0.852) into (a) legitimate new matches enabled at the wider tolerance vs (b) re-pairing drift that swaps which GT a detection is associated with",
-      "values": [
-        {
-          "quantity": "F1 lift, corrected-F1 curve, 50 m -> 100 m buffer",
-          "value_verbatim": "+0.020",
-          "value_parsed": 0.02,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==100)].F1"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==50)].F1"
-            }
-          ]
-        },
-        {
-          "quantity": "corrected F1 @ 50 m buffer, 55-map image generalisation",
-          "value_verbatim": "0.832",
-          "value_parsed": 0.832,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 100 m buffer, 55-map image generalisation",
-          "value_verbatim": "0.852",
-          "value_parsed": 0.852,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==100)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] F1-curve values are anchored to the corrected-f1-multi-buffer summary.json rather than the corrected-f1.csv named in the prose: the JSON carries identical columns and resolves mechanically."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          11,
-          14
-        ],
-        "section": "Headline finding"
-      },
-      "claim_text": "71 detection-GT pairs match at 100 m that did\nnot match at 50 m; zero pairs are lost going from 50 m to 100 m; and\nonly 4 of 4,108 already-matched pairs (0.10 %) drift to a different\nGT.",
-      "values": [
-        {
-          "quantity": "new detection-GT pairs matched at 100 m but not at 50 m",
-          "value_verbatim": "71",
-          "value_parsed": 71,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
-          "method": "read"
-        },
-        {
-          "quantity": "matches lost going from 50 m to 100 m",
-          "value_verbatim": "zero",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
-          "method": "read"
-        },
-        {
-          "quantity": "already-matched pairs that drift to a different GT",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.different_gt_at_both",
-          "method": "read"
-        },
-        {
-          "quantity": "pairs matched at both 50 m and 100 m",
-          "value_verbatim": "4,108",
-          "value_parsed": 4108,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers",
-          "method": "read"
-        },
-        {
-          "quantity": "drift rate as percentage of already-matched pairs",
-          "value_verbatim": "0.10 %",
-          "value_parsed": 0.1,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          14,
-          14
-        ],
-        "section": "Headline finding"
-      },
-      "claim_text": "The multi-buffer F1 curve (0.832 @ 50 m → 0.852 @ 100 m) is doing",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 50 m buffer",
-          "value_verbatim": "0.832",
-          "value_parsed": 0.832,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 100 m buffer",
-          "value_verbatim": "0.852",
-          "value_parsed": 0.852,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==100)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          23,
-          23
-        ],
-        "section": "Data and inputs (table)"
-      },
-      "claim_text": "| Verified detections | `outputs/55maps-image-generalisation/verified/verified_detections.geojson` | 4,665 |",
-      "values": [
-        {
-          "quantity": "verified detection count, verified_detections.geojson",
-          "value_verbatim": "4,665",
-          "value_parsed": 4665,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
-        "path": "len:$.features"
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Row names its own source path, so anchored to the GeoJSON feature count (instrument rule 2); the sibling summary.json records the same count at $.inputs.n_detections."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          24,
-          24
-        ],
-        "section": "Data and inputs (table)"
-      },
-      "claim_text": "| Extended ground truth | `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` | 5,216 |",
-      "values": [
-        {
-          "quantity": "extended ground-truth mound count, student-mounds-55maps-reviewed.geojson",
-          "value_verbatim": "5,216",
-          "value_parsed": 5216,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-        "path": "len:$.features"
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Row names its own source path; sibling summary.json records the same count at $.inputs.n_extended_gt."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          25,
-          25
-        ],
-        "section": "Data and inputs (table)"
-      },
-      "claim_text": "| ↳ Student-labelled | (component of above) | 4,744 |",
-      "values": [
-        {
-          "quantity": "student-labelled ground-truth mound count",
-          "value_verbatim": "4,744",
-          "value_parsed": 4744,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_student_gt",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.inputs.n_student_gt"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          26,
-          26
-        ],
-        "section": "Data and inputs (table)"
-      },
-      "claim_text": "| ↳ Reviewer-promoted phantoms | (component of above) | 472 |",
-      "values": [
-        {
-          "quantity": "reviewer-promoted phantom count",
-          "value_verbatim": "472",
-          "value_parsed": 472,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_reviewer_phantoms",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.inputs.n_reviewer_phantoms"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          27,
-          27
-        ],
-        "section": "Data and inputs (table)"
-      },
-      "claim_text": "| Review CSV | `results/55maps-image-generalisation/human-review.csv` | 472 promoted rows |",
-      "values": [
-        {
-          "quantity": "promoted rows in the single-buffer human review CSV",
-          "value_verbatim": "472",
-          "value_parsed": 472,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_reviewer_phantoms",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.inputs.n_reviewer_phantoms"
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] The row asserts a property of results/55maps-image-generalisation/human-review.csv (rows labelled as promoted mounds); anchored to the scalar the diagnostic recorded for that input, since the CSV needs a per-row label filter rather than a scalar lookup."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          28,
-          28
-        ],
-        "section": "Data and inputs (table)"
-      },
-      "claim_text": "| Map sheets | — | 55 |",
-      "values": [
-        {
-          "quantity": "map-sheet count",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_maps",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.inputs.n_maps"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          30,
-          31
-        ],
-        "section": "Data and inputs (prose)"
-      },
-      "claim_text": "Extended ground truth merges the original student-mound labels with\nthe 472 reviewer-promoted phantoms",
-      "values": [
-        {
-          "quantity": "reviewer-promoted phantom count merged into extended GT",
-          "value_verbatim": "472",
-          "value_parsed": 472,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_reviewer_phantoms",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.inputs.n_reviewer_phantoms"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          45,
-          45
-        ],
-        "section": "Diagnostic 1 — GT clustering density (table)"
-      },
-      "claim_text": "| GT with any neighbour within buffer | 6.44 % | 16.78 % |",
-      "values": [
-        {
-          "quantity": "percentage of GT with any neighbouring GT within 50 m",
-          "value_verbatim": "6.44 %",
-          "value_parsed": 6.44,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_50m"
-            }
-          ]
-        },
-        {
-          "quantity": "percentage of GT with any neighbouring GT within 100 m",
-          "value_verbatim": "16.78 %",
-          "value_parsed": 16.78,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] summary.json stores both as fractions ($.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_50m / _100m), hence the 100 * a derivation rather than a direct read."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          46,
-          46
-        ],
-        "section": "Diagnostic 1 — GT clustering density (table)"
-      },
-      "claim_text": "| Mean neighbours per GT | — | 0.192 |",
-      "values": [
-        {
-          "quantity": "mean neighbouring GT per GT within 100 m",
-          "value_verbatim": "0.192",
-          "value_parsed": 0.192,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.diagnostic_1_gt_clustering.mean_neighbours_100m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_1_gt_clustering.mean_neighbours_100m"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          47,
-          47
-        ],
-        "section": "Diagnostic 1 — GT clustering density (table)"
-      },
-      "claim_text": "| Median neighbours per GT | — | 0 |",
-      "values": [
-        {
-          "quantity": "median neighbouring GT per GT within 100 m",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.diagnostic_1_gt_clustering.median_neighbours_100m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_1_gt_clustering.median_neighbours_100m"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          48,
-          48
-        ],
-        "section": "Diagnostic 1 — GT clustering density (table)"
-      },
-      "claim_text": "| GT with 0 neighbours within 100 m | — | 4,341 (83.22 %) |",
-      "values": [
-        {
-          "quantity": "count of GT with 0 neighbours within 100 m",
-          "value_verbatim": "4,341",
-          "value_parsed": 4341,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_1_gt_clustering.n_gt_with_0_neighbours_100m",
-          "method": "read"
-        },
-        {
-          "quantity": "percentage of GT with 0 neighbours within 100 m",
-          "value_verbatim": "83.22 %",
-          "value_parsed": 83.22,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_with_0_neighbours_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          49,
-          49
-        ],
-        "section": "Diagnostic 1 — GT clustering density (table)"
-      },
-      "claim_text": "| GT with 1 neighbour within 100 m | — | 766 (14.69 %) |",
-      "values": [
-        {
-          "quantity": "count of GT with 1 neighbour within 100 m",
-          "value_verbatim": "766",
-          "value_parsed": 766,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_1_gt_clustering.n_gt_with_1_neighbour_100m",
-          "method": "read"
-        },
-        {
-          "quantity": "percentage of GT with 1 neighbour within 100 m",
-          "value_verbatim": "14.69 %",
-          "value_parsed": 14.69,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_with_1_neighbour_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          50,
-          50
-        ],
-        "section": "Diagnostic 1 — GT clustering density (table)"
-      },
-      "claim_text": "| GT with 2+ neighbours within 100 m | — | 109 (2.09 %) |",
-      "values": [
-        {
-          "quantity": "count of GT with 2+ neighbours within 100 m",
-          "value_verbatim": "109",
-          "value_parsed": 109,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_1_gt_clustering.n_gt_with_2plus_neighbours_100m",
-          "method": "read"
-        },
-        {
-          "quantity": "percentage of GT with 2+ neighbours within 100 m",
-          "value_verbatim": "2.09 %",
-          "value_parsed": 2.09,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_with_2plus_neighbours_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          51,
-          51
-        ],
-        "section": "Diagnostic 1 — GT clustering density (table)"
-      },
-      "claim_text": "| Maximum cluster size at 100 m | — | 5 |",
-      "values": [
-        {
-          "quantity": "maximum GT cluster size at 100 m",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_1_gt_clustering.max_cluster_size_100m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_1_gt_clustering.max_cluster_size_100m"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          53,
-          54
-        ],
-        "section": "Diagnostic 1 — GT clustering density (prose)"
-      },
-      "claim_text": "The 100 m neighbour fraction (16.78 %) is roughly 2.6 × the 50 m\nfraction (6.44 %), consistent with the buffer doubling.",
-      "values": [
-        {
-          "quantity": "percentage of GT with any neighbour within 100 m",
-          "value_verbatim": "16.78 %",
-          "value_parsed": 16.78,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
-            }
-          ]
-        },
-        {
-          "quantity": "ratio of 100 m neighbour fraction to 50 m neighbour fraction",
-          "value_verbatim": "2.6",
-          "value_parsed": 2.6,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_50m"
-            }
-          ]
-        },
-        {
-          "quantity": "percentage of GT with any neighbour within 50 m",
-          "value_verbatim": "6.44 %",
-          "value_parsed": 6.44,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_50m"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The document hedges the ratio as \"roughly 2.6\"; recorded at the quoted precision."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          54,
-          55
-        ],
-        "section": "Diagnostic 1 — GT clustering density (prose)"
-      },
-      "claim_text": "Most GT\n(83 %) remain isolated even at 100 m",
-      "values": [
-        {
-          "quantity": "percentage of GT isolated (0 neighbours) at 100 m, rounded",
-          "value_verbatim": "83 %",
-          "value_parsed": 83,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_with_0_neighbours_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          57,
-          59
-        ],
-        "section": "Diagnostic 1 — GT clustering density (prose)"
-      },
-      "claim_text": "The maximum 100 m\ncluster size is 5 mounds, and only 2 % of GT sit in 2+ neighbour\nclusters.",
-      "values": [
-        {
-          "quantity": "maximum GT cluster size at 100 m",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_1_gt_clustering.max_cluster_size_100m",
-          "method": "read"
-        },
-        {
-          "quantity": "percentage of GT in 2+ neighbour clusters at 100 m, rounded",
-          "value_verbatim": "2 %",
-          "value_parsed": 2,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_with_2plus_neighbours_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          61,
-          64
-        ],
-        "section": "Diagnostic 1 — Implication for the multi-buffer sweep"
-      },
-      "claim_text": "**Implication for the multi-buffer sweep**: the population of GT at\nrisk of ambiguous re-pairing as the buffer widens is small (≤ 17 %\nat 100 m) and dominated by isolated-neighbour-pairs (14.7 % of GT\nhave exactly one neighbour within 100 m, not many).",
-      "values": [
-        {
-          "quantity": "upper bound on percentage of GT at re-pairing risk at 100 m",
-          "value_verbatim": "≤ 17 %",
-          "value_parsed": 17,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
-            }
-          ]
-        },
-        {
-          "quantity": "percentage of GT with exactly one neighbour within 100 m",
-          "value_verbatim": "14.7 %",
-          "value_parsed": 14.7,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_with_1_neighbour_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "The ≤ bound marker is retained verbatim (instrument v1.2 amendment 5): the claim is an upper bound, not an equality."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          68,
-          68
-        ],
-        "section": "Diagnostic 1 — artefact pointer"
-      },
-      "claim_text": "Full per-GT neighbour counts are in `gt_clustering.csv` (5,216 rows,",
-      "values": [
-        {
-          "quantity": "row count, gt_clustering.csv (one per extended-GT mound)",
-          "value_verbatim": "5,216",
-          "value_parsed": 5216,
-          "unit": null,
-          "kind": "count",
-          "path": "len:rows",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/gt_clustering.csv",
-        "path": "len:rows"
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Non-JSON anchor (CSV): 'len:rows' means data rows excluding the header line (instrument v1.1 admits non-JSON anchors; the harness routes them to triage)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          80,
-          80
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| Detections matched at 50 m | 4,108 |",
-      "values": [
-        {
-          "quantity": "detections matched to a GT at 50 m",
-          "value_verbatim": "4,108",
-          "value_parsed": 4108,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.total_matched_at_50m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.total_matched_at_50m"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          81,
-          81
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| Detections matched at 100 m | 4,179 |",
-      "values": [
-        {
-          "quantity": "detections matched to a GT at 100 m",
-          "value_verbatim": "4,179",
-          "value_parsed": 4179,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.total_matched_at_100m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.total_matched_at_100m"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          82,
-          82
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| New matches at 100 m only | **71** |",
-      "values": [
-        {
-          "quantity": "new matches at 100 m only",
-          "value_verbatim": "71",
-          "value_parsed": 71,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          83,
-          83
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| Matches lost at 100 m | **0** |",
-      "values": [
-        {
-          "quantity": "matches lost at 100 m",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          84,
-          84
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| Matched at both 50 m and 100 m | 4,108 |",
-      "values": [
-        {
-          "quantity": "detections matched at both 50 m and 100 m",
-          "value_verbatim": "4,108",
-          "value_parsed": 4108,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          85,
-          85
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| — of which, matched to the same GT at both | 4,104 |",
-      "values": [
-        {
-          "quantity": "pairs matched to the same GT at both buffers",
-          "value_verbatim": "4,104",
-          "value_parsed": 4104,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.same_gt_at_both",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.same_gt_at_both"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          86,
-          86
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| — of which, matched to different GT at 50 m vs 100 m (drift) | 4 |",
-      "values": [
-        {
-          "quantity": "pairs matched to a different GT at 50 m vs 100 m (drift)",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.different_gt_at_both",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          87,
-          87
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| Drift as fraction of already-matched pairs | **0.10 %** |",
-      "values": [
-        {
-          "quantity": "drift as percentage of already-matched pairs",
-          "value_verbatim": "0.10 %",
-          "value_parsed": 0.1,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "[BATCH NOTE b075] summary.json stores this as the fraction $.diagnostic_2_pair_drift.pct_drift_of_both_matched; derived here to keep the percentage scale explicit."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          88,
-          88
-        ],
-        "section": "Diagnostic 2 — Pair drift (table)"
-      },
-      "claim_text": "| Drift as fraction of 100 m matches | **0.10 %** |",
-      "values": [
-        {
-          "quantity": "drift as percentage of 100 m matches",
-          "value_verbatim": "0.10 %",
-          "value_parsed": 0.1,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.total_matched_at_100m"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "[BATCH NOTE b075] summary.json stores this as the fraction $.diagnostic_2_pair_drift.pct_drift_of_100m_matches."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          90,
-          91
-        ],
-        "section": "Diagnostic 2 — Pair drift (prose)"
-      },
-      "claim_text": "Zero matches lost at 100 m confirms the matching is monotone in\nbuffer (a 50 m match is always a 100 m match).",
-      "values": [
-        {
-          "quantity": "matches lost at 100 m",
-          "value_verbatim": "Zero",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          91,
-          92
-        ],
-        "section": "Diagnostic 2 — Pair drift (prose)"
-      },
-      "claim_text": "71 new matches at\n100 m quantify the *genuine* recall gain at the wider tolerance.",
-      "values": [
-        {
-          "quantity": "new matches at 100 m only",
-          "value_verbatim": "71",
-          "value_parsed": 71,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          93,
-          94
-        ],
-        "section": "Diagnostic 2 — Pair drift (prose)"
-      },
-      "claim_text": "Only 4 of 4,108 already-matched pairs re-pair to a different GT —\none-tenth of one percent drift.",
-      "values": [
-        {
-          "quantity": "pairs re-paired to a different GT",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.different_gt_at_both",
-          "method": "read"
-        },
-        {
-          "quantity": "already-matched pairs (matched at both buffers)",
-          "value_verbatim": "4,108",
-          "value_parsed": 4108,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers",
-          "method": "read"
-        },
-        {
-          "quantity": "drift rate, stated in words",
-          "value_verbatim": "one-tenth of one percent",
-          "value_parsed": 0.1,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The third value is a word-form percentage (\"one-tenth of one percent\" = 0.1 %); included because it is a checkable quantitative assertion despite carrying no digits."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          97,
-          98
-        ],
-        "section": "Diagnostic 2 — artefact pointer"
-      },
-      "claim_text": "Full drift detail (detection-by-detection) is in `pair_drift.csv`\n(4 rows,",
-      "values": [
-        {
-          "quantity": "row count, pair_drift.csv (one per drift detection pair)",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "len:rows",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/pair_drift.csv",
-        "path": "len:rows"
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Non-JSON anchor (CSV): 'len:rows' means data rows excluding the header."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          99,
-          101
-        ],
-        "section": "Diagnostic 2 — artefact pointer"
-      },
-      "claim_text": "The per-row\n`distance_at_50` ≤ 50 and `distance_at_100` > 50 confirms drift",
-      "values": [
-        {
-          "quantity": "upper bound on distance_at_50 across all drift rows",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "lower bound on distance_at_100 across all drift rows",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "[BATCH NOTE b075] Anchor sought: results/55maps-image-generalisation/buffer-100m-diagnostics/pair_drift.csv, columns distance_at_50 and distance_at_100. The claim is a predicate over every row (all distance_at_50 ≤ 50 and all distance_at_100 > 50), not a scalar lookup, so no read path is offered; triage should evaluate the predicate rather than compare 50 against a cell."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          112,
-          112
-        ],
-        "section": "Interpretation — corrected-F1 curve (table)"
-      },
-      "claim_text": "| 50 m | 0.832 |",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 50 m buffer, 55-map image generalisation",
-          "value_verbatim": "0.832",
-          "value_parsed": 0.832,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": "$.results[?(@.R_m==50)].F1"
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Curve rows anchored to corrected-f1-multi-buffer/summary.json rather than the corrected-f1.csv cited in the prose; identical columns, and the JSON resolves mechanically."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          113,
-          113
-        ],
-        "section": "Interpretation — corrected-F1 curve (table)"
-      },
-      "claim_text": "| 75 m | 0.848 |",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 75 m buffer, 55-map image generalisation",
-          "value_verbatim": "0.848",
-          "value_parsed": 0.848,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==75)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": "$.results[?(@.R_m==75)].F1"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          114,
-          114
-        ],
-        "section": "Interpretation — corrected-F1 curve (table)"
-      },
-      "claim_text": "| 100 m | 0.852 |",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 100 m buffer, 55-map image generalisation",
-          "value_verbatim": "0.852",
-          "value_parsed": 0.852,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==100)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": "$.results[?(@.R_m==100)].F1"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          115,
-          115
-        ],
-        "section": "Interpretation — corrected-F1 curve (table)"
-      },
-      "claim_text": "| 125 m | 0.854 |",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 125 m buffer, 55-map image generalisation",
-          "value_verbatim": "0.854",
-          "value_parsed": 0.854,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==125)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": "$.results[?(@.R_m==125)].F1"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          116,
-          116
-        ],
-        "section": "Interpretation — corrected-F1 curve (table)"
-      },
-      "claim_text": "| 150 m | 0.855 |",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 150 m buffer, 55-map image generalisation",
-          "value_verbatim": "0.855",
-          "value_parsed": 0.855,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==150)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": "$.results[?(@.R_m==150)].F1"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          118,
-          118
-        ],
-        "section": "Interpretation — increment decomposition"
-      },
-      "claim_text": "The +0.020 F1 increment from 50 m to 100 m is driven by:",
-      "values": [
-        {
-          "quantity": "F1 increment, 50 m -> 100 m buffer",
-          "value_verbatim": "+0.020",
-          "value_parsed": 0.02,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==100)].F1"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==50)].F1"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          120,
-          120
-        ],
-        "section": "Interpretation — increment decomposition"
-      },
-      "claim_text": "- **+71 new matches at 100 m** (admitted true positives near the",
-      "values": [
-        {
-          "quantity": "new matches admitted at 100 m",
-          "value_verbatim": "71",
-          "value_parsed": 71,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          122,
-          122
-        ],
-        "section": "Interpretation — increment decomposition"
-      },
-      "claim_text": "matches lost at 100 m** — no detections are de-matched by the",
-      "values": [
-        {
-          "quantity": "matches lost at 100 m",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m"
-      },
-      "method": "read",
-      "notes": "Document writes the value with a leading minus sign (\"−0 matches lost\"); value_verbatim records the digit only so that it remains a substring of the span."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          124,
-          124
-        ],
-        "section": "Interpretation — increment decomposition"
-      },
-      "claim_text": "- **4 of 4,108 drift pairs (0.10 %)** — negligible re-assignment.",
-      "values": [
-        {
-          "quantity": "pairs that drift to a different GT",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.different_gt_at_both",
-          "method": "read"
-        },
-        {
-          "quantity": "already-matched pairs",
-          "value_verbatim": "4,108",
-          "value_parsed": 4108,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers",
-          "method": "read"
-        },
-        {
-          "quantity": "drift as percentage of already-matched pairs",
-          "value_verbatim": "0.10 %",
-          "value_parsed": 0.1,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          125,
-          126
-        ],
-        "section": "Interpretation — increment decomposition"
-      },
-      "claim_text": "- **Structurally bounded re-pairing risk**: only 17 % of GT have any\n  within-100 m neighbour, and only 2 % have 2+ neighbours.",
-      "values": [
-        {
-          "quantity": "percentage of GT with any neighbour within 100 m, rounded",
-          "value_verbatim": "17 %",
-          "value_parsed": 17,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
-            }
-          ]
-        },
-        {
-          "quantity": "percentage of GT with 2+ neighbours within 100 m, rounded",
-          "value_verbatim": "2 %",
-          "value_parsed": 2,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_with_2plus_neighbours_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          130,
-          131
-        ],
-        "section": "Interpretation — attractor-pull cross-check"
-      },
-      "claim_text": "which shows the shell-lift loses significance at the 125–150 m shell\n(p = 0.381)",
-      "values": [
-        {
-          "quantity": "permutation p-value, shell-lift at the (125, 150] m shell",
-          "value_verbatim": "0.381",
-          "value_parsed": 0.381,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.shell[?(@.R_inner_m==125)].p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
-        "path": "$.shell[?(@.R_inner_m==125)].p_value"
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Permutation p-value, but it is stored verbatim in the sibling buffer-band-lift artefacts (summary.json $.shell and shell.csv), so it is anchored as `read` rather than `recompute-script`; re-derivation would need scripts that regenerate the shell permutation test. The shell bounds 125-150 m are carried in `quantity` as row identifiers, not extracted as separate values."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          133,
-          134
-        ],
-        "section": "Interpretation — attractor-pull cross-check"
-      },
-      "claim_text": "Beyond 125 m the shell-lift analysis shows\nbuffer widening starts admitting non-adjacent candidates",
-      "values": [
-        {
-          "quantity": "buffer beyond which shell-lift admits non-adjacent candidates",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "[BATCH NOTE b075] Same assertion as lines 209 and 216 (the 125 m attractor-pull ceiling). The visible source is results/55maps-image-generalisation/buffer-band-lift/report.md — prose, so anchor-unknown per instrument rule 2; the underlying evidence is the p_value column of that analysis's shell.csv / summary.json $.shell."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          140,
-          143
-        ],
-        "section": "Reconciling the diagnostic and corrected-F1 counts"
-      },
-      "claim_text": "This diagnostic reports `total_matched_at_50m = 4,108`, while the\nmulti-buffer corrected-F1 pipeline at\n`results/55maps-image-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`\nreports TP = 4,110 at 50 m.",
-      "values": [
-        {
-          "quantity": "detections matched at 50 m, this diagnostic",
-          "value_verbatim": "4,108",
-          "value_parsed": 4108,
-          "unit": null,
-          "kind": "count",
-          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.diagnostic_2_pair_drift.total_matched_at_50m",
-          "method": "read"
-        },
-        {
-          "quantity": "TP @ 50 m, corrected-F1 multi-buffer pipeline",
-          "value_verbatim": "4,110",
-          "value_parsed": 4110,
-          "unit": null,
-          "kind": "count",
-          "path": "$.results[?(@.R_m==50)].TP",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Cross-file locator used for the first value (instrument v1.2 amendment 2): it belongs to the diagnostics summary.json, while the claim-level anchor covers the corrected-F1 side. The prose cites corrected-f1.csv for the TP figure; the sibling summary.json carries the same column."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          143,
-          144
-        ],
-        "section": "Reconciling the diagnostic and corrected-F1 counts"
-      },
-      "claim_text": "The 2-pair gap is a **methodological\ndifference in the ground-truth inputs the two pipelines consume**",
-      "values": [
-        {
-          "quantity": "gap between the two pipelines' 50 m matched-pair counts",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null,
-        "expression": "a - b",
-        "operands": [
-          {
-            "name": "a",
-            "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-            "path": "$.results[?(@.R_m==50)].TP"
-          },
-          {
-            "name": "b",
-            "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-            "path": "$.diagnostic_2_pair_drift.total_matched_at_50m"
-          }
-        ]
-      },
-      "method": "arithmetic",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          147,
-          149
-        ],
-        "section": "Reconciling — this diagnostic's inputs"
-      },
-      "claim_text": "- **This diagnostic** uses only yesterday's single-buffer review\n  (`results/55maps-image-generalisation/human-review.csv`, 472\n  confirmed mounds at 50 m from a 1,028-candidate single-pass review).",
-      "values": [
-        {
-          "quantity": "confirmed mounds at 50 m from the single-buffer review",
-          "value_verbatim": "472",
-          "value_parsed": 472,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_reviewer_phantoms",
-          "method": "read"
-        },
-        {
-          "quantity": "candidate count in the single-pass review",
-          "value_verbatim": "1,028",
-          "value_parsed": 1028,
-          "unit": null,
-          "kind": "count",
-          "path": "results/55maps-image-generalisation/human-review.csv#len:rows",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] The candidate count uses a cross-file CSV locator (v1.2 amendment 2 + amendment 4): data rows of human-review.csv excluding the header."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          151,
-          157
-        ],
-        "section": "Reconciling — corrected-F1 multi-buffer inputs"
-      },
-      "claim_text": "- **Corrected-F1 multi-buffer** uses both `human-review.csv` (472) and\n  today's `human-review-multi-buffer.csv` (2 additional mounds\n  specifically confirmed at the 50 m shell during a staggered\n  re-review for the attractor-pull analysis — candidate IDs 5641\n  (map K-35-075-4) and 5777 (map K-35-076-1)). Matching is the same\n  Hungarian one-to-one, just on 474 reviewer-extended phantoms at\n  50 m instead of 472.",
-      "values": [
-        {
-          "quantity": "confirmed mounds from the single-buffer review",
-          "value_verbatim": "472",
-          "value_parsed": 472,
-          "unit": null,
-          "kind": "count",
-          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_reviewer_phantoms",
-          "method": "read"
-        },
-        {
-          "quantity": "additional mounds confirmed at the 50 m shell in the multi-buffer re-review",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==50)].n_reviewer_promoted_at_R"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.inputs.n_reviewer_phantoms"
-            }
-          ]
-        },
-        {
-          "quantity": "reviewer-extended phantoms at 50 m, corrected-F1 pipeline",
-          "value_verbatim": "474",
-          "value_parsed": 474,
-          "unit": null,
-          "kind": "count",
-          "path": "$.results[?(@.R_m==50)].n_reviewer_promoted_at_R",
-          "method": "read"
-        },
-        {
-          "quantity": "reviewer-extended phantoms at 50 m, this diagnostic",
-          "value_verbatim": "472",
-          "value_parsed": 472,
-          "unit": null,
-          "kind": "count",
-          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_reviewer_phantoms",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Candidate IDs 5641 and 5777 and the map-sheet names K-35-075-4 / K-35-076-1 are identifiers, excluded per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          160,
-          163
-        ],
-        "section": "Reconciling — which count to cite"
-      },
-      "claim_text": "**For paper-headline claims, use the corrected-F1\ncount (4,110)** — it reflects the most recent and complete human\nverification dataset, and underpins the canonical corrected-F1\nheadline of 0.832 at 50 m.",
-      "values": [
-        {
-          "quantity": "TP @ 50 m, corrected-F1 pipeline (paper-headline count)",
-          "value_verbatim": "4,110",
-          "value_parsed": 4110,
-          "unit": null,
-          "kind": "count",
-          "path": "$.results[?(@.R_m==50)].TP",
-          "method": "read"
-        },
-        {
-          "quantity": "canonical corrected-F1 headline @ 50 m",
-          "value_verbatim": "0.832",
-          "value_parsed": 0.832,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==50)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          163,
-          166
-        ],
-        "section": "Reconciling — which count to cite"
-      },
-      "claim_text": "**The diagnostic's 4,108 is descriptive\nonly**, citable for decomposition-of-recall-gain contexts (71 new\nmatches admitted at 100 m, 0 lost) but not as a stand-alone TP",
-      "values": [
-        {
-          "quantity": "detections matched at 50 m, this diagnostic",
-          "value_verbatim": "4,108",
-          "value_parsed": 4108,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.total_matched_at_50m",
-          "method": "read"
-        },
-        {
-          "quantity": "new matches admitted at 100 m",
-          "value_verbatim": "71",
-          "value_parsed": 71,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
-          "method": "read"
-        },
-        {
-          "quantity": "matches lost at 100 m",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          171,
-          171
-        ],
-        "section": "Paper implications — 1"
-      },
-      "claim_text": "The +0.020 F1 from 50 m to 100 m reflects legitimate additional",
-      "values": [
-        {
-          "quantity": "F1 increment, 50 m -> 100 m buffer",
-          "value_verbatim": "+0.020",
-          "value_parsed": 0.02,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==100)].F1"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-              "path": "$.results[?(@.R_m==50)].F1"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          173,
-          174
-        ],
-        "section": "Paper implications — 2"
-      },
-      "claim_text": "At the preregistered 50 m\n   tolerance",
-      "values": [
-        {
-          "quantity": "preregistered spatial tolerance (buffer) in metres",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "parameter",
-          "path": null,
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/osf/preregistration.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Instrument v1.1 calibration rule: a claim about what the REGISTRATION specifies anchors to the lodged preregistration document with a null path, never to the executing config. Flagged for triage: the lodged document states primary results at 20 m with robustness checks at 10/30/50 m, so whether '50 m' is the preregistered tolerance is an adjudication for the harness, not the extractor."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          174,
-          174
-        ],
-        "section": "Paper implications — 2"
-      },
-      "claim_text": "the pipeline misses 71 TPs it would catch at 100 m,",
-      "values": [
-        {
-          "quantity": "TPs missed at 50 m that would be caught at 100 m",
-          "value_verbatim": "71",
-          "value_parsed": 71,
-          "unit": null,
-          "kind": "count",
-          "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          177,
-          177
-        ],
-        "section": "Paper implications — 2"
-      },
-      "claim_text": "precision can widen to 75 m (F1 = 0.848) or 100 m (F1 = 0.852)",
-      "values": [
-        {
-          "quantity": "corrected F1 @ 75 m buffer",
-          "value_verbatim": "0.848",
-          "value_parsed": 0.848,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==75)].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected F1 @ 100 m buffer",
-          "value_verbatim": "0.852",
-          "value_parsed": 0.852,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[?(@.R_m==100)].F1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          180,
-          180
-        ],
-        "section": "Paper implications — 3"
-      },
-      "claim_text": "The 0.10 % drift rate at 50 → 100 m is well below any threshold",
-      "values": [
-        {
-          "quantity": "drift rate as percentage of already-matched pairs, 50 m -> 100 m",
-          "value_verbatim": "0.10 %",
-          "value_parsed": 0.1,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          185,
-          186
-        ],
-        "section": "Paper implications — 4"
-      },
-      "claim_text": "83 % of GT\n   have zero neighbours within 100 m",
-      "values": [
-        {
-          "quantity": "percentage of GT with zero neighbours within 100 m, rounded",
-          "value_verbatim": "83 %",
-          "value_parsed": 83,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100 * a / b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_with_0_neighbours_100m"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-              "path": "$.diagnostic_1_gt_clustering.n_gt_total"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          195,
-          195
-        ],
-        "section": "Reproducibility (table)"
-      },
-      "claim_text": "| Buffers evaluated | 50 m and 100 m |",
-      "values": [
-        {
-          "quantity": "inner buffer evaluated, matching radius",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "parameter",
-          "path": "hungarian_match(det_xy, ref_xy, 50.0) in diagnose_pair_drift",
-          "method": "read"
-        },
-        {
-          "quantity": "outer buffer evaluated, matching radius",
-          "value_verbatim": "100",
-          "value_parsed": 100,
-          "unit": "m",
-          "kind": "parameter",
-          "path": "hungarian_match(det_xy, ref_xy, 100.0) in diagnose_pair_drift",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "scripts/diagnose_100m_buffer.py",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b075] Only place in the document where the buffer values are asserted as run parameters rather than as labels, so this is the single extraction of them. Non-JSON anchor (Python source) is legitimate per instrument v1.1; the harness routes it to triage."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          203,
-          203
-        ],
-        "section": "Artefacts"
-      },
-      "claim_text": "- `gt_clustering.csv` — 5,216 rows, one per extended-GT mound",
-      "values": [
-        {
-          "quantity": "row count, gt_clustering.csv",
-          "value_verbatim": "5,216",
-          "value_parsed": 5216,
-          "unit": null,
-          "kind": "count",
-          "path": "len:rows",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/gt_clustering.csv",
-        "path": "len:rows"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          204,
-          204
-        ],
-        "section": "Artefacts"
-      },
-      "claim_text": "- `pair_drift.csv` — 4 rows, one per drift detection pair",
-      "values": [
-        {
-          "quantity": "row count, pair_drift.csv",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "len:rows",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/pair_drift.csv",
-        "path": "len:rows"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          206,
-          206
-        ],
-        "section": "Artefacts"
-      },
-      "claim_text": "- Source detections: `outputs/55maps-image-generalisation/verified/verified_detections.geojson` (n = 4,665)",
-      "values": [
-        {
-          "quantity": "verified detection count, source detections GeoJSON",
-          "value_verbatim": "4,665",
-          "value_parsed": 4665,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
-        "path": "len:$.features"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          207,
-          207
-        ],
-        "section": "Artefacts"
-      },
-      "claim_text": "- Source extended GT: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (n = 5,216)",
-      "values": [
-        {
-          "quantity": "extended ground-truth count, source GT GeoJSON",
-          "value_verbatim": "5,216",
-          "value_parsed": 5216,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-        "path": "len:$.features"
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          209,
-          209
-        ],
-        "section": "Artefacts"
-      },
-      "claim_text": "- Related report: `results/55maps-image-generalisation/buffer-band-lift/report.md` (annular shell-lift analysis that sets the 125 m attractor-pull ceiling)",
-      "values": [
-        {
-          "quantity": "attractor-pull ceiling set by the shell-lift analysis",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "[BATCH NOTE b075] Instrument rule 2 forbids anchoring prose to prose: the visible source is results/55maps-image-generalisation/buffer-band-lift/report.md. The underlying artefact is that report's shell.csv / summary.json p_value column (significance stops after the (100, 125] m shell), but the ceiling itself is an interpretation, not a stored scalar."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          216,
-          216
-        ],
-        "section": "Cross-references"
-      },
-      "claim_text": "- Working-notes Obs 272 — attractor-pull scale ends at ~125 m",
-      "values": [
-        {
-          "quantity": "upper end of the attractor-pull scale",
-          "value_verbatim": "~125 m",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "[BATCH NOTE b075] Approx marker retained verbatim (v1.2 amendment 5). Source named by the document is Obs 272 in the working-notes register (docs/notes/reflections/working-notes.md per the project layout) — prose, so anchor-unknown per rule 2; Obs 272 itself is an identifier and is not extracted."
+ "schema_version": "1.1",
+ "extracted_at": "2026-08-03T00:00:00Z",
+ "source_document": {
+  "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/report.md",
+  "git_blob": "bbadec3ed547",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5",
+  "instrument_version": "1.2"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     3,
+     3
+    ],
+    "section": "Front matter — Study"
+   },
+   "claim_text": "**Study**: 55-map image generalisation",
+   "values": [
+    {
+     "quantity": "map-sheet count, 55-map image-generalisation corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_maps",
+     "method": "read"
     }
-  ]
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Scope decisions applied throughout this file: (a) buffer metres (50/75/100/125/150 m) are treated as quantity labels identifying which metric is meant and are carried in `quantity` rather than duplicated as values, EXCEPT where the document asserts them as run parameters (Reproducibility table, line 195), as a registration specification (line 173), or as a derived finding (the 125 m attractor-pull ceiling, lines 209 and 216); (b) candidate IDs 5641/5777 and map-sheet names on lines 154-155 are identifiers, excluded per instrument rule 5; (c) percentages quoted in the prose are stored as FRACTIONS in the sibling summary.json (e.g. 0.16775 for '16.78 %'), so they are extracted as `arithmetic` (100 * a) rather than `read`, to avoid manufacturing a scale-only mismatch. '55-map' here is both a study name and an asserted count (rule 5, the 487-tile precedent), so it is extracted."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     5,
+     5
+    ],
+    "section": "Front matter — Evaluation scope"
+   },
+   "claim_text": "**Evaluation scope**: 55 map sheets, 4,665 verified detections, 5,216 reviewer-extended ground truth mounds (= 4,744 student mounds + 472 reviewer-promoted phantoms)",
+   "values": [
+    {
+     "quantity": "map-sheet count, evaluation scope",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_maps",
+     "method": "read"
+    },
+    {
+     "quantity": "verified detection count",
+     "value_verbatim": "4,665",
+     "value_parsed": 4665,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_detections",
+     "method": "read"
+    },
+    {
+     "quantity": "reviewer-extended ground-truth mound count",
+     "value_verbatim": "5,216",
+     "value_parsed": 5216,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_extended_gt",
+     "method": "read"
+    },
+    {
+     "quantity": "student-labelled ground-truth mound count",
+     "value_verbatim": "4,744",
+     "value_parsed": 4744,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_student_gt",
+     "method": "read"
+    },
+    {
+     "quantity": "reviewer-promoted phantom count",
+     "value_verbatim": "472",
+     "value_parsed": 472,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_reviewer_phantoms",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     6,
+     6
+    ],
+    "section": "Front matter — Purpose"
+   },
+   "claim_text": "**Purpose**: decompose the +0.020 F1 lift from 50 m buffer to 100 m buffer (corrected-F1 curve 0.832 → 0.852) into (a) legitimate new matches enabled at the wider tolerance vs (b) re-pairing drift that swaps which GT a detection is associated with",
+   "values": [
+    {
+     "quantity": "F1 lift, corrected-F1 curve, 50 m -> 100 m buffer",
+     "value_verbatim": "+0.020",
+     "value_parsed": 0.02,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==100)].F1"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==50)].F1"
+      }
+     ]
+    },
+    {
+     "quantity": "corrected F1 @ 50 m buffer, 55-map image generalisation",
+     "value_verbatim": "0.832",
+     "value_parsed": 0.832,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 100 m buffer, 55-map image generalisation",
+     "value_verbatim": "0.852",
+     "value_parsed": 0.852,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==100)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] F1-curve values are anchored to the corrected-f1-multi-buffer summary.json rather than the corrected-f1.csv named in the prose: the JSON carries identical columns and resolves mechanically."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     11,
+     14
+    ],
+    "section": "Headline finding"
+   },
+   "claim_text": "71 detection-GT pairs match at 100 m that did\nnot match at 50 m; zero pairs are lost going from 50 m to 100 m; and\nonly 4 of 4,108 already-matched pairs (0.10 %) drift to a different\nGT.",
+   "values": [
+    {
+     "quantity": "new detection-GT pairs matched at 100 m but not at 50 m",
+     "value_verbatim": "71",
+     "value_parsed": 71,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
+     "method": "read"
+    },
+    {
+     "quantity": "matches lost going from 50 m to 100 m",
+     "value_verbatim": "zero",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
+     "method": "read"
+    },
+    {
+     "quantity": "already-matched pairs that drift to a different GT",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.different_gt_at_both",
+     "method": "read"
+    },
+    {
+     "quantity": "pairs matched at both 50 m and 100 m",
+     "value_verbatim": "4,108",
+     "value_parsed": 4108,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers",
+     "method": "read"
+    },
+    {
+     "quantity": "drift rate as percentage of already-matched pairs",
+     "value_verbatim": "0.10 %",
+     "value_parsed": 0.1,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     14,
+     14
+    ],
+    "section": "Headline finding"
+   },
+   "claim_text": "The multi-buffer F1 curve (0.832 @ 50 m → 0.852 @ 100 m) is doing",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 50 m buffer",
+     "value_verbatim": "0.832",
+     "value_parsed": 0.832,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 100 m buffer",
+     "value_verbatim": "0.852",
+     "value_parsed": 0.852,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==100)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     23,
+     23
+    ],
+    "section": "Data and inputs (table)"
+   },
+   "claim_text": "| Verified detections | `outputs/55maps-image-generalisation/verified/verified_detections.geojson` | 4,665 |",
+   "values": [
+    {
+     "quantity": "verified detection count, verified_detections.geojson",
+     "value_verbatim": "4,665",
+     "value_parsed": 4665,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.features",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+    "path": "len:$.features"
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Row names its own source path, so anchored to the GeoJSON feature count (instrument rule 2); the sibling summary.json records the same count at $.inputs.n_detections."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     24,
+     24
+    ],
+    "section": "Data and inputs (table)"
+   },
+   "claim_text": "| Extended ground truth | `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` | 5,216 |",
+   "values": [
+    {
+     "quantity": "extended ground-truth mound count, student-mounds-55maps-reviewed.geojson",
+     "value_verbatim": "5,216",
+     "value_parsed": 5216,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_extended_gt",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "path": "len:$.features"
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Row names its own source path; sibling summary.json records the same count at $.inputs.n_extended_gt. [TRIAGE REPAIR 2026-08-03 wave-6] [v0] Blind pass P2: 5,216 is the extended GT (4,744 student + 472 phantoms), n_extended_gt in the diagnostics summary; the prior anchor returned the student-only layer."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     25,
+     25
+    ],
+    "section": "Data and inputs (table)"
+   },
+   "claim_text": "| ↳ Student-labelled | (component of above) | 4,744 |",
+   "values": [
+    {
+     "quantity": "student-labelled ground-truth mound count",
+     "value_verbatim": "4,744",
+     "value_parsed": 4744,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_student_gt",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.inputs.n_student_gt"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     26,
+     26
+    ],
+    "section": "Data and inputs (table)"
+   },
+   "claim_text": "| ↳ Reviewer-promoted phantoms | (component of above) | 472 |",
+   "values": [
+    {
+     "quantity": "reviewer-promoted phantom count",
+     "value_verbatim": "472",
+     "value_parsed": 472,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_reviewer_phantoms",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.inputs.n_reviewer_phantoms"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     27,
+     27
+    ],
+    "section": "Data and inputs (table)"
+   },
+   "claim_text": "| Review CSV | `results/55maps-image-generalisation/human-review.csv` | 472 promoted rows |",
+   "values": [
+    {
+     "quantity": "promoted rows in the single-buffer human review CSV",
+     "value_verbatim": "472",
+     "value_parsed": 472,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_reviewer_phantoms",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.inputs.n_reviewer_phantoms"
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] The row asserts a property of results/55maps-image-generalisation/human-review.csv (rows labelled as promoted mounds); anchored to the scalar the diagnostic recorded for that input, since the CSV needs a per-row label filter rather than a scalar lookup."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     28,
+     28
+    ],
+    "section": "Data and inputs (table)"
+   },
+   "claim_text": "| Map sheets | — | 55 |",
+   "values": [
+    {
+     "quantity": "map-sheet count",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_maps",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.inputs.n_maps"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     30,
+     31
+    ],
+    "section": "Data and inputs (prose)"
+   },
+   "claim_text": "Extended ground truth merges the original student-mound labels with\nthe 472 reviewer-promoted phantoms",
+   "values": [
+    {
+     "quantity": "reviewer-promoted phantom count merged into extended GT",
+     "value_verbatim": "472",
+     "value_parsed": 472,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_reviewer_phantoms",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.inputs.n_reviewer_phantoms"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     45,
+     45
+    ],
+    "section": "Diagnostic 1 — GT clustering density (table)"
+   },
+   "claim_text": "| GT with any neighbour within buffer | 6.44 % | 16.78 % |",
+   "values": [
+    {
+     "quantity": "percentage of GT with any neighbouring GT within 50 m",
+     "value_verbatim": "6.44 %",
+     "value_parsed": 6.44,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_50m"
+      }
+     ]
+    },
+    {
+     "quantity": "percentage of GT with any neighbouring GT within 100 m",
+     "value_verbatim": "16.78 %",
+     "value_parsed": 16.78,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] summary.json stores both as fractions ($.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_50m / _100m), hence the 100 * a derivation rather than a direct read."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     46,
+     46
+    ],
+    "section": "Diagnostic 1 — GT clustering density (table)"
+   },
+   "claim_text": "| Mean neighbours per GT | — | 0.192 |",
+   "values": [
+    {
+     "quantity": "mean neighbouring GT per GT within 100 m",
+     "value_verbatim": "0.192",
+     "value_parsed": 0.192,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.diagnostic_1_gt_clustering.mean_neighbours_100m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_1_gt_clustering.mean_neighbours_100m"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     47,
+     47
+    ],
+    "section": "Diagnostic 1 — GT clustering density (table)"
+   },
+   "claim_text": "| Median neighbours per GT | — | 0 |",
+   "values": [
+    {
+     "quantity": "median neighbouring GT per GT within 100 m",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.diagnostic_1_gt_clustering.median_neighbours_100m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_1_gt_clustering.median_neighbours_100m"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     48,
+     48
+    ],
+    "section": "Diagnostic 1 — GT clustering density (table)"
+   },
+   "claim_text": "| GT with 0 neighbours within 100 m | — | 4,341 (83.22 %) |",
+   "values": [
+    {
+     "quantity": "count of GT with 0 neighbours within 100 m",
+     "value_verbatim": "4,341",
+     "value_parsed": 4341,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_1_gt_clustering.n_gt_with_0_neighbours_100m",
+     "method": "read"
+    },
+    {
+     "quantity": "percentage of GT with 0 neighbours within 100 m",
+     "value_verbatim": "83.22 %",
+     "value_parsed": 83.22,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_with_0_neighbours_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     49,
+     49
+    ],
+    "section": "Diagnostic 1 — GT clustering density (table)"
+   },
+   "claim_text": "| GT with 1 neighbour within 100 m | — | 766 (14.69 %) |",
+   "values": [
+    {
+     "quantity": "count of GT with 1 neighbour within 100 m",
+     "value_verbatim": "766",
+     "value_parsed": 766,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_1_gt_clustering.n_gt_with_1_neighbour_100m",
+     "method": "read"
+    },
+    {
+     "quantity": "percentage of GT with 1 neighbour within 100 m",
+     "value_verbatim": "14.69 %",
+     "value_parsed": 14.69,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_with_1_neighbour_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     50,
+     50
+    ],
+    "section": "Diagnostic 1 — GT clustering density (table)"
+   },
+   "claim_text": "| GT with 2+ neighbours within 100 m | — | 109 (2.09 %) |",
+   "values": [
+    {
+     "quantity": "count of GT with 2+ neighbours within 100 m",
+     "value_verbatim": "109",
+     "value_parsed": 109,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_1_gt_clustering.n_gt_with_2plus_neighbours_100m",
+     "method": "read"
+    },
+    {
+     "quantity": "percentage of GT with 2+ neighbours within 100 m",
+     "value_verbatim": "2.09 %",
+     "value_parsed": 2.09,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_with_2plus_neighbours_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     51,
+     51
+    ],
+    "section": "Diagnostic 1 — GT clustering density (table)"
+   },
+   "claim_text": "| Maximum cluster size at 100 m | — | 5 |",
+   "values": [
+    {
+     "quantity": "maximum GT cluster size at 100 m",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_1_gt_clustering.max_cluster_size_100m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_1_gt_clustering.max_cluster_size_100m"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     53,
+     54
+    ],
+    "section": "Diagnostic 1 — GT clustering density (prose)"
+   },
+   "claim_text": "The 100 m neighbour fraction (16.78 %) is roughly 2.6 × the 50 m\nfraction (6.44 %), consistent with the buffer doubling.",
+   "values": [
+    {
+     "quantity": "percentage of GT with any neighbour within 100 m",
+     "value_verbatim": "16.78 %",
+     "value_parsed": 16.78,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
+      }
+     ]
+    },
+    {
+     "quantity": "ratio of 100 m neighbour fraction to 50 m neighbour fraction",
+     "value_verbatim": "2.6",
+     "value_parsed": 2.6,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_50m"
+      }
+     ]
+    },
+    {
+     "quantity": "percentage of GT with any neighbour within 50 m",
+     "value_verbatim": "6.44 %",
+     "value_parsed": 6.44,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_50m"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The document hedges the ratio as \"roughly 2.6\"; recorded at the quoted precision."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     54,
+     55
+    ],
+    "section": "Diagnostic 1 — GT clustering density (prose)"
+   },
+   "claim_text": "Most GT\n(83 %) remain isolated even at 100 m",
+   "values": [
+    {
+     "quantity": "percentage of GT isolated (0 neighbours) at 100 m, rounded",
+     "value_verbatim": "83 %",
+     "value_parsed": 83,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_with_0_neighbours_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     57,
+     59
+    ],
+    "section": "Diagnostic 1 — GT clustering density (prose)"
+   },
+   "claim_text": "The maximum 100 m\ncluster size is 5 mounds, and only 2 % of GT sit in 2+ neighbour\nclusters.",
+   "values": [
+    {
+     "quantity": "maximum GT cluster size at 100 m",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_1_gt_clustering.max_cluster_size_100m",
+     "method": "read"
+    },
+    {
+     "quantity": "percentage of GT in 2+ neighbour clusters at 100 m, rounded",
+     "value_verbatim": "2 %",
+     "value_parsed": 2,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_with_2plus_neighbours_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     61,
+     64
+    ],
+    "section": "Diagnostic 1 — Implication for the multi-buffer sweep"
+   },
+   "claim_text": "**Implication for the multi-buffer sweep**: the population of GT at\nrisk of ambiguous re-pairing as the buffer widens is small (≤ 17 %\nat 100 m) and dominated by isolated-neighbour-pairs (14.7 % of GT\nhave exactly one neighbour within 100 m, not many).",
+   "values": [
+    {
+     "quantity": "upper bound on percentage of GT at re-pairing risk at 100 m",
+     "value_verbatim": "≤ 17 %",
+     "value_parsed": 17,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
+      }
+     ]
+    },
+    {
+     "quantity": "percentage of GT with exactly one neighbour within 100 m",
+     "value_verbatim": "14.7 %",
+     "value_parsed": 14.7,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_with_1_neighbour_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "The ≤ bound marker is retained verbatim (instrument v1.2 amendment 5): the claim is an upper bound, not an equality."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     68,
+     68
+    ],
+    "section": "Diagnostic 1 — artefact pointer"
+   },
+   "claim_text": "Full per-GT neighbour counts are in `gt_clustering.csv` (5,216 rows,",
+   "values": [
+    {
+     "quantity": "row count, gt_clustering.csv (one per extended-GT mound)",
+     "value_verbatim": "5,216",
+     "value_parsed": 5216,
+     "unit": null,
+     "kind": "count",
+     "path": "len:rows",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/gt_clustering.csv",
+    "path": "len:rows"
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Non-JSON anchor (CSV): 'len:rows' means data rows excluding the header line (instrument v1.1 admits non-JSON anchors; the harness routes them to triage)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     80,
+     80
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| Detections matched at 50 m | 4,108 |",
+   "values": [
+    {
+     "quantity": "detections matched to a GT at 50 m",
+     "value_verbatim": "4,108",
+     "value_parsed": 4108,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.total_matched_at_50m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.total_matched_at_50m"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     81,
+     81
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| Detections matched at 100 m | 4,179 |",
+   "values": [
+    {
+     "quantity": "detections matched to a GT at 100 m",
+     "value_verbatim": "4,179",
+     "value_parsed": 4179,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.total_matched_at_100m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.total_matched_at_100m"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     82,
+     82
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| New matches at 100 m only | **71** |",
+   "values": [
+    {
+     "quantity": "new matches at 100 m only",
+     "value_verbatim": "71",
+     "value_parsed": 71,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     83,
+     83
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| Matches lost at 100 m | **0** |",
+   "values": [
+    {
+     "quantity": "matches lost at 100 m",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     84,
+     84
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| Matched at both 50 m and 100 m | 4,108 |",
+   "values": [
+    {
+     "quantity": "detections matched at both 50 m and 100 m",
+     "value_verbatim": "4,108",
+     "value_parsed": 4108,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     85,
+     85
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| — of which, matched to the same GT at both | 4,104 |",
+   "values": [
+    {
+     "quantity": "pairs matched to the same GT at both buffers",
+     "value_verbatim": "4,104",
+     "value_parsed": 4104,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.same_gt_at_both",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.same_gt_at_both"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     86,
+     86
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| — of which, matched to different GT at 50 m vs 100 m (drift) | 4 |",
+   "values": [
+    {
+     "quantity": "pairs matched to a different GT at 50 m vs 100 m (drift)",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.different_gt_at_both",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     87,
+     87
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| Drift as fraction of already-matched pairs | **0.10 %** |",
+   "values": [
+    {
+     "quantity": "drift as percentage of already-matched pairs",
+     "value_verbatim": "0.10 %",
+     "value_parsed": 0.1,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "[BATCH NOTE b075] summary.json stores this as the fraction $.diagnostic_2_pair_drift.pct_drift_of_both_matched; derived here to keep the percentage scale explicit."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     88,
+     88
+    ],
+    "section": "Diagnostic 2 — Pair drift (table)"
+   },
+   "claim_text": "| Drift as fraction of 100 m matches | **0.10 %** |",
+   "values": [
+    {
+     "quantity": "drift as percentage of 100 m matches",
+     "value_verbatim": "0.10 %",
+     "value_parsed": 0.1,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.total_matched_at_100m"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "[BATCH NOTE b075] summary.json stores this as the fraction $.diagnostic_2_pair_drift.pct_drift_of_100m_matches."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     90,
+     91
+    ],
+    "section": "Diagnostic 2 — Pair drift (prose)"
+   },
+   "claim_text": "Zero matches lost at 100 m confirms the matching is monotone in\nbuffer (a 50 m match is always a 100 m match).",
+   "values": [
+    {
+     "quantity": "matches lost at 100 m",
+     "value_verbatim": "Zero",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     91,
+     92
+    ],
+    "section": "Diagnostic 2 — Pair drift (prose)"
+   },
+   "claim_text": "71 new matches at\n100 m quantify the *genuine* recall gain at the wider tolerance.",
+   "values": [
+    {
+     "quantity": "new matches at 100 m only",
+     "value_verbatim": "71",
+     "value_parsed": 71,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     93,
+     94
+    ],
+    "section": "Diagnostic 2 — Pair drift (prose)"
+   },
+   "claim_text": "Only 4 of 4,108 already-matched pairs re-pair to a different GT —\none-tenth of one percent drift.",
+   "values": [
+    {
+     "quantity": "pairs re-paired to a different GT",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.different_gt_at_both",
+     "method": "read"
+    },
+    {
+     "quantity": "already-matched pairs (matched at both buffers)",
+     "value_verbatim": "4,108",
+     "value_parsed": 4108,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers",
+     "method": "read"
+    },
+    {
+     "quantity": "drift rate, stated in words",
+     "value_verbatim": "one-tenth of one percent",
+     "value_parsed": 0.1,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The third value is a word-form percentage (\"one-tenth of one percent\" = 0.1 %); included because it is a checkable quantitative assertion despite carrying no digits."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     97,
+     98
+    ],
+    "section": "Diagnostic 2 — artefact pointer"
+   },
+   "claim_text": "Full drift detail (detection-by-detection) is in `pair_drift.csv`\n(4 rows,",
+   "values": [
+    {
+     "quantity": "row count, pair_drift.csv (one per drift detection pair)",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "len:rows",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/pair_drift.csv",
+    "path": "len:rows"
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Non-JSON anchor (CSV): 'len:rows' means data rows excluding the header."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     99,
+     101
+    ],
+    "section": "Diagnostic 2 — artefact pointer"
+   },
+   "claim_text": "The per-row\n`distance_at_50` ≤ 50 and `distance_at_100` > 50 confirms drift",
+   "values": [
+    {
+     "quantity": "upper bound on distance_at_50 across all drift rows",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "lower bound on distance_at_100 across all drift rows",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "[BATCH NOTE b075] Anchor sought: results/55maps-image-generalisation/buffer-100m-diagnostics/pair_drift.csv, columns distance_at_50 and distance_at_100. The claim is a predicate over every row (all distance_at_50 ≤ 50 and all distance_at_100 > 50), not a scalar lookup, so no read path is offered; triage should evaluate the predicate rather than compare 50 against a cell."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     112,
+     112
+    ],
+    "section": "Interpretation — corrected-F1 curve (table)"
+   },
+   "claim_text": "| 50 m | 0.832 |",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 50 m buffer, 55-map image generalisation",
+     "value_verbatim": "0.832",
+     "value_parsed": 0.832,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": "$.results[?(@.R_m==50)].F1"
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Curve rows anchored to corrected-f1-multi-buffer/summary.json rather than the corrected-f1.csv cited in the prose; identical columns, and the JSON resolves mechanically."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     113,
+     113
+    ],
+    "section": "Interpretation — corrected-F1 curve (table)"
+   },
+   "claim_text": "| 75 m | 0.848 |",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 75 m buffer, 55-map image generalisation",
+     "value_verbatim": "0.848",
+     "value_parsed": 0.848,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==75)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": "$.results[?(@.R_m==75)].F1"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     114,
+     114
+    ],
+    "section": "Interpretation — corrected-F1 curve (table)"
+   },
+   "claim_text": "| 100 m | 0.852 |",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 100 m buffer, 55-map image generalisation",
+     "value_verbatim": "0.852",
+     "value_parsed": 0.852,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==100)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": "$.results[?(@.R_m==100)].F1"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     115,
+     115
+    ],
+    "section": "Interpretation — corrected-F1 curve (table)"
+   },
+   "claim_text": "| 125 m | 0.854 |",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 125 m buffer, 55-map image generalisation",
+     "value_verbatim": "0.854",
+     "value_parsed": 0.854,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==125)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": "$.results[?(@.R_m==125)].F1"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     116,
+     116
+    ],
+    "section": "Interpretation — corrected-F1 curve (table)"
+   },
+   "claim_text": "| 150 m | 0.855 |",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 150 m buffer, 55-map image generalisation",
+     "value_verbatim": "0.855",
+     "value_parsed": 0.855,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==150)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": "$.results[?(@.R_m==150)].F1"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     118,
+     118
+    ],
+    "section": "Interpretation — increment decomposition"
+   },
+   "claim_text": "The +0.020 F1 increment from 50 m to 100 m is driven by:",
+   "values": [
+    {
+     "quantity": "F1 increment, 50 m -> 100 m buffer",
+     "value_verbatim": "+0.020",
+     "value_parsed": 0.02,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==100)].F1"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==50)].F1"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     120,
+     120
+    ],
+    "section": "Interpretation — increment decomposition"
+   },
+   "claim_text": "- **+71 new matches at 100 m** (admitted true positives near the",
+   "values": [
+    {
+     "quantity": "new matches admitted at 100 m",
+     "value_verbatim": "71",
+     "value_parsed": 71,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     122,
+     122
+    ],
+    "section": "Interpretation — increment decomposition"
+   },
+   "claim_text": "matches lost at 100 m** — no detections are de-matched by the",
+   "values": [
+    {
+     "quantity": "matches lost at 100 m",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m"
+   },
+   "method": "read",
+   "notes": "Document writes the value with a leading minus sign (\"−0 matches lost\"); value_verbatim records the digit only so that it remains a substring of the span."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     124,
+     124
+    ],
+    "section": "Interpretation — increment decomposition"
+   },
+   "claim_text": "- **4 of 4,108 drift pairs (0.10 %)** — negligible re-assignment.",
+   "values": [
+    {
+     "quantity": "pairs that drift to a different GT",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.different_gt_at_both",
+     "method": "read"
+    },
+    {
+     "quantity": "already-matched pairs",
+     "value_verbatim": "4,108",
+     "value_parsed": 4108,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers",
+     "method": "read"
+    },
+    {
+     "quantity": "drift as percentage of already-matched pairs",
+     "value_verbatim": "0.10 %",
+     "value_parsed": 0.1,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     125,
+     126
+    ],
+    "section": "Interpretation — increment decomposition"
+   },
+   "claim_text": "- **Structurally bounded re-pairing risk**: only 17 % of GT have any\n  within-100 m neighbour, and only 2 % have 2+ neighbours.",
+   "values": [
+    {
+     "quantity": "percentage of GT with any neighbour within 100 m, rounded",
+     "value_verbatim": "17 %",
+     "value_parsed": 17,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.pct_gt_with_any_neighbour_100m"
+      }
+     ]
+    },
+    {
+     "quantity": "percentage of GT with 2+ neighbours within 100 m, rounded",
+     "value_verbatim": "2 %",
+     "value_parsed": 2,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_with_2plus_neighbours_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     130,
+     131
+    ],
+    "section": "Interpretation — attractor-pull cross-check"
+   },
+   "claim_text": "which shows the shell-lift loses significance at the 125–150 m shell\n(p = 0.381)",
+   "values": [
+    {
+     "quantity": "permutation p-value, shell-lift at the (125, 150] m shell",
+     "value_verbatim": "0.381",
+     "value_parsed": 0.381,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.shell[?(@.R_inner_m==125)].p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+    "path": "$.shell[?(@.R_inner_m==125)].p_value"
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Permutation p-value, but it is stored verbatim in the sibling buffer-band-lift artefacts (summary.json $.shell and shell.csv), so it is anchored as `read` rather than `recompute-script`; re-derivation would need scripts that regenerate the shell permutation test. The shell bounds 125-150 m are carried in `quantity` as row identifiers, not extracted as separate values."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     133,
+     134
+    ],
+    "section": "Interpretation — attractor-pull cross-check"
+   },
+   "claim_text": "Beyond 125 m the shell-lift analysis shows\nbuffer widening starts admitting non-adjacent candidates",
+   "values": [
+    {
+     "quantity": "buffer beyond which shell-lift admits non-adjacent candidates",
+     "value_verbatim": "125",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "[BATCH NOTE b075] Same assertion as lines 209 and 216 (the 125 m attractor-pull ceiling). The visible source is results/55maps-image-generalisation/buffer-band-lift/report.md — prose, so anchor-unknown per instrument rule 2; the underlying evidence is the p_value column of that analysis's shell.csv / summary.json $.shell."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     140,
+     143
+    ],
+    "section": "Reconciling the diagnostic and corrected-F1 counts"
+   },
+   "claim_text": "This diagnostic reports `total_matched_at_50m = 4,108`, while the\nmulti-buffer corrected-F1 pipeline at\n`results/55maps-image-generalisation/corrected-f1-multi-buffer/corrected-f1.csv`\nreports TP = 4,110 at 50 m.",
+   "values": [
+    {
+     "quantity": "detections matched at 50 m, this diagnostic",
+     "value_verbatim": "4,108",
+     "value_parsed": 4108,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.diagnostic_2_pair_drift.total_matched_at_50m",
+     "method": "read"
+    },
+    {
+     "quantity": "TP @ 50 m, corrected-F1 multi-buffer pipeline",
+     "value_verbatim": "4,110",
+     "value_parsed": 4110,
+     "unit": null,
+     "kind": "count",
+     "path": "$.results[?(@.R_m==50)].TP",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Cross-file locator used for the first value (instrument v1.2 amendment 2): it belongs to the diagnostics summary.json, while the claim-level anchor covers the corrected-F1 side. The prose cites corrected-f1.csv for the TP figure; the sibling summary.json carries the same column."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     143,
+     144
+    ],
+    "section": "Reconciling the diagnostic and corrected-F1 counts"
+   },
+   "claim_text": "The 2-pair gap is a **methodological\ndifference in the ground-truth inputs the two pipelines consume**",
+   "values": [
+    {
+     "quantity": "gap between the two pipelines' 50 m matched-pair counts",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null,
+    "expression": "a - b",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+      "path": "$.results[?(@.R_m==50)].TP"
+     },
+     {
+      "name": "b",
+      "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+      "path": "$.diagnostic_2_pair_drift.total_matched_at_50m"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     147,
+     149
+    ],
+    "section": "Reconciling — this diagnostic's inputs"
+   },
+   "claim_text": "- **This diagnostic** uses only yesterday's single-buffer review\n  (`results/55maps-image-generalisation/human-review.csv`, 472\n  confirmed mounds at 50 m from a 1,028-candidate single-pass review).",
+   "values": [
+    {
+     "quantity": "confirmed mounds at 50 m from the single-buffer review",
+     "value_verbatim": "472",
+     "value_parsed": 472,
+     "unit": null,
+     "kind": "count",
+     "path": "$.inputs.n_reviewer_phantoms",
+     "method": "read"
+    },
+    {
+     "quantity": "candidate count in the single-pass review",
+     "value_verbatim": "1,028",
+     "value_parsed": 1028,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-image-generalisation/human-review.csv#len:rows",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] The candidate count uses a cross-file CSV locator (v1.2 amendment 2 + amendment 4): data rows of human-review.csv excluding the header."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     151,
+     157
+    ],
+    "section": "Reconciling — corrected-F1 multi-buffer inputs"
+   },
+   "claim_text": "- **Corrected-F1 multi-buffer** uses both `human-review.csv` (472) and\n  today's `human-review-multi-buffer.csv` (2 additional mounds\n  specifically confirmed at the 50 m shell during a staggered\n  re-review for the attractor-pull analysis — candidate IDs 5641\n  (map K-35-075-4) and 5777 (map K-35-076-1)). Matching is the same\n  Hungarian one-to-one, just on 474 reviewer-extended phantoms at\n  50 m instead of 472.",
+   "values": [
+    {
+     "quantity": "confirmed mounds from the single-buffer review",
+     "value_verbatim": "472",
+     "value_parsed": 472,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_reviewer_phantoms",
+     "method": "read"
+    },
+    {
+     "quantity": "additional mounds confirmed at the 50 m shell in the multi-buffer re-review",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==50)].n_reviewer_promoted_at_R"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.inputs.n_reviewer_phantoms"
+      }
+     ]
+    },
+    {
+     "quantity": "reviewer-extended phantoms at 50 m, corrected-F1 pipeline",
+     "value_verbatim": "474",
+     "value_parsed": 474,
+     "unit": null,
+     "kind": "count",
+     "path": "$.results[?(@.R_m==50)].n_reviewer_promoted_at_R",
+     "method": "read"
+    },
+    {
+     "quantity": "reviewer-extended phantoms at 50 m, this diagnostic",
+     "value_verbatim": "472",
+     "value_parsed": 472,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_reviewer_phantoms",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Candidate IDs 5641 and 5777 and the map-sheet names K-35-075-4 / K-35-076-1 are identifiers, excluded per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     160,
+     163
+    ],
+    "section": "Reconciling — which count to cite"
+   },
+   "claim_text": "**For paper-headline claims, use the corrected-F1\ncount (4,110)** — it reflects the most recent and complete human\nverification dataset, and underpins the canonical corrected-F1\nheadline of 0.832 at 50 m.",
+   "values": [
+    {
+     "quantity": "TP @ 50 m, corrected-F1 pipeline (paper-headline count)",
+     "value_verbatim": "4,110",
+     "value_parsed": 4110,
+     "unit": null,
+     "kind": "count",
+     "path": "$.results[?(@.R_m==50)].TP",
+     "method": "read"
+    },
+    {
+     "quantity": "canonical corrected-F1 headline @ 50 m",
+     "value_verbatim": "0.832",
+     "value_parsed": 0.832,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==50)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     163,
+     166
+    ],
+    "section": "Reconciling — which count to cite"
+   },
+   "claim_text": "**The diagnostic's 4,108 is descriptive\nonly**, citable for decomposition-of-recall-gain contexts (71 new\nmatches admitted at 100 m, 0 lost) but not as a stand-alone TP",
+   "values": [
+    {
+     "quantity": "detections matched at 50 m, this diagnostic",
+     "value_verbatim": "4,108",
+     "value_parsed": 4108,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.total_matched_at_50m",
+     "method": "read"
+    },
+    {
+     "quantity": "new matches admitted at 100 m",
+     "value_verbatim": "71",
+     "value_parsed": 71,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
+     "method": "read"
+    },
+    {
+     "quantity": "matches lost at 100 m",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.matches_lost_at_100m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     171,
+     171
+    ],
+    "section": "Paper implications — 1"
+   },
+   "claim_text": "The +0.020 F1 from 50 m to 100 m reflects legitimate additional",
+   "values": [
+    {
+     "quantity": "F1 increment, 50 m -> 100 m buffer",
+     "value_verbatim": "+0.020",
+     "value_parsed": 0.02,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==100)].F1"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+       "path": "$.results[?(@.R_m==50)].F1"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     173,
+     174
+    ],
+    "section": "Paper implications — 2"
+   },
+   "claim_text": "At the preregistered 50 m\n   tolerance",
+   "values": [
+    {
+     "quantity": "preregistered spatial tolerance (buffer) in metres",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "parameter",
+     "path": null,
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/osf/preregistration.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Instrument v1.1 calibration rule: a claim about what the REGISTRATION specifies anchors to the lodged preregistration document with a null path, never to the executing config. Flagged for triage: the lodged document states primary results at 20 m with robustness checks at 10/30/50 m, so whether '50 m' is the preregistered tolerance is an adjudication for the harness, not the extractor."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     174,
+     174
+    ],
+    "section": "Paper implications — 2"
+   },
+   "claim_text": "the pipeline misses 71 TPs it would catch at 100 m,",
+   "values": [
+    {
+     "quantity": "TPs missed at 50 m that would be caught at 100 m",
+     "value_verbatim": "71",
+     "value_parsed": 71,
+     "unit": null,
+     "kind": "count",
+     "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": "$.diagnostic_2_pair_drift.new_matches_at_100m_only"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     177,
+     177
+    ],
+    "section": "Paper implications — 2"
+   },
+   "claim_text": "precision can widen to 75 m (F1 = 0.848) or 100 m (F1 = 0.852)",
+   "values": [
+    {
+     "quantity": "corrected F1 @ 75 m buffer",
+     "value_verbatim": "0.848",
+     "value_parsed": 0.848,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==75)].F1",
+     "method": "read"
+    },
+    {
+     "quantity": "corrected F1 @ 100 m buffer",
+     "value_verbatim": "0.852",
+     "value_parsed": 0.852,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.results[?(@.R_m==100)].F1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     180,
+     180
+    ],
+    "section": "Paper implications — 3"
+   },
+   "claim_text": "The 0.10 % drift rate at 50 → 100 m is well below any threshold",
+   "values": [
+    {
+     "quantity": "drift rate as percentage of already-matched pairs, 50 m -> 100 m",
+     "value_verbatim": "0.10 %",
+     "value_parsed": 0.1,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.different_gt_at_both"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_2_pair_drift.matched_at_both_buffers"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     185,
+     186
+    ],
+    "section": "Paper implications — 4"
+   },
+   "claim_text": "83 % of GT\n   have zero neighbours within 100 m",
+   "values": [
+    {
+     "quantity": "percentage of GT with zero neighbours within 100 m, rounded",
+     "value_verbatim": "83 %",
+     "value_parsed": 83,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100 * a / b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_with_0_neighbours_100m"
+      },
+      {
+       "name": "b",
+       "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+       "path": "$.diagnostic_1_gt_clustering.n_gt_total"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     195,
+     195
+    ],
+    "section": "Reproducibility (table)"
+   },
+   "claim_text": "| Buffers evaluated | 50 m and 100 m |",
+   "values": [
+    {
+     "quantity": "inner buffer evaluated, matching radius",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "parameter",
+     "path": "hungarian_match(det_xy, ref_xy, 50.0) in diagnose_pair_drift",
+     "method": "read"
+    },
+    {
+     "quantity": "outer buffer evaluated, matching radius",
+     "value_verbatim": "100",
+     "value_parsed": 100,
+     "unit": "m",
+     "kind": "parameter",
+     "path": "hungarian_match(det_xy, ref_xy, 100.0) in diagnose_pair_drift",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "scripts/diagnose_100m_buffer.py",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b075] Only place in the document where the buffer values are asserted as run parameters rather than as labels, so this is the single extraction of them. Non-JSON anchor (Python source) is legitimate per instrument v1.1; the harness routes it to triage."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     203,
+     203
+    ],
+    "section": "Artefacts"
+   },
+   "claim_text": "- `gt_clustering.csv` — 5,216 rows, one per extended-GT mound",
+   "values": [
+    {
+     "quantity": "row count, gt_clustering.csv",
+     "value_verbatim": "5,216",
+     "value_parsed": 5216,
+     "unit": null,
+     "kind": "count",
+     "path": "len:rows",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/gt_clustering.csv",
+    "path": "len:rows"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     204,
+     204
+    ],
+    "section": "Artefacts"
+   },
+   "claim_text": "- `pair_drift.csv` — 4 rows, one per drift detection pair",
+   "values": [
+    {
+     "quantity": "row count, pair_drift.csv",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "len:rows",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/pair_drift.csv",
+    "path": "len:rows"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     206,
+     206
+    ],
+    "section": "Artefacts"
+   },
+   "claim_text": "- Source detections: `outputs/55maps-image-generalisation/verified/verified_detections.geojson` (n = 4,665)",
+   "values": [
+    {
+     "quantity": "verified detection count, source detections GeoJSON",
+     "value_verbatim": "4,665",
+     "value_parsed": 4665,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.features",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+    "path": "len:$.features"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     207,
+     207
+    ],
+    "section": "Artefacts"
+   },
+   "claim_text": "- Source extended GT: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (n = 5,216)",
+   "values": [
+    {
+     "quantity": "extended ground-truth count, source GT GeoJSON",
+     "value_verbatim": "5,216",
+     "value_parsed": 5216,
+     "unit": null,
+     "kind": "count",
+     "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_extended_gt",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "path": "len:$.features"
+   },
+   "method": "read",
+   "notes": "[TRIAGE REPAIR 2026-08-03 wave-6] [v0] Blind pass P2: 5,216 is the extended GT (4,744 student + 472 phantoms), n_extended_gt in the diagnostics summary; the prior anchor returned the student-only layer."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     209,
+     209
+    ],
+    "section": "Artefacts"
+   },
+   "claim_text": "- Related report: `results/55maps-image-generalisation/buffer-band-lift/report.md` (annular shell-lift analysis that sets the 125 m attractor-pull ceiling)",
+   "values": [
+    {
+     "quantity": "attractor-pull ceiling set by the shell-lift analysis",
+     "value_verbatim": "125",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "[BATCH NOTE b075] Instrument rule 2 forbids anchoring prose to prose: the visible source is results/55maps-image-generalisation/buffer-band-lift/report.md. The underlying artefact is that report's shell.csv / summary.json p_value column (significance stops after the (100, 125] m shell), but the ceiling itself is an interpretation, not a stored scalar."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     216,
+     216
+    ],
+    "section": "Cross-references"
+   },
+   "claim_text": "- Working-notes Obs 272 — attractor-pull scale ends at ~125 m",
+   "values": [
+    {
+     "quantity": "upper end of the attractor-pull scale",
+     "value_verbatim": "~125 m",
+     "value_parsed": 125,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "[BATCH NOTE b075] Approx marker retained verbatim (v1.2 amendment 5). Source named by the document is Obs 272 in the working-notes register (docs/notes/reflections/working-notes.md per the project layout) — prose, so anchor-unknown per rule 2; Obs 272 itself is an identifier and is not extracted."
+  }
+ ]
 }

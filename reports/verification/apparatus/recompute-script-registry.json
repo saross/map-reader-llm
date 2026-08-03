@@ -1720,6 +1720,29 @@
     "count_symlink_entries": true
    },
    "note": "Session-126 wave-5 triage: same census as 032#44[1] (the JSONL denominator restates the run count). Executed 60 (document quotes '60')."
+  },
+  {
+   "batch": "051",
+   "claim_index": 0,
+   "value_index": 0,
+   "runner": "json-subset-count",
+   "params": {
+    "file": "results/run-analyses.json",
+    "list_path": "$.analyses",
+    "where": [
+     {
+      "key": "manually_verified_at",
+      "op": "eq",
+      "value": null
+     },
+     {
+      "key": "analysis_id",
+      "op": "ne",
+      "value": "pv-diag-384-consensus-calibration"
+     }
+    ]
+   },
+   "note": "Session-126 wave-6 triage (blind pass P3, RE-3): 'awaiting sign-off' = null-valued MINUS the by-design permanent calibration exclusion the document names two lines below. Era value 7 (8 null - 1 exclusion); document vindicated at era; current value reflects later signings (honest divergence)."
   }
  ]
 }
