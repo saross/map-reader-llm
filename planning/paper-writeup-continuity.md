@@ -8,7 +8,110 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (126) — PHASE 3: PI DECISIONS (E43 ESCALATION) + FLEET + TRANCHES 2–3 [Session 125 CLOSED 2026-08-02; ran in Fable]
+## 🎯 NEXT SESSION (127) — PHASE 3: PI ESCALATION QUEUE (W6-E1 COST REVERSAL) + DOC-REPAIR PASS + FLEET [Session 126 CLOSED 2026-08-03; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged.
+> **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–15.
+> The blind layer corrected the triager in BOTH S126 waves (sixth and
+> seventh consecutive corrections — including a hash transposition in
+> the triager's own pass brief, caught and verified by pass P3).
+
+**What Session 126 did** (commits `77ed9bdaa`→`71087b4e6` + this
+continuity commit, **US$0.00 API** — Claude-side agents + sapphire
+recompute only; tier-1 **1,352→1,356/0**): **TWO complete fleet wave
+cycles (waves 5 and 6), 40 batches, 2,258 claims / 6,449 values,
+both Obs 382 joins CLEAN, 308 mismatch rows blind-adjudicated, 37
+extraction repairs, three instrument fixes, four dated riders.**
+(1) **Wave 5 (b030–b059)**: 1,188 claims validated (`77ed9bdaa`);
+canonical recompute 9,588 rows (`3fdff7803`); Obs 382 join CLEAN —
+exactly 12 pre-wave rows moved, all attributed (ruling-15 phases 1–2,
+S125 repairs, E39 fix, e43 analysis registration; the 0.7.1
+conditional prediction resolved to zero rows); 92 mismatches
+triaged blind (57 divergence / 19 extraction / 11 doc-defect-at-era /
+5 instrument; stories pre-registered `e97c08c7b`, four Opus passes
+archived in `c4-triage/blind-passes/`); landed: comparer half-up
+float-noise fix (`1e4a13ff7`), filtered-subset + `!=` locator
+extensions (`6af00ffad`), census `count_symlink_entries` opt-in
+(`5f2f79856`), 19 extraction repairs verified row-by-row
+(`963ab91dc`), dated riders on FOUR snapshot docs (`a577f1ef3`:
+session-58 second banner incl. the 5-of-10→10-of-10 and
+572-denominator corrections; both config audits — incl. the v2's own
+Flash-misattribution of Pro's 0.840; phase3a closure rider);
+`mismatch-triage-2026-08-03.json` with escalations W5-E1..E4 (chief:
+**era_check × banner-policy interaction** — ruling-1 banners reset
+the blob-era the machinery keys on; 134/178 era_check rows
+degenerate; Obs candidate DRAFTED at
+`reports/verification/drafts/obs-candidate-era-check-banner-interaction-2026-08-03.md`).
+(2) **Wave 6 (b060–b079)**: 1,070 claims validated (`85ca4ad43`);
+canonical recompute 12,988 rows (`3a322d9c2`); Obs 382 join CLEAN —
+53 transitions + 9 reason drifts, ALL attributed to the S126 fixes
+(the wave-5 predictions landed EXACTLY: 17→MATCH, 7→SKIPPED; +24
+UNRESOLVED→MATCH bonus from the locator extension); 216 rows triaged
+blind (153 divergence / 34 doc-defect-at-era / 15 extraction / 11
+instrument / 4 reclassifications; stories `d84acd626`, four passes
+archived); 18 extraction repairs verified (`cf11e3baa`, incl. the
+064-rulings four-arm-union repeat of the 056 mechanism, two ruling-9
+git-era resolutions at a deleted artefact, and a registered
+json-subset-count spec vindicating 051#0[0] at era);
+`mismatch-triage-2026-08-03-wave6.json` (`71087b4e6`). **ALL wave-6
+doc-side repairs DEFERRED to the PI queue** (exact repair text in the
+archived pass files) because they entangle with W6-E1/E3. Plan
+pending **138→98** (all results-findings genre → Opus per ruling 4).
+
+**🚩 PI ESCALATION QUEUE FOR S127 (decide before the doc-repair
+pass)**:
+
+1. **W6-E1 (HIGH, research)**: the audited manifests REVERSE the
+   cross-track report's cost conclusion — image **$200.83 is cheaper
+   than** text-HIGH **$207.34** (0.97×, not "2.9× lower for
+   text-HIGH"; within 3 % ≈ equal under the audit's caveat; thinking
+   billing vs cache savings, mechanism verified). The doc was never
+   in the token-load audit's propagation set, has no revision banner,
+   and its § 10 decomposition doesn't sum. Affects the Seed-5 /
+   cost-equivalence paper thread. Decide the corrected claim wording.
+2. **W6-E3 (policy)**: ruling 1 vs ruling 14 on partial-refresh
+   residue in living docs (≥15 rows; one doc states different
+   precision/recall four lines apart). Needed before GATE 3.
+3. **W5-E1 + W6-E2 (instrument)**: era-selection redesign (per-claim
+   `git log -S`/blame hybrid + disagreement flags +
+   anchor-absent-at-era status; void the two false era-defect fields
+   P3 identified). Registered instrument work per ruling 14.
+4. **W5-E2/E3/E4, W6-E4/E5/E6**: v2-audit misattribution materiality;
+   session-58 572/569/435 framing (paper-corpus sweep pending);
+   phase3a banner under-coverage; marker/magnitude comparer gaps
+   (fold into tranche 2); quoted-path resolver bug (three masked
+   rows); audit-propagation registry check at GATE 3.
+5. **Obs candidates**: era_check×banner (drafted, obs-writer +
+   blind pass on approval); the S126 user-obs/WN material at
+   handoff review.
+
+**Session 127's queue**: (a) the PI decisions above, then the
+**doc-repair pass** (exact text in `c4-triage/blind-passes/wave6-*`
+R3/R5/R6 + P3/P1 rider material; P2 R9's 3-d.p. coupling constraint:
+0.857→0.856 changes downstream citations, 0.8333→0.8332 does not);
+(b) **fleet waves** (98 pending, results-findings → Opus; per-wave
+validate → recompute (sapphire) → Obs 382 join → triage — next join
+expects the `cf11e3baa` transitions: 7→MATCH, 9→SKIPPED, 051#0[0]
+actual 4→3, 071#46[1]→SKIPPED; NO new blob-era drift — wave 6 landed
+zero doc edits); (c) **runner tranches 2–3** (binding requirements
+unchanged: era blobs per Obs 380, flex = tokens × rates × 0.5 never
+cost_estimate, BCa pre-May CI caveat, statistical on sapphire; now
+ALSO: magnitude bridge, marker-aware comparison, quoted-path parse
+fix); (d) D4 phases 3–5, anchor-fallthrough corpus sweep,
+era_check-to-runner-rows, the three ruling-15 audit PI-calls; (e) the
+P3 corpus_growth_summary is the GATE-3 scope-growth line, ready to
+lift.
+
+**Carry-forward (S126 additions)**: wave-6's 34 doc-defect and 153
+divergence rows remain honest MISMATCHes pending the PI decisions
+(ledger-only for divergence); verify commit hashes inside agent
+briefs against git before sending (the P3 catch); wave-5 extraction
+files were re-serialised at indent=1 during repairs — match existing
+serialisation in future repair passes.
+
+---
+
+## NEXT SESSION (126) — PHASE 3: PI DECISIONS (E43 ESCALATION) + FLEET + TRANCHES 2–3 [Session 125 CLOSED 2026-08-02; ran in Fable]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–13.
