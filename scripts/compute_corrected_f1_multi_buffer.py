@@ -245,7 +245,7 @@ def build_phantom_gdf(
 def build_extended_gt(
     gdf_student: gpd.GeoDataFrame,
     gdf_phantoms: gpd.GeoDataFrame,
-    dedup_tolerance_m: float = 1.0,
+    dedup_tolerance_m: float = 5.0,
 ) -> gpd.GeoDataFrame:
     """Concatenate student GT and phantom GT into a single extended-GT GDF.
 
@@ -264,17 +264,23 @@ def build_extended_gt(
     the durable channel; the phantom is redundant by construction.
     The drop count is recorded in ``result.attrs
     ["n_phantom_duplicates_dropped"]`` and printed when non-zero. The
-    tolerance is deliberately tight (default 1 m): channel-duplicated
-    rescues are placed AT the detection coordinates, while genuinely
-    distinct neighbouring mounds sit tens of metres apart and must
-    never be de-duplicated.
+    tolerance default is 5 m (raised from 1 m by the W6-E9 exposure
+    sweep): a rescue's curator point sits AT one run's detection
+    coordinates, but OTHER runs detect the same mound up to ~3.8 m
+    away (observed cross-config spread), while genuinely distinct
+    mounds — even touching ones — sit ≳15–20 m apart, and the first
+    ambiguous ordinary-student-point case appears at 7.3 m. Five
+    metres catches the whole observed duplicate class and nothing
+    else (verified against all four config pipelines: drops 1/2/2/0
+    at R=50, exactly the adjudicated twin sets).
 
     Args:
         gdf_student: Student ground truth with ``source_map`` column.
         gdf_phantoms: Phantom GT built by :func:`build_phantom_gdf`.
         dedup_tolerance_m: Drop phantoms within this distance (metres,
             projected CRS) of a same-map student-GT point. Set to 0 to
-            disable (exact reproduction of pre-fix behaviour).
+            disable (exact reproduction of pre-fix behaviour); 1.0
+            reproduces the initial 2026-08-04 fix (exact twins only).
 
     Returns:
         Combined GeoDataFrame with ``source_map`` and ``geometry``

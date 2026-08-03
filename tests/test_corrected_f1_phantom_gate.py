@@ -148,3 +148,22 @@ def test_extended_gt_dedup_disabled_at_zero_tolerance():
     ext = build_extended_gt(student, phantoms, dedup_tolerance_m=0)
     assert len(ext) == 2
     assert ext.attrs["n_phantom_duplicates_dropped"] == 0
+
+
+@pytest.mark.tier1
+def test_extended_gt_drops_cross_run_twin_within_five_metres():
+    """A phantom ~3.8 m from a same-map student point is dropped.
+
+    W6-E9 sweep: other runs detect a curator-rescued mound up to
+    ~3.8 m from the curator point (observed cross-config spread), so
+    the default tolerance is 5 m. The first ambiguous
+    ordinary-student case sits at 7.3 m and must survive.
+    """
+    student = _student([("K-1", 100.0, 100.0)])
+    near_twin = _phantoms([("K-1", 103.8, 100.0)])
+    ext = build_extended_gt(student, near_twin)
+    assert ext.attrs["n_phantom_duplicates_dropped"] == 1
+    ambiguous = _phantoms([("K-1", 107.3, 100.0)])
+    ext2 = build_extended_gt(student, ambiguous)
+    assert ext2.attrs["n_phantom_duplicates_dropped"] == 0
+    assert len(ext2) == 2

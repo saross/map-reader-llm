@@ -129,6 +129,14 @@ def load_inputs() -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame, int]:
     phantom_slim = phantom_gdf[["map_name", "geometry"]].copy()
     phantom_slim["source"] = "reviewer_phantom"
 
+    # KNOWN LIMITATION (Session 126, W6-E9): this bare concatenation
+    # predates the channel-twin guard in
+    # compute_corrected_f1_multi_buffer.build_extended_gt and carries
+    # the double-count against any post-2026-05-03T00:32Z student
+    # layer. The committed artefact is safe by era only (pre-recovery
+    # inputs); route any regeneration through build_extended_gt or
+    # apply the same de-duplication first (see the W6-E9/W6-E10
+    # records in reports/verification/c4-triage/).
     extended = gpd.GeoDataFrame(
         pd.concat([student_slim, phantom_slim], ignore_index=True),
         crs=CRS,

@@ -97,6 +97,63 @@ def gather_reviews(kit_root: Path) -> list[dict]:
     return rows
 
 
+def drop_student_layer_twins(
+    rows: list[dict],
+    student_gt_path: Path,
+    tolerance_m: float,
+) -> tuple[list[dict], list[tuple[dict, float]]]:
+    """Drop mound rows that duplicate a same-map student-layer point.
+
+    Session-126 escalation W6-E9: a rescue can enter through two
+    channels — a review-CSV ``mound`` row AND a curator point later
+    added to the student layer at (nearly) the same coordinates. This
+    build previously pooled review rows WITHOUT consulting the student
+    layer, so its 20 m union-find de-dup (phantom-vs-phantom only)
+    laundered such twins into authoritative-looking canonical phantoms,
+    and every consumer scoring student-layer + canonical phantoms
+    together carried spurious FNs. The guard runs BEFORE clustering,
+    where raw per-run rows sit 0–3.8 m from their curator twins
+    (post-merge centroids drift further, which is why it cannot run
+    after). Only ``mound`` rows are dropped — ``not_mound`` rows near
+    a student point are conflict signal, not duplication. The 5 m
+    default catches the observed cross-run duplicate spread (≤3.78 m)
+    and stays well below distinct-mound spacing (touching mounds sit
+    ≳15–20 m apart; student jitter is ~20–25 m).
+
+    Args:
+        rows: Pooled review rows from :func:`gather_reviews`.
+        student_gt_path: The student GT GeoJSON (EPSG:32635 points).
+        tolerance_m: Drop radius in metres; 0 disables the guard.
+
+    Returns:
+        ``(kept_rows, dropped)`` where ``dropped`` pairs each removed
+        row with its distance to the nearest same-map student point.
+    """
+    if tolerance_m <= 0:
+        return rows, []
+    with open(student_gt_path) as f:
+        gt = json.load(f)
+    by_map: dict[str, list[list[float]]] = defaultdict(list)
+    for feat in gt.get("features", []):
+        props = feat.get("properties") or {}
+        geom = feat.get("geometry") or {}
+        if geom.get("type") == "Point":
+            by_map[props.get("source_map", "")].append(
+                list(geom["coordinates"][:2]))
+    trees = {m: cKDTree(np.asarray(c)) for m, c in by_map.items() if c}
+    kept: list[dict] = []
+    dropped: list[tuple[dict, float]] = []
+    for r in rows:
+        tree = trees.get(r["map_name"])
+        if tree is not None and r["label"] == "mound":
+            dist, _ = tree.query([r["x"], r["y"]])
+            if dist <= tolerance_m:
+                dropped.append((r, float(dist)))
+                continue
+        kept.append(r)
+    return kept, dropped
+
+
 def cluster(rows: list[dict], radius: float) -> dict[int, list[dict]]:
     """Union-find clustering of review points at ``radius`` metres."""
     coords = np.array([[d["x"], d["y"]] for d in rows])
@@ -128,9 +185,24 @@ def main() -> int:
                          "out-of-range sentinel to re-review (default: auto-resolve "
                          "to the creditable ring).")
     ap.add_argument("--output-dir", type=Path, required=True)
+    ap.add_argument("--student-gt", type=Path,
+                    default=Path("inputs/vectors/references/"
+                                 "student-mounds-55maps-reviewed.geojson"),
+                    help="Student GT layer for the W6-E9 channel-twin "
+                         "guard (see drop_student_layer_twins).")
+    ap.add_argument("--dedup-tolerance-m", type=float, default=5.0,
+                    help="Drop mound review rows within this distance of "
+                         "a same-map student-GT point BEFORE clustering "
+                         "(channel-duplicated rescues; 0 disables).")
     args = ap.parse_args()
 
     rows = gather_reviews(args.kit_root)
+    rows, twin_dropped = drop_student_layer_twins(
+        rows, args.student_gt, args.dedup_tolerance_m)
+    for r, dist in twin_dropped:
+        print(f"student-layer twin dropped: {r['src']} "
+              f"({r['x']:.1f}, {r['y']:.1f}) buf {int(r['buf'])} — "
+              f"{dist:.3f} m from a {r['map_name']} student point")
     clusters = cluster(rows, args.cluster_m)
 
     auto_mounds: list[dict] = []      # review-schema rows for build_phantom_gdf
@@ -221,6 +293,8 @@ def main() -> int:
 
     summary = {
         "n_review_rows": len(rows),
+        "n_student_layer_twins_dropped": len(twin_dropped),
+        "dedup_tolerance_m": args.dedup_tolerance_m,
         "n_clusters": len(clusters),
         "n_auto_canonical_mounds": len(auto_mounds),
         "n_auto_not_mound_clusters": n_auto_notmound,
