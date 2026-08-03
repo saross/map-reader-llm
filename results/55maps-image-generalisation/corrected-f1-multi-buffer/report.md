@@ -1,8 +1,8 @@
 # Corrected F1 / P / R on the 55-map image set — buffer-stratified
 
-> **Last revised**: 2026-08-03 (Session 126 wave-6 escalation W6-E8 — analysis
-> re-run against the current review CSVs, closing the cand-2397 staleness the
-> earlier wave-6 repair pass could only record). See
+> **Last revised**: 2026-08-04 (W6-E9 resolved — coincidence de-dup landed in
+> `build_extended_gt` and the artefact regenerated from the tracked HEAD
+> student GT; every metric identical, channel accounting corrected). See
 > [§ Changelog](#changelog) for revision history.
 
 **Original analysis timestamp**: 2026-04-21T09:19:22.660216+00:00.
@@ -31,17 +31,24 @@ table now genuinely includes the cand 2397 review entry (`c816d4bd4`).
 >    despite being claimed as included. The 2026-08-03 re-run adds it:
 >    F1 = 0.8332 → **0.8333** at 50 m, a further **+0.0001**.
 >
-> Total movement across both: 0.8317 → 0.8333, **+0.0016**. The
-> auto-regenerated sibling `report_autogen.md` is at the same
-> 2026-08-03 state. Superseded artefacts are preserved as the
-> `*.pre-cand2397-rerun-20260803T123434.backup` siblings (post-recovery,
-> pre-2397) and `*.pre-recovery-20260503T023134.backup` (pre-recovery).
+> Total movement across both: 0.8317 → 0.8333, **+0.0016**. On
+> 2026-08-04 the artefact was regenerated through `build_extended_gt`'s
+> coincidence de-duplication (`1de559119`) from the tracked HEAD student
+> GT (`30a902f56`): **no metric moved**; the channel accounting now
+> counts the cand-2397 rescue once, on the student side
+> (`n_ref_student_only` 4,746, `n_reviewer_promoted_at_R` −1 at every R,
+> `n_phantom_duplicates_dropped` = 1). The auto-regenerated sibling
+> `report_autogen.md` is at the same state. Superseded artefacts are
+> preserved as the `*.pre-dedup-rerun-20260804T000000.backup`,
+> `*.pre-cand2397-rerun-20260803T123434.backup` (post-recovery,
+> pre-2397), and `*.pre-recovery-20260503T023134.backup` (pre-recovery)
+> siblings.
 
 **Observation anchors**: Obs 267 (corrected-F1 headline), Obs 272 (attractor-pull scale ends at ~125 m), Obs 263 + Obs 268 (review-UI calibration). Direct input to meta-findings Theme T1.
 
 **Companion auto-generated file**: `report_autogen.md` in this directory holds the script's raw output. This `report.md` is the paper-citation source; re-running the script does NOT overwrite it (script hardened 2026-04-24 Session 76; see §9 Reproducibility).
 
-**Sibling single-buffer artefact**: `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` is the analytic-adjustment variant using yesterday-only review (472 phantoms; F1 = 0.8295 at 50 m). This multi-buffer artefact re-runs Hungarian against extended GT at each R ∈ {50, 75, 100, 125, 150} m using yesterday + today review (475 phantoms at 50 m; F1 = 0.8333 at 50 m after the 2026-08-03 cand-2397 re-run). Both round to the paper-citable ≥ 0.830 headline.
+**Sibling single-buffer artefact**: `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` is the analytic-adjustment variant using yesterday-only review (472 phantoms; F1 = 0.8295 at 50 m). This multi-buffer artefact re-runs Hungarian against extended GT at each R ∈ {50, 75, 100, 125, 150} m using yesterday + today review (474 phantoms entering at 50 m post de-dup; F1 = 0.8333 at 50 m). Both round to the paper-citable ≥ 0.830 headline.
 
 ## 1. Executive summary
 
@@ -58,15 +65,15 @@ The 55-map image-generalisation corrected-F1 curve (2026-08-03 re-run), computed
 
 **One-line paper claim (2026-08-03 re-run)**: "The 55-map image-generalisation corrected F1 runs from 0.833 at 50 m to 0.857 at 150 m; the practitioner-useful ceiling, at the largest buffer where attractor-pull is statistically distinguishable from within-tile random placement (Obs 272), is **F1 = 0.855 at 125 m** [0.8468, 0.8635]."
 
-## 2. F1 curve (2026-08-03 cand-2397 re-run)
+## 2. F1 curve (current state — 2026-08-04 regeneration; metrics identical to the 2026-08-03 re-run)
 
 | R (m) | TP | FP | FN | n_ref_student | n_promoted@R | n_ref_extended | P [95 % CI] | R [95 % CI] | F1 [95 % CI] |
 |------:|---:|---:|---:|--------------:|-------------:|---------------:|:-----------:|:-----------:|:------------:|
-| 50 | 4125 | 555 | 1095 | 4745 | 475 | 5220 | 0.8814 [0.8715, 0.8907] | 0.7902 [0.7776, 0.8025] | **0.8333** [0.8241, 0.8422] |
-| 75 | 4255 | 425 | 1086 | 4745 | 596 | 5341 | 0.9092 [0.9002, 0.9175] | 0.7967 [0.7844, 0.8086] | **0.8492** [0.8405, 0.8575] |
-| 100 | 4297 | 383 | 1091 | 4745 | 643 | 5388 | 0.9182 [0.9096, 0.9261] | 0.7975 [0.7854, 0.8093] | **0.8536** [0.8450, 0.8617] |
-| 125 | 4314 | 366 | 1093 | 4745 | 662 | 5407 | 0.9218 [0.9133, 0.9297] | 0.7979 [0.7857, 0.8097] | **0.8554** [0.8468, 0.8635] |
-| 150 | 4325 | 355 | 1093 | 4745 | 673 | 5418 | 0.9241 [0.9158, 0.9319] | 0.7983 [0.7861, 0.8101] | **0.8566** [0.8481, 0.8646] |
+| 50 | 4125 | 555 | 1095 | 4746 | 474 | 5220 | 0.8814 [0.8715, 0.8907] | 0.7902 [0.7776, 0.8025] | **0.8333** [0.8241, 0.8422] |
+| 75 | 4255 | 425 | 1086 | 4746 | 595 | 5341 | 0.9092 [0.9002, 0.9175] | 0.7967 [0.7844, 0.8086] | **0.8492** [0.8405, 0.8575] |
+| 100 | 4297 | 383 | 1091 | 4746 | 642 | 5388 | 0.9182 [0.9096, 0.9261] | 0.7975 [0.7854, 0.8093] | **0.8536** [0.8450, 0.8617] |
+| 125 | 4314 | 366 | 1093 | 4746 | 661 | 5407 | 0.9218 [0.9133, 0.9297] | 0.7979 [0.7857, 0.8097] | **0.8554** [0.8468, 0.8635] |
+| 150 | 4325 | 355 | 1093 | 4746 | 672 | 5418 | 0.9241 [0.9158, 0.9319] | 0.7983 [0.7861, 0.8101] | **0.8566** [0.8481, 0.8646] |
 
 For the post-recovery-but-pre-2397 numbers (TP = 4,124 at 50 m; F1 = 0.8332 at
 50 m to 0.8565 at 150 m) see the `*.pre-cand2397-rerun-20260803T123434.backup`
@@ -78,7 +85,7 @@ sibling. All are preserved at the same path.
 
 - **TP / FP / FN**: Hungarian-matching counts against the extended GT at R. Every reviewer-promoted phantom within R is added to the GT before matching.
 - **n_ref_student**: Student GT points scoped to the evaluation tile bounds (the denominator without any human-review correction).
-- **n_promoted@R**: Number of reviewer-promoted phantoms included in the extended GT at this R. Yesterday's 472 mound labels appear at every R ≥ 50. Today's shell-stratified mound labels accumulate as R rises: +3 @ 50 m, +121 @ 75 m, +47 @ 100 m, +19 @ 125 m, +11 @ 150 m.
+- **n_promoted@R**: Number of reviewer-promoted phantoms that ENTER the extended GT at this R (post de-duplication — § 9 caveat 7). Yesterday's 472 mound labels appear at every R ≥ 50. Today's shell-stratified mound labels accumulate as R rises: +3 reviewed @ 50 m of which 1 (cand 2397) is de-duplicated against its curator twin, so +2 enter; +121 @ 75 m, +47 @ 100 m, +19 @ 125 m, +11 @ 150 m.
 - **n_ref_extended**: Scoped extended-GT count at R (student GT scoped ∪ in-scope phantoms at R). This is the recall denominator.
 - **F1 [95 % CI]**: Corrected F1 at R with tile-level bootstrap CI.
 
@@ -141,14 +148,21 @@ The sibling `results/55maps-image-generalisation/buffer-100m-diagnostics/report.
    that double-count (re-run against the HEAD 4,746-feature GT, same seed and
    inputs otherwise): FN +1 at every R, and recall at 50 m *falling* to 0.7901
    against the § 2 table's 0.7902, despite a rescue that should only help.
-   **The § 2 table therefore
-   scores against the 4,745-feature student GT** (blob
-   `60adff7258b328eb93cee2340715a0a5b4e0e923`, the layer state at `8699f456b`),
-   which excludes the curator's duplicate and leaves the review CSV as the sole
-   channel for cand 2397 — see § 12. Resolving this properly needs a
-   de-duplication step in `build_extended_gt` (or withdrawal of the redundant
-   curator point); until then, any analysis that consumes the HEAD student GT
-   *and* the multi-buffer review CSV together carries the same +1 FN.
+   **RESOLVED 2026-08-04**: `build_extended_gt` now de-duplicates
+   channel-coincident rescues (commit `1de559119` — any phantom within
+   1 m of a same-map student-GT point is dropped and the student
+   channel kept; the drop count is recorded as
+   `n_phantom_duplicates_dropped`; the fix propagates to
+   `paired_permutation_corrected_55maps` and
+   `score_55maps_extended_gt_canonical` by import). The § 2 artefact
+   was then regenerated from the **tracked HEAD student GT (4,746
+   features)** through the fix (`30a902f56`): every metric and CI is
+   identical to the pre-fix 4,745-blob run; only the channel
+   accounting moves (`n_reviewer_promoted_at_R` −1 at every R,
+   `n_ref_student_only` 4,745 → 4,746, `n_phantom_duplicates_dropped`
+   = 1) — the rescue is counted once, on the student side. The
+   companion exposure sweep of other GT-plus-CSV consumers is recorded
+   in the Session-126 triage register.
 
 ## 10. Paper implications
 
@@ -185,7 +199,7 @@ Precision rises monotonically from 0.8814 at 50 m to 0.9241 at 150 m (2026-08-03
 **Inputs**:
 
 - `outputs/55maps-image-generalisation/verified/verified_detections.geojson` — VLM detections post-verifier (**4,680 features** at HEAD; 4,665 pre-recovery).
-- `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` — student GT. The § 2 table scores against the **4,745-mound** state (4,744 pre-recovery), materialised from blob `60adff7258b328eb93cee2340715a0a5b4e0e923` (the layer as of `8699f456b`). The tracked layer has since advanced to 4,746 at `2e075eb99` (2026-05-03, curator GT mound added at image cand 2397); that added point is **deliberately excluded** here because it duplicates the cand-2397 phantom the review CSV already supplies — see § 9 caveat 7 and § 12.
+- `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` — student GT, consumed at the **tracked HEAD state (4,746 mounds)**. The curator point added at image cand 2397 (`2e075eb99`) duplicates the phantom the review CSV supplies; `build_extended_gt`'s coincidence de-duplication (`1de559119`) counts the rescue once, on the student side — see § 9 caveat 7.
 - `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` — 55-map evaluation bounds (8,541 tiles).
 - `results/55maps-image-generalisation/human-review.csv` — yesterday's review (1,028 rows; 472 mounds, all at 50 m).
 - `results/55maps-image-generalisation/human-review-multi-buffer.csv` — today's multi-buffer re-review (558 rows; **275 mounds** across shells, of which 74 sit at the excluded `buffer_metres = 200` sentinel).
@@ -196,17 +210,14 @@ Precision rises monotonically from 0.8814 at 50 m to 0.9241 at 150 m (2026-08-03
 - **Guardrail (Session 75 item 6 / Session 76 carry-over)**: script hardened 2026-04-24 to redirect Markdown output from `report.md` to `report_autogen.md`, protecting this hand-authored level-up against dry-run overwrite.
 - **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling (configurable via CLI).
 - **Exact command that produced the current § 2 table** (run on `sapphire`,
-  2026-08-03T12:34:34Z, repo at `a6a18b3c4`, wall-clock 35.9 s). The student-GT
-  argument is a materialised historical blob, not the tracked path — see § 9
-  caveat 7 for why:
+  2026-08-04, repo at `1de559119`, wall-clock ~36 s). Every input is a
+  tracked working-tree path — no git-blob materialisation step is needed
+  since `build_extended_gt`'s coincidence de-duplication (§ 9 caveat 7):
 
     ```bash
-    git cat-file -p 60adff7258b328eb93cee2340715a0a5b4e0e923 \
-        > /tmp/s126-w6e8/materialised-from-git/student-mounds-55maps-reviewed--blob-60adff7258b328eb93cee2340715a0a5b4e0e923.geojson
-
     python scripts/compute_corrected_f1_multi_buffer.py \
         --verified-detections outputs/55maps-image-generalisation/verified/verified_detections.geojson \
-        --student-gt /tmp/s126-w6e8/materialised-from-git/student-mounds-55maps-reviewed--blob-60adff7258b328eb93cee2340715a0a5b4e0e923.geojson \
+        --student-gt inputs/vectors/references/student-mounds-55maps-reviewed.geojson \
         --bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson \
         --review-yesterday results/55maps-image-generalisation/human-review.csv \
         --review-today results/55maps-image-generalisation/human-review-multi-buffer.csv \
@@ -216,9 +227,12 @@ Precision rises monotonically from 0.8814 at 50 m to 0.9241 at 150 m (2026-08-03
         --seed 42
     ```
 
-  Substituting the tracked `inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
-  for the materialised blob reproduces the double-counted variant described in
-  § 9 caveat 7 (FN +1 at every R), not the § 2 table.
+  The 2026-08-03 predecessor run materialised the 4,745-feature GT blob
+  to a temporary path to sidestep the then-unfixed double-count; its
+  command is preserved in the changelog. Running the current script
+  against the tracked GT reproduces the § 2 table exactly (verified
+  field-by-field, `30a902f56`); the double-counted variant is no longer
+  producible without setting `dedup_tolerance_m=0`.
 
 - **Note on the previously recorded command**: the re-run block published here
   before 2026-08-03 used the flags `--detections` and `--out`, which the script
@@ -230,6 +244,33 @@ Precision rises monotonically from 0.8814 at 50 m to 0.9241 at 150 m (2026-08-03
 - **Toolchain**: Python ≥ 3.11, GeoPandas ≥ 0.14, NumPy, pandas, scipy (for Hungarian). Pinned versions in `requirements.txt`.
 
 ## Changelog
+
+### 2026-08-04 — W6-E9 resolved: de-dup fix landed, artefact regenerated from tracked HEAD GT
+
+**Trigger**: the durable fix for the two-channel cand-2397 rescue
+(Session-126 escalation W6-E9, PI-approved). `build_extended_gt` gained
+coincidence de-duplication (`1de559119`: phantoms within 1 m of a
+same-map student-GT point are dropped, the student channel kept,
+`n_phantom_duplicates_dropped` recorded; four tier-1 tests). The § 2
+artefact was regenerated on sapphire through the fix from the tracked
+HEAD student GT (`30a902f56`).
+
+**What changed**: NO metric moved — TP/FP/FN, P/R/F1, and every CI are
+identical to the 2026-08-03 state at all five R (verified
+field-by-field). Channel accounting only: `n_reviewer_promoted_at_R`
+−1 at every R (475→474 at 50 m …), `n_ref_student_only` 4,745 → 4,746,
+new field `n_phantom_duplicates_dropped` = 1. § 9 caveat 7 rewritten
+from open-hazard to resolved; the § 2 table's n_ref_student /
+n_promoted@R columns, the § 3 accumulation note, and the sibling-
+artefact note refreshed to the corrected accounting; § 11's input-diff
+record annotated; § 12
+now shows the tracked-path command (the 2026-08-03 predecessor
+materialised the 4,745 blob to a temporary path:
+`git cat-file -p 60adff7258b328eb93cee2340715a0a5b4e0e923 > /tmp/...`
+then `--student-gt` that path — preserved here for the record).
+
+**What did NOT change**: every headline and CI; the 17-pair gap
+decomposition; all conclusions.
 
 ### 2026-08-03 (later) — W6-E8: analysis re-run against the current review CSVs
 
@@ -264,8 +305,11 @@ inputs, three are byte-identical (`verified_detections.geojson`,
 2. `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` —
    4,745 → 4,746 features. **This was not folded in.** The added feature is at
    exactly cand 2397's detection coordinates and duplicates the phantom the
-   review CSV supplies; scoring against it double-counts. See § 9 caveat 7 for
-   the measured cost and § 12 for the blob actually used.
+   review CSV supplies; scoring against it double-counted at the time of
+   that run. See § 9 caveat 7 for the measured cost. (Superseded
+   2026-08-04: the de-dup fix `1de559119` now consumes the tracked HEAD
+   GT safely; the § 2 artefact was regenerated through it, `30a902f56`,
+   metrics unchanged.)
 
 **Field-by-field movement** (`summary.json`, old → new). The pattern is
 identical at every R: **TP +1, FP −1, FN unchanged**, `n_reviewer_promoted_at_R`
