@@ -678,3 +678,15 @@ follow the runbook should ensure they invoke the corrected runner.
 3. **Tier-2 + Tier-3 propagation** through their leaderboard strata once
    their cleanup state is known.
 4. **Campaign-wide closure Obs** (Obs 324 or later) once the above lands.
+
+## Dated rider (2026-08-03, Session-126 C4 triage)
+
+The 2026-05-06 annotation above lists three cells as skipped with
+outstanding work; commit `6683952ac` closed all three later the same
+day (~5.5 h). The annotation is era-faithful and stands unedited. The
+wave-5 blind triage re-verified the audit's figures at their true eras
+(`adf95dbf9` body, `d78601b62` annotation): 42 of 43 recomputed rows
+are era-faithful, and the recovery campaign's closure is exact — the
+per-cell count deltas sum to precisely the audit's own "Cumulative
+dropped candidates (genuine): 835". Adjudications:
+`reports/verification/c4-triage/mismatch-triage-2026-08-03.json`.

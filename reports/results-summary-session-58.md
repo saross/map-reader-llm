@@ -10,6 +10,26 @@
 > pre-existing defect). This document is a dated session record and its
 > body is unchanged; do not cite the temperature rows.
 
+<!-- separate dated banner follows -->
+
+> **⚠ Further at-era corrections (2026-08-03, Session-126 C4 triage)**:
+> (i) § 9's "5-of-10" should read "10-of-10" — the sweep's global
+> optimum is threshold 10 of pool 10 at F1 0.5521
+> (`results/h11-384-single-pass-t0-rerun/consensus-analysis-report.json`,
+> unchanged since `a371376c1`); 5-of-10 scores 0.5322. (ii) § 11's
+> "% of 572" denominator matches no reference-mound population at any
+> era: the reference set holds 569 (single commit `cfc10c133`), this
+> document's own preamble says 569, and the population inside the
+> 487-tile evaluation bounds is 435 — treat the percentage column as
+> uncited rather than rescaling it to 569 (572 is the
+> proposer-verifier-384 candidate count). (iii) Appendix A's
+> Flash-medium and Flash-HIGH verifier rows report the t=0.95 optimum;
+> the registered manifest cells for the same conditions are
+> constrained-grid selections (prob_t 0.25 / 0.5) and are not the same
+> operating point — cite one or the other, never interchangeably.
+> Adjudications:
+> `reports/verification/c4-triage/mismatch-triage-2026-08-03.json`.
+
 Consolidated results from Sessions 56–58 covering consensus sweeps, PV
 pipeline evaluations, proposer × verifier model matrix, buffer sensitivity,
 temperature sensitivity, diversity analysis, and the configuration audit.

@@ -411,3 +411,27 @@ sources (GeoJSON, cost_estimate, logs) are all consistent and correct.
 **Audit completion: 1,740/1,740 runs audited. Model field corrected for 12
 runs via GeoJSON/cost_estimate verification. Temperature and thinking level
 findings unchanged from v1.**
+
+## Dated rider (2026-08-03, Session-126 C4 triage)
+
+Two findings from the blind-verified wave-5 triage
+(`reports/verification/c4-triage/mismatch-triage-2026-08-03.json`);
+the body above is a dated snapshot and is unchanged.
+
+1. **Era scope of the "12 Pro runs" figure.** Correct as at
+   2026-03-25. The pro-high-text-n5 pool was extended to N=10 on
+   2026-03-29 (runs 6–10; `study_manifest.json` rewritten in place),
+   so a present-day recount from the manifests gives 17, and a
+   directory census gives 21 (the two Pro MEDIUM baselines each
+   gained runs 2–3 on 2026-06-03). Era arithmetic from run-start
+   timestamps confirms 5+5+1+1 = 12 at audit time.
+2. **Correction to "Scientific Implications" item 2 (lines
+   313–315).** The Flash comparator quoted as "F1=0.840 at 3-of-5
+   from the same comparison" is neither Flash nor 3-of-5: the cited
+   pairwise record's Flash arm is Flash HIGH text 5-of-5 at
+   global F1 0.7788, and Flash HIGH text at 3-of-5 is 0.6034; 0.840
+   is the rounded **Pro** arm value 0.8404 from that same record. The
+   sentence's qualitative conclusion is unaffected (the paired
+   permutation gives p=0.874 on a per-tile mean difference of
+   0.001772), but the quoted comparator must not be cited as a Flash
+   figure.

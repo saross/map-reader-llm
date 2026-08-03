@@ -388,3 +388,25 @@ silently downgrading) could not have occurred.
 
 **Audit completion: 1,740/1,740 runs audited across 239 conditions. All 6 checks
 applied to every run. All check results recorded as PASS, FAIL, or UNVERIFIABLE.**
+
+## Dated rider (2026-08-03, Session-126 C4 triage)
+
+Two at-era defects from the blind-verified wave-5 triage
+(`reports/verification/c4-triage/mismatch-triage-2026-08-03.json`);
+the body above is a dated snapshot (superseded by the v2 audit for
+model identification) and is unchanged.
+
+1. **The "T (range)" column reproduces prompt-config defaults as at
+   2026-03-25, not the run metadata.** Affected rows and executed
+   values: phase1-library ran at 1.0 (documented 0.0); phase2d,
+   phase2e, retest/phase2d, and retest/phase2e ran at 0.0 (documented
+   1.0). Cause: `library_pure-positive-canon.json` was edited
+   1.0 → 0.0 on 2026-02-08 (`953e2d26d`), a week AFTER phase1-library
+   ran (2026-02-01, `d06eacd0e`); and the phase2d/2e studies ran
+   under a study-YAML `temperature: 0.0` override the config file
+   does not carry. Run metas are uniform in every affected phase
+   (5/5 at 1.0; 40/40, 30/30, 4/4, 4/4 at 0.0). The phase2a, phase2b,
+   and phase2c rows are unaffected and verified correct.
+2. **The retest/phase2d "Conditions" cell should read 4** (track1-image
+   and track2-text, terse and verbose each), not 2; the "Runs" cell
+   (4) is correct.
