@@ -24728,3 +24728,545 @@ that produced this);
 — the "139" the four rows still fail against); commits `52a889b87`
 (census hygiene), `629ea3c08` (wave-3 triage), `7907c2f3f`, `c4aeac922`,
 and `0f1bd549f`.
+
+## Observation 386: The temperature record has three simultaneously-true layers, one per metric-and-corpus — object-F1 favours lower T, matched-scope consensus F1 is null, and tile-level MCC favours higher T monotonically (Session 125, 2026-08-03)
+
+*Source anchors: every figure below was re-read from these files on
+2026-08-03, not from the S125 draft or from the entries it cross-references.
+`results/deployment-oracle-2026-06-06/deployment-oracle-findings.md` (§ 3 the
+config-axis table, § 4 the joint oracle, § 4b the canonical adjudicated-GT
+re-score); `results/e43-matched-temperature/findings.md` (§ 4 the four matched
+permutation tests, § 8 caveats 2–4 and 6, § 12.3 the nine paired ΔMCC tests
+and the BH inline, § 12.4 the ladder and its 53-run coverage verification,
+§ 12.5 the cleanliness dividend, § 12.6 the Obs 274 replication, § 12.7
+caveats, § 13.1–13.5 the cost-equivalent configurations) at landing commits
+`6176b985e` (§ 4), `bc45133b4` (§ 11), `9ebc9e523` (§ 12), and `7cf0a0237`
+(§ 13), with §§ 12–13 produced on sapphire from tree states `7356f21fa` and
+`9ebc9e523`; `docs/paper/discussion-seeds.md` § "Seed 5" (`:127–156`);
+`docs/methodology/preregistration/protocol-errata.md` E72 (`:3254–3304`);
+Obs 274 (`:12962–13015`) re-read in full for the replication claim.*
+
+### The finding
+
+The project's temperature evidence is not one result with an unresolved
+contradiction in it. It is **three results on three different
+metric-and-corpus combinations**, each internally consistent, each living in a
+different artefact. Once they are laid side by side the apparent conflict
+dissolves — none of the three is evidence against either of the others,
+because no two of them measure the same thing.
+
+| # | layer | metric, corpus, scope | direction | headline |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **object-level F1, deployment** | corrected F1 @ 50 m, 55-map student corpus, carried operating points | **lower T better** | T0.3 **0.800** vs T0.7 **0.780**, Δ **+0.020**, p < 0.001 |
+| 2 | **consensus F1, matched scope** | F1 @ 20/30 m, 4-map GS corpus at 384 px, both arms 487/487 tiles | **no reliable difference** | ΔF1 **−0.02…−0.03**, all p ≥ 0.08 |
+| 3 | **tile-level MCC** | tile classification, same 487-tile corpus | **higher T better, monotonically** | end-to-end ΔMCC **−0.13 / −0.10**, BH q 0.0030 / 0.0069 |
+
+**Layer 1 — the deployment result, and the only one tested at scale.** On the
+55-map deployment corpus the config axis ranks `text-high T0.3 (k4)` at 0.800
+against `text-high T0.7 (k4, carried)` at 0.780, with all six pairwise
+contrasts significant (p < 0.001 except T0.7 > image at p = 0.005). The
+document states the contrast directly: **"T0.3 > T0.7 = +0.020 (p<0.001)"**.
+The § 4b canonical adjudicated-GT re-score — 773 canonical mounds, one point
+per real feature — raises the absolutes and holds the delta: T0.3 **0.836**
+against T0.7 **0.815**, **+0.021 (p<0.001)**. Both scorings agree, so the
+lower-temperature-is-better claim is robust to the GT construction that was
+the most plausible threat to it.
+
+**Layer 2 — at matched scope the same contrast is a null.** The four
+matched-scope permutation tests (10,000 permutations, seed 42, both arms
+487/487 tiles, Δ = F1(T=0.7) − F1(T=1.0)):
+
+| N | buffer | F1 (T=0.7) | F1 (T=1.0) | ΔF1 | p |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 5 | 20 m | 0.6397 | 0.6610 | **−0.0213** | 0.3352 |
+| 5 | 30 m | 0.6471 | 0.6674 | **−0.0203** | 0.3577 |
+| 10 | 20 m | 0.6332 | 0.6667 | **−0.0335** | 0.0815 |
+| 10 | 30 m | 0.6412 | 0.6728 | **−0.0316** | 0.0963 |
+
+Nothing reaches α = 0.05 at either buffer or either pool size. Extending to
+the T=0.3 rungs does not change that: **on F1 the entire ladder is a null
+result**, the one positive sign in it (T=0.3 over T=0.7 at N=10, +0.0092,
+p = 0.5950) matching layer 1's direction but nowhere near significance on
+this corpus.
+
+**Layer 3 — tile-level MCC separates the arms cleanly, in the other
+direction.** The ladder, at each arm's own best-F1@20 m operating point, all
+487/487 tiles:
+
+| T | N | threshold | F1@20 m | MCC | MCC 95 % CI | Sens. | Spec. |
+| :--- | ---: | :--- | ---: | ---: | :--- | ---: | ---: |
+| 0.0 † | 3 | 3-of-3 | 0.5932 | 0.2235 | [0.2063, 0.2403] | 0.9039 | 0.2713 |
+| 0.3 | 5 | 5-of-5 | 0.6307 | 0.2746 | [0.2565, 0.2930] | 0.8603 | 0.3837 |
+| 0.7 | 5 | 5-of-5 | 0.6397 | 0.3148 | [0.2962, 0.3310] | 0.8603 | 0.4264 |
+| 1.0 | 5 | 5-of-5 | 0.6610 | **0.4065** | [0.3881, 0.4237] | 0.8035 | 0.5969 |
+| 0.3 | 10 | 10-of-10 | 0.6424 | 0.3129 | [0.2956, 0.3301] | 0.8559 | 0.4302 |
+| 0.7 | 10 | 10-of-10 | 0.6332 | 0.3655 | [0.3483, 0.3817] | 0.8341 | 0.5155 |
+| 1.0 | 10 | 9-of-10 | 0.6667 | **0.4153** | [0.3962, 0.4316] | 0.8341 | 0.5698 |
+
+† T=0.0 has three runs; its rung varies consensus depth with temperature and
+is descriptive only.
+
+MCC is **strictly monotonic increasing in temperature at both pool sizes**
+(N=5: 0.2746 → 0.3148 → 0.4065; N=10: 0.3129 → 0.3655 → 0.4153), and **all
+nine paired ΔMCC point estimates are negative** — not one rung favours the
+lower temperature. The end-to-end contrast is the one that survives
+correction: **T=0.3 vs T=1.0, ΔMCC −0.1319 (p = 0.0005) at N=5 and −0.1023
+(p = 0.0023) at N=10, BH q = 0.0030 and 0.0069**. An independent exact
+McNemar cross-check on the discordant tiles agrees with the permutation test
+on the α = 0.05 verdict in all nine rows.
+
+**The mechanism is specificity purchased at near-flat sensitivity.** Across
+the pool-matched ladder, specificity climbs **+0.213** (N=5: 0.3837 → 0.5969)
+and **+0.140** (N=10: 0.4302 → 0.5698) while sensitivity moves only −0.057
+and −0.022. The N=10 T=0.7-versus-T=1.0 pair isolates it exactly: both arms
+have **identical** tile-level sensitivity (0.8341, TP 191 / FN 38 in both), so
+the entire MCC gap is false-positive tiles — **125 against 111**.
+
+**This is a replication, not an exception.** Obs 274 recorded the same
+signature fifteen weeks earlier in the preregistered Phase 2b H7 sweep (340
+tiles, K=3, 2-of-3 consensus): MCC monotonic increasing in T in both tracks,
+driven by flat sensitivity against climbing specificity — image 0.892 → 0.858
+sensitivity against 0.169 → 0.478 specificity; text 0.927 → 0.922 against
+0.110 → 0.235. The § 12.4 ladder reproduces that signature at a **second
+corpus era, tile size, model, and replication regime**, and upgrades the
+evidence from per-condition bootstrap intervals to paired permutation tests.
+Obs 274's mechanism carries over unchanged: higher temperature buys inter-run
+disagreement, and a strict consensus threshold converts that disagreement
+into rejected hallucinations on empty tiles.
+
+**Why it took four months to see.** A fourth apparent layer sat on top of
+these three and was louder than all of them: E43's "T=0.7 >> T=1.0, ΔF1
+~+0.15, p<0.0001 at all pool sizes". That number was a coverage artefact — a
+240-tile arm scored against 487-tile bounds (Obs 384, E72) — and it
+masqueraded as a layer precisely because it spanned all three, appearing to
+be an object-F1 result, a consensus result, and a large one. Correcting it
+(E43 correction block, E72, the 23-condition board regeneration) did not just
+remove a wrong number; it **exposed a clean structure that the wrong number
+had been hiding**. The three layers were all on disk the whole time.
+
+### Why this matters
+
+1. **The layers license different configuration choices, and the choice is a
+   workflow choice.** A fully-automated extraction pipeline consumes
+   object-level F1 and should read layer 1: lower temperature. A
+   semi-automated tile-triage workflow — "show me the tiles with mounds and I
+   will pinpoint them by hand" — consumes tile-level discrimination and should
+   read layer 3: higher temperature. This is now filed as `discussion-seeds.md`
+   Seed 5, and it converts a metric disagreement into a practitioner-facing
+   recommendation rather than a caveat to be apologised for.
+2. **"Which temperature is best?" is not a well-formed question in this
+   project.** It has three correct answers depending on the metric and the
+   corpus, and any paper sentence of the form "temperature X is better" is
+   under-specified until it names both. The failure mode this Obs guards
+   against is a reader — or a future instance — finding one of the three
+   layers, treating it as *the* temperature result, and reporting the other
+   two as anomalies.
+3. **A large effect can suppress the discovery of true small ones.** The
+   +0.15 artefact did not merely add a false claim; while it stood, there was
+   no puzzle to investigate, because it "explained" temperature. The three
+   real layers only became visible once the loud wrong number was removed.
+   Correcting a defect is not only subtraction — budget for what the
+   correction reveals.
+4. **Metric choice is a research design decision, not a reporting
+   afterthought.** F1 aggregates over detections and rewards recall; tile-MCC
+   aggregates over tiles and charges recall for the empty tiles it pollutes.
+   Reporting only the optimised metric would have recorded "no difference"
+   (layer 2) where the tile-level evidence says "T=1.0, and clearly". This is
+   the concrete case the project's report-MCC-alongside-F1 rule exists for.
+5. **A registered finding can pre-empt a live surprise.** § 12.6 was
+   commissioned to answer "is the MCC result an exception to our
+   lower-temperature-is-better pattern?" The answer was already in the
+   register: Obs 274 had recorded the MCC reversal in April. The pattern was
+   never an MCC pattern — it is an F1 pattern — and the register knew that
+   before the question was asked. Searching the Obs register is cheaper than
+   commissioning an analysis.
+
+### Caveats / methodological notes
+
+- **Operating points are F1-selected throughout.** Every cell in the ladder
+  and the cost table is its arm's best F1@20 m point, with MCC read off it.
+  Within every arm's own sweep MCC keeps rising past the F1 optimum
+  (`T=0.7` N=30: 29-of-30 is best-F1 at MCC 0.3814, while 30-of-30 scores MCC
+  0.4234 on a lower F1). **MCC-optimal selection would move every row**, and
+  possibly by different amounts per arm. The direction of the ladder is robust
+  across the sweeps; the magnitudes are not selection-free.
+- **The T=0.7 arms alone carry the path-and-date confound.** T=0.7 ran
+  2026-03-24 via the asynchronous Batch API; **T=0.0, T=0.3 and T=1.0 all ran
+  2026-04-17 through the governed real-time path**. Every contrast involving
+  T=0.7 inherits § 8 caveats 2–3; the BH-surviving T=0.3-versus-T=1.0
+  contrast does not. The cleanest contrast in the ladder is also the
+  strongest one, so the confound cannot explain the layer-3 result away.
+- **The T=0.0 rungs are pool-depth confounded.** The arm has three runs, so
+  tests 7–9 vary temperature *and* consensus depth together. They are
+  mechanically valid paired tests but are **not** temperature p-values and
+  must not be read as such.
+- **Only the end-to-end MCC contrast survives BH.** Across the six
+  pool-matched tests, T=0.3-vs-T=1.0 gives q = 0.0030 and 0.0069; the adjacent
+  T=0.7-vs-T=1.0 rung is raw p = 0.0255 at N=5 but **q = 0.0510 — marginal**,
+  and p = 0.2114 at N=10. That q = 0.0510 is itself an instance of the
+  family-composition sensitivity recorded in **Obs 387**.
+- **Disjoint per-condition intervals were the weaker evidence, not the
+  stronger.** § 11.2 read non-overlapping BCa intervals as conservative for a
+  paired design; pairing does not ratify that at N=10, and the reason is
+  structural — the paired null is much wider because swapping labels on the
+  58–113 discordant tiles moves both aggregate tables at once. In this
+  codebase, disjoint per-condition MCC intervals are **not** a substitute for
+  a paired MCC test.
+- **The N=10 T=1.0 operating point is 9-of-10, not 10-of-10.** Each arm was
+  allowed its own best-F1 threshold. At 10-of-10 that arm scores F1@20 m
+  0.6509 and MCC 0.4273 — lower F1, *higher* MCC — so the choice is
+  conservative with respect to the MCC conclusion.
+- **Cost rider — non-inferiority framing only.** § 13 compares
+  cost-equivalent configurations: against T=0.7/N=30, the five-pass T=1.0
+  configuration is an **F1 dead heat** (0.6610 vs 0.6611 at 20 m, Δ +0.0001,
+  p = 0.9793) at **1.00× versus 5.52×** proposer spend ($1.45 vs $7.98 at 487
+  tiles), with MCC favouring the cheap arm by 0.0252 (p = 0.5306). The 20 m
+  null 95 % intervals are ±0.038–0.039 F1, so these tests **cannot resolve a
+  true difference smaller than about 0.04 F1**. This is a
+  non-inferiority-shaped result reported with a superiority-shaped test: read
+  it as "no detectable penalty", **never** as "proven equivalent". The MCC
+  column of the N=30 row is also selection-dependent — an MCC-selected N=30
+  operating point would reverse its sign. The portable cost figure is the
+  **pass ratio, 1 : 2 : 6**; the dollar ratio depends on a T=0.7 per-pass cost
+  that is scaled, not measured.
+- **The three layers are not a within-experiment decomposition.** Layer 1 is
+  a 55-map deployment corpus at 50 m with an extended, human-reviewed GT;
+  layers 2–3 are a 4-map gold-standard corpus at 384 px, 20/30 m, against the
+  gold reference. They are compatible, and they are not commensurable — no
+  arithmetic should be done across them.
+- **Layers 2 and 3 are exploratory.** Raw p-values, no registered BH family,
+  one model, one prompt, one thinking level. The paper's citable temperature
+  evidence remains the preregistered Phase 2b sweep (text +0.072, FDR
+  p = 0.004; image +0.014, ns), per § 8 caveat 6 and E72.
+- Paper-relevant sections: Results (temperature — cite Phase 2b for the
+  registered claim, the deployment oracle for the deployment claim);
+  Discussion (Seed 5, the workflow-dependent configuration choice; the
+  metric-choice argument); Limitations/errata (E43 correction block, E72).
+
+### Findable later
+
+temperature has three layers; three simultaneously true temperature results;
+object-F1 versus consensus-F1 versus tile-MCC; lower T better higher T better
+both true; T0.3 > T0.7 +0.020 p<0.001 55-map deployment; canonical GT +0.021
+0.836 versus 0.815; corrected F1 @ 50 m config axis; matched 487-tile ΔF1
+−0.0213 −0.0203 −0.0335 −0.0316 all n.s.; entire F1 ladder null; paired ΔMCC
+ladder nine contrasts all negative; T=0.3 vs T=1.0 ΔMCC −0.1319 p=0.0005
+−0.1023 p=0.0023; BH q 0.0030 0.0069; T=0.7 vs T=1.0 q 0.0510 marginal; MCC
+monotonic 0.2746 0.3148 0.4065; 0.3129 0.3655 0.4153; specificity climbs
+sensitivity flat; +0.213 +0.140 specificity gain; identical sensitivity 0.8341
+TP 191 FN 38; 125 versus 111 false-positive tiles; McNemar cross-check agrees
+nine rows; Obs 274 replicated second era tile size model; Phase 2b signature
+0.892→0.858 versus 0.169→0.478; E72 coverage confound masqueraded as fourth
+layer; +0.15 artefact hid the structure; T=0.0 pool-depth confounded
+descriptive; T=0.7 alone batch API 2026-03-24; T=0.0 T=0.3 T=1.0 realtime
+2026-04-17; cleanliness dividend; cost-equivalent dead heat 0.6610 versus
+0.6611 p=0.9793; 5.52× spend $1.45 versus $7.98; pass ratio 1:2:6;
+non-inferiority framing ±0.038 null intervals; MCC-optimal selection would
+reverse; 30-of-30 MCC 0.4234; discussion-seeds Seed 5 semi-automated tile
+triage; fully-automated extraction optimises object-F1; commits 6176b985e
+bc45133b4 9ebc9e523 7cf0a0237 7356f21fa; Session 125 2026-08-03.
+
+### Related observations and artefacts
+
+- **[[Obs 274]]** (tile-level MCC in the preregistered Phase 2b temperature
+  sweep increases monotonically with T) — the entry this Obs replicates, and
+  the reason layer 3 is not a surprise. Obs 274 established both the ordering
+  and the mechanism (flat sensitivity, climbing specificity, consensus voting
+  filtering diverse hallucinations) on Era-1 340-tile data at K=3. This Obs
+  reproduces the signature on a different era, tile size, model, and
+  replication regime, with paired permutation tests rather than bootstrap
+  intervals. Obs 274 also anticipated the practical conclusion — its closing
+  paragraph already separates "production pipelines optimising object-count
+  accuracy" from "applications needing spatial-coverage assessment".
+- **[[Obs 384]]** (the largest configuration effect in the study was a
+  coverage artefact) — the correction that made this entry possible, and the
+  entry this one completes. Obs 384 establishes that the +0.15 temperature
+  effect was a 240-versus-487-tile scope mismatch and reports the matched F1
+  nulls plus the unpaired MCC gap. This Obs adds the paired tests, the full
+  ladder, the deployment layer, and the synthesis — the claim that the record
+  has exactly three layers and that they are mutually compatible. Read Obs 384
+  for what went wrong and this entry for what is true instead.
+- **[[Obs 387]]** (marginal tier separations are family-size-dependent) — the
+  sibling entry from the same remediation. Its subject appears inside this
+  Obs's own statistics: the T=0.7-versus-T=1.0 N=5 contrast has raw
+  p = 0.0255 and BH q = 0.0510, which is exactly the near-threshold q whose
+  fragility Obs 387 characterises. Both entries descend from the E72
+  correction.
+- **[[Obs 116]]** (temperature as a critical hyperparameter) and
+  **[[Obs 177]]** (N=30 consensus erases temperature sensitivity) — the
+  object-level F1 lineage, both cited by Obs 274 as the findings its MCC
+  result inverts without contradicting. Obs 116's "T=0.0 optimal, monotonic
+  F1 degradation" is the ancestor of layer 1; Obs 177's N=30 result is why
+  layer 2's nulls at N=5/10 are not surprising in isolation.
+- **[[Obs 209]]** (paper framing — absolute magnitude then direction, and the
+  T=1.0 distinction) — the entry that built the "cite Phase 2b, not E43"
+  firewall protecting `docs/paper/**`, and which nonetheless carried the
+  confounded −0.17 magnitude across it (Obs 384 § 4, and the rider at commit
+  `7356f21fa`). Its framing instruction stands; its magnitude does not.
+- **[[Obs 141]]** (serendipitous error as abductive catalyst) — the
+  unexpected-data policy under which the original T=1.0 comparison was wired.
+  The policy is vindicated rather than damaged here: preserving the
+  unplanned T=1.0 data was correct, and the ladder that now carries layer 3
+  exists because of it.
+- **E72** (`protocol-errata.md:3254–3304`) — the registered disposition of
+  the coverage confound, whose remediation items 2–3 produced §§ 4 and 12–13
+  of the findings document. This Obs is the register-side synthesis of that
+  remediation's analytical output.
+- **Seed 5** (`docs/paper/discussion-seeds.md:127–156`) — the paper-side home
+  of the practical edge: tile-MCC as the natural metric for a semi-supervised
+  workflow, and cost-equivalent configurations in the Pareto story. Seed 5 is
+  where this Obs's layer-3 finding becomes a Discussion argument.
+
+**Artefacts**: `results/e43-matched-temperature/findings.md` (§ 4, § 8,
+§ 12.3–12.7, § 13.1–13.5) with `n{5,10}-{20,30}m/pairwise_permutation_result.json`,
+`paired-mcc/`, `ladder-f1/`, `cost-equivalent/`, and
+`paper-eval/t{07,10}-n{5,10}-*/evaluation.json`;
+`results/deployment-oracle-2026-06-06/deployment-oracle-findings.md` (§ 3,
+§ 4, § 4b) with `config-axis-fixedunion/`, `config-axis-permutation/`, and
+`canonical-rescore/`; `results/phase3a-text-matrix/` (the pre-existing
+threshold sweeps that supplied every operating point);
+`results/paper-eval/mcc/phase2b/` (Obs 274's artefacts);
+`results/retest/phase2b/analysis_summary.md` (the citable temperature
+evidence); `scripts/paired_mcc_permutation.py` and
+`scripts/pairwise_permutation_test.py` (`run_permutation_test_mcc`, added
+`62d1173af`); `docs/paper/discussion-seeds.md` (Seed 5);
+`docs/methodology/preregistration/protocol-errata.md` (E72, E43 correction
+block); commits `6176b985e`, `bc45133b4`, `9ebc9e523`, `7cf0a0237`,
+`7356f21fa`, and `2f3ef020a`.
+
+## Observation 387: Marginal tier separations are family-size-dependent — the March 20 m board's solitary Tier 1 dissolved when three unrelated cells left the family, with no change to either condition's F1, Δ, or raw p (Session 125, 2026-08-03)
+
+*Source anchors: every figure below was re-read on 2026-08-03 from
+`results/e43-board-regen/summary.md` (§ 1 the drop table, § 2 gates A–D, § 3
+movement and BH status changes, § 3.1 the non-E72 order difference, § 4 the
+smaller families, § 5 what changed and what did not),
+`results/e43-board-regen/bh-families/families_recomputed.md` (the three
+per-family tables, read row by row), and
+`results/e43-board-regen/leaderboard-{20m,30m}/tiers.md`, all at commit
+`2f3ef020a` and produced from tree state `bc45133b4` by
+`scripts/regen_e43_board.py`. Comparison family sizes were read from
+`results/era1-leaderboard/tiering_20m.md` (`:5–6`) and
+`results/55map-leaderboard/55map-leaderboard-50m.md` (`:3`). Governing
+disposition re-read at `docs/methodology/preregistration/protocol-errata.md`
+E72 (`:3254–3304`, remediation item 3).*
+
+### The finding
+
+Benjamini–Hochberg (BH) adjustment is computed **within a declared family**,
+so an adjusted q-value is a joint property of the pair *and* the family it was
+corrected in. When a q sits near 0.05, that dependence stops being academic:
+the same pair, with the same data and the same raw p-value, can be
+significant in one family and not in another.
+
+The E72 remediation produced a clean natural experiment for this. Three
+coverage-confounded `flash-min-text-t10` cells were dropped from the March
+26-condition round-robin. **No test was re-run and no condition was
+re-scored** — the only thing that changed was who else was in the family:
+
+| board | conditions before | dropped | after | pairs before | dropped | pairs after |
+| :--- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `leaderboard-20m` | 26 | 3 | 23 | **325** | 72 | **253** |
+| `leaderboard-30m` | 25 | 3 | 22 | 300 | 69 | 231 |
+
+**The 20 m board's solitary Tier 1 did not survive the shrink.** The published
+board's top tier held one condition alone, and that solitude rested entirely
+on a single leader-versus-runner-up pair:
+
+| | Condition A | Condition B |
+| :--- | :--- | :--- |
+| condition | `flash-high-text-16-of-30--flash-min-vf (t=0.2)` | `flash-high-text-4-of-5--flash-min-vf (t=0.15)` |
+| F1 | 0.890 | 0.864 |
+| raw p | **0.0398** | (unchanged) |
+| q, 325-pair family | **0.0488** — significant | |
+| q, 253-pair family | **0.0503** — n.s.  | |
+
+The runner-up moved from Tier 2 to Tier 1, the board went **9 tiers → 8**, and
+**not one number belonging to either condition changed**: same F1, same
+precision, same recall, same detection count, same observed ΔF1, same raw
+permutation p-value (§ 5). The three cells that left were **not parties to
+this pair** — they are `flash-min-text-t10` conditions, and the pair is two
+`flash-high-text` PV conditions. Their entire causal contribution was to be
+counted.
+
+**A second, independent marginal flip occurred in a different family.** The
+same confounded p-values also entered the smaller declared families, and the
+`results/pairwise/20m` `confirmatory` family (26 members → 23 retained,
+BH-significant 17 → 16) recorded one status change of its own:
+
+| group | question | condition A | condition B | raw p | q (published) | q (recomputed) |
+| --: | :--- | :--- | :--- | ---: | ---: | ---: |
+| 7 | N=30 vs N=10 (HIGH text) | Flash HIGH text 26-of-30 | Flash HIGH text 9-of-10 | 0.0375 | **0.0488** | **0.0507** |
+
+Two different pairs, in two different families, at two different raw p-values
+(0.0398 and 0.0375), both published at q = 0.0488 to four decimal places, both
+landing just above 0.05 when their families shrank. The coincidence in the
+published q is arithmetic accident; the shared fragility is not — both were
+sitting within 0.002 of the threshold, where a family-size change of a few
+per cent is decisive.
+
+**Nothing else moved.** At 30 m the two conditions were **already tied in
+Tier 1** (with a third, `flash-high-text-4-of-5--flash-medium-vf (t=0.95)`),
+and that board recorded **zero** BH status changes among its 231 retained
+pairs. The `factor-analysis` `temperature` family (6 members → 2 retained)
+kept its single significant result. Five further families containing no
+confounded member were asserted clean rather than assumed so.
+
+**For scale, the project's declared families differ by two orders of
+magnitude**, so the same raw p can land anywhere:
+
+| family | size |
+| :--- | ---: |
+| 55-map deployment board | 28 pairs (24 significant) |
+| `pairwise/20m` `confirmatory` | 26 members → 23 |
+| March 20 m round-robin | 325 pairs → 253 |
+| Era-1 board | 3,321 pairs (2,351 significant, 10 tiers) |
+
+### Why this matters
+
+1. **Any "sole Tier 1" or "distinguishable from the runner-up" claim near the
+   threshold is a claim about the family, not just the pair.** The March 20 m
+   board's headline structure — one condition standing alone at the top — was
+   never a property of that condition's performance. It was a property of a
+   325-pair family, and it evaporated on a membership change that had nothing
+   to do with it. Paper claims of this form must **name the family and its
+   size**, and should state that the separation is marginal.
+2. **The stability question is the right one to ask before publication.** The
+   useful test is not "is q < 0.05?" but "**would this verdict survive a
+   defensible change to family membership?**" Membership is a design choice —
+   which contrasts are confirmatory, which board a condition belongs to,
+   whether a caveated cell is retained — and reasonable analysts differ. A
+   verdict that flips under such a change should be reported as marginal
+   regardless of which side of 0.05 it currently sits on.
+3. **The scale of the intervention was tiny relative to the effect.** Removing
+   3 of 26 conditions (72 of 325 pairs, 22 %) moved a q by 0.0015 — and that
+   was enough. The lesson is about proximity, not magnitude: at q ≈ 0.049 the
+   verdict is fragile to almost anything, so the flag should be triggered by
+   the **distance to threshold**, not by the size of any anticipated change.
+4. **Tier boundaries inherit the fragility of their weakest pair.** Greedy-
+   clique tiering converts pairwise verdicts into a partition, so a single
+   marginal pair can decide whether two conditions share a tier — and the
+   published board contained at least one other such boundary, resting on
+   `FH text 26/30` versus `FH text 9/10` at q = 0.046 (§ 3.1). Tier
+   *structure* is therefore more brittle than the underlying F1 ordering,
+   which did not move at all.
+5. **This is what a well-instrumented regeneration buys.** Because the
+   regeneration re-ran zero permutation tests and passed four validation
+   gates first — including Gate B, which reproduced the *published*
+   26-condition board (265/325 significant, 9 tiers) before its output was
+   trusted on the reduced board — the family-size effect could be isolated
+   cleanly from every other possible cause. Attribution this sharp is only
+   available when the reimplementation is proved faithful first.
+
+### Caveats / methodological notes
+
+- **Scope: this concerns the March 26-condition round-robin board only.** The
+  **Era-1**, **n1-baseline**, and **55-map** boards have their own registered
+  families, were not regenerated, and contain none of the dropped
+  `flash-min-text-t10` conditions (verified by search on the Era-1 and 55-map
+  board artefacts). Nothing here licenses a claim about their tiers.
+- **One 20 m difference from the published snapshot is *not* E72.**
+  Greedy-clique tiering is order-dependent, and the published snapshot ranks
+  `flash-high-image-3-of-5--flash-min-vf (t=0.15)` (F1 0.778) out of F1 order
+  at rank 10. Processed in strict F1-descending order it sits one tier lower
+  (3 → 4) **for reasons unrelated to the coverage confound**. Gate D proves
+  the attribution: replaying the clique under the published rank order
+  reproduces the published tier sizes (1, 6, 3, 2, 4, 4, 1, 3, 2) exactly.
+  Do not book that movement against E72.
+- **This is a demonstration, not an estimate.** Two flips in one remediation
+  says the mechanism is real and reachable in practice; it does not quantify
+  how often near-threshold verdicts flip in this project generally. No sweep
+  over plausible family compositions was run.
+- **The direction is not always dissolution.** Here a shrinking family made a
+  q larger, because BH's adjustment depends on the rank of the p-value within
+  the family and on how many members it has. A family change can equally
+  create a separation. "Marginal" means unstable, not "actually null".
+- **Membership was derived from provenance, not labels.** The dropped
+  condition carries five aliases across the repository, so membership came
+  from each test artefact's recorded `condition_*.source`. Any replication of
+  this analysis that matches on labels will get a different family and
+  therefore different q-values — which is, recursively, the point.
+- **The two flips are not independent findings about the same test.** They are
+  different pairs in different families; the confirmatory-family pair
+  (`26-of-30` vs `9-of-10`, raw p 0.0375) is a consensus-depth contrast, and
+  the board pair (raw p 0.0398) is a PV leaderboard contrast. They should be
+  cited separately.
+- Paper-relevant sections: Methods (multiple-comparison procedure — declare
+  each family and its size); Results (any tier claim on the 20 m board, which
+  must now be reported as a two-condition Tier 1); Limitations (marginal
+  separations and their family dependence).
+
+### Findable later
+
+marginal tier separations family-size dependent; BH q depends on family
+composition; solitary Tier 1 dissolved; q 0.0488 to 0.0503; q 0.0488 to
+0.0507; two marginal flips one remediation; 325 pairs to 253 pairs; 26
+conditions to 23; 9 tiers to 8; raw p 0.0398 unchanged; raw p 0.0375 group 7
+N=30 vs N=10 HIGH text; flash-high-text-16-of-30--flash-min-vf t=0.2 F1 0.890;
+flash-high-text-4-of-5--flash-min-vf t=0.15 F1 0.864; no change to F1 delta or
+raw p; dropped cells unrelated to the pair; flash-min-text-t10 three cells;
+confirmatory family 26 members 17 to 16 significant; 30 m board already tied
+zero status changes; 231 retained pairs; factor-analysis temperature family 6
+to 2; name the family in the paper; distance to threshold triggers the flag;
+greedy clique order dependence Gate D tier sizes 1 6 3 2 4 4 1 3 2; Gate B
+reproduces 265/325 significant 9 tiers; flash-high-image-3-of-5 tier 3 to 4
+not E72; Era-1 board 3321 pairs 2351 significant; 55-map board 24 of 28 pairs;
+n1-baseline board untouched; membership from condition source provenance not
+labels; regen_e43_board.py; E72 remediation item 3; commit 2f3ef020a
+bc45133b4; Session 125 2026-08-03.
+
+### Related observations and artefacts
+
+- **[[Obs 384]]** (the largest configuration effect in the study was a
+  coverage artefact) — the parent finding. Obs 384 recorded the 20 m board
+  flip as "a side-effect of the remediation worth its own line" and drew the
+  general point in its § "Why this matters" item 5. This entry is that line
+  promoted to its own Obs, with the second flip added (the `confirmatory`
+  family's group 7 pair, which Obs 384 does not report), the family-size
+  comparison across the project's boards, and the scope statement about which
+  boards were untouched. Cite Obs 384 for why the cells were dropped and this
+  entry for what the drop revealed about tiering.
+- **[[Obs 386]]** (the temperature record has three simultaneously-true
+  layers) — the sibling entry from the same remediation, and an independent
+  instance of the phenomenon described here. Its paired-MCC set contains a
+  T=0.7-versus-T=1.0 contrast at raw p = 0.0255 whose BH q is **0.0510** —
+  significant before correction, marginal after, in a six-test family. Two
+  entries landed on the same day, from unrelated analyses, both carrying a q
+  within 0.002 of the threshold: near-threshold verdicts are common enough in
+  this project to warrant a standing reporting rule rather than case-by-case
+  judgement.
+- **E72** (`protocol-errata.md:3254–3304`) — the governing disposition. Its
+  remediation item 3 is the instruction this board regeneration executes:
+  file the matched cells as a first-class analysis and regenerate the March
+  round-robin as a 23-condition board with q-values recomputed over the
+  retained pairs, rather than splicing replacements in. The choice between
+  "drop and regenerate" and "splice" is itself a family-composition decision,
+  which is why the ruling had to be made by the PI rather than by the
+  analysis.
+- **`reports/verification/family-fdr-registration.md`** — the project's
+  pre-execution registration for the eight-hypothesis BH-FDR family (one
+  primary test per hypothesis, with an all-contrasts correction as a reported
+  sensitivity). It is a **different** family from any board discussed here,
+  and that is exactly why it matters to this entry: the project maintains
+  several declared families simultaneously, BH is applied within each, and a
+  contrast's q therefore depends on which registration it is being read
+  under. The registration document is the model for what "name the family"
+  should look like in practice — memberships fixed and justified before
+  inspection of the ranking.
+
+**Artefacts**: `results/e43-board-regen/summary.md` (§§ 1–5) with
+`leaderboard-{20m,30m}/{leaderboard,tiers}.{md,csv}`,
+`leaderboard-{20m,30m}/pairwise_results_fdr.csv`,
+`leaderboard-{20m,30m}/run_manifest.json`, and
+`bh-families/families_recomputed.{md,csv,json}`;
+`scripts/regen_e43_board.py` (the four gates);
+`results/paper-tables/leaderboard_tiers_20m.md` (the published snapshot the
+regeneration supersedes); `results/pairwise/{20m,30m}/` (the unmodified
+per-pair permutation artefacts — no test was re-run);
+`results/factor-analysis/factor_analysis_results.json` (the `temperature`
+family); `results/era1-leaderboard/tiering_20m.md`,
+`results/55map-leaderboard/55map-leaderboard-50m.md`, and
+`results/paper-tables/n1_leaderboard.csv` (the untouched boards);
+`reports/verification/family-fdr-registration.md`;
+`docs/methodology/preregistration/protocol-errata.md` (E72 remediation item
+3); `reports/e43-coverage-confound-remediation-2026-08-02.md` (the 148-artefact
+inventory); commits `2f3ef020a` and `bc45133b4`.
