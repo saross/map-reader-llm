@@ -24435,3 +24435,296 @@ citable temperature evidence);
 escalation that started this); commits `7035b19db`, `6176b985e`, `9680893a9`,
 `a6f58d1b7`, `166bf7704`, `672836a00`, `ec763f9d8`, `bc45133b4`, `2f3ef020a`,
 `4e1988462`, and `ec00c2ae0` / `964182b85` (the carry-forward provenance).
+
+## Observation 385: The census that contaminated Obs 383's exposure table was never run by the harness — `experiment_intent.md` is 174/174 tracked on both machines, and the guard built in response mis-stamps the one row that genuinely flips (Session 125, 2026-08-03)
+
+*Source anchors: every figure below was re-measured on 2026-08-03, on
+amd-tower locally (at `b21ce4a1c`) and on sapphire over read-only `ssh`
+(at `9ebc9e523`) — not taken from the S125 draft or from Obs 383.
+`outputs/55maps-text-min-n10-uplift/proposer-all/` (`ls -la`);
+`reports/verification/c4-recompute-report.json` at `c4aeac922`
+(`_meta.host`, `_meta.counts`, the 29 `machine_scope`-stamped rows) and
+its S124 predecessor at `0f1bd549f` read back out of the commit;
+`reports/verification/apparatus/recompute-script-registry.json` at
+`7907c2f3f` (`_meta.tranche_counts`, `_meta.revision`, the `glob-count`
+specs); `scripts/lib_c4_runners.py` (`:91–132` `glob_entries`, the
+`crosses_symlink` filter at `:114–123`);
+`scripts/recompute_c4_claims.py` (`:199–228` `_census_scope`, `:425` its
+use, `:543` the host stamp); `tests/test_lib_c4_runners.py` (`:114–120`);
+commit `52a889b87` (the S125 census-hygiene commit, 2026-08-02 12:31 +1000);
+`reports/verification/c4-triage/mismatch-triage-2026-08-02.json`
+(`instrument_findings` → `symlink-census-method`) at `629ea3c08`. The
+pre-fix runner was re-executed from `52a889b87^` against the live tree
+rather than reasoned about.*
+
+### The finding
+
+Obs 383's latent-exposure paragraph reported the four
+`outputs/**/experiment_intent.md` census rows as counting "184 live
+files, **174 tracked**", with "the 10 untracked files, all under
+`outputs/55maps-text-min-n10-uplift/proposer-all/run_{1..10}/`"
+agreeing across machines "by luck". Re-measured on both hosts, **none
+of that sub-example holds**.
+
+| census of `outputs/**/experiment_intent.md` | amd-tower | sapphire |
+| :--- | --: | --: |
+| `find outputs -name experiment_intent.md` | **174** | **174** |
+| `find -L outputs -name experiment_intent.md` | 184 | 184 |
+| `git ls-files outputs \| grep 'experiment_intent.md$'` | **174** | **174** |
+| live-but-untracked / tracked-but-absent | **0 / 0** | — |
+
+The live set and the tracked set are not merely equal in cardinality:
+they are the **same set**, both differences empty. The `proposer-all`
+entries are ten **symlinks** created 2026-07-15, present identically on
+both hosts, and `find` without `-L` returns **zero** intent files
+beneath them. Each of the ten paths `find -L` adds resolves to a real
+file that is already inside the 174 and is git-tracked — checked one at
+a time, ten for ten. So the "10 untracked files" were re-counts, not
+artefacts.
+
+**The split of those symlinks is also not what the draft recorded**, and
+the correction matters for anyone re-deriving the census:
+
+| link | target | tree |
+| :--- | :--- | :--- |
+| `run_1` – `run_5` | `outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_N` | cross-tree |
+| `run_6` – `run_10` | `outputs/55maps-text-min-n10-uplift/proposer/run_N` | same-tree |
+
+Five and five, not nine and one. All ten are stored as **absolute**
+paths beginning `/home/shawn/Code/map-reader-llm/outputs/…`, so they
+resolve on sapphire only because both hosts happen to check the repo out
+at the identical absolute path.
+
+**And the harness never produced 184.** This is the part that inverts
+the draft's diagnosis. The S124 canonical report at `0f1bd549f` already
+records `actual: 174.0` for all four rows (`006-output-dir-standard`
+`#23[0]`, `#23[1]`, `#33[1]`, `#38[1]`), and the registry's own spec
+notes read "Executed 174 (document quotes '139')". Re-executing the
+pre-fix runner from `52a889b87^` against the live tree, with
+`REPO_ROOT` repointed at the repository:
+
+| glob pattern | pre-fix runner | post-fix runner | `find` |
+| :--- | --: | --: | --: |
+| `**/experiment_intent.md` (the registered spec) | **174** | 174 | 174 |
+| `*/proposer-all/*/experiment_intent.md` | **10** | **0** | 0 |
+
+On Python **3.13.3**, `Path.glob` does *not* recurse `**` through
+directory symlinks — `recurse_symlinks` defaults to `False`, and passing
+`True` reproduces 184 exactly. A non-`**` wildcard segment is a
+different matter: ordinary path resolution walks straight through a
+symlinked directory, which is where the 10 phantom hits come from. So
+the fix in `52a889b87` is right and worth keeping, but its stated
+rationale is wrong on this example: `glob_entries`' docstring
+(`:101–107`) and the commit message both assert that `Path.glob`
+traverses symlinks on 3.13 and that this "inflated the
+`experiment_intent.md` census 174 → 184". The registered spec was never
+inflated. The 184 came from a hand-run follow-symlinks census performed
+while Obs 383 was being written, and it entered the Obs without passing
+through the instrument that would have contradicted it.
+
+**The guard now has a false negative on precisely the row Obs 383 was
+about.** `_census_scope` stamps a row `repo-reproducible` when
+`census_tracked == census_total`. In the current canonical report
+(`c4aeac922`, `_meta.host` = `sapphire`, 6,539 rows, 2402 MATCH / 135
+MISMATCH / 2285 SKIPPED / 1709 UNRESOLVED / 8 APPROX), 29 rows carry the
+stamp:
+
+| `machine_scope` stamp, sapphire report `c4aeac922` | rows |
+| :--- | --: |
+| `repo-reproducible` (`census_tracked == census_total`) | 27 |
+| `machine-relative` (some counted entry untracked) | 2 |
+
+The two flagged rows are the `pv-diag-384` pair `006#32[1]` and
+`006#34[1]`, at `census_total` 127,281 / `census_tracked` 1,538. But
+`037#37[0]` — the single row whose verdict Obs 383 showed flipping
+MATCH↔MISMATCH by machine — is stamped **`repo-reproducible`**, because
+on sapphire the crops directory is empty and `0 == 0` satisfies the
+test. A zero-cardinality census is the maximally machine-relative case,
+and the guard reads it as the safest.
+
+**Obs 383's core mechanism was re-verified today and stands.** Both
+figures reproduce on the current trees: `outputs/h11/pv-diag-384` holds
+**48,707** files on amd-tower and **127,281** on sapphire, and
+`results/gs-125m-fp-side-6-crop-review/crops` holds **6** files on
+amd-tower and **0** on sapphire, with nothing under it tracked. The
+cross-machine finding is intact; only its fourth, illustrative example
+is withdrawn.
+
+### Why this matters
+
+1. **A correction is only as good as the instrument that produced it.**
+   Obs 383's headline was itself an instrument finding, and its
+   sub-example was nevertheless a hand-run measurement that the
+   instrument would have refused. The register's own recompute report
+   held the contradicting figure at the time of writing, in a committed
+   file, under the exact claim identifiers the Obs cited. Checking a
+   worked example against the harness before shipping it costs one
+   lookup and would have caught this.
+2. **The remediation was built on the wrong mechanism and still needs
+   keeping.** `crosses_symlink` closes a real hole — 10 versus 0 on a
+   non-`**` pattern — so the code is correct even though its rationale
+   is not. The hazard is that the docstring and commit message now teach
+   a false fact about Python 3.13 to every future reader of the census
+   layer, and a future maintainer who checks the claim will find it
+   false and may revert the guard with it. **Carry-forward: correct
+   `scripts/lib_c4_runners.py:101–107` in a separate commit**, restating
+   the mechanism as "non-`**` wildcard segments resolve through
+   symlinked directories, and `recurse_symlinks=True` recurses through
+   them" rather than a blanket traversal claim.
+3. **`tracked == total` is the wrong predicate at zero.** The guard
+   answers "is every counted entry in the repository?" when the question
+   the GATE 3 scope decision needs is "would another host count the same
+   entries?". Those coincide except at `census_total == 0`, where they
+   diverge maximally. **Carry-forward: `census_total == 0` should stamp
+   `machine-relative` (or a third value such as `empty-census`), not
+   `repo-reproducible`** — one comparison, and it converts the guard's
+   worst false negative into its loudest flag.
+4. **A single-host stamp cannot settle a cross-host question.** Every
+   `machine_scope` value in the current report was computed on sapphire.
+   A spec whose matched set is non-empty on amd-tower and empty on
+   sapphire is stamped clean; the reverse case would be stamped clean
+   too. The 27/2 split is therefore a lower bound on the exposure, not a
+   measurement of it. **Carry-forward: the six specs Obs 383 classified
+   "partially tracked" must be re-measured symlink-consistently and on
+   both hosts before the GATE 3 scope decision consumes any version of
+   that table** — the numbers in Obs 383's 23/6/1 table should not be
+   quoted in the meantime.
+
+### Caveats / methodological notes
+
+- **This Obs corrects one sub-example, not Obs 383.** Obs 383's
+  headline (1938/123 sapphire versus 1943/122 amd-tower, seven divergent
+  rows, one verdict flip), both named mechanisms, and all four `044`
+  never-committed-anchor rows are untouched and re-verified. What is
+  withdrawn is the "184 live files, 10 untracked, agreed by luck"
+  sentence and the 23-fully-tracked / 6-partial / 1-zero table that
+  sentence sat inside. Obs 383 itself is not edited — append-only
+  register.
+- **The four rows are still MISMATCHes, for an unrelated reason.** All
+  four record `value_verbatim: "139"` against `actual: 174.0` in both
+  the S124 and the current report. That is ordinary document drift in
+  `docs/methodology/output-directory-standard.md` (`:325`, `:325`,
+  `:418`, `:444`), not a scope problem, and it is not addressed here.
+  Obs 383's "agreed by luck" reading was right that they agreed and
+  wrong about why: they agree because the census is fully tracked.
+- **The registry has drifted since Obs 383 quoted it.** Obs 383 cites
+  "30 `glob-count` specs (out of 90 census specs overall, drawn from 488
+  `recompute-script` rows)". At `7907c2f3f` the registry holds **88**
+  census specs — 29 `glob-count`, 35 `json-subset-count`, 21
+  `json-aggregate`, 3 `regex-count` — after wave-3 moved two specs to
+  named families (`_meta.revision`). Any restatement of the exposure
+  denominator should read 29 of 88, not 30 of 90.
+- **`find -L` was used as the reference for "the follow-symlinks
+  reading", not as a claim about what any tool did.** Nobody has
+  recovered the exact command that produced 184 during Obs 383's
+  authoring; `find -L` and `Path.glob(..., recurse_symlinks=True)` both
+  return 184 here, and either would explain it.
+- **Two hosts, one symlink layout.** The ten links exist identically on
+  both machines, which is why the contaminated figure agreed across
+  hosts and looked robust. A third host without them would have exposed
+  it immediately — cross-machine agreement between two hosts configured
+  by the same person is weak evidence of machine-independence, which is
+  the lesson Obs 383 drew and, ironically, the mechanism that hid this.
+- Paper-relevant sections: Methods (verification apparatus — scope,
+  reproducibility, and the symlink-consistency of census primitives);
+  any statement of how many recomputation specs are reproducible from
+  the repository alone; Limitations (what an external reader can re-run).
+
+### Findable later
+
+symlink census contamination; follow-symlinks census inflated 174 to
+184; experiment_intent.md 174 tracked 174 live same set; proposer-all
+run_1 to run_10 symlinks 2026-07-15; run_1-5 cross-tree
+55maps-text-min-generalisation detect_brief-text, run_6-10 same-tree
+n10-uplift proposer; absolute symlink targets /home/shawn/Code/map-
+reader-llm; find versus find -L versus git ls-files; Python 3.13
+Path.glob recurse_symlinks defaults False; `**` does not traverse
+directory symlinks; non-`**` wildcard segment resolves through symlinked
+dir 10 versus 0; pre-fix runner re-executed at 52a889b87^ returned 174;
+harness never produced 184; glob_entries crosses_symlink filter;
+docstring rationale wrong carry-forward; test_glob_count_ignores_dir_
+symlinks; _census_scope census_total census_tracked machine_scope;
+zero-cardinality census stamped repo-reproducible false negative;
+037#37 crops 6 amd-tower 0 sapphire stamped repo-reproducible; 27
+repo-reproducible 2 machine-relative of 29; pv-diag-384 127,281 total
+1,538 tracked; 48,707 amd-tower; Obs 383 23 fully tracked 6 partial 1
+zero withdrawn; registry 29 glob-count of 88 census specs not 30 of 90;
+006-output-dir-standard #23[0] #23[1] #33[1] #38[1] quoted 139 actual
+174; single-host stamp cannot settle cross-host question; GATE 3 scope
+decision re-measure requirement; commits 52a889b87 c4aeac922 0f1bd549f
+7907c2f3f 629ea3c08; Session 125 2026-08-03.
+
+### Related observations and artefacts
+
+- **[[Obs 383]]** (a quantitative claim about an uncommitted artefact
+  has no canonical referent tree — 1938/123 sapphire versus 1943/122
+  amd-tower) — the entry this corrects, and the entry whose core it
+  confirms. The correction is narrow and the confirmation is broad: two
+  independent re-measurements today reproduce both of Obs 383's
+  mechanisms exactly, while its fourth example turns out to be the one
+  figure in the entry that never came from the instrument. Read the two
+  together as a single claim with a smaller worked example, not as a
+  retraction. There is a second-order irony worth keeping: Obs 383's
+  thesis is that a census over content the repository cannot see is
+  machine-relative, and its own contaminated example was a census whose
+  content the repository *could* see entirely.
+- **[[Obs 382]]** (a semantics-driven repair leaves the MISMATCH count
+  alone; 255 pathless values repaired, the same 104 rows row-for-row) —
+  the honesty-machinery sibling, and the reason this correction is
+  cheap. Obs 382's invariant is that the repair apparatus cannot read
+  its own scorecard, so a repair cannot flatter itself. The same
+  separation is what made the S124 report a usable witness against the
+  Obs written alongside it: the report recorded 174 while the prose
+  recorded 184, and neither could edit the other. An apparatus that
+  cannot flatter itself is also an apparatus that can contradict its
+  author.
+- **[[Obs 384]]** (the largest configuration effect in the study was a
+  coverage artefact — matched-scope ΔF1 −0.021 / −0.034, n.s.) — the
+  other correction landed from this session's blind passes, and the
+  pattern the pair establishes. Obs 384 corrected a *result* claim
+  carried across four register entries; this one corrects a *method*
+  claim inside a single entry. Both were produced by a pass that
+  re-derived from source instead of inheriting the prior pass's
+  numbers, and in both the escalating or proposing pass mis-anchored a
+  figure the executing pass caught. Three consecutive sessions of blind
+  passes correcting the record (Obs 381, 384, and this) is enough to
+  treat re-derivation-at-hand-off as load-bearing rather than
+  ceremonial.
+- **[[Obs 379]]** (a silent anchor-path fallback manufactured confident
+  wrong-quantity comparisons — the instrument, not the document) — the
+  structural precedent, inverted. Obs 379 is a defective instrument
+  producing wrong answers about correct documents; this is a correct
+  instrument being bypassed by a hand measurement that produced a wrong
+  answer about a correct tree. The shared lesson is that a verification
+  programme's numbers should enter its prose *through* the instrument,
+  and any figure that did not is an unlabelled exception.
+- **[[Obs 381]]** (wrong-control sampling — a set-level claim checked on
+  one convenient member) — the same sampling error one level up. There,
+  the convenient member; in Obs 383, the convenient working tree; here,
+  the convenient shell command. Each time the answer was true of what
+  was measured and false of what was claimed.
+
+**Artefacts**: `outputs/55maps-text-min-n10-uplift/proposer-all/`
+(the ten symlinks, `ls -la`, mtime 2026-07-15) with targets in
+`outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_{1..5}`
+and `outputs/55maps-text-min-n10-uplift/proposer/run_{6..10}`;
+`reports/verification/c4-recompute-report.json` at `c4aeac922`
+(`_meta.host` `sapphire`, 2402/135/2285/1709/8 over 6,539 rows; the 29
+`machine_scope`-stamped rows, including `037#37[0]` at `census_total` 0)
+and at `0f1bd549f` (the S124 canonical run recording `actual` 174.0 for
+the four intent rows); `reports/verification/apparatus/recompute-script-registry.json`
+at `7907c2f3f` (`_meta.tranche_counts.CENSUS_specced` 88; 29
+`glob-count` specs; the "Executed 174" spec notes; `_meta.revision`);
+`scripts/lib_c4_runners.py` (`:91–132` — the fix, and `:101–107` the
+docstring flagged for correction);
+`scripts/recompute_c4_claims.py` (`:199–228`, `:425`, `:543`);
+`tests/test_lib_c4_runners.py` (`:114–120`, tier 1, passing);
+`reports/verification/c4-triage/mismatch-triage-2026-08-02.json`
+(`instrument_findings` → `symlink-census-method`, the wave-3 escalation
+that produced this);
+`archive/verification-drafts/obs-candidate-symlink-census-2026-08-02.md`
+(the PI-approved draft this entry supersedes, archived on landing);
+`docs/methodology/output-directory-standard.md` (`:325`, `:418`, `:444`
+— the "139" the four rows still fail against); commits `52a889b87`
+(census hygiene), `629ea3c08` (wave-3 triage), `7907c2f3f`, `c4aeac922`,
+and `0f1bd549f`.
