@@ -86,9 +86,17 @@ re-run vs re-word).
    0.8333). NEW from the re-run: **W6-E9** (cand 2397 rescued through
    TWO channels — review-CSV row + curator GT point at 0.00 m;
    `build_extended_gt` has no coincidence check, so HEAD-GT + CSV
-   analyses double-count it as +1 FN — sweep + durable fix needed) and
-   **W6-E10** (buffer-100m-diagnostics summary predates the ENTIRE
-   recovery — regenerate-vs-banner decision).
+   analyses double-count it as +1 FN) — [x] **RESOLVED 2026-08-04**:
+   sweep found a SECOND twin (cand 4264; true cutoff 00:32:53Z) and
+   that build_canonical_gt LAUNDERS the class (8 Track-2 cells carry
+   2 spurious FN, 4th-decimal, no conclusion moves, NO re-runs
+   required); fix chain `1de559119`→`30a902f56`→`fcfc90bff` (5 m
+   tolerance verified 1/2/2/0 across pipelines; canonical builder
+   gains a pre-clustering student-layer guard; diagnose_100m_buffer
+   commented). Residuals documented in the triage record. PENDING PI:
+   regenerate the canonical GT + 8 cells + boards now, or bundle with
+   **W6-E10** (buffer-100m-diagnostics predates the ENTIRE recovery —
+   regenerate-vs-banner) at S127 — recommended: bundle at S127.
 2. **W5-E1 + W6-E2 (instrument)**: era-selection redesign (per-claim
    `git log -S`/blame hybrid + disagreement flags +
    anchor-absent-at-era status; void the two false era-defect fields
