@@ -1449,3 +1449,54 @@ def test_e55_corrected_verifier_pass_lists_runlog_in_provenance(registry):
     files = passes[0]["provenance"]["source_files"]
     assert "outputs/verifier-t-pilot/T0.5/run.log" in files
     assert any(f.endswith("run.meta.json") for f in files)
+
+
+@pytest.mark.tier1
+def test_multi_meta_pass_unions_completed_deterministically(tmp_path, monkeypatch):
+    """D6 (2026-08-03): a pass with a primary meta plus a dated recovery
+    fragment must report its CUMULATIVE completed coverage identically on
+    every host. The unsorted glob made meta_files[0] a filesystem-order
+    lottery (partial/486 on one machine, ok/487 on another for
+    flash35-pv-2x2::flash35-min-text-1of10::run3); the fix sorts the glob
+    and unions completed_items across sibling metas, with status from the
+    effective shortfall."""
+    import scripts.generate_post_run_report as gpr
+
+    run_1 = tmp_path / "outputs" / "testrun" / "proposer" / "poolA" / "run_1"
+    run_1.mkdir(parents=True)
+
+    def meta(completed, failed_n, dispatched):
+        return {
+            "configuration": {"model": "test-model", "thinking_level": "minimal"},
+            "execution_stats": {
+                "completed_items": completed,
+                "items_processed": len(completed),
+                "items_failed": failed_n,
+            },
+            "per_item_metadata": [
+                {"item_id": f"t{i}", "model_used": "test-model"}
+                for i in range(dispatched)
+            ],
+            "usage_stats": {},
+            "cost_estimate": {},
+        }
+
+    # Fragment named to sort FIRST; primary sorts second. Counts must
+    # still union regardless of which file the sorted glob yields first.
+    (run_1 / "a-fragment.meta.json").write_text(
+        json.dumps(meta(["t2"], 0, 1)))
+    (run_1 / "b-primary.meta.json").write_text(
+        json.dumps(meta(["t0", "t1"], 1, 3)))
+
+    monkeypatch.setattr(gpr, "REPO_ROOT", tmp_path)
+    ctx = {
+        "run_id": "testrun",
+        "directory_path": "outputs/testrun",
+        "scope": {},
+        "proposer_pools": {"poolA": {"modality": "text", "path": "proposer/poolA"}},
+        "verifier_passes": {},
+        "conditions": [],
+    }
+    (row,) = gpr.extract_passes(ctx)
+    assert row["n_tiles_processed"] == 3  # union of {t2} and {t0, t1}
+    assert row["status"] == "ok"  # the primary-round failure was recovered

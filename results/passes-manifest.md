@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->
 
 # Passes manifest
 
-> Generated 2026-08-02T12:28:54Z · 1132 row(s) · schema v1.0.
+> Generated 2026-08-03T02:32:37Z · 1132 row(s) · schema v1.0.
 >
 > **Coverage**: 1132 pass(es) across the decomposed runs (sub-step 3b in progress).
 
@@ -10,7 +10,7 @@
 |---|---|---|---|---|---|---|---|---|
 | 55maps-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 1 | — | 0.002995 |
 | 55maps-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 7 | — | 0.01474 |
-| 55maps-generalisation::detect_brief-text::run3 |  | text | high | 0.7 | partial | 1 | — | 0.0 |
+| 55maps-generalisation::detect_brief-text::run3 |  | text | high | 0.7 | ok | 1 | — | 0.0 |
 | 55maps-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 3 | — | 0.008457 |
 | 55maps-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 4 | — | 0.007735 |
 | 55maps-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 10154 | 12.428556 |
@@ -101,23 +101,23 @@
 | e47-propose-brief::propose_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
 | e47-propose-brief::propose_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
 | e47-propose-brief::propose_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.689781 |
-| e47-propose-brief::propose_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | partial | 487 | — | 0.703235 |
+| e47-propose-brief::propose_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.703235 |
 | n1-outstanding-384::brief-text-t03::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.576124 |
-| n1-outstanding-384::brief-text-t03::run2 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.57241 |
-| n1-outstanding-384::brief-text-t03::run3 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.579769 |
-| n1-outstanding-384::image-t0::run1 | gemini-3-flash-preview | image | minimal | 0.0 | partial | 487 | — | 3.968198 |
-| n1-outstanding-384::image-t0::run2 | gemini-3-flash-preview | image | minimal | 0.0 | partial | 487 | — | 3.968532 |
-| n1-outstanding-384::image-t0::run3 | gemini-3-flash-preview | image | minimal | 0.0 | partial | 487 | — | 3.968382 |
-| n1-outstanding-384::image-t03::run1 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.969399 |
-| n1-outstanding-384::image-t03::run2 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.968975 |
-| n1-outstanding-384::image-t03::run3 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.96837 |
+| n1-outstanding-384::brief-text-t03::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.57241 |
+| n1-outstanding-384::brief-text-t03::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.579769 |
+| n1-outstanding-384::image-t0::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 3.968198 |
+| n1-outstanding-384::image-t0::run2 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 3.968532 |
+| n1-outstanding-384::image-t0::run3 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 3.968382 |
+| n1-outstanding-384::image-t03::run1 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.969399 |
+| n1-outstanding-384::image-t03::run2 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.968975 |
+| n1-outstanding-384::image-t03::run3 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.96837 |
 | n1-outstanding-384::pro-image-high-t0::run1 | gemini-3-flash-preview | image | high | 0.0 | partial | 486 | — | 3.971445 |
 | n1-outstanding-384::pro-image-high-t0::run2 | gemini-3-flash-preview | image | high | 0.0 | partial | 486 | — | 3.973056 |
 | n1-outstanding-384::pro-image-high-t0::run3 | gemini-3-flash-preview | image | high | 0.0 | partial | 485 | — | 3.97049 |
 | n1-outstanding-384::pro-text-high-t0::run1 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.599392 |
 | n1-outstanding-384::pro-text-high-t0::run2 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.59995 |
 | n1-outstanding-384::pro-text-high-t0::run3 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.591894 |
-| n1-outstanding-384::pro-image-medium-t07::run1 | gemini-3-flash-preview | image | medium | 0.7 | partial | 487 | — | 4.003194 |
+| n1-outstanding-384::pro-image-medium-t07::run1 | gemini-3-flash-preview | image | medium | 0.7 | ok | 487 | — | 4.003194 |
 | n1-outstanding-384::pro-text-medium-t07::run1 | gemini-3-flash-preview | text | medium | 0.7 | ok | 487 | — | 0.646861 |
 | n1-pro-rerun-384::pro-text-high-t0::run1 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.850932 |
 | n1-pro-rerun-384::pro-text-high-t0::run2 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.849756 |
@@ -140,13 +140,13 @@
 | proposer-verifier-384::verified-cascade-adversarial-checklist::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 271 | 0.068167 |
 | proposer-verifier-384::verified-cascade-checklist-adversarial::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 326 | 0.400782 |
 | proposer-verifier-512::verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 140 | 0.034499 |
-| pv-diag-384::flash-high-image-n5-image-t0.0::run1 | gemini-3-flash-preview | image | high | 0.0 | partial | 484 | — | 0.284125 |
+| pv-diag-384::flash-high-image-n5-image-t0.0::run1 | gemini-3-flash-preview | image | high | 0.0 | ok | 484 | — | 0.284125 |
 | pv-diag-384::flash-high-image-n5-image-t0.0::run2 | gemini-3-flash-preview | image | high | 0.0 | partial | 483 | — | 4.005902 |
 | pv-diag-384::flash-high-image-n5-image-t0.0::run3 | gemini-3-flash-preview | image | high | 0.0 | partial | 485 | — | 4.005909 |
 | pv-diag-384::flash-high-image-n5-image-t0.3::run1 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.005138 |
 | pv-diag-384::flash-high-image-n5-image-t0.3::run10 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.012106 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run2 | gemini-3-flash-preview | image | high | 0.3 | partial | 487 | — | 4.011731 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run3 | gemini-3-flash-preview | image | high | 0.3 | partial | 487 | — | 4.005218 |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run2 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.011731 |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run3 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.005218 |
 | pv-diag-384::flash-high-image-n5-image-t0.3::run4 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.008371 |
 | pv-diag-384::flash-high-image-n5-image-t0.3::run5 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.004633 |
 | pv-diag-384::flash-high-image-n5-image-t0.3::run6 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.007802 |
@@ -165,14 +165,14 @@
 | pv-diag-384::flash-high-image-n5-image-t0.7::run9 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::flash-high-image-n5-image-t1.0::run1 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.019285 |
 | pv-diag-384::flash-high-image-n5-image-t1.0::run10 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.014926 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run2 | gemini-3-flash-preview | image | high | 1.0 | partial | 487 | — | 4.012053 |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run2 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.012053 |
 | pv-diag-384::flash-high-image-n5-image-t1.0::run3 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.997076 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run4 | gemini-3-flash-preview | image | high | 1.0 | partial | 487 | — | 4.013693 |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run4 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.013693 |
 | pv-diag-384::flash-high-image-n5-image-t1.0::run5 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.037534 |
 | pv-diag-384::flash-high-image-n5-image-t1.0::run6 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.004028 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | high | 1.0 | partial | 487 | — | 4.023687 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | high | 1.0 | partial | 487 | — | 4.011342 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | high | 1.0 | partial | 487 | — | 4.014455 |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.023687 |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.011342 |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.014455 |
 | pv-diag-384::flash-high-text-n5-text-t0.0::run1 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.599322 |
 | pv-diag-384::flash-high-text-n5-text-t0.0::run2 | gemini-3-flash-preview | text | high | 0.0 | partial | 486 | — | 0.594867 |
 | pv-diag-384::flash-high-text-n5-text-t0.0::run3 | gemini-3-flash-preview | text | high | 0.0 | partial | 486 | — | 0.596377 |
@@ -181,7 +181,7 @@
 | pv-diag-384::flash-high-text-n5-text-t0.3::run2 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.624907 |
 | pv-diag-384::flash-high-text-n5-text-t0.3::run3 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.614251 |
 | pv-diag-384::flash-high-text-n5-text-t0.3::run4 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.626485 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run5 | gemini-3-flash-preview | text | high | 0.3 | partial | 487 | — | 0.631252 |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run5 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.631252 |
 | pv-diag-384::flash-high-text-n5-text-t0.3::run6 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.635287 |
 | pv-diag-384::flash-high-text-n5-text-t0.3::run7 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.611416 |
 | pv-diag-384::flash-high-text-n5-text-t0.3::run8 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.647551 |
@@ -216,29 +216,29 @@
 | pv-diag-384::flash-high-text-n5-text-t0.7::run7 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::flash-high-text-n5-text-t0.7::run8 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::flash-high-text-n5-text-t0.7::run9 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run1 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.676153 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run10 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.661837 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run2 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.662476 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run3 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.666973 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run4 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.656509 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run5 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.643672 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run6 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.649204 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run7 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.660385 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run8 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.667057 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run9 | gemini-3-flash-preview | text | high | 1.0 | partial | 487 | — | 0.675247 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | partial | 487 | — | 0.565162 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run1 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.676153 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run10 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.661837 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run2 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.662476 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run3 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.666973 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run4 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.656509 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run5 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.643672 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run6 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.649204 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run7 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.660385 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run8 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.667057 |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run9 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.675247 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.565162 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run2 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.570748 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run3 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.562825 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run1 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.564913 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run10 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.567301 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run2 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.572506 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run3 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.573544 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run4 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.572206 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run5 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.570703 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run6 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.566584 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run7 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.566221 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run8 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.573964 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run9 | gemini-3-flash-preview | text | minimal | 0.3 | partial | 487 | — | 0.564361 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.564913 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run10 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.567301 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.572506 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.573544 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run4 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.572206 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run5 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.570703 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run6 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.566584 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run7 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.566221 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run8 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.573964 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run9 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.564361 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run11 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
@@ -269,26 +269,26 @@
 | pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run1 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 487 | — | 0.577204 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run10 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 487 | — | 0.584041 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.577204 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run10 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.584041 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.582955 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run3 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 487 | — | 0.577369 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.577369 |
 | pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run4 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.58642 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run5 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 487 | — | 0.575215 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run6 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 487 | — | 0.576508 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run7 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 487 | — | 0.575128 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run8 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 487 | — | 0.575794 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run9 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 487 | — | 0.574969 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run5 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575215 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run6 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.576508 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run7 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575128 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run8 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575794 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run9 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.574969 |
 | pv-diag-384::image-baseline-image-t0.0::run1 | gemini-3-flash | image | minimal | 0.0 | partial | 483 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.3::run1 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.978327 |
-| pv-diag-384::image-n5-image-t0.3::run10 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.979802 |
-| pv-diag-384::image-n5-image-t0.3::run2 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.979023 |
-| pv-diag-384::image-n5-image-t0.3::run3 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.980336 |
-| pv-diag-384::image-n5-image-t0.3::run4 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.982268 |
-| pv-diag-384::image-n5-image-t0.3::run5 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.979535 |
-| pv-diag-384::image-n5-image-t0.3::run6 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.978614 |
-| pv-diag-384::image-n5-image-t0.3::run7 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.982436 |
-| pv-diag-384::image-n5-image-t0.3::run8 | gemini-3-flash-preview | image | minimal | 0.3 | partial | 487 | — | 3.980822 |
+| pv-diag-384::image-n5-image-t0.3::run1 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.978327 |
+| pv-diag-384::image-n5-image-t0.3::run10 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.979802 |
+| pv-diag-384::image-n5-image-t0.3::run2 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.979023 |
+| pv-diag-384::image-n5-image-t0.3::run3 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.980336 |
+| pv-diag-384::image-n5-image-t0.3::run4 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.982268 |
+| pv-diag-384::image-n5-image-t0.3::run5 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.979535 |
+| pv-diag-384::image-n5-image-t0.3::run6 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.978614 |
+| pv-diag-384::image-n5-image-t0.3::run7 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.982436 |
+| pv-diag-384::image-n5-image-t0.3::run8 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.980822 |
 | pv-diag-384::image-n5-image-t0.3::run9 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.980112 |
 | pv-diag-384::image-n5-image-t0.7::run1 | gemini-3-flash | image | minimal | 0.7 | partial | 486 | — | 0.0 |
 | pv-diag-384::image-n5-image-t0.7::run10 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
@@ -300,16 +300,16 @@
 | pv-diag-384::image-n5-image-t0.7::run7 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::image-n5-image-t0.7::run8 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::image-n5-image-t0.7::run9 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t1.0::run1 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.987417 |
-| pv-diag-384::image-n5-image-t1.0::run10 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.985335 |
-| pv-diag-384::image-n5-image-t1.0::run2 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.982814 |
-| pv-diag-384::image-n5-image-t1.0::run3 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.978791 |
-| pv-diag-384::image-n5-image-t1.0::run4 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.980186 |
-| pv-diag-384::image-n5-image-t1.0::run5 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.982746 |
-| pv-diag-384::image-n5-image-t1.0::run6 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.982911 |
-| pv-diag-384::image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.980765 |
-| pv-diag-384::image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.984077 |
-| pv-diag-384::image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | — | 3.98625 |
+| pv-diag-384::image-n5-image-t1.0::run1 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.987417 |
+| pv-diag-384::image-n5-image-t1.0::run10 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.985335 |
+| pv-diag-384::image-n5-image-t1.0::run2 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.982814 |
+| pv-diag-384::image-n5-image-t1.0::run3 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.978791 |
+| pv-diag-384::image-n5-image-t1.0::run4 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.980186 |
+| pv-diag-384::image-n5-image-t1.0::run5 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.982746 |
+| pv-diag-384::image-n5-image-t1.0::run6 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.982911 |
+| pv-diag-384::image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.980765 |
+| pv-diag-384::image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.984077 |
+| pv-diag-384::image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.98625 |
 | pv-diag-384::pro-high-image-n5-image-t0.7::run1 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::pro-high-image-n5-image-t0.7::run2 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | 0.0 |
 | pv-diag-384::pro-high-image-n5-image-t0.7::run3 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | 0.0 |
@@ -336,7 +336,7 @@
 | pv-diag-384::scale-4-optimal-487::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.977342 |
 | pv-diag-384::scale-4-optimal-487::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.990083 |
 | pv-diag-384::scale-4-optimal-487::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.978581 |
-| pv-diag-384::scale-4-optimal-487::run5 | gemini-3-flash-preview | image | high | 0.7 | partial | 487 | — | 3.989253 |
+| pv-diag-384::scale-4-optimal-487::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.989253 |
 | pv-diag-384::scale-4-optimal-487::run6 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.982047 |
 | pv-diag-384::scale-4-optimal-487::run7 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.983885 |
 | pv-diag-384::scale-4-optimal-487::run8 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.978878 |
@@ -456,14 +456,14 @@
 | h8-v2::pure-positive-canon::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.634119 |
 | h8-v2::pure-positive-canon::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.628599 |
 | h8-v2::canonical::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.972151 |
-| h8-v2::canonical::run2 | gemini-3-flash-preview | image | high | 0.7 | partial | 327 | — | 1.982267 |
+| h8-v2::canonical::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.982267 |
 | h8-v2::canonical::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.968017 |
 | h8-v2::canonical::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.963796 |
 | h8-v2::canonical::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.971391 |
 | h8-v2::plus-hp::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.680339 |
 | h8-v2::plus-hp::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.679094 |
 | h8-v2::plus-hp::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.669935 |
-| h8-v2::plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | partial | 327 | — | 2.685677 |
+| h8-v2::plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.685677 |
 | h8-v2::plus-hp::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.683111 |
 | h8-v2::scale-4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.681356 |
 | h8-v2::scale-4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.686957 |
@@ -1124,7 +1124,7 @@
 | flash35-pv-2x2::flash35-min-text-1of10::run1 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.5405490000000001 |
 | flash35-pv-2x2::flash35-min-text-1of10::run10 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.540316 |
 | flash35-pv-2x2::flash35-min-text-1of10::run2 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.541704 |
-| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | partial | 486 | — | 0.540711 |
+| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.540711 |
 | flash35-pv-2x2::flash35-min-text-1of10::run4 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.543667 |
 | flash35-pv-2x2::flash35-min-text-1of10::run5 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.540739 |
 | flash35-pv-2x2::flash35-min-text-1of10::run6 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.542455 |

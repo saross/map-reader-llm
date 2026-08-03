@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.7.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->
 
 # Conditions manifest
 
-> Generated 2026-08-02T12:22:09Z · 322 row(s) · schema v1.0.
+> Generated 2026-08-03T02:32:37Z · 322 row(s) · schema v1.0.
 >
 > **Coverage**: 322 condition(s) across the decomposed runs (sub-step 3b in progress).
 

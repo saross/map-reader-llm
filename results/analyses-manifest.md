@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.7.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->
 
 # Analyses manifest
 
-> Generated 2026-08-03T00:53:26Z · 21 row(s) · schema v1.0.
+> Generated 2026-08-03T02:32:37Z · 21 row(s) · schema v1.0.
 >
 > **Coverage**: 21 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 

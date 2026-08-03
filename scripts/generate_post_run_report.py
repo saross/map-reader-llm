@@ -90,7 +90,14 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: proposer rows. The crop count is preserved under the new
 #: ``n_candidates_verified``; ``n_tiles_dispatched`` is likewise nulled for
 #: verifier rows (its per_item_metadata source counts crop API items).
-GENERATOR_VERSION: str = "0.7.0"
+#:
+#: 0.7.1 (2026-08-03, D6): deterministic multi-meta passes. The meta glob is
+#: sorted (an unsorted glob made pass rows filesystem-order-dependent across
+#: machines) and completed counts union across sibling metas, so a pass whose
+#: failed tile was recovered by a dated fragment reads its cumulative
+#: coverage (ok/487) identically on every host; status uses the effective
+#: shortfall (dispatched minus completed-union).
+GENERATOR_VERSION: str = "0.7.1"
 
 #: Why a verifier pass's ``n_tiles_processed`` is null. Written verbatim into
 #: every verifier row so the manifest explains itself without a reader having
@@ -379,7 +386,15 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 print(f"WARNING: skipping non-numeric pass dir {_repo_rel(run_n_dir)}",
                       file=sys.stderr)
                 continue
-            meta_files = list(run_n_dir.glob("*.meta.json"))
+            # Sorted for determinism: an unsorted glob made meta_files[0] a
+            # filesystem-order lottery, so a multi-meta pass (primary run +
+            # dated recovery fragment) reported 486/partial on one machine
+            # and 487/ok on another (D6 investigation, 2026-08-03 — the
+            # Obs 383 hidden-parameter family). The primary (earliest-dated)
+            # meta stays the row's identity/cost record; completed counts
+            # union across ALL metas below, per the C3-validated rule the
+            # pim branch already documents.
+            meta_files = sorted(run_n_dir.glob("*.meta.json"))
             if not meta_files:
                 continue
             pass_n = int(suffix)
@@ -405,7 +420,16 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 n_dispatched = len(pim)
                 completed = es.get("completed_items")
                 if completed:
-                    n_proc = len(set(completed))
+                    completed_union = set(completed)
+                    # Union completed items across sibling metas (recovery
+                    # fragments and resume-merges) so the count is the
+                    # pass's cumulative coverage, machine-independently.
+                    for sibling_path in meta_files[1:]:
+                        sibling_es = (_load_json(sibling_path)
+                                      .get("execution_stats") or {})
+                        completed_union.update(
+                            sibling_es.get("completed_items") or [])
+                    n_proc = len(completed_union)
                 elif es.get("items_processed"):
                     n_proc = es["items_processed"]
                 else:
@@ -467,6 +491,10 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             if model_of_record:
                 prov_sources.append("results/run-conditions.json")
             failed = es.get("items_failed", 0)
+            if n_dispatched:
+                # Effective shortfall: a tile that failed in the primary
+                # round but completed in a recovery fragment is not failed.
+                failed = max(0, n_dispatched - n_proc)
             status = "failed" if n_proc == 0 else ("ok" if failed == 0 else "partial")
             rows.append({
                 "pass_id": f"{run_id}::{pool}::run{pass_n}",
