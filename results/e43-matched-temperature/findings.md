@@ -1,9 +1,9 @@
 # E43 remediation R1 — matched-scope temperature evidence
 
-> **Last revised**: 2026-08-02 (later — E72 remediation item 3: the four
-> matched cells filed at the house grain, 14 buffers + tile-level MCC, and
-> registered as the `e43-matched-temperature` analysis; see
-> [§ 11](#11-house-grain-filing--14-buffers-tile-level-mcc-and-manifest-registration)).
+> **Last revised**: 2026-08-03 (E72 follow-up: the unpaired-MCC caveat of
+> § 11.2 discharged with nine paired ΔMCC permutation tests, and the
+> result situated against the four-rung temperature ladder; see
+> [§ 12](#12-paired-mcc-and-the-temperature-ladder--e72-follow-up-2026-08-03)).
 > See [§ Changelog](#changelog) for revision history.
 
 **Purpose**: Supplies the matched-scope evidence that Phase R1 of
@@ -434,13 +434,20 @@ which is the stronger evidence and does not depend on the guard.
 
 ### 11.2 MCC separates the arms more sharply than F1 — flagged
 
-| Pool | ΔF1@20 m | ΔMCC | MCC intervals |
-| :--- | ---: | ---: | :--- |
-| N=5 | −0.0213 (p = 0.335, n.s.) | **−0.0917** | [0.2962, 0.3310] vs [0.3881, 0.4237] — **disjoint** |
-| N=10 | −0.0335 (p = 0.082, n.s.) | **−0.0498** | [0.3483, 0.3817] vs [0.3962, 0.4316] — **disjoint** |
+| Pool | ΔF1@20 m | ΔMCC | MCC intervals | Paired p (§ 12) |
+| :--- | ---: | ---: | :--- | ---: |
+| N=5 | −0.0213 (p = 0.335, n.s.) | **−0.0917** | [0.2962, 0.3310] vs [0.3881, 0.4237] — **disjoint** | 0.0255 |
+| N=10 | −0.0335 (p = 0.082, n.s.) | **−0.0498** | [0.3483, 0.3817] vs [0.3962, 0.4316] — **disjoint** | **0.2114** |
 
 Δ keeps this document's convention: T=0.7 minus T=1.0, so a negative
 value favours T=1.0.
+
+> **Read this section against [§ 12](#12-paired-mcc-and-the-temperature-ladder--e72-follow-up-2026-08-03).**
+> The paired tests commissioned as the E72 follow-up were run on
+> 2026-08-03 and they do not ratify the disjoint-interval reading at
+> N=10: the same contrast that shows non-overlapping BCa intervals
+> returns p = 0.2114 when the tiles are properly paired. The direction
+> below stands; the strength claimed for it at N=10 does not.
 
 **This is worth flagging.** On F1 the matched contrast is a null result
 (§ 4). On tile-level MCC the same four cells separate cleanly in
@@ -457,12 +464,19 @@ false-positive tiles to T=1.0's 111.
 Two caveats bound this, and neither is dismissible:
 
 1. **The MCC comparison is unpaired.** The intervals are per-condition
-   BCa bootstraps, not a paired test on matched tiles. Non-overlapping
-   intervals are suggestive and, for a paired design, conservative — but
-   they are not a p-value. No paired MCC permutation test was run;
-   `scripts/pairwise_permutation_test.py` tests F1. That test is the
-   obvious next step if the MCC direction is to be claimed rather than
-   noted.
+   BCa bootstraps, not a paired test on matched tiles. They are not a
+   p-value. ~~Non-overlapping intervals are suggestive and, for a paired
+   design, conservative~~ — **that expectation was wrong here**, and
+   § 12.3 shows why: the two per-condition bootstraps resample tiles
+   within one arm, where MCC is stable, whereas the paired null swaps
+   arm labels on the 109 (N=5) and 96 (N=10) tiles the arms actually
+   classify differently, which is a much noisier quantity. The paired
+   test is the
+   less significant of the two at N=10, not the more. No paired MCC
+   permutation test had been run **at the time of writing**; the kernel
+   in fact existed (`pairwise_permutation_test.run_permutation_test_mcc`,
+   commit `62d1173af`) but was not exposed on any command line, which is
+   how it was missed. It is now — see § 12.
 2. **The operating points were selected on F1@20 m** (§ 3, § 8 caveat
    4). Selecting on one metric and reporting another is a known way to
    flatter the metric you did not select on. Both arms were selected by
@@ -471,9 +485,11 @@ Two caveats bound this, and neither is dismissible:
    selection.
 
 What survives both caveats: **nothing in this analysis supports E43's
-direction.** F1 says "no reliable difference"; MCC says "T=1.0, and
-clearly". The published +0.168 to +0.194 claim has no support at matched
-scope on either metric.
+direction.** F1 says "no reliable difference"; MCC points at T=1.0 —
+significantly so at N=5 (paired p = 0.0255) but not at N=10 (paired
+p = 0.2114), so "and clearly" overstates the adjacent-rung contrast and
+§ 12.5 restates it properly. The published +0.168 to +0.194 claim has no
+support at matched scope on either metric.
 
 ### 11.3 Buffer saturation
 
@@ -545,7 +561,403 @@ the tile-classification block:
 - `paper-eval/t07-n10-10of10/evaluation.json`
 - `paper-eval/t10-n10-9of10/evaluation.json`
 
+## 12. Paired MCC and the temperature ladder — E72 follow-up (2026-08-03)
+
+§ 11.2 flagged that tile-level MCC separates the matched arms in T=1.0's
+favour, and bounded the claim with two caveats: the comparison was
+unpaired, and the operating points had been selected on F1. The principal
+investigator (PI) commissioned this follow-up to (1) make the MCC
+comparison properly paired and (2) situate it against the full
+temperature ladder, so that the question it raises — *is this an
+exception to the project's lower-temperature-is-better pattern?* — gets a
+direct answer.
+
+**Produced**: 2026-08-03, on sapphire, from repository commit
+`7356f21fa`. Zero API calls; every figure derives from on-disk
+detections and from evaluations already filed in this repository.
+
+### 12.1 The machinery, and one correction to § 11.2
+
+§ 11.2 recorded that "no paired MCC permutation test was run;
+`scripts/pairwise_permutation_test.py` tests F1". The first half is
+right, the second is not. That script carries **two** permutation
+kernels: `run_permutation_test` (F1) and `run_permutation_test_mcc`,
+added 2026-04-25 in commit `62d1173af` and in production use by
+`build_tiered_leaderboard.py` and `build_cross_architecture_tables.py`.
+The MCC kernel implements exactly the commissioned test — per tile, the
+full (TP, TN, FP, FN) one-hot 4-tuple is swapped between arms with
+probability 0.5, the aggregate MCC is recomputed, and the two-sided
+p-value is the fraction of permutations whose |ΔMCC| reaches the
+observed |ΔMCC|. It was invisible because it is not reachable from any
+command line: the script's own command-line interface (CLI) runs the F1
+sibling only.
+
+The new `scripts/paired_mcc_permutation.py` therefore does **not**
+reimplement the statistics — duplicating a tested kernel for a house
+metric is how two implementations drift apart. It supplies what was
+missing around it: a CLI, batch execution over a job file, and a hard
+per-arm validation gate.
+
+**The gate.** Per-tile labels come from `lib_advanced_metrics`'s own
+`compute_per_tile_classification`, so they cannot diverge from the house
+definition by construction. The gate then proves it end to end: the
+labels are aggregated and checked against the TP/TN/FP/FN cells, the MCC
+point estimate, and the detection count **recorded** in one or more
+on-disk `evaluation.json` files for that same cell. Any disagreement
+raises `ConfusionGateError` and the pair is not tested. All 18 arm-gates
+in this section passed, 10 of them against two independent references
+apiece (the § 11.1 house-grain evaluation and the `phase3a-text-matrix`
+sweep evaluation, which agree exactly).
+
+### 12.2 Tile-level MCC is buffer-invariant — one Δ, not two
+
+The commission asked for tile classification "at 20 m and 30 m buffers".
+Those are the same number, and it is worth saying why rather than
+reporting a value twice.
+
+House tile classification asks two questions per tile — does the tile
+intersect any ground-truth mound, and did the arm emit any detection
+assigned to that tile? Neither involves a spatial matching tolerance
+(`lib_advanced_metrics.calculate_tile_classification`). Tile-level MCC
+is therefore **invariant to the F1 buffer**, and this is a structural
+property of the metric, not a coincidence of these data. It is pinned by
+a tier-1 test (`test_delta_is_invariant_to_ground_truth_buffering`) and
+noted in the kernel's own docstring. Every ΔMCC below holds identically
+at 20 m and 30 m. F1, which does use the buffer, is reported at both.
+
+### 12.3 Paired ΔMCC — the commissioned tests and the ladder
+
+487 tiles, 10,000 permutations, seed 42, bounds
+`inputs/vectors/bounds/384/full_evaluation_bounds.geojson`, ground truth
+`inputs/vectors/references/mounds-reference.geojson`. Δ = MCC(lower T) −
+MCC(higher T), so **a negative Δ favours the higher temperature** — the
+same sign convention as the rest of this document.
+
+| # | Contrast | Pool | ΔMCC | Paired p | Discordant tiles (lower-T only / higher-T only) | McNemar exact p |
+| :--- | :--- | :--- | ---: | ---: | :--- | ---: |
+| 1 | T=0.7 vs T=1.0 | N=5 | **−0.0918** | **0.0255** | 109 (39 / 70) | 0.0039 |
+| 2 | T=0.7 vs T=1.0 | N=10 | −0.0498 | 0.2114 | 96 (41 / 55) | 0.1843 |
+| 3 | T=0.3 vs T=0.7 | N=5 | −0.0401 | 0.3267 | 93 (41 / 52) | 0.2997 |
+| 4 | T=0.3 vs T=0.7 | N=10 | −0.0526 | 0.1668 | 91 (37 / 54) | 0.0929 |
+| 5 | T=0.3 vs T=1.0 | N=5 | **−0.1319** | **0.0005** | 96 (27 / 69) | < 0.0001 |
+| 6 | T=0.3 vs T=1.0 | N=10 | **−0.1023** | **0.0023** | 77 (23 / 54) | 0.0005 |
+| 7 | T=0.0 vs T=0.3 | N=3 vs 10 † | −0.0895 | 0.0060 | 58 (14 / 44) | 0.0001 |
+| 8 | T=0.0 vs T=0.7 | N=3 vs 10 † | −0.1421 | 0.0008 | 113 (33 / 80) | < 0.0001 |
+| 9 | T=0.0 vs T=1.0 | N=3 vs 10 † | −0.1918 | < 0.0001 | 103 (21 / 82) | < 0.0001 |
+
+† Pool-depth confounded — see § 12.6. Tests 1 and 2 are the two the PI
+commissioned; 3–6 complete the pool-matched ladder; 7–9 are descriptive
+only.
+
+**Every one of the nine point estimates is negative.** Not one rung of
+the ladder favours the lower temperature on tile-level MCC.
+
+**Independent cross-check.** The rightmost column is an exact McNemar
+test on the discordant tiles — a different statistic (tile-classification
+accuracy, ignoring which cell the tile moved between) computed by a
+different route (`scipy.stats.binomtest`). It agrees with the
+permutation test on the α = 0.05 verdict in all nine rows. The
+permutation p is uniformly the larger of the two, which is expected: it
+tests ΔMCC, which additionally depends on *how* the discordance
+distributes across mound-bearing and empty tiles, so it spends power the
+sign test does not.
+
+**Why the paired p can exceed what disjoint intervals suggest.** The
+per-condition BCa intervals of § 11.1 are narrow (half-widths ≈ 0.017)
+because resampling tiles within a single arm barely moves that arm's
+MCC. The paired null is much wider (standard deviation 0.0327–0.0427)
+because swapping arm labels on the 58–113 discordant tiles moves *both*
+aggregate tables at once. § 11.2's expectation that non-overlapping
+intervals would be "for a paired design, conservative" was therefore
+backwards, and is corrected in place.
+
+**Multiplicity.** Following § 8 caveat 7, these are raw p-values and are
+not members of any registered Benjamini–Hochberg (BH) family. For
+readers who would form one, BH across the six pool-matched tests (1–6)
+gives: test 5 q = 0.0030 and test 6 q = 0.0069 (both significant), test 1
+q = 0.0510 (marginal), tests 2, 3, 4 q = 0.2537, 0.3267, 0.2502. **Only
+the T=0.3-versus-T=1.0 contrast survives correction.**
+
+### 12.4 The temperature ladder — F1 and MCC side by side
+
+All four arms live under the same parent study,
+`outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/`. Each arm's
+operating point is its own best-F1@20 m cell in the pre-existing
+threshold sweep under `results/phase3a-text-matrix/`.
+
+| T | N | Threshold | Detections | F1@20 m | F1@30 m | MCC | MCC 95 % CI | Sens. | Spec. | TP / TN / FP / FN |
+| :--- | ---: | :--- | ---: | ---: | ---: | ---: | :--- | ---: | ---: | :--- |
+| 0.0 † | 3 | 3-of-3 | 799 | 0.5932 | 0.5981 | 0.2235 | [0.2063, 0.2403] | 0.9039 | 0.2713 | 207 / 70 / 188 / 22 |
+| 0.3 | 5 | 5-of-5 | 659 | 0.6307 | 0.6362 | 0.2746 | [0.2565, 0.2930] | 0.8603 | 0.3837 | 197 / 99 / 159 / 32 |
+| 0.7 | 5 | 5-of-5 | 653 | 0.6397 | 0.6471 | 0.3148 | [0.2962, 0.3310] | 0.8603 | 0.4264 | 197 / 110 / 148 / 32 |
+| 1.0 | 5 | 5-of-5 | 509 | **0.6610** | **0.6674** | **0.4065** | [0.3881, 0.4237] | 0.8035 | 0.5969 | 184 / 154 / 104 / 45 |
+| 0.3 | 10 | 10-of-10 | 608 | 0.6424 | 0.6481 | 0.3129 | [0.2956, 0.3301] | 0.8559 | 0.4302 | 196 / 111 / 147 / 33 |
+| 0.7 | 10 | 10-of-10 | 560 | 0.6332 | 0.6412 | 0.3655 | [0.3483, 0.3817] | 0.8341 | 0.5155 | 191 / 133 / 125 / 38 |
+| 1.0 | 10 | 9-of-10 | 549 | **0.6667** | **0.6728** | **0.4153** | [0.3962, 0.4316] | 0.8341 | 0.5698 | 191 / 147 / 111 / 38 |
+
+† T=0.0 has only three runs; its row is descriptive (§ 12.6).
+
+Every row sums to 487 tiles (229 mound-bearing, 258 empty). Coverage was
+verified directly from the per-run `*.tiles.json` sidecars for all
+**53** runs across the four arms (3 + 10 + 30 + 10): `total_tiles == 487`
+and `len(completed) == 487` in every one, every logged tile failure
+retried successfully, and the intersection of completed tiles across each
+arm is the full 487. No arm in this ladder carries an E72-style coverage
+defect. Configuration parity also holds across all 53 runs — one distinct
+`system_instruction_hash` (`e169b7237b…`) and one distinct `library_hash`
+(`8580ecb225…`), with `thinking_level: minimal` and
+`version: detect_brief-text` throughout; temperature is the only intended
+difference. Every pool is a strict first-N pool, verified from the union
+of `contributing_passes` across each pool's thresholds rather than from
+directory naming (preregistration § 3.8).
+
+**Paired F1 tests for the ladder rungs** (the two T=0.7-versus-T=1.0 rows
+are from § 4; the two T=0.3 rows are new, same harness and settings):
+
+| Contrast | Pool | ΔF1@20 m | p | ΔF1@30 m | p |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| T=0.3 vs T=0.7 | N=10 | +0.0092 | 0.5950 | +0.0069 | 0.6907 |
+| T=0.3 vs T=1.0 | N=10 | −0.0243 | 0.0624 | −0.0246 | 0.0563 |
+| T=0.7 vs T=1.0 | N=10 | −0.0335 | 0.0815 | −0.0316 | 0.0963 |
+| T=0.7 vs T=1.0 | N=5 | −0.0213 | 0.3352 | −0.0203 | 0.3577 |
+
+**On F1 the entire ladder is a null result** — not one contrast reaches
+α = 0.05 at either buffer. The one positive sign in the table (T=0.3 over
+T=0.7, +0.0092) matches the direction of the 55-map deployment result
+but is nowhere near significance on this corpus.
+
+### 12.5 Does the T=1.0 MCC advantage survive pairing?
+
+**Yes in direction, partly in strength, and not where § 11.2 put the
+weight.**
+
+- **Direction: survives completely.** All nine paired contrasts favour
+  the higher temperature, and the MCC ladder is strictly monotonic
+  increasing in temperature at both pool sizes (N=5: 0.2746 → 0.3148 →
+  0.4065; N=10: 0.3129 → 0.3655 → 0.4153; with T=0.0 at 0.2235 below
+  both). Nothing in the paired analysis rescues E43's direction.
+- **Strength: survives only end to end.** The contrast § 11.2 headlined —
+  T=0.7 versus T=1.0, the adjacent rung — is significant at N=5
+  (p = 0.0255) but **not** at N=10 (p = 0.2114), and does not survive BH
+  correction at either. What does survive, comfortably and at both pool
+  sizes, is the **end-to-end** T=0.3-versus-T=1.0 contrast (ΔMCC −0.1319
+  p = 0.0005 at N=5; −0.1023 p = 0.0023 at N=10; BH q = 0.0030 and
+  0.0069).
+- **A methodological correction falls out of this.** § 11.2 reported
+  disjoint BCa intervals at *both* pool sizes and read them as
+  conservative for a paired design. Pairing does not ratify that at
+  N=10. Non-overlapping per-condition bootstrap intervals were the
+  weaker evidence here, not the stronger, and the reason is structural
+  (§ 12.3), so the lesson generalises beyond this table: in this
+  codebase, disjoint per-condition MCC intervals are not a substitute
+  for a paired MCC test.
+
+There is also a **cleanliness dividend** the commission did not
+anticipate. § 8 caveats 2 and 3 note that the T=0.7 and T=1.0 arms ran 24
+days apart by different execution paths — T=0.7 on 2026-03-24 via the
+asynchronous Batch API, T=1.0 on 2026-04-17 via the governed real-time
+path. Checking the run metadata for the other two arms shows that
+**T=0.0, T=0.3, and T=1.0 all ran on 2026-04-17 through the same governed
+real-time path** (their run metadata carries a `tpm_governor` block;
+T=0.7's carries `batch_api` instead). The T=0.3-versus-T=1.0 contrast is
+therefore free of the date and execution-path confound that dogs every
+T=0.7 comparison in this document — and it is precisely the contrast that
+is significant. The confound cannot explain the result away; if anything,
+the cleanest contrast in the ladder is the strongest one.
+
+### 12.6 Does the ladder contradict the lower-temperature-is-better pattern?
+
+**No. It refines it, and the MCC result is not an exception at all — it
+is a replication.**
+
+The project already holds a registered finding that says exactly this,
+in a different study family. **Observation 274** (2026-04-23,
+`docs/notes/working-notes.md`) reports that tile-level MCC in the
+**preregistered Phase 2b H7 temperature sweep** "increases monotonically
+with T", is "near-worst at T=0.0 and near-best at T=1.3, in both image
+and text tracks", and is "orthogonal to, not contradicting, the
+object-level F1 headline". Its mechanism section identifies the cause:
+sensitivity is essentially flat while specificity climbs — image
+sensitivity 0.892 → 0.858 against specificity 0.169 → 0.478; text
+sensitivity 0.927 → 0.922 against specificity 0.110 → 0.235.
+
+The ladder in § 12.4 reproduces that signature almost exactly, on a
+different corpus era, tile size, model, and replication regime:
+sensitivity 0.9039 → 0.8035 (N=5) and 0.8559 → 0.8341 (N=10) as
+temperature rises, against specificity 0.2713 → 0.5969 and 0.4302 →
+0.5698. At N=10 the T=0.7 and T=1.0 arms have **identical** tile-level
+sensitivity (0.8341, TP 191 / FN 38 in both), so the whole MCC gap is
+specificity: 125 false-positive tiles against 111. Obs 274's explanation
+carries over — higher temperature buys inter-run disagreement, and a
+strict consensus threshold converts that disagreement into rejected
+hallucinations on empty tiles.
+
+So the two metrics are measuring different things and ordering
+temperature differently, consistently, across two independent study
+families:
+
+| | What it rewards | Temperature ordering |
+| :--- | :--- | :--- |
+| Object-level F1 | finding mounds; recall-weighted | lower T better *where it has been tested at scale* |
+| Tile-level MCC | correctly rejecting empty tiles; specificity-weighted | **higher T better**, monotonically |
+
+**Against the pattern's canonical statements** — compared directionally
+in prose, not recomputed:
+
+- The **55-map deployment oracle**
+  (`results/deployment-oracle-2026-06-06/deployment-oracle-findings.md`)
+  is the load-bearing lower-temperature result: on corrected F1 @ 50 m,
+  "text-high **T0.3** (k4)" scores 0.800 against "text-high T0.7 (k4,
+  carried)" 0.780, and the document states "**T0.3 > T0.7 = +0.020
+  (p<0.001)**". That is an **F1** claim on the **55-map deployment
+  corpus**. Nothing in this section touches it: the ladder here is a
+  4-map gold-standard corpus at 384 px, its F1 contrasts are all
+  non-significant, and its only significant contrasts are on MCC. The
+  two results are compatible because they are about different metrics.
+- The **preregistered Phase 2b** F1 result (T=0.0 optimal, monotonic F1
+  degradation as T rises) and the **Phase 2b MCC** result (Obs 274, MCC
+  monotonic *increasing* in T) come from **the same ten cells**. The
+  project has therefore already accepted that F1 and MCC order
+  temperature oppositely; § 12.3 simply shows it holds here too, now with
+  paired p-values rather than intervals.
+- Where the F1 pattern and this ladder *appear* to disagree — T=1.0
+  posting the best F1@20 m in § 12.4 — the disagreement is not
+  statistically real: ΔF1 against T=0.3 is −0.0243 at p = 0.0624 and
+  against T=0.7 is −0.0335 at p = 0.0815. This corpus is simply not
+  powered to rank temperatures on F1.
+
+**The honest one-line answer**: the T=1.0 MCC advantage is real,
+survives pairing as an end-to-end contrast, and is *not* an exception to
+the project's temperature pattern — because that pattern was never an
+MCC pattern. It is an F1 pattern, and the project's own Obs 274 recorded
+the MCC reversal fifteen weeks before this document raised it as a
+surprise.
+
+**T=0.0 is descriptive only.** The arm has three runs, so its best cell
+is 3-of-3 against 10-of-10 comparators. The permutation test is
+mechanically valid — the same 487 tiles, properly paired — and it was
+run, but the contrast varies temperature **and** consensus depth
+together, so tests 7–9 are not temperature p-values and must not be read
+as such. What the row does contribute is the ladder's bottom rung: at
+T=0.0 the arm emits the most detections (799), has the highest
+sensitivity (0.9039) and by far the worst specificity (0.2713) and MCC
+(0.2235) — the deterministic-decoding end of the diversity mechanism
+Obs 274 describes, where near-identical runs produce near-identical
+hallucinations that consensus voting cannot filter.
+
+### 12.7 Caveats
+
+1. **The operating points are F1-selected.** Every cell in § 12.4 is its
+   arm's best F1@20 m point, and MCC is then read off it. § 11.2 caveat 2
+   already flagged this; the ladder makes the cost visible. Within every
+   arm's own sweep, MCC rises monotonically with the consensus threshold
+   and keeps rising past the F1 optimum — the T=0.7 N=30 pool is the
+   clearest case, where 29-of-30 is the best-F1 cell at MCC 0.3814 while
+   30-of-30 scores MCC 0.4234 on a lower F1. **MCC-optimal selection
+   would move every row of this table**, and quite possibly by different
+   amounts per arm. The direction of the ladder is robust across the
+   sweeps (higher T dominates at every matched threshold), but the
+   magnitudes are not selection-free.
+2. **Run counts are unequal.** T=0.7 has 30 runs, T=0.3 and T=1.0 have 10
+   each, T=0.0 has 3. Only the N=5 and N=10 pools are comparable across
+   arms, which is why the ladder is reported at those depths. No matched
+   N=30 comparison is possible.
+3. **The N=10 T=1.0 operating point is 9-of-10, not 10-of-10.** Each arm
+   was allowed its own best-F1 threshold, so the N=10 row compares
+   10-of-10 against 9-of-10. This is the § 3 convention and it is applied
+   symmetrically, but it is an asymmetry in the comparison. At 10-of-10
+   the T=1.0 arm scores F1@20 m 0.6509 and MCC 0.4273 — a lower F1 and a
+   *higher* MCC than the 9-of-10 cell used here, so the choice is
+   conservative with respect to the MCC conclusion.
+4. **T=0.7 is the odd arm out on provenance.** It alone ran on
+   2026-03-24 via the Batch API; the other three ran on 2026-04-17 via
+   the governed real-time path (§ 12.5). Every contrast involving T=0.7
+   inherits § 8 caveats 2 and 3. The significant contrasts do not.
+5. **Multiplicity is uncorrected in the headline table.** § 12.3 reports
+   raw p-values per § 8 caveat 7 and gives the BH result inline; only the
+   T=0.3-versus-T=1.0 contrasts survive correction.
+6. **Tile assignment is by spatial join.** Consensus GeoJSONs carry a
+   plural `source_tiles` list and no singular `source_tile`, so every arm
+   is assigned to tiles by the same `intersects` join, first match kept —
+   identical to `evaluate_detections.py`, and identical across arms, so
+   it cannot bias a contrast (§ 8 caveat 5).
+7. **This section changes no registered claim.** It supplies the paired
+   test § 11.2 asked for and the ladder context the PI commissioned. The
+   paper's citable temperature evidence remains the preregistered
+   Phase 2b sweep, as § 8 caveat 6 and the E72 erratum both direct.
+
+### 12.8 Reproduction
+
+Run from the repository root on sapphire with the project virtual
+environment. Zero API calls; the whole section takes about 30 seconds.
+
+```bash
+# 1. the nine paired MCC tests (dry-run first — the gates run, the
+#    permutations do not, and nothing is written)
+.venv/bin/python scripts/paired_mcc_permutation.py \
+    --jobs planning/paired-mcc-jobs/e72-temperature-ladder-2026-08-03.json \
+    --output-dir results/e43-matched-temperature/paired-mcc
+.venv/bin/python scripts/paired_mcc_permutation.py \
+    --jobs planning/paired-mcc-jobs/e72-temperature-ladder-2026-08-03.json \
+    --output-dir results/e43-matched-temperature/paired-mcc \
+    --seed 42 --n-permutations 10000 --execute
+
+# 2. the two new F1 ladder rungs (20 m and 30 m), for example:
+S=outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+.venv/bin/python scripts/pairwise_permutation_test.py --mode geojson \
+    --geojson-a $S/text-t0.3/consensus/consensus_t10.geojson \
+    --geojson-b $S/text-t1.0/consensus/consensus_t9.geojson \
+    --label-a "Flash MIN text T=0.3 10-of-10 (487-tile, first-10)" \
+    --label-b "Flash MIN text T=1.0 9-of-10 (487-tile, first-10)" \
+    --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson \
+    --ground-truth inputs/vectors/references/mounds-reference.geojson \
+    --buffer-metres 20 --n-permutations 10000 --seed 42 \
+    --output-dir results/e43-matched-temperature/ladder-f1/t03-vs-t10-n10-20m
+
+# 3. the tier-1 tests for the new script
+.venv/bin/python -m pytest tests/test_paired_mcc_permutation.py -q
+```
+
+Artefacts:
+
+- `paired-mcc/paired_mcc_summary.json` — all nine tests, null
+  distributions, gate records.
+- `paired-mcc/<pair_id>.json` — per-pair result with the full 487-row
+  per-tile classification for both arms.
+- `ladder-f1/t03-vs-t{07,10}-n10-{20,30}m/pairwise_permutation_result.json`
+  — the four new F1 tests.
+
 ## Changelog
+
+### 2026-08-03 — paired MCC tests and the temperature ladder (E72 follow-up)
+
+**Trigger**: PI commission of 2026-08-03, arising from § 11.2's flagged
+unpaired-MCC caveat — the matched-scope finding that tile-level MCC
+favours T=1.0 read as a possible exception to the project's
+lower-temperature-is-better pattern, and needed both a proper paired test
+and ladder context before it could be interpreted.
+
+| Claim | Before | After |
+|---|---|---|
+| MCC evidence type | unpaired per-condition BCa intervals, "disjoint at both pool sizes" | nine paired tile-swap permutation tests, 10,000 permutations, seed 42, each cross-checked against an exact McNemar test (§ 12.3) |
+| T=0.7 vs T=1.0, N=5 | ΔMCC −0.0917, disjoint intervals | ΔMCC −0.0918, **paired p = 0.0255** (BH q = 0.0510) |
+| T=0.7 vs T=1.0, N=10 | ΔMCC −0.0498, disjoint intervals | ΔMCC −0.0498, **paired p = 0.2114 — not significant** (§ 11.2 corrected in place) |
+| Strongest MCC contrast | not assessed | T=0.3 vs T=1.0: −0.1319 p = 0.0005 (N=5), −0.1023 p = 0.0023 (N=10); the only contrasts surviving BH, and the only ones free of the execution-path confound (§ 12.5) |
+| "Non-overlapping intervals are, for a paired design, conservative" | asserted in § 11.2 caveat 1 | **withdrawn** — the paired null is the wider of the two here, for a structural reason (§ 12.3) |
+| Temperature evidence scope | T=0.7 and T=1.0 only | four-rung ladder T=0.0 / 0.3 / 0.7 / 1.0 with F1@20 m, F1@30 m, MCC, sensitivity, specificity and confusion cells (§ 12.4), plus four new paired F1 tests |
+| Tooling | "no paired MCC permutation test was run; `pairwise_permutation_test.py` tests F1" | the MCC kernel existed since commit `62d1173af` but was not CLI-reachable; `scripts/paired_mcc_permutation.py` now exposes it with a hard confusion-reproduction gate and 17 tier-1 tests |
+| The exception question | open | **answered: not an exception, a replication** — Obs 274 (2026-04-23) already found MCC rising monotonically with T in the preregistered Phase 2b sweep, by the same flat-sensitivity/climbing-specificity mechanism (§ 12.6) |
+
+What did NOT change: every figure in §§ 1–10 and § 11.1, § 11.3 and
+§ 11.4. The four F1@20 m operating points (0.6397, 0.6610, 0.6332,
+0.6667), the four § 11.1 MCC values and their confusion cells, the
+240-tile leg, the coverage quantification (193/435; ceiling 0.5563), and
+the manifest registration all stand. § 11.2 was edited in place in three
+places — the results table gained a paired-p column, caveat 1's
+"conservative" expectation was withdrawn, and the closing "and clearly"
+was qualified — with each edit pointing at § 12. No conditions were
+minted; no evaluation was re-scored. Zero API calls; all computation on
+sapphire.
 
 ### 2026-08-02 (later) — house-grain filing (E72 remediation item 3)
 
