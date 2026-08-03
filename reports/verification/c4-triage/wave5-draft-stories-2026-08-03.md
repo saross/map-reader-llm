@@ -103,6 +103,7 @@ says 569 reference mounds while the appendix table header asserts
 inconsistency in this document).
 
 **G (3 rows) — three distinct stories.**
+
 - 051#1[0] ('one' tier vs 2): the S113 signoff asserted the
   verifier-robustness rungs shared ONE tier; later tiering machinery
   (BH/BCa revisions) now yields 2. Predicted SNAPSHOT-DIVERGENCE with
