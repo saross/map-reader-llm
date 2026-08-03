@@ -1,14 +1,14 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-03T22:58:06.563803+00:00",
+  "timestamp": "2026-08-03T12:34:34.396136+00:00",
   "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching",
   "metadata": {
     "seed": 42,
     "bootstrap_n": 10000,
-    "git_commit": "1de5591196ef17f46d02f07bea06289adf9f60db",
+    "git_commit": "a6a18b3c42066fd958368182d49744e444d96d33",
     "input_paths": {
       "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
-      "student_gt": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "student_gt": "/tmp/s126-w6e8/materialised-from-git/student-mounds-55maps-reviewed--blob-60adff7258b328eb93cee2340715a0a5b4e0e923.geojson",
       "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
       "review_yesterday": "results/55maps-image-generalisation/human-review.csv",
       "review_today": "results/55maps-image-generalisation/human-review-multi-buffer.csv"
@@ -26,9 +26,8 @@
       "TP": 4125,
       "FP": 555,
       "FN": 1095,
-      "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 474,
-      "n_phantom_duplicates_dropped": 1,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 475,
       "n_ref_extended": 5220,
       "precision": 0.8814102564102564,
       "precision_CI": [
@@ -51,9 +50,8 @@
       "TP": 4255,
       "FP": 425,
       "FN": 1086,
-      "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 595,
-      "n_phantom_duplicates_dropped": 1,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 596,
       "n_ref_extended": 5341,
       "precision": 0.9091880341880342,
       "precision_CI": [
@@ -76,9 +74,8 @@
       "TP": 4297,
       "FP": 383,
       "FN": 1091,
-      "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 642,
-      "n_phantom_duplicates_dropped": 1,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 643,
       "n_ref_extended": 5388,
       "precision": 0.9181623931623931,
       "precision_CI": [
@@ -101,9 +98,8 @@
       "TP": 4314,
       "FP": 366,
       "FN": 1093,
-      "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 661,
-      "n_phantom_duplicates_dropped": 1,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 662,
       "n_ref_extended": 5407,
       "precision": 0.9217948717948717,
       "precision_CI": [
@@ -126,9 +122,8 @@
       "TP": 4325,
       "FP": 355,
       "FN": 1093,
-      "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 672,
-      "n_phantom_duplicates_dropped": 1,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 673,
       "n_ref_extended": 5418,
       "precision": 0.9241452991452992,
       "precision_CI": [

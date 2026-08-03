@@ -1,19 +1,19 @@
 # Corrected F1 / P / R on the 55-map image set — buffer-stratified
 
-**Timestamp**: 2026-08-03T22:58:06.565415+00:00
+**Timestamp**: 2026-08-03T12:34:34.397796+00:00
 **Methodology**: Approach B — extended-GT-at-R Hungarian matching
 **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-**Git commit**: `1de5591196ef17f46d02f07bea06289adf9f60db`
+**Git commit**: `a6a18b3c42066fd958368182d49744e444d96d33`
 
 ## F1 curve
 
 | R (m) | TP | FP | FN | n_ref_student | n_promoted@R | n_ref_extended | P [95 % CI] | R [95 % CI] | F1 [95 % CI] |
 |------:|---:|---:|---:|--------------:|-------------:|---------------:|:-----------:|:-----------:|:------------:|
-| 50 | 4125 | 555 | 1095 | 4746 | 474 | 5220 | 0.8814 [0.8715, 0.8907] | 0.7902 [0.7776, 0.8025] | **0.8333** [0.8241, 0.8422] |
-| 75 | 4255 | 425 | 1086 | 4746 | 595 | 5341 | 0.9092 [0.9002, 0.9175] | 0.7967 [0.7844, 0.8086] | **0.8492** [0.8405, 0.8575] |
-| 100 | 4297 | 383 | 1091 | 4746 | 642 | 5388 | 0.9182 [0.9096, 0.9261] | 0.7975 [0.7854, 0.8093] | **0.8536** [0.8450, 0.8617] |
-| 125 | 4314 | 366 | 1093 | 4746 | 661 | 5407 | 0.9218 [0.9133, 0.9297] | 0.7979 [0.7857, 0.8097] | **0.8554** [0.8468, 0.8635] |
-| 150 | 4325 | 355 | 1093 | 4746 | 672 | 5418 | 0.9241 [0.9158, 0.9319] | 0.7983 [0.7861, 0.8101] | **0.8566** [0.8481, 0.8646] |
+| 50 | 4125 | 555 | 1095 | 4745 | 475 | 5220 | 0.8814 [0.8715, 0.8907] | 0.7902 [0.7776, 0.8025] | **0.8333** [0.8241, 0.8422] |
+| 75 | 4255 | 425 | 1086 | 4745 | 596 | 5341 | 0.9092 [0.9002, 0.9175] | 0.7967 [0.7844, 0.8086] | **0.8492** [0.8405, 0.8575] |
+| 100 | 4297 | 383 | 1091 | 4745 | 643 | 5388 | 0.9182 [0.9096, 0.9261] | 0.7975 [0.7854, 0.8093] | **0.8536** [0.8450, 0.8617] |
+| 125 | 4314 | 366 | 1093 | 4745 | 662 | 5407 | 0.9218 [0.9133, 0.9297] | 0.7979 [0.7857, 0.8097] | **0.8554** [0.8468, 0.8635] |
+| 150 | 4325 | 355 | 1093 | 4745 | 673 | 5418 | 0.9241 [0.9158, 0.9319] | 0.7983 [0.7861, 0.8101] | **0.8566** [0.8481, 0.8646] |
 
 ## How to read this table
 
@@ -87,10 +87,10 @@ the task brief and Obs 272.
 
 - **Inputs**:
   - Detections: `outputs/55maps-image-generalisation/verified/verified_detections.geojson`
-  - Student GT: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
+  - Student GT: `/tmp/s126-w6e8/materialised-from-git/student-mounds-55maps-reviewed--blob-60adff7258b328eb93cee2340715a0a5b4e0e923.geojson`
   - Bounds: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
   - Review (yesterday): `results/55maps-image-generalisation/human-review.csv`
   - Review (today): `results/55maps-image-generalisation/human-review-multi-buffer.csv`
 - **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-- **Git commit**: `1de5591196ef17f46d02f07bea06289adf9f60db`
+- **Git commit**: `a6a18b3c42066fd958368182d49744e444d96d33`
 - **Script**: `scripts/compute_corrected_f1_multi_buffer.py`
