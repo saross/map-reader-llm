@@ -98,5 +98,16 @@
   "Wave-6 unrepaired adjudicated rows remain honest MISMATCHes pending the PI's W6-E1/E3 decisions and the S127 doc-repair pass — notably the 34 DOC-DEFECT-AT-ERA rows and the divergence mass (ledger-only).",
   "The P3 corpus_growth_summary (per-registry before->after with causing commits) is the GATE-3 scope-growth line, ready to lift.",
   "Instrument fixes queued for runner tranche 2: magnitude bridge, marker-aware comparison, quoted-path parse fix (W6-E5), era-selection redesign (W6-E2, consolidating W5-E1)."
- ]
+ ],
+ "doc_repairs_resolution": {
+  "date": "2026-08-03 (same session, PI interactive)",
+  "rulings": "16 (approximate equality within ~5%) and 17 (two-layer rule: ruling 14 = triage vocabulary, Document Revision Policy = repair policy for living docs) — phase3-rulings fourth batch, commit 4c9dd2681",
+  "executed": "Six documents repaired per the archived pass specs, every figure re-derived from tracked artefacts by the repairing agents: cross-track (audited-cost refresh + approximately-equal conclusion + coupled section-7 counts + BCa method text), corrected-f1-multi-buffer (0.8332 x11 + section-10.2 + 4,124 restatement), attractor-pull-v2 (honest re-confirmation clause + tables byte-identical to the autogen twin), ds-summary-v2 (five cells), verifier-silent-drop (ruling-1 banner, body untouched), phase1-gate-package (696/702 erratum rider). Commits 723d56a29 + ce0126938. Archive scope README 36b3312a8.",
+  "ratified_coupled_fixes": "corrected-f1 banner 0.8316->0.8317 / +0.0017->+0.0015 (forced by internal arithmetic once 0.8332 landed; verified against the pre-recovery backup; batch-078 had recorded the inconsistency verbatim unadjudicated).",
+  "propagation_sweep": "docs/paper/ CLEAN (no stale cost figure or 2.9x claim). Remaining carriers: generated post_run_report/pre_launch_audit files (correction lane = regeneration against audited manifests, generated stratum); dated 2026-04-21 documentation-audit snapshots (era-faithful; their fleet partitions adjudicate); temperature-failure-recovery-analysis (fleet partition pending). Append-only registers and before/after audit tables retain historical figures correctly.",
+  "new_pi_items": [
+   "W6-E7: cross-track section 4.2's 'CI overlap? yes (partial)' at R=100m is WRONG on the artefacts (image [0.845,0.862] vs text-HIGH [0.822,0.842] are DISJOINT, before and after the refresh) — fixing it strengthens a separation conclusion, so it was flagged in the changelog residues and NOT edited. PI: approve the correction to 'no overlap'.",
+   "W6-E8: corrected-f1's '+274 mounds'/cand-2397 residue — summary.json was written 88 minutes BEFORE cand 2397 landed, so the banner's 'now included' claim appears false for the section-2 table; refreshing the count without re-running would create a new inconsistency. PI: re-run the analysis vs re-word the claim."
+  ]
+ }
 }
