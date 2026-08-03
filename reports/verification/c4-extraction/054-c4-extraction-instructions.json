@@ -1,0 +1,365 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/apparatus/c4-extraction-instructions.md",
+    "git_blob": "f38da08dc1a4",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          34
+        ],
+        "section": "Output"
+      },
+      "claim_text": "Fill `source_document.git_blob` with the\noutput of `git rev-parse HEAD:<file>` (abbreviated to ≥ 7 chars).",
+      "values": [
+        {
+          "quantity": "minimum abbreviation length for source_document.git_blob, C4 extraction files",
+          "value_verbatim": "≥ 7",
+          "value_parsed": 7,
+          "unit": "characters",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b054] The batch plan assigned lines 1-108 of this document against v1.0; the file is now 164 lines at v1.2 and no other batch covers the tail, so this extraction sweeps the whole current file (lines 1-164). This document is both this batch's instrument and one of its mine documents; it was read as instrument first, then extracted. Scope decisions logged per hard rule 5: the version strings (1.2, 1.1, 1.0, schema 1.1), session numbers (S123, Session-123), charter/schema section references, and the illustrative condition names on line 83 (`min6`, `t0.3`, `384` in `pv-diag-384`, which the rule itself declares names rather than claims) were all excluded as out of C4 scope. This value is a procedural rule parameter of the instrument, included with the doubt flagged per the batch brief. The 7-character minimum is encoded in the schema as a regular expression (`^[0-9a-f]{7,40}$` at $.properties.source_document.properties.git_blob.pattern in docs/manifest-schemas/c4-claims.schema.json), not as a scalar, so no mechanical read exists; anchor-unknown rather than manufacture a string-vs-number comparison."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          44
+        ],
+        "section": "Hard rules"
+      },
+      "claim_text": "`source.lines` (1-indexed, inclusive) must\n   bound the span.",
+      "values": [
+        {
+          "quantity": "minimum legal line index in source.lines, C4 claim schema",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.$defs.claim.properties.source.properties.lines.items.minimum",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/manifest-schemas/c4-claims.schema.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Procedural rule parameter of the instrument (1-indexed line locators), included with the doubt flagged per the batch brief. The schema encodes the same convention as the minimum of the lines array items."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          84
+        ],
+        "section": "Hard rules"
+      },
+      "claim_text": "A number used BOTH as a name and as an asserted fact (\"the\n   487-tile Era 2 corpus\") IS a claim (count, Era 2 tile corpus).",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 (384 px) test corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 487-tile figure appears here as rule 5's own worked example, but the span asserts it as a fact about the Era 2 corpus, so it is extracted as a claim (which is exactly what the rule instructs). Anchor is the Era 2 evaluation tile manifest (a top-level array)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          100
+        ],
+        "section": "v1.1 calibration rule"
+      },
+      "claim_text": "a numeric claim about what\nthe REGISTRATION specifies (\"the preregistered temperature was 1.0\",\n\"registered as 10,000 permutations\")",
+      "values": [
+        {
+          "quantity": "preregistered proposer temperature (illustrative quotation of a registration claim)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered permutation count (illustrative quotation of a registration claim)",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": "permutations",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both values appear as quoted illustrations inside the v1.1 rule rather than as free-standing assertions; included with the doubt flagged. Anchored per the rule they illustrate: registration claims anchor to the lodged preregistration (path null), never to the config or script that executed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          120
+        ],
+        "section": "v1.2 amendments"
+      },
+      "claim_text": "(the 487−160=327 trap: 487 and 160\n   both \"mismatched\" 327)",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 (384 px) test corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        },
+        {
+          "quantity": "tile count, pool_160 hard-example mining pool excluded from Era 3",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/calibration/h10-384/tile_selection_metadata.json#$.calibration_pools['160'].n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile count, Era 3 (384 px, post-pool_160) test corpus",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles_384/full_evaluation_manifest.json",
+              "path": "len:$"
+            },
+            {
+              "name": "b",
+              "file": "inputs/calibration/h10-384/tile_selection_metadata.json",
+              "path": "$.calibration_pools['160'].n_tiles"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Each of the three values appears twice in the span (once in the arithmetic, once in the restatement); enumerated once each. Per v1.2 amendment 1 the two operand values take method read with their own paths and only the derived value is arithmetic. 327 is independently readable as len:$ of inputs/calibration/h10-384/test_manifest.json if triage prefers a direct read to the derivation the document asserts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          129
+        ],
+        "section": "v1.2 amendments"
+      },
+      "claim_text": "(the pass-count-vs-temperature trap: \"5 passes\"\n   compared against `$.configuration.temperature` = 0.7)",
+      "values": [
+        {
+          "quantity": "pass count of the claim quoted in the amendment-3 example",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposer temperature the example value was wrongly compared against",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Real values recovered from the Session-123 triage but quoted here without naming the claim, run, or configuration file they came from, so no anchor can be identified from this document alone; looked for a named run, condition, or eval JSON in the surrounding amendment and found none. Included with the doubt flagged."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          143
+        ],
+        "section": "v1.2 amendments"
+      },
+      "claim_text": "(the ≈$1.11 flex-pricing row surfaced as MISMATCH\n   instead of APPROX)",
+      "values": [
+        {
+          "quantity": "cost USD, approximate flex-pricing row cited from the first recompute run",
+          "value_verbatim": "≈$1.11",
+          "value_parsed": 1.11,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The approximation marker is retained in value_verbatim per amendment 5 (dropping it is the defect the amendment exists to prevent). The document does not name the row's source document, run, or cost manifest, so the anchor cannot be identified from this document; triage will need the recompute diff report to chase it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "v1.2 amendments"
+      },
+      "claim_text": "In spans like \"2.4–2.7 %\"",
+      "values": [
+        {
+          "quantity": "lower bound of the illustrative percentage range",
+          "value_verbatim": "2.4",
+          "value_parsed": 2.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the illustrative percentage range",
+          "value_verbatim": "2.7",
+          "value_parsed": 2.7,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Flagged doubt: this looks like a syntactic illustration (\"In spans like ...\") rather than an assertion about the study, but the instrument's own rule is to include when in doubt. No quantity, condition, or artefact is named, so no anchor can be identified."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          158
+        ],
+        "section": "Known traps"
+      },
+      "claim_text": "The same quantity appears at different precisions across documents\n  (0.890 vs 0.8902)",
+      "values": [
+        {
+          "quantity": "F1@20m, pv-diag-384 verified-adv-text 16-of-30 headline (3-significant-figure rendering)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, pv-diag-384 verified-adv-text 16-of-30 headline (4-decimal rendering)",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted as an illustration of the precision trap, but both values are the study's headline F1 asserted as one quantity; included with the doubt flagged. Anchor identified by locating the only conditions-manifest cell at this value (pv-diag-384::verified-adv-text-consensus-16of30, per_buffer 20m); triage should confirm the intended condition. The document explicitly hands rounding tolerance to the harness."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          161
+        ],
+        "section": "Known traps"
+      },
+      "claim_text": "Costs appear as estimates (\"~$60\"), audited figures (\"$34.5\"), and\n  billed figures (\"$402.08\")",
+      "values": [
+        {
+          "quantity": "cost USD, quoted as an example of an estimated figure",
+          "value_verbatim": "~$60",
+          "value_parsed": 60,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cost USD, quoted as an example of an audited figure",
+          "value_verbatim": "$34.5",
+          "value_parsed": 34.5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cost USD, quoted as an example of a billed figure",
+          "value_verbatim": "$402.08",
+          "value_parsed": 402.08,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Three cost figures quoted as examples of the three cost kinds; included with the doubt flagged (they are illustrations, but each asserts a real study figure). Neither the estimate nor the audited figure names its run or cost manifest, so no anchor can be identified from this document; the billed figure is by the document's own rule an external (billing-console) quantity, attestation material only."
+    }
+  ]
+}

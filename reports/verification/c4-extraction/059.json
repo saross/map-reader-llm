@@ -1,0 +1,2672 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/family-fdr-registration.md",
+    "git_blob": "169e4a603e0d",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          506,
+          508
+        ],
+        "section": "5.6 H6 — Optimisations transfer from Gemini 3 Flash to Pro — EXCLUDED"
+      },
+      "claim_text": "**Status: NEVER RUN.** Excluded from the family per the PI decision at\n`planning/audit-and-completion-plan.md` § 4 line 119\n(\"7; H6 never ran\").",
+      "values": [
+        {
+          "quantity": "family size after H6 exclusion, as quoted from the PI decision",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b059] Batch covers lines 503-831 only (b058 holds 1-502; 832+ is another batch). Scope decisions applied throughout, per instrument rule 5: erratum/CMT/Obs/Decision/session identifiers, section refs, `preregistration.md:NNN` line-number citations, git commit hashes, era ordinals (Era 1/2/3), array indices used as locators (`comparisons[25]`, `contrasts[3]`), and numbers inside condition or file names (`T0.3`, `Scale-8`, `pv-diag-384`, `16-of-30`) are NOT extracted. Spelled-out determiners where the count is not the assertion (\"one (H6) was never executed\", \"one H1 contrast\", \"three sets\", \"all three options\", \"a single script\") are likewise not extracted. Registration-spec values anchor to the lodged preregistration per instrument v1.1; result values quoted from prose are re-anchored to the least-writable artefact holding them. THIS CLAIM: the family size is quoted from `planning/audit-and-completion-plan.md` § 4, a planning markdown — instrument rule 2 forbids prose-to-prose anchoring; triage should chase to `results/family-fdr/family_fdr.json` `$.family_size`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          513,
+          514
+        ],
+        "section": "5.6 H6 — Optimisations transfer from Gemini 3 Flash to Pro — EXCLUDED"
+      },
+      "claim_text": "> **Not at all.** No run in `results/runs-manifest.json` (31 runs) carries\n> `primary_hypothesis: \"H6\"`.",
+      "values": [
+        {
+          "quantity": "run count, results/runs-manifest.json",
+          "value_verbatim": "31",
+          "value_parsed": 31,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": "len:$.runs"
+      },
+      "method": "read",
+      "notes": "Quoted verbatim from reports/d17-inventory/unexecuted-register.md § E-01; the manifest itself is the least-writable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          514,
+          515
+        ],
+        "section": "5.6 H6 — Optimisations transfer from Gemini 3 Flash to Pro — EXCLUDED"
+      },
+      "claim_text": "`studies/phase4-transfer.yaml` still holds 13\n> `PLACEHOLDER` strings",
+      "values": [
+        {
+          "quantity": "PLACEHOLDER string count, studies/phase4-transfer.yaml",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase4-transfer.yaml",
+        "path": "count:PLACEHOLDER"
+      },
+      "method": "read",
+      "notes": "Text-occurrence count in a YAML file, not a JSON scalar; non-JSON anchors are expected (instrument v1.1) and route to triage. The quoted line-number list (`:28,31,...`) is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          529,
+          530
+        ],
+        "section": "5.6 H6 — Optimisations transfer from Gemini 3 Flash to Pro — EXCLUDED"
+      },
+      "claim_text": "> The preregistered H6 (Flash→Pro transfer, §3.6) specifies a 20-tile\n> stratified holdout subset at 512px tile size.",
+      "values": [
+        {
+          "quantity": "registered H6 holdout size, tiles",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered H6 tile size",
+          "value_verbatim": "512px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered design parameters, quoted through E41 (docs/methodology/preregistration/protocol-errata.md). Instrument v1.1: registration claims anchor to the lodged document, never to the executed config. No machine path exists in a markdown anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          530,
+          531
+        ],
+        "section": "5.6 H6 — Optimisations transfer from Gemini 3 Flash to Pro — EXCLUDED"
+      },
+      "claim_text": "Our Pro comparison uses 487\n> tiles at 384px",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 corpus (Pro-versus-Flash comparison)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.permutation_test.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile size as run, n1-baseline-matrix-384 comparison",
+          "value_verbatim": "384px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "studies/h11-384-n1-baselines.yaml#$.tile_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Values as-run, quoted through E41. The 487-tile Era 2 corpus size is anchored to the nearest committed scalar (the H2 permutation artefact's n_tiles); the document names no artefact for the n1-baseline-matrix-384 board itself."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          546,
+          547
+        ],
+        "section": "5.6 H6 — Optimisations transfer from Gemini 3 Flash to Pro — EXCLUDED"
+      },
+      "claim_text": "the paper must state that the registered\nconfirmatory family comprised eight hypotheses",
+      "values": [
+        {
+          "quantity": "registered confirmatory family size, hypotheses",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec claim; anchors to the lodged document per instrument v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          548,
+          548
+        ],
+        "section": "5.6 H6 — Optimisations transfer from Gemini 3 Flash to Pro — EXCLUDED"
+      },
+      "claim_text": "the BH correction is therefore over seven",
+      "values": [
+        {
+          "quantity": "BH-FDR family size registered here (H6 excluded)",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.family_size"
+      },
+      "method": "read",
+      "notes": "The registration's own family-size decision; the executed correction artefact records it as family_size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          559,
+          560
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "> - Pairwise bootstrap comparisons across 5 temperature levels (95% CIs,\n>   FDR-corrected)",
+      "values": [
+        {
+          "quantity": "registered temperature levels, H7 primary analysis",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered bootstrap confidence level, H7 primary analysis",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quote of CMT-0217; registration spec, so anchored to the lodged preregistration (instrument v1.1). No machine path in a markdown anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          567,
+          567
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "> - Planned contrasts: T=1.0 vs each other level",
+      "values": [
+        {
+          "quantity": "registered reference temperature level, H7 planned contrasts",
+          "value_verbatim": "T=1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Doubt flagged per instrument task note: T=1.0 doubles as a condition label (rule 5 would exclude it) and as the registered reference level of the planned-contrast set (v1.1 would include it). Included as the registration-spec reading; prune at triage if judged a name."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          572,
+          573
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "> **Advance to Stage 2 if**: Any temperature significantly outperforms\n> T=1.0, or if escalation trigger activates and higher or low temperatures",
+      "values": [
+        {
+          "quantity": "registered reference temperature level, H7 advance rule",
+          "value_verbatim": "T=1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quote of CMT-0222. Duplicates the reference level asserted at line 567 in a separate span; same doubt applies."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          576,
+          577
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "**Executed artefact**: `results/retest/pairwise-bootstrap-comparisons.json`\n(Era 1, 340 tiles).",
+      "values": [
+        {
+          "quantity": "tile count, Era 1 retest corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": "$.n_tiles"
+      },
+      "method": "read",
+      "notes": "The named artefact (results/retest/pairwise-bootstrap-comparisons.json) carries no tile-count scalar; the Era 1 leaderboard does. inputs/tiles/full_evaluation_manifest.json (340 entries) is a corroborating anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          582,
+          583
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "No omnibus across the five\nlevels was executed.",
+      "values": [
+        {
+          "quantity": "registered temperature levels, H7",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The count is the registered level set; the assertion is that no omnibus over them ran."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          585,
+          586
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "**Selection is not outcome-material**: every candidate sits at the\nbootstrap resolution floor of p = 0.001 (B = 1 000 iterations).",
+      "values": [
+        {
+          "quantity": "bootstrap p-value resolution floor, Era 1 retest",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/retest/pairwise-bootstrap-comparisons.json",
+              "path": "$.metadata.bootstrap_iterations"
+            }
+          ]
+        },
+        {
+          "quantity": "bootstrap iterations, Era 1 retest",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_iterations",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Floor is 1/B; B is read separately so the operand is not compared against its own derivation (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          590,
+          590
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "| **(i)** text track, best alternative vs vendor default | `T0.3` vs `T1.0` | `comparisons[25]` | +0.09584910578988215 | **0.001** |",
+      "values": [
+        {
+          "quantity": "F1 delta, T0.3 vs T1.0, text track (Era 1 bootstrap)",
+          "value_verbatim": "+0.09584910578988215",
+          "value_parsed": 0.09584910578988215,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.comparisons[25].f1_delta",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap p, T0.3 vs T1.0, text track",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[25].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          591,
+          591
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "| (ii) image track, best alternative vs vendor default | `T0.0` vs `T1.0` | `comparisons[12]` | +0.06390203981488053 | **0.001** |",
+      "values": [
+        {
+          "quantity": "F1 delta, T0.0 vs T1.0, image track (Era 1 bootstrap)",
+          "value_verbatim": "+0.06390203981488053",
+          "value_parsed": 0.06390203981488053,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.comparisons[12].f1_delta",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap p, T0.0 vs T1.0, image track",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[12].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          592,
+          592
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "| (iii) text track, T = 0.0 vs vendor default | `T0.0` vs `T1.0` | `comparisons[22]` | +0.0930388572836824 | **0.001** |",
+      "values": [
+        {
+          "quantity": "F1 delta, T0.0 vs T1.0, text track (Era 1 bootstrap)",
+          "value_verbatim": "+0.0930388572836824",
+          "value_parsed": 0.0930388572836824,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.comparisons[22].f1_delta",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap p, T0.0 vs T1.0, text track",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[22].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          597,
+          598
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "study's optimum (`results/phase2b-carry-forward-parameters.md`: Track 2\noptimum T = 0.3, F1 = 0.606).",
+      "values": [
+        {
+          "quantity": "Track 2 (text) optimum temperature",
+          "value_verbatim": "T = 0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, Track 2 optimum condition (text-t0.3)",
+          "value_verbatim": "0.606",
+          "value_parsed": 0.606,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase2b::text-t0.3')].eval_f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document cites results/phase2b-carry-forward-parameters.md, a markdown; instrument rule 2 forbids prose-to-prose anchoring, so the F1 is re-anchored to the Era 1 leaderboard cell. The optimum temperature has no artefact field (it identifies the condition), hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          600,
+          601
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "**Note on the p-value floor**: 0.001 is the smallest value the bootstrap\ncan report at B = 1 000.",
+      "values": [
+        {
+          "quantity": "bootstrap p-value resolution floor, Era 1 retest",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/retest/pairwise-bootstrap-comparisons.json",
+              "path": "$.metadata.bootstrap_iterations"
+            }
+          ]
+        },
+        {
+          "quantity": "bootstrap iterations, Era 1 retest",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_iterations",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the floor asserted at lines 585-586 in a separate span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          601,
+          602
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "It must be recorded as **p ≤ 0.001**, not as an\nexact value, and its BH rank handled accordingly (see § 8.3).",
+      "values": [
+        {
+          "quantity": "H7 primary p, reported as a bound (bootstrap floor)",
+          "value_verbatim": "≤ 0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[25].f1_p_value"
+      },
+      "method": "read",
+      "notes": "Reporting prescription; the bound marker is kept verbatim per instrument v1.2 amendment 5 so the harness treats it as a bound, not an exact comparison."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          604,
+          608
+        ],
+        "section": "5.7 H7 — Temperature affects detection performance"
+      },
+      "claim_text": "**Current-instrument cross-check**:\n`results/era1-leaderboard/tiering_20m.json` `pairwise[837]`\n(`retest-phase2b::text-t0.3` vs `retest-phase2b::text-t1.0`), `p_value` =\n0.0, `bh_adjusted_p` = 0.0; and `pairwise[397]` (image T0.0 vs T1.0),\n`p_value` = 0.0.",
+      "values": [
+        {
+          "quantity": "permutation p, text-t0.3 vs text-t1.0, Era 1 leaderboard",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[837].p_value",
+          "method": null
+        },
+        {
+          "quantity": "BH-adjusted p, text-t0.3 vs text-t1.0, Era 1 leaderboard",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[837].bh_adjusted_p",
+          "method": null
+        },
+        {
+          "quantity": "permutation p, image-t0.0 vs image-t1.0, Era 1 leaderboard",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[397].p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          623,
+          624
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> - **Primary**: Pairwise bootstrap comparisons across 7 library\n>   conditions (95% CIs, FDR-corrected)",
+      "values": [
+        {
+          "quantity": "registered library conditions, H8 primary analysis",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered bootstrap confidence level, H8 primary analysis",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quote of CMT-0259; registration spec (instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          631,
+          631
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> | C1 | Pure Positive Canon → Canonical | Does Canon- help? | Canon+ constant (4), HP=0, HN=0 |",
+      "values": [
+        {
+          "quantity": "registered Canon+ example count, contrast C1",
+          "value_verbatim": "(4)",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered hard-positive count, contrast C1",
+          "value_verbatim": "HP=0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered hard-negative count, contrast C1",
+          "value_verbatim": "HN=0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered planned-contrast design table (CMT-0239-CMT-0245), quoted verbatim; anchors to the lodged document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          632,
+          632
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> | C2 | Canonical → +HP | Do HP help? | Canon+/- constant, HN=0 |",
+      "values": [
+        {
+          "quantity": "registered hard-negative count, contrast C2",
+          "value_verbatim": "HN=0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered planned-contrast design table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          633,
+          633
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> | C3 | +HP → Scale-8 | Do HN help? | Canon+/- constant, HP constant (4) |",
+      "values": [
+        {
+          "quantity": "registered hard-positive count held constant, contrast C3",
+          "value_verbatim": "(4)",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered planned-contrast design table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          634,
+          634
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> | S1 | Scale-4 → Scale-8 | 4 → 8 | Initial scaling value |",
+      "values": [
+        {
+          "quantity": "registered library size, scaling contrast S1 start",
+          "value_verbatim": "4 →",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered library size, scaling contrast S1 end",
+          "value_verbatim": "→ 8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library sizes in the description column; the same numerals also appear in the condition names (Scale-4, Scale-8), which are out of scope on their own."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          635,
+          635
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> | S2 | Scale-8 → Scale-16 | 8 → 16 | Mid-range scaling |",
+      "values": [
+        {
+          "quantity": "registered library size, scaling contrast S2 start",
+          "value_verbatim": "8 →",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered library size, scaling contrast S2 end",
+          "value_verbatim": "→ 16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library sizes in the description column."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          636,
+          636
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> | S3 | Scale-16 → Scale-32 | 16 → 32 | Ceiling/diminishing returns |",
+      "values": [
+        {
+          "quantity": "registered library size, scaling contrast S3 start",
+          "value_verbatim": "16 →",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered library size, scaling contrast S3 end",
+          "value_verbatim": "→ 32",
+          "value_parsed": 32,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library sizes in the description column."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          637,
+          637
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> | B1 | +HP vs Scale-4 | At matched total (13 examples): is 4+0 or 2+2 better? |",
+      "values": [
+        {
+          "quantity": "registered matched library total, contrast B1",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": "examples",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered HP+HN composition, B1 arm a",
+          "value_verbatim": "4+0",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered HP+HN composition, B1 arm b",
+          "value_verbatim": "2+2",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Compositions recorded verbatim; value_parsed null because they are two-part specifications, not single scalars."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          641,
+          642
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "> - Significant main effect of library composition (FDR-corrected p <\n>   0.05), OR",
+      "values": [
+        {
+          "quantity": "registered FDR-corrected alpha, H8 advance rule",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered advance rule, quoted verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          644,
+          647
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "**Executed artefact**: `results/h8-v2/permutation-t4/fdr_summary.json`\n(Era 3, 327 tiles, greedy consensus t = 4, 20 m buffer, 10 000\npermutations, seed 42; `method` = \"Benjamini-Hochberg FDR at q=0.05 over 7\nH8 preregistered contrasts\", `any_significant` = false).",
+      "values": [
+        {
+          "quantity": "tile count, Era 3 H10 test set",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.contrasts[3].n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "greedy consensus vote threshold as run, H8 v2",
+          "value_verbatim": "t = 4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.operating_point",
+          "method": null
+        },
+        {
+          "quantity": "evaluation buffer as run, H8 v2",
+          "value_verbatim": "20 m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/h8-v2/permutation-t4/B1-plus-hp-vs-scale-4/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "permutation iterations as run, H8 v2",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": null
+        },
+        {
+          "quantity": "random seed as run, H8 v2",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": null
+        },
+        {
+          "quantity": "FDR q as run, H8 v2",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.q",
+          "method": null
+        },
+        {
+          "quantity": "contrasts corrected within H8",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_contrasts",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "As-run parameters, so anchored to the executed artefact. t = 4 and the buffer are embedded in the descriptive `operating_point` string in fdr_summary.json; the buffer is re-pointed at the per-contrast permutation result, which carries it as a scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          651,
+          651
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "All seven registered contrasts were executed",
+      "values": [
+        {
+          "quantity": "registered H8 contrasts executed",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": "$.n_contrasts"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          656,
+          657
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "**Selection is not outcome-material**: all seven contrasts are null, raw\np from 0.1636 to 0.932.",
+      "values": [
+        {
+          "quantity": "H8 contrasts, all null",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_contrasts",
+          "method": null
+        },
+        {
+          "quantity": "minimum raw permutation p across the seven H8 contrasts",
+          "value_verbatim": "0.1636",
+          "value_parsed": 0.1636,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.contrasts[3].p",
+          "method": null
+        },
+        {
+          "quantity": "maximum raw permutation p across the seven H8 contrasts",
+          "value_verbatim": "0.932",
+          "value_parsed": 0.932,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.contrasts[1].p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Min/max contrast indices located by inspecting the anchor only (instrument rule 4); no adjudication performed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          661,
+          661
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "| **(i)** minimum-p contrast — the \"any significant difference between conditions\" reading | B1 (`plus-hp` vs `scale-4`) | `contrasts[3]` | −0.027578 | **0.1636** | 0.8344 |",
+      "values": [
+        {
+          "quantity": "F1 delta, contrast B1 (plus-hp vs scale-4), Era 3",
+          "value_verbatim": "−0.027578",
+          "value_parsed": -0.027578,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.contrasts[3].delta",
+          "method": null
+        },
+        {
+          "quantity": "raw permutation p, contrast B1",
+          "value_verbatim": "**0.1636**",
+          "value_parsed": 0.1636,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.contrasts[3].p",
+          "method": null
+        },
+        {
+          "quantity": "within-H8 BH-adjusted p, contrast B1",
+          "value_verbatim": "0.8344",
+          "value_parsed": 0.8344,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.contrasts[3].bh_adjusted_p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          662,
+          662
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "| (ii) the registration's own named component question — H5 background at `preregistration.md:582` states \"The question of *whether* negatives help is now answered by H8 (contrast C3: +HP → Scale-8)\" | C3 (`plus-hp` vs `scale-8`) | `contrasts[2]` | −0.004956 | **0.8538** | 0.932 |",
+      "values": [
+        {
+          "quantity": "F1 delta, contrast C3 (plus-hp vs scale-8), Era 3",
+          "value_verbatim": "−0.004956",
+          "value_parsed": -0.004956,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.contrasts[2].delta",
+          "method": null
+        },
+        {
+          "quantity": "raw permutation p, contrast C3",
+          "value_verbatim": "**0.8538**",
+          "value_parsed": 0.8538,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.contrasts[2].p",
+          "method": null
+        },
+        {
+          "quantity": "within-H8 BH-adjusted p, contrast C3",
+          "value_verbatim": "0.932",
+          "value_parsed": 0.932,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.contrasts[2].bh_adjusted_p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          663,
+          663
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "| (iii) hypothesis-level summary — the smallest within-H8 BH-adjusted p, treating the existing seven-contrast correction as the H8 test | B1 | `contrasts[3]` | −0.027578 | — | **0.8344** |",
+      "values": [
+        {
+          "quantity": "H8 contrasts in the within-H8 correction",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_contrasts",
+          "method": null
+        },
+        {
+          "quantity": "F1 delta, contrast B1 (plus-hp vs scale-4), Era 3",
+          "value_verbatim": "−0.027578",
+          "value_parsed": -0.027578,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.contrasts[3].delta",
+          "method": null
+        },
+        {
+          "quantity": "within-H8 BH-adjusted p, contrast B1 (selected H8 primary)",
+          "value_verbatim": "**0.8344**",
+          "value_parsed": 0.8344,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.contrasts[3].bh_adjusted_p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          673,
+          674
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "the asymmetry with the family's other six\n(raw) primaries is disclosed in § 8.3.",
+      "values": [
+        {
+          "quantity": "family primaries reported at raw p (all but H8)",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null,
+        "expression": "a - 1",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/family-fdr/family_fdr.json",
+            "path": "$.family_size"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Derived as family size minus the single BH-adjusted (H8) primary; no artefact field records the raw/adjusted split directly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          676,
+          677
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "Era 3 (327 tiles at\n384 px) under the production carry-forward",
+      "values": [
+        {
+          "quantity": "tile count, Era 3 H10 test set",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.contrasts[3].n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile size as run, Era 3",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "studies/h8-v2-library.yaml#$.tile_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          677,
+          678
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "not the registered 60-tile\n512 px design",
+      "values": [
+        {
+          "quantity": "registered holdout size, tiles",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered tile size",
+          "value_verbatim": "512 px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec values (instrument v1.1). inputs/tiles/validation_manifest.json (60 entries) corroborates the holdout size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          678,
+          678
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "(E51 records 15 deviations from the original Phase 2c H8)",
+      "values": [
+        {
+          "quantity": "deviations recorded by E51 from the original Phase 2c H8",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source is docs/methodology/preregistration/protocol-errata.md § E51, a markdown erratum register; instrument rule 2 forbids prose-to-prose anchoring, so triage must chase the deviation count there."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          679,
+          679
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "greedy consensus at t = 4 as the aggregation, per Decision 26.",
+      "values": [
+        {
+          "quantity": "greedy consensus vote threshold as run, H8 v2",
+          "value_verbatim": "t = 4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": "$.operating_point"
+      },
+      "method": "read",
+      "notes": "Recorded inside the descriptive `operating_point` string (\"greedy t=4, 20 m buffer, 327-tile H10 test set\"), not as a scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          681,
+          684
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "the original Phase 2c H8 ran only\nfive of the seven library conditions\n(`results/retest/pairwise-bootstrap-comparisons.json`, \"Phase 2c T1/T2\",\n20 contrasts; Scale-16 and Scale-32 absent).",
+      "values": [
+        {
+          "quantity": "library conditions executed in the original Phase 2c H8",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "registered library conditions, H8",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#registered H8 library conditions",
+          "method": null
+        },
+        {
+          "quantity": "Phase 2c T1/T2 bootstrap contrasts",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/retest/pairwise-bootstrap-comparisons.json",
+              "path": "len:$.comparisons[?(@.phase=='Phase 2c T1: H8 Library (Image)')]"
+            },
+            {
+              "name": "b",
+              "file": "results/retest/pairwise-bootstrap-comparisons.json",
+              "path": "len:$.comparisons[?(@.phase=='Phase 2c T2: H8 Library (Text)')]"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span: the executed-condition count has no scalar field (it is a distinct-label count over the two Phase 2c groups), the registered count is a cross-file locator into the lodged preregistration (instrument v1.2 amendment 2; markdown, so triage resolves), and the contrast count is the sum of the two group sizes."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          684,
+          688
+        ],
+        "section": "5.8 H8 — Library composition and scaling"
+      },
+      "claim_text": "Its only nominally\nsignificant row is `plus-hp` vs `scale-4` on the text track\n(`f1_p_value` = 0.001, ΔF1 = −0.0127) — a 0.013 F1 difference that\n`results/retest/retest-production-summary.md` itself describes as \"a tiny\neffect\".",
+      "values": [
+        {
+          "quantity": "bootstrap p, plus-hp vs scale-4, Phase 2c text track",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[45].f1_p_value",
+          "method": null
+        },
+        {
+          "quantity": "F1 delta, plus-hp vs scale-4, Phase 2c text track",
+          "value_verbatim": "−0.0127",
+          "value_parsed": -0.0127,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.comparisons[45].f1_delta",
+          "method": null
+        },
+        {
+          "quantity": "absolute F1 difference, plus-hp vs scale-4 (rounded)",
+          "value_verbatim": "0.013",
+          "value_parsed": 0.013,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/retest/pairwise-bootstrap-comparisons.json",
+              "path": "$.comparisons[45].f1_delta"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Comparison index located by inspecting the anchor only (rule 4). The 0.013 figure is the magnitude of the delta at the quoted precision, so it is derived rather than read, per instrument v1.2 amendment 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          692,
+          692
+        ],
+        "section": "6. Summary — the seven primary tests"
+      },
+      "claim_text": "## 6. Summary — the seven primary tests",
+      "values": [
+        {
+          "quantity": "primary tests in the registered BH-FDR family",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.family_size"
+      },
+      "method": "read",
+      "notes": "Section heading asserting the family size the registration fixes."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          697,
+          697
+        ],
+        "section": "6. Summary — the seven primary tests"
+      },
+      "claim_text": "| H2 | Flash HIGH text 16-of-30 + PV vs Flash HIGH text 26-of-30 (F1) | `results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json` | `permutation_test.p_value` | 0.0 (< 1e-4) | SELECTED |",
+      "values": [
+        {
+          "quantity": "permutation p, H2 primary (PV vs 26-of-30 consensus)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": null
+        },
+        {
+          "quantity": "permutation resolution bound, H2 primary",
+          "value_verbatim": "1e-4",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+              "path": "$.permutation_test.n_permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          698,
+          698
+        ],
+        "section": "6. Summary — the seven primary tests"
+      },
+      "claim_text": "| H3 | consensus-flash-high-text-26of30 vs matched single-pass (F1) | `results/diversity-dividend-384/tiering-champions/tiering_20m.json` | `headline_contrasts[2].p_value` | 0.0 (< 1e-4) | SELECTED |",
+      "values": [
+        {
+          "quantity": "permutation p, H3 primary (consensus vs matched single-pass)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[2].p_value",
+          "method": null
+        },
+        {
+          "quantity": "permutation resolution bound, H3 primary",
+          "value_verbatim": "1e-4",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+              "path": "$.n_permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          699,
+          699
+        ],
+        "section": "6. Summary — the seven primary tests"
+      },
+      "claim_text": "| H4 | canonical-first vs canonical-last (F1) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[55].f1_p_value` | 0.124 | SELECTED |",
+      "values": [
+        {
+          "quantity": "bootstrap p, H4 primary (canonical-first vs canonical-last, F1)",
+          "value_verbatim": "0.124",
+          "value_parsed": 0.124,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[55].f1_p_value"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          700,
+          700
+        ],
+        "section": "6. Summary — the seven primary tests"
+      },
+      "claim_text": "| H5 | terse vs verbose, image track (**precision**) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[53].precision_p` | 0.756 | SELECTED (by constraint; PI-ratified) |",
+      "values": [
+        {
+          "quantity": "bootstrap p, H5 primary (terse vs verbose, image track, precision)",
+          "value_verbatim": "0.756",
+          "value_parsed": 0.756,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[53].precision_p"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          702,
+          702
+        ],
+        "section": "6. Summary — the seven primary tests"
+      },
+      "claim_text": "| H7 | T = 0.3 vs T = 1.0, text track (F1) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[25].f1_p_value` | ≤ 0.001 | SELECTED (PI-confirmed default) |",
+      "values": [
+        {
+          "quantity": "bootstrap p, H7 primary (T0.3 vs T1.0, text track, F1)",
+          "value_verbatim": "≤ 0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[25].f1_p_value"
+      },
+      "method": "read",
+      "notes": "Bound marker kept verbatim (instrument v1.2 amendment 5): the value sits at the bootstrap floor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          703,
+          703
+        ],
+        "section": "6. Summary — the seven primary tests"
+      },
+      "claim_text": "| H8 | Simes global null over the seven registered contrasts (within-H8 BH minimum, at B1) | `results/h8-v2/permutation-t4/fdr_summary.json` | `contrasts[3].bh_adjusted_p` | 0.8344 | SELECTED (PI, option iii) |",
+      "values": [
+        {
+          "quantity": "within-H8 BH-adjusted p, H8 primary (Simes global null at B1)",
+          "value_verbatim": "0.8344",
+          "value_parsed": 0.8344,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": "$.contrasts[3].bh_adjusted_p"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          705,
+          706
+        ],
+        "section": "6. Summary — the seven primary tests"
+      },
+      "claim_text": "Six of the\nseven p-values are visible in-repo",
+      "values": [
+        {
+          "quantity": "family p-values already visible in-repo at registration",
+          "value_verbatim": "Six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "primary p-values in the registered family",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The six/seven split describes the document's own pre-execution state; only the family size has an artefact counterpart."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          716,
+          718
+        ],
+        "section": "7.1 Tail direction — two-sided throughout"
+      },
+      "claim_text": "Four\nplaces carry an explicit one-tailed rule: H1's elaboration contrast\n(`CMT-0108`), H2 (`CMT-0124`), H3 (`CMT-0138`), and H4 (`CMT-0147`).",
+      "values": [
+        {
+          "quantity": "registered one-tailed rules in the preregistration",
+          "value_verbatim": "Four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec count (instrument v1.1); the CMT identifiers are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          738,
+          739
+        ],
+        "section": "7.1 Tail direction — two-sided throughout"
+      },
+      "claim_text": "Consequence for H4, the only case where tail choice changes the numeral:\ntwo-sided p = 0.124 versus one-tailed p ≈ 0.062.",
+      "values": [
+        {
+          "quantity": "two-sided bootstrap p, H4 primary",
+          "value_verbatim": "0.124",
+          "value_parsed": 0.124,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[55].f1_p_value",
+          "method": null
+        },
+        {
+          "quantity": "one-tailed equivalent p, H4 primary",
+          "value_verbatim": "≈ 0.062",
+          "value_parsed": 0.062,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/retest/pairwise-bootstrap-comparisons.json",
+              "path": "$.comparisons[55].f1_p_value"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker kept verbatim (instrument v1.2 amendment 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          739,
+          740
+        ],
+        "section": "7.1 Tail direction — two-sided throughout"
+      },
+      "claim_text": "Both are null at\nα = 0.05; the two-sided value is used and is conservative.",
+      "values": [
+        {
+          "quantity": "registered alpha for the confirmatory family",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec alpha (instrument v1.1); the executed counterpart is results/family-fdr/family_fdr.json $.q."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          743,
+          744
+        ],
+        "section": "7.1 Tail direction — two-sided throughout"
+      },
+      "claim_text": "A one-tailed test in the registered direction would give\np ≈ 1.0.",
+      "values": [
+        {
+          "quantity": "one-tailed p in the registered direction, H2",
+          "value_verbatim": "≈ 1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null,
+        "expression": "1 - a / 2",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+            "path": "$.permutation_test.p_value"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "The executed direction is opposite to the registered alternative, so the one-tailed value is the upper-tail complement of the two-sided p."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          744,
+          746
+        ],
+        "section": "7.1 Tail direction — two-sided throughout"
+      },
+      "claim_text": "The two-sided reading (p < 1 × 10⁻⁴, favouring two-stage) is used\nand must be reported as a **falsified directional prediction**, not as a\nconfirmation.",
+      "values": [
+        {
+          "quantity": "permutation resolution bound quoted for the H2 two-sided p",
+          "value_verbatim": "1 × 10⁻⁴",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null,
+        "expression": "1 / a",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+            "path": "$.permutation_test.n_permutations"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          757,
+          757
+        ],
+        "section": "7.2 Inference method — bootstrap versus permutation (E45)"
+      },
+      "claim_text": "> `permutation` appears zero times in the lodged registration",
+      "values": [
+        {
+          "quantity": "occurrences of 'permutation' in the lodged registration",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "count:permutation"
+      },
+      "method": "read",
+      "notes": "Quoted from E45 (protocol-errata.md) but checkable directly against the lodged document; text-occurrence count, so a non-JSON anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          765,
+          768
+        ],
+        "section": "7.2 Inference method — bootstrap versus permutation (E45)"
+      },
+      "claim_text": "**Family composition under this constraint**: four primaries (H1, H4, H5,\nH7) come from the registered bootstrap instrument; three (H2, H3, H8) come\nfrom permutation artefacts because no bootstrap execution of those\ncontrasts exists at the current era. This is disclosed, not hidden.",
+      "values": [
+        {
+          "quantity": "family primaries drawn from the registered bootstrap instrument",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "family primaries drawn from permutation artefacts",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The instrument split is a property of this registration's family table (§ 6); results/family-fdr/family_fdr.json records the seven inputs but carries no per-instrument field, so triage must derive it from inputs_ranked sources."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          780,
+          780
+        ],
+        "section": "7.3 Corpus heterogeneity"
+      },
+      "claim_text": "| H1, H4, H5, H7 | Era 1 retest | 340 | 512 px | 1 |",
+      "values": [
+        {
+          "quantity": "tile count, Era 1 retest corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 1 retest corpus",
+          "value_verbatim": "512 px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Era 1 phase2* study YAMLs carry no tile_size key (512 px was the pipeline default), so the tile size has no located anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          781,
+          781
+        ],
+        "section": "7.3 Corpus heterogeneity"
+      },
+      "claim_text": "| H2, H3 | Era 2 (`pv-diag-384`, `h11`) | 487 | 384 px | 2 |",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.permutation_test.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 2 corpus",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "studies/h11-384-pv-diag-text-baseline.yaml#$.tile_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          782,
+          782
+        ],
+        "section": "7.3 Corpus heterogeneity"
+      },
+      "claim_text": "| H8 | Era 3 (`h10-384` test set) | 327 | 384 px | 3 |",
+      "values": [
+        {
+          "quantity": "tile count, Era 3 H10 test set",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.contrasts[3].n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 3 H10 test set",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "studies/h8-v2-library.yaml#$.tile_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          784,
+          786
+        ],
+        "section": "7.3 Corpus heterogeneity"
+      },
+      "claim_text": "The three sets are **strictly nested** (Era 3 ⊂ Era 2 ⊂ Era 1, 100.000 %\narea containment, zero mounds unique to a smaller scope —\n`results/evaluation-scopes.md` § 3).",
+      "values": [
+        {
+          "quantity": "area containment across the nested evaluation scopes",
+          "value_verbatim": "100.000 %",
+          "value_parsed": 100.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mounds unique to a smaller scope",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The only named source is results/evaluation-scopes.md § 3, a markdown; instrument rule 2 forbids prose-to-prose anchoring."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          786,
+          787
+        ],
+        "section": "7.3 Corpus heterogeneity"
+      },
+      "claim_text": "None is the registered 60-tile\nholdout",
+      "values": [
+        {
+          "quantity": "registered holdout size, tiles",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec value; inputs/tiles/validation_manifest.json (60 entries) corroborates."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          791,
+          794
+        ],
+        "section": "7.3 Corpus heterogeneity"
+      },
+      "claim_text": "> The eight confirmatory hypotheses now have heterogeneous inference\n> (bootstrap CI pseudo-p in Era 1; tile-swap permutation in the\n> leaderboards), different scopes (60/327/340/487 tiles), and H6 has no\n> result at all.",
+      "values": [
+        {
+          "quantity": "registered confirmatory hypotheses",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered holdout size, tiles",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count, Era 3 H10 test set",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/h8-v2/permutation-t4/fdr_summary.json#$.contrasts[3].n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile count, Era 1 retest corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/era1-leaderboard/tiering_20m.json#$.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile count, Era 2 corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json#$.permutation_test.n_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted from reports/d17-inventory/unexecuted-register.md § A-01. The two registered counts anchor to the lodged document (path null); the three era corpora use cross-file locators (instrument v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          803,
+          803
+        ],
+        "section": "7.4 Other structural divergences carried into the family"
+      },
+      "claim_text": "| H3 | E53 | Phase 3a-HIGH image track moved from 512 px (Era 1) to 384 px (Era 2) |",
+      "values": [
+        {
+          "quantity": "tile size, Phase 3a-HIGH image track before the move (Era 1)",
+          "value_verbatim": "512 px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile size, Phase 3a-HIGH image track after the move (Era 2)",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.tile_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-pv-diag-text-baseline.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Era 1 study YAMLs carry no tile_size key, so the 512 px side has no located anchor; YAML anchors route to triage per instrument v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          804,
+          804
+        ],
+        "section": "7.4 Other structural divergences carried into the family"
+      },
+      "claim_text": "| H4 | E30 | Phase 2e tests 4 ordering conditions instead of the preregistered 3 |",
+      "values": [
+        {
+          "quantity": "ordering conditions actually tested in Phase 2e",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "registered ordering conditions, H4",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The as-run condition count has no scalar field (Phase 2e appears as six pairwise comparisons in the retest bootstrap artefact); the registered count anchors to the lodged document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          805,
+          805
+        ],
+        "section": "7.4 Other structural divergences carried into the family"
+      },
+      "claim_text": "| H5 | E28 | single-factor OFAT replaced the registered 3 × 3 M/E × H5 design |",
+      "values": [
+        {
+          "quantity": "registered M/E factor levels, H5 design",
+          "value_verbatim": "3 ×",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered H5 factor levels, H5 design",
+          "value_verbatim": "× 3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered factorial design dimensions."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          807,
+          807
+        ],
+        "section": "7.4 Other structural divergences carried into the family"
+      },
+      "claim_text": "| H8 | E51 | H8 re-run under production carry-forward, 384 px / v2 pipeline (15 deviations) |",
+      "values": [
+        {
+          "quantity": "tile size, H8 v2 production re-run",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "deviations recorded by E51",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deviation count lives in protocol-errata.md § E51, a markdown erratum register (instrument rule 2: no prose-to-prose anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          808,
+          808
+        ],
+        "section": "7.4 Other structural divergences carried into the family"
+      },
+      "claim_text": "| all | E36 | corpus expansion beyond the registered 60-tile holdout |",
+      "values": [
+        {
+          "quantity": "registered holdout size, tiles",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          809,
+          809
+        ],
+        "section": "7.4 Other structural divergences carried into the family"
+      },
+      "claim_text": "| all | E54 | bootstrap iteration count (1 000 primary; 10 000 for narrow effects) |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, primary runs",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_iterations",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap iterations, narrow-effect runs",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The retest bootstrap artefact records 1 000 iterations; no artefact for the 10 000-iteration narrow-effect runs is named here, so that side is unanchored."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          817,
+          818
+        ],
+        "section": "8. The BH-FDR procedure — 8.1 Specification"
+      },
+      "claim_text": "- **Family**: the seven primary p-values in § 6 (H1, H2, H3, H4, H5, H7,\n  H8). H6 excluded as never-run.",
+      "values": [
+        {
+          "quantity": "primary p-values in the registered BH-FDR family",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.family_size"
+      },
+      "method": "read",
+      "notes": "The registration's own family-membership decision, fixed before execution."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          819,
+          819
+        ],
+        "section": "8. The BH-FDR procedure — 8.1 Specification"
+      },
+      "claim_text": "- **q**: 0.05",
+      "values": [
+        {
+          "quantity": "registered FDR q for the family correction",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec value (instrument v1.1); the executed counterpart is results/family-fdr/family_fdr.json $.q."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          820,
+          822
+        ],
+        "section": "8. The BH-FDR procedure — 8.1 Specification"
+      },
+      "claim_text": "- **Procedure**: Benjamini–Hochberg step-up. Order the seven p-values\n  ascending as p₍₁₎ ≤ … ≤ p₍₇₎. Find the largest k such that\n  p₍ₖ₎ ≤ (k / 7) · q. Reject H₍₁₎ … H₍ₖ₎.",
+      "values": [
+        {
+          "quantity": "p-values ordered in the BH step-up",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": null
+        },
+        {
+          "quantity": "family size in the BH critical-value formula (k / 7) · q",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          823,
+          826
+        ],
+        "section": "8. The BH-FDR procedure — 8.1 Specification"
+      },
+      "claim_text": "- **Adjusted p-values**: p_adj₍ₖ₎ = min over j ≥ k of (7 / j) · p₍ⱼ₎,\n  clipped at 1.0 (the standard monotone step-up adjustment, matching\n  `scripts/apply_fdr_correction.py` as used for the existing 26-row\n  family).",
+      "values": [
+        {
+          "quantity": "family size in the monotone step-up adjustment (7 / j)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": null
+        },
+        {
+          "quantity": "adjusted-p clip ceiling",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/apply_fdr_correction.py#clip ceiling constant",
+          "method": null
+        },
+        {
+          "quantity": "rows in the existing all-contrasts confirmatory FDR family",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "results/pairwise/20m/fdr/pairwise_results_fdr.json#len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The clip ceiling is a script constant (non-JSON anchor, expected per instrument v1.1); the 26-row family is the confirmatory subset of the all-contrasts FDR artefact."
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/apparatus/c1-extraction-instructions.md",
+    "git_blob": "68d36c8157ca",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          6
+        ],
+        "section": "Header (version, controller, schema, consumers)"
+      },
+      "claim_text": "agents (one per chunk)",
+      "values": [
+        {
+          "quantity": "extraction agents per assigned chunk (instrument grain parameter)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "agents",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b053] DOUBT FLAGGED: fleet-organisation parameter of the instrument, not a fact about the study; included under the include-when-in-doubt rule and the batch brief's guidance on procedural parameters. SCOPE DECISIONS as for the other c1-* apparatus documents in this batch: version strings (1.1, v1.0), dates, controller/charter section and rule citations (§ 7 Phase 1, § 5 rule 3, §§ 5-6, § 7), hypothesis ids (H7) and the numbered hard-rule markers (1.-8.) are out of C4 scope per hard rule 5. Numerically stated procedural/grain parameters ARE extracted with the doubt flagged, per the batch brief."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "v1.1 convention"
+      },
+      "claim_text": "effect\") are `trigger` rows with five-element blocks.",
+      "values": [
+        {
+          "quantity": "number of elements in a trigger block (instrument parameter)",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "elements",
+          "kind": "count",
+          "path": "len:$['$defs'].triggerRule.required",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/manifest-schemas/commitments.schema.json",
+        "path": "len:$['$defs'].triggerRule.required"
+      },
+      "method": "read",
+      "notes": "The trigger block's five elements are mechanically checkable against the commitments schema's triggerRule required list; instrument parameter rather than a study result, included with the doubt flagged per the batch brief."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          37
+        ],
+        "section": "Output"
+      },
+      "claim_text": "Return a one-line count\nsummary as your final message, not the JSON.",
+      "values": [
+        {
+          "quantity": "number of lines required in the agent's final summary message (instrument output-format parameter)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "lines",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DOUBT FLAGGED: prose-format parameter of the instrument, not a fact about the study."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "Hard rules"
+      },
+      "claim_text": "`source.lines` (1-indexed, inclusive) must bound the span.",
+      "values": [
+        {
+          "quantity": "index base of the source.lines locator (instrument convention)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DOUBT FLAGGED: '1-indexed' is a convention label rather than a measured quantity; included under the include-when-in-doubt rule and the batch brief's guidance on procedural parameters."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Hard rules"
+      },
+      "claim_text": "2. **Five-element trigger rule** (`kind: \"trigger\"`): fill `statistic`,",
+      "values": [
+        {
+          "quantity": "number of elements in the trigger rule (instrument parameter)",
+          "value_verbatim": "Five",
+          "value_parsed": 5,
+          "unit": "elements",
+          "kind": "count",
+          "path": "len:$['$defs'].triggerRule.required",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/manifest-schemas/commitments.schema.json",
+        "path": "len:$['$defs'].triggerRule.required"
+      },
+      "method": "read",
+      "notes": "The five named fields are enumerated at lines 46-48 of the source and are the required list of the commitments schema's triggerRule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "Hard rules"
+      },
+      "claim_text": "one commitment per prompt variant or",
+      "values": [
+        {
+          "quantity": "commitments required per prompt variant or configuration block (instrument grain parameter)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "commitments",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DOUBT FLAGGED: grain parameter of the instrument; it fixes output cardinality but is a claim about the instrument, not the study."
+    }
+  ]
+}

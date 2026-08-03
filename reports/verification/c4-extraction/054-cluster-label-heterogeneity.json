@@ -1,0 +1,1559 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.md",
+    "git_blob": "2fec13797c77",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          11
+        ],
+        "section": "Header"
+      },
+      "claim_text": "Computed on\nsapphire, zero Application Programming Interface (API) cost, from\ncommitted detection GeoJSONs.",
+      "values": [
+        {
+          "quantity": "cost USD, cluster label-heterogeneity computation",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b054] Scope decisions logged for this document per hard rule 5: erratum and sub-item identifiers (E64, E64(iii)), the registration's \"voting step 4\" step number, section references (§ 1c), dates and the sapphire run stamp, and the replication /condition labels A-E and rep 1-5 are not extracted. This claim: a cost assertion expressed as a word rather than a numeral; included with the doubt flagged. No cost manifest or run.meta exists for this computation (it ran locally on sapphire from committed GeoJSONs); the claim is decidable only by inspecting scripts/analyse_cluster_label_heterogeneity.py for API calls, which is a triage judgement rather than a mechanical read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "Header"
+      },
+      "claim_text": "its 20 m greedy star clustering semantics,",
+      "values": [
+        {
+          "quantity": "clustering distance threshold, executed merge_passes semantics",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": "$.distance_threshold_metres"
+      },
+      "method": "read",
+      "notes": "Anchored to the analysis's own JSON sidecar, which records the distance threshold actually used; the same constant also lives in scripts/merge_passes.py, which triage may prefer as the less-writable source for the pipeline's semantics."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          28
+        ],
+        "section": "1. Question"
+      },
+      "claim_text": "The readings diverge only where detections within 20 m carry\ndifferent subtypes.",
+      "values": [
+        {
+          "quantity": "clustering distance threshold within which label disagreement matters",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": "$.distance_threshold_metres"
+      },
+      "method": "read",
+      "notes": "Second assertion of the 20 m threshold in a distinct span; the value is the same quantity as the Script-block claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          30
+        ],
+        "section": "1. Question"
+      },
+      "claim_text": "Previously available figures — 17.2 % (re-verified)\nand ~21 % (defence-pass, pool unrecorded) non-`burial_mound` subtype\nshares — are loose upper bounds.",
+      "values": [
+        {
+          "quantity": "share of non-burial_mound subtypes, re-verified descriptive bound",
+          "value_verbatim": "17.2",
+          "value_parsed": 17.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of non-burial_mound subtypes, defence-pass figure (approximate, pool unrecorded)",
+          "value_verbatim": "~21",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Neither figure is sourced in this document. Looked for a subtype-share artefact under results/gold-standard-subtype-classification/ and could not identify which output carries the 17.2 % re-verification; the document itself states the ~21 % defence-pass figure has no recorded pool or denominator (see § 4 item 4). The approximation marker is kept verbatim per instrument v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "2. Corpus"
+      },
+      "claim_text": "47 pools, 153,102 clusters:",
+      "values": [
+        {
+          "quantity": "pool count, all corpora",
+          "value_verbatim": "47",
+          "value_parsed": 47,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.all.n_pools",
+          "method": null
+        },
+        {
+          "quantity": "spatial cluster count, all corpora",
+          "value_verbatim": "153,102",
+          "value_parsed": 153102,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.all.total_clusters",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the JSON sidecar named in the document's Data block."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          45
+        ],
+        "section": "2. Corpus"
+      },
+      "claim_text": "- **Era 1** (340 tiles, 512 px): all 45 phase3c H9 diversity pools\n  (track1-image A–E × replications 1–5; track2-text A, B, D, E ×\n  replications 1–5), N = 5 passes each.",
+      "values": [
+        {
+          "quantity": "tile count, Era 1 test corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/full_evaluation_manifest.json#len:$",
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 1",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "config.py#TILE_SIZE",
+          "method": null
+        },
+        {
+          "quantity": "pool count, Era 1 (phase3c H9 diversity)",
+          "value_verbatim": "45",
+          "value_parsed": 45,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.era1-phase3c.n_pools",
+          "method": null
+        },
+        {
+          "quantity": "passes per pool, Era 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.corpus=='era1-phase3c')].n_passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Scope decision (logged, not silent): the condition letters A-E and the replication ranges 1-5 in this span are condition/replication names per hard rule 5 and are not extracted; the 45-pool total they imply is extracted. config.py is a non-JSON anchor, legitimate and expected per the v1.1 rule (TILE_SIZE constant); the Era 1 pass count resolves by constant collapse across the 45 era1-phase3c pools."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          48
+        ],
+        "section": "2. Corpus"
+      },
+      "claim_text": "- **Era 2** (487 tiles, 384 px): the `pv-diag-384` flash-high-text pool\n  at N = 30 (the 0.890 headline's proposer pool) and its first-5\n  sub-pool (N = 5).",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 test corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles_384/full_evaluation_manifest.json#len:$",
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "pass count, pv-diag-384 flash-high-text proposer pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, the headline (pv-diag-384 verified-adv-text 16-of-30)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "pass count, first-5 sub-pool of the pv-diag-384 pool",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].n_passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 384 in `pv-diag-384` is a run name (hard rule 5), but \"384 px\" here is asserted as the Era 2 tile size and so is extracted. The 0.890 headline anchor was identified by locating the conditions-manifest cell at that value; triage should confirm the intended condition. Cross-file value locators per v1.2 amendment 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          53
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "**Headline: 2.21 % of spatial clusters are label-heterogeneous**\n(3,390 / 153,102).",
+      "values": [
+        {
+          "quantity": "share of spatial clusters that are label-heterogeneous, all corpora",
+          "value_verbatim": "2.21",
+          "value_parsed": 2.21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.all.heterogeneous_clusters"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.all.total_clusters"
+            }
+          ]
+        },
+        {
+          "quantity": "label-heterogeneous cluster count, all corpora",
+          "value_verbatim": "3,390",
+          "value_parsed": 3390,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.all.heterogeneous_clusters",
+          "method": null
+        },
+        {
+          "quantity": "spatial cluster count, all corpora",
+          "value_verbatim": "153,102",
+          "value_parsed": 153102,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.all.total_clusters",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The sidecar stores the share as a fraction ($.aggregate.all.heterogeneous_share), so the percentage is taken as a derivation over the two counts rather than a read; per v1.2 amendment 1 the two operand counts keep method read with their own paths."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          54
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "Era 1: 2.17 % (2,985 / 137,595); Era 2: 2.61 %\n(405 / 15,507; 2.76 % at N = 30, 2.14 % at N = 5).",
+      "values": [
+        {
+          "quantity": "share of label-heterogeneous clusters, Era 1",
+          "value_verbatim": "2.17",
+          "value_parsed": 2.17,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.era1-phase3c.heterogeneous_clusters"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.era1-phase3c.total_clusters"
+            }
+          ]
+        },
+        {
+          "quantity": "label-heterogeneous cluster count, Era 1",
+          "value_verbatim": "2,985",
+          "value_parsed": 2985,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.era1-phase3c.heterogeneous_clusters",
+          "method": null
+        },
+        {
+          "quantity": "spatial cluster count, Era 1",
+          "value_verbatim": "137,595",
+          "value_parsed": 137595,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.era1-phase3c.total_clusters",
+          "method": null
+        },
+        {
+          "quantity": "share of label-heterogeneous clusters, Era 2",
+          "value_verbatim": "2.61",
+          "value_parsed": 2.61,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.era2-pv-diag-384.heterogeneous_clusters"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.era2-pv-diag-384.total_clusters"
+            }
+          ]
+        },
+        {
+          "quantity": "label-heterogeneous cluster count, Era 2",
+          "value_verbatim": "405",
+          "value_parsed": 405,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.era2-pv-diag-384.heterogeneous_clusters",
+          "method": null
+        },
+        {
+          "quantity": "spatial cluster count, Era 2",
+          "value_verbatim": "15,507",
+          "value_parsed": 15507,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.era2-pv-diag-384.total_clusters",
+          "method": null
+        },
+        {
+          "quantity": "share of label-heterogeneous clusters, Era 2 N=30 pool",
+          "value_verbatim": "2.76",
+          "value_parsed": 2.76,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_heterogeneous"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_clusters"
+            }
+          ]
+        },
+        {
+          "quantity": "pass count, pv-diag-384 N=30 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": null
+        },
+        {
+          "quantity": "share of label-heterogeneous clusters, Era 2 first-5 sub-pool",
+          "value_verbatim": "2.14",
+          "value_parsed": 2.14,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].n_heterogeneous"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].n_clusters"
+            }
+          ]
+        },
+        {
+          "quantity": "pass count, pv-diag-384 first-5 sub-pool",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].n_passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Four derived percentages in one span, so each carries its own expression and operands per v1.2 amendment 1; the counts they consume keep method read with their own paths."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 1 (45 × N=5, aggregate) | 2 | 755 / 44,278 | 1.71 % |",
+      "values": [
+        {
+          "quantity": "pool count, Era 1 aggregate",
+          "value_verbatim": "45",
+          "value_parsed": 45,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.era1-phase3c.n_pools",
+          "method": "read"
+        },
+        {
+          "quantity": "passes per pool, Era 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.corpus=='era1-phase3c')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, Era 1 aggregate row",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 2, Era 1 aggregate",
+          "value_verbatim": "755",
+          "value_parsed": 755,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "clusters passing spatially at t = 2, Era 1 aggregate",
+          "value_verbatim": "44,278",
+          "value_parsed": 44278,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 2, Era 1 aggregate",
+          "value_verbatim": "1.71",
+          "value_parsed": 1.71,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Era 1 aggregate row: the sidecar stores per-threshold counts per pool only, so the affected and passing cells are sums over the 45 era1-phase3c pools' per_threshold entries ($.pools[?(@.corpus=='era1-phase3c')].per_threshold['2'].affected_by_label_gate and .passing) and the share is 100 x the ratio of those sums; no aggregate scalar exists, hence recompute-script. The vote threshold t is a row identifier that lives in the sidecar as an object key rather than a scalar, so it takes anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 1 | 3 | 648 / 28,003 | 2.31 % |",
+      "values": [
+        {
+          "quantity": "vote threshold t, Era 1 aggregate row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 3, Era 1 aggregate",
+          "value_verbatim": "648",
+          "value_parsed": 648,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "clusters passing spatially at t = 3, Era 1 aggregate",
+          "value_verbatim": "28,003",
+          "value_parsed": 28003,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 3, Era 1 aggregate",
+          "value_verbatim": "2.31",
+          "value_parsed": 2.31,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Era 1 aggregate row: the sidecar stores per-threshold counts per pool only, so the affected and passing cells are sums over the 45 era1-phase3c pools' per_threshold entries ($.pools[?(@.corpus=='era1-phase3c')].per_threshold['3'].affected_by_label_gate and .passing) and the share is 100 x the ratio of those sums; no aggregate scalar exists, hence recompute-script. The vote threshold t is a row identifier that lives in the sidecar as an object key rather than a scalar, so it takes anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 1 | 4 | 1,082 / 20,078 | 5.39 % |",
+      "values": [
+        {
+          "quantity": "vote threshold t, Era 1 aggregate row",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 4, Era 1 aggregate",
+          "value_verbatim": "1,082",
+          "value_parsed": 1082,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "clusters passing spatially at t = 4, Era 1 aggregate",
+          "value_verbatim": "20,078",
+          "value_parsed": 20078,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 4, Era 1 aggregate",
+          "value_verbatim": "5.39",
+          "value_parsed": 5.39,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Era 1 aggregate row: the sidecar stores per-threshold counts per pool only, so the affected and passing cells are sums over the 45 era1-phase3c pools' per_threshold entries ($.pools[?(@.corpus=='era1-phase3c')].per_threshold['4'].affected_by_label_gate and .passing) and the share is 100 x the ratio of those sums; no aggregate scalar exists, hence recompute-script. The vote threshold t is a row identifier that lives in the sidecar as an object key rather than a scalar, so it takes anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 1 | 5 (unanimous) | 1,272 / 12,785 | 9.95 % |",
+      "values": [
+        {
+          "quantity": "vote threshold t, Era 1 aggregate row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 5, Era 1 aggregate",
+          "value_verbatim": "1,272",
+          "value_parsed": 1272,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "clusters passing spatially at t = 5, Era 1 aggregate",
+          "value_verbatim": "12,785",
+          "value_parsed": 12785,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 5, Era 1 aggregate",
+          "value_verbatim": "9.95",
+          "value_parsed": 9.95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Era 1 aggregate row: the sidecar stores per-threshold counts per pool only, so the affected and passing cells are sums over the 45 era1-phase3c pools' per_threshold entries ($.pools[?(@.corpus=='era1-phase3c')].per_threshold['5'].affected_by_label_gate and .passing) and the share is 100 x the ratio of those sums; no aggregate scalar exists, hence recompute-script. The vote threshold t is a row identifier that lives in the sidecar as an object key rather than a scalar, so it takes anchor-unknown. t = 5 is unanimity for the 5-pass Era 1 pools."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 2 N=30 | 3 | 49 / 3,072 | 1.60 % |",
+      "values": [
+        {
+          "quantity": "pass count, pv-diag-384 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, Era 2 row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 3",
+          "value_verbatim": "49",
+          "value_parsed": 49,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['3'].affected_by_label_gate",
+          "method": "read"
+        },
+        {
+          "quantity": "clusters passing spatially at t = 3",
+          "value_verbatim": "3,072",
+          "value_parsed": 3072,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['3'].passing",
+          "method": "read"
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 3",
+          "value_verbatim": "1.60",
+          "value_parsed": 1.6,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['3'].affected_by_label_gate"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['3'].passing"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Single-pool row: affected and passing read directly from the pool's per_threshold entry via single-match filters (v1.2 amendment 7); the share is derived from them (amendment 1). The vote threshold t is an object key in the sidecar rather than a scalar, so it takes anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 2 N=30 | 16 (headline op. point) | 17 / 729 | 2.33 % |",
+      "values": [
+        {
+          "quantity": "pass count, pv-diag-384 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, Era 2 row",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 16",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['16'].affected_by_label_gate",
+          "method": "read"
+        },
+        {
+          "quantity": "clusters passing spatially at t = 16",
+          "value_verbatim": "729",
+          "value_parsed": 729,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['16'].passing",
+          "method": "read"
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 16",
+          "value_verbatim": "2.33",
+          "value_parsed": 2.33,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['16'].affected_by_label_gate"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['16'].passing"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Single-pool row: affected and passing read directly from the pool's per_threshold entry via single-match filters (v1.2 amendment 7); the share is derived from them (amendment 1). The vote threshold t is an object key in the sidecar rather than a scalar, so it takes anchor-unknown. The parenthetical also asserts that t = 16 of 30 is the headline operating point; the 16-of-30 threshold appears in the headline condition's name (pv-diag-384::verified-adv-text-consensus-16of30) in results/conditions-manifest.json, which triage may use to corroborate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 2 N=30 | 26 (single-stage optimum) | 39 / 415 | 9.40 % |",
+      "values": [
+        {
+          "quantity": "pass count, pv-diag-384 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, Era 2 row",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 26",
+          "value_verbatim": "39",
+          "value_parsed": 39,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['26'].affected_by_label_gate",
+          "method": "read"
+        },
+        {
+          "quantity": "clusters passing spatially at t = 26",
+          "value_verbatim": "415",
+          "value_parsed": 415,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['26'].passing",
+          "method": "read"
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 26",
+          "value_verbatim": "9.40",
+          "value_parsed": 9.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['26'].affected_by_label_gate"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['26'].passing"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Single-pool row: affected and passing read directly from the pool's per_threshold entry via single-match filters (v1.2 amendment 7); the share is derived from them (amendment 1). The vote threshold t is an object key in the sidecar rather than a scalar, so it takes anchor-unknown. The parenthetical also asserts t = 26 is the single-stage optimum; results/conditions-manifest.json records vote_threshold 26 for pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30, which triage may use to corroborate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 2 N=30 | 30 (unanimous) | 43 / 256 | 16.80 % |",
+      "values": [
+        {
+          "quantity": "pass count, pv-diag-384 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, Era 2 row",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 30",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['30'].affected_by_label_gate",
+          "method": "read"
+        },
+        {
+          "quantity": "clusters passing spatially at t = 30",
+          "value_verbatim": "256",
+          "value_parsed": 256,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['30'].passing",
+          "method": "read"
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 30",
+          "value_verbatim": "16.80",
+          "value_parsed": 16.8,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['30'].affected_by_label_gate"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n30')].per_threshold['30'].passing"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Single-pool row: affected and passing read directly from the pool's per_threshold entry via single-match filters (v1.2 amendment 7); the share is derived from them (amendment 1). The vote threshold t is an object key in the sidecar rather than a scalar, so it takes anchor-unknown. Both 30s in this row are the same pool's pass count and the unanimity threshold respectively."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 2 N=5 (first 5) | 3 | 20 / 855 | 2.34 % |",
+      "values": [
+        {
+          "quantity": "pass count, pv-diag-384 pool",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, Era 2 row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 3",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].per_threshold['3'].affected_by_label_gate",
+          "method": "read"
+        },
+        {
+          "quantity": "clusters passing spatially at t = 3",
+          "value_verbatim": "855",
+          "value_parsed": 855,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].per_threshold['3'].passing",
+          "method": "read"
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 3",
+          "value_verbatim": "2.34",
+          "value_parsed": 2.34,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].per_threshold['3'].affected_by_label_gate"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].per_threshold['3'].passing"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Single-pool row: affected and passing read directly from the pool's per_threshold entry via single-match filters (v1.2 amendment 7); the share is derived from them (amendment 1). The vote threshold t is an object key in the sidecar rather than a scalar, so it takes anchor-unknown. \"(first 5)\" is the sub-pool's name (hard rule 5), not a separate count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "| Era 2 N=5 | 5 (unanimous) | 40 / 415 | 9.64 % |",
+      "values": [
+        {
+          "quantity": "pass count, pv-diag-384 pool",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, Era 2 row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 5",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].per_threshold['5'].affected_by_label_gate",
+          "method": "read"
+        },
+        {
+          "quantity": "clusters passing spatially at t = 5",
+          "value_verbatim": "415",
+          "value_parsed": 415,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].per_threshold['5'].passing",
+          "method": "read"
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 5",
+          "value_verbatim": "9.64",
+          "value_parsed": 9.64,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].per_threshold['5'].affected_by_label_gate"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.pools[?(@.pool=='flash-high-text/n5-first5')].per_threshold['5'].passing"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Single-pool row: affected and passing read directly from the pool's per_threshold entry via single-match filters (v1.2 amendment 7); the share is derived from them (amendment 1). The vote threshold t is an object key in the sidecar rather than a scalar, so it takes anchor-unknown. t = 5 is unanimity for the 5-pass sub-pool."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          73
+        ],
+        "section": "3. Results"
+      },
+      "claim_text": "At t = 1 the readings are identical by construction (0 affected,\neverywhere).",
+      "values": [
+        {
+          "quantity": "vote threshold t at which the two readings coincide",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clusters affected by the label gate at t = 1, all pools",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pools[*].per_threshold['1'].affected_by_label_gate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The zero is asserted for every pool, so it resolves by constant collapse across the pools collection (v1.2 amendment 7). t = 1 is an object key rather than a scalar, so it takes anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          79
+        ],
+        "section": "4. Reading"
+      },
+      "claim_text": "**The materiality bound collapses by an order of magnitude**: from\n   the 17.2 %/~21 % subtype-share proxies to **2.2 %** cluster-level\n   heterogeneity",
+      "values": [
+        {
+          "quantity": "share of non-burial_mound subtypes, re-verified proxy",
+          "value_verbatim": "17.2",
+          "value_parsed": 17.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "share of non-burial_mound subtypes, defence-pass proxy (approximate)",
+          "value_verbatim": "~21",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "share of spatial clusters that are label-heterogeneous, all corpora (2-significant-figure restatement of the headline)",
+          "value_verbatim": "2.2",
+          "value_parsed": 2.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.all.heterogeneous_clusters"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.all.total_clusters"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Mixed span: the two proxy shares have no locatable anchor in this document (see the § 1 claim on the same figures), while 2.2 % is the headline restated at two significant figures and derives from the sidecar's aggregate counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          83
+        ],
+        "section": "4. Reading"
+      },
+      "claim_text": "**At the operative thresholds the label gate would touch ~1.6–2.4 %\n   of passing clusters** (t = 3 of 5 across both eras; t = 16 of 30 at\n   the headline operating point).",
+      "values": [
+        {
+          "quantity": "lower bound of the share of passing clusters the label gate would touch at operative thresholds",
+          "value_verbatim": "~1.6",
+          "value_parsed": 1.6,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the share of passing clusters the label gate would touch at operative thresholds",
+          "value_verbatim": "2.4",
+          "value_parsed": 2.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "vote threshold t, operative 5-pass point",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "passes per pool, the 5-pass eras",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.corpus=='era1-phase3c')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, headline operating point",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "pass count, pv-diag-384 N=30 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The range summarises the t = 3 rows of both eras and the t = 16 row of the N=30 pool, so it needs the same aggregation as the Era 1 table rows rather than a single read. Units are set on both range endpoints per v1.2 amendment 6 (only the second carries the % sign in the source)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          85
+        ],
+        "section": "4. Reading"
+      },
+      "claim_text": "**The readings diverge most at strict/unanimous thresholds**\n   (~10 % at t = 5 of 5 and t = 26 of 30; ~17 % at t = 30 of 30):",
+      "values": [
+        {
+          "quantity": "share of passing clusters affected at unanimous/near-unanimous thresholds (approximate)",
+          "value_verbatim": "~10",
+          "value_parsed": 10,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "vote threshold t, unanimity for 5-pass pools",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "passes per pool, the 5-pass eras",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.corpus=='era1-phase3c')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold t, single-stage optimum",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "pass count, pv-diag-384 N=30 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "share of passing clusters affected at t = 30 of 30 (approximate)",
+          "value_verbatim": "~17",
+          "value_parsed": 17,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "vote threshold t, unanimity for the N=30 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "pass count, pv-diag-384 N=30 pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.pools[?(@.pool=='flash-high-text/n30')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Both approximate shares round the corresponding table rows (9.95 %, 9.64 %, 9.40 % and 16.80 %), so they are recorded as recompute rather than read; approximation markers kept verbatim per v1.2 amendment 5. The pass counts repeat within the span and are enumerated at each appearance in order."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          92
+        ],
+        "section": "4. Reading"
+      },
+      "claim_text": "The defence-pass ~21 % figure remains unanchored (no recorded pool\n   or denominator) and is superseded by this computation; the 17.2 %\n   subtype share stands as a re-verified descriptive bound only.",
+      "values": [
+        {
+          "quantity": "share of non-burial_mound subtypes, defence-pass figure (approximate)",
+          "value_verbatim": "~21",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of non-burial_mound subtypes, re-verified descriptive bound",
+          "value_verbatim": "17.2",
+          "value_parsed": 17.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document itself declares the ~21 % figure unanchored (no recorded pool or denominator) and superseded; the 17.2 % figure is asserted as still standing but is not sourced here. Looked for a subtype-share artefact under results/gold-standard-subtype-classification/ without being able to identify the specific output."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "47 pools, 153,102 clusters; headline 2.21 %.",
+      "values": [
+        {
+          "quantity": "pool count, all corpora",
+          "value_verbatim": "47",
+          "value_parsed": 47,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.all.n_pools",
+          "method": null
+        },
+        {
+          "quantity": "spatial cluster count, all corpora",
+          "value_verbatim": "153,102",
+          "value_parsed": 153102,
+          "unit": null,
+          "kind": "count",
+          "path": "$.aggregate.all.total_clusters",
+          "method": null
+        },
+        {
+          "quantity": "share of spatial clusters that are label-heterogeneous, all corpora",
+          "value_verbatim": "2.21",
+          "value_parsed": 2.21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.all.heterogeneous_clusters"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+              "path": "$.aggregate.all.total_clusters"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Changelog restatement under an \"Original publication\" entry, not a before/after correction table, so these are live claims rather than historical values (instrument rule 3 and the first known trap)."
+    }
+  ]
+}

@@ -1,0 +1,2502 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/family-fdr-registration.md",
+    "git_blob": "169e4a603e0d",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          4
+        ],
+        "section": "Header — revision banner and status"
+      },
+      "claim_text": "**Last revised**: 2026-07-30 (REGISTERED — all six § 11 PI rulings\n> collected and incorporated; committed before computation).",
+      "values": [
+        {
+          "quantity": "count of § 11 ambiguities resolved by PI ruling and incorporated",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b058] Batch b058 covers lines 1–502 only; § 5.6 (H6, from line 504) and everything after is a later batch. Scope decisions applied throughout: dates, git hashes/blob ids, erratum ids (E22, E28, E30, E36, E45, E54, E58, E59, E64), commitment ids (CMT-nnnn), section and line-number citations (`preregistration.md:436`), array locators (`comparisons[55]`, `pairwise[81]`), and numerals inside condition or file names (`16-of-30`, `26of30`, `pv-diag-384`, `t-0-7`, `N = 5`) are treated as identifiers, not claims. Only source is `reports/verification/phase2-rulings-2026-07-30.md` § 3 (prose) — rule 2 forbids anchoring prose to prose, so triage must chase the ruling count to an artefact if one exists."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          12
+        ],
+        "section": "Header — revision banner and status"
+      },
+      "claim_text": "All six § 11\nambiguities were ruled on by the Principal Investigator (PI) on 2026-07-30",
+      "values": [
+        {
+          "quantity": "count of § 11 ambiguities ruled on by the Principal Investigator",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same count as the banner claim; source named is `reports/verification/phase2-rulings-2026-07-30.md` § 3 (prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Header — authority chain table"
+      },
+      "claim_text": "| PI decision, family definition | `planning/audit-and-completion-plan.md` § 4, line 119 | \"\\| BH-FDR family \\| one primary test per hypothesis (7; H6 never ran) as primary, all-contrasts correction as a reported sensitivity \\|\" |",
+      "values": [
+        {
+          "quantity": "BH-FDR family size (one primary test per hypothesis) as fixed by the PI decision quoted from the completion plan",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted from `planning/audit-and-completion-plan.md` § 4 line 119 (prose). Anchored instead to the least-writable artefact carrying the family size, `results/family-fdr/family_fdr.json` `$.family_size`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "Header — authority chain table"
+      },
+      "claim_text": "| GATE 1 ruling 7(d) | `planning/audit-charter.md` § 10 item 7(d) | \"**Eight-hypothesis BH-FDR family**: run it now (zero API cost), plus a Methods/Discussion disclosure of why practice deviated.\" |",
+      "values": [
+        {
+          "quantity": "hypothesis count of the BH-FDR family as stated in the GATE 1 ruling (registration's intended family size)",
+          "value_verbatim": "Eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "API cost of running the registered BH-FDR correction, per the GATE 1 ruling",
+          "value_verbatim": "zero",
+          "value_parsed": 0.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Verbatim quote of `planning/audit-charter.md` § 10 item 7(d) (prose); rule 2 forbids a prose anchor. The eight-hypothesis figure is the registration's intended family (cf. the lodged preregistration § 3.2 \"8 confirmatory hypotheses\"); the zero-cost figure is an attestation that no API call is made."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          32
+        ],
+        "section": "Header — API spend"
+      },
+      "claim_text": "**API spend**: **US$0.00.** This is pure recomputation over p-values already\ncommitted to the repository. No API call is made",
+      "values": [
+        {
+          "quantity": "API spend, family-FDR recomputation (pure recomputation over committed p-values)",
+          "value_verbatim": "US$0.00",
+          "value_parsed": 0.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No repo artefact records the cost of a zero-spend recomputation; attestation material. Flagged rather than forced to `external`, which the instrument reserves for vendor/billing figures."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "§ 1 What this registration does and does not fix"
+      },
+      "claim_text": "**It fixes**: which hypotheses constitute the family (seven);",
+      "values": [
+        {
+          "quantity": "registered BH-FDR family size (hypotheses constituting the family)",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec claim: the family size this document fixes. Anchored to the artefact computed under this registration, which carries `family_size`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "§ 1 What this registration does and does not fix"
+      },
+      "claim_text": "**It does not fix outcome blindness for six of the seven primaries**",
+      "values": [
+        {
+          "quantity": "count of family primaries whose p-values were already committed (family size less the one outcome-blind H1 primary)",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/family-fdr/family_fdr.json",
+              "path": "$.family_size"
+            }
+          ]
+        },
+        {
+          "quantity": "registered BH-FDR family size",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The six is the family size minus H1, whose primary (§ 5.1.1) had not been computed at registration; given its own derivation per v1.2 amendment 1 so it is not compared against the operand."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "§ 2 The registered obligation, verbatim"
+      },
+      "claim_text": "> - **Per-hypothesis α**: 0.05",
+      "values": [
+        {
+          "quantity": "per-hypothesis significance level α, as lodged",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: a claim about what the registration specifies anchors to the lodged preregistration (§ 3.1 \"Significance Testing\"), never to an executing config."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          63
+        ],
+        "section": "§ 2 The registered obligation, verbatim"
+      },
+      "claim_text": "> - **Multiple comparison correction**: Benjamini-Hochberg FDR at q = 0.05\n>   across confirmatory hypotheses",
+      "values": [
+        {
+          "quantity": "Benjamini–Hochberg FDR level q, as lodged",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered q. The value computed under this registration is recorded at `results/family-fdr/family_fdr.json` `$.q`, but the claim here is about the lodged promise (v1.1 calibration rule)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          73
+        ],
+        "section": "§ 2 The registered obligation, verbatim"
+      },
+      "claim_text": "> With 8 confirmatory hypotheses tested on 60 tiles (79 mound symbols),\n> statistical power is adequate for detecting moderate effects.",
+      "values": [
+        {
+          "quantity": "confirmatory hypothesis count assumed by the lodged power framing",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "evaluation tile count of the registered corpus",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mound symbol count in the registered 60-tile corpus",
+          "value_verbatim": "79",
+          "value_parsed": 79,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quote of the lodged preregistration § 3.2 (line 274). All three values are registration-spec figures; anchor path null because the lodged document is markdown (v1.1: non-JSON anchors route to triage)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          78
+        ],
+        "section": "§ 2 The registered obligation, verbatim"
+      },
+      "claim_text": "> - Report **effect sizes** (F1 difference, precision difference, recall\n>   difference) with 95% bootstrapped CIs",
+      "values": [
+        {
+          "quantity": "bootstrap confidence interval level, as lodged",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered inference machinery (§ 3.5 line 293)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "§ 3 Family membership"
+      },
+      "claim_text": "| 8 | H8 Library composition | yes | executed (Era 3, all seven registered contrasts) |",
+      "values": [
+        {
+          "quantity": "count of registered H8 contrasts, all executed in Era 3",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Leading `8` is the table row index, not a claim. Looked for a per-hypothesis contrast count: `results/commitments.json` carries H8 commitments but no field distinguishing 'registered contrast' rows, and the lodged preregistration H8 section is prose. Triage to locate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "§ 3 Family membership"
+      },
+      "claim_text": "**Family size m = 7.**",
+      "values": [
+        {
+          "quantity": "registered BH-FDR family size m",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The headline family-size registration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          97
+        ],
+        "section": "§ 3 Family membership"
+      },
+      "claim_text": "The registration's own § 3.2 framing anticipated\neight; the reduction to seven is a factual consequence of H6's\nnon-execution, not a selection made on results.",
+      "values": [
+        {
+          "quantity": "family size anticipated by the lodged preregistration § 3.2",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ 3.2 confirmatory hypothesis count",
+          "method": "read"
+        },
+        {
+          "quantity": "registered BH-FDR family size after H6's exclusion",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cross-file locator (v1.2 amendment 2) for the anticipated eight, which belongs to the lodged preregistration, not to the computed family file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          111
+        ],
+        "section": "§ 4 Selection rule"
+      },
+      "claim_text": "3. **AMBIGUOUS.** Otherwise, the hypothesis is flagged AMBIGUOUS, two or\n   three candidate primaries are listed with their p-values",
+      "values": [
+        {
+          "quantity": "lower bound on candidate primaries listed when a hypothesis is flagged AMBIGUOUS",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound on candidate primaries listed when a hypothesis is flagged AMBIGUOUS",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubtful inclusion (instrument: include and flag). This is a procedural rule the registration sets for itself, not an assertion of fact about the study, so no artefact can decide it; only § 5.1's own candidate table instantiates it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          131
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "> - Primary: Pairwise bootstrap comparisons across 5 M/E levels (95% CIs,\n>   FDR-corrected)",
+      "values": [
+        {
+          "quantity": "registered count of modality/elaboration levels compared in the H1 primary",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.commitments[?(@.commitment_id=='CMT-0102')].statement",
+          "method": null
+        },
+        {
+          "quantity": "registered confidence interval level for the H1 primary",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.commitments[?(@.commitment_id=='CMT-0102')].statement",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": "$.commitments[?(@.commitment_id=='CMT-0102')].statement"
+      },
+      "method": "read",
+      "notes": "The document names `results/commitments.json` `CMT-0102` as its source; the commitment `statement` field carries the registered sentence verbatim (parallel lodged source: `preregistration.md:436`)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          157
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "**Executed artefact**: `results/retest/pairwise-bootstrap-comparisons.json`\n(Era 1, 340 tiles, 20 m buffer, 1 000 bootstrap iterations, seed 42;\n`metadata.n_comparisons` = 70, `metadata.note` = \"Raw p-values — FDR\ncorrection deferred until all data available\"). Field carrying the\np-value: `comparisons[i].f1_p_value`.",
+      "values": [
+        {
+          "quantity": "evaluation tile count, Era 1 retest corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-leaderboard/tiering_20m.json#$.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "matching buffer, Era 1 pairwise bootstrap",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/era1-leaderboard/tiering_20m.json#$.buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap iterations, pairwise bootstrap comparisons",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_iterations",
+          "method": null
+        },
+        {
+          "quantity": "random seed, pairwise bootstrap comparisons",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": null
+        },
+        {
+          "quantity": "number of pairwise comparisons in the artefact",
+          "value_verbatim": "70",
+          "value_parsed": 70,
+          "unit": null,
+          "kind": "count",
+          "path": "$.metadata.n_comparisons",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tile count and buffer are not carried in this artefact's metadata; cross-file locators point at the Era-1 leaderboard tiering artefact, which records both as scalars (v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          162
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "The registration names four planned\ncontrasts and designates none as headline; no omnibus/main-effect test\nacross the five M/E levels was executed.",
+      "values": [
+        {
+          "quantity": "registered count of planned H1 contrasts",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered count of modality/elaboration levels",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec counts (v1.1 calibration rule): the four planned contrasts are `preregistration.md:438-441` = `CMT-0103`–`CMT-0106`; the five M/E levels are the registered modality/elaboration design. The executed five-condition set is at `results/retest/phase2a-evaluation.json` `len:$.phase2a.conditions`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          163
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "Selection was outcome-material\nacross the three *executed* candidates (p-values spanning 0.004 to 0.38):",
+      "values": [
+        {
+          "quantity": "count of executed candidate primaries for H1",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "minimum f1_p_value across the executed H1 candidates (brief-text vs image-only)",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[1].f1_p_value",
+          "method": null
+        },
+        {
+          "quantity": "maximum f1_p_value across the executed H1 candidates (brief-text vs brief-text-image)",
+          "value_verbatim": "0.38",
+          "value_parsed": 0.38,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[0].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The count of three candidates is enumerated only in this document's own option table (options (i)–(iii)); no artefact fixes it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "| (i) first-listed registered contrast `CMT-0103`: Image-only vs Brief+image | `brief-text-image` vs `image-only` | `comparisons[4]` | +0.06536107577746958 | **0.006** |",
+      "values": [
+        {
+          "quantity": "f1_delta, brief-text-image vs image-only (Era 1 bootstrap)",
+          "value_verbatim": "+0.06536107577746958",
+          "value_parsed": 0.06536107577746958,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[4].f1_delta",
+          "method": null
+        },
+        {
+          "quantity": "f1_p_value, brief-text-image vs image-only (Era 1 bootstrap)",
+          "value_verbatim": "0.006",
+          "value_parsed": 0.006,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[4].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          168
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "| (ii) registered contrast `CMT-0105`: Brief-text vs Brief+image (\"do images help?\") | `brief-text` vs `brief-text-image` | `comparisons[0]` | +0.022473818822873966 | **0.38** |",
+      "values": [
+        {
+          "quantity": "f1_delta, brief-text vs brief-text-image (Era 1 bootstrap)",
+          "value_verbatim": "+0.022473818822873966",
+          "value_parsed": 0.022473818822873966,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[0].f1_delta",
+          "method": null
+        },
+        {
+          "quantity": "f1_p_value, brief-text vs brief-text-image (Era 1 bootstrap)",
+          "value_verbatim": "0.38",
+          "value_parsed": 0.38,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[0].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "| (iii) \"significant differences detected between levels\" reading — minimum-p over the ten executed level pairs | `brief-text` vs `image-only` | `comparisons[1]` | +0.08783489460034355 | **0.004** |",
+      "values": [
+        {
+          "quantity": "count of executed level-versus-level pairs across the five M/E levels",
+          "value_verbatim": "ten",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "f1_delta, brief-text vs image-only (Era 1 bootstrap)",
+          "value_verbatim": "+0.08783489460034355",
+          "value_parsed": 0.08783489460034355,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[1].f1_delta",
+          "method": null
+        },
+        {
+          "quantity": "f1_p_value, brief-text vs image-only (Era 1 bootstrap)",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[1].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ten level pairs would be a filtered count over `$.comparisons` restricted to the Phase 2a M/E rows; the exact `phase` string was not confirmed at extraction, so the count is left to triage rather than guessed into a filter path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          173
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "**Why (iv)**: registered contrast 4 was **never executed as a pooled\ncontrast** — the artefact carries only the ten level-versus-level pairs,",
+      "values": [
+        {
+          "quantity": "count of level-versus-level pairs carried by the Era 1 pairwise bootstrap artefact for the five M/E levels",
+          "value_verbatim": "ten",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Second assertion of the same count as the option-(iii) row; same filtered-count problem, left to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          184,
+          185
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "Zero API cost (recomputation over committed\ndetections, on sapphire).",
+      "values": [
+        {
+          "quantity": "API cost of executing registered contrast 4 (CMT-0106)",
+          "value_verbatim": "Zero",
+          "value_parsed": 0.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Attestation that the CMT-0106 run is recomputation over committed detections; no repo artefact records a zero spend."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          190
+        ],
+        "section": "§ 5.1.1 The registered reconstruction rule for CMT-0106"
+      },
+      "claim_text": "- **Conditions**: the five Era-1 retest Phase 2a M/E conditions\n  (`outputs/retest/phase2a/`):",
+      "values": [
+        {
+          "quantity": "count of Era-1 retest Phase 2a M/E conditions entering the pooled contrast",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.phase2a.conditions",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2a-evaluation.json",
+        "path": "len:$.phase2a.conditions"
+      },
+      "method": "read",
+      "notes": "Registration-spec condition count; anchored to the Phase 2a evaluation artefact whose `conditions` object enumerates them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          198,
+          204
+        ],
+        "section": "§ 5.1.1 The registered reconstruction rule for CMT-0106"
+      },
+      "claim_text": "- **Statistic**: per bootstrap iteration, resample the 340 evaluation\n  tiles with replacement (paired — the same tile indices for all five\n  conditions); score each condition as its mean F1 across runs on the\n  resampled tiles (the executed artefact's `bootstrap_multi_run` method:\n  per-run evaluation per E22, per-tile TP/FP/FN precompute per E26,\n  20 m buffer); score each group as the **unweighted mean of its\n  conditions' scores**; the contrast is text-only minus image-using.",
+      "values": [
+        {
+          "quantity": "evaluation tiles resampled per bootstrap iteration (Era 1 corpus)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.corpus.tiles",
+          "method": null
+        },
+        {
+          "quantity": "count of conditions scored per resample",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "results/retest/phase2a-evaluation.json#len:$.phase2a.conditions",
+          "method": null
+        },
+        {
+          "quantity": "matching buffer for the pooled modality contrast",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.corpus.buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "REGISTRATION-SPEC values, fixed before computation. Anchored to the deliverable this section itself names (`results/family-fdr/h1_cmt0106_pooled_modality.json`), which is the least-writable artefact carrying the parameters — not to any executing script or config. A divergence here is a protocol deviation for triage, not a documentation error."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          205
+        ],
+        "section": "§ 5.1.1 The registered reconstruction rule for CMT-0106"
+      },
+      "claim_text": "- **Point estimate**: the same computed on the full 340-tile set.",
+      "values": [
+        {
+          "quantity": "tile count of the full Era-1 set used for the point estimate",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.corpus.tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+        "path": "$.corpus.tiles"
+      },
+      "method": "read",
+      "notes": "Registration-spec value; anchored to the named deliverable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          208
+        ],
+        "section": "§ 5.1.1 The registered reconstruction rule for CMT-0106"
+      },
+      "claim_text": "- **Inference**: two-sided bootstrap p (proportion of resamples where the\n  contrast crosses zero, doubled — the executed artefact's convention),\n  **B = 10 000** (E54's narrow-effects licence), seed 42.",
+      "values": [
+        {
+          "quantity": "registered bootstrap resample count B for CMT-0106",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_iterations",
+          "method": null
+        },
+        {
+          "quantity": "registered random seed for CMT-0106",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "REGISTRATION-SPEC parameters fixed before computation; anchored to the named deliverable rather than to any executing script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          211
+        ],
+        "section": "§ 5.1.1 The registered reconstruction rule for CMT-0106"
+      },
+      "claim_text": "- **Ground truth and bounds**: identical to the executed Phase 2a retest\n  artefact (Era-1 340-tile corpus, reviewed GT, 20 m buffer).",
+      "values": [
+        {
+          "quantity": "Era-1 corpus tile count for the CMT-0106 ground truth",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.corpus.tiles",
+          "method": null
+        },
+        {
+          "quantity": "matching buffer for the CMT-0106 ground truth",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.corpus.buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec values; anchored to the named deliverable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          213
+        ],
+        "section": "§ 5.1.1 The registered reconstruction rule for CMT-0106"
+      },
+      "claim_text": "- **Unweighted-mean rationale, stated before the result is known**: the\n  groups are unbalanced (2 vs 3 conditions);",
+      "values": [
+        {
+          "quantity": "count of text-only conditions in the pooled modality contrast",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions.text_only",
+          "method": null
+        },
+        {
+          "quantity": "count of image-using conditions in the pooled modality contrast",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions.image_using",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Group sizes registered in the § 5.1.1 reconstruction rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          226,
+          230
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "**One-tailed limb**: the registered one-tailed elaboration test\n(`CMT-0108`, verbose > brief) is available at `comparisons[6]`\n(`brief-text-image` vs `verbose-text-image`, `f1_delta` =\n+0.0021486512989132792, `f1_p_value` = 0.94) and, on the text-only arm, at\n`comparisons[2]` (`brief-text` vs `verbose-text`, `f1_p_value` = 0.106).",
+      "values": [
+        {
+          "quantity": "f1_delta, brief-text-image vs verbose-text-image (Era 1 bootstrap)",
+          "value_verbatim": "+0.0021486512989132792",
+          "value_parsed": 0.0021486512989132792,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[6].f1_delta",
+          "method": null
+        },
+        {
+          "quantity": "f1_p_value, brief-text-image vs verbose-text-image (Era 1 bootstrap)",
+          "value_verbatim": "0.94",
+          "value_parsed": 0.94,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[6].f1_p_value",
+          "method": null
+        },
+        {
+          "quantity": "f1_p_value, brief-text vs verbose-text (Era 1 bootstrap)",
+          "value_verbatim": "0.106",
+          "value_parsed": 0.106,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[2].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          234,
+          237
+        ],
+        "section": "§ 5.1 H1 — Modality and elaboration level"
+      },
+      "claim_text": "**Current-instrument cross-check** (permutation, not registered method):\n`results/era1-leaderboard/tiering_20m.json`, `pairwise[81]`\n(`retest-phase2a::brief-text-image` vs `retest-phase2a::image-only`),\n`p_value` = 0.001, `bh_adjusted_p` = 0.001751.",
+      "values": [
+        {
+          "quantity": "permutation p_value, retest-phase2a brief-text-image vs image-only",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[81].p_value",
+          "method": null
+        },
+        {
+          "quantity": "BH-adjusted p, retest-phase2a brief-text-image vs image-only",
+          "value_verbatim": "0.001751",
+          "value_parsed": 0.001751,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[81].bh_adjusted_p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          267,
+          270
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "> **Stopping rule**: Two-stage architectures will only be pursued further\n> if either demonstrates F1 at least 0.05 higher than single-stage. Given\n> the inherent cost (~2× API calls) and complexity overhead, parity or\n> marginal improvement would not justify adoption.",
+      "values": [
+        {
+          "quantity": "registered F1 margin a two-stage architecture must clear to be pursued",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.commitments[?(@.commitment_id=='CMT-0126')].statement",
+          "method": null
+        },
+        {
+          "quantity": "registered API-call cost multiplier of two-stage architectures",
+          "value_verbatim": "~2×",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.commitments[?(@.commitment_id=='CMT-0126')].statement",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": "$.commitments[?(@.commitment_id=='CMT-0126')].statement"
+      },
+      "method": "read",
+      "notes": "Registered stopping rule quoted verbatim from `CMT-0126` (`preregistration.md:491`); the approximation marker on the cost multiplier is kept in `value_verbatim` per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          272,
+          275
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "**Executed artefact**:\n`results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json`\n(Era 2, 487 tiles, 20 m buffer, 10 000 permutations, seed 42). Field:\n`permutation_test.p_value`.",
+      "values": [
+        {
+          "quantity": "evaluation tile count, Era 2 corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "matching buffer, H2 pairwise permutation test",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "permutation count, H2 pairwise test",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": null
+        },
+        {
+          "quantity": "random seed, H2 pairwise test",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          286,
+          286
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "| condition A (two-stage, B) | Flash HIGH text 16-of-30 + PV, F1 = 0.890201 |",
+      "values": [
+        {
+          "quantity": "F1@20m, Flash HIGH text 16-of-30 + PV (two-stage condition B)",
+          "value_verbatim": "0.890201",
+          "value_parsed": 0.890201,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_a.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": "$.condition_a.f1"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          287,
+          287
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "| condition B (single-stage optimal with voting) | Flash HIGH text 26-of-30, F1 = 0.814118 |",
+      "values": [
+        {
+          "quantity": "F1@20m, Flash HIGH text 26-of-30 (single-stage optimal with voting)",
+          "value_verbatim": "0.814118",
+          "value_parsed": 0.814118,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_b.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": "$.condition_b.f1"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          288,
+          288
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "| `permutation_test.observed_f1_diff` | 0.076083 |",
+      "values": [
+        {
+          "quantity": "observed F1 difference, two-stage minus single-stage (H2 primary)",
+          "value_verbatim": "0.076083",
+          "value_parsed": 0.076083,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": "$.permutation_test.observed_f1_diff"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          289,
+          289
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "| **`permutation_test.p_value`** | **0.0** (10 000 permutations ⇒ p < 1 × 10⁻⁴) |",
+      "values": [
+        {
+          "quantity": "permutation p_value, H2 primary test",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": null
+        },
+        {
+          "quantity": "permutation count, H2 primary test",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": null
+        },
+        {
+          "quantity": "resolution floor of the permutation p (1 / n_permutations)",
+          "value_verbatim": "1 × 10⁻⁴",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+              "path": "$.permutation_test.n_permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 1 × 10⁻⁴ bound is the instrument's resolution floor, derived from the permutation count; given its own expression per v1.2 amendment 1 so the operand is not compared against its own derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          290,
+          290
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "| `comparisons[0].p_value_adj` (existing 26-row family) | 0.0 |",
+      "values": [
+        {
+          "quantity": "row count of the existing FDR-corrected pairwise family",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons",
+          "method": null
+        },
+        {
+          "quantity": "BH-adjusted p, H2 primary row in the corrected roll-up",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[0].p_value_adj",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The roll-up's `comparisons` array is the natural locator for the row count; if the file carries rows outside the confirmatory family, triage should apply the family filter before comparing."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          294,
+          296
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "- **Direction reversed.** The registered prediction is that two-stage will\n  *not* improve; the executed result is that it improves by +0.0761 F1,\n  which also **clears the registered stopping-rule threshold of ≥ 0.05**.",
+      "values": [
+        {
+          "quantity": "observed F1 improvement of two-stage over single-stage, quoted at 4 dp",
+          "value_verbatim": "+0.0761",
+          "value_parsed": 0.0761,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": null
+        },
+        {
+          "quantity": "registered stopping-rule F1 threshold",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/commitments.json#$.commitments[?(@.commitment_id=='CMT-0126')].statement",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The delta is the same quantity as the `observed_f1_diff` row, quoted at lower precision (harness owns rounding tolerance). The threshold is a registration-spec value, reached by cross-file locator into `results/commitments.json` `CMT-0126`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          297,
+          299
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "Under the registered one-tailed alternative (two-stage < single-stage)\n  the p-value would be ≈ 1.0; under the operative two-sided reading it is\n  < 1 × 10⁻⁴.",
+      "values": [
+        {
+          "quantity": "p-value under the registered one-tailed alternative (two-stage < single-stage)",
+          "value_verbatim": "≈ 1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "two-sided p bound at the permutation resolution floor",
+          "value_verbatim": "1 × 10⁻⁴",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+              "path": "$.permutation_test.n_permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The one-tailed p is not committed anywhere: it would need recomputation from the permutation null distribution in the H2 pairwise artefact. Approximation marker retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          305,
+          306
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "- **Corpus**: Era 2 (487 tiles at 384 px), not the registered 60-tile\n  512 px holdout (E36).",
+      "values": [
+        {
+          "quantity": "evaluation tile count, Era 2 corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "tile crop size, Era 2 corpus",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "registered holdout corpus tile count",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#registered holdout corpus tile count",
+          "method": "read"
+        },
+        {
+          "quantity": "registered holdout crop size",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#registered holdout crop size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 384 px figure is asserted as the Era 2 tile size (not merely the `pv-diag-384` condition name), but no single artefact locator for the crop size was identified — triage to locate (a crop-size PNG or study manifest is the likely home). The registered 60-tile / 512 px figures are registration-spec values reached by cross-file locator into the lodged preregistration (markdown, so no JSONPath)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          308,
+          311
+        ],
+        "section": "§ 5.2 H2 — Two-stage pipelines do not improve detection"
+      },
+      "claim_text": "**Alternatives not selected** (same file family, all Era 2): the N = 5 pair\n(`pv-vs-consensus-flash-high-text-4-of-5-pv-vs-flash-high-text-5-of-5.json`,\n`p_value` = 0.0), the N = 10 pair (`p_value` = 0.0), the image pair\n(`p_value` = 0.0004), and the Pro pair (`p_value` = 0.258).",
+      "values": [
+        {
+          "quantity": "permutation p_value, PV vs consensus at N = 5 (Era 2)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": null
+        },
+        {
+          "quantity": "permutation p_value, PV vs consensus at N = 10 (Era 2)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-9-of-10-pv-vs-flash-high-text-9-of-10.json#$.permutation_test.p_value",
+          "method": null
+        },
+        {
+          "quantity": "permutation p_value, PV vs consensus image pair (Era 2)",
+          "value_verbatim": "0.0004",
+          "value_parsed": 0.0004,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-image-flash-high-image-3-of-5-pv-vs-flash-high-image-3-of-5.json#$.permutation_test.p_value",
+          "method": null
+        },
+        {
+          "quantity": "permutation p_value, PV vs consensus Pro pair (Era 2)",
+          "value_verbatim": "0.258",
+          "value_parsed": 0.258,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-pro-pro-high-text-3-of-5-pv-vs-pro-high-text-3-of-5.json#$.permutation_test.p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-4-of-5-pv-vs-flash-high-text-5-of-5.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`N = 5` / `N = 10` are condition names, not claims. The document names only the first file; the N = 10, image, and Pro filenames were identified from the sibling listing of `results/pairwise/20m/group_1_architecture/` and should be confirmed at triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          336,
+          339
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "**Executed artefact**:\n`results/diversity-dividend-384/tiering-champions/tiering_20m.json`\n(Era 2, 487 tiles, 20 m buffer, 10 000 permutations, seed 42, `fdr_q` =\n0.05, `git_commit` = `db582f1d`).",
+      "values": [
+        {
+          "quantity": "evaluation tile count, Era 2 corpus (diversity-dividend tiering)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairwise[*].n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "matching buffer, diversity-dividend tiering",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "permutation count, diversity-dividend tiering",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": null
+        },
+        {
+          "quantity": "random seed, diversity-dividend tiering",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": null
+        },
+        {
+          "quantity": "BH-FDR q within the diversity-dividend tiering artefact",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tile count uses the constant-collapse locator across the pairwise collection (v1.2 amendment 7); the artefact carries no top-level `n_tiles`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          349,
+          349
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "| `ref_a` / `f1_a` | `consensus-flash-high-text-26of30` / 0.8141 |",
+      "values": [
+        {
+          "quantity": "F1@20m, consensus-flash-high-text-26of30 (H3 headline contrast a)",
+          "value_verbatim": "0.8141",
+          "value_parsed": 0.8141,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[2].f1_a",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": "$.headline_contrasts[2].f1_a"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          350,
+          350
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "| `ref_b` / `f1_b` | `pv-diag-384::baseline-flash-text-high-t-0-7` / 0.3871 |",
+      "values": [
+        {
+          "quantity": "F1@20m, pv-diag-384 baseline single-pass (H3 headline contrast b)",
+          "value_verbatim": "0.3871",
+          "value_parsed": 0.3871,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[2].f1_b",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": "$.headline_contrasts[2].f1_b"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          351,
+          351
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "| `f1_diff` | 0.427 |",
+      "values": [
+        {
+          "quantity": "F1 difference, consensus minus matched single-pass (H3 primary)",
+          "value_verbatim": "0.427",
+          "value_parsed": 0.427,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[2].f1_diff",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": "$.headline_contrasts[2].f1_diff"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          352,
+          352
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "| **`p_value`** | **0.0** (10 000 permutations ⇒ p < 1 × 10⁻⁴) |",
+      "values": [
+        {
+          "quantity": "permutation p_value, H3 primary test",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[2].p_value",
+          "method": null
+        },
+        {
+          "quantity": "permutation count, diversity-dividend tiering",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": null
+        },
+        {
+          "quantity": "resolution floor of the permutation p (1 / n_permutations)",
+          "value_verbatim": "1 × 10⁻⁴",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+              "path": "$.n_permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          353,
+          353
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "| `bh_adjusted_p` (within that artefact's own family) | 0.0 |",
+      "values": [
+        {
+          "quantity": "BH-adjusted p, H3 primary within the tiering artefact's own family",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[2].bh_adjusted_p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": "$.headline_contrasts[2].bh_adjusted_p"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          355,
+          357
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "**Divergences**: registered one-tailed, executed two-sided (conservative —\nthe observed direction is the predicted one); permutation not bootstrap\n(E45); Era 2 not the registered 60-tile corpus.",
+      "values": [
+        {
+          "quantity": "registered corpus tile count",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-spec corpus size (v1.1 calibration rule)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          364,
+          364
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "| Era 1 bootstrap, registered method, **not** condition-matched | `results/retest/pairwise-bootstrap-comparisons.json` `comparisons[68]` (`consensus_T0.7_18of30_image` vs `single_pass_canonical_last`) | `f1_p_value` | 0.001 |",
+      "values": [
+        {
+          "quantity": "f1_p_value, consensus_T0.7_18of30_image vs single_pass_canonical_last (Era 1 bootstrap)",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[68].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[68].f1_p_value"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          365,
+          365
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "| Era 1 permutation, condition-matched (image) | `results/era1-leaderboard/tiering_20m.json` `pairwise[579]` | `p_value` | 0.0 |",
+      "values": [
+        {
+          "quantity": "permutation p_value, Era 1 condition-matched consensus vs single-pass (image)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[579].p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": "$.pairwise[579].p_value"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          366,
+          366
+        ],
+        "section": "§ 5.3 H3 — Consensus voting improves F1"
+      },
+      "claim_text": "| Era 1 permutation, condition-matched (text) | `results/era1-leaderboard/tiering_20m.json` `pairwise[871]` | `p_value` | 0.0 |",
+      "values": [
+        {
+          "quantity": "permutation p_value, Era 1 condition-matched consensus vs single-pass (text)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[871].p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": "$.pairwise[871].p_value"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          387,
+          388
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "> - **Primary**: Pairwise bootstrap comparisons across 3 ordering\n>   conditions (95% CIs, FDR-corrected)",
+      "values": [
+        {
+          "quantity": "registered count of ordering conditions compared in the H4 primary",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.commitments[?(@.commitment_id=='CMT-0158')].statement",
+          "method": null
+        },
+        {
+          "quantity": "registered confidence interval level for the H4 primary",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.commitments[?(@.commitment_id=='CMT-0158')].statement",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": "$.commitments[?(@.commitment_id=='CMT-0158')].statement"
+      },
+      "method": "read",
+      "notes": "Registered primary analysis quoted from `CMT-0158` (`preregistration.md:570`)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          396,
+          397
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "**Executed artefact**: `results/retest/pairwise-bootstrap-comparisons.json`\n`comparisons[55]` (Era 1, 340 tiles). Field: `f1_p_value`.",
+      "values": [
+        {
+          "quantity": "evaluation tile count, Era 1 retest corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-leaderboard/tiering_20m.json#$.n_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tile count is not carried in this artefact; cross-file locator to the Era-1 leaderboard tiering artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          407,
+          407
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "| `f1_delta` | −0.03294330664745624 (canonical-last is the higher of the two) |",
+      "values": [
+        {
+          "quantity": "f1_delta, canonical-first vs canonical-last (Era 1 bootstrap)",
+          "value_verbatim": "−0.03294330664745624",
+          "value_parsed": -0.03294330664745624,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[55].f1_delta",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[55].f1_delta"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          408,
+          408
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "| **`f1_p_value`** | **0.124** |",
+      "values": [
+        {
+          "quantity": "f1_p_value, canonical-first vs canonical-last (H4 primary, two-sided)",
+          "value_verbatim": "0.124",
+          "value_parsed": 0.124,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[55].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[55].f1_p_value"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          411,
+          415
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "**Divergences**: registered one-tailed, executed two-sided. The observed\ndirection *is* the predicted one, so the one-tailed p would be\napproximately 0.062 — still null at α = 0.05, and consistent with the\nindependently derived estimate at\n`reports/d17-inventory/d17-inventory-h1-h4.md:1098` (\"p ≈ 0.06\").",
+      "values": [
+        {
+          "quantity": "one-tailed p for the H4 primary, halved from the two-sided value",
+          "value_verbatim": "approximately 0.062",
+          "value_parsed": 0.062,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/retest/pairwise-bootstrap-comparisons.json",
+              "path": "$.comparisons[55].f1_p_value"
+            }
+          ]
+        },
+        {
+          "quantity": "per-hypothesis significance level α",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#per-hypothesis α",
+          "method": "read"
+        },
+        {
+          "quantity": "independently derived one-tailed p estimate quoted from the D17 inventory",
+          "value_verbatim": "≈ 0.06",
+          "value_parsed": 0.06,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.06 figure is quoted from `reports/d17-inventory/d17-inventory-h1-h4.md` (prose); rule 2 forbids a prose anchor, so triage must chase it to an artefact. Approximation markers retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          415,
+          416
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "The\ntwo-sided value 0.124 is used and is strictly conservative.",
+      "values": [
+        {
+          "quantity": "f1_p_value used as the H4 BH input (two-sided)",
+          "value_verbatim": "0.124",
+          "value_parsed": 0.124,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[55].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[55].f1_p_value"
+      },
+      "method": "read",
+      "notes": "Second assertion of the same p-value as the § 5.4 verdict table row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          416,
+          418
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "A fourth\ncondition (`config-default`) was added post-lodgement (E30), so the\nregistered three-condition family became four.",
+      "values": [
+        {
+          "quantity": "registered count of H4 ordering conditions",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "results/commitments.json#$.commitments[?(@.commitment_id=='CMT-0158')].statement",
+          "method": "read"
+        },
+        {
+          "quantity": "executed count of H4 ordering conditions after the post-lodgement addition",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.phase2e.conditions",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2e-evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"A fourth condition\" asserts the same executed count as \"became four\"; recorded once. The registered three is a registration-spec value reached by cross-file locator into `CMT-0158`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          425,
+          426
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "canonical-last vs random contrast (`comparisons[59]`, `f1_p_value` =\n0.002).",
+      "values": [
+        {
+          "quantity": "f1_p_value, canonical-last vs random (Era 1 bootstrap, the significant neighbour not used for BH)",
+          "value_verbatim": "0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[59].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[59].f1_p_value"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          429,
+          431
+        ],
+        "section": "§ 5.4 H4 — Example ordering (canonical placement)"
+      },
+      "claim_text": "**Current-instrument cross-check**:\n`results/era1-leaderboard/tiering_20m.json` `pairwise[2096]`, `p_value` =\n0.1366, `bh_adjusted_p` = 0.176243",
+      "values": [
+        {
+          "quantity": "permutation p_value, Era 1 canonical-first vs canonical-last",
+          "value_verbatim": "0.1366",
+          "value_parsed": 0.1366,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[2096].p_value",
+          "method": null
+        },
+        {
+          "quantity": "BH-adjusted p, Era 1 canonical-first vs canonical-last",
+          "value_verbatim": "0.176243",
+          "value_parsed": 0.176243,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[2096].bh_adjusted_p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          440,
+          441
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "> - **Primary**: Pairwise bootstrap comparisons across 3 H5 levels on\n>   precision (95% CIs, FDR-corrected; within each M/E level)",
+      "values": [
+        {
+          "quantity": "registered count of H5 negative-text levels compared in the primary",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.commitments[?(@.commitment_id=='CMT-0181')].statement",
+          "method": null
+        },
+        {
+          "quantity": "registered confidence interval level for the H5 primary",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.commitments[?(@.commitment_id=='CMT-0181')].statement",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": "$.commitments[?(@.commitment_id=='CMT-0181')].statement"
+      },
+      "method": "read",
+      "notes": "Registered primary analysis quoted from `CMT-0181` (`preregistration.md:632`)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          458,
+          459
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "**Executed artefact**: `results/retest/pairwise-bootstrap-comparisons.json`\n`comparisons[53]` (Era 1, 340 tiles). Field: `precision_p`.",
+      "values": [
+        {
+          "quantity": "evaluation tile count, Era 1 retest corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-leaderboard/tiering_20m.json#$.n_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tile count is not carried in this artefact; cross-file locator to the Era-1 leaderboard tiering artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          476,
+          476
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "| `precision_delta` | −0.006023599105863865 |",
+      "values": [
+        {
+          "quantity": "precision_delta, terse vs verbose (Phase 2d T1 image track)",
+          "value_verbatim": "−0.006023599105863865",
+          "value_parsed": -0.006023599105863865,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[53].precision_delta",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[53].precision_delta"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          477,
+          477
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "| **`precision_p`** | **0.756** |",
+      "values": [
+        {
+          "quantity": "precision_p, terse vs verbose (H5 primary, image track)",
+          "value_verbatim": "0.756",
+          "value_parsed": 0.756,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[53].precision_p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[53].precision_p"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          478,
+          478
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "| `f1_p_value` (tertiary metric, for reference) | 0.85 |",
+      "values": [
+        {
+          "quantity": "f1_p_value, terse vs verbose (tertiary metric, image track)",
+          "value_verbatim": "0.85",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[53].f1_p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[53].f1_p_value"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          482,
+          484
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "- The registered headline contrast is unavailable at current era. On the\n  original 60-tile registered corpus all three levels *were* run —\n  `results/phase2d-track1-image-analysis.json`",
+      "values": [
+        {
+          "quantity": "tile count of the original registered corpus for the Phase 2d track 1 image analysis",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairwise_comparisons[*].n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "count of H5 negative-text levels run on the original corpus",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.per_condition_metrics",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2d-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Level count uses the `per_condition_metrics` keys (minimal, terse, verbose); the artefact also carries a scalar `n_conditions`. Tile count uses the constant-collapse locator across the pairwise comparisons (v1.2 amendment 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          489,
+          490
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "- The registered \"within each M/E level\" stratification is inestimable:\n  only one image-based M/E level (`brief-text-image`) received H5 variants",
+      "values": [
+        {
+          "quantity": "count of image-based M/E levels that received H5 variants",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubtful inclusion (instrument: include and flag) — a spelled-out count of one. No artefact enumerates which M/E levels received H5 variants; the document cites `reports/d17-inventory/unexecuted-register.md` § E-12 (prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          494,
+          495
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "- Text-track counterpart, **not selected** (excluded by\n  `preregistration.md:624`): `comparisons[54]`, `precision_p` = 0.862.",
+      "values": [
+        {
+          "quantity": "precision_p, terse vs verbose (text track, excluded from the H5 primary)",
+          "value_verbatim": "0.862",
+          "value_parsed": 0.862,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[54].precision_p",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[54].precision_p"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          498,
+          499
+        ],
+        "section": "§ 5.5 H5 — Negative text treatment"
+      },
+      "claim_text": "H5 stays in\nthe family (m = 7)",
+      "values": [
+        {
+          "quantity": "registered BH-FDR family size m after the PI accepted the H5 substitute",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.family_size"
+      },
+      "method": "read",
+      "notes": null
+    }
+  ]
+}

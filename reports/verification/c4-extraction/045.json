@@ -1,0 +1,3353 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+    "git_blob": "6f2ceb7ad30c",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          8
+        ],
+        "section": "Superseded-figures banner (inserted 2026-08-01)"
+      },
+      "claim_text": "The May–July 2026 recovery and completion campaigns closed\n> the audited completeness gaps (35 gap figures below no longer\n> reproduce; current gap 0).",
+      "values": [
+        {
+          "quantity": "count of gap figures in this document's body rendered non-reproducing by the May–July 2026 recovery and completion campaigns",
+          "value_verbatim": "35",
+          "value_parsed": 35,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cumulative verifier completeness gap across the audited cells, asserted as current at the 2026-08-01 banner correction",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b045] Batch-coverage extension: this 12-line banner (current lines 3–14) was inserted on 2026-08-01, after the S122 batches extracted this document through old line 313 (current 325); no other batch covers it, so b045 extracts the banner in addition to its main range (current 326–514). Anchoring: neither figure sits in a single artefact — '35' would need every body gap figure re-derived against current outputs/ artefacts and counted, and 'current gap 0' is a cumulative statement over the audited cell population (explicitly excepting the regressed cell at gap 63 in the next sentence). The banner cites reports/verification/c4-triage/mismatch-triage-2026-07-31.json for era-current values, which this batch is barred from opening under the blind-extraction rule, so no anchor is proposed here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          8,
+          11
+        ],
+        "section": "Superseded-figures banner (inserted 2026-08-01)"
+      },
+      "claim_text": "One cell regressed after the audit:\n> `text-t0.0/verified-v1-n3`'s pool was re-materialised 2026-07-30\n> without a verifier re-run (gap 63; Obs 377 — no paper exposure, no\n> re-run per PI ruling).",
+      "values": [
+        {
+          "quantity": "count of audited verifier cells that regressed after the 2026-05-03 audit",
+          "value_verbatim": "One",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "current completeness gap, cell outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3 (consensus-t1 pool minus verified probabilities entries)",
+          "value_verbatim": "63",
+          "value_parsed": 63,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+            "path": "len:$.features"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "[BATCH NOTE b045] Anchor disambiguation: the banner's short cell name `text-t0.0/verified-v1-n3` matches two rows of this document's own gap-0 table — line 164 (outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/verified-v1-n3) and line 299 (outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/verified-v1-n3). Resolved to the flash-high-text-n5 cell because commit f6116cba0 (2026-07-30, 'data(recovery): re-materialised consensus + re-evaluation for the two live t0.0 cells') re-materialised flash-high-text-n5/text-t0.0/consensus/*, which is the consensus-t1 input pool this document records for that cell (line 164); the flash-minimal-text-n30-t07 pool was not touched in that window. If triage disagrees with the disambiguation the arithmetic should be re-pointed, not re-derived. The spelled-out 'One' is included as a count under the instrument's include-when-in-doubt rule; it is a population statement over the audited cells and has no single-artefact anchor, hence the per-value anchor-unknown override."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          326,
+          326
+        ],
+        "section": "Unmatched cells (no traceable input-set file)"
+      },
+      "claim_text": "| `outputs/verifier-t-pilot/T0.5/probabilities.json` | 607 | (no manifest located) |",
+      "values": [
+        {
+          "quantity": "probabilities entry count (n_probabilities) at audit, unmatched verifier cell `outputs/verifier-t-pilot/T0.5/probabilities.json`",
+          "value_verbatim": "607",
+          "value_parsed": 607,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/verifier-t-pilot/T0.5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Table column 'n_probabilities'; the document reports no input-set file for this cell, so it carries no gap figure and is not among the 35 gap figures the 2026-08-01 banner marks as no longer reproducing. `results` is an object keyed by candidate id, so the count is `len:$.results` (instrument v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          327,
+          327
+        ],
+        "section": "Unmatched cells (no traceable input-set file)"
+      },
+      "claim_text": "| `outputs/verifier-t-pilot/T1.0/probabilities.json` | 607 | (no manifest located) |",
+      "values": [
+        {
+          "quantity": "probabilities entry count (n_probabilities) at audit, unmatched verifier cell `outputs/verifier-t-pilot/T1.0/probabilities.json`",
+          "value_verbatim": "607",
+          "value_parsed": 607,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/verifier-t-pilot/T1.0/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Table column 'n_probabilities'; the document reports no input-set file for this cell, so it carries no gap figure and is not among the 35 gap figures the 2026-08-01 banner marks as no longer reproducing. `results` is an object keyed by candidate id, so the count is `len:$.results` (instrument v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          328,
+          328
+        ],
+        "section": "Unmatched cells (no traceable input-set file)"
+      },
+      "claim_text": "| `outputs/h11/pv-diag-384/verified/pro-image-minimal-verifier/probabilities.json` | 519 | (no manifest located) |",
+      "values": [
+        {
+          "quantity": "probabilities entry count (n_probabilities) at audit, unmatched verifier cell `outputs/h11/pv-diag-384/verified/pro-image-minimal-verifier/probabilities.json`",
+          "value_verbatim": "519",
+          "value_parsed": 519,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-image-minimal-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Table column 'n_probabilities'; the document reports no input-set file for this cell, so it carries no gap figure and is not among the 35 gap figures the 2026-08-01 banner marks as no longer reproducing. `results` is an object keyed by candidate id, so the count is `len:$.results` (instrument v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          329,
+          329
+        ],
+        "section": "Unmatched cells (no traceable input-set file)"
+      },
+      "claim_text": "| `outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/probabilities.json` | 430 | (no manifest located) |",
+      "values": [
+        {
+          "quantity": "probabilities entry count (n_probabilities) at audit, unmatched verifier cell `outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/probabilities.json`",
+          "value_verbatim": "430",
+          "value_parsed": 430,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Table column 'n_probabilities'; the document reports no input-set file for this cell, so it carries no gap figure and is not among the 35 gap figures the 2026-08-01 banner marks as no longer reproducing. `results` is an object keyed by candidate id, so the count is `len:$.results` (instrument v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          330,
+          330
+        ],
+        "section": "Unmatched cells (no traceable input-set file)"
+      },
+      "claim_text": "| `outputs/h11/pv-diag-384/verified/flash-minimal-image-medium-verifier/probabilities.json` | 746 | (no manifest located) |",
+      "values": [
+        {
+          "quantity": "probabilities entry count (n_probabilities) at audit, unmatched verifier cell `outputs/h11/pv-diag-384/verified/flash-minimal-image-medium-verifier/probabilities.json`",
+          "value_verbatim": "746",
+          "value_parsed": 746,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-minimal-image-medium-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Table column 'n_probabilities'; the document reports no input-set file for this cell, so it carries no gap figure and is not among the 35 gap figures the 2026-08-01 banner marks as no longer reproducing. `results` is an object keyed by candidate id, so the count is `len:$.results` (instrument v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          331,
+          331
+        ],
+        "section": "Unmatched cells (no traceable input-set file)"
+      },
+      "claim_text": "| `outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json` | 430 | (no manifest located) |",
+      "values": [
+        {
+          "quantity": "probabilities entry count (n_probabilities) at audit, unmatched verifier cell `outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json`",
+          "value_verbatim": "430",
+          "value_parsed": 430,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Table column 'n_probabilities'; the document reports no input-set file for this cell, so it carries no gap figure and is not among the 35 gap figures the 2026-08-01 banner marks as no longer reproducing. `results` is an object keyed by candidate id, so the count is `len:$.results` (instrument v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          332,
+          332
+        ],
+        "section": "Unmatched cells (no traceable input-set file)"
+      },
+      "claim_text": "| `outputs/h11/pv-diag-384/verified/flash-minimal-text-medium-verifier/probabilities.json` | 1047 | (no manifest located) |",
+      "values": [
+        {
+          "quantity": "probabilities entry count (n_probabilities) at audit, unmatched verifier cell `outputs/h11/pv-diag-384/verified/flash-minimal-text-medium-verifier/probabilities.json`",
+          "value_verbatim": "1047",
+          "value_parsed": 1047,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-minimal-text-medium-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Table column 'n_probabilities'; the document reports no input-set file for this cell, so it carries no gap figure and is not among the 35 gap figures the 2026-08-01 banner marks as no longer reproducing. `results` is an object keyed by candidate id, so the count is `len:$.results` (instrument v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          333,
+          333
+        ],
+        "section": "Unmatched cells (no traceable input-set file)"
+      },
+      "claim_text": "| `outputs/h11/pv-diag-384/verified/pro-image-medium-verifier/probabilities.json` | 519 | (no manifest located) |",
+      "values": [
+        {
+          "quantity": "probabilities entry count (n_probabilities) at audit, unmatched verifier cell `outputs/h11/pv-diag-384/verified/pro-image-medium-verifier/probabilities.json`",
+          "value_verbatim": "519",
+          "value_parsed": 519,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-image-medium-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Table column 'n_probabilities'; the document reports no input-set file for this cell, so it carries no gap figure and is not among the 35 gap figures the 2026-08-01 banner marks as no longer reproducing. `results` is an object keyed by candidate id, so the count is `len:$.results` (instrument v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          341,
+          341
+        ],
+        "section": "Gap-positive cells, expanded — note on the `verified-cleanup` artefact"
+      },
+      "claim_text": "**Note on the `verified-cleanup` artefact (gap 8916):**",
+      "values": [
+        {
+          "quantity": "completeness gap at audit, cell outputs/55maps-generalisation/verified-cleanup (8,942-candidate manifest minus 26 verified entries)",
+          "value_verbatim": "8916",
+          "value_parsed": 8916,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure, restated from the section heading at line 351. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), and the document itself frames this particular figure as structural rather than a silent drop. Era derivation for triage, should it want it: outputs/55maps-generalisation/crops/candidate_manifest.json len:$.candidates minus archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          342,
+          345
+        ],
+        "section": "Gap-positive cells, expanded — note on the `verified-cleanup` artefact"
+      },
+      "claim_text": "`outputs/55maps-generalisation/verified-cleanup/`\n> is the **output directory of an earlier cleanup pass that re-verified only\n> the 26 missing candidates**, so by construction it contains 26 results\n> against the 8,942-candidate manifest.",
+      "values": [
+        {
+          "quantity": "candidates re-verified by the earlier cleanup pass (the candidates missing from the canonical verified pool at that time)",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        },
+        {
+          "quantity": "results contained in outputs/55maps-generalisation/verified-cleanup/probabilities.json",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        },
+        {
+          "quantity": "candidate count of the 55maps-generalisation input manifest",
+          "value_verbatim": "8,942",
+          "value_parsed": 8942,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-generalisation/crops/candidate_manifest.json#len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "The path the document names (outputs/55maps-generalisation/verified-cleanup/probabilities.json) no longer exists in the working tree: the partial cleanup output was archived, as the document itself recommends, to archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/probabilities.json (git-tracked), which is the anchor used here. Third value uses a cross-file locator (instrument v1.2 amendment 2) into the sibling manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          345,
+          346
+        ],
+        "section": "Gap-positive cells, expanded — note on the `verified-cleanup` artefact"
+      },
+      "claim_text": "The canonical cell\n> (`outputs/55maps-generalisation/verified/probabilities.json`) is gap=0;",
+      "values": [
+        {
+          "quantity": "completeness gap, canonical cell outputs/55maps-generalisation/verified",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/verified/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/55maps-generalisation/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/55maps-generalisation/verified/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Extracted as a live claim rather than historical: the banner marks the body's gap-positive figures as no longer reproducing and asserts current gap 0, so a gap of 0 asserted at audit for the canonical cell is not superseded by it. Flagged for triage as a status call the banner leaves ambiguous."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          347,
+          349
+        ],
+        "section": "Gap-positive cells, expanded — note on the `verified-cleanup` artefact"
+      },
+      "claim_text": "It is included\n> in the table for full transparency, but excluded from the \"835 cumulative\n> dropped candidates\" headline figure.",
+      "values": [
+        {
+          "quantity": "cumulative dropped candidates excluding the verified-cleanup artefact (executive-summary headline figure)",
+          "value_verbatim": "835",
+          "value_parsed": 835,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the executive-summary headline at line 21 (outside this batch's ranges; extracted by an earlier batch from the pre-banner document). Recorded as historical because it is a sum over the body's gap figures, which the 2026-08-01 banner marks as no longer reproducing (current gap 0). Status flagged rather than dropped: if triage rules the cumulative figure live, it needs a scripted re-derivation (sum of per-cell gaps excluding outputs/55maps-generalisation/verified-cleanup), not a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          351,
+          351
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/55maps-generalisation/verified-cleanup/probabilities.json`"
+      },
+      "claim_text": "### `outputs/55maps-generalisation/verified-cleanup/probabilities.json` — gap 8916",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/55maps-generalisation/verified-cleanup/probabilities.json`",
+          "value_verbatim": "8916",
+          "value_parsed": 8916,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/55maps-generalisation/crops/candidate_manifest.json len:$.candidates minus archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          353,
+          353
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/55maps-generalisation/verified-cleanup/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/55maps-generalisation/verified-cleanup/probabilities.json` (26 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/55maps-generalisation/verified-cleanup/probabilities.json`",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4). The path the document names no longer exists in the working tree; the partial cleanup output was archived to archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/probabilities.json (git-tracked), which is the anchor used here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          354,
+          354
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/55maps-generalisation/verified-cleanup/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-sibling-crops)**: `/home/shawn/Code/map-reader-llm/outputs/55maps-generalisation/crops/candidate_manifest.json` (8942 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-sibling-crops), cell `outputs/55maps-generalisation/verified-cleanup/probabilities.json`",
+          "value_verbatim": "8942",
+          "value_parsed": 8942,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          355,
+          355
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/55maps-generalisation/verified-cleanup/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 8916):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/55maps-generalisation/verified-cleanup/probabilities.json`",
+          "value_verbatim": "8916",
+          "value_parsed": 8916,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "[BATCH NOTE b045] Explicit scope decision applied to all 'Sample missing candidate IDs' lines in this batch: the trailing 'of N' is extracted (it restates the cell's gap figure) and the leading 'first N' is not, because it counts the candidate IDs printed on the same line — a fact about the document's own display, checkable only against that line, with no artefact anchor (anchoring prose to prose is barred by instrument rule 2). Logged here rather than left silent; triage can reinstate them mechanically if wanted. Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          357,
+          357
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json` — gap 460",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json`",
+          "value_verbatim": "460",
+          "value_parsed": 460,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          359,
+          359
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json` (342 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json`",
+          "value_verbatim": "342",
+          "value_parsed": 342,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          360,
+          360
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-in-crops-subdir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/crops/candidate_manifest.json` (802 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-in-crops-subdir), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json`",
+          "value_verbatim": "802",
+          "value_parsed": 802,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          362,
+          362
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json` — gap 57",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json`",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/candidate_manifest.json len:$.candidates minus outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          364,
+          364
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json` (4301 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json`",
+          "value_verbatim": "4301",
+          "value_parsed": 4301,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          365,
+          365
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/candidate_manifest.json` (4358 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json`",
+          "value_verbatim": "4358",
+          "value_parsed": 4358,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          366,
+          366
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 57):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json`",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          368,
+          368
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json` — gap 41",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          370,
+          370
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json` (3695 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`",
+          "value_verbatim": "3695",
+          "value_parsed": 3695,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          371,
+          371
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`"
+      },
+      "claim_text": "- **Input set (shared-manifest)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` (3736 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (shared-manifest), cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`",
+          "value_verbatim": "3736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          372,
+          372
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 41):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          374,
+          374
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json` — gap 28",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json`",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/candidate_manifest.json len:$.candidates minus outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          376,
+          376
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json` (1626 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json`",
+          "value_verbatim": "1626",
+          "value_parsed": 1626,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          377,
+          377
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/candidate_manifest.json` (1654 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json`",
+          "value_verbatim": "1654",
+          "value_parsed": 1654,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          378,
+          378
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 28):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json`",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          380,
+          380
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json` — gap 27",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json`",
+          "value_verbatim": "27",
+          "value_parsed": 27,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          382,
+          382
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json` (3709 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json`",
+          "value_verbatim": "3709",
+          "value_parsed": 3709,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          383,
+          383
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json`"
+      },
+      "claim_text": "- **Input set (shared-manifest)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` (3736 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (shared-manifest), cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json`",
+          "value_verbatim": "3736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          384,
+          384
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 27):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/probabilities.json`",
+          "value_verbatim": "27",
+          "value_parsed": 27,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          386,
+          386
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json` — gap 26",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          388,
+          388
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json` (1991 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`",
+          "value_verbatim": "1991",
+          "value_parsed": 1991,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          389,
+          389
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`"
+      },
+      "claim_text": "- **Input set (shared-manifest)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` (2017 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (shared-manifest), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`",
+          "value_verbatim": "2017",
+          "value_parsed": 2017,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          390,
+          390
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 26):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/probabilities.json`",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          392,
+          392
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json` — gap 21",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          394,
+          394
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json` (3715 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`",
+          "value_verbatim": "3715",
+          "value_parsed": 3715,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          395,
+          395
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`"
+      },
+      "claim_text": "- **Input set (shared-manifest)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` (3736 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (shared-manifest), cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`",
+          "value_verbatim": "3736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          396,
+          396
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 21):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          398,
+          398
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json` — gap 21",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json`",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/crops/text-baseline/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          400,
+          400
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json` (1026 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json`",
+          "value_verbatim": "1026",
+          "value_parsed": 1026,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          401,
+          401
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-fuzzy-suffix-strip)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/text-baseline/candidate_manifest.json` (1047 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-fuzzy-suffix-strip), cell `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json`",
+          "value_verbatim": "1047",
+          "value_parsed": 1047,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/crops/text-baseline/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          402,
+          402
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 21):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/probabilities.json`",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          404,
+          404
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json` — gap 19",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          406,
+          406
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json` (1998 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`",
+          "value_verbatim": "1998",
+          "value_parsed": 1998,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          407,
+          407
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`"
+      },
+      "claim_text": "- **Input set (shared-manifest)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` (2017 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (shared-manifest), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`",
+          "value_verbatim": "2017",
+          "value_parsed": 2017,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          408,
+          408
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 19):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json`",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          410,
+          410
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json` — gap 19",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json`",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          412,
+          412
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json` (1998 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json`",
+          "value_verbatim": "1998",
+          "value_parsed": 1998,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          413,
+          413
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json`"
+      },
+      "claim_text": "- **Input set (shared-manifest)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` (2017 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (shared-manifest), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json`",
+          "value_verbatim": "2017",
+          "value_parsed": 2017,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          414,
+          414
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 19):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json`",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          416,
+          416
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json` — gap 19",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json`",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/candidate_manifest.json len:$.candidates minus outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          418,
+          418
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json` (1053 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json`",
+          "value_verbatim": "1053",
+          "value_parsed": 1053,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          419,
+          419
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/candidate_manifest.json` (1072 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json`",
+          "value_verbatim": "1072",
+          "value_parsed": 1072,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          420,
+          420
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 19):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json`",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          422,
+          422
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h8-v2/wbf/scale-4/verified/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h8-v2/wbf/scale-4/verified/probabilities.json` — gap 15",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h8-v2/wbf/scale-4/verified/probabilities.json`",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h8-v2/wbf/scale-4/crops/candidate_manifest.json len:$.candidates minus outputs/h8-v2/wbf/scale-4/verified/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          424,
+          424
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h8-v2/wbf/scale-4/verified/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h8-v2/wbf/scale-4/verified/probabilities.json` (1099 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h8-v2/wbf/scale-4/verified/probabilities.json`",
+          "value_verbatim": "1099",
+          "value_parsed": 1099,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h8-v2/wbf/scale-4/verified/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          425,
+          425
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h8-v2/wbf/scale-4/verified/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-sibling-crops)**: `/home/shawn/Code/map-reader-llm/outputs/h8-v2/wbf/scale-4/crops/candidate_manifest.json` (1114 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-sibling-crops), cell `outputs/h8-v2/wbf/scale-4/verified/probabilities.json`",
+          "value_verbatim": "1114",
+          "value_parsed": 1114,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h8-v2/wbf/scale-4/crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          426,
+          426
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h8-v2/wbf/scale-4/verified/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 15):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h8-v2/wbf/scale-4/verified/probabilities.json`",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          428,
+          428
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json` — gap 14",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json`",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/candidate_manifest.json len:$.candidates minus outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          430,
+          430
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json` (739 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json`",
+          "value_verbatim": "739",
+          "value_parsed": 739,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          431,
+          431
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/candidate_manifest.json` (753 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json`",
+          "value_verbatim": "753",
+          "value_parsed": 753,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          432,
+          432
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 14):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json`",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          434,
+          434
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json` — gap 11",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json`",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          436,
+          436
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json` (2179 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json`",
+          "value_verbatim": "2179",
+          "value_parsed": 2179,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          437,
+          437
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-in-crops-subdir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/crops/candidate_manifest.json` (2190 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-in-crops-subdir), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/probabilities.json`",
+          "value_verbatim": "2190",
+          "value_parsed": 2190,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          439,
+          439
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json` — gap 10",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json`",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          441,
+          441
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json` (509 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json`",
+          "value_verbatim": "509",
+          "value_parsed": 509,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          442,
+          442
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-fuzzy-suffix-strip)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json` (519 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-fuzzy-suffix-strip), cell `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json`",
+          "value_verbatim": "519",
+          "value_parsed": 519,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          443,
+          443
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 10 of 10):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json`",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          445,
+          445
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json` — gap 9",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json`",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/candidate_manifest.json len:$.candidates minus outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          447,
+          447
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json` (478 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json`",
+          "value_verbatim": "478",
+          "value_parsed": 478,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          448,
+          448
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/candidate_manifest.json` (487 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json`",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          449,
+          449
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 9 of 9):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json`",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          451,
+          451
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json` — gap 8",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json`",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          453,
+          453
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json` (833 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json`",
+          "value_verbatim": "833",
+          "value_parsed": 833,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          454,
+          454
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/candidate_manifest.json` (841 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json`",
+          "value_verbatim": "841",
+          "value_parsed": 841,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          455,
+          455
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 8 of 8):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json`",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          457,
+          457
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json` — gap 8",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json`",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/crops/pro-high-image-1of5/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          459,
+          459
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json` (833 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json`",
+          "value_verbatim": "833",
+          "value_parsed": 833,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          460,
+          460
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-fuzzy-suffix-strip)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-high-image-1of5/candidate_manifest.json` (841 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-fuzzy-suffix-strip), cell `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json`",
+          "value_verbatim": "841",
+          "value_parsed": 841,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/crops/pro-high-image-1of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          461,
+          461
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 8 of 8):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/probabilities.json`",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          463,
+          463
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/55maps-generalisation/verified-v2/probabilities.json`"
+      },
+      "claim_text": "### `outputs/55maps-generalisation/verified-v2/probabilities.json` — gap 3",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/55maps-generalisation/verified-v2/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/55maps-generalisation/crops/candidate_manifest.json len:$.candidates minus outputs/55maps-generalisation/verified-v2/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          465,
+          465
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/55maps-generalisation/verified-v2/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/55maps-generalisation/verified-v2/probabilities.json` (8939 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/55maps-generalisation/verified-v2/probabilities.json`",
+          "value_verbatim": "8939",
+          "value_parsed": 8939,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/verified-v2/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          466,
+          466
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/55maps-generalisation/verified-v2/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-sibling-crops)**: `/home/shawn/Code/map-reader-llm/outputs/55maps-generalisation/crops/candidate_manifest.json` (8942 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-sibling-crops), cell `outputs/55maps-generalisation/verified-v2/probabilities.json`",
+          "value_verbatim": "8942",
+          "value_parsed": 8942,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          467,
+          467
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/55maps-generalisation/verified-v2/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 3 of 3):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/55maps-generalisation/verified-v2/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          469,
+          469
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json` — gap 3",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          471,
+          471
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json` (294 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json`",
+          "value_verbatim": "294",
+          "value_parsed": 294,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          472,
+          472
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/candidate_manifest.json` (297 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json`",
+          "value_verbatim": "297",
+          "value_parsed": 297,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          473,
+          473
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 3 of 3):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          475,
+          475
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json` — gap 3",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          477,
+          477
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json` (468 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json`",
+          "value_verbatim": "468",
+          "value_parsed": 468,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          478,
+          478
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/candidate_manifest.json` (471 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json`",
+          "value_verbatim": "471",
+          "value_parsed": 471,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          479,
+          479
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 3 of 3):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          481,
+          481
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json` — gap 3",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          483,
+          483
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json` (580 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json`",
+          "value_verbatim": "580",
+          "value_parsed": 580,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          484,
+          484
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/candidate_manifest.json` (583 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json`",
+          "value_verbatim": "583",
+          "value_parsed": 583,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          485,
+          485
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 3 of 3):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          487,
+          487
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json` — gap 3",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          489,
+          489
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json` (388 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json`",
+          "value_verbatim": "388",
+          "value_parsed": 388,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          490,
+          490
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/candidate_manifest.json` (391 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json`",
+          "value_verbatim": "391",
+          "value_parsed": 391,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          491,
+          491
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 3 of 3):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json`",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          493,
+          493
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json` — gap 1",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json`",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          495,
+          495
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json` (3735 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json`",
+          "value_verbatim": "3735",
+          "value_parsed": 3735,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          496,
+          496
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-same-dir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/candidate_manifest.json` (3736 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-same-dir), cell `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json`",
+          "value_verbatim": "3736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          497,
+          497
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 1 of 1):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json`",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          499,
+          499
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json` — gap 1",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json`",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/crops/flash-high-text-1of5/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          501,
+          501
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json` (3735 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json`",
+          "value_verbatim": "3735",
+          "value_parsed": 3735,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          502,
+          502
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-fuzzy-suffix-strip)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/flash-high-text-1of5/candidate_manifest.json` (3736 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-fuzzy-suffix-strip), cell `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json`",
+          "value_verbatim": "3736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/crops/flash-high-text-1of5/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          503,
+          503
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 1 of 1):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json`",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          505,
+          505
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json` — gap 1",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json`",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          507,
+          507
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json` (2016 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json`",
+          "value_verbatim": "2016",
+          "value_parsed": 2016,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          508,
+          508
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json`"
+      },
+      "claim_text": "- **Input set (manifest-in-crops-subdir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/crops/candidate_manifest.json` (2017 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (manifest-in-crops-subdir), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json`",
+          "value_verbatim": "2017",
+          "value_parsed": 2017,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          510,
+          510
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json`"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json` — gap 1",
+      "values": [
+        {
+          "quantity": "completeness gap at audit (input-set candidates minus verified probabilities entries), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json`",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Audit-era (2026-05-03) gap figure. Recorded as historical: the 2026-08-01 banner (lines 3–14) marks the body's 35 gap figures as no longer reproducing (current gap 0), i.e. the document itself marks this value superseded. Era derivation for triage: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json len:$.candidates minus outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json len:$.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          512,
+          512
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json`"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json` (2016 entries)",
+      "values": [
+        {
+          "quantity": "verified probabilities entry count at audit, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json`",
+          "value_verbatim": "2016",
+          "value_parsed": 2016,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Audit-era (2026-05-03) entry count. Extracted as a live read claim because the banner marks only the derived gap figures as superseded, but the May–July 2026 recovery campaign re-ran gap-positive cells, so an era-drift difference here would be expected rather than an error — doubt flagged, not dropped, per the instrument's include-when-in-doubt rule. `results` is an object keyed by candidate id, so the count is `len:$.results` (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          513,
+          513
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json`"
+      },
+      "claim_text": "- **Input set (shared-manifest)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json` (2017 expected)",
+      "values": [
+        {
+          "quantity": "input-set candidate count at audit (shared-manifest), cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json`",
+          "value_verbatim": "2017",
+          "value_parsed": 2017,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Input-set size the audit compared against. Candidate manifests were not re-materialised by the recovery campaign as far as this batch can tell from the document alone, so this is extracted as a live read claim; the banner's supersession note covers the derived gap, not the manifest size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          514,
+          514
+        ],
+        "section": "Gap-positive cells, expanded — `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json`"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 1 of 1):",
+      "values": [
+        {
+          "quantity": "completeness gap at audit restated as the sample population, cell `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json`",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Restates the section's gap figure, so it carries the same historical status (2026-08-01 banner marks the body's gap figures as no longer reproducing). The leading 'first N' is the count of sample candidate IDs printed on this line and is not extracted as a separate value."
+    }
+  ]
+}

@@ -1,0 +1,806 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/drafts/errata-drafts-2026-07-29.md",
+    "git_blob": "704b09391c6b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          666,
+          668
+        ],
+        "section": "Draft 4 / Block 2 - attach to E16 (Correction 2026-07-29)"
+      },
+      "claim_text": "Commit `2d46311`, which this erratum records, did\nnot only reword existing material: it **added three new exclusion sections**, enumerated\nin the commit's own message:",
+      "values": [
+        {
+          "quantity": "count of new exclusion sections added to the system-instruction prompts by commit 2d46311",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "sections",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b057] Scope decisions for lines 648-926, logged explicitly per instrument rule 5 rather than silently. Excluded as identifiers/names, not claims: the key-test numbers in the E65 diff list ('key test 2', 'key test 5', 'key test 6', lines 770-779) and the numbering inside the quoted prompt text; commit-message change labels ('Change 2A', '2B', '3', '4B'); erratum/Obs/Decision/finding/queue identifiers (E1-E68, Obs 211, Decision 15, D15, finding 4, finding 11, queue item 5, queue item 6, CMT-0109, F4/F7, P3b); section references (§ 2.1, § 8.6, § 8.7.3, § 1.6.2, Sections 5-6, Section 3); line-number citations (osf/preregistration.md:2027-2032, protocol-errata.md:1939 and :5, execution-checklist.md:92, decisions-log.md:671, phase3d-h2-twostage.yaml:68, E51:1459, E52:1600, preregistration-appendix-prompts.md:1088-1128); git hashes; all dates and timestamps; and version strings. The version-string exclusion is why E67 (lines 862-901) yields no claims at all: its entire numeric content is version strings ('Document version: 4.6', 'v4.7') and dates. Family/phase/stage names (pv-diag-384, pv-diag-256, proposer-verifier-384, Phase 2a-3a, Stage 2) excluded per rule 5's naming clause. || This count is a git-diff fact: the three headings are enumerated in the table at lines 670-674 and the document itself says they are verifiable via `git show 2d46311 -- prompts/system-instructions`. Looked for a working-tree artefact recording a section count under prompts/system-instructions/ and results/*.json; none exists, so no mechanical anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          676,
+          677
+        ],
+        "section": "Draft 4 / Block 2 - attach to E16 (Correction 2026-07-29)"
+      },
+      "claim_text": "All three headings are verifiable as additions in `git show 2d46311 --\nprompts/system-instructions`.",
+      "values": [
+        {
+          "quantity": "count of headings added to prompts/system-instructions by commit 2d46311",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "headings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restatement of the same count as the claim at lines 666-668; git-diff fact with no working-tree anchor. Triage may wish to collapse the pair."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          696,
+          699
+        ],
+        "section": "Draft 4 / Block 2 - attach to E16 (Why this matters)"
+      },
+      "claim_text": "broader ruling was a **major downgrade** of the prompt-divergence concern: the lodged\nappendix was byte-accurate at lodgement, all drift is post-lodgement across five commits\n(2026-02-02 to 2026-02-11), four of them erratum'd within 24 hours, and the restructure\nis licensed by E14.",
+      "values": [
+        {
+          "quantity": "count of post-lodgement commits carrying prompt drift",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of those commits erratum'd contemporaneously",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "turnaround window within which four of the five commits were erratum'd",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b057] This document is an errata DRAFT and cites other markdown documents (phase1-gate-package.md, defence-pass-adjudication-2026-07-29.md, protocol-errata.md, decisions-log.md) as its sources for most counts. Rule 2 forbids anchoring prose to prose, so those claims carry method 'anchor-unknown' with the cited document named in notes for triage to chase to an artefact. The exception is registration-spec figures, which follow the v1.1 calibration rule and anchor to the lodged docs/methodology/preregistration/osf/preregistration.md with path null. || Source named by the document: the Phase 1 verification campaign (reports/verification/phase1-gate-package.md § 2 finding 4; reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md F4). The underlying facts live in git history over prompts/system-instructions and in protocol-errata.md dates. Restated at lines 759-762 (E65)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          715,
+          716
+        ],
+        "section": "Draft 4 / Block 3 - attach to E20 (Correction 2026-07-29)"
+      },
+      "claim_text": "this erratum's Rationale closes with \"The 281-tile reserve\nremains unnamed/untouched.\"",
+      "values": [
+        {
+          "quantity": "reserve size in tiles as originally stated in E20 (quoted old value, corrected to 280 at lines 725-727)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Quoted-old-value side of a correction block: E20's '281-tile reserve' is the figure this correction falsifies. Live replacement (280) is extracted separately from lines 725-727."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          716,
+          717
+        ],
+        "section": "Draft 4 / Block 3 - attach to E20 (Correction 2026-07-29)"
+      },
+      "claim_text": "**That statement was falsified 40 days later and was never\namended.** E20 is dated 2026-02-05; E36 is dated 2026-03-17",
+      "values": [
+        {
+          "quantity": "elapsed interval between E20 (2026-02-05) and the E36 corpus expansion (2026-03-17) that falsified it",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged per instrument rule on inclusion: the value is a duration derived from two erratum dates in docs/methodology/preregistration/protocol-errata.md, and dates themselves are out of C4 scope. Included because the interval is asserted as a fact; anchor is prose (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          717,
+          719
+        ],
+        "section": "Draft 4 / Block 3 - attach to E20 (Correction 2026-07-29)"
+      },
+      "claim_text": "E36 is dated 2026-03-17 and records the expansion of\nthe evaluation corpus to 340 tiles — which is the full 360-tile physical corpus minus the\n20 calibration tiles, and therefore absorbs the *entire* reserve.",
+      "values": [
+        {
+          "quantity": "evaluation corpus size after the E36 expansion",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "physical tile corpus size",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles#len:**/*.png",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration tile count",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles/tile_selection_metadata.json#$.calibration.total_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Each value anchored independently (v1.2 amendment 1): the document's 340 = 360 - 20 relation is NOT modelled as arithmetic here, because all three quantities sit in committed artefacts and treating the operands as derived would manufacture the 487-160=327 trap. Cross-file locators per v1.2 amendment 2; the 360 anchor is the PNG count under inputs/tiles, which is the check the document itself cites."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          720,
+          721
+        ],
+        "section": "Draft 4 / Block 3 - attach to E20 (Correction 2026-07-29)"
+      },
+      "claim_text": "reserve was neither unnamed (it is enumerated in\n`inputs/tiles/full_evaluation_manifest.json`, 340 entries)",
+      "values": [
+        {
+          "quantity": "entry count of the full evaluation manifest",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "The document names its own source file here, so the anchor is direct; the manifest is a top-level JSON array, hence len:$."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          725,
+          727
+        ],
+        "section": "Draft 4 / Block 3 - attach to E20 (Secondary correction)"
+      },
+      "claim_text": "E20 says \"281-tile\"; the physical corpus is\n**360** tiles (`find inputs/tiles -name \"*.png\"` → 360), of which 20 are calibration and\n60 validation, leaving a reserve of **280**.",
+      "values": [
+        {
+          "quantity": "reserve size in tiles as stated in E20 (quoted old value)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "physical tile corpus size",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles#len:**/*.png",
+          "method": "read"
+        },
+        {
+          "quantity": "physical tile corpus size, restated as the output of the cited find command",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles#len:**/*.png",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration tile count",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.calibration.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "validation tile count",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected reserve size (physical corpus less calibration and validation tiles)",
+          "value_verbatim": "280",
+          "value_parsed": 280,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b - c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles",
+              "path": "len:**/*.png"
+            },
+            {
+              "name": "b",
+              "file": "inputs/tiles/tile_selection_metadata.json",
+              "path": "$.calibration.total_tiles"
+            },
+            {
+              "name": "c",
+              "file": "inputs/tiles/tile_selection_metadata.json",
+              "path": "$.validation.total_tiles"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span (v1.2 amendments 1 and 3): 281 is the quoted old value (historical), 360/20/60 are read operands each with their own path, and only 280 carries the derivation - the operands must not inherit the arithmetic method or they are compared against their own difference."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          727,
+          729
+        ],
+        "section": "Draft 4 / Block 3 - attach to E20 (Secondary correction)"
+      },
+      "claim_text": "The 281 figure inherits the off-by-one in\n§ 2.1's \"**Total**: 361 tiles\" — see E64 sub-item (ii), which adopts § 8.6's \"~360\" as\nthe operative corpus count.",
+      "values": [
+        {
+          "quantity": "reserve size in tiles as stated in E20 (quoted old value being explained)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total tile count stated at § 2.1 of the lodged preregistration",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "operative corpus count adopted from § 8.6 of the lodged preregistration (approximate as quoted)",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: both figures are claims about what the LODGED preregistration says (§ 2.1 'Total: 361 tiles'; § 8.6 '~360'), so they anchor to the lodged document with path null, never to the executed tile manifests. Approx marker retained in value_verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          741,
+          742
+        ],
+        "section": "Draft 5 - queue item 5: small errata (Drafting note)"
+      },
+      "claim_text": "**Drafting note (house style)**: drafted as **three short entries** rather than one\n> entry with three sub-items.",
+      "values": [
+        {
+          "quantity": "count of separate errata entries this draft supplies (E65, E66, E67)",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count over this draft's own structure; no external artefact decides it. The same count recurs at line 742 ('The three items') and line 746 ('the three bodies below'), not extracted separately as restatements within one drafting note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          749,
+          749
+        ],
+        "section": "E65 (heading)"
+      },
+      "claim_text": "the one prompt-divergence commit with no contemporaneous erratum",
+      "values": [
+        {
+          "quantity": "count of post-lodgement prompt-divergence commits lacking a contemporaneous erratum",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged: 'the one' asserts a count of exactly one, the complement of the 'four of five erratum'd' figures at lines 697-698 and 759-762. Source is the Phase 1 verification campaign (prose) plus git history."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          759,
+          762
+        ],
+        "section": "E65 (Description)"
+      },
+      "claim_text": "**Description**: the Phase 1 verification campaign established that the lodged prompt\nappendix was byte-accurate at lodgement and that all subsequent divergence occurred in\nfive post-lodgement commits between 2026-02-02 and 2026-02-11, **four of which were\nerratum'd within 24 hours**.",
+      "values": [
+        {
+          "quantity": "count of post-lodgement commits carrying prompt drift",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of those commits erratum'd contemporaneously",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "turnaround window within which four of the five commits were erratum'd",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restatement of the lines 696-699 counts inside E65's own description. Source named by the document: reports/verification/phase1-gate-package.md (prose, rule 2); underlying facts in git history over prompts/system-instructions."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          762,
+          764
+        ],
+        "section": "E65 (Description)"
+      },
+      "claim_text": "Commit `5e7601d77` (2026-02-03, \"feat(prompts): Update\ntwo-stage prompts per Opus review\") is the fifth, and carries no contemporaneous\nerratum.",
+      "values": [
+        {
+          "quantity": "ordinal position of commit 5e7601d77 among the five post-lodgement prompt-divergence commits",
+          "value_verbatim": "fifth",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged: an ordinal rather than a magnitude, but it asserts membership and position in the five-commit set. Same prose source as the counts above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          784,
+          785
+        ],
+        "section": "E65 (What changed in verify_brief.md)"
+      },
+      "claim_text": "The same commit made two smaller edits to `propose_brief.md` (occlusion language,\ncentre-pointing sentence);",
+      "values": [
+        {
+          "quantity": "count of edits commit 5e7601d77 made to propose_brief.md",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "edits",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Git-diff fact. prompts/system-instructions/propose_brief.md exists in the working tree but records no edit count; verification requires `git show 5e7601d77 -- prompts/system-instructions/propose_brief.md`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          800,
+          801
+        ],
+        "section": "E65 (Protocol impact)"
+      },
+      "claim_text": "the `verify_brief` verifier arm was executed against a prompt that\ndiffers from the lodged appendix text in the four respects above;",
+      "values": [
+        {
+          "quantity": "count of respects in which the executed verify_brief prompt differs from the lodged appendix text",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "differences",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Diff claim between prompts/system-instructions/verify_brief.md and the lodged text at docs/methodology/preregistration/osf/preregistration-appendix-prompts.md (both exist); no single artefact holds the count, and the four respects are the numbered list at lines 770-782 of this draft."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          802,
+          804
+        ],
+        "section": "E65 (Protocol impact)"
+      },
+      "claim_text": "Blast radius is bounded by E39, which found all three verifier strategies\nstatistically indistinguishable at 340-tile scale (adversarial 0.770, checklist 0.769,\nbrief 0.752, all CIs overlapping)",
+      "values": [
+        {
+          "quantity": "count of verifier strategies compared in E39",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "strategies",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation corpus size for the E39 verifier-strategy comparison",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, verify_adversarial arm, E39 verifier-strategy comparison",
+          "value_verbatim": "0.770",
+          "value_parsed": 0.77,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, verify_checklist arm, E39 verifier-strategy comparison",
+          "value_verbatim": "0.769",
+          "value_parsed": 0.769,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, verify_brief arm, E39 verifier-strategy comparison",
+          "value_verbatim": "0.752",
+          "value_parsed": 0.752,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span. The 340-tile scale anchors to the evaluation manifest. The three F1 figures are attributed to E39 in docs/methodology/preregistration/protocol-errata.md (prose, rule 2): I looked in results/conditions-manifest.json for verifier-strategy cells (condition_ids proposer-verifier-384::verified-{adversarial,brief,checklist}-{text,image}, metrics.per_buffer[<m>].f1) and could not determine which family, arm, or buffer these three figures index, so they go to triage rather than to a guessed cell that would manufacture a mismatch. The strategy count 'three' likewise depends on E39's scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          820,
+          821
+        ],
+        "section": "E66 (Description)"
+      },
+      "claim_text": "**Description**: § 8.7.3 of the registration maps hypotheses to scripts, naming\n`run_study.py` in five of six rows",
+      "values": [
+        {
+          "quantity": "count of rows in the registration's hypothesis-to-script table naming run_study.py",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "rows",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total rows in the registration's hypothesis-to-script table",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "rows",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: a claim about what the lodged registration specifies (§ 8.7.3's script mapping, cited by the document at osf/preregistration.md:2027-2032), so it anchors to the lodged document with path null, not to the executed scripts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          830,
+          833
+        ],
+        "section": "E66 (Decision and documentation)"
+      },
+      "claim_text": "which records four structural\nincompatibilities between `run_study.py` and the one-factor-at-a-time (OFAT) YAML\nstructure: hard-coded factorial factor names, a `defaults` versus `fixed` schema\nmismatch, no runs loop, and no `{condition}/run_{K}/` output hierarchy.",
+      "values": [
+        {
+          "quantity": "count of structural incompatibilities between run_study.py and the OFAT YAML structure recorded in Decision 15",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "incompatibilities",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source named by the document is docs/methodology/preregistration/decisions-log.md:671 - a markdown document, so rule 2 forbids anchoring there; triage to chase. The four are enumerated in the same span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          842,
+          843
+        ],
+        "section": "E66 (Precision on what is and is not post-lodgement)"
+      },
+      "claim_text": "- `scripts/run_phase1.py` was **first committed 2026-01-21** (`fa5d53ede`) — ten days\n  **before** lodgement (2026-01-31).",
+      "values": [
+        {
+          "quantity": "interval between the first commit of scripts/run_phase1.py and lodgement",
+          "value_verbatim": "ten",
+          "value_parsed": 10,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged: a duration derived from a git commit date and the lodgement date, both of which are themselves out of C4 scope. Included because the interval is asserted as a fact; verification is a git-log operation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          907,
+          908
+        ],
+        "section": "Consolidated drafting notes for the orchestrator / PI"
+      },
+      "claim_text": "1. **Count discrepancy (E62)**: \"four verifier-parameter levels\" in the brief and gate\n   package; the census and the enumeration both give **five**. Confirm before landing.",
+      "values": [
+        {
+          "quantity": "verifier-parameter level count as stated in the brief and the gate package",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier-parameter level count per the census and the enumeration",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Not a changelog before/after pair: both figures are live in their respective documents and the note asks the PI to adjudicate, so neither is marked historical. The 'four' is attributed to the brief and reports/verification/phase1-gate-package.md (prose, rule 2); the 'five' comes from E62's census earlier in this draft (outside batch b057's line range), whose underlying artefacts would be results/runs-manifest.json and results/run-conditions.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          909,
+          910
+        ],
+        "section": "Consolidated drafting notes for the orchestrator / PI"
+      },
+      "claim_text": "2. **Scope surprise (E62)**: `verifier_thinking_level=medium` sits entirely within\n   `pv-diag-384`, a licensed family — not within the three unlicensed families.",
+      "values": [
+        {
+          "quantity": "count of unlicensed run families in the E62 scope",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "families",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Family census lives in E62 earlier in this draft (outside batch b057's range) and ultimately in results/runs-manifest.json, but 'licensed' vs 'unlicensed' is an adjudication the manifest does not record, so no mechanical anchor. The 384 in pv-diag-384 is excluded as a family name per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          915,
+          916
+        ],
+        "section": "Consolidated drafting notes for the orchestrator / PI"
+      },
+      "claim_text": "4. **Figure to pin (E64 iii)**: gate package says ~21 % non-mound subtypes; my\n   `phase3c` spot-check gives 17.2 %. The draft reports both.",
+      "values": [
+        {
+          "quantity": "non-mound subtype share as stated in the gate package (approximate as quoted)",
+          "value_verbatim": "~21 %",
+          "value_parsed": 21.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "non-mound subtype share from the author's phase3c spot-check",
+          "value_verbatim": "17.2 %",
+          "value_parsed": 17.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approx marker retained per v1.2 amendment 5. The 21 % is attributed to reports/verification/phase1-gate-package.md (prose, rule 2). For the 17.2 % I looked for a phase3c artefact recording mound versus non-mound subtype counts (results/*.json manifests, outputs/**/evaluation.json) and could not identify which spot-check population it covers; triage to chase."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          924,
+          925
+        ],
+        "section": "Consolidated drafting notes for the orchestrator / PI"
+      },
+      "claim_text": "7. **Correction blocks**: all three are drop-in — each specifies the amended heading, the\n   amended `Date` field, and the block text to insert below the field table.",
+      "values": [
+        {
+          "quantity": "count of correction blocks supplied by this draft set",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "blocks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count over this draft's own structure (Blocks 1-3, of which Blocks 2 and 3 fall in batch b057's range); no external artefact decides it."
+    }
+  ]
+}

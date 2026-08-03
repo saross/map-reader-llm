@@ -1,0 +1,3230 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/drafts/errata-drafts-2026-07-29.md",
+    "git_blob": "704b09391c6b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          280,
+          282
+        ],
+        "section": "Draft 3 — E64 drafting note"
+      },
+      "claim_text": "Each of the five sub-items below\n> therefore carries: both conflicting spans verbatim, the operative reading, the\n> reasoning, and the post-facto acknowledgement.",
+      "values": [
+        {
+          "quantity": "count of sub-items carried by erratum E64",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "sub-items",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b056] Batch covers lines 274-647 of the errata draft. Scope decisions applied throughout, per instrument rule 5: dates, commit hashes, session numbers, erratum/observation/hypothesis identifiers (E15, E36, E64, Obs 155, H9, H11), section numbers (§ 8.6, § 3.1), and line-number citations (`:815`, `:1443`) are NOT extracted. Structural or self-referential counts of the document's own sub-items ARE extracted and flagged, since they double as counts of contradictions in the lodged registration. Purely illustrative counts in argument prose (lines 461 'split into two clusters', 465 'two neighbouring clauses') are rhetorical, not checkable claims, and are not extracted. Self-referential count: checkable by counting the (i)-(v) sub-items in this document; no external artefact records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          284,
+          284
+        ],
+        "section": "Draft 3 — E64 heading and field table"
+      },
+      "claim_text": "### E64: Five internal contradictions in the lodged registration — operative readings adopted, reasoning stated, post-facto status acknowledged",
+      "values": [
+        {
+          "quantity": "count of internal contradictions catalogued in the lodged registration",
+          "value_verbatim": "Five",
+          "value_parsed": 5,
+          "unit": "contradictions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No artefact enumerates the contradictions; the count is a synthesis over the lodged preregistration, summarised in this document's own table at lines 311-317 and cross-referenced to reports/verification/phase1-gate-package.md (prose — instrument rule 2 forbids anchoring prose to prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          289,
+          289
+        ],
+        "section": "Draft 3 — E64 heading and field table"
+      },
+      "claim_text": "| Type | Clarification (five reconciliations; no registered procedure altered) |",
+      "values": [
+        {
+          "quantity": "count of reconciliations filed under erratum E64",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "reconciliations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same count as the E64 heading; checkable against the five (i)-(v) sub-items in this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          292,
+          292
+        ],
+        "section": "Draft 3 — E64 heading and field table"
+      },
+      "claim_text": "| Impact | None on executed procedure — in every case the execution followed one of the lodged readings. Impact is on interpretation and on the paper's Methods: five parameters are specified two or three ways in the lodged text, and this entry fixes which reading governs |",
+      "values": [
+        {
+          "quantity": "count of registration parameters specified more than one way",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "parameters",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "lower bound on the number of lodged readings per contradicted parameter",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "readings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound on the number of lodged readings per contradicted parameter",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "readings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counts synthesised over the lodged preregistration; no artefact records them. 'two or three ways' split into two values because the phrase is a range."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          294,
+          297
+        ],
+        "section": "Draft 3 — E64 'Why one entry'"
+      },
+      "claim_text": "**Why one entry**: the Phase 1 verification campaign's meta-finding is that the single\nmost recurrent root cause across its twelve headline findings is **internal\ninconsistency within the lodged registration itself** — the same parameter specified two\nor three ways, with execution following one of them",
+      "values": [
+        {
+          "quantity": "count of headline findings in the Phase 1 verification campaign",
+          "value_verbatim": "twelve",
+          "value_parsed": 12,
+          "unit": "findings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "lower bound on the number of lodged readings per contradicted parameter",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "readings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound on the number of lodged readings per contradicted parameter",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "readings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source named by the document is reports/verification/phase1-gate-package.md and reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md — both prose, so instrument rule 2 applies: named, not anchored. The finding identifiers '1, 2, 6, 7, 8, 11' are identifiers (out of scope) rather than a count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          299,
+          299
+        ],
+        "section": "Draft 3 — E64 'Why one entry'"
+      },
+      "claim_text": "Filing five separate errata would obscure the pattern.",
+      "values": [
+        {
+          "quantity": "count of separate errata that would otherwise have been filed",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "errata",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counterfactual/structural count of the five reconciliations; same underlying five sub-items."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          302,
+          303
+        ],
+        "section": "Draft 3 — E64 heading and field table"
+      },
+      "claim_text": "**Standing acknowledgement, applying to all five**: each operative reading below was\nadopted in **July 2026, with the results in hand**.",
+      "values": [
+        {
+          "quantity": "count of operative readings covered by the standing acknowledgement",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "readings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Anaphoric reference to the same five sub-items."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          313,
+          313
+        ],
+        "section": "Draft 3 — E64 summary table"
+      },
+      "claim_text": "| i | Hard-example mining K and filter | `:815` — K=10 baseline runs, any-run candidacy | `:1443` — 5 passes; `:1450-1451` — ≥3/5 filter | **The executed procedure**: K=5 passes, any-run HP candidacy (reading A's rule), ≥3-of-5 HN filter (reading B's rule) |",
+      "values": [
+        {
+          "quantity": "hard-example mining pass count, lodged reading A (§ H8 availability constraint)",
+          "value_verbatim": "K=10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "§ H8 availability constraint (:815)",
+          "method": null
+        },
+        {
+          "quantity": "hard-example mining pass count, lodged reading B (§ 8.4.1 step 1)",
+          "value_verbatim": "5 passes",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "§ 8.4.1 step 1 (:1443)",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative candidacy filter, lodged reading B (§ 8.4.1 step 2)",
+          "value_verbatim": "≥3/5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "§ 8.4.1 step 2 (:1450-1451)",
+          "method": null
+        },
+        {
+          "quantity": "hard-example mining pass count, as executed",
+          "value_verbatim": "K=5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json#$.k_passes",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative candidacy filter, as executed",
+          "value_verbatim": "≥3-of-5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b056] v1.1 calibration rule applied throughout this batch: every value asserted as what the REGISTRATION specifies is anchored to the lodged document (docs/methodology/preregistration/osf/…) with anchor.path null; the document's own section/line locator is carried in the per-value `path` field purely to disambiguate which lodged quantity each value refers to (v1.2 amendment 3), not as a resolvable JSONPath — non-JSON anchors route to triage as expected. Values asserted as what was RUN carry cross-file paths to configs/metas/registers. The executed ≥3-of-5 hard-negative filter is a rule, not a recorded scalar: the register stores only the filtered count (summary.consistent_fp)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          314,
+          314
+        ],
+        "section": "Draft 3 — E64 summary table"
+      },
+      "claim_text": "| ii | Corpus size and reserve | § 2.1 `:78` — 361 total, `:76` — 281 reserve | § 8.6 `:1921` — \"~360 total\"; coverage § 9 `:237` — \"321 available\" | **The 360 physical tiles** (§ 8.6) |",
+      "values": [
+        {
+          "quantity": "total tile corpus size, lodged reading A (§ 2.1)",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 2.1 (:78)",
+          "method": null
+        },
+        {
+          "quantity": "reserve set size, lodged reading A (§ 2.1)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 2.1 (:76)",
+          "method": null
+        },
+        {
+          "quantity": "total tile corpus size, lodged reading B (§ 8.6)",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 8.6 (:1921)",
+          "method": null
+        },
+        {
+          "quantity": "reserve tiles available, lodged reading C (coverage § 9)",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration-coverage.md#§ 9 (:237)",
+          "method": null
+        },
+        {
+          "quantity": "physical tile count on disk, operative reading",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles#len:*.png",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Operative-reading value is a filesystem count of inputs/tiles/*.png (non-JSON anchor; routes to triage per v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          316,
+          316
+        ],
+        "section": "Draft 3 — E64 summary table"
+      },
+      "claim_text": "| iv | Tile overlap at 384 px | H11 `:968` — \"64px overlap\" | H11 `:959` — \"~1.8×\" API-call multiplier | **Constant overlap fraction** — 48 px overlap, stride 336 at 384 px |",
+      "values": [
+        {
+          "quantity": "tile edge length, H11 condition B",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "§ H11 condition table (:959)",
+          "method": null
+        },
+        {
+          "quantity": "tile overlap, lodged reading A (§ H11 implementation)",
+          "value_verbatim": "64px",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": "§ H11 implementation (:968)",
+          "method": null
+        },
+        {
+          "quantity": "API-call multiplier for the 384 px condition, lodged reading B",
+          "value_verbatim": "~1.8×",
+          "value_parsed": 1.8,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "§ H11 condition table (:959)",
+          "method": null
+        },
+        {
+          "quantity": "tile overlap at 384 px, operative reading",
+          "value_verbatim": "48 px",
+          "value_parsed": 48,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/evaluate_detections.py#stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "tile stride at 384 px, operative reading",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/evaluate_detections.py#stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "tile edge length at which the operative stride applies",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/build_example_pool.py#384px stride comment",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span: registration-side values anchor to the lodged document, executed-side values to the analysis scripts the document names at lines 509-510. '384 px' is borderline between a condition name and an asserted tile size (instrument rule 5); extracted because the row asserts the stride/overlap that holds AT that tile size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          317,
+          317
+        ],
+        "section": "Draft 3 — E64 summary table"
+      },
+      "claim_text": "| v | Test tailedness | § 3.1 `:269` — one-tailed for directional predictions | H1 `:442` — two-tailed for modality; § 3.6 `:300` — power computed two-tailed | **Two-sided throughout** |",
+      "values": [
+        {
+          "quantity": "test tailedness for directional predictions, lodged reading A (§ 3.1)",
+          "value_verbatim": "one-tailed",
+          "value_parsed": 1,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ 3.1 (:269)",
+          "method": null
+        },
+        {
+          "quantity": "test tailedness for modality comparisons, lodged reading B (H1)",
+          "value_verbatim": "two-tailed",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ H1 analysis (:442)",
+          "method": null
+        },
+        {
+          "quantity": "test tailedness assumed by the lodged power calculation (§ 3.6)",
+          "value_verbatim": "two-tailed",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ 3.6 (:300)",
+          "method": null
+        },
+        {
+          "quantity": "test tailedness, operative reading adopted",
+          "value_verbatim": "Two-sided",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tailedness is a word-form parameter; value_parsed normalised to the number of tails. The operative reading is a policy adoption made in this document — no committed artefact records the tailedness of the executed tests, so it is flagged anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          325,
+          327
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "> \"The training set contains 36 mounds across 20 tiles. Hard examples are drawn from\n> failures across K=10 baseline runs (a mound missed in any run is a candidate HP; any\n> false detection is a candidate HN).\"",
+      "values": [
+        {
+          "quantity": "training-set mound count, lodged § H8",
+          "value_verbatim": "36",
+          "value_parsed": 36,
+          "unit": "mounds",
+          "kind": "count",
+          "path": "§ H8 availability constraint (:815)",
+          "method": null
+        },
+        {
+          "quantity": "training-set tile count, lodged § H8",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ H8 availability constraint (:815)",
+          "method": null
+        },
+        {
+          "quantity": "hard-example mining pass count, lodged § H8",
+          "value_verbatim": "K=10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "§ H8 availability constraint (:815)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration (reading A); v1.1 calibration rule — anchored to the lodged document, not to any executed config."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          331,
+          331
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "> \"- Passes: 5 × 20 training tiles = 100 API calls\"",
+      "values": [
+        {
+          "quantity": "hard-example mining pass count, lodged § 8.4.1 step 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "§ 8.4.1 step 1 (:1443)",
+          "method": null
+        },
+        {
+          "quantity": "training tile count, lodged § 8.4.1 step 1",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 8.4.1 step 1 (:1443)",
+          "method": null
+        },
+        {
+          "quantity": "API calls for hard-example mining, lodged § 8.4.1 step 1",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "API calls",
+          "kind": "count",
+          "path": "§ 8.4.1 step 1 (:1443)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration (reading B). The quote carries its own arithmetic identity 5 × 20 = 100; all three values recorded as reads against the lodged text rather than letting the operands inherit an arithmetic method (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          335,
+          335
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "> \"- **False Negatives (FNs)**: Ground truth mounds missed in ≥3/5 passes\"",
+      "values": [
+        {
+          "quantity": "false-negative candidacy filter, lodged § 8.4.1 step 2",
+          "value_verbatim": "≥3/5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ 8.4.1 step 2 (:1450)"
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule. value_parsed null — the value is a ratio-form threshold, not a scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          337,
+          337
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "> \"- **False Positives (FPs)**: Detections in ≥3/5 passes with no matching ground truth\"",
+      "values": [
+        {
+          "quantity": "false-positive candidacy filter, lodged § 8.4.1 step 2",
+          "value_verbatim": "≥3/5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ 8.4.1 step 2 (:1451)"
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          339,
+          340
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "The two passages contradict each other twice over: K=10 versus five passes, and\n*any-run* candidacy versus a *≥3-of-5* majority filter. Both are lodged.",
+      "values": [
+        {
+          "quantity": "count of contradictions between the two lodged passages",
+          "value_verbatim": "twice",
+          "value_parsed": 2,
+          "unit": "contradictions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "hard-example mining pass count, lodged reading A",
+          "value_verbatim": "K=10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "§ H8 availability constraint (:815)",
+          "method": null
+        },
+        {
+          "quantity": "hard-example mining pass count, lodged reading B",
+          "value_verbatim": "five passes",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "§ 8.4.1 step 1 (:1443)",
+          "method": null
+        },
+        {
+          "quantity": "candidacy filter, lodged reading B",
+          "value_verbatim": "≥3-of-5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "§ 8.4.1 step 2 (:1450-1451)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'twice over' is a structural count of the contradictions the document identifies, not an artefact-backed figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          342,
+          343
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "**Operative reading**: the executed procedure — **K=5 passes; hard positives by the\nany-run rule of reading A; hard negatives by the ≥3-of-5 filter of reading B.**",
+      "values": [
+        {
+          "quantity": "hard-example mining pass count, as executed",
+          "value_verbatim": "K=5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.k_passes",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative candidacy filter, as executed",
+          "value_verbatim": "≥3-of-5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The executed ≥3-of-5 filter is a rule applied during register construction; the register records only its output (summary.consistent_fp), so the rule itself is flagged anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          343,
+          349
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "This is\nverifiable in the artefact: `outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json`\nrecords `k_passes: 5`, and its summary block reconciles exactly —\n`borderline_tp: 82` (missed in at least one of five passes) + `consistent_fn: 26`\n(missed in all five) = `hp_candidates: 108`, the any-run count; while\n`consistent_fp: 57` = `hn_candidates: 57`, the majority-filtered count, out of\n`total_fp_clusters: 720`.",
+      "values": [
+        {
+          "quantity": "hard-example mining pass count, as executed",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.k_passes",
+          "method": null
+        },
+        {
+          "quantity": "borderline true positives (mounds missed in at least one pass), pool_160 hard-case register",
+          "value_verbatim": "82",
+          "value_parsed": 82,
+          "unit": "mounds",
+          "kind": "count",
+          "path": "$.summary.borderline_tp",
+          "method": null
+        },
+        {
+          "quantity": "any-run hard-positive candidacy threshold (missed in at least one pass)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "hard-example mining pass count, as executed",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.k_passes",
+          "method": null
+        },
+        {
+          "quantity": "consistent false negatives (mounds missed in all passes), pool_160 hard-case register",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": "mounds",
+          "kind": "count",
+          "path": "$.summary.consistent_fn",
+          "method": null
+        },
+        {
+          "quantity": "hard-example mining pass count, as executed",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.k_passes",
+          "method": null
+        },
+        {
+          "quantity": "hard-positive candidates, pool_160 hard-case register",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.summary.hp_candidates",
+          "method": null
+        },
+        {
+          "quantity": "consistent false positives, pool_160 hard-case register",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": "clusters",
+          "kind": "count",
+          "path": "$.summary.consistent_fp",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative candidates, pool_160 hard-case register",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.summary.hn_candidates",
+          "method": null
+        },
+        {
+          "quantity": "total false-positive clusters, pool_160 hard-case register",
+          "value_verbatim": "720",
+          "value_parsed": 720,
+          "unit": "clusters",
+          "kind": "count",
+          "path": "$.summary.total_fp_clusters",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span asserts the identity borderline_tp + consistent_fn = hp_candidates (82 + 26 = 108) and consistent_fp = hn_candidates (57 = 57). Per v1.2 amendment 1 the operands are NOT given an arithmetic method — each value is read at its own path, because the document states that the register records each figure directly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          355,
+          357
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "documented at the same line\n815 (\"If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly\nScale-16) will be capped at the maximum available\")",
+      "values": [
+        {
+          "quantity": "minimum distinct hard positives or hard negatives required before capping, lodged § H8",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "examples",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ H8 availability constraint (:815)"
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule. 'Scale-32' and 'Scale-16' are condition names (instrument rule 5), not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          358,
+          359
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "a ≥3-of-5 filter on FNs would have deepened an exhaustion the registration already\nanticipated.",
+      "values": [
+        {
+          "quantity": "counterfactual false-negative filter (lodged reading B applied to FNs)",
+          "value_verbatim": "≥3-of-5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ 8.4.1 step 2 (:1450-1451)"
+      },
+      "method": "read",
+      "notes": "Restates the lodged reading-B filter in a counterfactual argument; same lodged value as claims at lines 335 and 337."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          359,
+          360
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "The HN rule follows reading B because false-positive clusters were\nabundant (720 candidates), so the stricter filter costs nothing and buys quality.",
+      "values": [
+        {
+          "quantity": "false-positive cluster candidates available for hard-negative selection",
+          "value_verbatim": "720",
+          "value_parsed": 720,
+          "unit": "clusters",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json",
+        "path": "$.summary.total_fp_clusters"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          361,
+          362
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "spirit of the campaign — build the strongest available hard-example library under a\n1:1 ratio constraint — selects each rule on the side where it binds.",
+      "values": [
+        {
+          "quantity": "hard-positive to hard-negative ratio constraint on the hard-example library",
+          "value_verbatim": "1:1",
+          "value_parsed": null,
+          "unit": "HP:HN",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ H8 / § 8.4.1 hard-example library"
+      },
+      "method": "read",
+      "notes": "Registration-spec design constraint; v1.1 calibration rule — anchored to the lodged document. value_parsed null (ratio form)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          364,
+          366
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "**Prior treatment and residue**: E15 already corrects the *appendix's* stale \"≥3/10\"\nreferences to ≥3/5 and records \"Phase 1 was executed with K=5 passes as specified by the\noperative procedure\".",
+      "values": [
+        {
+          "quantity": "stale candidacy filter in the preregistration appendix, corrected by E15",
+          "value_verbatim": "≥3/10",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "corrected candidacy filter in the preregistration appendix",
+          "value_verbatim": "≥3/5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "hard-example filter clause",
+          "method": null
+        },
+        {
+          "quantity": "hard-example mining pass count, as executed in Phase 1",
+          "value_verbatim": "K=5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json#$.k_passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Correction block: '≥3/10' is the quoted-old-value side (instrument rule 3, historical); '≥3/5' is the live corrected value in the appendix. The correcting document (protocol-errata.md, E15) is prose, so the anchor is the appendix it corrects, not the erratum."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          367,
+          367
+        ],
+        "section": "Draft 3 — E64 (i) Hard-example mining: K and the candidacy filter"
+      },
+      "claim_text": "E15, E49, and E51 license the K=5 substance downstream.",
+      "values": [
+        {
+          "quantity": "hard-example mining pass count licensed downstream by E15/E49/E51",
+          "value_verbatim": "K=5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json",
+        "path": "$.k_passes"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          378,
+          378
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "> \"| Reserve set | 281 | Confirmatory testing | **Untouched** |\"",
+      "values": [
+        {
+          "quantity": "reserve set size, lodged § 2.1 corpus table",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ 2.1 Map Tile Corpus (:76)"
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          382,
+          383
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "> \"**Total**: 361 tiles from 4 annotated Soviet topographic map sheets. Maps were\n> hand-annotated by students with comprehensive expert review.\"",
+      "values": [
+        {
+          "quantity": "total tile corpus size, lodged § 2.1",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 2.1 (:78)",
+          "method": null
+        },
+        {
+          "quantity": "annotated Soviet topographic map sheets, lodged § 2.1",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": "§ 2.1 (:78)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          388,
+          388
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "> \"- **Tiles**: 512×512 pixel tiles at native resolution (~90 tiles per map, ~360 total)\"",
+      "values": [
+        {
+          "quantity": "tile dimensions, lodged § 8.6",
+          "value_verbatim": "512×512",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": "§ 8.6 (:1921)",
+          "method": null
+        },
+        {
+          "quantity": "tiles per map sheet, lodged § 8.6",
+          "value_verbatim": "~90",
+          "value_parsed": 90,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 8.6 (:1921)",
+          "method": null
+        },
+        {
+          "quantity": "total tile corpus size, lodged § 8.6",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 8.6 (:1921)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule. Approx markers retained verbatim (v1.2 amendment 5). value_parsed null for the 512×512 pair."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          393,
+          393
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "> \"2. Use **80-160 reserve tiles** (from 321 available)\"",
+      "values": [
+        {
+          "quantity": "minimum reserve tiles to use, lodged coverage § 9",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 9 Stage 2 design principles (:237)",
+          "method": null
+        },
+        {
+          "quantity": "maximum reserve tiles to use, lodged coverage § 9",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 9 Stage 2 design principles (:237)",
+          "method": null
+        },
+        {
+          "quantity": "reserve tiles available, lodged coverage § 9",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 9 Stage 2 design principles (:237)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-coverage.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged coverage document; v1.1 calibration rule. Range endpoints split into two values with a shared unit (v1.2 amendment 6). The leading '2.' is a list marker, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          395,
+          396
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "Three figures for one corpus: 361 total with a 281-tile reserve; ~360 total; and a\n321-tile reserve.",
+      "values": [
+        {
+          "quantity": "count of distinct corpus figures lodged across the registration",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": "figures",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total tile corpus size, lodged § 2.1",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 2.1 (:78)",
+          "method": null
+        },
+        {
+          "quantity": "reserve set size, lodged § 2.1",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 2.1 (:76)",
+          "method": null
+        },
+        {
+          "quantity": "total tile corpus size, lodged § 8.6",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 8.6 (:1921)",
+          "method": null
+        },
+        {
+          "quantity": "reserve tiles available, lodged coverage § 9",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration-coverage.md#§ 9 (:237)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          398,
+          399
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "**Operative reading**: **the 360 physical tiles.** `find inputs/tiles -name \"*.png\"`\nreturns **360**;",
+      "values": [
+        {
+          "quantity": "physical tile count on disk (inputs/tiles PNG files)",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:*.png",
+          "method": null
+        },
+        {
+          "quantity": "physical tile count returned by find inputs/tiles -name '*.png'",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:*.png",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Filesystem count rather than a JSON scalar; the harness routes non-JSON anchors to triage (v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          399,
+          401
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "`inputs/tiles/full_evaluation_manifest.json` contains **340** entries\n(= 360 − 20 calibration tiles); `inputs/tiles/calibration_manifest.json` contains 20 and\n`inputs/tiles/validation_manifest.json` contains 60.",
+      "values": [
+        {
+          "quantity": "entries in the full evaluation manifest",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        },
+        {
+          "quantity": "physical tile count on disk, as the derivation's first operand",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles#len:*.png",
+          "method": null
+        },
+        {
+          "quantity": "calibration tiles subtracted in the derivation",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles/calibration_manifest.json#len:$",
+          "method": null
+        },
+        {
+          "quantity": "entries in the calibration manifest",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles/calibration_manifest.json#len:$",
+          "method": null
+        },
+        {
+          "quantity": "entries in the validation manifest",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span asserts the identity 340 = 360 − 20; per v1.2 amendment 1 the operands keep method 'read' at their own paths rather than inheriting an arithmetic method, and 340 is read directly because the document states the manifest contains it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          401,
+          402
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "The reserve is therefore\n360 − 20 − 60 = **280**, not 281 and not 321.",
+      "values": [
+        {
+          "quantity": "physical tile count on disk",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles#len:*.png",
+          "method": null
+        },
+        {
+          "quantity": "entries in the calibration manifest",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles/calibration_manifest.json#len:$",
+          "method": null
+        },
+        {
+          "quantity": "entries in the validation manifest",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": null
+        },
+        {
+          "quantity": "reserve set size implied by the physical corpus",
+          "value_verbatim": "280",
+          "value_parsed": 280,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b - c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles",
+              "path": "len:*.png"
+            },
+            {
+              "name": "b",
+              "file": "inputs/tiles/calibration_manifest.json",
+              "path": "len:$"
+            },
+            {
+              "name": "c",
+              "file": "inputs/tiles/validation_manifest.json",
+              "path": "len:$"
+            }
+          ]
+        },
+        {
+          "quantity": "reserve set size, lodged § 2.1 (rejected by the operative reading)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ 2.1 (:76)",
+          "method": null
+        },
+        {
+          "quantity": "reserve tiles available, lodged coverage § 9 (rejected by the operative reading)",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration-coverage.md#§ 9 (:237)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Single derived value (280) carries its own expression and operands (schema 1.1); the three operands stay method 'read' so they are not compared against their own difference (v1.2 amendment 1). 281 and 321 are the lodged figures the document rejects — still live registration-spec claims, anchored to the lodged documents per the v1.1 calibration rule, not marked historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          402,
+          404
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "§ 8.6's \"~360\" is the accurate statement;\n§ 2.1's 361 is off by one and its 281 inherits that off-by-one; coverage § 9's 321 is\nreconcilable with neither and appears to be a residue of an earlier tile-selection draft.",
+      "values": [
+        {
+          "quantity": "total tile corpus size, lodged § 8.6 (accepted)",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ 8.6 (:1921)",
+          "method": null
+        },
+        {
+          "quantity": "total tile corpus size, lodged § 2.1 (asserted to be wrong)",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ 2.1 (:78)",
+          "method": null
+        },
+        {
+          "quantity": "magnitude of the § 2.1 corpus-count error",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "reserve set size, lodged § 2.1 (asserted to inherit the error)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ 2.1 (:76)",
+          "method": null
+        },
+        {
+          "quantity": "reserve tiles available, lodged coverage § 9",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration-coverage.md#§ 9 (:237)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'off by one' asserts the difference between the lodged § 2.1 total (361) and the physical count (360); its operands are a lodged-markdown figure and a filesystem count, neither mechanically resolvable, so it is flagged anchor-unknown rather than dressed up as arithmetic."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          406,
+          408
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "**Reasoning**: § 8.6 is the methodology section that generated the tiles, and it is the\nonly one of the three that matches the artefacts on disk. The 361st tile never existed —\nrepository history contains no deletion of a tile file.",
+      "values": [
+        {
+          "quantity": "count of lodged corpus figures compared against the artefacts",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "figures",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "ordinal of the tile asserted never to have existed",
+          "value_verbatim": "361st",
+          "value_parsed": 361,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'The 361st tile never existed' is an existence claim about the corpus, checkable only as the absence of a 361st PNG in inputs/tiles plus the absence of a deletion in repository history — no single artefact decides it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          414,
+          415
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "E36 (2026-03-17) expanded the evaluation corpus to 340 tiles, which\nabsorbs the entire reserve.",
+      "values": [
+        {
+          "quantity": "evaluation corpus size after the E36 expansion",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          415,
+          417
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "a dated correction block\nattached to **E20** (Draft 4, block 3 below) records that E20's \"The 281-tile reserve\nremains unnamed/untouched\" was falsified by that expansion.",
+      "values": [
+        {
+          "quantity": "reserve set size asserted untouched in E20 (falsified quoted claim)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Quoted-old-value side of a correction block (instrument rule 3): E20's '281-tile reserve remains unnamed/untouched' is recorded as falsified by the E36 expansion."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          419,
+          420
+        ],
+        "section": "Draft 3 — E64 (ii) Corpus size and the reserve set"
+      },
+      "claim_text": "The 340-tile corpus has been the production\nevaluation set since March 2026.",
+      "values": [
+        {
+          "quantity": "production evaluation corpus size",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          429,
+          430
+        ],
+        "section": "Draft 3 — E64 (iii) The voting step-4 label clause"
+      },
+      "claim_text": "> \"   - Greedy clustering: for each unclustered detection, find all others within 20m\n> and matching label; group as cluster\"",
+      "values": [
+        {
+          "quantity": "greedy clustering distance threshold, lodged § 8.5 step 4",
+          "value_verbatim": "20m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ 8.5 spatial clustering algorithm, step 4 (:1882)"
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          440,
+          441
+        ],
+        "section": "Draft 3 — E64 (iii) The voting step-4 label clause"
+      },
+      "claim_text": "> \"The 20m clustering threshold deliberately matches the spatial tolerance used in F1\n> calculation (Section 4.1.1). This ensures that:",
+      "values": [
+        {
+          "quantity": "clustering threshold aligned with the F1 spatial tolerance, lodged § 8.5",
+          "value_verbatim": "20m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ 8.5 alignment clause (:1898-1901)"
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          447,
+          449
+        ],
+        "section": "Draft 3 — E64 (iii) The voting step-4 label clause"
+      },
+      "claim_text": "and § 4.1.2's matching algorithm, which is purely spatial — steps 1–7 at\n`osf/preregistration.md:362-368` compute pairwise centroid distances, threshold them at\n20 m, and run the Hungarian assignment,",
+      "values": [
+        {
+          "quantity": "number of steps in the lodged § 4.1.2 matching algorithm",
+          "value_verbatim": "1–7",
+          "value_parsed": null,
+          "unit": "steps",
+          "kind": "count",
+          "path": "§ 4.1.2 (:362-368)",
+          "method": null
+        },
+        {
+          "quantity": "spatial matching tolerance, lodged § 4.1.2",
+          "value_verbatim": "20 m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "§ 4.1.2 (:362-368)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "value_parsed null for the step range '1–7' (seven steps, expressed as a range)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          467,
+          468
+        ],
+        "section": "Draft 3 — E64 (iii) The voting step-4 label clause"
+      },
+      "claim_text": "**Materiality, bounded**: the difference only bites where two detections within 20 m\ncarry different subtypes.",
+      "values": [
+        {
+          "quantity": "co-location distance within which the label clause would bite",
+          "value_verbatim": "20 m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": "spatial matching tolerance"
+      },
+      "method": "read",
+      "notes": "Claim about the executed pipeline rather than the lodged text, so anchored to the analysis script rather than the preregistration. The argument prose in this sub-item also contains illustrative counts ('two clusters', line 461; 'two neighbouring clauses', line 465) which are rhetorical, not checkable claims, and are not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          468,
+          471
+        ],
+        "section": "Draft 3 — E64 (iii) The voting step-4 label clause"
+      },
+      "claim_text": "a spot-check of the\n`phase3c` track-1 H9-A run-1 pool (4 954 detections) gives 82.8 % `burial_mound`,\n10.1 % `benchmark_mound`, 6.4 % `triangulation_mound`, 0.7 % `settlement_mound` —\ni.e. ~17 % non-`burial_mound`, and the defence pass records ~21 % on its pool.",
+      "values": [
+        {
+          "quantity": "detections in the phase3c track-1 H9-A run-1 pool",
+          "value_verbatim": "4 954",
+          "value_parsed": 4954,
+          "unit": "detections",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        },
+        {
+          "quantity": "share of detections labelled burial_mound, phase3c track-1 H9-A run-1 pool",
+          "value_verbatim": "82.8 %",
+          "value_parsed": 82.8,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "share of detections labelled benchmark_mound, same pool",
+          "value_verbatim": "10.1 %",
+          "value_parsed": 10.1,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "share of detections labelled triangulation_mound, same pool",
+          "value_verbatim": "6.4 %",
+          "value_parsed": 6.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "share of detections labelled settlement_mound, same pool",
+          "value_verbatim": "0.7 %",
+          "value_parsed": 0.7,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "share of detections not labelled burial_mound, same pool",
+          "value_verbatim": "~17 %",
+          "value_parsed": 17.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "share of non-burial_mound subtypes recorded by the defence pass on its own pool",
+          "value_verbatim": "~21 %",
+          "value_parsed": 21.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b056] Anchor identified by name only (instrument rules 2 and 4): 'phase3c track-1 H9-A run-1 pool' resolves to outputs/retest/phase3c/track1-image/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson — confirmed to exist; the feature count was NOT read (no verification at extraction). The subtype shares require a tally over the pool's feature properties, hence recompute-script. The ~21 % figure comes from reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md / the gate package (prose), so it is flagged anchor-unknown per rule 2. Approx markers kept verbatim (v1.2 amendment 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          472,
+          474
+        ],
+        "section": "Draft 3 — E64 (iii) The voting step-4 label clause"
+      },
+      "claim_text": "materiality bound is therefore of order one detection in five *at most*, and lower in\npractice since co-located differing-subtype pairs are rarer than differing subtypes\noverall.",
+      "values": [
+        {
+          "quantity": "upper bound on the materiality of the label clause, as a share of detections",
+          "value_verbatim": "one detection in five",
+          "value_parsed": 0.2,
+          "unit": "detections",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "An order-of-magnitude bound derived from the subtype shares; requires the same tally over the pool."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          476,
+          477
+        ],
+        "section": "Draft 3 — E64 (iii) The voting step-4 label clause"
+      },
+      "claim_text": "> **Drafting note**: the gate package § 2 finding 8 states \"~21 % non-mound subtypes\".\n> My independent spot-check on a `phase3c` pool gives 17.2 %.",
+      "values": [
+        {
+          "quantity": "share of non-mound subtypes stated by the Phase 1 gate package",
+          "value_verbatim": "~21 %",
+          "value_parsed": 21.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "share of non-burial_mound subtypes from the drafter's independent spot-check on a phase3c pool",
+          "value_verbatim": "17.2 %",
+          "value_parsed": 17.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The ~21 % figure is sourced to reports/verification/phase1-gate-package.md § 2 finding 8 (prose — rule 2: named, not anchored). The spot-check pool is described only as 'a phase3c pool'; the nearest identified pool is the H9-A run-1 geojson used in the preceding paragraph, which reports '~17 %' — the two figures may or may not come from the same pool. Flagged for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          490,
+          490
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "> \"- Tiles generated from source maps with 64px overlap\"",
+      "values": [
+        {
+          "quantity": "tile overlap, lodged § H11 implementation",
+          "value_verbatim": "64px",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ H11 implementation (:968)"
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          494,
+          494
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "> \"| B | 384×384 | 0.56× | ~1.8× | Higher |\"",
+      "values": [
+        {
+          "quantity": "tile dimensions for H11 condition B, lodged § H11 condition table",
+          "value_verbatim": "384×384",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": "§ H11 (:959)",
+          "method": null
+        },
+        {
+          "quantity": "tile-area multiplier for H11 condition B, lodged § H11 condition table",
+          "value_verbatim": "0.56×",
+          "value_parsed": 0.56,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "§ H11 (:959)",
+          "method": null
+        },
+        {
+          "quantity": "API-call multiplier for H11 condition B, lodged § H11 condition table",
+          "value_verbatim": "~1.8×",
+          "value_parsed": 1.8,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "§ H11 (:959)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; 'B' is a condition label, not a claim. value_parsed null for the 384×384 pair."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          496,
+          497
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "**Operative reading**: **constant overlap fraction — 48 px overlap, stride 336, at\n384 px.**",
+      "values": [
+        {
+          "quantity": "tile overlap at 384 px, operative reading",
+          "value_verbatim": "48 px",
+          "value_parsed": 48,
+          "unit": "px",
+          "kind": "physical",
+          "path": "stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "tile stride at 384 px, operative reading",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "tile edge length for the operative stride/overlap",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/build_example_pool.py#384px stride comment",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Executed parameters; the document names scripts/evaluate_detections.py and scripts/build_example_pool.py as the hard-coded sources at lines 509-510."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          499,
+          500
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "At the 512 px\nbaseline (§ 8.6 `:1921`), a 64 px overlap gives stride 448.",
+      "values": [
+        {
+          "quantity": "baseline tile edge length, lodged § 8.6",
+          "value_verbatim": "512 px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "§ 8.6 (:1921)",
+          "method": null
+        },
+        {
+          "quantity": "tile overlap, lodged § H11 implementation",
+          "value_verbatim": "64 px",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": "§ H11 implementation (:968)",
+          "method": null
+        },
+        {
+          "quantity": "baseline tile stride implied by the lodged tile size and overlap",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "docs/methodology/preregistration/osf/preregistration.md",
+              "path": "§ 8.6 (:1921)"
+            },
+            {
+              "name": "b",
+              "file": "docs/methodology/preregistration/osf/preregistration.md",
+              "path": "§ H11 implementation (:968)"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "448 is derived in-text as 512 − 64; its operands live only in the lodged markdown, so the arithmetic will route to triage rather than resolving mechanically (v1.1: non-JSON anchors are expected)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          500,
+          501
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "Preserving that overlap\n*fraction* (64/512 = 12.5 %) at 384 px gives overlap 48 and stride 336,",
+      "values": [
+        {
+          "quantity": "tile overlap at the 512 px baseline, numerator of the overlap fraction",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ H11 implementation (:968)",
+          "method": null
+        },
+        {
+          "quantity": "baseline tile edge length, denominator of the overlap fraction",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ 8.6 (:1921)",
+          "method": null
+        },
+        {
+          "quantity": "overlap fraction preserved across tile sizes",
+          "value_verbatim": "12.5 %",
+          "value_parsed": 12.5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "docs/methodology/preregistration/osf/preregistration.md",
+              "path": "§ H11 implementation (:968)"
+            },
+            {
+              "name": "b",
+              "file": "docs/methodology/preregistration/osf/preregistration.md",
+              "path": "§ 8.6 (:1921)"
+            }
+          ]
+        },
+        {
+          "quantity": "tile edge length of the H11 condition B corpus",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ H11 condition table (:959)",
+          "method": null
+        },
+        {
+          "quantity": "tile overlap at 384 px, as executed",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/evaluate_detections.py#stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "tile stride at 384 px, as executed",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/evaluate_detections.py#stride/overlap comment",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span: lodged values anchor to the preregistration, executed values to the analysis script. Only the overlap fraction is treated as derived; 48 and 336 are read from the pipeline because the document states they are hard-coded there (lines 509-510)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          501,
+          502
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "and the tile\ncount scales as (448/336)² = **1.78× — the \"~1.8×\" the registration states**.",
+      "values": [
+        {
+          "quantity": "baseline tile stride at 512 px",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile stride at 384 px, as executed",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/evaluate_detections.py#stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "tile-count multiplier at 384 px under the constant-fraction reading",
+          "value_verbatim": "1.78×",
+          "value_parsed": 1.78,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "API-call multiplier stated by the registration for H11 condition B",
+          "value_verbatim": "~1.8×",
+          "value_parsed": 1.8,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ H11 condition table (:959)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "1.78× is derived in-text as (448/336)²; both operands are themselves derived or executed values with no artefact recording the multiplier, so it is flagged anchor-unknown with the derivation stated here rather than forced into an arithmetic expression. The 448 operand is likewise derived (512 − 64) and disclosed only in E51's parameter table (prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          502,
+          504
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "Carrying\nthe 64 px overlap across *literally* gives stride 320 and (448/320)² = **1.96×**, which\nthe registration does not state.",
+      "values": [
+        {
+          "quantity": "tile overlap, lodged § H11 implementation",
+          "value_verbatim": "64 px",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#§ H11 implementation (:968)",
+          "method": null
+        },
+        {
+          "quantity": "counterfactual tile stride at 384 px under a literal 64 px overlap",
+          "value_verbatim": "320",
+          "value_parsed": 320,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "docs/methodology/preregistration/osf/preregistration.md",
+              "path": "§ H11 condition table (:959)"
+            },
+            {
+              "name": "b",
+              "file": "docs/methodology/preregistration/osf/preregistration.md",
+              "path": "§ H11 implementation (:968)"
+            }
+          ]
+        },
+        {
+          "quantity": "baseline tile stride at 512 px",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "counterfactual tile stride at 384 px",
+          "value_verbatim": "320",
+          "value_parsed": 320,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "counterfactual tile-count multiplier under the literal reading",
+          "value_verbatim": "1.96×",
+          "value_parsed": 1.96,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Counterfactual arithmetic the document performs to show that reading A does not reproduce the registration's stated ~1.8×. The second occurrence of 320 (inside '(448/320)²') is recorded anchor-unknown so that it is not compared against its own derivation (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          505,
+          506
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "the one the registration used to justify the condition's cost, and it is the one that\nmatches the 0.56× area multiplier in the same row.",
+      "values": [
+        {
+          "quantity": "tile-area multiplier for H11 condition B, lodged § H11 condition table",
+          "value_verbatim": "0.56×",
+          "value_parsed": 0.56,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ H11 condition table (:959)"
+      },
+      "method": "read",
+      "notes": "Registration-spec value; note 0.56 ≈ (384/512)² = 0.5625, consistent with the constant-fraction reading the document adopts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          506,
+          508
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "Execution followed reading B: stride\n336 is disclosed in E51's parameter table (`protocol-errata.md:1459`, \"| Stride | 448 px\n| 336 px |\") and carried into E52 (`:1600`, \"| Stride | 448 px | 336 px (E51) |\"),",
+      "values": [
+        {
+          "quantity": "tile stride at 384 px, as executed",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "baseline tile stride quoted in E51's parameter table",
+          "value_verbatim": "448 px",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "re-run tile stride quoted in E51's parameter table",
+          "value_verbatim": "336 px",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "baseline tile stride quoted in E52's parameter table",
+          "value_verbatim": "448 px",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "re-run tile stride quoted in E52's parameter table",
+          "value_verbatim": "336 px",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "stride/overlap comment",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The E51/E52 parameter-table cells are quoted from docs/methodology/preregistration/protocol-errata.md (prose — rule 2: named, not anchored). These are before→after parameter tables for re-runs, not corrections of an error, so the 448 px baseline cells are NOT marked historical; they are flagged anchor-unknown because no committed artefact was identified that records the 512 px baseline stride."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          508,
+          510
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "and it\nis hard-coded in the analysis pipeline (`scripts/evaluate_detections.py:1330`,\n\"stride=336 overlaps neighbours by 48 px\"; `scripts/build_example_pool.py:243`).",
+      "values": [
+        {
+          "quantity": "tile stride at 384 px hard-coded in the analysis pipeline",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "tile overlap at 384 px hard-coded in the analysis pipeline",
+          "value_verbatim": "48 px",
+          "value_parsed": 48,
+          "unit": "px",
+          "kind": "physical",
+          "path": "stride/overlap comment",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b056] Anchor confirmed to exist (rule 4, no verification performed): the comment 'stride=336 overlaps neighbours by 48 px' is present in scripts/evaluate_detections.py, but at line 1439 in the current working tree rather than the :1330 the document cites, and scripts/build_example_pool.py carries '336 (384px stride)' near line 243. Line-number citations are out of C4 scope (rule 5); the drift is recorded here for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          513,
+          515
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "**Neither addresses `osf/preregistration.md:968` on its own terms** — that\nis, neither says \"the registered 64 px overlap clause was not followed, and here is\nwhy\".",
+      "values": [
+        {
+          "quantity": "registered tile overlap clause not followed in execution",
+          "value_verbatim": "64 px",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "§ H11 implementation (:968)"
+      },
+      "method": "read",
+      "notes": "Registration-spec value; v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          521,
+          522
+        ],
+        "section": "Draft 3 — E64 (iv) Tile overlap at 384 px"
+      },
+      "claim_text": "The 384 px corpus was generated at stride 336 in\nearly 2026 and every 384 px result in the project rests on it.",
+      "values": [
+        {
+          "quantity": "tile edge length of the generated corpus",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/build_example_pool.py#384px stride comment",
+          "method": null
+        },
+        {
+          "quantity": "tile stride used to generate the 384 px corpus",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "stride/overlap comment",
+          "method": null
+        },
+        {
+          "quantity": "tile edge length referenced for downstream results",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "scripts/build_example_pool.py#384px stride comment",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The second '384 px' functions largely as a corpus label; extracted for completeness and flagged."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          530,
+          531
+        ],
+        "section": "Draft 3 — E64 (v) Test tailedness"
+      },
+      "claim_text": "> \"- **Direction**: One-tailed for directional predictions; two-tailed for equivalence\n> tests (H1)\"",
+      "values": [
+        {
+          "quantity": "test tailedness for directional predictions, lodged § 3.1",
+          "value_verbatim": "One-tailed",
+          "value_parsed": 1,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ 3.1 (:269)",
+          "method": null
+        },
+        {
+          "quantity": "test tailedness for equivalence tests, lodged § 3.1",
+          "value_verbatim": "two-tailed",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ 3.1 (:269)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule. Word-form parameter, value_parsed normalised to the number of tails."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          533,
+          533
+        ],
+        "section": "Draft 3 — E64 (v) Test tailedness"
+      },
+      "claim_text": "**Reading B**, two lodged instances that contradict reading A.",
+      "values": [
+        {
+          "quantity": "count of lodged instances contradicting § 3.1 on tailedness",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "instances",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Structural count of the two lodged passages quoted immediately below (§ H1 analysis and § 3.6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          536,
+          538
+        ],
+        "section": "Draft 3 — E64 (v) Test tailedness"
+      },
+      "claim_text": "> \"- Two-tailed tests for modality comparisons\"\n>\n> \"- One-tailed for elaboration: H0: verbose ≤ brief; H1: verbose > brief\"",
+      "values": [
+        {
+          "quantity": "test tailedness for modality comparisons, lodged § H1 analysis",
+          "value_verbatim": "Two-tailed",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ H1 (:442)",
+          "method": null
+        },
+        {
+          "quantity": "test tailedness for elaboration contrasts, lodged § H1 analysis",
+          "value_verbatim": "One-tailed",
+          "value_parsed": 1,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ H1 (:443)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; H0/H1 are hypothesis labels, not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          540,
+          541
+        ],
+        "section": "Draft 3 — E64 (v) Test tailedness"
+      },
+      "claim_text": "— i.e. H1 is *not* uniformly an equivalence test as § 3.1 asserts; it is split, with\ndirectional elaboration contrasts run one-tailed and modality contrasts two-tailed.",
+      "values": [
+        {
+          "quantity": "test tailedness for elaboration contrasts, lodged § H1 analysis",
+          "value_verbatim": "one-tailed",
+          "value_parsed": 1,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ H1 (:443)",
+          "method": null
+        },
+        {
+          "quantity": "test tailedness for modality comparisons, lodged § H1 analysis",
+          "value_verbatim": "two-tailed",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ H1 (:442)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restatement in the document's own words of the values quoted at lines 536-538."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          544,
+          546
+        ],
+        "section": "Draft 3 — E64 (v) Test tailedness"
+      },
+      "claim_text": "> \"With 60 holdout tiles containing 79 mound symbols, statistical power is adequate for\n> detecting moderate effects. Approximate detectable effect sizes (80% power, α = 0.05,\n> two-tailed):\"",
+      "values": [
+        {
+          "quantity": "holdout tiles assumed by the lodged power calculation",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "§ 3.6 (:300)",
+          "method": null
+        },
+        {
+          "quantity": "mound symbols in the holdout, lodged § 3.6",
+          "value_verbatim": "79",
+          "value_parsed": 79,
+          "unit": "mounds",
+          "kind": "count",
+          "path": "§ 3.6 (:300)",
+          "method": null
+        },
+        {
+          "quantity": "statistical power assumed by the lodged calculation",
+          "value_verbatim": "80%",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "§ 3.6 (:300)",
+          "method": null
+        },
+        {
+          "quantity": "significance level assumed by the lodged power calculation",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "§ 3.6 (:300)",
+          "method": null
+        },
+        {
+          "quantity": "test tailedness assumed by the lodged power calculation",
+          "value_verbatim": "two-tailed",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ 3.6 (:300)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the lodged registration; v1.1 calibration rule — anchored to the lodged document even though the 60-tile holdout also appears as inputs/tiles/validation_manifest.json (60 entries)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          548,
+          550
+        ],
+        "section": "Draft 3 — E64 (v) Test tailedness"
+      },
+      "claim_text": "— i.e. the registration's own power calculation, which underwrites the whole design, was\ncomputed **two-tailed**, including for the directional hypotheses § 3.1 would run\none-tailed.",
+      "values": [
+        {
+          "quantity": "test tailedness of the lodged power calculation",
+          "value_verbatim": "two-tailed",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ 3.6 (:300)",
+          "method": null
+        },
+        {
+          "quantity": "test tailedness § 3.1 would apply to directional hypotheses",
+          "value_verbatim": "one-tailed",
+          "value_parsed": 1,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ 3.1 (:269)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restatement in the document's own words of the lodged values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          552,
+          552
+        ],
+        "section": "Draft 3 — E64 (v) Test tailedness"
+      },
+      "claim_text": "**Operative reading**: **two-sided tests throughout.**",
+      "values": [
+        {
+          "quantity": "test tailedness, operative reading adopted",
+          "value_verbatim": "two-sided",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Policy adoption made in this document; no committed artefact was identified that records the tailedness of the executed tests. Candidate artefacts for triage: the permutation/bootstrap analysis scripts under scripts/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          559,
+          560
+        ],
+        "section": "Draft 3 — E64 (v) Test tailedness"
+      },
+      "claim_text": "The scope of the contradiction is narrow: the one-tailed rule bites H2, H3, H4, and one\nH1 elaboration contrast only.",
+      "values": [
+        {
+          "quantity": "test tailedness of the lodged § 3.1 rule",
+          "value_verbatim": "one-tailed",
+          "value_parsed": 1,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": "§ 3.1 (:269)",
+          "method": null
+        },
+        {
+          "quantity": "count of H1 elaboration contrasts affected by the tailedness contradiction",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "contrasts",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "H2, H3, and H4 are hypothesis identifiers (out of scope, rule 5); only the count of affected H1 elaboration contrasts is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          573,
+          574
+        ],
+        "section": "Draft 3 — E64 protocol impact"
+      },
+      "claim_text": "**Protocol impact (E64 as a whole)**: none on executed procedure. In all five cases\nexecution followed one of the lodged readings;",
+      "values": [
+        {
+          "quantity": "count of reconciled cases in which execution followed a lodged reading",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "cases",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Structural count of the five sub-items."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          575,
+          578
+        ],
+        "section": "Draft 3 — E64 protocol impact"
+      },
+      "claim_text": "Reporting requirements: (a) the paper's Methods states the operative\nreading for each of the five parameters; (b) the Discussion carries the meta-finding —\nthat a registration can be internally inconsistent in five distinct places without any\nsingle inconsistency being visible at authoring time,",
+      "values": [
+        {
+          "quantity": "count of parameters whose operative reading the Methods must state",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "parameters",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of places in which the registration is internally inconsistent",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "places",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Structural counts of the five sub-items."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          601,
+          601
+        ],
+        "section": "Draft 4 — Block 1 (correction attached to E36)"
+      },
+      "claim_text": "> ### E36: 340-tile production retest replaces 60-tile holdout evaluation (corrected 2026-07-29)",
+      "values": [
+        {
+          "quantity": "production retest corpus size (amended E36 heading)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        },
+        {
+          "quantity": "holdout evaluation corpus size (amended E36 heading)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          609,
+          611
+        ],
+        "section": "Draft 4 — Block 1 (correction attached to E36)"
+      },
+      "claim_text": "this erratum's Description states that on the 60-tile\nholdout \"only 1 of 10 Phase 2a pairwise comparisons survived FDR correction (Obs 155)\".\n**The correct figure is zero.**",
+      "values": [
+        {
+          "quantity": "holdout evaluation corpus size",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": null
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction, as originally stated in E36",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons performed, as quoted in the erroneous span",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction, corrected figure",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Correction block (instrument rule 3): 'only 1 of 10 … survived FDR correction' is the quoted-old-value side, so both 1 and 10 are marked historical inside the quotation; the live value of 10 is captured separately at lines 611-615, where the document asserts the artefact records n_comparisons: 10."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          611,
+          615
+        ],
+        "section": "Draft 4 — Block 1 (correction attached to E36)"
+      },
+      "claim_text": "`results/phase2a-analysis-report.json` — the artefact\nthis claim summarises, generated 2026-02-06 and committed 2026-02-08 (`57ec68c25`) —\nrecords `n_comparisons: 10`, `n_initially_significant: 3`, and **`n_fdr_significant: 0`**,\nwith a `recommendation` field that says so in words: \"No pairwise differences\nsignificant after FDR correction (q=0.05).\"",
+      "values": [
+        {
+          "quantity": "Phase 2a pairwise comparisons performed",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": null
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons significant before FDR correction",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_initially_significant",
+          "method": null
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons significant after FDR correction",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": null
+        },
+        {
+          "quantity": "false-discovery-rate level applied to the Phase 2a comparisons",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Generation date, commit date, and commit hash in the span are out of C4 scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          615,
+          617
+        ],
+        "section": "Draft 4 — Block 1 (correction attached to E36)"
+      },
+      "claim_text": "Every committed version of that artefact\nrecords 0; no version has ever recorded 1. The defence pass independently re-ran the\nBenjamini–Hochberg routine and reproduced 0.",
+      "values": [
+        {
+          "quantity": "Phase 2a pairwise comparisons significant after FDR correction, every committed version",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": null
+        },
+        {
+          "quantity": "Phase 2a comparisons surviving FDR correction, the erroneous figure never recorded by the artefact",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a comparisons surviving FDR correction, reproduced by the defence pass's independent Benjamini–Hochberg re-run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The defence-pass reproduction is a scripted Benjamini–Hochberg re-run over the Phase 2a comparisons; recorded, not run at extraction (instrument rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          621,
+          622
+        ],
+        "section": "Draft 4 — Block 1 (correction attached to E36)"
+      },
+      "claim_text": "**The error is self-adverse.** Zero surviving comparisons is a *stronger* rationale\n   for the corpus expansion this erratum records than one surviving comparison.",
+      "values": [
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction, corrected figure",
+          "value_verbatim": "Zero",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": null
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction, the superseded figure",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          627,
+          629
+        ],
+        "section": "Draft 4 — Block 1 (correction attached to E36)"
+      },
+      "claim_text": "an analysis of 44 verifier candidates under\n   HIGH versus minimal thinking; a full-text scan of the entry returns zero occurrences\n   of \"FDR\", \"bootstrap\", \"holdout\", or \"pairwise\".",
+      "values": [
+        {
+          "quantity": "verifier candidates analysed in Observation 155",
+          "value_verbatim": "44",
+          "value_parsed": 44,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "occurrences of 'FDR', 'bootstrap', 'holdout', or 'pairwise' in the Observation 155 entry",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": "occurrences",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/notes/working-notes.md",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "docs/notes/working-notes.md is prose, so instrument rule 2 applies: the document is named, not treated as a resolving anchor; triage chases the 44-candidate figure to the underlying verifier output. The zero-occurrence claim is a full-text scan of the Obs 155 entry and is recorded as recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          631,
+          637
+        ],
+        "section": "Draft 4 — Block 1 (correction attached to E36)"
+      },
+      "claim_text": "**It propagated to four documents.** `docs/methodology/preregistration/protocol-errata.md:890`\n   (this entry); `reports/experimental-progression.md:83` (\"only 1 of 10 Phase 2a pairwise\n   comparisons survived FDR correction\"); `reports/gs-tile-pool-mapping-2026-05-28.md:45`\n   (quoting \"only 1 of 10 / Phase 2a comparisons\" surviving FDR correction);\n   `docs/notes/working-notes.md:3397`, in the \"Transition to Production Runs (Session 52)\"\n   block (\"Only 1 of 10 Phase 2a comparisons / survived\"). All four require the same\n   correction to 0.",
+      "values": [
+        {
+          "quantity": "documents into which the erroneous FDR figure propagated",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "documents",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Phase 2a comparisons surviving FDR correction, as quoted from reports/experimental-progression.md",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a comparisons performed, as quoted from reports/experimental-progression.md",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a comparisons surviving FDR correction, as quoted from reports/gs-tile-pool-mapping-2026-05-28.md",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a comparisons performed, as quoted from reports/gs-tile-pool-mapping-2026-05-28.md",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a comparisons surviving FDR correction, as quoted from docs/notes/working-notes.md",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a comparisons performed, as quoted from docs/notes/working-notes.md",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "documents requiring the same correction",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "documents",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction, corrected figure",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "All quoted '1 of 10' spans are quoted-old-value sides of the correction (rule 3, historical). The propagation count of four is checkable by grepping the four named files but is not recorded in any artefact, hence anchor-unknown. Line-number citations and 'Session 52' are out of scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          641,
+          642
+        ],
+        "section": "Draft 4 — Block 1 (correction attached to E36)"
+      },
+      "claim_text": "**What does not change**: the corpus expansion decision, the 340-tile scope, the power\nrationale, and every downstream result.",
+      "values": [
+        {
+          "quantity": "evaluation corpus scope unaffected by the correction",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    }
+  ]
+}

@@ -1,0 +1,777 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/phase3-decomposition-investigation-2026-06-05.md",
+    "git_blob": "bbb088ce5edf",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          4,
+          4
+        ],
+        "section": "Header block"
+      },
+      "claim_text": "**Author**: two read-only `general-purpose` exploration agents, commissioned to set up the next session's Batch D/E work.",
+      "values": [
+        {
+          "quantity": "count of exploration agents that authored this report",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Provenance count (how many general-purpose exploration agents produced the report), not a study measurement; no committed artefact records agent counts, so no anchor exists. Included per the instrument's 'when in doubt, include and flag' rule; a legitimate prune candidate at triage. [BATCH NOTE b042] Scope decisions for this document (instrument rule 5 — logged, not silent). Excluded as out of C4 scope: dates and timestamps (2026-06-05, 2026-03-15/16, 2026-01-09, 2025-11-18, 2026-03-21); session numbers (100, 101); git commit hashes (5a57f586, 195fa64a, 245b9468); line-number citations (line 6, lines 277-278/318/345, line 278, line 159, lines ~143-160); Obs / GAP / erratum identifiers (Obs-45, GAP-6, GAP-7, GAP-9, E57); hypothesis labels (H3, H9, H11); Era labels (Era-1, Era-2, Era-2/3); sub-step identifiers (3b, 3c); model version strings (gemini-3-flash, gemini-2.0-flash, gemini-3-flash-preview, 2.x); and numbers embedded in file paths, directory globs or condition names (`T{0.3,0.7,1.0}`, `run_1..30`, `run_1..5`, `h9-{A..E}`, `h9-A-p1..p4`, `_v1..v5.md`, `bounds/384/`, `pv-diag-384`, `track1`/`track2`, `Track 1`). Boundary call applied consistently: temperatures asserted in prose as the swept parameter values (line 33 `T=0.3/0.7/1.0`, line 34 `T=0.7`, line 37 `0.4/0.55/0.7/0.85/1.0`) ARE extracted as parameter claims; the same temperatures appearing only as a directory-name glob (line 32 `T{0.3,0.7,1.0}`) are not, per the rule-5 `t0.3` example. Pass/pool counts asserted as 'on disk' have no JSON artefact recording them and are anchored to the run tree with method recompute-script (directory count of `run_*` / `h9-*`)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          5,
+          5
+        ],
+        "section": "Header block — Why this exists"
+      },
+      "claim_text": "These two investigations resolve it and characterise the four Era-1 phase3 runs for manifest decomposition (sub-step 3b/3c).",
+      "values": [
+        {
+          "quantity": "count of investigations reported in this document",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of Era-1 phase3 runs characterised for manifest decomposition",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-facts.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The four runs are enumerated verbatim at line 24 (`retest-phase3a`, `retest-phase3a-high`, `retest-phase3a-replication`, `retest-phase3c`); verifying the count means filtering `$.facts` in results/run-facts.json to those keys, hence recompute-script rather than a single read path. The 'two investigations' value has no artefact anchor (same provenance class as the agent count on line 4) and is marked anchor-unknown at value level."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "Headline resolution — the phase3a / pv-diag-384 name collision"
+      },
+      "claim_text": "**`retest-phase3a`** = a distinct Era-1 run: 340 tiles, 512px, curator GT, H3 consensus voting.",
+      "values": [
+        {
+          "quantity": "tile count, retest-phase3a test set (era-1-340)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.facts['retest-phase3a'].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, retest-phase3a",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.facts['retest-phase3a'].tile_size_px",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-facts.json",
+        "path": "$.facts['retest-phase3a'].scope.n_test_tiles"
+      },
+      "method": "read",
+      "notes": "results/run-facts.json is named by the document itself as a key anchor path (line 55). 'Era-1', 'curator GT' and 'H3' are labels, not numeric claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "Headline resolution — the phase3a / pv-diag-384 name collision"
+      },
+      "claim_text": "It has its **own** 180 proposer passes under `outputs/retest/phase3a/` (2 tracks × 3 temperatures × 30 runs).",
+      "values": [
+        {
+          "quantity": "proposer pass count on disk, retest-phase3a",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "track count, retest-phase3a proposer passes",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature-level count, retest-phase3a consensus sweep",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "results/retest/phase3a-consensus/track1-image/consensus-analysis-report.json#len:$.metadata.temperatures",
+          "method": "read"
+        },
+        {
+          "quantity": "run count per track x temperature cell, retest-phase3a",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Pass and track counts are filesystem facts (count `run_*` directories under outputs/retest/phase3a/{track1-image,track2-text}/T*/); no committed JSON records them. The temperature-level count is readable from the sibling consensus-analysis report's metadata (same list appears in results/retest/phase3a-consensus/track2-text/consensus-analysis-report.json). The document's own derivation 2 x 3 x 30 = 180 is offered as a cross-check but is not encoded as `arithmetic` because two of its three operands have no artefact locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "Headline resolution — the phase3a / pv-diag-384 name collision"
+      },
+      "claim_text": "Every sampled `evaluation.json` there scores `outputs/h11/pv-diag-384/...` detections against `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` with `n_tiles: 487` — i.e. **pv-diag-384's Era-2 / 384px / 487-tile scope**.",
+      "values": [
+        {
+          "quantity": "tile count (n_tiles) recorded in the phase3a-*-matrix evaluations",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, pv-diag-384",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "results/run-facts.json#$.facts['pv-diag-384'].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, pv-diag-384 test set (era-2-487)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-facts.json#$.facts['pv-diag-384'].scope.n_test_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3a-text-matrix/high-t0.0/n3/high-t0-0-3of3/evaluation.json",
+        "path": "$.summary.buffers[0].coverage.n_tiles"
+      },
+      "method": "read",
+      "notes": "The document asserts this of 'every sampled evaluation.json' under results/phase3a-text-matrix/ and results/phase3a-image-matrix/; the anchor names one representative sampled file, and n_tiles repeats at each of the four buffer entries ($.summary.buffers[0..3].coverage.n_tiles). The 384 inside `inputs/vectors/bounds/384/...` is a path segment and is not extracted; the '384px' and '487-tile' scope assertions are. Second and third values use cross-file locators (instrument v1.2 amendment 2) into results/run-facts.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          18
+        ],
+        "section": "Headline resolution — consequence for pv-diag-384 GAP-7 completion"
+      },
+      "claim_text": "the `phase3a-text-matrix` / `phase3a-image-matrix` evals (Era-2/487, **WITH MCC** — verified)",
+      "values": [
+        {
+          "quantity": "tile count, pv-diag-384 test set (era-2-487) asserted for the phase3a-*-matrix evaluations",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.facts['pv-diag-384'].scope.n_test_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-facts.json",
+        "path": "$.facts['pv-diag-384'].scope.n_test_tiles"
+      },
+      "method": "read",
+      "notes": "Restates the Era-2 tile count of line 14 in the consequence paragraph."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "The four Era-1 phase3 runs (section heading)"
+      },
+      "claim_text": "The four Era-1 phase3 runs — all → sub-step 3c analyses (no MCC conditions exist)",
+      "values": [
+        {
+          "quantity": "count of Era-1 phase3 runs routed to sub-step 3c analyses",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-facts.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Section heading restating the count from line 5; the four are enumerated at line 24. Verification requires filtering `$.facts` for the Era-1 phase3 run keys."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "The four Era-1 phase3 runs"
+      },
+      "claim_text": "All four (`retest-phase3a`, `retest-phase3a-high`, `retest-phase3a-replication`, `retest-phase3c`) are **absent from `results/run-conditions.json` → decomposition** (undecomposed), all Era-1 / 340 / 512px / curator GT",
+      "values": [
+        {
+          "quantity": "count of Era-1 phase3 runs absent from the run-conditions decomposition",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile count, Era-1 test set (era-1-340), asserted for all four phase3 runs",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.facts['retest-phase3a'].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, asserted for all four Era-1 phase3 runs",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.facts['retest-phase3a'].tile_size_px",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-facts.json",
+        "path": "$.facts['retest-phase3a'].scope.n_test_tiles"
+      },
+      "method": "read",
+      "notes": "The 340 / 512px assertions are made of all four runs; the anchor names the retest-phase3a entry, with the same fields present at $.facts['retest-phase3a-high'], $.facts['retest-phase3a-replication'] and $.facts['retest-phase3c'] (a `[*]` constant-collapse across those four keys would also serve). The 'four' value is a key-set count, hence recompute-script. The companion assertion (absence from results/run-conditions.json -> decomposition) is non-numeric and is not extracted as a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "The four Era-1 phase3 runs — decisive property"
+      },
+      "claim_text": "**ZERO per-condition `evaluation.json` files with MCC exist for any of them.**",
+      "values": [
+        {
+          "quantity": "count of per-condition evaluation.json files carrying MCC across the four Era-1 phase3 runs",
+          "value_verbatim": "ZERO",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase3a-consensus",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Negative-existence claim: verifying it means scanning for evaluation.json files carrying tile_classification / mcc across all four Era-1 phase3 run trees — results/retest/phase3a-consensus/, results/retest/phase3a-high-text/, results/phase3c-diversity/, outputs/retest/phase3a*/ and outputs/retest/phase3c/. The anchor names the first of those trees; the full scan set is listed here because a single-file anchor cannot decide an absence claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "Per-run recommendation table — retest-phase3a row"
+      },
+      "claim_text": "| `retest-phase3a` | H3 consensus-voting sweep, K=30, 2 tracks × 3 temps | 180 (`track1-image` + `track2-text`, `T{0.3,0.7,1.0}`/run_1..30) | `results/retest/phase3a-consensus/{track1-image,track2-text}/` — F1 sweep summaries, **no MCC** | **3c analysis** + record the 180 passes; do NOT attach the `phase3a-*-matrix` evals (those are pv-diag-384's) |",
+      "values": [
+        {
+          "quantity": "consensus pool size K, retest-phase3a sweep",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.pool_sizes[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "track count, retest-phase3a",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature-level count, retest-phase3a sweep",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.metadata.temperatures",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer pass count on disk, retest-phase3a",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "proposer pass count on disk, retest-phase3a (restated in the recommendation cell)",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase3a-consensus/track1-image/consensus-analysis-report.json",
+        "path": "len:$.metadata.temperatures"
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). K=30 is the largest swept pool size, recorded as the third entry of $.metadata.pool_sizes in the consensus-analysis report (the track2-text sibling at results/retest/phase3a-consensus/track2-text/consensus-analysis-report.json carries the same metadata). Pass and track counts are filesystem counts under outputs/retest/phase3a/. The temperatures appear on this row only as the directory glob `T{0.3,0.7,1.0}` and are therefore not extracted here (rule 5); they are extracted from line 33 where they are stated as parameter values. The 180 appears twice in the row and is recorded twice, in order of appearance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "Per-run recommendation table — retest-phase3a-high row"
+      },
+      "claim_text": "| `retest-phase3a-high` | H3 HIGH-thinking temp sweep (T=0.3/0.7/1.0), K=30 | text-track only (`track2-text`, run_1..30 × 3 temps). **`track1-image` NEVER RAN** (only `study_manifest.json`) | `results/retest/phase3a-high-text/*.json` — consensus sweep + pairwise, **no MCC** | **3c analysis** (text); record `track1-image` as **planned-but-unexecuted** (no passes/conditions — do not invent) |",
+      "values": [
+        {
+          "quantity": "temperature swept (level 1), retest-phase3a-high",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase3a-high/track2-text/T0.3/run_1/detections_T0.3_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature swept (level 2), retest-phase3a-high",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase3a-high/track2-text/T0.7/run_1/detections_T0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature swept (level 3), retest-phase3a-high",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase3a-high/track2-text/T1.0/run_1/detections_T1.0_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus pool size K, retest-phase3a-high sweep",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.pool_sizes[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature-level count, retest-phase3a-high text track",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.temperatures",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase3a-high-text/phase3a-high-text-consensus-sweep.json",
+        "path": "len:$.temperatures"
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). The three temperatures are asserted in prose as the swept parameter values, so they are extracted (unlike the line-32 directory glob); each anchors to the `configuration.temperature` field of a representative pass meta in the corresponding T-directory, because $.temperatures in the sweep JSON holds the string labels 'T0.3'/'T0.7'/'T1.0' rather than numeric temperatures. The 'track1-image NEVER RAN (only study_manifest.json)' assertion is non-numeric and is not extracted as a value; it is checkable by listing outputs/retest/phase3a-high/track1-image/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "Per-run recommendation table — retest-phase3a-replication row"
+      },
+      "claim_text": "| `retest-phase3a-replication` | clean `high` vs `minimal` thinking at T=0.7, K=30, text — built because the original phase3a HIGH/min both accidentally used minimal | 60 (`high/`, `minimal/`, run_1..30) | `results/retest/phase3a-consensus/replication/consensus-analysis-report.json` (`study_dir = outputs/retest/phase3a-replication`) — F1 sweep, **no MCC** | **3c analysis** + record the 60 passes |",
+      "values": [
+        {
+          "quantity": "temperature, retest-phase3a-replication",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase3a-replication/high/run_1/detections_high_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus pool size K, retest-phase3a-replication sweep",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.pool_sizes[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer pass count on disk, retest-phase3a-replication",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "proposer pass count on disk, retest-phase3a-replication (restated in the recommendation cell)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase3a-consensus/replication/consensus-analysis-report.json",
+        "path": "$.metadata.pool_sizes[2]"
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). The replication report's $.metadata.temperatures holds the thinking levels ('minimal','high'), not temperatures, so T=0.7 anchors to a representative pass meta instead. The 60 passes are a filesystem count of `run_*` directories under outputs/retest/phase3a-replication/{high,minimal}/; the 60 appears twice in the row and is recorded twice, in order of appearance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "Per-run recommendation table — retest-phase3c row"
+      },
+      "claim_text": "| `retest-phase3c` | H9 diversity study (does cross-pass diversity beat identical passes?) | 45 pools (`track1` 25, `track2` 20), each a PASS-variant `h9-{A..E}-{p,v,img,t}N` with run_1..5 | `results/phase3c-diversity/{track1-image,track2-text}/diversity-analysis-report.json` / `diversity-consensus-sweep.json` — condition-level F1 means + permutation p, **no MCC** | **3c analysis** + record the 45 pools as passes. **H9 was REJECTED** (no diversity mechanism gives a significant gain) |",
+      "values": [
+        {
+          "quantity": "pool count on disk, retest-phase3c (both tracks)",
+          "value_verbatim": "45",
+          "value_parsed": 45,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "pool count on disk, retest-phase3c track 1 (image)",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "pool count on disk, retest-phase3c track 2 (text)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "pool count on disk, retest-phase3c (restated in the recommendation cell)",
+          "value_verbatim": "45",
+          "value_parsed": 45,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track1-image/diversity-analysis-report.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Table row (instrument rule 6). Pool counts are filesystem counts of `h9-*` directories under outputs/retest/phase3c/{track1-image,track2-text}/. Design cross-check available from the diversity reports' metadata: track 1 = len($.metadata.conditions) x $.metadata.n_passes in results/phase3c-diversity/track1-image/diversity-analysis-report.json, track 2 = the same product in results/phase3c-diversity/track2-text/diversity-analysis-report.json, with 45 their sum; not encoded as `arithmetic` because the row asserts pools on disk, not the design product. 'H9 was REJECTED (no diversity mechanism gives a significant gain)' is a significance verdict carrying no quoted number and is not extracted; the underlying permutation comparisons live at $.comparisons in the same reports."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "phase3c pool naming decoded"
+      },
+      "claim_text": "the suffix is the **pass variant** within that condition's 5-pass set",
+      "values": [
+        {
+          "quantity": "passes per diversity condition, retest-phase3c",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.metadata.n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track1-image/diversity-analysis-report.json",
+        "path": "$.metadata.n_passes"
+      },
+      "method": "read",
+      "notes": "The document names `diversity-analysis-report.json` `study_conditions` as its source for this decoding; the pass count is recorded as $.metadata.n_passes (the track2-text sibling at results/phase3c-diversity/track2-text/diversity-analysis-report.json records the same)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "phase3c pool naming decoded"
+      },
+      "claim_text": "A = baseline (5 identical), B = text/instruction-variant diversity (`_v1..v5.md`), C = image/hard-negative diversity (Track 1 only), D = temperature diversity (0.4/0.55/0.7/0.85/1.0), E = combined.",
+      "values": [
+        {
+          "quantity": "pass count in diversity condition A (baseline, identical passes)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "results/phase3c-diversity/track1-image/diversity-analysis-report.json#len:$.metadata.study_conditions.A.sub_conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, condition D pass variant h9-D-t1",
+          "value_verbatim": "0.4",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.name=='h9-D-t1')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, condition D pass variant h9-D-t2",
+          "value_verbatim": "0.55",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.name=='h9-D-t2')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, condition D pass variant h9-D-t3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.name=='h9-D-t3')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, condition D pass variant h9-D-t4",
+          "value_verbatim": "0.85",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.name=='h9-D-t4')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, condition D pass variant h9-D-t5",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.name=='h9-D-t5')].temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/retest/phase3c-h9-diversity-track1.yaml",
+        "path": "$.conditions[?(@.name=='h9-D-t1')].temperature"
+      },
+      "method": "read",
+      "notes": "Non-JSON (YAML) anchor, legitimate per instrument v1.1 — the study definition is the least-writable artefact recording the temperature-diversity ladder; the same five temperatures are declared in studies/retest/phase3c-h9-diversity-track2.yaml for the text track. The 'A = baseline (5 identical)' count uses a cross-file locator into the diversity report's study_conditions (v1.2 amendment 2). Non-numeric decode content (`_v1..v5.md` file names, 'Track 1 only') is excluded as names per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "Anomaly 1 — RESOLVED block"
+      },
+      "claim_text": "(c) **zero** retest artefacts record any 2.x model",
+      "values": [
+        {
+          "quantity": "count of retest artefacts recording a 2.x model version",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Negative-existence claim requiring a scan of every retest meta for a 2.x model string (fields $.configuration.model, $.configuration.full_config_snapshot.model and $.cost_estimate.pricing_used.model), plus the results/retest/ analysis artefacts. Model version strings themselves ('gemini-3-flash', 'gemini-2.0-flash', '2.x') are out of C4 scope; only the count is extracted. This is the live side of a resolution block — the superseded `gemini-2.0-flash` prose it corrects carries no quoted number, so no companion `historical` value arises."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "Anomaly 3 — Era-1 batch metas have placeholder timing"
+      },
+      "claim_text": "**Era-1 batch metas have placeholder timing**: `duration_seconds` ≈ 0.000156 with start≈end despite `items_processed: 340`.",
+      "values": [
+        {
+          "quantity": "duration_seconds recorded in Era-1 batch metas (placeholder timing)",
+          "value_verbatim": "≈ 0.000156",
+          "value_parsed": 0.000156,
+          "unit": "s",
+          "kind": "physical",
+          "path": "$.timestamp.duration_seconds",
+          "method": "read"
+        },
+        {
+          "quantity": "items processed per Era-1 batch pass",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a/track2-text/T0.7/run_1/detections_T0.7_run01.meta.json",
+        "path": "$.timestamp.duration_seconds"
+      },
+      "method": "read",
+      "notes": "Asserted of the Era-1 batch metas as a class; the anchor names one representative phase3a pass meta. The approximation marker is retained in value_verbatim per instrument v1.2 amendment 5 so the harness treats it as an approximate quote. 'start≈end' carries no quoted number and is not extracted as a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "Key anchor paths (re-verify here)"
+      },
+      "claim_text": "`results/phase3a-text-matrix/`, `results/phase3a-image-matrix/` — **pv-diag-384's** Era-2/487 consensus sweeps (HAVE MCC)",
+      "values": [
+        {
+          "quantity": "tile count, pv-diag-384 test set (era-2-487) asserted for the phase3a-*-matrix consensus sweeps",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.facts['pv-diag-384'].scope.n_test_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-facts.json",
+        "path": "$.facts['pv-diag-384'].scope.n_test_tiles"
+      },
+      "method": "read",
+      "notes": "Third restatement of the Era-2 tile count (lines 14, 18, 65); recorded separately per full enumeration. The 384 in `pv-diag-384` and `outputs/h11/pv-diag-384/...` is a name, not a claim (rule 5)."
+    }
+  ]
+}

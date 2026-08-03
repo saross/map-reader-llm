@@ -1,0 +1,1285 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/diversity-crs-mislabel-investigation-2026-06-08.md",
+    "git_blob": "b195df86d680",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          21
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "   cosmetic label. Re-running `analyse_diversity.py` against the current\n   on-disk run data produces **F1 = 0** for every cell, because the",
+      "values": [
+        {
+          "quantity": "F1, live re-run of analyse_diversity.py on current on-disk run data",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b034] Scope decisions for this document, per instrument v1.2 rule 5: excluded dates, git commit hashes (2d7a26538, 650fe9019, a371376c1, 8c8e101fc, d4930b0fe, 9d3fcbb02, fca7f888b, bfdcf512f), the Session-107 reference, the model version string 'Opus 4.8, 1M context', the pytest marker name 'tier1', EPSG/CRS codes (4326, 32635) which are identifiers rather than quantities, and the numerals inside the quoted commit subject 'N=5/10 + diversity-pool consensus + 14-buf+MCC re-score' (a verbatim quotation of an external string, not an assertion by this document). Path-embedded numerals (phase3c, track2, h9-A-p1) are names. This claim: requires re-running scripts/analyse_diversity.py against outputs/retest/phase3c/track2-text; no committed artefact records the broken-run F1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "3. The 20 m dedup/cluster tolerance operates in **true UTM metres** and is",
+      "values": [
+        {
+          "quantity": "dedup/cluster spatial tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "DISTANCE_THRESHOLD_METRES",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": "DISTANCE_THRESHOLD_METRES"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: module-level constant in merge_passes.py (expected per instrument v1.1, routed to triage)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          42
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "   version. The consensus **geometry** reproduces exactly\n   (n_detections 100/100), but the **F1** does not — the published F1 was",
+      "values": [
+        {
+          "quantity": "cells whose recomputed n_detections match the published value",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells compared, condition/replication/threshold grid",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-sweep-results.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Requires re-deriving consensus n_detections per cell and diffing against the published sweep CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          45
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "   computed on a data/scorer state that has since drifted. Two candidate\n   fixes (4326→UTM round-trip vs exact-UTM) also disagree by up to\n   **0.011 F1**, so the fix choice is *not* itself inert.",
+      "values": [
+        {
+          "quantity": "candidate fixes considered",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "maximum absolute F1 difference between the two candidate fixes",
+          "value_verbatim": "0.011",
+          "value_parsed": 0.011,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The fix count is self-referential to section 3(b) of this document (Fix 1 and Fix 2); the 0.011 figure needs both fixes recomputed across the cell grid."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "1. The actual CRS data flow"
+      },
+      "claim_text": "| Source run GeoJSON on disk | — | **EPSG:32635 (UTM)** | Embedded `crs` member `urn:ogc:def:crs:EPSG::32635`; coords ~(397541, 4705060); geometries are **Polygons**. |",
+      "values": [
+        {
+          "quantity": "sample easting, source run GeoJSON detection",
+          "value_verbatim": "397541",
+          "value_parsed": 397541,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "sample northing, source run GeoJSON detection",
+          "value_verbatim": "4705060",
+          "value_parsed": 4705060,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track2-text/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Illustrative sample coordinates; the document marks the pair approximate ('coords ~(397541, 4705060)'), so they should be compared at order-of-magnitude tolerance. Anchored to a representative committed run GeoJSON under outputs/retest/phase3c/track2-text/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "1. The actual CRS data flow"
+      },
+      "claim_text": "| Within-pass dedup | `deduplicate_within_pass` | EPSG:32635 | Centroids + 20 m Euclidean tolerance in **true metres**. ✅ |",
+      "values": [
+        {
+          "quantity": "within-pass dedup tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "DISTANCE_THRESHOLD_METRES",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": "DISTANCE_THRESHOLD_METRES"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "1. The actual CRS data flow"
+      },
+      "claim_text": "| Cross-pass cluster | `cluster_across_passes` | EPSG:32635 | Same; 20 m tolerance in metres. ✅ |",
+      "values": [
+        {
+          "quantity": "cross-pass clustering tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "DISTANCE_THRESHOLD_METRES",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": "DISTANCE_THRESHOLD_METRES"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "1. The actual CRS data flow"
+      },
+      "claim_text": "| Threshold + output | `apply_threshold` | **EPSG:4326 (lon/lat)** | Reprojects UTM→4326 via `_TO_4326.transform` (added by `8c8e101fc`). Sample output: `[25.753222, 42.491127]`. |",
+      "values": [
+        {
+          "quantity": "sample longitude, apply_threshold consensus output",
+          "value_verbatim": "25.753222",
+          "value_parsed": 25.753222,
+          "unit": "deg",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "sample latitude, apply_threshold consensus output",
+          "value_verbatim": "42.491127",
+          "value_parsed": 42.491127,
+          "unit": "deg",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track2-text/h9-A-p1/consensus/consensus_t4.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Illustrative sample coordinate pair from a consensus GeoJSON; position within the feature collection is not stated, so it needs a scripted search rather than a fixed locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "1. The actual CRS data flow / where the 20 m tolerance operates"
+      },
+      "claim_text": "### Where the 20 m tolerance operates — the crux",
+      "values": [
+        {
+          "quantity": "dedup/cluster spatial tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "DISTANCE_THRESHOLD_METRES",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": "DISTANCE_THRESHOLD_METRES"
+      },
+      "method": "read",
+      "notes": "Section heading restating the tolerance; included for full enumeration (the same constant is claimed at several other points in the document)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "1. The actual CRS data flow / where the 20 m tolerance operates"
+      },
+      "claim_text": "The task asked specifically whether the 20 m dedup/cluster tolerance might",
+      "values": [
+        {
+          "quantity": "dedup/cluster spatial tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "DISTANCE_THRESHOLD_METRES",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": "DISTANCE_THRESHOLD_METRES"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "1. The actual CRS data flow / where the 20 m tolerance operates"
+      },
+      "claim_text": "those centroids are UTM eastings/northings (~397 000, ~4 705 000) the whole",
+      "values": [
+        {
+          "quantity": "centroid easting magnitude, UTM (approximate)",
+          "value_verbatim": "~397 000",
+          "value_parsed": 397000,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "centroid northing magnitude, UTM (approximate)",
+          "value_verbatim": "~4 705 000",
+          "value_parsed": 4705000,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track2-text/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Approx markers retained in value_verbatim per instrument v1.2 amendment 5; these are order-of-magnitude statements about the centroid coordinate space, not exact values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          83
+        ],
+        "section": "1. The actual CRS data flow / the mislabel, demonstrated"
+      },
+      "claim_text": "consensus points total_bounds (labelled 32635, actually 4326):\n    [24.748984  41.833602  26.747751  42.49911 ]   # lon/lat",
+      "values": [
+        {
+          "quantity": "consensus points total_bounds minimum longitude",
+          "value_verbatim": "24.748984",
+          "value_parsed": 24.748984,
+          "unit": "deg",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus points total_bounds minimum latitude",
+          "value_verbatim": "41.833602",
+          "value_parsed": 41.833602,
+          "unit": "deg",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus points total_bounds maximum longitude",
+          "value_verbatim": "26.747751",
+          "value_parsed": 26.747751,
+          "unit": "deg",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus points total_bounds maximum latitude",
+          "value_verbatim": "42.49911",
+          "value_parsed": 42.49911,
+          "unit": "deg",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track2-text/h9-A-p1/consensus/consensus_t4.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Bounding box over all consensus points loaded by analyse_diversity.py across the study directory outputs/retest/phase3c/track2-text; anchored to a representative consensus GeoJSON, but the figure spans the whole collection so it needs a script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          85
+        ],
+        "section": "1. The actual CRS data flow / the mislabel, demonstrated"
+      },
+      "claim_text": "gdf_bounds total_bounds (genuine 32635 / UTM metres):\n    [316259.71  4631497.60  478962.78  4706006.13]",
+      "values": [
+        {
+          "quantity": "tile bounds total_bounds minimum easting",
+          "value_verbatim": "316259.71",
+          "value_parsed": 316259.71,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile bounds total_bounds minimum northing",
+          "value_verbatim": "4631497.60",
+          "value_parsed": 4631497.6,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile bounds total_bounds maximum easting",
+          "value_verbatim": "478962.78",
+          "value_parsed": 478962.78,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile bounds total_bounds maximum northing",
+          "value_verbatim": "4706006.13",
+          "value_parsed": 4706006.13,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Bounds file named by this document's Reproduction notes; the published diversity-analysis-report.json instead records $.metadata.bounds = inputs/vectors/bounds/full_evaluation_bounds.geojson, so triage should confirm which bounds layer the figure came from."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "1. The actual CRS data flow / the mislabel, demonstrated"
+      },
+      "claim_text": "sjoin(intersects): 771 consensus points → 0 matched, 771 'unknown'",
+      "values": [
+        {
+          "quantity": "consensus points entering the source_tile spatial join",
+          "value_verbatim": "771",
+          "value_parsed": 771,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus points matched to a tile",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus points tagged source_tile 'unknown'",
+          "value_verbatim": "771",
+          "value_parsed": 771,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Produced by a live re-run of the spatial join in consensus_to_gdf; no committed artefact records these counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "1. The actual CRS data flow / the mislabel, demonstrated"
+      },
+      "claim_text": "selects nothing, so all references become false negatives and **F1 = 0**.",
+      "values": [
+        {
+          "quantity": "F1 under the broken source_tile assignment",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "2. Is the mislabel cosmetic or numerical?"
+      },
+      "claim_text": "| Now (post-`8c8e101fc`, 2026-04-11) | UTM→4326 reproject | EPSG:32635 | **Broken.** 4326 points mislabelled UTM; join finds nothing; F1 = 0. |",
+      "values": [
+        {
+          "quantity": "F1 under the current (post-8c8e101fc) code path",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Table row; the only extracted numeral is the F1 = 0 result. CRS codes, the commit hash and the date are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "2. Is the mislabel cosmetic or numerical? / timeline"
+      },
+      "claim_text": "| 2026-03-25 | (report timestamp) | Published `diversity-analysis-report.json` generated (`study_dir = outputs/retest/phase3c/track2-text`, buffer 20). |",
+      "values": [
+        {
+          "quantity": "buffer (spatial matching tolerance), published diversity report",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-analysis-report.json",
+        "path": "$.metadata.buffer_metres"
+      },
+      "method": "read",
+      "notes": "value_verbatim '20' also occurs inside the row's date; the intended value is the 'buffer 20' figure at the end of the row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "2. Is the mislabel cosmetic or numerical? / timeline"
+      },
+      "claim_text": "| 2026-03-26 | `a371376c1` | CSVs regenerated (200 lines changed, track2). Still UTM-era code. **This is the last real regeneration of the published CSV.** |",
+      "values": [
+        {
+          "quantity": "lines changed in the track2 CSV regeneration",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-sweep-results.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A git-history diffstat claim (git diff of the commit that regenerated the CSV), not a value living in any committed file; recompute rather than read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          127
+        ],
+        "section": "3. Why inertness is unprovable"
+      },
+      "claim_text": "coordinate-identical geometries reproducing the published F1. Three\nindependent findings break that assumption:",
+      "values": [
+        {
+          "quantity": "independent findings breaking the inertness assumption",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of subsections (a), (b) and (c) of section 3 in this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          131
+        ],
+        "section": "3. Why inertness is unprovable / (a)"
+      },
+      "claim_text": "Recomputing condition A (and B, D, E), buffer 20, against the current run",
+      "values": [
+        {
+          "quantity": "buffer (spatial matching tolerance) used for the recomputation",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-analysis-report.json",
+        "path": "$.metadata.buffer_metres"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          136
+        ],
+        "section": "3. Why inertness is unprovable / (a)"
+      },
+      "claim_text": "| Current broken code | 100/100 exact | all 0 (bug) |",
+      "values": [
+        {
+          "quantity": "cells with n_detections matching the published value, current broken code",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells compared, current broken code",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 across all cells, current broken code",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-sweep-results.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Table row; every figure needs the recomputation described in the section, diffed against the published sweep CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          137
+        ],
+        "section": "3. Why inertness is unprovable / (a)"
+      },
+      "claim_text": "| Old UTM-direct code (no reproject) | 100/100 exact | 25/25 mismatch (cond A) |",
+      "values": [
+        {
+          "quantity": "cells with n_detections matching the published value, old UTM-direct code",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells compared, old UTM-direct code",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells whose F1 mismatched the published value, condition A",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells compared, condition A",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-sweep-results.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          138
+        ],
+        "section": "3. Why inertness is unprovable / (a)"
+      },
+      "claim_text": "| Exact-UTM (no round-trip) + **current** scorer | 100/100 exact | 22/100 differ |",
+      "values": [
+        {
+          "quantity": "cells with n_detections matching the published value, exact-UTM with current scorer",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells compared, exact-UTM with current scorer",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells whose F1 differed from the published value",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells compared",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-sweep-results.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "3. Why inertness is unprovable / (a)"
+      },
+      "claim_text": "| Exact-UTM + **period-correct** scorer (`9d3fcbb02`) | 100/100 exact | **100/100 mismatch** |",
+      "values": [
+        {
+          "quantity": "cells with n_detections matching the published value, exact-UTM with period-correct scorer",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells compared, exact-UTM with period-correct scorer",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells whose F1 mismatched the published value, period-correct scorer",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells compared, period-correct scorer",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-sweep-results.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          166
+        ],
+        "section": "3. Why inertness is unprovable / (b)"
+      },
+      "claim_text": "Measured difference between them across 100 cells (4 conds × 5 reps ×\n5 thresholds), buffer 20: **max |ΔF1| = 0.011**, with 22 cells differing by\n≥ 1e-4. The round-trip drift (sub-metre) flips a handful of detections",
+      "values": [
+        {
+          "quantity": "cells compared between the two candidate fixes",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase3c-diversity/track2-text/diversity-analysis-report.json",
+              "path": "len:$.metadata.conditions"
+            },
+            {
+              "name": "b",
+              "file": "results/phase3c-diversity/track2-text/diversity-analysis-report.json",
+              "path": "$.metadata.n_replications"
+            },
+            {
+              "name": "c",
+              "file": "results/phase3c-diversity/track2-text/diversity-analysis-report.json",
+              "path": "len:$.metadata.thresholds"
+            }
+          ]
+        },
+        {
+          "quantity": "condition count, phase3c track2 diversity study",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.metadata.conditions",
+          "method": null
+        },
+        {
+          "quantity": "replication count per condition",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.metadata.n_replications",
+          "method": null
+        },
+        {
+          "quantity": "vote-threshold count swept",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.metadata.thresholds",
+          "method": null
+        },
+        {
+          "quantity": "buffer (spatial matching tolerance)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "maximum absolute F1 difference between the two candidate fixes",
+          "value_verbatim": "0.011",
+          "value_parsed": 0.011,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "cells differing by at least 1e-4 F1",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1 difference threshold for counting a differing cell",
+          "value_verbatim": "1e-4",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 100-cell grid is derived; its three operands are given explicit read methods and paths so they are not compared against their own product (instrument v1.2 amendment 1). The measured difference figures require both candidate fixes to be run."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "3. Why inertness is unprovable / (b)"
+      },
+      "claim_text": "across the 20 m matching boundary. A fix that changes F1 by up to 0.011 is",
+      "values": [
+        {
+          "quantity": "F1 matching tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "DISTANCE_THRESHOLD_METRES",
+          "method": null
+        },
+        {
+          "quantity": "maximum F1 change induced by the fix",
+          "value_verbatim": "0.011",
+          "value_parsed": 0.011,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span: the tolerance reads from merge_passes.py, the 0.011 F1 change needs the recomputation described in section 3(b)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          185,
+          185
+        ],
+        "section": "Recommendation"
+      },
+      "claim_text": "1. **Confirm the bug is real** (this report demonstrates F1 = 0 on a live",
+      "values": [
+        {
+          "quantity": "F1 demonstrated on a live re-run",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          203,
+          203
+        ],
+        "section": "Recommendation"
+      },
+      "claim_text": "   round-trip drift is ≤ 0.011 F1, so qualitative conclusions (H9: does",
+      "values": [
+        {
+          "quantity": "upper bound on F1 drift from the round-trip",
+          "value_verbatim": "≤ 0.011",
+          "value_parsed": 0.011,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Bound marker retained in value_verbatim (instrument v1.2 amendment 5 spirit): the claim is an upper bound, not an equality."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          213
+        ],
+        "section": "Recommendation / proposed Fix 1 patch"
+      },
+      "claim_text": "If a minimal, low-risk patch is preferred over Fix 2 despite the ≤ 0.011 F1",
+      "values": [
+        {
+          "quantity": "upper bound on F1 drift from the round-trip",
+          "value_verbatim": "≤ 0.011",
+          "value_parsed": 0.011,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Bound marker retained in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          244,
+          244
+        ],
+        "section": "Recommendation / proposed regression test"
+      },
+      "claim_text": "  (EPSG:32635) with UTM-magnitude coordinates (easting > 100 000);",
+      "values": [
+        {
+          "quantity": "minimum easting asserted by the proposed regression test",
+          "value_verbatim": "100 000",
+          "value_parsed": 100000,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_analyse_diversity_crs.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Proposed assertion threshold; tests/test_analyse_diversity_crs.py now exists in the working tree, so the figure can be checked against the landed test (non-JSON anchor, routed to triage)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          256,
+          256
+        ],
+        "section": "Reproduction notes"
+      },
+      "claim_text": "(single-buffer F1, geometry diffs, no bootstrap — each well under 30 s),",
+      "values": [
+        {
+          "quantity": "upper bound on wall-clock runtime per local check",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "s",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Wall-clock assertion about checks run interactively on amd-tower; no committed artefact records the timings."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          258,
+          259
+        ],
+        "section": "Reproduction notes"
+      },
+      "claim_text": "diversity CSVs/reports (which involves 1000-iteration BCa bootstraps and\n10 000-permutation tests per condition) **must be run on sapphire**, not",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, diversity regeneration",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": null
+        },
+        {
+          "quantity": "permutation count per condition, diversity regeneration",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          275,
+          275
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "the mislabel is a post-`8c8e101fc` live bug producing F1 = 0, that the",
+      "values": [
+        {
+          "quantity": "F1 produced by the post-8c8e101fc code path",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Changelog restatement of the section-1 finding; the 'Original publication' entry is not a before/after correction table, so the values are treated as live rather than historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          277,
+          278
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "unreproducible from on-disk data, and that the two candidate fixes differ\nby up to 0.011 F1. Concluded: report-only, no code change; recommend Fix 2",
+      "values": [
+        {
+          "quantity": "candidate fixes considered",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "maximum F1 difference between the two candidate fixes",
+          "value_verbatim": "0.011",
+          "value_parsed": 0.011,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Changelog restatement of section 3(b); the fix count is self-referential to that section."
+    }
+  ]
+}

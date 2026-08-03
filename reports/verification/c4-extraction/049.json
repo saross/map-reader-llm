@@ -1,0 +1,1087 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/results-summary-session-58.md",
+    "git_blob": "40bd0f3b893f",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": { "lines": [309, 309], "section": "9. Single-Pass T=0.0 Rerun" },
+      "claim_text": "Corrected rerun of single-pass-384 at T=0.0 (was T=1.0 due to E44).",
+      "values": [
+        {
+          "quantity": "temperature as run, corrected single-pass-384 rerun (H11)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": null
+        },
+        {
+          "quantity": "temperature of the superseded original single-pass-384 runs (quoted 'was' value)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b049] Scope decisions for this batch (instrument rule 5, logged not silent): erratum identifiers (E42, E43, E44), observation identifiers (Obs 148, 190, 191, 192, 193), session numbers (Sessions 56, 57, 58), the hypothesis identifier H11, the phase label 'Phase 3d', and numerals inside condition, study, and file names ('single-pass-384', 'consensus-384', 'lib_llm_metadata.py', '1-of-30', '1-of-5', '4-of-5', '3-of-5', 'N=30' where used as a condition reference at line 355) are excluded as identifiers rather than asserted facts. Section headings at line 307 ('T=0.0') and line 368 ('N=5') are excluded as duplicates of the adjacent prose claims extracted at lines 309-310 and 370-371. Lines 388-389 (Obs 191, Obs 192) carry no in-scope numeric value. Assigned range starts at current line 306; the start boundary was respected and no span begins earlier. Claim-specific: per instrument rule 3, the quoted 'was T=1.0' side is historical; the original T=1.0 single-pass-384 runs are not present under outputs/ (only the corrected rerun at outputs/retest/h11-single-pass-384-t0), so no live anchor exists for that side."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [310, 310], "section": "9. Single-Pass T=0.0 Rerun" },
+      "claim_text": "10 runs × 487 tiles, Flash MINIMAL, deterministic (T=0.0).",
+      "values": [
+        {
+          "quantity": "run count, corrected single-pass-384 T=0.0 rerun",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        },
+        {
+          "quantity": "tile count processed per run, corrected single-pass-384 T=0.0 rerun (full evaluation area)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.meta.json#$.execution_stats.items_processed",
+          "method": null
+        },
+        {
+          "quantity": "temperature as run, corrected single-pass-384 T=0.0 rerun",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.meta.json#$.configuration.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/h11-single-pass-384-t0/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Run count anchored to the retest study manifest; per-run tile count and temperature reached by cross-file locators into run_1's detection meta (v1.2 amendment 2). This is a retest-era study, so the tile count is a verifiable items_processed scalar (known-traps note); no token claim is made here."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [312, 314], "section": "9. Single-Pass T=0.0 Rerun" },
+      "claim_text": "The consensus sweep shows best F1 ≈ 0.552 at 5-of-10 — substantially\nbelow the consensus results above, as expected for a single-pass MINIMAL\nconfiguration without HIGH thinking.",
+      "values": [
+        {
+          "quantity": "best F1 at the 20 m buffer, single-pass-384 T=0.0 consensus sweep",
+          "value_verbatim": "≈ 0.552",
+          "value_parsed": 0.552,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima.global_optimum.f1",
+          "method": null
+        },
+        {
+          "quantity": "vote threshold at the sweep optimum, single-pass-384 T=0.0 rerun",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.optima.global_optimum.threshold",
+          "method": null
+        },
+        {
+          "quantity": "pool size at the sweep optimum, single-pass-384 T=0.0 rerun",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.optima.global_optimum.pool_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-single-pass-t0-rerun/consensus-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approximation marker retained inside value_verbatim (v1.2 amendment 5). The document expresses the optimum as '5-of-10'; the two component numerals are extracted as separate values against the report's recorded global-optimum threshold and pool size. No adjudication of the sweep's argmax attempted (instrument rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [321, 321], "section": "10. Configuration Audit Summary" },
+      "claim_text": "Comprehensive audit of 1,740 runs across 239 conditions (Session 57):",
+      "values": [
+        {
+          "quantity": "run count audited, Session 57 configuration audit",
+          "value_verbatim": "1,740",
+          "value_parsed": 1740,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "condition count audited, Session 57 configuration audit",
+          "value_verbatim": "239",
+          "value_parsed": 239,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No artefact anchor located. The only visible source is the prose audit reports/configuration-audit-2026-03-25-v2.md (with v1 at reports/configuration-audit-2026-03-25.md), and instrument rule 2 forbids anchoring prose to prose. results/runs-manifest.json is study-level (31 study entries, not individual runs) and results/conditions-manifest.json carries 322 condition entries from later re-scorings, so neither matches this Session-57 audit's scope; triage should chase the audit report to a run-level artefact."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [323, 323], "section": "10. Configuration Audit Summary" },
+      "claim_text": "**173/174** multi-run conditions internally consistent (1 intentional exception)",
+      "values": [
+        {
+          "quantity": "multi-run conditions found internally consistent, Session 57 audit",
+          "value_verbatim": "173",
+          "value_parsed": 173,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "multi-run conditions audited for internal consistency, Session 57 audit",
+          "value_verbatim": "174",
+          "value_parsed": 174,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "intentional internal-consistency exceptions, Session 57 audit",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same provenance as the 1,740/239 claim: prose audit only. Searched results/ and reports/ for a machine-readable consistency-check artefact accompanying reports/configuration-audit-2026-03-25-v2.md and found none (reports/verifier-completeness-audit-2026-05-06.json is a different, later audit)."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [324, 326], "section": "10. Configuration Audit Summary" },
+      "claim_text": "**E42 corrected**: metadata bug in `lib_llm_metadata.py` caused incorrect\n  model attribution. Pro proposer runs confirmed genuine via 3 independent\n  sources. 22 bugs fixed across 11 files.",
+      "values": [
+        {
+          "quantity": "independent sources used to confirm Pro proposer model attribution (E42 remediation)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "bugs fixed during E42 remediation",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "files touched by the E42 bug fixes",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The visible source is the prose audit reports/configuration-audit-2026-03-25-v2.md, which describes a corrected model-verification procedure; rule 2 forbids prose-to-prose anchoring. The bug and file counts are git-history assertions with no committed artefact locator, so they cannot be anchored mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [327, 329], "section": "10. Configuration Audit Summary" },
+      "claim_text": "**E43**: consensus-384 executed at T=1.0 instead of T=0.7 (config\n  propagation failure). 30 runs affected. Data preserved as T=1.0\n  sensitivity data. Corrected baseline produced.",
+      "values": [
+        {
+          "quantity": "temperature actually executed, consensus-384 (E43)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": null
+        },
+        {
+          "quantity": "temperature the consensus-384 study definition specified",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h11-384-consensus.yaml#$.carried_forward.optimal_temperature",
+          "method": null
+        },
+        {
+          "quantity": "run count affected by E43, consensus-384",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        },
+        {
+          "quantity": "temperature label of the preserved E43 sensitivity dataset (restatement of the executed temperature)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.7 here is what the STUDY definition specified, not what the preregistration specifies, so the study YAML is the correct anchor (the v1.1 calibration rule applies only to registration claims). Doubt flagged per the batch instruction: the top-of-file banner (2026-08-02, E72) declares this document's temperature-sensitivity section confounded and superseded; this bullet asserts a configuration fact about E43 rather than a temperature score, so it is retained as a live claim, but triage should be aware the banner touches the same erratum. Fourth value is the same asserted temperature restated within the span, kept for full enumeration (rule 1)."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [330, 331], "section": "10. Configuration Audit Summary" },
+      "claim_text": "**E44**: single-pass-384 same bug. 10 runs affected. Corrected T=0.0\n  rerun completed.",
+      "values": [
+        {
+          "quantity": "run count affected by E44, single-pass-384",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        },
+        {
+          "quantity": "temperature of the corrected single-pass-384 rerun",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.meta.json#$.configuration.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/h11-single-pass-384-t0/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Proxy anchor flagged: the original T=1.0 single-pass-384 runs are not present under outputs/ (searched outputs/h11/ and outputs/retest/), so the affected-run count is anchored to the 1:1 corrected rerun's study manifest rather than to the affected runs themselves. Flagging rather than dropping, per the instrument's over-inclusion rule."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [332, 332], "section": "10. Configuration Audit Summary" },
+      "claim_text": "**12 runs** used Pro model (proposers only); 1,728 used Flash.",
+      "values": [
+        {
+          "quantity": "run count using the Pro model, Session 57 audit inventory",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count using the Flash model, Session 57 audit inventory",
+          "value_verbatim": "1,728",
+          "value_parsed": 1728,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prose audit (reports/configuration-audit-2026-03-25-v2.md) is the only visible source. results/runs-manifest.json is study-level and carries no per-run model field, so no len: filter anchor is expressible. The two counts sum to the 1,740 asserted at line 321, but both operands are document-internal, so an arithmetic anchor is not available either."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [333, 333], "section": "10. Configuration Audit Summary" },
+      "claim_text": "Pro verifier matrix now complete (10 conditions evaluated, Session 58).",
+      "values": [
+        {
+          "quantity": "condition count evaluated in the Pro verifier matrix",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Ambiguous referent flagged rather than dropped: 'conditions evaluated' could mean Pro-verifier cells specifically or the completed proposer × verifier matrix as a whole. results/conditions-manifest.json holds pv-diag-384 conditions whose verifier_config.model is the Pro preview model, but a study-scoped count would need a compound filter over the condition_id prefix that is not reliably expressible as a mechanical locator here."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [334, 336], "section": "10. Configuration Audit Summary" },
+      "claim_text": "Pro verifier improves Flash HIGH text 4-of-5 by +0.015 F1 (0.879 vs\n  0.864) but has minimal effect on Pro proposer output (all verifiers\n  ≈0.850).",
+      "values": [
+        {
+          "quantity": "ΔF1 at 20 m, Flash HIGH text 4-of-5 with Pro medium verifier minus the same pool with Flash minimal verifier",
+          "value_verbatim": "+0.015",
+          "value_parsed": 0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/conditions-manifest.json",
+              "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-pro-vf-4of5')].metrics.per_buffer['20'].f1"
+            },
+            {
+              "name": "b",
+              "file": "results/conditions-manifest.json",
+              "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-4of5')].metrics.per_buffer['20'].f1"
+            }
+          ]
+        },
+        {
+          "quantity": "F1 at 20 m, Flash HIGH text 4-of-5 proposer with Pro medium verifier",
+          "value_verbatim": "0.879",
+          "value_parsed": 0.879,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-pro-vf-4of5')].metrics.per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 20 m, Flash HIGH text 4-of-5 proposer with Flash minimal verifier",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-4of5')].metrics.per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "collective F1 at 20 m across all verifiers applied to the Pro proposer output",
+          "value_verbatim": "≈0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.2 amendment 1 observed: the delta carries its own expression and operands, and the two operand values are separately method 'read' with their own paths so they are never compared against their own difference. The ≈0.850 value is a collective approximation over three Pro-proposer conditions (pv-diag-384::verified-adv-pro-text-pro-vf-3of5, ::verified-adv-pro-text-medium-vf-3of5, ::verified-adv-pro-text-flash-vf-3of5, listed individually in Appendix A) with no single locator, so it takes an explicit anchor-unknown method rather than a misleading path. Anchoring to results/conditions-manifest.json follows rule 2's standard-artefact clause; note the manifest reflects later re-scorings, so scope may differ from the Session-58 evaluation — no adjudication attempted."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [343, 344], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "The Phase 3d pilot (single-pass, 150px) found ~13% image-only mound\ndetections, suggesting a cross-modal union could boost recall.",
+      "values": [
+        {
+          "quantity": "pixel size asserted for the Phase 3d pilot configuration",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of mound detections that were image-only, Phase 3d pilot",
+          "value_verbatim": "~13%",
+          "value_parsed": 13.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Phase 3d pilot figures are reported in prose (results/phase3d-pilot-results.md, results/phase3d-union-results.md, results/phase3d-pilot-extensions.md); rule 2 forbids prose-to-prose anchoring, and no matched-detection JSON for the pilot was located under results/. '150px' is extracted because it is asserted as the pilot's configuration rather than used as a condition name (rule 5 boundary, doubt flagged); detection metas record configuration.tile_size as null, so no mechanical anchor exists for a pixel size in any case. Approximation marker retained verbatim (v1.2 amendment 5)."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [344, 346], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "At the\ncurrent production scale (384px, HIGH thinking, N=30 consensus), this\ncomplementarity has nearly vanished:",
+      "values": [
+        {
+          "quantity": "tile pixel size asserted for the current production scale",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "pass count of the production text consensus pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='retest-phase3a-high::text-high-t0.7-n30-22of30')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'384px' is asserted here as the production tile scale rather than used as a bare condition or path name, so it is extracted (rule 5 boundary); detection metas under outputs/ record configuration.tile_size as null and the only other occurrences are inside file paths such as inputs/vectors/bounds/384/, which rule 5 excludes — hence anchor-unknown for that value. The N=30 pass count is anchored to a 30-pass Flash HIGH text condition in the standard conditions manifest."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [348, 348], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "| Proposer pool | Matched refs | % of 572 |",
+      "values": [
+        {
+          "quantity": "reference mound total used as the denominator of the cross-modal table",
+          "value_verbatim": "572",
+          "value_parsed": 572,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table-header denominator extracted as an asserted count (rule 5's name-and-fact clause). Doubt flagged: this document's own preamble at line 17 (outside the assigned range) states 569 reference mounds, so the provenance of the 572 denominator is unclear — possibly a differently scoped or differently dated reference set. Anchored to the reference GeoJSON feature count without any match/mismatch adjudication (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [350, 350], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "| Text 1-of-30 | 419 | 73.3% |",
+      "values": [
+        {
+          "quantity": "matched reference mounds, text 1-of-30 proposer pool",
+          "value_verbatim": "419",
+          "value_parsed": 419,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "matched reference mounds as a percentage of the 572 denominator, text 1-of-30 proposer pool",
+          "value_verbatim": "73.3%",
+          "value_parsed": 73.3,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed artefact located for this Session-58 production-scale cross-modal table. Searched results/ for union or matched-reference JSON; results/verifier-robustness/pool_recall_ceilings.json records pool recall ceilings but not this matched-reference breakdown, and results/phase3d-union-results.md is prose about the earlier pilot. The percentage would follow from the row's own count over the header's 572, but both operands are document-internal, so no mechanical arithmetic anchor exists. Recovering these values would require re-running pool-versus-ground-truth matching at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [351, 351], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "| Image 1-of-5 | 383 | 67.0% |",
+      "values": [
+        {
+          "quantity": "matched reference mounds, image 1-of-5 proposer pool",
+          "value_verbatim": "383",
+          "value_parsed": 383,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "matched reference mounds as a percentage of the 572 denominator, image 1-of-5 proposer pool",
+          "value_verbatim": "67.0%",
+          "value_parsed": 67.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same provenance gap as the text 1-of-30 row: no committed matched-reference artefact for the Session-58 cross-modal check was located under results/ or outputs/."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [352, 352], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "| Text 1-of-30 ∪ Image 1-of-5 | 421 | **73.6%** |",
+      "values": [
+        {
+          "quantity": "matched reference mounds, union of the text 1-of-30 and image 1-of-5 proposer pools",
+          "value_verbatim": "421",
+          "value_parsed": 421,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "union matched reference mounds as a percentage of the 572 denominator",
+          "value_verbatim": "73.6%",
+          "value_parsed": 73.6,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same provenance gap as the other rows of this table. The bold markers around the percentage are formatting, not part of the value."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [353, 353], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "| Image-only (not in text 1-of-30) | 2 | 0.3% |",
+      "values": [
+        {
+          "quantity": "reference mounds matched by the image pool only (not by text 1-of-30)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "image-only matched reference mounds as a percentage of the 572 denominator",
+          "value_verbatim": "0.3%",
+          "value_parsed": 0.3,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same provenance gap as the other rows of this table."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [355, 356], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "Adding the image track to text N=30 contributes just **2 additional\nmounds** (+0.3% recall).",
+      "values": [
+        {
+          "quantity": "additional reference mounds contributed by adding the image track to the text N=30 pool",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "recall gain from adding the image track to the text N=30 pool",
+          "value_verbatim": "+0.3%",
+          "value_parsed": 0.3,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prose restatement of the image-only table row at line 353; same missing-artefact position. 'N=30' in this span is a condition reference and is excluded per rule 5 (the same pass count is extracted as a parameter at lines 344-346)."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [356, 357], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "The text track at scale already captures nearly\neverything the image track finds, plus 38 mounds the image track misses.",
+      "values": [
+        {
+          "quantity": "reference mounds matched by the text track only (missed by the image track)",
+          "value_verbatim": "38",
+          "value_parsed": 38,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Would follow from the table above as union minus image-pool matches, but both operands are document-internal prose/table values, so no mechanical arithmetic anchor is available; no committed matched-reference artefact for this check was located."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [360, 361], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "The Phase 3d pilot used single-pass\nproposers on 60 tiles.",
+      "values": [
+        {
+          "quantity": "tile count of the Phase 3d pilot",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "results/phase3d-pilot-results.md (prose) describes the pilot as reusing existing Phase 2d detection outputs rather than issuing new runs, and no manifest for a 60-tile pilot subset was located under outputs/ or studies/. Rule 2 forbids anchoring to the prose report; triage will need to chase the pilot's tile selection to an artefact."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [362, 364], "section": "11. Cross-Modal Complementarity Check" },
+      "claim_text": "With 30-pass\nconsensus and HIGH thinking, the text track's recall ceiling rose enough\nto subsume nearly all of the image track's unique contributions.",
+      "values": [
+        {
+          "quantity": "pass count of the production text consensus pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='retest-phase3a-high::text-high-t0.7-n30-22of30')].n_passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": "$.conditions[?(@.condition_id=='retest-phase3a-high::text-high-t0.7-n30-22of30')].n_passes"
+      },
+      "method": "read",
+      "notes": "Restates the N=30 parameter asserted at lines 344-346; extracted separately for full enumeration. Anchored to a 30-pass Flash HIGH text condition in the standard conditions manifest."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [370, 371], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "Full factorial results — every proposer × verifier × thinking combination\ntested at N=5 consensus:",
+      "values": [
+        {
+          "quantity": "consensus pass count for the proposer × verifier matrix",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-pro-vf-4of5')].n_passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-pro-vf-4of5')].n_passes"
+      },
+      "method": "read",
+      "notes": "The same 'N=5' appears in the Appendix A heading at line 368, excluded as a heading duplicate (see the batch note). Anchored to the n_passes of a representative matrix cell."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [375, 375], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "| Flash HIGH text | Pro medium | **0.879** | 0.926 | 0.837 |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, Flash HIGH text proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.879",
+          "value_parsed": 0.879,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-pro-vf-4of5')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision at 20 m, Flash HIGH text proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.926",
+          "value_parsed": 0.926,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-pro-vf-4of5')].metrics.per_buffer['20'].precision",
+          "method": null
+        },
+        {
+          "quantity": "recall at 20 m, Flash HIGH text proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.837",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-pro-vf-4of5')].metrics.per_buffer['20'].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Appendix A rows mapped to conditions-manifest entries by proposer pool, verifier model and thinking level, and the best-F1 vote threshold recorded for that cell; this row maps to pv-diag-384::verified-adv-text-pro-vf-4of5 (pool flash-high-text-1of5, verifier gemini-3.1-pro-preview medium, n_passes 5, vote_threshold 4). Two standing caveats for all eight Appendix A rows: (a) the buffer is taken as 20 m per the document's preamble default; (b) results/conditions-manifest.json reflects later re-scorings, so scope or ground-truth revisions may differ from the Session-58 evaluation — flagged, not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [376, 376], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "| Flash HIGH text | Flash minimal | 0.864 | 0.915 | 0.818 |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, Flash HIGH text proposer with Flash minimal verifier (N=5, best threshold)",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-4of5')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision at 20 m, Flash HIGH text proposer with Flash minimal verifier (N=5, best threshold)",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-4of5')].metrics.per_buffer['20'].precision",
+          "method": null
+        },
+        {
+          "quantity": "recall at 20 m, Flash HIGH text proposer with Flash minimal verifier (N=5, best threshold)",
+          "value_verbatim": "0.818",
+          "value_parsed": 0.818,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-4of5')].metrics.per_buffer['20'].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Maps to pv-diag-384::verified-adv-text-4of5 (pool flash-high-text-1of5, verifier gemini-3-flash-preview minimal, n_passes 5, vote_threshold 4). Standing caveats as recorded on the first Appendix A row."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [377, 377], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "| Flash HIGH text | Flash medium | 0.859 | 0.878 | 0.841 |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, Flash HIGH text proposer with Flash medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.859",
+          "value_parsed": 0.859,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-medium-vf-4of5')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision at 20 m, Flash HIGH text proposer with Flash medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.878",
+          "value_parsed": 0.878,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-medium-vf-4of5')].metrics.per_buffer['20'].precision",
+          "method": null
+        },
+        {
+          "quantity": "recall at 20 m, Flash HIGH text proposer with Flash medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.841",
+          "value_parsed": 0.841,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-medium-vf-4of5')].metrics.per_buffer['20'].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Maps to pv-diag-384::verified-adv-text-medium-vf-4of5 (pool flash-high-text-1of5, verifier gemini-3-flash-preview medium, n_passes 5, vote_threshold 4). Standing caveats as recorded on the first Appendix A row."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [378, 378], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "| Flash HIGH text | Flash HIGH | 0.853 | 0.867 | 0.839 |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, Flash HIGH text proposer with Flash HIGH verifier (N=5, best threshold)",
+          "value_verbatim": "0.853",
+          "value_parsed": 0.853,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-high-vf-4of5')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision at 20 m, Flash HIGH text proposer with Flash HIGH verifier (N=5, best threshold)",
+          "value_verbatim": "0.867",
+          "value_parsed": 0.867,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-high-vf-4of5')].metrics.per_buffer['20'].precision",
+          "method": null
+        },
+        {
+          "quantity": "recall at 20 m, Flash HIGH text proposer with Flash HIGH verifier (N=5, best threshold)",
+          "value_verbatim": "0.839",
+          "value_parsed": 0.839,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-high-vf-4of5')].metrics.per_buffer['20'].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Maps to pv-diag-384::verified-adv-text-high-vf-4of5 (pool flash-high-text-1of5, verifier gemini-3-flash-preview high, n_passes 5, vote_threshold 4). Standing caveats as recorded on the first Appendix A row."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [379, 379], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "| Pro HIGH text | Pro medium | 0.851 | 0.957 | 0.765 |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, Pro HIGH text proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.851",
+          "value_parsed": 0.851,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-pro-vf-3of5')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision at 20 m, Pro HIGH text proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.957",
+          "value_parsed": 0.957,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-pro-vf-3of5')].metrics.per_buffer['20'].precision",
+          "method": null
+        },
+        {
+          "quantity": "recall at 20 m, Pro HIGH text proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.765",
+          "value_parsed": 0.765,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-pro-vf-3of5')].metrics.per_buffer['20'].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Maps to pv-diag-384::verified-adv-pro-text-pro-vf-3of5 (pool pro-high-text-1of5, verifier gemini-3.1-pro-preview medium, n_passes 5, vote_threshold 3). Standing caveats as recorded on the first Appendix A row."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [380, 380], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "| Pro HIGH text | Flash medium | 0.850 | 0.954 | 0.765 |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, Pro HIGH text proposer with Flash medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-medium-vf-3of5')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision at 20 m, Pro HIGH text proposer with Flash medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.954",
+          "value_parsed": 0.954,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-medium-vf-3of5')].metrics.per_buffer['20'].precision",
+          "method": null
+        },
+        {
+          "quantity": "recall at 20 m, Pro HIGH text proposer with Flash medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.765",
+          "value_parsed": 0.765,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-medium-vf-3of5')].metrics.per_buffer['20'].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Maps to pv-diag-384::verified-adv-pro-text-medium-vf-3of5 (pool pro-high-text-1of5, verifier gemini-3-flash-preview medium, n_passes 5, vote_threshold 3). Standing caveats as recorded on the first Appendix A row."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [381, 381], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "| Pro HIGH text | Flash minimal | 0.849 | 0.957 | 0.763 |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, Pro HIGH text proposer with Flash minimal verifier (N=5, best threshold)",
+          "value_verbatim": "0.849",
+          "value_parsed": 0.849,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-flash-vf-3of5')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision at 20 m, Pro HIGH text proposer with Flash minimal verifier (N=5, best threshold)",
+          "value_verbatim": "0.957",
+          "value_parsed": 0.957,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-flash-vf-3of5')].metrics.per_buffer['20'].precision",
+          "method": null
+        },
+        {
+          "quantity": "recall at 20 m, Pro HIGH text proposer with Flash minimal verifier (N=5, best threshold)",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-text-flash-vf-3of5')].metrics.per_buffer['20'].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Maps to pv-diag-384::verified-adv-pro-text-flash-vf-3of5 (pool pro-high-text-1of5, verifier gemini-3-flash-preview minimal, n_passes 5, vote_threshold 3). Standing caveats as recorded on the first Appendix A row."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [382, 382], "section": "Appendix A: Proposer × Verifier Complete Matrix (N=5, best F1)" },
+      "claim_text": "| Pro HIGH image | Pro medium | 0.707 | 0.710 | 0.703 |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, Pro HIGH image proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.707",
+          "value_parsed": 0.707,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-image-pro-vf-3of5')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision at 20 m, Pro HIGH image proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.710",
+          "value_parsed": 0.71,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-image-pro-vf-3of5')].metrics.per_buffer['20'].precision",
+          "method": null
+        },
+        {
+          "quantity": "recall at 20 m, Pro HIGH image proposer with Pro medium verifier (N=5, best threshold)",
+          "value_verbatim": "0.703",
+          "value_parsed": 0.703,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-pro-image-pro-vf-3of5')].metrics.per_buffer['20'].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Maps to pv-diag-384::verified-adv-pro-image-pro-vf-3of5 (pool pro-high-image-1of5, verifier gemini-3.1-pro-preview medium, n_passes 5, vote_threshold 3). Standing caveats as recorded on the first Appendix A row."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [386, 387], "section": "Appendix B: Key Observations from This Session" },
+      "claim_text": "**Obs 190**: Buffer distance sensitivity — image tracks gain 0.09–0.15\n  F1 at relaxed buffers due to modality-dependent spatial precision",
+      "values": [
+        {
+          "quantity": "lower bound of the F1 gain for image tracks at relaxed buffers",
+          "value_verbatim": "0.09",
+          "value_parsed": 0.09,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the F1 gain for image tracks at relaxed buffers",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Range endpoints share the trailing 'F1' label (v1.2 amendment 6 acknowledged; F1 is dimensionless so no unit bridging is needed). The supporting figures live in this document's own buffer-sensitivity section (outside the assigned range) and in the Obs 190 entry of the working-notes log — both prose, which rule 2 forbids as anchors. Recovering the range would need a scripted sweep over per_buffer metrics for the image conditions in results/conditions-manifest.json; triage to decide the bounds' definition."
+    },
+    {
+      "claim_id": null,
+      "source": { "lines": [390, 390], "section": "Appendix B: Key Observations from This Session" },
+      "claim_text": "**Obs 193**: F1 > 0.9 milestone and precision–recall operating points",
+      "values": [
+        {
+          "quantity": "F1 milestone threshold asserted as reached this session",
+          "value_verbatim": "0.9",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged and included per the instrument's over-inclusion rule: this is an observation title rather than a measured value, and the '0.9' functions as a milestone threshold. Note the tension with this document's own leaderboard (top F1 0.890, outside the assigned range) — flagged, not adjudicated (rule 4). No anchor proposed because the referent condition is unnamed in the span."
+    }
+  ]
+}

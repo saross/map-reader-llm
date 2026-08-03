@@ -1,0 +1,2203 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/configuration-audit-2026-04-15-h8-v2.md",
+    "git_blob": "ff8b4bb5d14c",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          6
+        ],
+        "section": "Header"
+      },
+      "claim_text": "**Configs audited**: `prompts/configs/h8/v2/detect_h8_*_v2.json` (7 files)",
+      "values": [
+        {
+          "quantity": "config file count, H8 v2 library conditions",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b034] Scope decisions for this document, per instrument v1.2 rule 5: excluded dates (2026-04-15), errata/decision/blocker/warning identifiers (E11/E27/E33/E41/E49/E50/E51, Decision 2, B1, W1-W3, Obs 20), preregistration line-number citations (lines 737-831, 764, 813, 815, 779-797), phase references (Phase 2.5, 2.6-2.7), the SDK version string `google-genai 1.73.1`, and numbers embedded in names/paths (gemini-3-flash, h8/v2, pool_160_hp4hn4 / hp8hn8 / hp16hn16, h10-384, scale-4/8/16/32, tiles_384, bounds/384). The seven-config count itself is extracted as a claim. This claim: the seven per-condition config files are enumerated one-per-level in the study YAML factor table; the literal glob count is a directory listing of prompts/configs/h8/v2/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          11
+        ],
+        "section": "Header"
+      },
+      "claim_text": "**Original verdict**: BLOCKED on one dimensional-uniformity blocker",
+      "values": [
+        {
+          "quantity": "blocker count, original audit verdict",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of blocker headings in this document (section 'Blockers (original)' carries B1 only). No external artefact records it; triage may treat as documentation-internal."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          15
+        ],
+        "section": "Header / resolution applied"
+      },
+      "claim_text": "`pool_160_hp16hn16` re-mined with the filter. All 48 new crops are\n150 × 150. Pre-filter pools archived to",
+      "values": [
+        {
+          "quantity": "new crop count, re-mined pool_160_hp8hn8 + pool_160_hp16hn16",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp8hn8/pool_metadata.json",
+              "path": "$.hp_selected"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp8hn8/pool_metadata.json",
+              "path": "$.hn_selected"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+              "path": "$.hp_selected"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+              "path": "$.hn_selected"
+            }
+          ]
+        },
+        {
+          "quantity": "crop width, re-mined pools",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_size",
+          "method": null
+        },
+        {
+          "quantity": "crop height, re-mined pools",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Crop dimensions are asserted of the PNG files themselves; the pool metadata records the nominal crop_size the miner wrote them at (non-JSON PNG anchors are legitimate per instrument v1.1 and route to triage)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          27
+        ],
+        "section": "1. Preregistration requirements"
+      },
+      "claim_text": "1. **Seven library conditions** at preregistered compositions (§H8 line 764):\n   Pure Positive Canon (7), Canonical (9), +HP (13), Scale-4 (13), Scale-8 (17),\n   Scale-16 (25), Scale-32 (41). **HARD.**",
+      "values": [
+        {
+          "quantity": "preregistered library condition count, H8",
+          "value_verbatim": "Seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered library size, Pure Positive Canon",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered library size, Canonical",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered library size, +HP",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered library size, Scale-4",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered library size, Scale-8",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered library size, Scale-16",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered library size, Scale-32",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.1 calibration rule: this is a claim about what the REGISTRATION specifies, so it anchors to the lodged preregistration (section H8), not to the executed configs. The same totals also appear in studies/h8-v2-library.yaml $.factors.library_composition.levels[*].composition.total, which is the what-was-run counterpart."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "1. Preregistration requirements"
+      },
+      "claim_text": "2. **1:1 HP:HN ratio** in scaling conditions (§H8 line 813). **HARD.**",
+      "values": [
+        {
+          "quantity": "preregistered hard-positive to hard-negative ratio, scaling conditions",
+          "value_verbatim": "1:1",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.1 calibration rule: registration-side claim, anchored to the lodged preregistration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "1. Preregistration requirements"
+      },
+      "claim_text": "3. **Availability constraint**: ≥16 HP and ≥16 HN for Scale-32 (§H8 line 815).",
+      "values": [
+        {
+          "quantity": "preregistered minimum hard-positive availability, Scale-32",
+          "value_verbatim": "≥16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "preregistered minimum hard-negative availability, Scale-32",
+          "value_verbatim": "≥16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.1 calibration rule: registration-side availability constraint, anchored to the lodged preregistration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "1. Preregistration requirements"
+      },
+      "claim_text": "   **HARD** — resolved by v2 pool (108 HP / 57 HN available).",
+      "values": [
+        {
+          "quantity": "hard-positive candidates available, v2 pool_160 (pre-filter)",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hp_available",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative candidates available, v2 pool_160 (pre-filter)",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hn_available",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/pool_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "These are the pre-edge-filter availability figures current at audit time; the later 'Re-mine results' section records them dropping to 102 / 52. Anchored to the archived pre-filter pool metadata rather than the live pool so the quoted figures are not compared against the post-filter artefact. Same values also at outputs/h10/example-pools-v2/pool_160_hp4hn4/pool_metadata.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          36
+        ],
+        "section": "1. Preregistration requirements"
+      },
+      "claim_text": "6. **Temperature** and **thinking level**: originally T=0.0 / minimal per H7\n   carry-forward; **E51-modified** to T=0.7 / thinking=high (production\n   carry-forward aligned with H10 v2).",
+      "values": [
+        {
+          "quantity": "temperature, original H7 carry-forward (superseded)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "temperature, E51-modified H8 v2 as run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2/detect_h8_scale-32_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'originally T=0.0' is the quoted-old-value side of an in-body correction and is marked historical; the live value is the E51-modified 0.7 carried by all seven H8 v2 configs (scale-32 shown). Thinking level is non-numeric and not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          38
+        ],
+        "section": "1. Preregistration requirements"
+      },
+      "claim_text": "7. **K passes**: originally 10; **E51-modified** to 5 (production n=5\n   consensus).",
+      "values": [
+        {
+          "quantity": "K passes, preregistered original (superseded)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "K passes, E51-modified H8 v2 as run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": null
+        },
+        {
+          "quantity": "consensus n, production carry-forward",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'originally 10' is the quoted-old-value side of an in-body correction (historical). The two live values are the same quantity stated twice (K=5 and n=5 consensus)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "1. Preregistration requirements"
+      },
+      "claim_text": "8. **Tile size**: originally 512 px; **E41/E51-modified** to 384 px.",
+      "values": [
+        {
+          "quantity": "tile size, preregistered original (superseded)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile size, E41/E51-modified H8 v2 as run",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.tile_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'originally 512 px' is the quoted-old-value side of an in-body correction (historical)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          41
+        ],
+        "section": "1. Preregistration requirements"
+      },
+      "claim_text": "9. **Evaluation manifest**: **E50-modified** to H10 test set\n   (`inputs/calibration/h10-384/test_manifest.json`, 327 tiles).",
+      "values": [
+        {
+          "quantity": "tile count, H10 384 px test manifest",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "Manifest is a bare JSON array of tile records."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "2. Pairwise config diff"
+      },
+      "claim_text": "All seven configs were compared field-by-field.",
+      "values": [
+        {
+          "quantity": "config count compared field-by-field",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "2. Pairwise config diff (controlled fields)"
+      },
+      "claim_text": "**Controlled fields (identical across all 7)**:",
+      "values": [
+        {
+          "quantity": "config count asserted to share every controlled field",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "2. Pairwise config diff (controlled fields)"
+      },
+      "claim_text": "| `temperature` | `0.7` |",
+      "values": [
+        {
+          "quantity": "temperature, H8 v2 configs (asserted identical across all 7)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2/detect_h8_scale-32_v2.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": "Row asserts the field is identical across all seven configs; anchored to scale-32 as representative. The other six live at prompts/configs/h8/v2/detect_h8_*_v2.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "2. Pairwise config diff (controlled fields)"
+      },
+      "claim_text": "| `max_output_tokens` | `8192` |",
+      "values": [
+        {
+          "quantity": "max_output_tokens, H8 v2 configs (asserted identical across all 7)",
+          "value_verbatim": "8192",
+          "value_parsed": 8192,
+          "unit": "tokens",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2/detect_h8_scale-32_v2.json",
+        "path": "$.max_output_tokens"
+      },
+      "method": "read",
+      "notes": "Row asserts the field is identical across all seven configs; anchored to scale-32 as representative."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "2. Pairwise config diff (bookkeeping)"
+      },
+      "claim_text": "- `description`, `ordering_note`, `version` — one per condition",
+      "values": [
+        {
+          "quantity": "distinct bookkeeping-field values per condition",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubtful inclusion (instrument: include-and-flag). The assertion is that description / ordering_note / version are distinct across the seven configs; no single artefact records the distinctness count, it is a cross-file property of prompts/configs/h8/v2/detect_h8_*_v2.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          88
+        ],
+        "section": "3. Transmission check (scale-32 dimension failure)"
+      },
+      "claim_text": "- `hp_11.png` — 95 × 150 (edge-of-raster clip)",
+      "values": [
+        {
+          "quantity": "crop width, hp_11.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hp_11.png#image_width_px",
+          "method": null
+        },
+        {
+          "quantity": "crop height, hp_11.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hp_11.png#image_height_px",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hp_11.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Describes the pre-edge-filter pool state, preserved under archive/h10-v2-prefilter-pools/ when the pool was re-mined; anchored to the archived PNG rather than the live pool so the superseded dimensions are not compared against the replacement crop. Non-JSON crop-size PNG anchor is expected per instrument v1.1 and routes to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "3. Transmission check (scale-32 dimension failure)"
+      },
+      "claim_text": "- `hn_11.png` — 150 × 100 (edge-of-raster clip)",
+      "values": [
+        {
+          "quantity": "crop width, hn_11.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_11.png#image_width_px",
+          "method": null
+        },
+        {
+          "quantity": "crop height, hn_11.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_11.png#image_height_px",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_11.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-edge-filter pool state; anchored to the archived PNG (see the hp_11.png claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "3. Transmission check (scale-32 dimension failure)"
+      },
+      "claim_text": "- `hn_16.png` — 150 × 149 (1-pixel short)",
+      "values": [
+        {
+          "quantity": "crop width, hn_16.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_16.png#image_width_px",
+          "method": null
+        },
+        {
+          "quantity": "crop height, hn_16.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "149",
+          "value_parsed": 149,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_16.png#image_height_px",
+          "method": null
+        },
+        {
+          "quantity": "pixel shortfall against nominal crop size, hn_16.png",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/pool_metadata.json",
+              "path": "$.crop_size"
+            },
+            {
+              "name": "b",
+              "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_16.png",
+              "path": "image_height_px"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_16.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-edge-filter pool state; anchored to the archived PNG. The '1-pixel short' figure is the nominal crop_size (150) minus the actual height (149)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          93
+        ],
+        "section": "3. Transmission check"
+      },
+      "claim_text": "Every other crop across all three pools (pool_160_hp4hn4, pool_160_hp8hn8,\npool_160_hp16hn16) is exactly 150 × 150.",
+      "values": [
+        {
+          "quantity": "example-pool count, v2 pool_160 rungs",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "crop width, all other v2 pool crops",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_size",
+          "method": null
+        },
+        {
+          "quantity": "crop height, all other v2 pool crops",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The three-pool count is a directory count under outputs/h10/example-pools-v2/ (pool_160_hp4hn4, pool_160_hp8hn8, pool_160_hp16hn16); the dimension assertion is over every PNG in those pools, with the metadata crop_size as the mechanical proxy."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| Seven library compositions | MATCHES | All 7 totals and category counts verified |",
+      "values": [
+        {
+          "quantity": "library composition count verified",
+          "value_verbatim": "Seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        },
+        {
+          "quantity": "condition totals and category counts verified",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| 1:1 HP:HN ratio (scaling) | MATCHES | scale-4: 2:2; scale-8: 4:4; scale-16: 8:8; scale-32: 16:16 |",
+      "values": [
+        {
+          "quantity": "hard-positive count, scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[?(@.name=='scale-4')].composition.hard_positive",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative count, scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[?(@.name=='scale-4')].composition.hard_negative",
+          "method": null
+        },
+        {
+          "quantity": "hard-positive count, scale-8",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[?(@.name=='scale-8')].composition.hard_positive",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative count, scale-8",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[?(@.name=='scale-8')].composition.hard_negative",
+          "method": null
+        },
+        {
+          "quantity": "hard-positive count, scale-16",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[?(@.name=='scale-16')].composition.hard_positive",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative count, scale-16",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[?(@.name=='scale-16')].composition.hard_negative",
+          "method": null
+        },
+        {
+          "quantity": "hard-positive count, scale-32",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[?(@.name=='scale-32')].composition.hard_positive",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative count, scale-32",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[?(@.name=='scale-32')].composition.hard_negative",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row states four HP:HN pairs; each side is extracted separately so the harness can resolve a scalar per value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| Availability constraint | MATCHES | v2 pool_160: 108 HP / 57 HN; E51 resolves E11 |",
+      "values": [
+        {
+          "quantity": "hard-positive candidates available, v2 pool_160 (pre-filter)",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hp_available",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative candidates available, v2 pool_160 (pre-filter)",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hn_available",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/pool_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-edge-filter availability, as in the section-1 requirement; anchored to the archived pre-filter pool metadata."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| instruction_file = brief-text-image | MATCHES | All 7 |",
+      "values": [
+        {
+          "quantity": "config count sharing instruction_file",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          103
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| model = gemini-3-flash | MATCHES | All 7 |",
+      "values": [
+        {
+          "quantity": "config count sharing model",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| include_example_images = true | MATCHES | All 7 |",
+      "values": [
+        {
+          "quantity": "config count sharing include_example_images",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| temperature (T=0.7) | DELIBERATE DEVIATION (E51) | Was T=0.0 per H7; production carry-forward |",
+      "values": [
+        {
+          "quantity": "temperature, H8 v2 as run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": null
+        },
+        {
+          "quantity": "temperature, H7 carry-forward (superseded)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2/detect_h8_scale-32_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Was T=0.0 per H7' is the quoted-old-value side of the deviation note and is marked historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| K=5 passes | DELIBERATE DEVIATION (E51) | Was K=10; production n=5 consensus |",
+      "values": [
+        {
+          "quantity": "K passes, H8 v2 as run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": null
+        },
+        {
+          "quantity": "K passes, preregistered original (superseded)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "consensus n, production carry-forward",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Was K=10' is the quoted-old-value side of the deviation note (historical)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| tile_size = 384 px | DELIBERATE DEVIATION (E41/E51) | Was 512 px; 384 pathway closed by H11 |",
+      "values": [
+        {
+          "quantity": "tile size, H8 v2 as run",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "tile size, preregistered original (superseded)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Was 512 px' is the quoted-old-value side of the deviation note (historical). The trailing '384 pathway closed by H11' uses 384 as the pathway's name and is not extracted a second time."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| Manifest = H10 test set | DELIBERATE DEVIATION (E50) | Was 60-tile validation set; expanded to 327 |",
+      "values": [
+        {
+          "quantity": "tile count, prior validation manifest (superseded)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile count, H10 384 px test manifest",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Was 60-tile validation set' is the quoted-old-value side of the deviation note (historical); 327 is the live manifest length."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "4. Preregistration alignment"
+      },
+      "claim_text": "| 7 planned contrasts | MATCHES | Study YAML encodes all 7 including re-enabled S2, S3 |",
+      "values": [
+        {
+          "quantity": "planned contrast count, H8",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.analysis.planned_contrasts",
+          "method": null
+        },
+        {
+          "quantity": "planned contrast count encoded in study YAML",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.analysis.planned_contrasts",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The study YAML lists the contrasts under $.analysis.planned_contrasts; section 1 item 10 names them C1, C2, C3, S1, S2, S3, B1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          113
+        ],
+        "section": "4. Preregistration alignment (tally)"
+      },
+      "claim_text": "**Matches**: 8. **Deliberate deviations**: 5 (all in E41/E50/E51).\n**Undocumented deviations**: 0.",
+      "values": [
+        {
+          "quantity": "alignment rows verdict MATCHES",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "alignment rows verdict DELIBERATE DEVIATION",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "undocumented deviations",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Tally of the section-4 table rows of this document; no external artefact records it, and instrument rule 2 forbids anchoring prose to prose. Triage may resolve it against the table above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          118
+        ],
+        "section": "5. Dry-run validation"
+      },
+      "claim_text": "Ran `--dry-run` with `--mode realtime --service-tier flex --use-cache\n--skip-intent-check` against two configs (smallest and largest):",
+      "values": [
+        {
+          "quantity": "configs dry-run validated",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of the two dry-run subsections in this document (scale-32 and pure-positive-canon); no artefact records how many dry-runs were executed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "5. Dry-run validation (scale-32)"
+      },
+      "claim_text": "- Examples loaded: 41 ✓",
+      "values": [
+        {
+          "quantity": "example count loaded, scale-32",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2/detect_h8_scale-32_v2.json",
+        "path": "len:$.examples"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "5. Dry-run validation (scale-32)"
+      },
+      "claim_text": "- Tiles to process: 327 ✓",
+      "values": [
+        {
+          "quantity": "tile count to process, H10 384 px test manifest",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "5. Dry-run validation (pure-positive-canon)"
+      },
+      "claim_text": "- Examples loaded: 7 ✓",
+      "values": [
+        {
+          "quantity": "example count loaded, pure-positive-canon",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2/detect_h8_pure-positive-canon_v2.json",
+        "path": "len:$.examples"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          133
+        ],
+        "section": "5. Dry-run validation (pure-positive-canon)"
+      },
+      "claim_text": "- Tiles to process: 327 ✓",
+      "values": [
+        {
+          "quantity": "tile count to process, H10 384 px test manifest",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "6. Evaluation scope"
+      },
+      "claim_text": "| Test manifest size | 327 tiles |",
+      "values": [
+        {
+          "quantity": "tile count, H10 384 px test manifest",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "6. Evaluation scope"
+      },
+      "claim_text": "| Calibration manifest size (pool_160) | 160 tiles |",
+      "values": [
+        {
+          "quantity": "tile count, pool_160 calibration manifest",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/calibration_manifest_160.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "6. Evaluation scope"
+      },
+      "claim_text": "| Overlap (test ∩ calibration) | **0** |",
+      "values": [
+        {
+          "quantity": "tile overlap, test manifest intersect calibration manifest",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Set intersection of the tile ids in inputs/calibration/h10-384/test_manifest.json and inputs/calibration/h10-384/calibration_manifest_160.json; needs a script, not a read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          154
+        ],
+        "section": "7. Completeness"
+      },
+      "claim_text": "**Checked**: all 7 requirement items, all 7 configs against 8 transmission\nerror modes, pairwise diff across all fields, dry-run on smallest and largest\nconditions, evaluation-scope disjointness.",
+      "values": [
+        {
+          "quantity": "requirement items checked",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "config count checked",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        },
+        {
+          "quantity": "transmission error modes checked",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span. The requirement-item count is self-referential to section 1 of this document (which is numbered 1-10) and the error-mode count to the eight check columns of the section-3 transmission table; neither has an external artefact, so both take anchor-unknown. Only the config count resolves mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "Blockers (original) / B1"
+      },
+      "claim_text": "### B1. Three off-size crops in `pool_160_hp16hn16` (Scale-32 only)",
+      "values": [
+        {
+          "quantity": "off-size crop count, pre-filter pool_160_hp16hn16",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Requires reading every PNG under the archived pre-filter crops directory and counting those not 150x150."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          171
+        ],
+        "section": "Blockers (original) / B1"
+      },
+      "claim_text": "- `hp_11.png` (95 × 150), `hn_11.png` (150 × 100), `hn_16.png` (150 × 149)",
+      "values": [
+        {
+          "quantity": "crop width, hp_11.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hp_11.png#image_width_px",
+          "method": null
+        },
+        {
+          "quantity": "crop height, hp_11.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hp_11.png#image_height_px",
+          "method": null
+        },
+        {
+          "quantity": "crop width, hn_11.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_11.png#image_width_px",
+          "method": null
+        },
+        {
+          "quantity": "crop height, hn_11.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_11.png#image_height_px",
+          "method": null
+        },
+        {
+          "quantity": "crop width, hn_16.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_16.png#image_width_px",
+          "method": null
+        },
+        {
+          "quantity": "crop height, hn_16.png in pre-filter pool_160_hp16hn16",
+          "value_verbatim": "149",
+          "value_parsed": 149,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_16.png#image_height_px",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the section-3 dimension failures inside the blocker record; anchored to the archived pre-filter crops directory with per-value cross-file PNG locators."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          175
+        ],
+        "section": "Blockers (original) / B1"
+      },
+      "claim_text": "  \"three lower-quality new hard examples at Scale-32\". Interpretation of S3",
+      "values": [
+        {
+          "quantity": "off-size crop count, pre-filter pool_160_hp16hn16",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Doubtful inclusion (instrument: include-and-flag) - the numeral appears inside a quoted hypothetical alternative explanation, but it restates the three off-size crops as a fact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          183,
+          184
+        ],
+        "section": "Blocker B1 resolution"
+      },
+      "claim_text": "**Script change**: `scripts/build_example_pool.py` extended with three new\nfunctions (`_raster_shape`, `_crop_fully_in_bounds`, `filter_edge_candidates`)",
+      "values": [
+        {
+          "quantity": "new functions added to build_example_pool.py",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_example_pool.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (function definitions _raster_shape, _crop_fully_in_bounds, filter_edge_candidates); expected per instrument v1.1 and routed to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          194
+        ],
+        "section": "Blocker B1 resolution / re-mine results"
+      },
+      "claim_text": "- Filter rejected 6 HP candidates (108 → 102) and 5 HN candidates (57 → 52)",
+      "values": [
+        {
+          "quantity": "hard-positive candidates rejected by edge filter",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/pool_metadata.json",
+              "path": "$.hp_available"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+              "path": "$.hp_available"
+            }
+          ]
+        },
+        {
+          "quantity": "hard-positive candidates available, pre-filter",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/pool_metadata.json#$.hp_available",
+          "method": null
+        },
+        {
+          "quantity": "hard-positive candidates available, post-filter",
+          "value_verbatim": "102",
+          "value_parsed": 102,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hp_available",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative candidates rejected by edge filter",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c - d",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/pool_metadata.json",
+              "path": "$.hn_available"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+              "path": "$.hn_available"
+            }
+          ]
+        },
+        {
+          "quantity": "hard-negative candidates available, pre-filter",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/pool_metadata.json#$.hn_available",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative candidates available, post-filter",
+          "value_verbatim": "52",
+          "value_parsed": 52,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hn_available",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The two rejection counts are derived; their operands are given explicit read methods and paths so they are not compared against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          196,
+          198
+        ],
+        "section": "Blocker B1 resolution / re-mine results"
+      },
+      "claim_text": "- `pool_160_hp8hn8` new selections are **identical** to the pre-filter\n  selections — none of the top 8 HP or HN picks were edge candidates, so\n  filtering was a no-op at this rung.",
+      "values": [
+        {
+          "quantity": "top hard-positive/hard-negative picks unaffected at the hp8hn8 rung",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hp_selected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/example-pools-v2/pool_160_hp8hn8/pool_metadata.json",
+        "path": "$.hp_selected"
+      },
+      "method": "read",
+      "notes": "'top 8 HP or HN picks' - hp_selected and hn_selected are both 8 at this rung; compare against archive/h10-v2-prefilter-pools/pool_160_hp8hn8_prefilter/selected_examples.json for the identity assertion itself."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          199,
+          201
+        ],
+        "section": "Blocker B1 resolution / re-mine results"
+      },
+      "claim_text": "- `pool_160_hp16hn16` new selections preserve picks 1–10 (HP and HN);\n  picks 11–16 shift by 1–3 positions because the filter rejected what would\n  have been picks 11 (HP), 11 (HN), and 16 (HN) in the pre-filter selection.",
+      "values": [
+        {
+          "quantity": "first preserved pick index, pool_160_hp16hn16",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "last preserved pick index, pool_160_hp16hn16",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "first shifted pick index, pool_160_hp16hn16",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "last shifted pick index, pool_160_hp16hn16",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "minimum positional shift",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "maximum positional shift",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "rejected pre-filter pick index, HP",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "rejected pre-filter pick index, HN",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "rejected pre-filter pick index, HN (second)",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/selected_examples.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Requires diffing the live selection list against archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/selected_examples.json position by position; no scalar in either file records these indices directly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          203
+        ],
+        "section": "Blocker B1 resolution / re-mine results"
+      },
+      "claim_text": "- Nestedness **preserved** at all three rungs: `pool_160_hp4hn4` ⊂\n  new `pool_160_hp8hn8` ⊂ new `pool_160_hp16hn16` for both HP and HN.",
+      "values": [
+        {
+          "quantity": "example-pool rungs with nestedness preserved",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/selected_examples.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Prefix-containment check across outputs/h10/example-pools-v2/pool_160_hp4hn4, pool_160_hp8hn8 and pool_160_hp16hn16 selected_examples.json; the count of rungs is a directory count under outputs/h10/example-pools-v2/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          204
+        ],
+        "section": "Blocker B1 resolution / re-mine results"
+      },
+      "claim_text": "- All 48 new crops (`8+8+16+16`) are exactly 150 × 150 pixels.",
+      "values": [
+        {
+          "quantity": "new crop count, re-mined pools",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp8hn8/pool_metadata.json",
+              "path": "$.hp_selected"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp8hn8/pool_metadata.json",
+              "path": "$.hn_selected"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+              "path": "$.hp_selected"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+              "path": "$.hn_selected"
+            }
+          ]
+        },
+        {
+          "quantity": "hard-positive selections, pool_160_hp8hn8",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h10/example-pools-v2/pool_160_hp8hn8/pool_metadata.json#$.hp_selected",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative selections, pool_160_hp8hn8",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h10/example-pools-v2/pool_160_hp8hn8/pool_metadata.json#$.hn_selected",
+          "method": null
+        },
+        {
+          "quantity": "hard-positive selections, pool_160_hp16hn16",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hp_selected",
+          "method": null
+        },
+        {
+          "quantity": "hard-negative selections, pool_160_hp16hn16",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hn_selected",
+          "method": null
+        },
+        {
+          "quantity": "crop width, re-mined pools",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_size",
+          "method": null
+        },
+        {
+          "quantity": "crop height, re-mined pools",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document spells the derivation out as 8+8+16+16; the four operands are given explicit read methods and paths so they are not compared against their own sum (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          208
+        ],
+        "section": "Blocker B1 resolution / re-mine results"
+      },
+      "claim_text": "- Dry-run of `scale-32` post-fix: **PASS** (41 examples loaded, 327 tiles,\n  Validation PASSED).",
+      "values": [
+        {
+          "quantity": "example count loaded, scale-32",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": null
+        },
+        {
+          "quantity": "tile count to process, H10 384 px test manifest",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/calibration/h10-384/test_manifest.json#len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2/detect_h8_scale-32_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          216,
+          217
+        ],
+        "section": "Warnings"
+      },
+      "claim_text": "- **W1**: Pure-positive-canon library (7 examples) may fall below Gemini's\n  minimum cacheable token count (~4 KB for Flash). Script falls back",
+      "values": [
+        {
+          "quantity": "example count, pure-positive-canon library",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": null
+        },
+        {
+          "quantity": "Gemini Flash minimum cacheable payload (vendor figure, approximate)",
+          "value_verbatim": "~4 KB",
+          "value_parsed": 4,
+          "unit": "KB",
+          "kind": "tokens",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2/detect_h8_pure-positive-canon_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained in value_verbatim per instrument v1.2 amendment 5. The ~4 KB minimum-cacheable threshold is a vendor figure with no repo artefact (external / attestation only)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          232,
+          233
+        ],
+        "section": "Overall verdict"
+      },
+      "claim_text": "**READY TO LAUNCH** (after B1 resolution). All seven conditions now pass\nevery check in the audit matrix. Blocker B1 was resolved by adding an",
+      "values": [
+        {
+          "quantity": "condition count passing every audit check",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          236
+        ],
+        "section": "Overall verdict"
+      },
+      "claim_text": "`pool_160_hp8hn8` and `pool_160_hp16hn16`. Nestedness preserved, all crops\nare 150 × 150, dry-run validates.",
+      "values": [
+        {
+          "quantity": "crop width, re-mined pools",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_size",
+          "method": null
+        },
+        {
+          "quantity": "crop height, re-mined pools",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_size",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    }
+  ]
+}

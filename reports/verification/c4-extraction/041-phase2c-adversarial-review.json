@@ -1,0 +1,741 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/phase2c-adversarial-review.md",
+    "git_blob": "63cf9c772f83",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          241,
+          242
+        ],
+        "section": "Step 7: Mechanistic Synthesis"
+      },
+      "claim_text": "All six verification steps passed without finding any pipeline bug, configuration error, or\nscoring anomaly.",
+      "values": [
+        {
+          "quantity": "count of verification steps reported as passing, Phase 2c adversarial review",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b041] Batch b041 covers lines 238-359 of this document (lines 1-237 belong to batch b040). Scope decisions applied across the batch, per instrument hard rule 5: example-image index ranges ('examples 09-10', 'examples 15-17'), ordered-list and section numbering, phase labels ('Phase 2c', 'Phase 2d'), map sheet names ('K-35-052-4') and the report date were treated as identifiers and NOT extracted. This claim itself is a self-referential count of the document's own Step 1-Step 6 sections; no repo artefact records it, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          242,
+          243
+        ],
+        "section": "Step 7: Mechanistic Synthesis"
+      },
+      "claim_text": "The results\nare genuine findings that can be explained by three complementary mechanisms:",
+      "values": [
+        {
+          "quantity": "count of mechanisms proposed to explain the Phase 2c results",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of the three numbered subsections that follow (lines 245-286 of this document); no repo artefact records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          248,
+          249
+        ],
+        "section": "Step 7 § 1. P:N Label Ratio Effect"
+      },
+      "claim_text": "As HP examples are added to a pure-positive library, the P:N ratio shifts from 1.33\n(pure-positive-canon: 4P+3N) to 2.67 (pure-positive-4hp: 8P+3N).",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-canon library",
+          "value_verbatim": "1.33",
+          "value_parsed": 1.33,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "positive-labelled example count, pure-positive-canon library",
+          "value_verbatim": "4P",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, pure-positive-canon library",
+          "value_verbatim": "3N",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-4hp library",
+          "value_verbatim": "2.67",
+          "value_parsed": 2.67,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "positive-labelled example count, pure-positive-4hp library",
+          "value_verbatim": "8P",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, pure-positive-4hp library",
+          "value_verbatim": "3N",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "P:N ratios and the P/N label counts are definitional derivations from the library composition blocks of the two prompt configs; each value carries its own expression so no value inherits another's derivation (instrument v1.2 amendment 1). Second config file named in the operands."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          249,
+          252
+        ],
+        "section": "Step 7 § 1. P:N Label Ratio Effect"
+      },
+      "claim_text": "With only 3\nuninformative null tiles as negatives, the model's class boundary becomes increasingly\npermissive — it sees an overwhelming majority of \"Positive\" examples and loosens its\ndetection threshold.",
+      "values": [
+        {
+          "quantity": "null-tile (uninformative negative) count, pure-positive libraries",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-4hp.json",
+        "path": "$.composition.null"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          252,
+          253
+        ],
+        "section": "Step 7 § 1. P:N Label Ratio Effect"
+      },
+      "claim_text": "This produces more detections (128 → 132) that are disproportionately\nfalse positives (59 → 69 FP).",
+      "values": [
+        {
+          "quantity": "detection count, pure-positive-canon, Phase 2c run_1",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json#$.results_summary.total_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "detection count, pure-positive-4hp, Phase 2c run_1",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json#$.results_summary.total_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives, pure-positive-canon, Phase 2c run_1",
+          "value_verbatim": "59",
+          "value_parsed": 59,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, pure-positive-4hp, Phase 2c run_1",
+          "value_verbatim": "69",
+          "value_parsed": 69,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Detection and FP figures match the Step 6 run_1 table earlier in this document (batch b040 range), so anchored to the run_1 metas. FP is not stored: it is derived per run as n_detections - (precision x n_detections) from `archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv` — hence recompute-script. The document cites this CSV as `outputs/phase2c/track1-image-exploratory/per_run_metrics.csv`; that tree was archived to the path above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          263,
+          265
+        ],
+        "section": "Step 7 § 2. Informative vs Uninformative Negatives"
+      },
+      "claim_text": "The evidence for this is striking: plus-hp and pure-positive-4hp share the same 8 positive\nexamples and make the same number of detections (132), but plus-hp (which has Canon-)\nconverts 8 detections from FPs to TPs compared to pure-positive-4hp (which has only nulls).",
+      "values": [
+        {
+          "quantity": "positive-labelled example count shared by plus-hp and pure-positive-4hp libraries",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "detection count, plus-hp, Phase 2c run_1",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json#$.results_summary.total_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "detections converted from false positive to true positive, plus-hp vs pure-positive-4hp, Phase 2c run_1",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The FP-to-TP conversion count is the run_1 TP difference between plus-hp and pure-positive-4hp; TP is derived per run from `archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv` / `archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv` as precision x n_detections, so recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          270,
+          271
+        ],
+        "section": "Step 7 § 3. HP + Canon- Interaction"
+      },
+      "claim_text": "In plus-hp (F1=0.609), HP examples labelled \"Positive\" show the model what mounds look\nlike in difficult contexts (ambiguous terrain, marginal cases).",
+      "values": [
+        {
+          "quantity": "mean F1 over 10 runs, plus-hp, Phase 2c 60-tile validation set",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          278,
+          279
+        ],
+        "section": "Step 7 § 3. HP + Canon- Interaction"
+      },
+      "claim_text": "This is why HP helps with Canon- present (plus-hp F1=0.609 vs canonical F1=0.528) but\nhurts without it (pure-positive-canon F1=0.603 → pure-positive-4hp F1=0.550).",
+      "values": [
+        {
+          "quantity": "mean F1 over 10 runs, plus-hp",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, canonical",
+          "value_verbatim": "0.528",
+          "value_parsed": 0.528,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['canonical'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-canon",
+          "value_verbatim": "0.603",
+          "value_parsed": 0.603,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['pure-positive-canon'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-4hp",
+          "value_verbatim": "0.550",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-exploratory-pure-positive-hp.json#$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "pure-positive-4hp belongs to the exploratory arm, so its value takes a cross-file locator (instrument v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          292,
+          292
+        ],
+        "section": "Step 8: Independent Verification Test Design"
+      },
+      "claim_text": "A verification test has been designed using the 5-tile verification manifest.",
+      "values": [
+        {
+          "quantity": "tile count, Phase 2c verification manifest",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/verification_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          297,
+          297
+        ],
+        "section": "Step 8 § Test Design"
+      },
+      "claim_text": "- **Tiles**: 5 tiles from `inputs/tiles/verification_manifest.json`",
+      "values": [
+        {
+          "quantity": "tile count, Phase 2c verification manifest",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/verification_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          298,
+          298
+        ],
+        "section": "Step 8 § Test Design"
+      },
+      "claim_text": "- **Conditions**: 3 (pure-positive-canon, pure-positive-4hp, plus-hp)",
+      "values": [
+        {
+          "quantity": "condition count, phase2c verification-test study definition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-verification-test.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": "Anchored to the study YAML the document names in the preceding sentence; non-JSON anchor, expected to route to triage (instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          299,
+          299
+        ],
+        "section": "Step 8 § Test Design"
+      },
+      "claim_text": "- **Runs**: K=1 per condition (T=0.0 is near-deterministic)",
+      "values": [
+        {
+          "quantity": "runs per condition (K), phase2c verification-test study definition",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature carried forward, phase2c verification-test study definition",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-verification-test.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          300,
+          300
+        ],
+        "section": "Step 8 § Test Design"
+      },
+      "claim_text": "- **Total API calls**: 15 (5 tiles × 3 conditions × 1 run)",
+      "values": [
+        {
+          "quantity": "total API calls, phase2c verification test",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": "$.estimates.total_new_api_calls",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Phase 2c verification manifest",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/verification_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "condition count, phase2c verification-test study definition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": "read"
+        },
+        {
+          "quantity": "runs per condition, phase2c verification-test study definition",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-verification-test.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          301,
+          301
+        ],
+        "section": "Step 8 § Test Design"
+      },
+      "claim_text": "- **Estimated cost**: < $0.10 USD",
+      "values": [
+        {
+          "quantity": "estimated cost (upper bound as stated), phase2c verification test",
+          "value_verbatim": "< $0.10",
+          "value_parsed": 0.1,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-verification-test.yaml",
+        "path": "$.estimates.cost_usd"
+      },
+      "method": "read",
+      "notes": "The document states an upper bound rather than a point estimate; the nearest committed locator is the study definition's `estimates.cost_usd`. Bound marker retained in value_verbatim by analogy with instrument v1.2 amendment 5 (approx markers are verbatim). Triage to decide whether a bound is comparable to the recorded estimate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          305,
+          305
+        ],
+        "section": "Step 8 § Prerequisites"
+      },
+      "claim_text": "Before running, generate `verification_bounds.geojson` from the 5 verification tiles:",
+      "values": [
+        {
+          "quantity": "tile count, Phase 2c verification manifest",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/verification_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          315,
+          317
+        ],
+        "section": "Step 8 § What It Proves"
+      },
+      "claim_text": "If the directional pattern (plus-hp > pure-positive-canon > pure-positive-4hp) holds on\ncompletely independent tiles, it strongly supports the results being genuine rather than an\nartefact of the specific 60-tile validation set.",
+      "values": [
+        {
+          "quantity": "tile count, Phase 2c validation set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "'60-tile validation set' uses the number as both a name and an asserted count, so it is a claim (instrument hard rule 5)."
+    }
+  ]
+}

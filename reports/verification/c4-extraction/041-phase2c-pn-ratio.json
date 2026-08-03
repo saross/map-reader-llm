@@ -1,0 +1,4550 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/phase2c-pn-ratio-analysis.md",
+    "git_blob": "fabbbf0c814d",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          4,
+          4
+        ],
+        "section": "Front matter"
+      },
+      "claim_text": "**Context**: Post-adversarial review analysis of all 7 Phase 2c library conditions",
+      "values": [
+        {
+          "quantity": "count of Phase 2c library conditions analysed",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-h8-library.yaml",
+        "path": null,
+        "expression": "a + b - 1",
+        "operands": [
+          {
+            "name": "a",
+            "file": "studies/phase2c-h8-library.yaml",
+            "path": "len:$.factors.library_composition.levels"
+          },
+          {
+            "name": "b",
+            "file": "studies/phase2c-exploratory-pure-positive-hp.yaml",
+            "path": "len:$.factors.library_composition.levels"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "[BATCH NOTE b041] Whole-file sweep (lines 1-304). Scope decisions applied across the batch, per instrument hard rule 5: example-image index ranges ('examples 01-04' ... 'examples 15-17' in the notation table, lines 23-27, and lines 192), ordered-list and section numbering, the 'Section 3.4' cross-reference, phase labels ('Phase 2c', 'Phase 2d'), the session number in the footer and the report date were treated as identifiers and NOT extracted. Two Phase 2c analysis JSONs carry the 10-run aggregates: `results/phase2c-track1-image-analysis.json` (canonical, scale-4, scale-8, plus-hp, pure-positive-canon) and `results/phase2c-exploratory-pure-positive-hp.json` (pure-positive-canon, pure-positive-2hp, pure-positive-4hp); pure-positive-canon is anchored to the former throughout. The per-run CSVs the document cites as `outputs/phase2c/track1-image[-exploratory]/per_run_metrics.csv` were archived to `archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv` and `archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv`. Phase 2c ran as two studies whose level lists overlap in one condition (pure-positive-canon appears in both), hence `a + b - 1`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "Background"
+      },
+      "claim_text": "Phase 2c tested 7 library compositions under H8 (library composition and scaling).",
+      "values": [
+        {
+          "quantity": "count of library compositions tested in Phase 2c",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-h8-library.yaml",
+        "path": null,
+        "expression": "a + b - 1",
+        "operands": [
+          {
+            "name": "a",
+            "file": "studies/phase2c-h8-library.yaml",
+            "path": "len:$.factors.library_composition.levels"
+          },
+          {
+            "name": "b",
+            "file": "studies/phase2c-exploratory-pure-positive-hp.yaml",
+            "path": "len:$.factors.library_composition.levels"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Phase 2c ran as two studies whose level lists overlap in one condition (pure-positive-canon appears in both), hence `a + b - 1`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          15
+        ],
+        "section": "Background"
+      },
+      "claim_text": "The adversarial review (`reports/phase2c-adversarial-review.md`) confirmed the\nresults are genuine and proposed three complementary mechanisms.",
+      "values": [
+        {
+          "quantity": "count of mechanisms proposed by the adversarial review",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Only visible source is another markdown document (`reports/phase2c-adversarial-review.md`); instrument hard rule 2 forbids anchoring prose to prose, so triage should chase the chain."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          17
+        ],
+        "section": "Background"
+      },
+      "claim_text": "This report extends\nthat analysis with comprehensive P:N ratio data, a 2x2 interaction decomposition,\nand TP/FP/FN breakdowns that reveal the causal pathways.",
+      "values": [
+        {
+          "quantity": "factorial design of the interaction decomposition",
+          "value_verbatim": "2x2",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Design descriptor rather than a measured quantity; it corresponds to the four conditions crossed in Analysis 2 (lines 103-119). No artefact records a '2x2' literal. Flagged as doubtful per the instrument's include-when-in-doubt rule; cheap to prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          33
+        ],
+        "section": "Background § Role of Null Tiles"
+      },
+      "claim_text": "Null tiles (3 per library, fixed across all conditions) are **functionally\nnecessary infrastructure**, not a compositional variable.",
+      "values": [
+        {
+          "quantity": "null-tile count per library, all Phase 2c conditions",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": "$.composition.null"
+      },
+      "method": "read",
+      "notes": "The span also asserts the count is fixed across all conditions; that requires checking `$.composition.null` in all seven `prompts/configs/library_*.json` files, not just the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          37
+        ],
+        "section": "Background § Role of Null Tiles"
+      },
+      "claim_text": "The count of 3 is relatively few by ML standards and has been deferred\nfor exploratory investigation (see `docs/planning/future-work.md`, Section 3.4).",
+      "values": [
+        {
+          "quantity": "null-tile count per library, all Phase 2c conditions",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": "$.composition.null"
+      },
+      "method": "read",
+      "notes": "'Section 3.4' excluded as a section identifier (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          44
+        ],
+        "section": "Master Data Table"
+      },
+      "claim_text": "All values are 10-run means from Phase 2c (60 validation tiles, 97 reference\nmounds, T=0.0, Gemini 3 Flash).",
+      "values": [
+        {
+          "quantity": "runs per condition, Phase 2c",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_condition_metrics['plus-hp'].n_runs",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Phase 2c validation set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "reference mound count across the 60 validation tiles",
+          "value_verbatim": "97",
+          "value_parsed": 97,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, Phase 2c",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prompts/configs/library_plus-hp.json#$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The reference-mound total is not stored as a scalar in any committed artefact; recomputing it means intersecting `inputs/vectors/references/mounds-reference.geojson` with the bounds of the 60 validation tiles."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "Master Data Table"
+      },
+      "claim_text": "| **plus-hp** | 4 | 4 | 2 | 0 | 3 | 1.60 | **0.609** | 134.4 | 70.4 | 64.0 | 26.6 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, plus-hp library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, plus-hp library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, plus-hp library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, plus-hp library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, plus-hp library",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Positive:Negative label ratio, plus-hp library",
+          "value_verbatim": "1.60",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, plus-hp",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['plus-hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, plus-hp",
+          "value_verbatim": "134.4",
+          "value_parsed": 134.4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, plus-hp",
+          "value_verbatim": "70.4",
+          "value_parsed": 70.4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, plus-hp",
+          "value_verbatim": "64.0",
+          "value_parsed": 64.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, plus-hp",
+          "value_verbatim": "26.6",
+          "value_parsed": 26.6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mean TP/FP/FN are not stored: the document derives them per run from `archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv` (TP = precision x n_detections; FP = n_detections - TP; FN = 97 - TP), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "Master Data Table"
+      },
+      "claim_text": "| **pp-canon** | 4 | 0 | 0 | 0 | 3 | 1.33 | **0.603** | 128.0 | 67.8 | 60.2 | 29.2 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, pure-positive-canon library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, pure-positive-canon library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, pure-positive-canon library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, pure-positive-canon library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, pure-positive-canon library",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-canon library",
+          "value_verbatim": "1.33",
+          "value_parsed": 1.33,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-canon",
+          "value_verbatim": "0.603",
+          "value_parsed": 0.603,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['pure-positive-canon'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, pure-positive-canon",
+          "value_verbatim": "128.0",
+          "value_parsed": 128.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, pure-positive-canon",
+          "value_verbatim": "67.8",
+          "value_parsed": 67.8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, pure-positive-canon",
+          "value_verbatim": "60.2",
+          "value_parsed": 60.2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, pure-positive-canon",
+          "value_verbatim": "29.2",
+          "value_parsed": 29.2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mean TP/FP/FN are not stored: the document derives them per run from `archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv` (TP = precision x n_detections; FP = n_detections - TP; FN = 97 - TP), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "Master Data Table"
+      },
+      "claim_text": "| **pp-2hp** | 4 | 2 | 0 | 0 | 3 | 2.00 | 0.575 | 133.8 | 66.3 | 67.5 | 30.7 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, pure-positive-2hp library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, pure-positive-2hp library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, pure-positive-2hp library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, pure-positive-2hp library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, pure-positive-2hp library",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-2hp library",
+          "value_verbatim": "2.00",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-2hp",
+          "value_verbatim": "0.575",
+          "value_parsed": 0.575,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-exploratory-pure-positive-hp.json#$.per_condition_metrics['pure-positive-2hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, pure-positive-2hp",
+          "value_verbatim": "133.8",
+          "value_parsed": 133.8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-2hp'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-2hp'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, pure-positive-2hp",
+          "value_verbatim": "66.3",
+          "value_parsed": 66.3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, pure-positive-2hp",
+          "value_verbatim": "67.5",
+          "value_parsed": 67.5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, pure-positive-2hp",
+          "value_verbatim": "30.7",
+          "value_parsed": 30.7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-2hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mean TP/FP/FN are not stored: the document derives them per run from `archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv` (TP = precision x n_detections; FP = n_detections - TP; FN = 97 - TP), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "Master Data Table"
+      },
+      "claim_text": "| **scale-8** | 4 | 4 | 2 | 4 | 3 | 0.89 | 0.570 | 135.0 | 66.1 | 68.9 | 30.9 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, scale-8 library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, scale-8 library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, scale-8 library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, scale-8 library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, scale-8 library",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Positive:Negative label ratio, scale-8 library",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, scale-8",
+          "value_verbatim": "0.570",
+          "value_parsed": 0.57,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['scale-8'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, scale-8",
+          "value_verbatim": "135.0",
+          "value_parsed": 135.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-8'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-8'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, scale-8",
+          "value_verbatim": "66.1",
+          "value_parsed": 66.1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, scale-8",
+          "value_verbatim": "68.9",
+          "value_parsed": 68.9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, scale-8",
+          "value_verbatim": "30.9",
+          "value_parsed": 30.9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mean TP/FP/FN are not stored: the document derives them per run from `archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv` (TP = precision x n_detections; FP = n_detections - TP; FN = 97 - TP), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "Master Data Table"
+      },
+      "claim_text": "| **scale-4** | 4 | 2 | 2 | 2 | 3 | 0.86 | 0.564 | 138.3 | 66.3 | 72.0 | 30.7 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, scale-4 library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, scale-4 library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, scale-4 library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, scale-4 library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, scale-4 library",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Positive:Negative label ratio, scale-4 library",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, scale-4",
+          "value_verbatim": "0.564",
+          "value_parsed": 0.564,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['scale-4'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, scale-4",
+          "value_verbatim": "138.3",
+          "value_parsed": 138.3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-4'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-4'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, scale-4",
+          "value_verbatim": "66.3",
+          "value_parsed": 66.3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, scale-4",
+          "value_verbatim": "72.0",
+          "value_parsed": 72.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, scale-4",
+          "value_verbatim": "30.7",
+          "value_parsed": 30.7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-4.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mean TP/FP/FN are not stored: the document derives them per run from `archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv` (TP = precision x n_detections; FP = n_detections - TP; FN = 97 - TP), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "Master Data Table"
+      },
+      "claim_text": "| **pp-4hp** | 4 | 4 | 0 | 0 | 3 | 2.67 | 0.550 | 132.0 | 63.0 | 69.0 | 34.0 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, pure-positive-4hp library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, pure-positive-4hp library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, pure-positive-4hp library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, pure-positive-4hp library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, pure-positive-4hp library",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-4hp library",
+          "value_verbatim": "2.67",
+          "value_parsed": 2.67,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-4hp",
+          "value_verbatim": "0.550",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-exploratory-pure-positive-hp.json#$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, pure-positive-4hp",
+          "value_verbatim": "132.0",
+          "value_parsed": 132.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, pure-positive-4hp",
+          "value_verbatim": "63.0",
+          "value_parsed": 63.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, pure-positive-4hp",
+          "value_verbatim": "69.0",
+          "value_parsed": 69.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, pure-positive-4hp",
+          "value_verbatim": "34.0",
+          "value_parsed": 34.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-4hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mean TP/FP/FN are not stored: the document derives them per run from `archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv` (TP = precision x n_detections; FP = n_detections - TP; FN = 97 - TP), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "Master Data Table"
+      },
+      "claim_text": "| **canonical** | 4 | 0 | 2 | 0 | 3 | 0.80 | 0.528 | 121.9 | 57.8 | 64.1 | 39.2 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, canonical library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, canonical library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, canonical library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, canonical library",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, canonical library",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Positive:Negative label ratio, canonical library",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, canonical",
+          "value_verbatim": "0.528",
+          "value_parsed": 0.528,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['canonical'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, canonical",
+          "value_verbatim": "121.9",
+          "value_parsed": 121.9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['canonical'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['canonical'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, canonical",
+          "value_verbatim": "57.8",
+          "value_parsed": 57.8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, canonical",
+          "value_verbatim": "64.1",
+          "value_parsed": 64.1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, canonical",
+          "value_verbatim": "39.2",
+          "value_parsed": 39.2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_canonical.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mean TP/FP/FN are not stored: the document derives them per run from `archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv` (TP = precision x n_detections; FP = n_detections - TP; FN = 97 - TP), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "Master Data Table § Derivation of TP/FP/FN"
+      },
+      "claim_text": "- FN = 97 - TP (97 = total reference mounds across 60 validation tiles)",
+      "values": [
+        {
+          "quantity": "reference mound count across the 60 validation tiles (in formula)",
+          "value_verbatim": "97",
+          "value_parsed": 97,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "reference mound count across the 60 validation tiles (gloss)",
+          "value_verbatim": "97",
+          "value_parsed": 97,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile count, Phase 2c validation set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "97 appears twice in the span (formula and gloss); both are the same quantity. Recomputing needs the reference set intersected with the 60 validation tile bounds."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "Analysis 1: P:N Ratio as a Predictor"
+      },
+      "claim_text": "0.80  canonical     0.528   2C- + 3null",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, canonical library",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, canonical",
+          "value_verbatim": "0.528",
+          "value_parsed": 0.528,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['canonical'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, canonical library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, canonical library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_canonical.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "Analysis 1: P:N Ratio as a Predictor"
+      },
+      "claim_text": "0.86  scale-4       0.564   2C- + 2HN + 3null",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, scale-4 library",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, scale-4",
+          "value_verbatim": "0.564",
+          "value_parsed": 0.564,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['scale-4'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, scale-4 library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, scale-4 library",
+          "value_verbatim": "2HN",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, scale-4 library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-4.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "Analysis 1: P:N Ratio as a Predictor"
+      },
+      "claim_text": "0.89  scale-8       0.570   2C- + 4HN + 3null",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, scale-8 library",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, scale-8",
+          "value_verbatim": "0.570",
+          "value_parsed": 0.57,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['scale-8'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, scale-8 library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, scale-8 library",
+          "value_verbatim": "4HN",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, scale-8 library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          76
+        ],
+        "section": "Analysis 1: P:N Ratio as a Predictor"
+      },
+      "claim_text": "1.33  pp-canon      0.603   3null only",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-canon library",
+          "value_verbatim": "1.33",
+          "value_parsed": 1.33,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-canon",
+          "value_verbatim": "0.603",
+          "value_parsed": 0.603,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['pure-positive-canon'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, pure-positive-canon library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          77
+        ],
+        "section": "Analysis 1: P:N Ratio as a Predictor"
+      },
+      "claim_text": "1.60  plus-hp       0.609   2C- + 3null",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, plus-hp library",
+          "value_verbatim": "1.60",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, plus-hp",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['plus-hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, plus-hp library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, plus-hp library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "Analysis 1: P:N Ratio as a Predictor"
+      },
+      "claim_text": "2.00  pp-2hp        0.575   3null only",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-2hp library",
+          "value_verbatim": "2.00",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-2hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-2hp",
+          "value_verbatim": "0.575",
+          "value_parsed": 0.575,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-exploratory-pure-positive-hp.json#$.per_condition_metrics['pure-positive-2hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, pure-positive-2hp library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-2hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "Analysis 1: P:N Ratio as a Predictor"
+      },
+      "claim_text": "2.67  pp-4hp        0.550   3null only",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-4hp library",
+          "value_verbatim": "2.67",
+          "value_parsed": 2.67,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-4hp",
+          "value_verbatim": "0.550",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-exploratory-pure-positive-hp.json#$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, pure-positive-4hp library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-4hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "Analysis 1 § Observation"
+      },
+      "claim_text": "F1 increases from P:N 0.80 to ~1.60, then decreases.",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, canonical library",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Positive:Negative label ratio, plus-hp library",
+          "value_verbatim": "~1.60",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_canonical.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Approximation marker retained in value_verbatim (instrument v1.2 amendment 5). Second config file named in the operands."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          85
+        ],
+        "section": "Analysis 1 § Observation"
+      },
+      "claim_text": "This suggests an inverted-U\nrelationship with a peak around P:N 1.3-1.6.",
+      "values": [
+        {
+          "quantity": "lower bound of the interpreted P:N peak band",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the interpreted P:N peak band",
+          "value_verbatim": "1.6",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "An interpretive band read off the sorted table rather than a computed statistic; the endpoints approximate the pure-positive-canon (1.33) and plus-hp (1.60) ratios recorded elsewhere in this document. Left anchor-unknown so a rounded restatement is not compared as a hard value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          89
+        ],
+        "section": "Analysis 1 § Observation"
+      },
+      "claim_text": "- canonical (P:N 0.80) and plus-hp (P:N 1.60) share the same negative composition\n  (2C- + 3null) but differ by 0.081 F1 — the difference is HP, not ratio",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, canonical library",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_canonical.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Positive:Negative label ratio, plus-hp library",
+          "value_verbatim": "1.60",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "canonical negative (C-) example count, canonical library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, canonical library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 difference, plus-hp minus canonical",
+          "value_verbatim": "0.081",
+          "value_parsed": 0.081,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['canonical'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_canonical.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          91
+        ],
+        "section": "Analysis 1 § Observation"
+      },
+      "claim_text": "- pp-canon (P:N 1.33) and pp-4hp (P:N 2.67) share the same negative composition\n  (3null only) but differ by 0.053 F1 — the difference is HP without Canon-",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-canon library",
+          "value_verbatim": "1.33",
+          "value_parsed": 1.33,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-canon.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Positive:Negative label ratio, pure-positive-4hp library",
+          "value_verbatim": "2.67",
+          "value_parsed": 2.67,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_pure-positive-4hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "null-tile example count, pure-positive-canon library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 difference, pure-positive-canon minus pure-positive-4hp",
+          "value_verbatim": "0.053",
+          "value_parsed": 0.053,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          93
+        ],
+        "section": "Analysis 1 § Observation"
+      },
+      "claim_text": "- plus-hp (P:N 1.60) and scale-8 (P:N 0.89) have very different ratios but\n  scale-8 scores lower — the difference is HN",
+      "values": [
+        {
+          "quantity": "Positive:Negative label ratio, plus-hp library",
+          "value_verbatim": "1.60",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Positive:Negative label ratio, scale-8 library",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.null"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          104
+        ],
+        "section": "Analysis 2: The 2x2 HP x Canon- Interaction"
+      },
+      "claim_text": "Four conditions form a natural 2x2 factorial crossing HP presence with Canon-\npresence (HN excluded):",
+      "values": [
+        {
+          "quantity": "count of conditions forming the HP x Canon- factorial",
+          "value_verbatim": "Four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "factorial design of the HP x Canon- decomposition",
+          "value_verbatim": "2x2",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A statement about how this report groups four already-anchored conditions (pp-canon, canonical, pp-4hp, plus-hp), not a measured quantity; no artefact records the grouping."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Analysis 2 § F1 Interaction Table"
+      },
+      "claim_text": "| **HP absent** | pp-canon: 0.603 | canonical: 0.528 | **-0.075** |",
+      "values": [
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-canon",
+          "value_verbatim": "0.603",
+          "value_parsed": 0.603,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['pure-positive-canon'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, canonical",
+          "value_verbatim": "0.528",
+          "value_parsed": 0.528,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['canonical'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- effect on mean F1 with HP absent (canonical minus pure-positive-canon)",
+          "value_verbatim": "-0.075",
+          "value_parsed": -0.075,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['canonical'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Analysis 2 § F1 Interaction Table"
+      },
+      "claim_text": "| **HP present** | pp-4hp: 0.550 | plus-hp: 0.609 | **+0.059** |",
+      "values": [
+        {
+          "quantity": "mean F1 over 10 runs, pure-positive-4hp",
+          "value_verbatim": "0.550",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-exploratory-pure-positive-hp.json#$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, plus-hp",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- effect on mean F1 with HP present (plus-hp minus pure-positive-4hp)",
+          "value_verbatim": "+0.059",
+          "value_parsed": 0.059,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Analysis 2 § F1 Interaction Table"
+      },
+      "claim_text": "| **HP delta** | **-0.053** | **+0.081** | |",
+      "values": [
+        {
+          "quantity": "HP effect on mean F1 with Canon- absent (pure-positive-4hp minus pure-positive-canon)",
+          "value_verbatim": "-0.053",
+          "value_parsed": -0.053,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].point_estimate.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "HP effect on mean F1 with Canon- present (plus-hp minus canonical)",
+          "value_verbatim": "+0.081",
+          "value_parsed": 0.081,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['canonical'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "Analysis 2 § TP/FP Interaction Table"
+      },
+      "claim_text": "| **HP absent** | 67.8 TP, 60.2 FP | 57.8 TP, 64.1 FP | -10.0 | +3.9 |",
+      "values": [
+        {
+          "quantity": "mean true positives per run, pure-positive-canon",
+          "value_verbatim": "67.8",
+          "value_parsed": 67.8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mean false positives per run, pure-positive-canon",
+          "value_verbatim": "60.2",
+          "value_parsed": 60.2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mean true positives per run, canonical",
+          "value_verbatim": "57.8",
+          "value_parsed": 57.8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mean false positives per run, canonical",
+          "value_verbatim": "64.1",
+          "value_parsed": 64.1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Canon- effect on mean TP with HP absent (canonical minus pure-positive-canon)",
+          "value_verbatim": "-10.0",
+          "value_parsed": -10.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Canon- effect on mean FP with HP absent (canonical minus pure-positive-canon)",
+          "value_verbatim": "+3.9",
+          "value_parsed": 3.9,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "All six values derive from per-run precision x n_detections; both conditions in this row live in the main-arm CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "Analysis 2 § TP/FP Interaction Table"
+      },
+      "claim_text": "| **HP present** | 63.0 TP, 69.0 FP | 70.4 TP, 64.0 FP | +7.4 | -5.0 |",
+      "values": [
+        {
+          "quantity": "mean true positives per run, pure-positive-4hp",
+          "value_verbatim": "63.0",
+          "value_parsed": 63.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mean false positives per run, pure-positive-4hp",
+          "value_verbatim": "69.0",
+          "value_parsed": 69.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mean true positives per run, plus-hp",
+          "value_verbatim": "70.4",
+          "value_parsed": 70.4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mean false positives per run, plus-hp",
+          "value_verbatim": "64.0",
+          "value_parsed": 64.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Canon- effect on mean TP with HP present (plus-hp minus pure-positive-4hp)",
+          "value_verbatim": "+7.4",
+          "value_parsed": 7.4,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Canon- effect on mean FP with HP present (plus-hp minus pure-positive-4hp)",
+          "value_verbatim": "-5.0",
+          "value_parsed": -5.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "pure-positive-4hp rows live in the anchored exploratory CSV; the plus-hp rows live in `archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          127
+        ],
+        "section": "Analysis 2 § Interpretation"
+      },
+      "claim_text": "**HP without Canon-** (pp-canon -> pp-4hp): Adding 4 hard positive examples to a\nnull-only library loses 4.8 TP and gains 8.8 FP.",
+      "values": [
+        {
+          "quantity": "hard positive (HP) example count added, pure-positive-4hp library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "mean TP lost, pure-positive-canon to pure-positive-4hp",
+          "value_verbatim": "4.8",
+          "value_parsed": 4.8,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean FP gained, pure-positive-canon to pure-positive-4hp",
+          "value_verbatim": "8.8",
+          "value_parsed": 8.8,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-4hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          130
+        ],
+        "section": "Analysis 2 § Interpretation"
+      },
+      "claim_text": "Detection volume increases slightly\n(128 -> 132) but the additional detections are disproportionately false.",
+      "values": [
+        {
+          "quantity": "mean detections per run over 10 runs, pure-positive-canon",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, pure-positive-4hp",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].n_runs"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Read as the 10-run mean detection counts of the master table (128.0 and 132.0, lines 49 and 53), quoted here without decimals."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          133
+        ],
+        "section": "Analysis 2 § Interpretation"
+      },
+      "claim_text": "**HP with Canon-** (canonical -> plus-hp): Adding 4 hard positive examples to a\nCanon- library gains 12.6 TP and loses 0.1 FP.",
+      "values": [
+        {
+          "quantity": "hard positive (HP) example count added, plus-hp library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "mean TP gained, canonical to plus-hp",
+          "value_verbatim": "12.6",
+          "value_parsed": 12.6,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean FP lost, canonical to plus-hp",
+          "value_verbatim": "0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          139
+        ],
+        "section": "Analysis 2 § Interpretation"
+      },
+      "claim_text": "**Canon- without HP** (pp-canon -> canonical): Adding 2 canonical negative examples\nto a null-only library loses 10.0 TP and gains 3.9 FP.",
+      "values": [
+        {
+          "quantity": "canonical negative (C-) example count added, canonical library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "mean TP lost, pure-positive-canon to canonical",
+          "value_verbatim": "10.0",
+          "value_parsed": 10.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean FP gained, pure-positive-canon to canonical",
+          "value_verbatim": "3.9",
+          "value_parsed": 3.9,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_canonical.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          145
+        ],
+        "section": "Analysis 2 § Interpretation"
+      },
+      "claim_text": "**Canon- with HP** (pp-4hp -> plus-hp): Adding 2 canonical negative examples to an\nHP library gains 7.4 TP and loses 5.0 FP with no change in detection volume (both\n132).",
+      "values": [
+        {
+          "quantity": "canonical negative (C-) example count added, plus-hp library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "mean TP gained, pure-positive-4hp to plus-hp",
+          "value_verbatim": "7.4",
+          "value_parsed": 7.4,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean FP lost, pure-positive-4hp to plus-hp",
+          "value_verbatim": "5.0",
+          "value_parsed": 5.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "detection count asserted equal for plus-hp and pure-positive-4hp",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json#$.results_summary.total_detections",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '(both 132)' figure matches the run_1 detection counts reported in the adversarial review, not the 10-run means recorded in this document's own master table (134.4 for plus-hp, 132.0 for pure-positive-4hp, lines 48 and 53). Anchored to the plus-hp run_1 meta; the companion locator is `archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json#$.results_summary.total_detections`. Triage to decide which reading the harness should compare."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "Analysis 3 § Cleanest Comparison"
+      },
+      "claim_text": "| plus-hp | 4C+ 4HP 2C- 3null | 134.4 | 70.4 | 64.0 | 26.6 | 0.609 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, plus-hp library",
+          "value_verbatim": "4C+",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, plus-hp library",
+          "value_verbatim": "4HP",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, plus-hp library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, plus-hp library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, plus-hp",
+          "value_verbatim": "134.4",
+          "value_parsed": 134.4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, plus-hp",
+          "value_verbatim": "70.4",
+          "value_parsed": 70.4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, plus-hp",
+          "value_verbatim": "64.0",
+          "value_parsed": 64.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, plus-hp",
+          "value_verbatim": "26.6",
+          "value_parsed": 26.6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, plus-hp",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['plus-hp'].point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          170,
+          170
+        ],
+        "section": "Analysis 3 § Cleanest Comparison"
+      },
+      "claim_text": "| scale-8 | 4C+ 4HP 2C- **4HN** 3null | 135.0 | 66.1 | 68.9 | 30.9 | 0.570 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, scale-8 library",
+          "value_verbatim": "4C+",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, scale-8 library",
+          "value_verbatim": "4HP",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, scale-8 library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, scale-8 library",
+          "value_verbatim": "4HN",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, scale-8 library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, scale-8",
+          "value_verbatim": "135.0",
+          "value_parsed": 135.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-8'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-8'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, scale-8",
+          "value_verbatim": "66.1",
+          "value_parsed": 66.1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, scale-8",
+          "value_verbatim": "68.9",
+          "value_parsed": 68.9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, scale-8",
+          "value_verbatim": "30.9",
+          "value_parsed": 30.9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, scale-8",
+          "value_verbatim": "0.570",
+          "value_parsed": 0.57,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['scale-8'].point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          180,
+          180
+        ],
+        "section": "Analysis 3 § Confounded Comparison"
+      },
+      "claim_text": "| plus-hp | 4C+ 4HP 2C- 3null | 134.4 | 70.4 | 64.0 | 26.6 | 0.609 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, plus-hp library",
+          "value_verbatim": "4C+",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, plus-hp library",
+          "value_verbatim": "4HP",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, plus-hp library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, plus-hp library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, plus-hp",
+          "value_verbatim": "134.4",
+          "value_parsed": 134.4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, plus-hp",
+          "value_verbatim": "70.4",
+          "value_parsed": 70.4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, plus-hp",
+          "value_verbatim": "64.0",
+          "value_parsed": 64.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, plus-hp",
+          "value_verbatim": "26.6",
+          "value_parsed": 26.6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, plus-hp",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['plus-hp'].point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          181,
+          181
+        ],
+        "section": "Analysis 3 § Confounded Comparison"
+      },
+      "claim_text": "| scale-4 | 4C+ **2HP** 2C- **2HN** 3null | 138.3 | 66.3 | 72.0 | 30.7 | 0.564 |",
+      "values": [
+        {
+          "quantity": "canonical positive (C+) example count, scale-4 library",
+          "value_verbatim": "4C+",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positive (HP) example count, scale-4 library",
+          "value_verbatim": "2HP",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "canonical negative (C-) example count, scale-4 library",
+          "value_verbatim": "2C-",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, scale-4 library",
+          "value_verbatim": "2HN",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null-tile example count, scale-4 library",
+          "value_verbatim": "3null",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detections per run over 10 runs, scale-4",
+          "value_verbatim": "138.3",
+          "value_parsed": 138.3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-4'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-4'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean true positives per run over 10 runs, scale-4",
+          "value_verbatim": "66.3",
+          "value_parsed": 66.3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false positives per run over 10 runs, scale-4",
+          "value_verbatim": "72.0",
+          "value_parsed": 72.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean false negatives per run over 10 runs, scale-4",
+          "value_verbatim": "30.7",
+          "value_parsed": 30.7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean F1 over 10 runs, scale-4",
+          "value_verbatim": "0.564",
+          "value_parsed": 0.564,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics['scale-4'].point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-4.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          173
+        ],
+        "section": "Analysis 3 § Cleanest Comparison"
+      },
+      "claim_text": "Adding 4 HN to the best-performing condition: +0.6 detections, -4.3 TP, +4.9 FP,\n+4.3 FN.",
+      "values": [
+        {
+          "quantity": "hard negative (HN) example count added, scale-8 library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "mean detection difference, scale-8 minus plus-hp",
+          "value_verbatim": "+0.6",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a / b) - (c / d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-8'].n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-8'].n_runs"
+            },
+            {
+              "name": "c",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_detections_total"
+            },
+            {
+              "name": "d",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "mean TP difference, scale-8 minus plus-hp",
+          "value_verbatim": "-4.3",
+          "value_parsed": -4.3,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean FP difference, scale-8 minus plus-hp",
+          "value_verbatim": "+4.9",
+          "value_parsed": 4.9,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean FN difference, scale-8 minus plus-hp",
+          "value_verbatim": "+4.3",
+          "value_parsed": 4.3,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          183,
+          185
+        ],
+        "section": "Analysis 3 § Confounded Comparison"
+      },
+      "claim_text": "This comparison is confounded (2 fewer HP, 2 more HN), but the direction is\nconsistent: adding HN while reducing HP produces more detections that are\ndisproportionately false.",
+      "values": [
+        {
+          "quantity": "hard positive (HP) example count difference, plus-hp minus scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "hard negative (HN) example count difference, scale-4 minus plus-hp",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-4.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_negative"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-4.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          212
+        ],
+        "section": "Analysis 4: Effect Decomposition Summary"
+      },
+      "claim_text": "| **HP** | Harmful (-0.053 F1) | Helpful (+0.081 F1) | Expands positive boundary; needs Canon- to constrain |",
+      "values": [
+        {
+          "quantity": "HP effect on mean F1 alone (pure-positive-4hp minus pure-positive-canon)",
+          "value_verbatim": "-0.053",
+          "value_parsed": -0.053,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].point_estimate.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "HP effect on mean F1 with Canon- (plus-hp minus canonical)",
+          "value_verbatim": "+0.081",
+          "value_parsed": 0.081,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['canonical'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          213
+        ],
+        "section": "Analysis 4: Effect Decomposition Summary"
+      },
+      "claim_text": "| **Canon-** | Harmful (-0.075 F1) | Helpful (+0.059 F1) | Constrains boundary; needs HP to benefit from expansion |",
+      "values": [
+        {
+          "quantity": "Canon- effect on mean F1 alone (canonical minus pure-positive-canon)",
+          "value_verbatim": "-0.075",
+          "value_parsed": -0.075,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['canonical'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['pure-positive-canon'].point_estimate.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon- effect on mean F1 with HP (plus-hp minus pure-positive-4hp)",
+          "value_verbatim": "+0.059",
+          "value_parsed": 0.059,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-exploratory-pure-positive-hp.json",
+              "path": "$.per_condition_metrics['pure-positive-4hp'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "Analysis 4: Effect Decomposition Summary"
+      },
+      "claim_text": "| **HN** | Not tested alone | Harmful (-0.039 F1) | Destabilises boundary even with Canon- present |",
+      "values": [
+        {
+          "quantity": "HN effect on mean F1 with Canon- present (scale-8 minus plus-hp)",
+          "value_verbatim": "-0.039",
+          "value_parsed": -0.039,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['scale-8'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/phase2c-track1-image-analysis.json",
+            "path": "$.per_condition_metrics['scale-8'].point_estimate.f1"
+          },
+          {
+            "name": "b",
+            "file": "results/phase2c-track1-image-analysis.json",
+            "path": "$.per_condition_metrics['plus-hp'].point_estimate.f1"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          215,
+          215
+        ],
+        "section": "Analysis 4: Effect Decomposition Summary"
+      },
+      "claim_text": "| **Null** (3 tiles, fixed) | Necessary infrastructure | — | Prevents runaway detection; non-discriminative |",
+      "values": [
+        {
+          "quantity": "null-tile count per library, all Phase 2c conditions",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": "$.composition.null"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          237,
+          239
+        ],
+        "section": "Standalone Verification"
+      },
+      "claim_text": "The directional pattern (plus-hp outperforms) was independently verified using\n`scripts/standalone_verification.py`, a completely independent reimplementation\nsharing zero code with the production pipeline:",
+      "values": [
+        {
+          "quantity": "shared code between standalone verification and the production pipeline",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A rhetorical zero rather than a measured quantity; deciding it would require a code-overlap comparison of `scripts/standalone_verification.py` against the production pipeline. Included per the instrument's include-when-in-doubt rule; cheap to prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          243,
+          243
+        ],
+        "section": "Standalone Verification"
+      },
+      "claim_text": "| plus-hp | 0.625 | 0.734 | 0.700 | **0.686** |",
+      "values": [
+        {
+          "quantity": "F1, plus-hp, standalone verification batch 1",
+          "value_verbatim": "0.625",
+          "value_parsed": 0.625,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_summaries['library_plus-hp'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, plus-hp, standalone verification batch 2",
+          "value_verbatim": "0.734",
+          "value_parsed": 0.734,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-experimental-pilot/standalone-verification-batch2/results.json#$.condition_summaries['library_plus-hp'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, plus-hp, standalone verification batch 3",
+          "value_verbatim": "0.700",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-experimental-pilot/standalone-verification-batch3/results.json#$.condition_summaries['library_plus-hp'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 across three standalone verification batches, plus-hp",
+          "value_verbatim": "0.686",
+          "value_parsed": 0.686,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b + c) / 3",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+              "path": "$.condition_summaries['library_plus-hp'].f1"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-experimental-pilot/standalone-verification-batch2/results.json",
+              "path": "$.condition_summaries['library_plus-hp'].f1"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-experimental-pilot/standalone-verification-batch3/results.json",
+              "path": "$.condition_summaries['library_plus-hp'].f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Batch 1/2/3 map to the three committed standalone-verification results files, which the document cites by the glob `outputs/standalone-verification*/results.json`; that tree was archived under `archive/outputs-experimental-pilot/`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          244,
+          244
+        ],
+        "section": "Standalone Verification"
+      },
+      "claim_text": "| pp-canon | 0.641 | 0.718 | 0.615 | 0.658 |",
+      "values": [
+        {
+          "quantity": "F1, pp-canon, standalone verification batch 1",
+          "value_verbatim": "0.641",
+          "value_parsed": 0.641,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_summaries['library_pure-positive-canon'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, pp-canon, standalone verification batch 2",
+          "value_verbatim": "0.718",
+          "value_parsed": 0.718,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-experimental-pilot/standalone-verification-batch2/results.json#$.condition_summaries['library_pure-positive-canon'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, pp-canon, standalone verification batch 3",
+          "value_verbatim": "0.615",
+          "value_parsed": 0.615,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-experimental-pilot/standalone-verification-batch3/results.json#$.condition_summaries['library_pure-positive-canon'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 across three standalone verification batches, pp-canon",
+          "value_verbatim": "0.658",
+          "value_parsed": 0.658,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b + c) / 3",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+              "path": "$.condition_summaries['library_pure-positive-canon'].f1"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-experimental-pilot/standalone-verification-batch2/results.json",
+              "path": "$.condition_summaries['library_pure-positive-canon'].f1"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-experimental-pilot/standalone-verification-batch3/results.json",
+              "path": "$.condition_summaries['library_pure-positive-canon'].f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Batch 1/2/3 map to the three committed standalone-verification results files, which the document cites by the glob `outputs/standalone-verification*/results.json`; that tree was archived under `archive/outputs-experimental-pilot/`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          245,
+          245
+        ],
+        "section": "Standalone Verification"
+      },
+      "claim_text": "| pp-4hp | 0.667 | 0.684 | 0.634 | 0.662 |",
+      "values": [
+        {
+          "quantity": "F1, pp-4hp, standalone verification batch 1",
+          "value_verbatim": "0.667",
+          "value_parsed": 0.667,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_summaries['library_pure-positive-4hp'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, pp-4hp, standalone verification batch 2",
+          "value_verbatim": "0.684",
+          "value_parsed": 0.684,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-experimental-pilot/standalone-verification-batch2/results.json#$.condition_summaries['library_pure-positive-4hp'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, pp-4hp, standalone verification batch 3",
+          "value_verbatim": "0.634",
+          "value_parsed": 0.634,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-experimental-pilot/standalone-verification-batch3/results.json#$.condition_summaries['library_pure-positive-4hp'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean F1 across three standalone verification batches, pp-4hp",
+          "value_verbatim": "0.662",
+          "value_parsed": 0.662,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b + c) / 3",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+              "path": "$.condition_summaries['library_pure-positive-4hp'].f1"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-experimental-pilot/standalone-verification-batch2/results.json",
+              "path": "$.condition_summaries['library_pure-positive-4hp'].f1"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-experimental-pilot/standalone-verification-batch3/results.json",
+              "path": "$.condition_summaries['library_pure-positive-4hp'].f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Batch 1/2/3 map to the three committed standalone-verification results files, which the document cites by the glob `outputs/standalone-verification*/results.json`; that tree was archived under `archive/outputs-experimental-pilot/`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          248,
+          251
+        ],
+        "section": "Standalone Verification"
+      },
+      "claim_text": "The\nhigher absolute F1 values reflect different tile selection (30 tiles with different\ndensity distributions) and different matching algorithm, but the directional pattern\nis consistent: plus-hp is the top performer across 2/3 batches and on aggregate.",
+      "values": [
+        {
+          "quantity": "total tile count across the three standalone verification batches",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+              "path": "$.metadata.tile_count"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-experimental-pilot/standalone-verification-batch2/results.json",
+              "path": "$.metadata.tile_count"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-experimental-pilot/standalone-verification-batch3/results.json",
+              "path": "$.metadata.tile_count"
+            }
+          ]
+        },
+        {
+          "quantity": "batches in which plus-hp was the top performer, out of three",
+          "value_verbatim": "2/3",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '2/3 batches' claim needs the per-batch condition_summaries F1 values compared across the three results files, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          274,
+          276
+        ],
+        "section": "Implications § For VLM Prompting Practice"
+      },
+      "claim_text": "**Negative example quality matters more than quantity**: 2 clear Canon- examples\n   outperform 4 ambiguous HN examples, despite the latter providing a \"better\" P:N\n   ratio (0.89 vs 1.60).",
+      "values": [
+        {
+          "quantity": "canonical negative (C-) example count, plus-hp library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negative (HN) example count, scale-8 library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-8.json#$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Positive:Negative label ratio, scale-8 library",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Positive:Negative label ratio, plus-hp library",
+          "value_verbatim": "1.60",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "prompts/configs/library_plus-hp.json",
+              "path": "$.composition.null"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          283,
+          283
+        ],
+        "section": "Implications § Open Questions"
+      },
+      "claim_text": "Would varying null count (0, 1, 3, 5) change results?",
+      "values": [
+        {
+          "quantity": "proposed null-count level for future work",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposed null-count level for future work",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposed null-count level for future work",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposed null-count level for future work",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Hypothetical future-work parameter levels, not assertions about what was run; no artefact can decide them. Included per the instrument's include-when-in-doubt rule; likely prunable at triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          287,
+          288
+        ],
+        "section": "Implications § Open Questions"
+      },
+      "claim_text": "Would a larger Canon- set (4 instead of 2) further improve performance, or does\n   the benefit saturate?",
+      "values": [
+        {
+          "quantity": "hypothetical enlarged Canon- set size",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "canonical negative (C-) example count as run, plus-hp library",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '4' is a hypothetical future library size with no artefact; the '2' restates the Canon- count actually run."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          302,
+          304
+        ],
+        "section": "Footer"
+      },
+      "claim_text": "All claims backed by\ndata from Phase 2c (10 runs x 60 tiles x 7 conditions = 4,200 evaluations) and\nstandalone verification (3 batches x 10 tiles x 3 conditions = 90 evaluations).",
+      "values": [
+        {
+          "quantity": "runs per condition, Phase 2c",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_condition_metrics['plus-hp'].n_runs",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Phase 2c validation set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2c library conditions",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "studies/phase2c-h8-library.yaml",
+              "path": "len:$.factors.library_composition.levels"
+            },
+            {
+              "name": "b",
+              "file": "studies/phase2c-exploratory-pure-positive-hp.yaml",
+              "path": "len:$.factors.library_composition.levels"
+            }
+          ]
+        },
+        {
+          "quantity": "total Phase 2c evaluations (runs x tiles x conditions)",
+          "value_verbatim": "4,200",
+          "value_parsed": 4200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b * (c + d - 1)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2c-track1-image-analysis.json",
+              "path": "$.per_condition_metrics['plus-hp'].n_runs"
+            },
+            {
+              "name": "b",
+              "file": "inputs/tiles/validation_manifest.json",
+              "path": "len:$"
+            },
+            {
+              "name": "c",
+              "file": "studies/phase2c-h8-library.yaml",
+              "path": "len:$.factors.library_composition.levels"
+            },
+            {
+              "name": "d",
+              "file": "studies/phase2c-exploratory-pure-positive-hp.yaml",
+              "path": "len:$.factors.library_composition.levels"
+            }
+          ]
+        },
+        {
+          "quantity": "standalone verification batch count",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tiles per standalone verification batch",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-experimental-pilot/standalone-verification/results.json#$.metadata.tile_count",
+          "method": "read"
+        },
+        {
+          "quantity": "conditions per standalone verification batch",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-experimental-pilot/standalone-verification/results.json#len:$.metadata.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "total standalone verification evaluations (batches x tiles x conditions)",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "3 * a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+              "path": "$.metadata.tile_count"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-experimental-pilot/standalone-verification/results.json",
+              "path": "len:$.metadata.conditions"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The batch count of 3 is the number of committed standalone-verification results files (the three listed in the operands of the '30 tiles' and '90 evaluations' claims); no single artefact records it, hence recompute-script. 'Session 30' excluded as a session identifier (hard rule 5)."
+    }
+  ]
+}

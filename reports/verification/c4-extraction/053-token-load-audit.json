@@ -1,0 +1,2769 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/token-load-audit-2026-06-12.md",
+    "git_blob": "4e26190d82d2",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          158
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "| `MIN_PASS_USD` (GS 487) | 0.54 | **0.266** | ten measured 55-map minimal passes scaled by 487/8,541 (§ 3.1, § 3.5) |",
+      "values": [
+        {
+          "quantity": "tile count, gold-standard (GS) corpus — scope of MIN_PASS_USD",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/verifier-robustness/pareto/pareto_v2.json#$.cost_model.production_scale.tiles_gs",
+          "method": "read"
+        },
+        {
+          "quantity": "MIN_PASS_USD, superseded value (GS 487-tile minimal pass)",
+          "value_verbatim": "0.54",
+          "value_parsed": 0.54,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "MIN_PASS_USD, corrected value (GS 487-tile minimal pass)",
+          "value_verbatim": "0.266",
+          "value_parsed": 0.266,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "MIN_PASS_USD",
+          "method": "read"
+        },
+        {
+          "quantity": "count of measured 55-map minimal passes underlying MIN_PASS_USD",
+          "value_verbatim": "ten",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map count, deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.unit_costs.map_count",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, GS corpus (numerator of the scaling ratio)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/verifier-robustness/pareto/pareto_v2.json#$.cost_model.production_scale.tiles_gs",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, 55-map deployment corpus (denominator of the scaling ratio)",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.unit_costs.tile_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_pareto_v2.py",
+        "path": "MIN_PASS_USD"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b053] Anchored to the script the document names ('Adopted in `scripts/build_pareto_v2.py`'); the generated echo of the same constant is results/verifier-robustness/pareto/pareto_v2.json $.cost_model.min_pass_usd. Non-JSON anchor path is the module-level constant name (instrument v1.1). SCOPE DECISIONS for this batch: (a) temperatures appearing as condition/row labels ('T0.7', 'T0.3', 'text-t1.0') are treated as condition names under hard rule 5 and not extracted; temperatures asserted in prose as what-was-run would be; (b) '55-map' IS extracted as an asserted map count (hard rule 5's '487-tile Era 2 corpus' precedent), even though the run directories are named 55maps-*; (c) rung names (min6, min11, high31, high5+5vf, TH7-k3) and section/line/commit/session identifiers are names, not claims. 'ten' has no single committed artefact: the ten minimal passes are five in outputs/55maps-text-min-generalisation/ plus five in outputs/55maps-text-min-n10-uplift/ (runs 6-10), so it is left anchor-unknown rather than pointed at a five-pass manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "| `HIGH_PASS_USD` (GS 487) | 1.61 | **2.29** | five measured 55-map T0.7 HIGH passes scaled; bracket [2.15, 2.64] measured at GS (§ 4) |",
+      "values": [
+        {
+          "quantity": "tile count, GS corpus — scope of HIGH_PASS_USD",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/verifier-robustness/pareto/pareto_v2.json#$.cost_model.production_scale.tiles_gs",
+          "method": "read"
+        },
+        {
+          "quantity": "HIGH_PASS_USD, superseded value (GS 487-tile HIGH pass)",
+          "value_verbatim": "1.61",
+          "value_parsed": 1.61,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "HIGH_PASS_USD, corrected value (GS 487-tile HIGH pass)",
+          "value_verbatim": "2.29",
+          "value_parsed": 2.29,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "HIGH_PASS_USD",
+          "method": "read"
+        },
+        {
+          "quantity": "count of measured 55-map T0.7 HIGH proposer passes",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.unit_costs.map_count",
+          "method": "read"
+        },
+        {
+          "quantity": "lower bound of the measured GS HIGH-text per-pass cost bracket (T1.0, 10 passes)",
+          "value_verbatim": "2.15",
+          "value_parsed": 2.15,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper bound of the measured GS HIGH-text per-pass cost bracket (T0.3, 10 passes)",
+          "value_verbatim": "2.64",
+          "value_parsed": 2.64,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_pareto_v2.py",
+        "path": "HIGH_PASS_USD"
+      },
+      "method": "read",
+      "notes": "Bracket endpoints are per-item token sums priced at flex over the GS pools named in § 4 (outputs/h11/pv-diag-384/flash-high-text-n5/text-t{0.3,1.0}/run_*/), hence recompute-script rather than read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "| `VF_CALL_USD` | 0.000697 | **0.000693** | opmax meta recompute; deployment runs measured 0.000684–0.000698 |",
+      "values": [
+        {
+          "quantity": "VF_CALL_USD, superseded value (verifier cost per call)",
+          "value_verbatim": "0.000697",
+          "value_parsed": 0.000697,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "VF_CALL_USD, corrected value (verifier cost per call)",
+          "value_verbatim": "0.000693",
+          "value_parsed": 0.000693,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": "VF_CALL_USD",
+          "method": "read"
+        },
+        {
+          "quantity": "lowest verifier per-call rate measured across deployment runs",
+          "value_verbatim": "0.000684",
+          "value_parsed": 0.000684,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "highest verifier per-call rate measured across deployment runs",
+          "value_verbatim": "0.000698",
+          "value_parsed": 0.000698,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_pareto_v2.py",
+        "path": "VF_CALL_USD"
+      },
+      "method": "read",
+      "notes": "Range endpoints share the unit with the leading value (instrument v1.2 amendment 6). Measured endpoints require per-run token sums priced at flex and divided by call counts, so recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          162
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "Deployment-scale (8,541 tiles) per-pass flex costs, **measured**:",
+      "values": [
+        {
+          "quantity": "tile count per proposer pass, 55-map deployment corpus",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.unit_costs.tile_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": "$.unit_costs.tile_count"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          166,
+          166
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "| Minimal text (T0.7) | **$4.66** | 10 | § 3.1 + § 3.5 |",
+      "values": [
+        {
+          "quantity": "flex cost per minimal-text proposer pass at deployment scale (8,541 tiles), measured mean",
+          "value_verbatim": "$4.66",
+          "value_parsed": 4.66,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of measured minimal-text passes behind the $4.66 figure",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The ten passes span two runs (55maps-text-min-generalisation run_{1..5} and 55maps-text-min-n10-uplift run_{6..10}); no single committed artefact carries the pooled count or the pooled mean."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "| HIGH text (T0.7) | **$40.19** | 5 | § 3.2 |",
+      "values": [
+        {
+          "quantity": "flex cost per HIGH-text T0.7 proposer pass at deployment scale, measured mean",
+          "value_verbatim": "$40.19",
+          "value_parsed": 40.19,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of measured HIGH-text T0.7 passes",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Per-pass costs are recorded individually at $.by_stage.proposer.per_pass[*].cost_usd; the quoted figure is their mean, which needs recomputation rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          168
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "| HIGH text (T0.3) | **$50.82** | 5 | § 3.3 |",
+      "values": [
+        {
+          "quantity": "flex cost per HIGH-text T0.3 proposer pass at deployment scale, measured mean",
+          "value_verbatim": "$50.82",
+          "value_parsed": 50.82,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of measured HIGH-text T0.3 passes",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "| HIGH image (cached) | **$39.07** | 5 | § 3.4 |",
+      "values": [
+        {
+          "quantity": "flex cost per HIGH-image (explicitly cached) proposer pass at deployment scale, measured mean",
+          "value_verbatim": "$39.07",
+          "value_parsed": 39.07,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of measured HIGH-image passes",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          175
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "The old model's two errors partially offset: `MIN_PASS_USD` was 2.0× too\nhigh (built on the double-counted TM manifest), while `HIGH_PASS_USD`\n(\"3× minimal\", extrapolated from verifier-side high-vs-min calls) was 1.4×\ntoo LOW because proposer-side HIGH thinking (2,693 tokens/tile at T0.7)\ndominates the pass cost.",
+      "values": [
+        {
+          "quantity": "number of errors identified in the superseded cost model",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "errors",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "factor by which the superseded MIN_PASS_USD exceeded the corrected value",
+          "value_verbatim": "2.0×",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "superseded model's assumed HIGH:minimal per-pass cost ratio",
+          "value_verbatim": "3×",
+          "value_parsed": 3.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "factor by which the superseded HIGH_PASS_USD under-priced the HIGH pass",
+          "value_verbatim": "1.4×",
+          "value_parsed": 1.4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "proposer thinking tokens per tile, 55-map HIGH-text T0.7",
+          "value_verbatim": "2,693",
+          "value_parsed": 2693,
+          "unit": "tokens/tile",
+          "kind": "tokens",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.tokens.thinking_tokens"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.tiles_processed"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The 2.0× and 1.4× factors are ratios against the superseded constants 0.54 and 1.61, which no longer exist in any committed artefact (the current scripts/build_pareto_v2.py holds the corrected values), so they are left anchor-unknown rather than given unresolvable operands."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          176
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "The true min : HIGH ratio per pass is **8.6×**,\nnot 3×.",
+      "values": [
+        {
+          "quantity": "corrected HIGH:minimal per-pass cost ratio",
+          "value_verbatim": "8.6×",
+          "value_parsed": 8.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/verifier-robustness/pareto/pareto_v2.json",
+              "path": "$.cost_model.high_pass_usd"
+            },
+            {
+              "name": "b",
+              "file": "results/verifier-robustness/pareto/pareto_v2.json",
+              "path": "$.cost_model.min_pass_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "superseded HIGH:minimal per-pass cost ratio",
+          "value_verbatim": "3×",
+          "value_parsed": 3.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          176,
+          178
+        ],
+        "section": "§ 5. Corrected cost model"
+      },
+      "claim_text": "Notably, explicit caching makes the image HIGH pass ($39.07)\nslightly CHEAPER than the text HIGH pass ($40.19) despite a 10× larger\nprompt.",
+      "values": [
+        {
+          "quantity": "flex cost per HIGH-image proposer pass at deployment scale",
+          "value_verbatim": "$39.07",
+          "value_parsed": 39.07,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "flex cost per HIGH-text T0.7 proposer pass at deployment scale",
+          "value_verbatim": "$40.19",
+          "value_parsed": 40.19,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ratio of image prompt size to text prompt size (input tokens per tile)",
+          "value_verbatim": "10×",
+          "value_parsed": 10.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.tokens.input_tokens"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.tokens.input_tokens"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Both campaigns processed the same 42,705 proposer tiles, so the input-token ratio is the per-tile prompt-size ratio."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          186
+        ],
+        "section": "§ 6. Corrected whole-run spend (proposer + verifier, flex)"
+      },
+      "claim_text": "| text-min | $93.50 | **~$23.4** (5 × $4.67 + $0.03 verifier) | 4.0× over (2× count, 2× rates) |",
+      "values": [
+        {
+          "quantity": "cost_usd recorded by the text-min cost manifest as audited (now superseded and archived)",
+          "value_verbatim": "$93.50",
+          "value_parsed": 93.5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected whole-run flex spend, text-min campaign (proposer + verifier)",
+          "value_verbatim": "~$23.4",
+          "value_parsed": 23.4,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.by_stage.verifier.meta_derived_cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "number of proposer passes, text-min campaign",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "clean flex cost per minimal-text pass",
+          "value_verbatim": "$4.67",
+          "value_parsed": 4.67,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier-leg flex cost as counted in § 6, text-min campaign",
+          "value_verbatim": "$0.03",
+          "value_parsed": 0.03,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.by_stage.verifier.meta_derived_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "manifest error factor, text-min (manifest / corrected)",
+          "value_verbatim": "4.0×",
+          "value_parsed": 4.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / (b + c)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-min-generalisation__cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.by_stage.verifier.meta_derived_cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "token double-count factor in the superseded text-min manifest",
+          "value_verbatim": "2×",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-min-generalisation__cost_manifest.json",
+              "path": "$.totals.input_tokens"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.totals.input_tokens"
+            }
+          ]
+        },
+        {
+          "quantity": "rate inflation factor (standard tier priced instead of flex)",
+          "value_verbatim": "2×",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-min-generalisation__cost_manifest.json",
+        "path": "$.totals.cost_usd"
+      },
+      "method": "read",
+      "notes": "The 'Manifest cost_usd' column describes the manifests as they stood at audit time; all four were regenerated on 2026-06-12 (see the changelog) and the audited-era files now live in archive/superseded-cost-manifests-2026-06-12/, which is where this column is anchored. The rate factor is a vendor-pricing ratio (standard $0.50/$3.00 vs flex $0.25/$1.50 per 1M) and is attestation material only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "§ 6. Corrected whole-run spend (proposer + verifier, flex)"
+      },
+      "claim_text": "| text-high | $126.81 | **~$207.4** (5 × $40.19 + $6.42) | 0.61× under (thinking omitted) |",
+      "values": [
+        {
+          "quantity": "cost_usd recorded by the text-high cost manifest as audited (now superseded and archived)",
+          "value_verbatim": "$126.81",
+          "value_parsed": 126.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected whole-run flex spend, text-high campaign",
+          "value_verbatim": "~$207.4",
+          "value_parsed": 207.4,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "number of proposer passes, text-high campaign",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "clean flex cost per HIGH-text T0.7 pass",
+          "value_verbatim": "$40.19",
+          "value_parsed": 40.19,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier-leg flex cost, text-high campaign",
+          "value_verbatim": "$6.42",
+          "value_parsed": 6.42,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "manifest error factor, text-high (manifest / corrected)",
+          "value_verbatim": "0.61×",
+          "value_parsed": 0.61,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-high-generalisation__cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-high-generalisation__cost_manifest.json",
+        "path": "$.totals.cost_usd"
+      },
+      "method": "read",
+      "notes": "The corrected figure is quoted as 5 x $40.19 + $6.42 = $207.4; the nearest committed scalar is the regenerated manifest total ($207.34 per the changelog), which is what the anchor points at. The $6.42 verifier leg spans the live meta (74 calls) plus outputs/55maps-text-high-generalisation/verified/run.meta.json.pre-recovery-20260502T235106.backup (9,131 calls), so it needs recomputation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          188,
+          188
+        ],
+        "section": "§ 6. Corrected whole-run spend (proposer + verifier, flex)"
+      },
+      "claim_text": "| text-high-t0.3 | $67.82 | **~$261.0** (5 × $50.82 + $6.90) | 0.26× under (thinking omitted) |",
+      "values": [
+        {
+          "quantity": "cost_usd recorded by the text-high-t0.3 cost manifest as audited (now superseded and archived)",
+          "value_verbatim": "$67.82",
+          "value_parsed": 67.82,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected whole-run flex spend, text-high-t0.3 campaign",
+          "value_verbatim": "~$261.0",
+          "value_parsed": 261.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "number of proposer passes, text-high-t0.3 campaign",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json#len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "clean flex cost per HIGH-text T0.3 pass",
+          "value_verbatim": "$50.82",
+          "value_parsed": 50.82,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier-leg flex cost, text-high-t0.3 campaign",
+          "value_verbatim": "$6.90",
+          "value_parsed": 6.9,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-t0.3-generalisation/verified/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "manifest error factor, text-high-t0.3 (manifest / corrected)",
+          "value_verbatim": "0.26×",
+          "value_parsed": 0.26,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-high-t0.3-generalisation__cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-high-t0.3-generalisation__cost_manifest.json",
+        "path": "$.totals.cost_usd"
+      },
+      "method": "read",
+      "notes": "The verifier meta records cost_estimate at standard rates; flex is exactly half (§ 2), hence the a / 2 derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "§ 6. Corrected whole-run spend (proposer + verifier, flex)"
+      },
+      "claim_text": "| image | $1,061.08 | **~$195.4** (5 × $39.07 + $0.001) | 5.4× over (3× count, 2× rates, cache rate) |",
+      "values": [
+        {
+          "quantity": "cost_usd recorded by the image cost manifest as audited (now superseded and archived)",
+          "value_verbatim": "$1,061.08",
+          "value_parsed": 1061.08,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected whole-run flex spend, image campaign",
+          "value_verbatim": "~$195.4",
+          "value_parsed": 195.4,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.by_stage.proposer.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "number of proposer passes, image campaign",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "clean flex cost per HIGH-image pass",
+          "value_verbatim": "$39.07",
+          "value_parsed": 39.07,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier-leg flex cost as counted in § 6, image campaign",
+          "value_verbatim": "$0.001",
+          "value_parsed": 0.001,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.by_stage.verifier.meta_derived_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "manifest error factor, image (manifest / corrected)",
+          "value_verbatim": "5.4×",
+          "value_parsed": 5.4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-image-generalisation__cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "tile triple-count factor in the superseded image manifest",
+          "value_verbatim": "3×",
+          "value_parsed": 3.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-image-generalisation__cost_manifest.json",
+              "path": "$.by_stage.proposer.tiles_processed"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.tiles_processed"
+            }
+          ]
+        },
+        {
+          "quantity": "rate inflation factor (standard tier priced instead of flex)",
+          "value_verbatim": "2×",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-cost-manifests-2026-06-12/55maps-image-generalisation__cost_manifest.json",
+        "path": "$.totals.cost_usd"
+      },
+      "method": "read",
+      "notes": "§ 6's image row counts the verifier leg as the $0.001 stub, so the corrected total it states (~$195.4) matches the regenerated proposer leg rather than the regenerated grand total ($200.83, which reconstructs the verifier leg — see the changelog). Anchored to the proposer leg with that ambiguity flagged for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          190
+        ],
+        "section": "§ 6. Corrected whole-run spend (proposer + verifier, flex)"
+      },
+      "claim_text": "| uplift (no manifest) | — | **~$34.5** (5 × $4.65 + $11.27) | — |",
+      "values": [
+        {
+          "quantity": "corrected whole-run flex spend, uplift campaign",
+          "value_verbatim": "~$34.5",
+          "value_parsed": 34.5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of proposer passes, uplift campaign (runs 6-10)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clean flex cost per minimal-text pass, uplift run",
+          "value_verbatim": "$4.65",
+          "value_parsed": 4.65,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier-leg flex cost, uplift campaign",
+          "value_verbatim": "$11.27",
+          "value_parsed": 11.27,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-n10-uplift/verified-3of10/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-n10-uplift/verified-3of10/run.meta.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The uplift run has no cost manifest (the row says so); the five proposer passes are outputs/55maps-text-min-n10-uplift/proposer/run_{6..10}/detections-detect_brief-text-3-flash-2026-06-11.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          192,
+          193
+        ],
+        "section": "§ 6. Corrected whole-run spend (proposer + verifier, flex)"
+      },
+      "claim_text": "Total corrected proposer + verifier spend across these five campaigns:\n**~$722 flex**.",
+      "values": [
+        {
+          "quantity": "number of campaigns summed",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "campaigns",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total corrected proposer + verifier flex spend across the five campaigns",
+          "value_verbatim": "~$722",
+          "value_parsed": 722.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Sum of the § 6 column: ~$23.4 + ~$207.4 + ~$261.0 + ~$195.4 + ~$34.5. The uplift leg has no manifest, so no purely mechanical operand set reproduces the total; the changelog restates it as approximately $734 on the regenerated bases."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          197,
+          198
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "Pareto v2 (`results/verifier-robustness/pareto/pareto_v2.json`, findings\n§ 15 table; GS run cost / 55-map production cost):",
+      "values": [
+        {
+          "quantity": "map count, deployment (production) corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": "$.unit_costs.map_count"
+      },
+      "method": "read",
+      "notes": "Extracted under the batch scope decision that '55-map' asserts a corpus size (hard rule 5's '487-tile Era 2 corpus' precedent)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          202
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "| min6 | 0.8784 | $3.81 | **$2.43** | ~$67 | **~$43** |",
+      "values": [
+        {
+          "quantity": "F1@20m, Pareto rung min6",
+          "value_verbatim": "0.8784",
+          "value_parsed": 0.8784,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='min6')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS run cost, rung min6, superseded cost model",
+          "value_verbatim": "$3.81",
+          "value_parsed": 3.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "GS run cost, rung min6, corrected cost model",
+          "value_verbatim": "$2.43",
+          "value_parsed": 2.43,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='min6')].est_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map production cost, rung min6, superseded cost model",
+          "value_verbatim": "~$67",
+          "value_parsed": 67.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "55-map production cost, rung min6, corrected cost model",
+          "value_verbatim": "~$43",
+          "value_parsed": 43.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='min6')].est_cost_55map_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": "$.rungs[?(@.rung=='min6')]"
+      },
+      "method": "read",
+      "notes": "Changelog-style before->after row: the 'Old' columns are the superseded cost model and are typed historical (instrument § 3 and known traps); the 'New' columns are live claims. Rung labels ('min6') are names, not counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          203,
+          203
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "| min11 | 0.8835 | $6.75 | **$4.00** | ~$118 | **~$70** |",
+      "values": [
+        {
+          "quantity": "F1@20m, Pareto rung min11",
+          "value_verbatim": "0.8835",
+          "value_parsed": 0.8835,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='min11')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS run cost, rung min11, superseded cost model",
+          "value_verbatim": "$6.75",
+          "value_parsed": 6.75,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "GS run cost, rung min11, corrected cost model",
+          "value_verbatim": "$4.00",
+          "value_parsed": 4.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='min11')].est_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map production cost, rung min11, superseded cost model",
+          "value_verbatim": "~$118",
+          "value_parsed": 118.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "55-map production cost, rung min11, corrected cost model",
+          "value_verbatim": "~$70",
+          "value_parsed": 70.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='min11')].est_cost_55map_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": "$.rungs[?(@.rung=='min11')]"
+      },
+      "method": "read",
+      "notes": "Before->after row; 'Old' columns historical, 'New' columns live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          204
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "| high6 | 0.8641 | $10.65 | **$14.04** | ~$187 | **~$246** |",
+      "values": [
+        {
+          "quantity": "F1@20m, Pareto rung high6",
+          "value_verbatim": "0.8641",
+          "value_parsed": 0.8641,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high6')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS run cost, rung high6, superseded cost model",
+          "value_verbatim": "$10.65",
+          "value_parsed": 10.65,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "GS run cost, rung high6, corrected cost model",
+          "value_verbatim": "$14.04",
+          "value_parsed": 14.04,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high6')].est_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map production cost, rung high6, superseded cost model",
+          "value_verbatim": "~$187",
+          "value_parsed": 187.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "55-map production cost, rung high6, corrected cost model",
+          "value_verbatim": "~$246",
+          "value_parsed": 246.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high6')].est_cost_55map_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": "$.rungs[?(@.rung=='high6')]"
+      },
+      "method": "read",
+      "notes": "Before->after row; 'Old' columns historical, 'New' columns live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          205
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "| high5+5vf | 0.8739 | $11.03 | **$14.41** | ~$193 | **~$253** |",
+      "values": [
+        {
+          "quantity": "F1@20m, Pareto rung high5+5vf",
+          "value_verbatim": "0.8739",
+          "value_parsed": 0.8739,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high5+5vf')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS run cost, rung high5+5vf, superseded cost model",
+          "value_verbatim": "$11.03",
+          "value_parsed": 11.03,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "GS run cost, rung high5+5vf, corrected cost model",
+          "value_verbatim": "$14.41",
+          "value_parsed": 14.41,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high5+5vf')].est_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map production cost, rung high5+5vf, superseded cost model",
+          "value_verbatim": "~$193",
+          "value_parsed": 193.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "55-map production cost, rung high5+5vf, corrected cost model",
+          "value_verbatim": "~$253",
+          "value_parsed": 253.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high5+5vf')].est_cost_55map_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": "$.rungs[?(@.rung=='high5+5vf')]"
+      },
+      "method": "read",
+      "notes": "Before->after row; 'Old' columns historical, 'New' columns live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          206
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "| high11 | 0.8769 | $20.19 | **$26.97** | ~$354 | **~$473** |",
+      "values": [
+        {
+          "quantity": "F1@20m, Pareto rung high11",
+          "value_verbatim": "0.8769",
+          "value_parsed": 0.8769,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high11')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS run cost, rung high11, superseded cost model",
+          "value_verbatim": "$20.19",
+          "value_parsed": 20.19,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "GS run cost, rung high11, corrected cost model",
+          "value_verbatim": "$26.97",
+          "value_parsed": 26.97,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high11')].est_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map production cost, rung high11, superseded cost model",
+          "value_verbatim": "~$354",
+          "value_parsed": 354.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "55-map production cost, rung high11, corrected cost model",
+          "value_verbatim": "~$473",
+          "value_parsed": 473.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high11')].est_cost_55map_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": "$.rungs[?(@.rung=='high11')]"
+      },
+      "method": "read",
+      "notes": "Before->after row; 'Old' columns historical, 'New' columns live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          207
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "| high31 | 0.8902 | $48.81 | **$69.21** | ~$856 | **~$1,214** |",
+      "values": [
+        {
+          "quantity": "F1@20m, Pareto rung high31",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high31')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS run cost, rung high31, superseded cost model",
+          "value_verbatim": "$48.81",
+          "value_parsed": 48.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "GS run cost, rung high31, corrected cost model",
+          "value_verbatim": "$69.21",
+          "value_parsed": 69.21,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high31')].est_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map production cost, rung high31, superseded cost model",
+          "value_verbatim": "~$856",
+          "value_parsed": 856.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "55-map production cost, rung high31, corrected cost model",
+          "value_verbatim": "~$1,214",
+          "value_parsed": 1214.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high31')].est_cost_55map_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": "$.rungs[?(@.rung=='high31')]"
+      },
+      "method": "read",
+      "notes": "Before->after row; 'Old' columns historical, 'New' columns live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          208,
+          208
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "| high35 | 0.8951 | $50.84 | **$71.23** | ~$892 | **~$1,249** |",
+      "values": [
+        {
+          "quantity": "F1@20m, Pareto rung high35",
+          "value_verbatim": "0.8951",
+          "value_parsed": 0.8951,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high35')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS run cost, rung high35, superseded cost model",
+          "value_verbatim": "$50.84",
+          "value_parsed": 50.84,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "GS run cost, rung high35, corrected cost model",
+          "value_verbatim": "$71.23",
+          "value_parsed": 71.23,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high35')].est_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map production cost, rung high35, superseded cost model",
+          "value_verbatim": "~$892",
+          "value_parsed": 892.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "55-map production cost, rung high35, corrected cost model",
+          "value_verbatim": "~$1,249",
+          "value_parsed": 1249.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high35')].est_cost_55map_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": "$.rungs[?(@.rung=='high35')]"
+      },
+      "method": "read",
+      "notes": "Before->after row; 'Old' columns historical, 'New' columns live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          212
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "Findings § 16(c) production trade: \"~$105 for 0.829 vs ~$150 for 0.843\"\n→ **\"~$58 for 0.829 vs ~$207 for 0.843\"** (min11-uplift as-run:\n10 × $4.66 + $11.27 verifier; TH7-k3 as-run: 5 × $40.19 + $6.42 verifier).",
+      "values": [
+        {
+          "quantity": "55-map production cost of the 0.829 operating point, superseded cost model (quoted from findings § 16(c))",
+          "value_verbatim": "~$105",
+          "value_parsed": 105.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 of the min11-uplift production operating point",
+          "value_verbatim": "0.829",
+          "value_parsed": 0.829,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "55-map production cost of the 0.843 operating point, superseded cost model (quoted from findings § 16(c))",
+          "value_verbatim": "~$150",
+          "value_parsed": 150.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 of the TH7-k3 production operating point",
+          "value_verbatim": "0.843",
+          "value_parsed": 0.843,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "55-map production cost of the 0.829 operating point, corrected cost model",
+          "value_verbatim": "~$58",
+          "value_parsed": 58.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1 of the min11-uplift production operating point (restated)",
+          "value_verbatim": "0.829",
+          "value_parsed": 0.829,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "55-map production cost of the 0.843 operating point, corrected cost model",
+          "value_verbatim": "~$207",
+          "value_parsed": 207.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1 of the TH7-k3 production operating point (restated)",
+          "value_verbatim": "0.843",
+          "value_parsed": 0.843,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "number of minimal proposer passes, min11-uplift as-run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "clean flex cost per minimal-text pass at deployment scale",
+          "value_verbatim": "$4.66",
+          "value_parsed": 4.66,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier-leg flex cost, uplift campaign",
+          "value_verbatim": "$11.27",
+          "value_parsed": 11.27,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-n10-uplift/verified-3of10/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "number of HIGH proposer passes, TH7-k3 as-run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "clean flex cost per HIGH-text T0.7 pass at deployment scale",
+          "value_verbatim": "$40.19",
+          "value_parsed": 40.19,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier-leg flex cost, text-high campaign",
+          "value_verbatim": "$6.42",
+          "value_parsed": 6.42,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The two F1 values are quoted from the findings document § 16(c) (prose), which hard rule 2 forbids as an anchor; the nearest committed trace of 0.829 is results/run-facts.json $.facts['55maps-text-min-n10-uplift'].headline_rationale, but it is a free-text string rather than a scalar, so both F1s are left anchor-unknown for triage. 'min11-uplift', 'TH7-k3' and 'k3' are condition names."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          213
+        ],
+        "section": "§ 7. Published figures changed (before → after)"
+      },
+      "claim_text": "The trade widens from ~1.4× to ~3.6×.",
+      "values": [
+        {
+          "quantity": "production cost ratio between the two operating points, superseded cost model",
+          "value_verbatim": "~1.4×",
+          "value_parsed": 1.4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "production cost ratio between the two operating points, corrected cost model",
+          "value_verbatim": "~3.6×",
+          "value_parsed": 3.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Ratio of the two corrected production costs (~$207 / ~$58); neither side is a committed scalar, so no mechanical operand set exists."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          218,
+          218
+        ],
+        "section": "§ 8. What did NOT change, and residual caveats"
+      },
+      "claim_text": "The re-run reproduced 0/21 significant pairs, one tier.",
+      "values": [
+        {
+          "quantity": "number of statistically significant pairwise rung comparisons after the cost-model re-run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "len:$.pairwise[?(@.significant==true)]",
+          "method": "read"
+        },
+        {
+          "quantity": "total number of pairwise rung comparisons",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "len:$.pairwise",
+          "method": "read"
+        },
+        {
+          "quantity": "number of tiers in the re-run tiering",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "len:$.tiers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": "len:$.pairwise"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          222,
+          222
+        ],
+        "section": "§ 8. What did NOT change, and residual caveats"
+      },
+      "claim_text": "- **Verifier rate**: confirmed within 1% of the published value;",
+      "values": [
+        {
+          "quantity": "relative difference between the recomputed and the previously published verifier per-call rate",
+          "value_verbatim": "1%",
+          "value_parsed": 1.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Compares the corrected VF_CALL_USD (0.000693) against the superseded published rate (0.000697), which no longer exists in any committed artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          224,
+          226
+        ],
+        "section": "§ 8. What did NOT change, and residual caveats"
+      },
+      "claim_text": "- **Historical actual-spend figures** in findings §§ 1–14 (e.g. $21.93,\n  $2.54, $20.86 flex): minimal-thinking verifier runs with correct flex\n  pricing — not revised (the $2.54 recomputes to $2.5257; rounding only).",
+      "values": [
+        {
+          "quantity": "historical actual-spend figure quoted from the findings document",
+          "value_verbatim": "$21.93",
+          "value_parsed": 21.93,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "historical actual-spend figure quoted from the findings document (opmax verifier run)",
+          "value_verbatim": "$2.54",
+          "value_parsed": 2.54,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "historical actual-spend figure quoted from the findings document",
+          "value_verbatim": "$20.86",
+          "value_parsed": 20.86,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "historical actual-spend figure restated",
+          "value_verbatim": "$2.54",
+          "value_parsed": 2.54,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "recomputed flex spend for the opmax verifier run",
+          "value_verbatim": "$2.5257",
+          "value_parsed": 2.5257,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/verifier-robustness/384-flash-high-text-16of30/T0.3/verified/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/verifier-robustness/384-flash-high-text-16of30/T0.3/verified/run.meta.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "The three quoted figures live in the findings document (prose), which hard rule 2 forbids as an anchor; only the $2.5257 recompute has a mechanical basis (the opmax verifier meta records cost_estimate at standard rates, flex being exactly half). Section citations (§§ 1-14) are out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          230,
+          232
+        ],
+        "section": "§ 8. What did NOT change, and residual caveats"
+      },
+      "claim_text": "Retry counts (live metas; text-high/image counts\n  halved for merge inflation, marked inferred): text-min 61; text-high\n  ~3,130 (inferred); t0.3 12,322; image ~2,190 (inferred).",
+      "values": [
+        {
+          "quantity": "retry count, text-min campaign",
+          "value_verbatim": "61",
+          "value_parsed": 61,
+          "unit": "retries",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "retry count, text-high campaign (halved for merge inflation; inferred)",
+          "value_verbatim": "~3,130",
+          "value_parsed": 3130,
+          "unit": "retries",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "retry count, text-high-t0.3 campaign",
+          "value_verbatim": "12,322",
+          "value_parsed": 12322,
+          "unit": "retries",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "retry count, image campaign (halved for merge inflation; inferred)",
+          "value_verbatim": "~2,190",
+          "value_parsed": 2190,
+          "unit": "retries",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Each figure is the sum of $.execution_stats.retries_total across that campaign's five proposer metas (run_{1..5}), with the text-high and image sums halved for the recovery-merge inflation the document describes; the anchor names the text-min run_1 meta as the representative locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          232,
+          233
+        ],
+        "section": "§ 8. What did NOT change, and residual caveats"
+      },
+      "claim_text": "Worst case if\n  every retry billed a full request: t0.3 up to ~29% higher.",
+      "values": [
+        {
+          "quantity": "worst-case upward revision of the t0.3 campaign cost if every retry billed a full request",
+          "value_verbatim": "~29%",
+          "value_parsed": 29.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Derived from the unmeasured retry token load; no on-disk record captures retried-attempt tokens (the same bullet says so)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          238,
+          239
+        ],
+        "section": "§ 8. What did NOT change, and residual caveats"
+      },
+      "claim_text": "Storage cost\n  excluded (< $0.15 per campaign, § 3.4).",
+      "values": [
+        {
+          "quantity": "explicit-cache storage cost per campaign, upper bound (excluded from the costings)",
+          "value_verbatim": "< $0.15",
+          "value_parsed": 0.15,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Bound marker kept in value_verbatim (instrument v1.2 amendment 5 applied by analogy to '<'). Derived in § 3.4 from a 14,549-token cache at $1.00/1M/hour; no committed artefact records cache storage cost."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          243,
+          244
+        ],
+        "section": "§ 9. Recommendation on the manifests"
+      },
+      "claim_text": "**Regenerate the three affected `cost_manifest.json` files** (text-min,\ntext-high, image)",
+      "values": [
+        {
+          "quantity": "number of cost manifests judged to require regeneration",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "manifests",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Count of the campaigns the § 1 verdict table marks inflated (text-min, text-high, image); the only visible source is prose in the same document, which hard rule 2 forbids as an anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          249,
+          252
+        ],
+        "section": "§ 9. Recommendation on the manifests"
+      },
+      "claim_text": "The manifest generator needs three fixes\nbefore any regeneration: (1) sum from `per_item_metadata`, never merge\npre-recovery backups additively; (2) price at the run's recorded\n`service_tier`; (3) bill thinking tokens at the output rate.",
+      "values": [
+        {
+          "quantity": "number of fixes required in the manifest generator",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "fixes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The (1)/(2)/(3) markers in the same span are list enumerators, not claims. Self-referential count over the enumerated list; no artefact anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          261,
+          261
+        ],
+        "section": "§ 10. Billing-console corroboration (Shawn, 2026-06-12, AEST dailies)"
+      },
+      "claim_text": "| 18 Apr (TM + TH7 + image proposer day) | $402.08 | $419.64 (three proposer legs) | **match, −4 %** — excludes the manifests' $1,281 for the same runs by 3× |",
+      "values": [
+        {
+          "quantity": "Google billing-console total billed for 18 April (AEST daily)",
+          "value_verbatim": "$402.08",
+          "value_parsed": 402.08,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "audited prediction for the three proposer legs run on 18 April",
+          "value_verbatim": "$419.64",
+          "value_parsed": 419.64,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "number of proposer legs in the 18 April prediction",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "legs",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "relative difference, billed vs audited prediction (18 April)",
+          "value_verbatim": "−4 %",
+          "value_parsed": -4.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "superseded manifests' combined cost_usd for the same three runs",
+          "value_verbatim": "$1,281",
+          "value_parsed": 1281.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-min-generalisation__cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-text-high-generalisation__cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "archive/superseded-cost-manifests-2026-06-12/55maps-image-generalisation__cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "factor by which the superseded manifests exceed the billed day total",
+          "value_verbatim": "3×",
+          "value_parsed": 3.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Billed figures come from the Google billing console and have no repo artefact (external, attestation only); the two factors that consume a billed figure as an operand are therefore anchor-unknown. Dates are out of scope; 'TM'/'TH7' are condition names."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          262,
+          262
+        ],
+        "section": "§ 10. Billing-console corroboration (Shawn, 2026-06-12, AEST dailies)"
+      },
+      "claim_text": "| 26 Apr (t0.3 campaign day) | $528.01 | ~$261 + retries | audited rate + the § 8 retry caveat (t0.3 logged 12,322 retries); residual partly unattributed |",
+      "values": [
+        {
+          "quantity": "Google billing-console total billed for 26 April (AEST daily)",
+          "value_verbatim": "$528.01",
+          "value_parsed": 528.01,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "audited prediction, text-high-t0.3 campaign",
+          "value_verbatim": "~$261",
+          "value_parsed": 261.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "retry count, text-high-t0.3 campaign",
+          "value_verbatim": "12,322",
+          "value_parsed": 12322,
+          "unit": "retries",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          263,
+          263
+        ],
+        "section": "§ 10. Billing-console corroboration (Shawn, 2026-06-12, AEST dailies)"
+      },
+      "claim_text": "| 18 Apr–7 May window | $1,122.90 | ~$700 (four campaigns) + other April runs | consistent; full attribution would need a per-day predicted series |",
+      "values": [
+        {
+          "quantity": "Google billing-console total billed for the 18 April - 7 May window",
+          "value_verbatim": "$1,122.90",
+          "value_parsed": 1122.9,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "audited prediction across four campaigns",
+          "value_verbatim": "~$700",
+          "value_parsed": 700.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "d",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "number of campaigns in the window prediction",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "campaigns",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The document's ~$700 is the sum of its own § 6 column (~$23.4 + ~$207.4 + ~$261.0 + ~$195.4 = ~$687); the operands given here are the regenerated manifest totals, which are the committed scalars nearest to the same four campaign totals."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          264,
+          264
+        ],
+        "section": "§ 10. Billing-console corroboration (Shawn, 2026-06-12, AEST dailies)"
+      },
+      "claim_text": "| 9–11 Jun dailies | $62.21 / $33.75 / $41.21 | session spends at audited rates | **the pre-audit uplift figure ($58.5) is excluded** — it would require negative Flash 3.5 spend on 10–11 Jun; the audited $34.5 fits |",
+      "values": [
+        {
+          "quantity": "Google billing-console daily total, 9 June",
+          "value_verbatim": "$62.21",
+          "value_parsed": 62.21,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Google billing-console daily total, 10 June",
+          "value_verbatim": "$33.75",
+          "value_parsed": 33.75,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Google billing-console daily total, 11 June",
+          "value_verbatim": "$41.21",
+          "value_parsed": 41.21,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "pre-audit uplift campaign cost figure (superseded)",
+          "value_verbatim": "$58.5",
+          "value_parsed": 58.5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "audited uplift campaign flex cost",
+          "value_verbatim": "$34.5",
+          "value_parsed": 34.5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-n10-uplift/verified-3of10/run.meta.json",
+        "path": null
+      },
+      "method": "external",
+      "notes": "'Flash 3.5' is a model name, not a claim; dates are out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          277,
+          279
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "The 18 April single-day match\n(billed $402.08 vs audited $419.64 for the three campaign proposer\nlegs) corroborates the audited rates and excludes the legacy manifest",
+      "values": [
+        {
+          "quantity": "Google billing-console total billed for 18 April",
+          "value_verbatim": "$402.08",
+          "value_parsed": 402.08,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "audited prediction for the three campaign proposer legs",
+          "value_verbatim": "$419.64",
+          "value_parsed": 419.64,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.by_stage.proposer.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "number of campaign proposer legs compared",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "legs",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Changelog restatement of the § 10 row; the values are live claims, not historical before-values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          284,
+          287
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "The generator received the three § 9 fixes as an opt-in\n`--pricing-tier` audited path (`scripts/run_generalisation.py`, commit\n`dc8ac772c`; default `recorded` keeps legacy behaviour; 4 new tier1\ntests).",
+      "values": [
+        {
+          "quantity": "number of § 9 fixes implemented in the manifest generator",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "fixes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "number of new tier1 tests added with the audited pricing path",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "tests",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_aggregate_cost_audited.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the count is of tier1-marked test functions in tests/test_aggregate_cost_audited.py (instrument v1.1 permits non-JSON anchors; the harness routes them to triage). The commit hash is out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          287,
+          287
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "All four manifests regenerated at flex",
+      "values": [
+        {
+          "quantity": "number of cost manifests regenerated at flex",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "manifests",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The four regenerated files are outputs/55maps-{text-min,text-high,text-high-t0.3,image}-generalisation/cost_manifest.json and the four superseded originals sit in archive/superseded-cost-manifests-2026-06-12/; a directory count is not a mechanical JSON locator, so this is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          290,
+          291
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "tiles 42,705 = 5 ×\n8,541 per run.",
+      "values": [
+        {
+          "quantity": "proposer tiles processed per regenerated run",
+          "value_verbatim": "42,705",
+          "value_parsed": 42705,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer passes per run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": "len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles per proposer pass, 55-map corpus",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.unit_costs.tile_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": "$.by_stage.proposer.tiles_processed"
+      },
+      "method": "read",
+      "notes": "All three values are recorded independently in the manifest, so each is typed read; typing 42,705 as the product would trip the operand-inherits-arithmetic trap (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          292,
+          293
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "reconstructs EVERY stub verifier leg from its proven call count\n(text-min +$7.08 over the stub, image +$5.48)",
+      "values": [
+        {
+          "quantity": "reconstructed verifier-leg cost, text-min campaign",
+          "value_verbatim": "$7.08",
+          "value_parsed": 7.08,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.verifier.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "reconstructed verifier-leg cost, image campaign",
+          "value_verbatim": "$5.48",
+          "value_parsed": 5.48,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.by_stage.verifier.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": "$.by_stage.verifier.cost_usd"
+      },
+      "method": "read",
+      "notes": "The '+$X over the stub' phrasing admits two readings — the reconstructed leg itself, or the increment over the stub ($.by_stage.verifier.meta_derived_cost_usd). Anchored to the reconstructed leg; triage should confirm."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          294,
+          296
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "corrected campaign totals are $30.44 / $207.34 /\n$261.02 / $200.83 (five-campaign total with the uplift ≈ $734 flex,",
+      "values": [
+        {
+          "quantity": "corrected campaign total, text-min",
+          "value_verbatim": "$30.44",
+          "value_parsed": 30.44,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected campaign total, text-high",
+          "value_verbatim": "$207.34",
+          "value_parsed": 207.34,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected campaign total, text-high-t0.3",
+          "value_verbatim": "$261.02",
+          "value_parsed": 261.02,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected campaign total, image",
+          "value_verbatim": "$200.83",
+          "value_parsed": 200.83,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "number of campaigns in the total",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "campaigns",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "five-campaign corrected flex total including the uplift run",
+          "value_verbatim": "≈ $734",
+          "value_parsed": 734.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": "$.totals.cost_usd"
+      },
+      "method": "read",
+      "notes": "Approximation marker retained in value_verbatim (instrument v1.2 amendment 5). The uplift leg has no manifest, so the five-campaign total needs recomputation rather than a four-operand sum."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          300,
+          300
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "Token-load audit conducted against the four 55-map cost manifests",
+      "values": [
+        {
+          "quantity": "number of 55-map cost manifests audited",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "manifests",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map count, deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": "$.unit_costs.map_count"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          301,
+          304
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "Cost model\nin `scripts/build_pareto_v2.py` corrected (MIN 0.54 → 0.266, HIGH 1.61 →\n2.29, VF 0.000697 → 0.000693)",
+      "values": [
+        {
+          "quantity": "MIN_PASS_USD, superseded value",
+          "value_verbatim": "0.54",
+          "value_parsed": 0.54,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "MIN_PASS_USD, corrected value",
+          "value_verbatim": "0.266",
+          "value_parsed": 0.266,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "MIN_PASS_USD",
+          "method": "read"
+        },
+        {
+          "quantity": "HIGH_PASS_USD, superseded value",
+          "value_verbatim": "1.61",
+          "value_parsed": 1.61,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "HIGH_PASS_USD, corrected value",
+          "value_verbatim": "2.29",
+          "value_parsed": 2.29,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "HIGH_PASS_USD",
+          "method": "read"
+        },
+        {
+          "quantity": "VF_CALL_USD, superseded value",
+          "value_verbatim": "0.000697",
+          "value_parsed": 0.000697,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "VF_CALL_USD, corrected value",
+          "value_verbatim": "0.000693",
+          "value_parsed": 0.000693,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": "VF_CALL_USD",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_pareto_v2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Changelog before->after triple: the left-hand values are historical, the right-hand values live. Anchor paths are module-level constant names in the script the changelog names."
+    }
+  ]
+}

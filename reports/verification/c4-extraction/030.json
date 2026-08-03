@@ -1,0 +1,2649 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/configuration-audit-2026-03-25-v2.md",
+    "git_blob": "04fa02c6f553",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "Correction Summary — Key corrections table"
+      },
+      "claim_text": "| \"No Pro model was used in any run\" | **12 runs used gemini-3.1-pro-preview** |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer runs executed on gemini-3.1-pro-preview",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b030] Batch b030 covers lines 1-210 only; a later batch takes 211-413. Scope decisions applied throughout this file, per instrument v1.2 rule 5: (a) numbers inside condition/directory names and comparison labels ('pv-diag-384', 'flash-high-text-n5', 'text-baseline-611tiles', 'Pro HIGH text 3-of-5', 'T=1.0 bug') are treated as names, not claims; (b) check identifiers in the discrepancy tables ('1: Label<->Meta', '2: Intent<->Meta', '3: Propagation') are identifiers, not claims; (c) v1/v2 document versions, the 2026-03-25 date, git 765cb232 and script v1.5.0 are out of scope. Recompute recipe for this claim: count run directories whose sibling *.meta.json has $.cost_estimate.pricing_used.model == 'gemini-3.1-pro-preview' across outputs/h11/pv-diag-384/{pro-high-text-n5,pro-high-image-n5,pro-medium-text-baseline,pro-medium-image-baseline}. Note the pro-high-* condition trees have since been extended (study_manifest.json now records runs_per_condition 10 for pro-high-text-n5), so the on-disk count may exceed the audit-time count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "Correction Summary — Key corrections table"
+      },
+      "claim_text": "| flash-high-text-n5-b (5 runs, Flash) | **Does not exist -- this is pro-high-text-n5 (5 runs, Pro)** |",
+      "values": [
+        {
+          "quantity": "run count, v1 audit's claimed flash-high-text-n5-b condition (quoted old value)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "run count, pv-diag-384/pro-high-text-n5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-text-n5",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Correction row: left cell is the superseded v1 claim (method historical per instrument rule 3); right cell is the live v2 claim. Live value = count of run_* directories under outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7; studies/h11-384-pro-high-text-n5.yaml records $.execution.runs as the planned figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "Correction Summary — Key corrections table"
+      },
+      "claim_text": "| flash-high-image-n5-b (5 runs, Flash) | **Does not exist -- this is pro-high-image-n5 (5 runs, Pro)** |",
+      "values": [
+        {
+          "quantity": "run count, v1 audit's claimed flash-high-image-n5-b condition (quoted old value)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "run count, pv-diag-384/pro-high-image-n5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-image-n5",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Correction row: left cell is the superseded v1 claim (historical); right cell is the live v2 claim. Live value = count of run_* directories under outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7; studies/h11-384-pro-high-image-n5.yaml records $.execution.runs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          52
+        ],
+        "section": "Section 1: Run Inventory Summary (Model-Corrected)"
+      },
+      "claim_text": "Only the H11 proposer runs and verifier runs are updated below. Phase 1-2,\nPhase 3, and retest runs are unchanged from v1 -- all confirmed as\n`gemini-3-flash-preview` via `cost_estimate.pricing_used.model` (1,532 Flash\nruns, 0 Pro runs, 0 missing).",
+      "values": [
+        {
+          "quantity": "run count, Phase 1-2 / Phase 3 / retest runs confirmed as gemini-3-flash-preview",
+          "value_verbatim": "1,532",
+          "value_parsed": 1532,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count, Phase 1-2 / Phase 3 / retest runs found to use a Pro model",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count, Phase 1-2 / Phase 3 / retest runs with missing cost_estimate.pricing_used.model",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Recompute recipe: sweep every *.meta.json under the Phase 1-2, Phase 3 and retest output trees and tally $.cost_estimate.pricing_used.model. Anchor caveat: the document's scope line names outputs/phase*, but no outputs/phase1|phase2|phase3 directory exists in the working tree; the surviving trees are outputs/retest/** (including outputs/retest/phase3a, phase3a-high, phase3a-replication, phase3c) plus archived copies under archive/. Anchored at the outputs/ root so triage can chase the sweep boundary."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/text-baseline | 1 | h11-384-pv-diag-text-baseline.yaml | detect_brief-text.json | **Flash** | 0.0 | minimal | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/text-baseline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/text-baseline",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/text-baseline",
+          "value_verbatim": "1/1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-pv-diag-text-baseline.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/text-baseline-611tiles | 1 | -- | detect_brief-text.json | **Flash** | 0.0 | minimal | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/text-baseline-611tiles",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/text-baseline-611tiles",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/text-baseline-611tiles",
+          "value_verbatim": "1/1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/text-baseline-611tiles/text-t0.0/run_1/detections_text-t0.0_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script). JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk. Temperature is the as-run value at the anchored meta.json path. The '611tiles' in the directory name is treated as a name, not a claim (instrument rule 5); the tile count itself is recorded at $.execution_stats.items_processed in the anchored meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/text-n10 | 10 | h11-384-pv-diag-text-n10.yaml | detect_brief-text.json | **Flash** | 0.7 | minimal | 10/10 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/text-n10",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/text-n10",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/text-n10",
+          "value_verbatim": "10/10",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-pv-diag-text-n10.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/image-baseline | 1 | h11-384-pv-diag-image-baseline.yaml | library_plus-hp.json | **Flash** | 0.0 | minimal | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/image-baseline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/image-baseline",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/image-baseline",
+          "value_verbatim": "1/1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-pv-diag-image-baseline.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/image-n5 | 10 | h11-384-pv-diag-image-n5.yaml | library_plus-hp.json | **Flash** | 0.7 | minimal | 10/10 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/image-n5",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/image-n5",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/image-n5",
+          "value_verbatim": "10/10",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-pv-diag-image-n5.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path. Note for triage: the condition is named image-n5 but the row asserts 10 runs; studies/h11-384-pv-diag-image-n5.yaml records $.execution.runs = 5. Not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-high-text-n5 | 30 | h11-384-flash-high-text-n5.yaml | detect_brief-text.json | **Flash** | 0.7 | high | 30/30 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/flash-high-text-n5",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/flash-high-text-n5",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/flash-high-text-n5",
+          "value_verbatim": "30/30",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-flash-high-text-n5.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path. Note for triage: the condition is named flash-high-text-n5 but the row asserts 30 runs; studies/h11-384-flash-high-text-n5.yaml records $.execution.runs = 5. Not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| **pv-diag-384/pro-high-text-n5** | **5** | **h11-384-pro-high-text-n5.yaml** | detect_brief-text.json | **Pro** | 0.7 | high | 5/5 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/pro-high-text-n5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/pro-high-text-n5",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/pro-high-text-n5",
+          "value_verbatim": "5/5",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-pro-high-text-n5.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-high-image-n5 | 10 | h11-384-flash-high-image-n5.yaml | library_plus-hp.json | **Flash** | 0.7 | high | 10/10 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/flash-high-image-n5",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/flash-high-image-n5",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/flash-high-image-n5",
+          "value_verbatim": "10/10",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-flash-high-image-n5.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path. Note for triage: the condition is named flash-high-image-n5 but the row asserts 10 runs; studies/h11-384-flash-high-image-n5.yaml records $.execution.runs = 5. Not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| **pv-diag-384/pro-high-image-n5** | **5** | **h11-384-pro-high-image-n5.yaml** | library_plus-hp.json | **Pro** | 0.7 | high | 5/5 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/pro-high-image-n5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/pro-high-image-n5",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/pro-high-image-n5",
+          "value_verbatim": "5/5",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-pro-high-image-n5.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| **pv-diag-384/pro-medium-text-baseline** | **1** | **h11-384-pro-medium-text-baseline.yaml** | detect_brief-text.json | **Pro** | 0.0 | medium | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/pro-medium-text-baseline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/pro-medium-text-baseline",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/pro-medium-text-baseline",
+          "value_verbatim": "1/1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-pro-medium-text-baseline.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| **pv-diag-384/pro-medium-image-baseline** | **1** | **h11-384-pro-medium-image-baseline.yaml** | library_plus-hp.json | **Pro** | 0.0 | medium | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/pro-medium-image-baseline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/pro-medium-image-baseline",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/pro-medium-image-baseline",
+          "value_verbatim": "1/1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-pro-medium-image-baseline.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-minimal-text-n30-t07 | 30 | h11-384-flash-minimal-text-n30-t07.yaml | detect_brief-text.json | **Flash** | 0.7 | minimal | 30/30 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-384/flash-minimal-text-n30-t07",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-384/flash-minimal-text-n30-t07",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-384/flash-minimal-text-n30-t07",
+          "value_verbatim": "30/30",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-flash-minimal-text-n30-t07.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| consensus-384 | 30 | h11-384-consensus.yaml | detect_brief-text.json | **Flash** | **1.0** | minimal | 0/30 |",
+      "values": [
+        {
+          "quantity": "run count, consensus-384",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, consensus-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, consensus-384",
+          "value_verbatim": "0/30",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-consensus.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path. The condition directory has since been renamed: the run tree now lives at outputs/h11/consensus-384-UNINTENDED-T1.0/384/, not outputs/h11/consensus-384/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          71,
+          71
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| single-pass-384 | 10 | h11-384-single-pass.yaml | detect_brief-text.json | **Flash** | **1.0** | minimal | 0/10 |",
+      "values": [
+        {
+          "quantity": "run count, single-pass-384",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, single-pass-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, single-pass-384",
+          "value_verbatim": "0/10",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-single-pass.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path. The condition directory is no longer under outputs/: the run tree was archived to archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-256/text-baseline | 1 | h11-256-pv-diag-text-baseline.yaml | detect_brief-text.json | **Flash** | 0.0 | minimal | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-256/text-baseline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-256/text-baseline",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-256/text-baseline",
+          "value_verbatim": "1/1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No run tree for pv-diag-256/text-baseline survives in the working tree: outputs/h11/pv-diag-256/ holds only consensus/ and crops/, so no meta.json carries the temperature and no run_* directories remain to count. Nearest artefacts: studies/h11-256-pv-diag-text-baseline.yaml ($.execution.runs) and outputs/h11/pv-diag-256/consensus/*.geojson."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-256/text-n5 | 5 | h11-256-pv-diag-text-n5.yaml | detect_brief-text.json | **Flash** | 0.7 | minimal | 5/5 |",
+      "values": [
+        {
+          "quantity": "run count, pv-diag-256/text-n5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperature as run, pv-diag-256/text-n5",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "JSONL files present / runs, pv-diag-256/text-n5",
+          "value_verbatim": "5/5",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No run tree for pv-diag-256/text-n5 survives in the working tree: outputs/h11/pv-diag-256/ holds only consensus/ and crops/, so no meta.json carries the temperature and no run_* directories remain to count. Nearest artefacts: studies/h11-256-pv-diag-text-n5.yaml ($.execution.runs) and outputs/h11/pv-diag-256/consensus/*.geojson."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| proposer-verifier-384 | 15 | h11-384-proposer-verifier.yaml | mixed (verifiers) | **Flash** | 0.0 | minimal | 0/15 |",
+      "values": [
+        {
+          "quantity": "run count, proposer-verifier-384",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, proposer-verifier-384",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, proposer-verifier-384",
+          "value_verbatim": "0/15",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-proposer-verifier.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path. Anchored to the proposer meta.json; the row's 15 runs aggregate one proposer pass plus the verifier passes under outputs/h11/proposer-verifier-384/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Proposer Runs"
+      },
+      "claim_text": "| proposer-verifier-512 | 2 | h11-384-proposer-verifier.yaml | mixed (verifiers) | **Flash** | 0.0 | minimal | 0/2 |",
+      "values": [
+        {
+          "quantity": "run count, proposer-verifier-512",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature as run, proposer-verifier-512",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "JSONL files present / runs, proposer-verifier-512",
+          "value_verbatim": "0/2",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-512/verified-adversarial-text.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Run count = number of run_* directories under the condition's output tree (recompute-script); the study YAML studies/h11-384-proposer-verifier.yaml records the planned figure at $.execution.runs. JSONL cell = per-run batch JSONL artefacts present / runs, counted on disk under the same tree. Temperature is the as-run value at the anchored meta.json path. Anchored to a verifier meta.json because outputs/h11/proposer-verifier-512/proposer/ holds only detections.geojson (no meta.json)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "Section 1: Run Inventory Summary — Model Verification Evidence for Pro Runs"
+      },
+      "claim_text": "Every Pro run was verified via all three reliable sources. All agree.",
+      "values": [
+        {
+          "quantity": "count of reliable model-verification sources used per Pro run",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubtful inclusion, flagged per the instrument's over-inclusion preference: 'three reliable sources' refers to items 1-3 of the corrected verification-method list earlier in the same document (GeoJSON properties.model, cost_estimate.pricing_used.model, log files) and to the three evidence columns of the table that follows. The only visible source is this markdown document itself, so no artefact anchor exists (rule 2: never anchor prose to prose). The table body at lines 83-94 carries no further quantitative claims — its cells are model-name strings and run identifiers."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| text-baseline | Flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition text-baseline",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/text-baseline/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| text-{1..5}of5 | Flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition text-{1..5}of5",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/text-2of5/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5). Anchored to verified/text-2of5 because verified/text-1of5 is an empty directory in the working tree; the row asserts a common temperature across the five text-Nof5 verifier conditions."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| text-{1..10}of10 | Flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition text-{1..10}of10",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/text-1of10/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5). Anchored to verified/text-1of10 as representative of the ten text-Nof10 verifier conditions the row covers."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| image-baseline | Flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition image-baseline",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/image-baseline/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| image-{1..5}of5 | Flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition image-{1..5}of5",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/image-1of5/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5). Anchored to verified/image-1of5 as representative of the five image-Nof5 verifier conditions the row covers."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| image-1of10 | Flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition image-1of10",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/image-1of10/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-high-text-1of5 | Flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition flash-high-text-1of5",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-minimal-text-medium-verifier | Flash | 0.0 | medium |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition flash-minimal-text-medium-verifier",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-minimal-text-medium-verifier/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-minimal-image-medium-verifier | Flash | 0.0 | medium |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition flash-minimal-image-medium-verifier",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-minimal-image-medium-verifier/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| pro-high-text-1of5 | **Flash** (verifier) | 0.0 | medium |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition pro-high-text-1of5",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-high-text-1of5/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| pro-text-medium-verifier | **Flash** (verifier) | 0.0 | medium |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition pro-text-medium-verifier",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| pro-text-minimal-verifier | **Flash** (verifier) | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition pro-text-minimal-verifier",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| pro-image-medium-verifier | **Flash** (verifier) | 0.0 | medium |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition pro-image-medium-verifier",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-image-medium-verifier/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "Section 1: Run Inventory Summary — H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| pro-image-minimal-verifier | **Flash** (verifier) | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "temperature as run, verifier condition pro-image-minimal-verifier",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/pro-image-minimal-verifier/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Verifier temperature as run. The row's thinking-level cell is a string (recorded at $.configuration.thinking_level in the same anchor) and the '{1..5}of5'-style ranges in the condition column are directory-name patterns, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals (Corrected)"
+      },
+      "claim_text": "| H11 Pro proposer | 4 | 12 | gemini-3.1-pro-preview | 12/12 | 12/12 |",
+      "values": [
+        {
+          "quantity": "condition count, H11 Pro proposer",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count, H11 Pro proposer",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with meta.json / runs, H11 Pro proposer",
+          "value_verbatim": "12/12",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with JSONL / runs, H11 Pro proposer",
+          "value_verbatim": "12/12",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Filesystem inventory row: every cell needs a scripted sweep (condition directories, run_* directories, sibling meta.json and batch JSONL artefacts). Approximation markers (~) are kept in value_verbatim per instrument v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals (Corrected)"
+      },
+      "claim_text": "| H11 Flash proposer | 43 | 193 | gemini-3-flash-preview | 193/193 | 99/193 |",
+      "values": [
+        {
+          "quantity": "condition count, H11 Flash proposer",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count, H11 Flash proposer",
+          "value_verbatim": "193",
+          "value_parsed": 193,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with meta.json / runs, H11 Flash proposer",
+          "value_verbatim": "193/193",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with JSONL / runs, H11 Flash proposer",
+          "value_verbatim": "99/193",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Filesystem inventory row: every cell needs a scripted sweep (condition directories, run_* directories, sibling meta.json and batch JSONL artefacts). Approximation markers (~) are kept in value_verbatim per instrument v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals (Corrected)"
+      },
+      "claim_text": "| H11 verifier (all) | ~37 | ~37 | gemini-3-flash | ~24/37 | 0/37 |",
+      "values": [
+        {
+          "quantity": "condition count, H11 verifier runs (approximate)",
+          "value_verbatim": "~37",
+          "value_parsed": 37,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count, H11 verifier runs (approximate)",
+          "value_verbatim": "~37",
+          "value_parsed": 37,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with meta.json / runs, H11 verifier (approximate)",
+          "value_verbatim": "~24/37",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with JSONL / runs, H11 verifier",
+          "value_verbatim": "0/37",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Filesystem inventory row: every cell needs a scripted sweep (condition directories, run_* directories, sibling meta.json and batch JSONL artefacts). Approximation markers (~) are kept in value_verbatim per instrument v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals (Corrected)"
+      },
+      "claim_text": "| Phase 1-2 original | 34 | 335 | gemini-3-flash-preview | 335/335 | 0/335 |",
+      "values": [
+        {
+          "quantity": "condition count, Phase 1-2 original",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count, Phase 1-2 original",
+          "value_verbatim": "335",
+          "value_parsed": 335,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with meta.json / runs, Phase 1-2 original",
+          "value_verbatim": "335/335",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with JSONL / runs, Phase 1-2 original",
+          "value_verbatim": "0/335",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Filesystem inventory row: every cell needs a scripted sweep (condition directories, run_* directories, sibling meta.json and batch JSONL artefacts). Approximation markers (~) are kept in value_verbatim per instrument v1.2 amendment 5. Anchor caveat: no outputs/phase1|phase2|phase3 tree exists in the working tree despite the document's scope line naming outputs/phase*; anchored at the outputs/ root so triage can chase the surviving copies (outputs/retest/phase3a*, archive/results-60-tile-validation/phase3*)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals (Corrected)"
+      },
+      "claim_text": "| Phase 3 original | 57 | 585 | gemini-3-flash-preview | 585/585 | 0/585 |",
+      "values": [
+        {
+          "quantity": "condition count, Phase 3 original",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count, Phase 3 original",
+          "value_verbatim": "585",
+          "value_parsed": 585,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with meta.json / runs, Phase 3 original",
+          "value_verbatim": "585/585",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with JSONL / runs, Phase 3 original",
+          "value_verbatim": "0/585",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Filesystem inventory row: every cell needs a scripted sweep (condition directories, run_* directories, sibling meta.json and batch JSONL artefacts). Approximation markers (~) are kept in value_verbatim per instrument v1.2 amendment 5. Anchor caveat: no outputs/phase1|phase2|phase3 tree exists in the working tree despite the document's scope line naming outputs/phase*; anchored at the outputs/ root so triage can chase the surviving copies (outputs/retest/phase3a*, archive/results-60-tile-validation/phase3*)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals (Corrected)"
+      },
+      "claim_text": "| Retest (all) | 92 | 615 | gemini-3-flash-preview | 615/615 | 192/615 |",
+      "values": [
+        {
+          "quantity": "condition count, retest runs",
+          "value_verbatim": "92",
+          "value_parsed": 92,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count, retest runs",
+          "value_verbatim": "615",
+          "value_parsed": 615,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with meta.json / runs, retest",
+          "value_verbatim": "615/615",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with JSONL / runs, retest",
+          "value_verbatim": "192/615",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Filesystem inventory row: every cell needs a scripted sweep (condition directories, run_* directories, sibling meta.json and batch JSONL artefacts). Approximation markers (~) are kept in value_verbatim per instrument v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals (Corrected)"
+      },
+      "claim_text": "| **TOTAL** | **~239** | **~1,740** | **12 Pro + ~1,728 Flash** | **~1,740/1,740** | **~303/1,740** |",
+      "values": [
+        {
+          "quantity": "condition count, all audited runs (approximate)",
+          "value_verbatim": "~239",
+          "value_parsed": 239,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count, all audited runs (approximate)",
+          "value_verbatim": "~1,740",
+          "value_parsed": 1740,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count on gemini-3.1-pro-preview, all audited runs",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "run count on Flash, all audited runs (approximate)",
+          "value_verbatim": "~1,728",
+          "value_parsed": 1728,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with meta.json / runs, all audited runs (approximate)",
+          "value_verbatim": "~1,740/1,740",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs with JSONL / runs, all audited runs (approximate)",
+          "value_verbatim": "~303/1,740",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Filesystem inventory row: every cell needs a scripted sweep (condition directories, run_* directories, sibling meta.json and batch JSONL artefacts). Approximation markers (~) are kept in value_verbatim per instrument v1.2 amendment 5. The TOTAL row is also the column sum of rows 123-128, but the operands are prose table cells rather than artefacts, so it is recorded as a sweep rather than as arithmetic."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — CRITICAL Discrepancies (NEW in v2)"
+      },
+      "claim_text": "| pro-high-text-n5 | 5 (all) | meta.json model field | CRITICAL (metadata) | configuration.model = gemini-3.1-pro-preview | configuration.model = gemini-3-flash | **Bug in meta.json:** `configuration.model` records config JSON default, not resolved model. GeoJSON and cost_estimate both correctly show gemini-3.1-pro-preview. The data is correct; only the metadata field is wrong. |",
+      "values": [
+        {
+          "quantity": "run count affected by the meta.json configuration.model defect, pro-high-text-n5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-text-n5",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Runs-affected count = number of run_* directories under the condition's output tree. The Expected/Actual cells carry model-name strings, not numeric claims; 'gemini-3.1-pro-preview' and 'gemini-3-flash' are model identifiers (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — CRITICAL Discrepancies (NEW in v2)"
+      },
+      "claim_text": "| pro-high-image-n5 | 5 (all) | meta.json model field | CRITICAL (metadata) | configuration.model = gemini-3.1-pro-preview | configuration.model = gemini-3-flash | Same bug as above. |",
+      "values": [
+        {
+          "quantity": "run count affected by the meta.json configuration.model defect, pro-high-image-n5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-image-n5",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Runs-affected count = number of run_* directories under the condition's output tree. The Expected/Actual cells carry model-name strings, not numeric claims; 'gemini-3.1-pro-preview' and 'gemini-3-flash' are model identifiers (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — CRITICAL Discrepancies (NEW in v2)"
+      },
+      "claim_text": "| pro-medium-text-baseline | 1 | meta.json model field | CRITICAL (metadata) | configuration.model = gemini-3.1-pro-preview | configuration.model = gemini-3-flash | Same bug. |",
+      "values": [
+        {
+          "quantity": "run count affected by the meta.json configuration.model defect, pro-medium-text-baseline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Runs-affected count = number of run_* directories under the condition's output tree. The Expected/Actual cells carry model-name strings, not numeric claims; 'gemini-3.1-pro-preview' and 'gemini-3-flash' are model identifiers (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — CRITICAL Discrepancies (NEW in v2)"
+      },
+      "claim_text": "| pro-medium-image-baseline | 1 | meta.json model field | CRITICAL (metadata) | configuration.model = gemini-3.1-pro-preview | configuration.model = gemini-3-flash | Same bug. |",
+      "values": [
+        {
+          "quantity": "run count affected by the meta.json configuration.model defect, pro-medium-image-baseline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Runs-affected count = number of run_* directories under the condition's output tree. The Expected/Actual cells carry model-name strings, not numeric claims; 'gemini-3.1-pro-preview' and 'gemini-3-flash' are model identifiers (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          152
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — HIGH Discrepancies (Unchanged from v1)"
+      },
+      "claim_text": "| h11/consensus-384 | 30 (all) | 2: Intent<->Meta, 3: Propagation | HIGH | temperature=0.7 | temperature=1.0 | T=1.0 bug: YAML specifies T=0.7 but config JSON default T=1.0 was not overridden. |",
+      "values": [
+        {
+          "quantity": "run count affected by the T=1.0 defect, h11/consensus-384",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature expected for h11/consensus-384 (study-YAML intent)",
+          "value_verbatim": "temperature=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h11-384-consensus.yaml#$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, h11/consensus-384",
+          "value_verbatim": "temperature=1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature specified by the study YAML, h11/consensus-384",
+          "value_verbatim": "T=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h11-384-consensus.yaml#$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature default in the config JSON, detect_brief-text.json",
+          "value_verbatim": "T=1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prompts/configs/detect_brief-text.json#$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "The leading 'T=1.0 bug:' in the Detail cell is treated as the name of the defect, not a separate claim (instrument rule 5); the two T= values extracted from that cell are the assertions about the YAML and the config JSON default. 'h11/consensus-384' now lives at outputs/h11/consensus-384-UNINTENDED-T1.0/384/. The check labels '2: Intent<->Meta, 3: Propagation' are identifiers, not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — HIGH Discrepancies (Unchanged from v1)"
+      },
+      "claim_text": "| h11/single-pass-384 | 10 (all) | 2: Intent<->Meta, 3: Propagation | HIGH | temperature=0.0 | temperature=1.0 | Same T=1.0 bug. |",
+      "values": [
+        {
+          "quantity": "run count affected by the T=1.0 defect, h11/single-pass-384",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature expected for h11/single-pass-384 (study-YAML intent)",
+          "value_verbatim": "temperature=0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h11-384-single-pass.yaml#$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, h11/single-pass-384",
+          "value_verbatim": "temperature=1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "'Same T=1.0 bug.' in the Detail cell is a back-reference to the named defect, not a separate claim. The single-pass-384 run tree is no longer under outputs/: it was archived to archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/. Check labels '2: Intent<->Meta, 3: Propagation' are identifiers, not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — WARNING Discrepancies (Unchanged from v1 except W2 corrected)"
+      },
+      "claim_text": "| phase3a/track1-image-high | 90 (all) | 1: Label<->Meta | WARNING | thinking=high | thinking=minimal | Known mislabelling. |",
+      "values": [
+        {
+          "quantity": "run count affected by the thinking-level mislabelling, phase3a/track1-image-high",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No original Phase 3a output tree survives in the working tree (no outputs/phase3a/ directory); looked for phase3a/track1-image-high under outputs/ and archive/. Nearest artefacts for triage: outputs/retest/phase3a, outputs/retest/phase3a-high, outputs/retest/phase3a-replication, archive/results-60-tile-validation/phase3a-*, and the study YAMLs studies/phase3a-h3-voting-track1.yaml / studies/phase3a-h3-voting-track2.yaml. The check label '1: Label<->Meta' is an identifier; the Expected/Actual cells carry thinking-level strings, not numbers."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — WARNING Discrepancies (Unchanged from v1 except W2 corrected)"
+      },
+      "claim_text": "| phase3a/track2-text-high | 90 (all) | 1: Label<->Meta | WARNING | thinking=high | thinking=minimal | Known mislabelling. |",
+      "values": [
+        {
+          "quantity": "run count affected by the thinking-level mislabelling, phase3a/track2-text-high",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No original Phase 3a output tree survives in the working tree (no outputs/phase3a/ directory); looked for phase3a/track2-text-high under outputs/ and archive/. Nearest artefacts for triage: outputs/retest/phase3a, outputs/retest/phase3a-high, outputs/retest/phase3a-replication, archive/results-60-tile-validation/phase3a-*, and the study YAMLs studies/phase3a-h3-voting-track1.yaml / studies/phase3a-h3-voting-track2.yaml. The check label '1: Label<->Meta' is an identifier; the Expected/Actual cells carry thinking-level strings, not numbers."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          172
+        ],
+        "section": "Section 2: Discrepancy Table (Corrected) — INFO Discrepancies (Unchanged from v1)"
+      },
+      "claim_text": "Same as v1: 265 runs in Phases 1-2 missing `thinking_level`/`instruction_hash`\nfields, plus 6 incomplete retest runs.",
+      "values": [
+        {
+          "quantity": "run count, Phases 1-2 runs missing thinking_level / instruction_hash metadata fields",
+          "value_verbatim": "265",
+          "value_parsed": 265,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "run count, incomplete retest runs",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Split methods: the Phases 1-2 figure has no surviving output tree to sweep (no outputs/phase1|phase2 directory in the working tree), so it is anchor-unknown; the incomplete-retest figure is a sweep over outputs/retest/** for run directories lacking a complete meta.json / detections GeoJSON pair."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Pairwise Comparisons Involving Pro (ALL GENUINELY Pro vs Flash)"
+      },
+      "claim_text": "| **Pro HIGH text 3-of-5 vs Flash HIGH text 5-of-5** | model (Pro vs Flash) | consensus threshold (3 vs 5) | Minor (threshold) -- **VALID model comparison** |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Pro HIGH text arm",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text arm",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/pairwise-comparisons.yaml",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. Matching entry: the comparison whose label_a is 'Pro HIGH text 3-of-5' (config_a 'text-t0.7,5,3') and label_b is 'Flash HIGH text 5-of-5' (config_b 'text-t0.7,5,5')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          188,
+          188
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Pairwise Comparisons Involving Pro (ALL GENUINELY Pro vs Flash)"
+      },
+      "claim_text": "| **Pro HIGH text 3-of-5 vs Flash MINIMAL-T0.7 text 5-of-5** | model + thinking_level | consensus threshold (3 vs 5) | **YES -- model AND thinking_level both vary** |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Pro HIGH text arm",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL-T0.7 text arm",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/pairwise-comparisons.yaml",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. No single entry in configs/pairwise-comparisons.yaml pairs these two labels; the arms must be assembled from 'Pro HIGH text 3-of-5' (config_a 'text-t0.7,5,3') and 'Flash MIN text 5-of-5' (config_b 'text-t0.7,5,5')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Pairwise Comparisons Involving Pro (ALL GENUINELY Pro vs Flash)"
+      },
+      "claim_text": "| **Pro HIGH text 3-of-5 vs Flash MINIMAL text 5-of-5 (consensus-384)** | model + thinking_level | **temperature (0.7 vs 1.0)**, threshold (3 vs 5) | **YES -- model, thinking_level, AND T=1.0 bug all confound** |",
+      "values": [
+        {
+          "quantity": "temperature as run, Pro HIGH text 3-of-5 arm",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, Flash MINIMAL text 5-of-5 (consensus-384) arm",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, Pro HIGH text arm",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text (consensus-384) arm",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. The two temperatures are as-run values readable from the two arms' meta.json files. 'T=1.0 bug' in the final cell is the defect's name, not a separate claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          190
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Pairwise Comparisons Involving Pro (ALL GENUINELY Pro vs Flash)"
+      },
+      "claim_text": "| **Pro HIGH text 3-of-5 vs Pro HIGH image 3-of-5** | modality (text vs image) | example_count (17 vs 13) | YES -- example_count differs (inherent design coupling) |",
+      "values": [
+        {
+          "quantity": "example count in the prompt library, Pro HIGH text arm",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.example_count",
+          "method": "read"
+        },
+        {
+          "quantity": "example count in the prompt library, Pro HIGH image arm",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json#$.configuration.example_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.example_count"
+      },
+      "method": "read",
+      "notes": "example_count is recorded per run at $.configuration.example_count; the image arm's value also appears as $.total_examples in prompts/configs/library_plus-hp.json. The '3-of-5' figures in the labels are condition names (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          198,
+          198
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Flash HIGH image 7-of-10 vs Flash MINIMAL image 8-of-10 | thinking_level | consensus threshold (7 vs 8) | Minor (threshold) |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash HIGH image arm",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL image arm",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/pairwise-comparisons.yaml",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. No entry in configs/pairwise-comparisons.yaml pairs these exact labels (the nearest image comparisons are 'Flash HIGH image 6-of-10' / 'Flash MIN image 4-of-5'), so triage must locate the pool-10 image consensus products under outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          200,
+          200
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Flash HIGH text 26-of-30 vs Flash MINIMAL-T0.7 text 29-of-30 | thinking_level | consensus threshold (26 vs 29) | Minor (threshold) |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 26-of-30 arm",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL-T0.7 text 29-of-30 arm",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/pairwise-comparisons.yaml",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. Matching entry: label_a 'Flash HIGH text 26-of-30' (config_a 'text-t0.7,30,26') vs label_b 'Flash MIN text 29-of-30' (config_b 'text-t0.7,30,29')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          201,
+          201
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Flash HIGH text 5-of-5 vs Flash HIGH image 3-of-5 | modality (text vs image) | example_count (17 vs 13), threshold (5 vs 3) | YES -- example_count differs |",
+      "values": [
+        {
+          "quantity": "example count in the prompt library, Flash HIGH text arm",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.example_count",
+          "method": "read"
+        },
+        {
+          "quantity": "example count in the prompt library, Flash HIGH image arm",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json#$.configuration.example_count",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 5-of-5 arm",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH image 3-of-5 arm",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.example_count"
+      },
+      "method": "read",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. Matching entry: label_a 'Flash HIGH text 5-of-5' (config_a 'text-t0.7,5,5') vs label_b 'Flash HIGH image 3-of-5' (config_b 'image-t0.7,5,3')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          203,
+          203
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Flash HIGH text 5-of-5 vs Flash MINIMAL text 5-of-5 (consensus-384) | thinking_level | **temperature (0.7 vs 1.0)** | **YES -- T=1.0 bug confounds** |",
+      "values": [
+        {
+          "quantity": "temperature as run, Flash HIGH text 5-of-5 arm",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, Flash MINIMAL text 5-of-5 (consensus-384) arm",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Both temperatures are as-run values readable from the two arms' meta.json files; 'T=1.0 bug' in the final cell is the defect's name, not a separate claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          204
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Flash HIGH text 9-of-10 vs Flash HIGH image 7-of-10 | modality | example_count (17 vs 13), threshold (9 vs 7) | YES -- example_count differs |",
+      "values": [
+        {
+          "quantity": "example count in the prompt library, Flash HIGH text arm",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.example_count",
+          "method": "read"
+        },
+        {
+          "quantity": "example count in the prompt library, Flash HIGH image arm",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json#$.configuration.example_count",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 9-of-10 arm",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH image 7-of-10 arm",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": "$.configuration.example_count"
+      },
+      "method": "read",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. configs/pairwise-comparisons.yaml carries 'Flash HIGH text 9-of-10' (config_a 'text-t0.7,10,9') but pairs it with 'Flash HIGH image 6-of-10', not 7-of-10; triage must locate the image 7-of-10 consensus product."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          206
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Flash HIGH text 9-of-10 vs Flash MINIMAL-T0.7 text 10-of-10 | thinking_level | consensus threshold (9 vs 10) | Minor (threshold) |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 9-of-10 arm",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL-T0.7 text 10-of-10 arm",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/pairwise-comparisons.yaml",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. Matching entry: label_a 'Flash HIGH text 9-of-10' (config_a 'text-t0.7,10,9') vs label_b 'Flash MIN text 10-of-10' (config_b 'text-t0.7,10,10')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          207
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Flash MINIMAL text T0.7 10-of-10 vs Flash MINIMAL text T1.0 9-of-10 | temperature | consensus threshold (10 vs 9) | T=1.0 was unintentional but data is valid |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text T0.7 10-of-10 arm",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text T1.0 9-of-10 arm",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/pairwise-comparisons.yaml",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. Matching entry: label_a 'Flash MIN text T=0.7 10-of-10' (config_a 'text-t0.7,10,10') vs label_b 'Flash MIN text T=1.0 9-of-10' (config_b '384,10,9'). 'T=1.0' in the final cell names the defect and the T0.7 / T1.0 markers in the comparison label are condition names, so no temperature value is extracted from this row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          208,
+          208
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Flash MINIMAL text T0.7 29-of-30 vs Flash MINIMAL text T1.0 28-of-30 | temperature | consensus threshold (29 vs 28) | Same as above |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text T0.7 29-of-30 arm",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text T1.0 28-of-30 arm",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/pairwise-comparisons.yaml",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Consensus thresholds/pool sizes in the confound matrix are recorded in configs/pairwise-comparisons.yaml as the second and third comma-separated fields of the config_a / config_b strings ('<condition>,<pool>,<threshold>'), so they need a parse rather than a direct read — hence recompute-script. Numbers inside the comparison labels themselves ('3-of-5', '26-of-30') are treated as condition names (instrument rule 5) and are not extracted separately. Nearest entry: label_a 'Flash MIN text T=0.7 29-of-30' (config_a 'text-t0.7,30,29') vs label_b 'Flash MIN text T=1.0 22-of-30' (config_b '384,30,22') — the file's T1.0 threshold is 22, not the 28 this row asserts. Flagged for triage, not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          210
+        ],
+        "section": "Section 3: Confound Matrix (Corrected) — Flash-Only Comparisons (Unchanged from v1)"
+      },
+      "claim_text": "| Image MINIMAL N=10 6-of-10 vs Image MINIMAL N=30 14-of-30 | consensus params (pool size) | None (same underlying data) | NO (same condition) |",
+      "values": [
+        {
+          "quantity": "consensus pool size, Image MINIMAL N=10 arm",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus pool size, Image MINIMAL N=30 arm",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/pairwise-comparisons.yaml",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Doubtful inclusion, flagged: the N=10 / N=30 pool sizes sit inside the comparison labels, which this batch otherwise treats as names, but 'N=' is parameter notation and the Intended Variable cell names pool size, so they are extracted. Pool size is the second comma-separated field of the config_a / config_b strings in configs/pairwise-comparisons.yaml; the '6-of-10' and '14-of-30' thresholds in the labels are not extracted (instrument rule 5). Rows 191, 197, 199, 202, 205 and 209 of this document carry no numbers outside comparison labels and are recorded here as deliberate non-extractions rather than omissions."
+    }
+  ]
+}

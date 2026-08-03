@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/apparatus/c1-discharge-instructions.md",
+    "git_blob": "b1720d271438",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          10,
+          10
+        ],
+        "section": "v1.1 defence-search record"
+      },
+      "claim_text": "licensing and exculpatory sources were searched (all 61 errata by topic,",
+      "values": [
+        {
+          "quantity": "number of errata in the project's errata licence register",
+          "value_verbatim": "61",
+          "value_parsed": 61,
+          "unit": "errata",
+          "kind": "count",
+          "path": "len:$.entries",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/errata-licence-register.json",
+        "path": "len:$.entries"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b053] The register the instrument itself names two lines later (reports/verification/c2-census/errata-licence-register.json) is the anchor. SCOPE DECISIONS as for the other c1-* apparatus documents in this batch: version strings (1.1, v1.0), dates, controller section and rule citations (§ 7 Phase 1, charter rule 13, Phase 4) are out of C4 scope per hard rule 5. Numerically stated procedural/grain parameters ARE extracted with the doubt flagged, per the batch brief."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "Output"
+      },
+      "claim_text": "\"note\": \"<one sentence of reasoning; UK English>\"}]`",
+      "values": [
+        {
+          "quantity": "length of the reasoning note required per proposal (instrument output-format parameter)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "sentences",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DOUBT FLAGGED: a prose-format parameter of the instrument, not a fact about the study; included under the include-when-in-doubt rule and the batch brief's guidance on procedural parameters."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "Output"
+      },
+      "claim_text": "One entry per assigned commitment — full enumeration.",
+      "values": [
+        {
+          "quantity": "output entries required per assigned commitment (instrument grain parameter)",
+          "value_verbatim": "One",
+          "value_parsed": 1,
+          "unit": "entries",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DOUBT FLAGGED: grain parameter of the instrument. It determines output cardinality, so it is closer to a checkable claim than the prose-format parameters, but it is still a claim about the instrument rather than about the study."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          61
+        ],
+        "section": "Output"
+      },
+      "claim_text": "Final message: one\nline: `discharge-N: n mapped (d discharged, w waived, o open)`.",
+      "values": [
+        {
+          "quantity": "number of lines required in the agent's final message (instrument output-format parameter)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "lines",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DOUBT FLAGGED: prose-format parameter of the instrument."
+    }
+  ]
+}

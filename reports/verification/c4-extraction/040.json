@@ -1,0 +1,4412 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/phase2c-adversarial-review.md",
+    "git_blob": "63cf9c772f83",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          9
+        ],
+        "section": "Executive Summary"
+      },
+      "claim_text": "All six verification steps passed.",
+      "values": [
+        {
+          "quantity": "count of verification steps reported as passed in this document",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b040] Scope decisions for this batch, logged explicitly per instrument hard rule 5: (a) the MD5 hex prefixes in the lines 45-51 code block and the `prompt_hash` hex on line 131 are excluded as hashes/identifiers, not quantities — only the surrounding counts are extracted; (b) the example index ranges on lines 124-125 ('examples 01-04', '05-08', '09-10', '11-14', '15-17') are excluded as numbers inside file names, and the underlying category counts they encode are captured by the Step 4 composition rows (lines 116-122); (c) map-sheet ids (K-35-052-4 etc.), tile filenames, run numbers, and library version strings (library_scale-4, pure-positive-2hp) are excluded as names; (d) the assignment covers lines 1-237 only — the document runs to line 359 and later sections are another batch; (e) no token or cost claims appear in lines 1-237, so the `unverifiable-era` method is not exercised in this batch even though the document sits in the retest era. THIS CLAIM: 'six verification steps' is a document-internal structural count (Steps 1-6 each carry a **Verdict**); no repo artefact decides it, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "What the Model Actually Sees (P:N label-ratio table)"
+      },
+      "claim_text": "| pure-positive-canon | 4 (4C+) | 3 (3 null) | 1.33 | 0.603 |",
+      "values": [
+        {
+          "quantity": "positive-label count, condition pure-positive-canon",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition pure-positive-canon",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "negative-label count, condition pure-positive-canon",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "null examples, condition pure-positive-canon",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "P:N label ratio, condition pure-positive-canon",
+          "value_verbatim": "1.33",
+          "value_parsed": 1.33,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 across 10 runs, condition pure-positive-canon",
+          "value_verbatim": "0.603",
+          "value_parsed": 0.603,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#mean($[?(@.condition=='pure-positive-canon')].f1)",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library composition anchored to the run_1 meta.json full_config_snapshot.composition block for this condition; the P and N column totals are sums over those composition counts and the P:N column is their ratio. The F1 column is the condition mean over 10 runs (the document states this at line 170), hence recompute-script over the per-run metrics CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "What the Model Actually Sees (P:N label-ratio table)"
+      },
+      "claim_text": "| canonical | 4 (4C+) | 5 (2C- + 3 null) | 0.80 | 0.528 |",
+      "values": [
+        {
+          "quantity": "positive-label count, condition canonical",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition canonical",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "negative-label count, condition canonical",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon- examples, condition canonical",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition canonical",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "P:N label ratio, condition canonical",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 across 10 runs, condition canonical",
+          "value_verbatim": "0.528",
+          "value_parsed": 0.528,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#mean($[?(@.condition=='canonical')].f1)",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library composition anchored to the run_1 meta.json full_config_snapshot.composition block for this condition; the P and N column totals are sums over those composition counts and the P:N column is their ratio. The F1 column is the condition mean over 10 runs (the document states this at line 170), hence recompute-script over the per-run metrics CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "What the Model Actually Sees (P:N label-ratio table)"
+      },
+      "claim_text": "| plus-hp | 8 (4C+ + 4HP) | 5 (2C- + 3 null) | 1.60 | 0.609 |",
+      "values": [
+        {
+          "quantity": "positive-label count, condition plus-hp",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition plus-hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition plus-hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "negative-label count, condition plus-hp",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon- examples, condition plus-hp",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition plus-hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "P:N label ratio, condition plus-hp",
+          "value_verbatim": "1.60",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 across 10 runs, condition plus-hp",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#mean($[?(@.condition=='plus-hp')].f1)",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library composition anchored to the run_1 meta.json full_config_snapshot.composition block for this condition; the P and N column totals are sums over those composition counts and the P:N column is their ratio. The F1 column is the condition mean over 10 runs (the document states this at line 170), hence recompute-script over the per-run metrics CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "What the Model Actually Sees (P:N label-ratio table)"
+      },
+      "claim_text": "| pure-positive-2hp | 6 (4C+ + 2HP) | 3 (3 null) | 2.00 | 0.575 |",
+      "values": [
+        {
+          "quantity": "positive-label count, condition pure-positive-2hp",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition pure-positive-2hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition pure-positive-2hp",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "negative-label count, condition pure-positive-2hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "null examples, condition pure-positive-2hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "P:N label ratio, condition pure-positive-2hp",
+          "value_verbatim": "2.00",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 across 10 runs, condition pure-positive-2hp",
+          "value_verbatim": "0.575",
+          "value_parsed": 0.575,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#mean($[?(@.condition=='pure-positive-2hp')].f1)",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library composition anchored to the run_1 meta.json full_config_snapshot.composition block for this condition; the P and N column totals are sums over those composition counts and the P:N column is their ratio. The F1 column is the condition mean over 10 runs (the document states this at line 170), hence recompute-script over the per-run metrics CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "What the Model Actually Sees (P:N label-ratio table)"
+      },
+      "claim_text": "| scale-4 | 6 (4C+ + 2HP) | 7 (2C- + 2HN + 3 null) | 0.86 | 0.564 |",
+      "values": [
+        {
+          "quantity": "positive-label count, condition scale-4",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition scale-4",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "negative-label count, condition scale-4",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon- examples, condition scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative examples, condition scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition scale-4",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "P:N label ratio, condition scale-4",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 across 10 runs, condition scale-4",
+          "value_verbatim": "0.564",
+          "value_parsed": 0.564,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#mean($[?(@.condition=='scale-4')].f1)",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library composition anchored to the run_1 meta.json full_config_snapshot.composition block for this condition; the P and N column totals are sums over those composition counts and the P:N column is their ratio. The F1 column is the condition mean over 10 runs (the document states this at line 170), hence recompute-script over the per-run metrics CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "What the Model Actually Sees (P:N label-ratio table)"
+      },
+      "claim_text": "| scale-8 | 8 (4C+ + 4HP) | 9 (2C- + 4HN + 3 null) | 0.89 | 0.570 |",
+      "values": [
+        {
+          "quantity": "positive-label count, condition scale-8",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition scale-8",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition scale-8",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "negative-label count, condition scale-8",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon- examples, condition scale-8",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative examples, condition scale-8",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition scale-8",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "P:N label ratio, condition scale-8",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 across 10 runs, condition scale-8",
+          "value_verbatim": "0.570",
+          "value_parsed": 0.57,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#mean($[?(@.condition=='scale-8')].f1)",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library composition anchored to the run_1 meta.json full_config_snapshot.composition block for this condition; the P and N column totals are sums over those composition counts and the P:N column is their ratio. The F1 column is the condition mean over 10 runs (the document states this at line 170), hence recompute-script over the per-run metrics CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "What the Model Actually Sees (P:N label-ratio table)"
+      },
+      "claim_text": "| pure-positive-4hp | 8 (4C+ + 4HP) | 3 (3 null) | 2.67 | 0.550 |",
+      "values": [
+        {
+          "quantity": "positive-label count, condition pure-positive-4hp",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition pure-positive-4hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition pure-positive-4hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "negative-label count, condition pure-positive-4hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "null examples, condition pure-positive-4hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "P:N label ratio, condition pure-positive-4hp",
+          "value_verbatim": "2.67",
+          "value_parsed": 2.67,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) / (c + d + e)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "mean F1 across 10 runs, condition pure-positive-4hp",
+          "value_verbatim": "0.550",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#mean($[?(@.condition=='pure-positive-4hp')].f1)",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Library composition anchored to the run_1 meta.json full_config_snapshot.composition block for this condition; the P and N column totals are sums over those composition counts and the P:N column is their ratio. The F1 column is the condition mean over 10 runs (the document states this at line 170), hence recompute-script over the per-run metrics CSV."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "Verification Steps / Step 1: Pure-Positive-4hp Determinism Check"
+      },
+      "claim_text": "**Question**: All 10 runs report F1=0.5502 with 132 detections.",
+      "values": [
+        {
+          "quantity": "run count, condition pure-positive-4hp",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, condition pure-positive-4hp, constant across all 10 runs",
+          "value_verbatim": "0.5502",
+          "value_parsed": 0.5502,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "detection count, condition pure-positive-4hp, constant across all 10 runs",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp')].n_detections",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Constant-collapse across the 10 run rows of the exploratory per-run metrics CSV (instrument v1.2 amendment 7); run count read from the exploratory study manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "Verification Steps / Step 1: Pure-Positive-4hp Determinism Check"
+      },
+      "claim_text": "**Finding**: Files are **not byte-identical** — all 10 MD5 checksums are unique:",
+      "values": [
+        {
+          "quantity": "run count whose detection files were MD5-checksummed, condition pure-positive-4hp",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json",
+        "path": "$.runs_per_condition"
+      },
+      "method": "read",
+      "notes": "Only the count of checksummed runs is extracted. The MD5 hex prefixes listed in the code block at lines 45-51, and the uniqueness assertion over them, are hashes/identifiers — excluded per hard rule 5 (see the batch note on the first claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          55
+        ],
+        "section": "Verification Steps / Step 1: Pure-Positive-4hp Determinism Check"
+      },
+      "claim_text": "However, coordinate-level comparison reveals **9/10 runs have identical coordinates**;\nrun_2 differs by exactly 1 detection on tile K-35-078-1_Lesovo_x3584_y1344.png (slightly\ndifferent bounding box, same tile).",
+      "values": [
+        {
+          "quantity": "runs with identical detection coordinates, condition pure-positive-4hp",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total run count, condition pure-positive-4hp",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "detections differing between run_2 and the other runs, condition pure-positive-4hp",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Requires coordinate-level comparison of all 10 pure-positive-4hp detection GeoJSONs under archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_*/; the anchor names run_1 as the entry point. The tile filename K-35-078-1_Lesovo_x3584_y1344.png is a name, not a claim (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "Verification Steps / Step 1: Pure-Positive-4hp Determinism Check"
+      },
+      "claim_text": "All 10 runs have exactly 132 detections.",
+      "values": [
+        {
+          "quantity": "run count, condition pure-positive-4hp",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "detection count per run, condition pure-positive-4hp, constant across runs",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp')].n_detections",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          58
+        ],
+        "section": "Verification Steps / Step 1: Pure-Positive-4hp Determinism Check"
+      },
+      "claim_text": "**Conclusion**: This is metric convergence from near-deterministic execution at T=0.0, not\na bug.",
+      "values": [
+        {
+          "quantity": "temperature as run, condition pure-positive-4hp",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Claim about what was RUN, so anchored to the executed run meta rather than the preregistration (instrument v1.1 calibration rule)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "Verification Steps / Step 2: Pure-Positive-2hp/run_2 Assembly Integrity"
+      },
+      "claim_text": "**Question**: run_2 was assembled across two API sessions (6 + 54 tiles) due to a timeout.",
+      "values": [
+        {
+          "quantity": "API sessions across which pure-positive-2hp/run_2 was assembled",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tiles processed in the first session, pure-positive-2hp/run_2",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles/validation_manifest.json",
+              "path": "len:$"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02.tiles.json",
+              "path": "$.total_tiles"
+            }
+          ]
+        },
+        {
+          "quantity": "tiles processed in the second session, pure-positive-2hp/run_2",
+          "value_verbatim": "54",
+          "value_parsed": 54,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02.tiles.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 54-tile second session is recorded as $.total_tiles in the run's tiles.json (and as $.execution_stats.items_processed in archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02.meta.json); the 6-tile first session is not recorded anywhere I could find, so it is proposed as the arithmetic residue of the 60-tile validation manifest minus the 54 recorded tiles. The session count ('two') has no artefact anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "Verification Steps / Step 2: Pure-Positive-2hp/run_2 Assembly Integrity"
+      },
+      "claim_text": "- `processed_tiles`: 60 (all tiles present)",
+      "values": [
+        {
+          "quantity": "processed_tiles entries in pure-positive-2hp/run_2 detections GeoJSON",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.processed_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02",
+        "path": "len:$.processed_tiles"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "Verification Steps / Step 2: Pure-Positive-2hp/run_2 Assembly Integrity"
+      },
+      "claim_text": "- `features`: 132 detections",
+      "values": [
+        {
+          "quantity": "detection features in pure-positive-2hp/run_2 detections GeoJSON",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "Verification Steps / Step 2: Pure-Positive-2hp/run_2 Assembly Integrity"
+      },
+      "claim_text": "- All other runs (1, 3-10): 134 detections each, 0 processed_tiles",
+      "values": [
+        {
+          "quantity": "detection count per run, condition pure-positive-2hp, runs 1 and 3-10",
+          "value_verbatim": "134",
+          "value_parsed": 134,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-2hp')].n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "processed_tiles entries in the runs 1 and 3-10 detections GeoJSONs, condition pure-positive-2hp",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The run identifiers '(1, 3-10)' are names, not claims (hard rule 5). The '0 processed_tiles' value asserts the ABSENCE of the processed_tiles key in those runs' GeoJSONs (e.g. archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01); absence is not a JSONPath-resolvable scalar, hence anchor-unknown for that value. The 134 constant-collapses over the nine non-run_2 rows of the exploratory CSV — note run_2's own row carries a different value, so the collapse is not over all ten rows."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          78
+        ],
+        "section": "Verification Steps / Step 2: Pure-Positive-2hp/run_2 Assembly Integrity"
+      },
+      "claim_text": "The 2-detection difference (132 vs 134) is consistent with the F1 difference between run_2\n(0.6026) and the other runs (0.5714).",
+      "values": [
+        {
+          "quantity": "detection-count difference between pure-positive-2hp run_2 and the other runs",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01",
+              "path": "len:$.features"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02",
+              "path": "len:$.features"
+            }
+          ]
+        },
+        {
+          "quantity": "detection count, pure-positive-2hp/run_2",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "detection count, pure-positive-2hp runs 1 and 3-10",
+          "value_verbatim": "134",
+          "value_parsed": 134,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, pure-positive-2hp/run_2",
+          "value_verbatim": "0.6026",
+          "value_parsed": 0.6026,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-2hp' && @.run==2)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, pure-positive-2hp runs other than run_2",
+          "value_verbatim": "0.5714",
+          "value_parsed": 0.5714,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-2hp' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.2 amendment 1: the 132 and 134 operands are given their own read paths so they are not compared against their own difference. The 0.5714 is read from the run_1 row as representative of runs 1 and 3-10."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          79
+        ],
+        "section": "Verification Steps / Step 2: Pure-Positive-2hp/run_2 Assembly Integrity"
+      },
+      "claim_text": "run_2 happens to have slightly fewer detections due\nto session boundary effects, but all 60 tiles were processed.",
+      "values": [
+        {
+          "quantity": "tiles processed, pure-positive-2hp/run_2",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.processed_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02",
+        "path": "len:$.processed_tiles"
+      },
+      "method": "read",
+      "notes": "Note the sibling scalar archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02.meta.json $.execution_stats.items_processed records the second-session tile count only; the collection-level processed_tiles list in the GeoJSON is the assembled total the sentence refers to."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "Verification Steps / Step 3: `processed_tiles` Key Does Not Affect Scoring"
+      },
+      "claim_text": "processed_tiles count in raw JSON: 60",
+      "values": [
+        {
+          "quantity": "processed_tiles entries in the raw pure-positive-2hp/run_2 GeoJSON",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.processed_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02",
+        "path": "len:$.processed_tiles"
+      },
+      "method": "read",
+      "notes": "Pasted console output inside a fenced code block; still a claim the document makes (hard rule 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Verification Steps / Step 3: `processed_tiles` Key Does Not Affect Scoring"
+      },
+      "claim_text": "Features count in raw JSON: 132",
+      "values": [
+        {
+          "quantity": "features in the raw pure-positive-2hp/run_2 GeoJSON",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Verification Steps / Step 3: `processed_tiles` Key Does Not Affect Scoring"
+      },
+      "claim_text": "Features loaded by geopandas: 132",
+      "values": [
+        {
+          "quantity": "features loaded by geopandas from the pure-positive-2hp/run_2 GeoJSON",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Asserted as a geopandas load result; the file-level equivalent locator is len:$.features. Strictly this needs a geopandas read to reproduce exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          101
+        ],
+        "section": "Verification Steps / Step 3: `processed_tiles` Key Does Not Affect Scoring"
+      },
+      "claim_text": "geopandas correctly ignores the collection-level `processed_tiles` key and loads all 132\nfeatures.",
+      "values": [
+        {
+          "quantity": "features loaded by geopandas from the pure-positive-2hp/run_2 GeoJSON",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_2/detections_pure-positive-2hp_run02",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Verification Steps / Step 4: Prompt Configuration Verification"
+      },
+      "claim_text": "**Finding**: All 7 conditions verified from `meta.json` → `full_config_snapshot`:",
+      "values": [
+        {
+          "quantity": "condition count, Phase 2c library-composition study",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json",
+              "path": "len:$.conditions"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The 7 conditions are the union of the two Phase 2c study manifests: 5 in archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json and 3 in archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json, with pure-positive-canon appearing in both (the exploratory manifest states it was copied from the main run), hence a + b - 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "Verification Steps / Step 4 (library composition table)"
+      },
+      "claim_text": "| canonical | library_canonical | 9 (4P+5N) | 4C+, 2C-, 3 null |",
+      "values": [
+        {
+          "quantity": "total example count, condition canonical",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.total_examples",
+          "method": "read"
+        },
+        {
+          "quantity": "positive-labelled example count, condition canonical",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, condition canonical",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition canonical",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- examples, condition canonical",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition canonical",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string in the second column (e.g. library_scale-4) is a name, not a claim (hard rule 5); its literal is checkable at $.configuration.full_config_snapshot.version but carries no quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "Verification Steps / Step 4 (library composition table)"
+      },
+      "claim_text": "| plus-hp | library_plus-hp | 13 (8P+5N) | 4C+, 4HP, 2C-, 3 null |",
+      "values": [
+        {
+          "quantity": "total example count, condition plus-hp",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.total_examples",
+          "method": "read"
+        },
+        {
+          "quantity": "positive-labelled example count, condition plus-hp",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, condition plus-hp",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition plus-hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition plus-hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- examples, condition plus-hp",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition plus-hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string in the second column (e.g. library_scale-4) is a name, not a claim (hard rule 5); its literal is checkable at $.configuration.full_config_snapshot.version but carries no quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "Verification Steps / Step 4 (library composition table)"
+      },
+      "claim_text": "| pure-positive-canon | library_pure-positive-canon | 7 (4P+3N) | 4C+, 3 null |",
+      "values": [
+        {
+          "quantity": "total example count, condition pure-positive-canon",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.total_examples",
+          "method": "read"
+        },
+        {
+          "quantity": "positive-labelled example count, condition pure-positive-canon",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, condition pure-positive-canon",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition pure-positive-canon",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition pure-positive-canon",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string in the second column (e.g. library_scale-4) is a name, not a claim (hard rule 5); its literal is checkable at $.configuration.full_config_snapshot.version but carries no quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "Verification Steps / Step 4 (library composition table)"
+      },
+      "claim_text": "| pure-positive-2hp | library_pure-positive-2hp | 9 (6P+3N) | 4C+, 2HP, 3 null |",
+      "values": [
+        {
+          "quantity": "total example count, condition pure-positive-2hp",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.total_examples",
+          "method": "read"
+        },
+        {
+          "quantity": "positive-labelled example count, condition pure-positive-2hp",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, condition pure-positive-2hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition pure-positive-2hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition pure-positive-2hp",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition pure-positive-2hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string in the second column (e.g. library_scale-4) is a name, not a claim (hard rule 5); its literal is checkable at $.configuration.full_config_snapshot.version but carries no quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "Verification Steps / Step 4 (library composition table)"
+      },
+      "claim_text": "| pure-positive-4hp | library_pure-positive-4hp | 11 (8P+3N) | 4C+, 4HP, 3 null |",
+      "values": [
+        {
+          "quantity": "total example count, condition pure-positive-4hp",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.total_examples",
+          "method": "read"
+        },
+        {
+          "quantity": "positive-labelled example count, condition pure-positive-4hp",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, condition pure-positive-4hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition pure-positive-4hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition pure-positive-4hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition pure-positive-4hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string in the second column (e.g. library_scale-4) is a name, not a claim (hard rule 5); its literal is checkable at $.configuration.full_config_snapshot.version but carries no quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "Verification Steps / Step 4 (library composition table)"
+      },
+      "claim_text": "| scale-4 | library_scale-4 | 13 (6P+7N) | 4C+, 2HP, 2C-, 2HN, 3 null |",
+      "values": [
+        {
+          "quantity": "total example count, condition scale-4",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.total_examples",
+          "method": "read"
+        },
+        {
+          "quantity": "positive-labelled example count, condition scale-4",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, condition scale-4",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition scale-4",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- examples, condition scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative examples, condition scale-4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition scale-4",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string in the second column (e.g. library_scale-4) is a name, not a claim (hard rule 5); its literal is checkable at $.configuration.full_config_snapshot.version but carries no quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "Verification Steps / Step 4 (library composition table)"
+      },
+      "claim_text": "| scale-8 | library_scale-8 | 17 (8P+9N) | 4C+, 4HP, 2C-, 4HN, 3 null |",
+      "values": [
+        {
+          "quantity": "total example count, condition scale-8",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.total_examples",
+          "method": "read"
+        },
+        {
+          "quantity": "positive-labelled example count, condition scale-8",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        },
+        {
+          "quantity": "negative-labelled example count, condition scale-8",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c + d + e",
+          "operands": [
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_negative"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_negative"
+            },
+            {
+              "name": "e",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.null"
+            }
+          ]
+        },
+        {
+          "quantity": "Canon+ examples, condition scale-8",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive examples, condition scale-8",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- examples, condition scale-8",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative examples, condition scale-8",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "null examples, condition scale-8",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.full_config_snapshot.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string in the second column (e.g. library_scale-4) is a name, not a claim (hard rule 5); its literal is checkable at $.configuration.full_config_snapshot.version but carries no quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          131
+        ],
+        "section": "Verification Steps / Step 4: Prompt Configuration Verification"
+      },
+      "claim_text": "- **Prompt hash**: All 7 conditions share the same `prompt_hash`\n  (`e169b7237b853eeaad99...`).",
+      "values": [
+        {
+          "quantity": "condition count sharing the same prompt_hash, Phase 2c",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json",
+              "path": "len:$.conditions"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The 7 conditions are the union of the two Phase 2c study manifests: 5 in archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json and 3 in archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json, with pure-positive-canon appearing in both (the exploratory manifest states it was copied from the main run), hence a + b - 1. The truncated SHA-256 hex on line 131 is a hash, excluded per hard rule 5; the per-condition literal lives at $.configuration.prompt_hash in each run meta."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          139
+        ],
+        "section": "Verification Steps / Step 4: Prompt Configuration Verification"
+      },
+      "claim_text": "- **Model/temperature**: All conditions use `gemini-3-flash`, T=0.0,\n  `detect_brief-text-image.md`.",
+      "values": [
+        {
+          "quantity": "temperature as run, all Phase 2c conditions",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Asserted across all 7 conditions; anchored to one representative run meta (pure-positive-4hp/run_1) because the schema carries a single anchor file — the sibling metas under archive/outputs-pre-retest-60-tile/phase2c/track1-image/*/run_1/ and archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/*/run_1/ carry the same key. The model string 'gemini-3-flash' and the instruction filename are names, not quantities."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          150,
+          151
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "**Test tile**: K-35-052-4_32635_x0_y2240.png (13 ground truth references — the\nhighest-density tile in the validation set).",
+      "values": [
+        {
+          "quantity": "ground-truth mound references within the bounds of tile K-35-052-4_32635_x0_y2240.png",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Needs a spatial join of the ground-truth references against the tile footprint (inputs/vectors/bounds/validation_bounds.geojson); the per-sheet alternative anchor is inputs/vectors/references/reference_K-35-052-4_32635.geojson. Numbers inside the tile filename are names, not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          157
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "| pure-positive-canon | 13 | 10 | 3 | 3 | 0.769 | 0.769 | 0.769 |",
+      "values": [
+        {
+          "quantity": "detections on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-canon",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.source_tile=='K-35-052-4_32635_x0_y2240.png')]",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-canon",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-canon",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-canon",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-canon",
+          "value_verbatim": "0.769",
+          "value_parsed": 0.769,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-canon",
+          "value_verbatim": "0.769",
+          "value_parsed": 0.769,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1 on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-canon",
+          "value_verbatim": "0.769",
+          "value_parsed": 0.769,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Single-tile TP/FP/FN and derived metrics are not stored in any committed artefact; they need Hungarian matching of this condition's detections against the ground truth at the 20 m buffer, restricted to tile K-35-052-4_32635_x0_y2240.png. The run is not stated in the table; the anchor names run_1, which the following paragraph (line 165) uses for the full-run figures. Detection count is directly readable via the source_tile filter."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          158
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "| pure-positive-4hp | 12 | 9 | 3 | 4 | 0.750 | 0.692 | 0.720 |",
+      "values": [
+        {
+          "quantity": "detections on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-4hp",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.source_tile=='K-35-052-4_32635_x0_y2240.png')]",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-4hp",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-4hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-4hp",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-4hp",
+          "value_verbatim": "0.750",
+          "value_parsed": 0.75,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-4hp",
+          "value_verbatim": "0.692",
+          "value_parsed": 0.692,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1 on tile K-35-052-4_32635_x0_y2240.png, condition pure-positive-4hp",
+          "value_verbatim": "0.720",
+          "value_parsed": 0.72,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Single-tile TP/FP/FN and derived metrics are not stored in any committed artefact; they need Hungarian matching of this condition's detections against the ground truth at the 20 m buffer, restricted to tile K-35-052-4_32635_x0_y2240.png. The run is not stated in the table; the anchor names run_1, which the following paragraph (line 165) uses for the full-run figures. Detection count is directly readable via the source_tile filter."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "| plus-hp | 12 | 10 | 2 | 3 | 0.833 | 0.769 | 0.800 |",
+      "values": [
+        {
+          "quantity": "detections on tile K-35-052-4_32635_x0_y2240.png, condition plus-hp",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.source_tile=='K-35-052-4_32635_x0_y2240.png')]",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives on tile K-35-052-4_32635_x0_y2240.png, condition plus-hp",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on tile K-35-052-4_32635_x0_y2240.png, condition plus-hp",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives on tile K-35-052-4_32635_x0_y2240.png, condition plus-hp",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision on tile K-35-052-4_32635_x0_y2240.png, condition plus-hp",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall on tile K-35-052-4_32635_x0_y2240.png, condition plus-hp",
+          "value_verbatim": "0.769",
+          "value_parsed": 0.769,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1 on tile K-35-052-4_32635_x0_y2240.png, condition plus-hp",
+          "value_verbatim": "0.800",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Single-tile TP/FP/FN and derived metrics are not stored in any committed artefact; they need Hungarian matching of this condition's detections against the ground truth at the 20 m buffer, restricted to tile K-35-052-4_32635_x0_y2240.png. The run is not stated in the table; the anchor names run_1, which the following paragraph (line 165) uses for the full-run figures. Detection count is directly readable via the source_tile filter."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          161
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "Match distances range from 1.4m to 19.4m (all within the 20m buffer).",
+      "values": [
+        {
+          "quantity": "minimum match distance in the single-tile trace",
+          "value_verbatim": "1.4",
+          "value_parsed": 1.4,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum match distance in the single-tile trace",
+          "value_verbatim": "19.4",
+          "value_parsed": 19.4,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "evaluation buffer distance",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "--buffers (argparse default)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Non-JSON anchor (instrument v1.1): the 20 m buffer is the documented default of scripts/evaluate_detections.py --buffers. The two match distances need the matching to be rerun on the single-tile trace. Units set explicitly on all three values per v1.2 amendment 6."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          165,
+          165
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "Full-run F1 verification (all 60 tiles, run_1):",
+      "values": [
+        {
+          "quantity": "tile count, 60-tile validation corpus",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "Retest-era tile counts are verifiable (instrument known traps); the per-run scalar equivalent is $.execution_stats.items_processed in each run meta."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "- pure-positive-canon: P=0.5391, R=0.7113, F1=0.6133",
+      "values": [
+        {
+          "quantity": "precision, pure-positive-canon run_1",
+          "value_verbatim": "0.5391",
+          "value_parsed": 0.5391,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='pure-positive-canon' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, pure-positive-canon run_1",
+          "value_verbatim": "0.7113",
+          "value_parsed": 0.7113,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='pure-positive-canon' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, pure-positive-canon run_1",
+          "value_verbatim": "0.6133",
+          "value_parsed": 0.6133,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='pure-positive-canon' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "pure-positive-canon rows appear in both Phase 2c per-run metrics CSVs (archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv and archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv); the main-study CSV is used as the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          168
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "- pure-positive-4hp: P=0.4773, R=0.6495, F1=0.5502",
+      "values": [
+        {
+          "quantity": "precision, pure-positive-4hp run_1",
+          "value_verbatim": "0.4773",
+          "value_parsed": 0.4773,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, pure-positive-4hp run_1",
+          "value_verbatim": "0.6495",
+          "value_parsed": 0.6495,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, pure-positive-4hp run_1",
+          "value_verbatim": "0.5502",
+          "value_parsed": 0.5502,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          170,
+          170
+        ],
+        "section": "Verification Steps / Step 5: Single-Tile Scoring Trace"
+      },
+      "claim_text": "These are run_1 values; the reported means (0.603, 0.550) are averages across 10 runs.",
+      "values": [
+        {
+          "quantity": "mean F1 across 10 runs, condition pure-positive-canon",
+          "value_verbatim": "0.603",
+          "value_parsed": 0.603,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#mean($[?(@.condition=='pure-positive-canon')].f1)",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mean F1 across 10 runs, condition pure-positive-4hp",
+          "value_verbatim": "0.550",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#mean($[?(@.condition=='pure-positive-4hp')].f1)",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "runs per condition, Phase 2c",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Quoted at 3 decimal places against 4-dp CSV cells; the harness owns rounding tolerance (instrument known traps)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          185,
+          185
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| canonical | 122 | 58 | 64 | 39 | 0.475 | 0.598 | 0.530 |",
+      "values": [
+        {
+          "quantity": "detections, condition canonical run_1",
+          "value_verbatim": "122",
+          "value_parsed": 122,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives, condition canonical run_1",
+          "value_verbatim": "58",
+          "value_parsed": 58,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, condition canonical run_1",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, condition canonical run_1",
+          "value_verbatim": "39",
+          "value_parsed": 39,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision, condition canonical run_1",
+          "value_verbatim": "0.475",
+          "value_parsed": 0.475,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='canonical' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, condition canonical run_1",
+          "value_verbatim": "0.598",
+          "value_parsed": 0.598,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='canonical' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, condition canonical run_1",
+          "value_verbatim": "0.530",
+          "value_parsed": 0.53,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='canonical' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Detections read from the run_1 detections GeoJSON; P/R/F1 read from the per-run metrics CSV (document quotes 3 dp against 4-dp cells); TP/FP/FN are not stored in any committed artefact and need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          186
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| plus-hp | 132 | 71 | 61 | 26 | 0.538 | 0.732 | 0.620 |",
+      "values": [
+        {
+          "quantity": "detections, condition plus-hp run_1",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives, condition plus-hp run_1",
+          "value_verbatim": "71",
+          "value_parsed": 71,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, condition plus-hp run_1",
+          "value_verbatim": "61",
+          "value_parsed": 61,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, condition plus-hp run_1",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision, condition plus-hp run_1",
+          "value_verbatim": "0.538",
+          "value_parsed": 0.538,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='plus-hp' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, condition plus-hp run_1",
+          "value_verbatim": "0.732",
+          "value_parsed": 0.732,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='plus-hp' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, condition plus-hp run_1",
+          "value_verbatim": "0.620",
+          "value_parsed": 0.62,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='plus-hp' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Detections read from the run_1 detections GeoJSON; P/R/F1 read from the per-run metrics CSV (document quotes 3 dp against 4-dp cells); TP/FP/FN are not stored in any committed artefact and need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| pure-positive-canon | 128 | 69 | 59 | 28 | 0.539 | 0.711 | 0.613 |",
+      "values": [
+        {
+          "quantity": "detections, condition pure-positive-canon run_1",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives, condition pure-positive-canon run_1",
+          "value_verbatim": "69",
+          "value_parsed": 69,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, condition pure-positive-canon run_1",
+          "value_verbatim": "59",
+          "value_parsed": 59,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, condition pure-positive-canon run_1",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision, condition pure-positive-canon run_1",
+          "value_verbatim": "0.539",
+          "value_parsed": 0.539,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='pure-positive-canon' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, condition pure-positive-canon run_1",
+          "value_verbatim": "0.711",
+          "value_parsed": 0.711,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='pure-positive-canon' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, condition pure-positive-canon run_1",
+          "value_verbatim": "0.613",
+          "value_parsed": 0.613,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='pure-positive-canon' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Detections read from the run_1 detections GeoJSON; P/R/F1 read from the per-run metrics CSV (document quotes 3 dp against 4-dp cells); TP/FP/FN are not stored in any committed artefact and need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          188,
+          188
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| pure-positive-2hp | 134 | 66 | 68 | 31 | 0.493 | 0.680 | 0.571 |",
+      "values": [
+        {
+          "quantity": "detections, condition pure-positive-2hp run_1",
+          "value_verbatim": "134",
+          "value_parsed": 134,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives, condition pure-positive-2hp run_1",
+          "value_verbatim": "66",
+          "value_parsed": 66,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, condition pure-positive-2hp run_1",
+          "value_verbatim": "68",
+          "value_parsed": 68,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, condition pure-positive-2hp run_1",
+          "value_verbatim": "31",
+          "value_parsed": 31,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision, condition pure-positive-2hp run_1",
+          "value_verbatim": "0.493",
+          "value_parsed": 0.493,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-2hp' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, condition pure-positive-2hp run_1",
+          "value_verbatim": "0.680",
+          "value_parsed": 0.68,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-2hp' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, condition pure-positive-2hp run_1",
+          "value_verbatim": "0.571",
+          "value_parsed": 0.571,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-2hp' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Detections read from the run_1 detections GeoJSON; P/R/F1 read from the per-run metrics CSV (document quotes 3 dp against 4-dp cells); TP/FP/FN are not stored in any committed artefact and need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| pure-positive-4hp | 132 | 63 | 69 | 34 | 0.477 | 0.649 | 0.550 |",
+      "values": [
+        {
+          "quantity": "detections, condition pure-positive-4hp run_1",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives, condition pure-positive-4hp run_1",
+          "value_verbatim": "63",
+          "value_parsed": 63,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, condition pure-positive-4hp run_1",
+          "value_verbatim": "69",
+          "value_parsed": 69,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, condition pure-positive-4hp run_1",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision, condition pure-positive-4hp run_1",
+          "value_verbatim": "0.477",
+          "value_parsed": 0.477,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, condition pure-positive-4hp run_1",
+          "value_verbatim": "0.649",
+          "value_parsed": 0.649,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, condition pure-positive-4hp run_1",
+          "value_verbatim": "0.550",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/per_run_metrics.csv#$[?(@.condition=='pure-positive-4hp' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Detections read from the run_1 detections GeoJSON; P/R/F1 read from the per-run metrics CSV (document quotes 3 dp against 4-dp cells); TP/FP/FN are not stored in any committed artefact and need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          190
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| scale-4 | 138 | 66 | 72 | 31 | 0.478 | 0.680 | 0.562 |",
+      "values": [
+        {
+          "quantity": "detections, condition scale-4 run_1",
+          "value_verbatim": "138",
+          "value_parsed": 138,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives, condition scale-4 run_1",
+          "value_verbatim": "66",
+          "value_parsed": 66,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, condition scale-4 run_1",
+          "value_verbatim": "72",
+          "value_parsed": 72,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, condition scale-4 run_1",
+          "value_verbatim": "31",
+          "value_parsed": 31,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision, condition scale-4 run_1",
+          "value_verbatim": "0.478",
+          "value_parsed": 0.478,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='scale-4' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, condition scale-4 run_1",
+          "value_verbatim": "0.680",
+          "value_parsed": 0.68,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='scale-4' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, condition scale-4 run_1",
+          "value_verbatim": "0.562",
+          "value_parsed": 0.562,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='scale-4' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Detections read from the run_1 detections GeoJSON; P/R/F1 read from the per-run metrics CSV (document quotes 3 dp against 4-dp cells); TP/FP/FN are not stored in any committed artefact and need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          191,
+          191
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| scale-8 | 137 | 67 | 70 | 30 | 0.489 | 0.691 | 0.573 |",
+      "values": [
+        {
+          "quantity": "detections, condition scale-8 run_1",
+          "value_verbatim": "137",
+          "value_parsed": 137,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives, condition scale-8 run_1",
+          "value_verbatim": "67",
+          "value_parsed": 67,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, condition scale-8 run_1",
+          "value_verbatim": "70",
+          "value_parsed": 70,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, condition scale-8 run_1",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision, condition scale-8 run_1",
+          "value_verbatim": "0.489",
+          "value_parsed": 0.489,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='scale-8' && @.run==1)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall, condition scale-8 run_1",
+          "value_verbatim": "0.691",
+          "value_parsed": 0.691,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='scale-8' && @.run==1)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, condition scale-8 run_1",
+          "value_verbatim": "0.573",
+          "value_parsed": 0.573,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/per_run_metrics.csv#$[?(@.condition=='scale-8' && @.run==1)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Detections read from the run_1 detections GeoJSON; P/R/F1 read from the per-run metrics CSV (document quotes 3 dp against 4-dp cells); TP/FP/FN are not stored in any committed artefact and need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          194
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "**Critical comparison — pure-positive-4hp vs plus-hp** (same 8 positive examples, different\nnegatives):",
+      "values": [
+        {
+          "quantity": "positive examples shared by pure-positive-4hp and plus-hp",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.canonical_positive"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+              "path": "$.configuration.full_config_snapshot.composition.hard_positive"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.meta.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Positive examples = canonical_positive + hard_positive; the same sum should hold in archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.meta.json for plus-hp."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          198,
+          198
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| Detections | 132 | 132 | 0 |",
+      "values": [
+        {
+          "quantity": "detections, pure-positive-4hp run_1",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "detections, plus-hp run_1",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "detection-count delta, plus-hp minus pure-positive-4hp, run_1",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+              "path": "len:$.features"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Delta column runs pure-positive-4hp -> plus-hp, so delta = plus-hp minus pure-positive-4hp. TP/FP/FN and their deltas need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer (no committed artefact holds them). Instrument v1.2 amendment 1: the two operand counts carry their own read paths."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          199,
+          199
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| TP | 63 | 71 | +8 |",
+      "values": [
+        {
+          "quantity": "true positives, pure-positive-4hp run_1",
+          "value_verbatim": "63",
+          "value_parsed": 63,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true positives, plus-hp run_1",
+          "value_verbatim": "71",
+          "value_parsed": 71,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true positives delta, plus-hp minus pure-positive-4hp, run_1",
+          "value_verbatim": "+8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Delta column runs pure-positive-4hp -> plus-hp, so delta = plus-hp minus pure-positive-4hp. TP/FP/FN and their deltas need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer (no committed artefact holds them)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          200,
+          200
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| FP | 69 | 61 | -8 |",
+      "values": [
+        {
+          "quantity": "false positives, pure-positive-4hp run_1",
+          "value_verbatim": "69",
+          "value_parsed": 69,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, plus-hp run_1",
+          "value_verbatim": "61",
+          "value_parsed": 61,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives delta, plus-hp minus pure-positive-4hp, run_1",
+          "value_verbatim": "-8",
+          "value_parsed": -8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Delta column runs pure-positive-4hp -> plus-hp, so delta = plus-hp minus pure-positive-4hp. TP/FP/FN and their deltas need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer (no committed artefact holds them)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          201,
+          201
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| FN | 34 | 26 | -8 |",
+      "values": [
+        {
+          "quantity": "false negatives, pure-positive-4hp run_1",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, plus-hp run_1",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives delta, plus-hp minus pure-positive-4hp, run_1",
+          "value_verbatim": "-8",
+          "value_parsed": -8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Delta column runs pure-positive-4hp -> plus-hp, so delta = plus-hp minus pure-positive-4hp. TP/FP/FN and their deltas need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer (no committed artefact holds them)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          203,
+          203
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "The detection **volume** is identical (132 each).",
+      "values": [
+        {
+          "quantity": "detections per run, pure-positive-4hp and plus-hp run_1",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Asserted of both conditions; the sibling anchor is archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01 at the same path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          205
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "With\nCanon- examples, 8 detections that would have been false positives become true positives.",
+      "values": [
+        {
+          "quantity": "detections switching from false positive to true positive between pure-positive-4hp and plus-hp, run_1",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Equals the TP delta on line 199; needs re-scoring of both runs against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          211
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| K-35-052-4 | 18/19 | 23/14 | +5 |",
+      "values": [
+        {
+          "quantity": "true positives on map K-35-052-4, pure-positive-4hp run_1",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on map K-35-052-4, pure-positive-4hp run_1",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true positives on map K-35-052-4, plus-hp run_1",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on map K-35-052-4, plus-hp run_1",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true-positive gain on map K-35-052-4, plus-hp minus pure-positive-4hp",
+          "value_verbatim": "+5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Per-map TP/FP splits are not stored in any committed artefact; they need re-scoring of the two run_1 detection GeoJSONs (archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01 and archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01) against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer, grouped by map sheet. Map-sheet ids are names, not claims (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          212
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| K-35-053-3 | 17/19 | 19/15 | +2 |",
+      "values": [
+        {
+          "quantity": "true positives on map K-35-053-3, pure-positive-4hp run_1",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on map K-35-053-3, pure-positive-4hp run_1",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true positives on map K-35-053-3, plus-hp run_1",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on map K-35-053-3, plus-hp run_1",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true-positive gain on map K-35-053-3, plus-hp minus pure-positive-4hp",
+          "value_verbatim": "+2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Per-map TP/FP splits are not stored in any committed artefact; they need re-scoring of the two run_1 detection GeoJSONs (archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01 and archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01) against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer, grouped by map sheet. Map-sheet ids are names, not claims (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          213
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| K-35-062-2 | 26/12 | 27/13 | +1 |",
+      "values": [
+        {
+          "quantity": "true positives on map K-35-062-2, pure-positive-4hp run_1",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on map K-35-062-2, pure-positive-4hp run_1",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true positives on map K-35-062-2, plus-hp run_1",
+          "value_verbatim": "27",
+          "value_parsed": 27,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on map K-35-062-2, plus-hp run_1",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true-positive gain on map K-35-062-2, plus-hp minus pure-positive-4hp",
+          "value_verbatim": "+1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Per-map TP/FP splits are not stored in any committed artefact; they need re-scoring of the two run_1 detection GeoJSONs (archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01 and archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01) against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer, grouped by map sheet. Map-sheet ids are names, not claims (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| K-35-078-1 | 2/19 | 2/19 | 0 |",
+      "values": [
+        {
+          "quantity": "true positives on map K-35-078-1, pure-positive-4hp run_1",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on map K-35-078-1, pure-positive-4hp run_1",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true positives on map K-35-078-1, plus-hp run_1",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on map K-35-078-1, plus-hp run_1",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true-positive gain on map K-35-078-1, plus-hp minus pure-positive-4hp",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Per-map TP/FP splits are not stored in any committed artefact; they need re-scoring of the two run_1 detection GeoJSONs (archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01 and archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01) against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer, grouped by map sheet. Map-sheet ids are names, not claims (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          223,
+          223
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| Detections | 128 | 132 | +4 |",
+      "values": [
+        {
+          "quantity": "detections, pure-positive-canon run_1",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "detections, pure-positive-4hp run_1",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "detection-count delta, pure-positive-4hp minus pure-positive-canon, run_1",
+          "value_verbatim": "+4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01",
+              "path": "len:$.features"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Delta column runs pure-positive-canon -> pure-positive-4hp, so delta = pure-positive-4hp minus pure-positive-canon. TP/FP/FN and their deltas need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer. Instrument v1.2 amendment 1: the two operand counts carry their own read paths."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          224,
+          224
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| TP | 69 | 63 | -6 |",
+      "values": [
+        {
+          "quantity": "true positives, pure-positive-canon run_1",
+          "value_verbatim": "69",
+          "value_parsed": 69,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true positives, pure-positive-4hp run_1",
+          "value_verbatim": "63",
+          "value_parsed": 63,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true positives delta, pure-positive-4hp minus pure-positive-canon, run_1",
+          "value_verbatim": "-6",
+          "value_parsed": -6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Delta column runs pure-positive-canon -> pure-positive-4hp, so delta = pure-positive-4hp minus pure-positive-canon. TP/FP/FN and their deltas need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          225,
+          225
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| FP | 59 | 69 | +10 |",
+      "values": [
+        {
+          "quantity": "false positives, pure-positive-canon run_1",
+          "value_verbatim": "59",
+          "value_parsed": 59,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives, pure-positive-4hp run_1",
+          "value_verbatim": "69",
+          "value_parsed": 69,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives delta, pure-positive-4hp minus pure-positive-canon, run_1",
+          "value_verbatim": "+10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Delta column runs pure-positive-canon -> pure-positive-4hp, so delta = pure-positive-4hp minus pure-positive-canon. TP/FP/FN and their deltas need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          226,
+          226
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "| FN | 28 | 34 | +6 |",
+      "values": [
+        {
+          "quantity": "false negatives, pure-positive-canon run_1",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives, pure-positive-4hp run_1",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives delta, pure-positive-4hp minus pure-positive-canon, run_1",
+          "value_verbatim": "+6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Delta column runs pure-positive-canon -> pure-positive-4hp, so delta = pure-positive-4hp minus pure-positive-canon. TP/FP/FN and their deltas need re-scoring against inputs/vectors/references/mounds-reference.geojson at the 20 m buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          228,
+          229
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "Adding HP to a pure-positive library produces 4 more detections but loses 6 TPs and gains\n10 FPs.",
+      "values": [
+        {
+          "quantity": "extra detections from adding HP to a pure-positive library, run_1",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01",
+              "path": "len:$.features"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+              "path": "len:$.features"
+            }
+          ]
+        },
+        {
+          "quantity": "true positives lost from adding HP to a pure-positive library, run_1",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives gained from adding HP to a pure-positive library, run_1",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Prose restatement of the lines 223-226 table (pure-positive-canon -> pure-positive-4hp)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          232,
+          233
+        ],
+        "section": "Verification Steps / Step 6: Cross-Condition Detection Analysis"
+      },
+      "claim_text": "Per-tile analysis shows 12/60 tiles have differing detection counts across the three key\nconditions; the differences are distributed across all four maps.",
+      "values": [
+        {
+          "quantity": "tiles with differing detection counts across the three key conditions",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile count, 60-tile validation corpus",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "conditions compared in the per-tile analysis",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map sheets in the validation corpus",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$[*] (distinct map-sheet prefix count)",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The 12 needs per-tile detection counts from the three run_1 GeoJSONs (archive/outputs-pre-retest-60-tile/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01, archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01, archive/outputs-pre-retest-60-tile/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01) grouped on properties.source_tile. 'Three key conditions' is a document-internal grouping with no artefact anchor. The map count is the distinct map-sheet prefix count over the validation manifest (four per-sheet reference files exist under inputs/vectors/references/)."
+    }
+  ]
+}

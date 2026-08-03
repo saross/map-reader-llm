@@ -1,0 +1,2536 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/configuration-audit-2026-03-25.md",
+    "git_blob": "60103a88fe7f",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals"
+      },
+      "claim_text": "| H11 (all) | 47 | 205 | 205/205 | 111/205 |",
+      "values": [
+        {
+          "quantity": "condition count, H11 (all)",
+          "value_verbatim": "47",
+          "value_parsed": 47,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count, H11 (all)",
+          "value_verbatim": "205",
+          "value_parsed": 205,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with meta.json / total runs, H11 (all)",
+          "value_verbatim": "205/205",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with JSONL / total runs, H11 (all)",
+          "value_verbatim": "111/205",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Grand-totals table row. Census of outputs/h11: condition directories, run directories, per-run *.meta.json and *.jsonl presence. [BATCH NOTE b033] Batch b033 covers lines 113–390 of reports/configuration-audit-2026-03-25.md (batch b032 covers lines 1–112); no claim in this file begins before line 113. This is the superseded v1 audit of 2026-03-25 — values are extracted as this document asserts them, at its own lines; corrections made by the v2 audit of the same date are NOT imported, and no value here is marked 'historical' on the strength of another document contradicting it. Explicit scope decisions under hard rule 5 (logged, not silent): check identifiers ('1:', '2:', '3:', '1,5:', 'Check 5'), erratum ids (E40, E42), session numbers (Session 56, Session 57), the 2026-03-25 date, instruction-hash prefixes (2518d529…, ded339c9…, 81c3485d…), and numbers inside directory/condition/config names (pv-diag-384, tiles_384, -n5, -n30-t07, h9-A-p1/run_1) are not extracted. Corpus-wide counts in this document derive from a filesystem census of outputs/, not from a committed JSON artefact: where the scanned subtree still exists (outputs/h11, outputs/retest, outputs/retest/phase3c/track1-image, outputs/h11/proposer-verifier-384) the claim is anchored recompute-script to that subtree; where it does not, the claim is anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals"
+      },
+      "claim_text": "| Phase 1-2 original | 34 | 335 | 335/335 | 0/335 |",
+      "values": [
+        {
+          "quantity": "condition count, Phase 1-2 original",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count, Phase 1-2 original",
+          "value_verbatim": "335",
+          "value_parsed": 335,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with meta.json / total runs, Phase 1-2 original",
+          "value_verbatim": "335/335",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with JSONL / total runs, Phase 1-2 original",
+          "value_verbatim": "0/335",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Filesystem census claim. The scanned subtree is absent from the working tree at this blob: no outputs/phase1-library, outputs/phase2a–2e, outputs/phase3a or outputs/phase3c directories exist (only the retest copies under outputs/retest/). No committed JSON artefact records these inventory totals, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals"
+      },
+      "claim_text": "| Phase 3 original | 57 | 585 | 585/585 | 0/585 |",
+      "values": [
+        {
+          "quantity": "condition count, Phase 3 original",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count, Phase 3 original",
+          "value_verbatim": "585",
+          "value_parsed": 585,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with meta.json / total runs, Phase 3 original",
+          "value_verbatim": "585/585",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with JSONL / total runs, Phase 3 original",
+          "value_verbatim": "0/585",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Filesystem census claim. The scanned subtree is absent from the working tree at this blob: no outputs/phase1-library, outputs/phase2a–2e, outputs/phase3a or outputs/phase3c directories exist (only the retest copies under outputs/retest/). No committed JSON artefact records these inventory totals, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals"
+      },
+      "claim_text": "| Retest (all) | 92 | 615 | 615/615 | 192/615 |",
+      "values": [
+        {
+          "quantity": "condition count, retest (all)",
+          "value_verbatim": "92",
+          "value_parsed": 92,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count, retest (all)",
+          "value_verbatim": "615",
+          "value_parsed": 615,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with meta.json / total runs, retest (all)",
+          "value_verbatim": "615/615",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with JSONL / total runs, retest (all)",
+          "value_verbatim": "192/615",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Grand-totals table row. Census of outputs/retest: condition directories, run directories, per-run *.meta.json and *.jsonl presence."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "Section 1: Run Inventory Summary — Grand Totals"
+      },
+      "claim_text": "| **TOTAL** | **239** | **1,740** | **1,740/1,740** | **303/1,740** |",
+      "values": [
+        {
+          "quantity": "condition count, whole audited corpus",
+          "value_verbatim": "239",
+          "value_parsed": 239,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count, whole audited corpus",
+          "value_verbatim": "1,740",
+          "value_parsed": 1740,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with meta.json / total runs, whole audited corpus",
+          "value_verbatim": "1,740/1,740",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs with JSONL / total runs, whole audited corpus",
+          "value_verbatim": "303/1,740",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grand-totals TOTAL row. The census spans the Phase 1-2 and Phase 3 original subtrees, which are absent from the working tree at this blob, so the total cannot be resolved against any present artefact. Not derived arithmetically from the four rows above it, because those rows are prose in this same document (hard rule 2 forbids anchoring prose to prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| h11/consensus-384 | 30 (all) | 2: Intent<->Meta, 3: Propagation | HIGH | temperature=0.7 | temperature=1.0 | T=1.0 bug: YAML specifies T=0.7 (fixed.temperature and carried_forward.optimal_temperature) but config JSON default T=1.0 was not overridden. No conditions block in YAML, so extract_conditions() had no temperature override to propagate. |",
+      "values": [
+        {
+          "quantity": "runs affected, h11/consensus-384",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "expected temperature (study-YAML intent), h11/consensus-384",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "actual temperature recorded in run meta, h11/consensus-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "carried_forward.optimal_temperature, h11-384-consensus.yaml",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "config JSON default temperature, detect_brief-text.json",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prompts/configs/detect_brief-text.json#$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-consensus.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Discrepancy table row (Condition / Runs Affected / Check / Severity / Expected / Actual / Detail). The condition directory is named outputs/h11/consensus-384-UNINTENDED-T1.0 in the working tree; the audit refers to it as h11/consensus-384. The Detail column restates the Expected and Actual temperatures as 'T=0.7' and 'T=1.0'; those restatements are covered by the values above rather than duplicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          133
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| h11/single-pass-384 | 10 (all) | 2: Intent<->Meta, 3: Propagation | HIGH | temperature=0.0 | temperature=1.0 | Same T=1.0 bug: YAML specifies T=0.0 (fixed.temperature and carried_forward.optimal_temperature) but config JSON default T=1.0 prevailed. No conditions block in YAML. |",
+      "values": [
+        {
+          "quantity": "runs affected, h11/single-pass-384",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected temperature (study-YAML intent), h11/single-pass-384",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "actual temperature recorded in run meta, h11/single-pass-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "carried_forward.optimal_temperature, h11-384-single-pass.yaml",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "config JSON default temperature, detect_brief-text.json",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prompts/configs/detect_brief-text.json#$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-single-pass.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Discrepancy table row. No outputs/h11/single-pass-384 directory exists in the working tree at this blob (the nearest is outputs/retest/h11-single-pass-384-t0, the T=0.0 re-execution), so the run count and the actual per-run temperature have no locatable anchor and take per-value method anchor-unknown (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          134
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| phase3a/track1-image-high | 90 (all) | 1: Label<->Meta | WARNING | thinking=high | thinking=minimal | Directory label says \"high\" but all runs used minimal thinking. Known issue -- documented in phase3a-replication.yaml (\"the Phase 3a 'HIGH' result was mislabelled -- both original directories used minimal thinking\"). |",
+      "values": [
+        {
+          "quantity": "runs affected, phase3a/track1-image-high",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Discrepancy table row. outputs/phase3a/track1-image-high is absent from the working tree at this blob (only outputs/retest/phase3a/track1-image and outputs/retest/phase3a-high/track1-image exist). The Expected/Actual cells (thinking=high, thinking=minimal) are non-numeric and carry no value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          135
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| phase3a/track2-text-high | 90 (all) | 1: Label<->Meta | WARNING | thinking=high | thinking=minimal | Same mislabelling as track1-image-high. |",
+      "values": [
+        {
+          "quantity": "runs affected, phase3a/track2-text-high",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Discrepancy table row. outputs/phase3a/track2-text-high is absent from the working tree at this blob. Expected/Actual cells are non-numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| phase1-library | 5 | 1,5: Meta fields | INFO | thinking_level, instruction_hash, example_count all MISSING in meta.json (older schema) |",
+      "values": [
+        {
+          "quantity": "runs affected (older meta.json schema, missing fields), phase1-library",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "INFO discrepancy table row. The original Phase 1–2 output subtree is absent from the working tree at this blob (only outputs/retest/phase2* exists), so the affected-run count has no locatable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| phase2a (all conditions) | 50 | 1,5: Meta fields | INFO | Same MISSING fields as phase1 |",
+      "values": [
+        {
+          "quantity": "runs affected (older meta.json schema, missing fields), phase2a (all conditions)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "INFO discrepancy table row. The original Phase 1–2 output subtree is absent from the working tree at this blob (only outputs/retest/phase2* exists), so the affected-run count has no locatable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| phase2b (all conditions) | 100 | 1,5: Meta fields | INFO | Same MISSING fields |",
+      "values": [
+        {
+          "quantity": "runs affected (older meta.json schema, missing fields), phase2b (all conditions)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "INFO discrepancy table row. The original Phase 1–2 output subtree is absent from the working tree at this blob (only outputs/retest/phase2* exists), so the affected-run count has no locatable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| phase2c (all conditions) | 80 | 1,5: Meta fields | INFO | Same MISSING fields |",
+      "values": [
+        {
+          "quantity": "runs affected (older meta.json schema, missing fields), phase2c (all conditions)",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "INFO discrepancy table row. The original Phase 1–2 output subtree is absent from the working tree at this blob (only outputs/retest/phase2* exists), so the affected-run count has no locatable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| phase2d (all conditions) | 60 | 1,5: Meta fields | INFO | Same MISSING fields |",
+      "values": [
+        {
+          "quantity": "runs affected (older meta.json schema, missing fields), phase2d (all conditions)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "INFO discrepancy table row. The original Phase 1–2 output subtree is absent from the working tree at this blob (only outputs/retest/phase2* exists), so the affected-run count has no locatable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          146,
+          146
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| phase2e (all conditions) | 40 | 1,5: Meta fields | INFO | Same MISSING fields |",
+      "values": [
+        {
+          "quantity": "runs affected (older meta.json schema, missing fields), phase2e (all conditions)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "INFO discrepancy table row. The original Phase 1–2 output subtree is absent from the working tree at this blob (only outputs/retest/phase2* exists), so the affected-run count has no locatable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "Section 2: Discrepancy Table"
+      },
+      "claim_text": "| retest/phase3c track1-image | 6 | SOURCE_MISSING:meta | INFO | 6 runs have JSONL but no meta.json and no output (incomplete/failed runs) |",
+      "values": [
+        {
+          "quantity": "runs affected (JSONL present, no meta.json and no output), retest/phase3c track1-image",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "INFO discrepancy table row. Census of run directories under outputs/retest/phase3c/track1-image that hold a JSONL file but no *.meta.json and no output geojson. The Detail cell restates the same count ('6 runs have JSONL but no meta.json'); recorded once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          165,
+          165
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash HIGH image 7-of-10 vs Flash MINIMAL image 8-of-10 | thinking_level | consensus threshold (7 vs 8) | Minor (threshold is a consensus param, not a model config) |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash HIGH image 7-of-10",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL image 8-of-10",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable. [BATCH NOTE b033] Confound-matrix policy: the 'X-of-N' tokens inside the comparison labels in column 1 (e.g. 'Flash HIGH image 3-of-5', 'T0.7', 'T1.0') are treated as condition names under hard rule 5 and are NOT extracted; a value is extracted only where a column other than the label asserts it as a parameter value ('consensus threshold (7 vs 8)', 'example_count (17 vs 13)', 'temperature (0.7 vs 1.0)'). Rows at lines 164, 166, 167, 170 and 173 assert no numeric parameter values outside their labels and therefore yield no claim. Doubt is flagged per instrument § Task: if triage prefers full label expansion, those five rows and the label tokens are the pruned/added set. The same policy empties the 'Pairwise Test Reference Issues' table at lines 151–154 (its only numbers sit inside directory names) and the bullet lists at lines 188–190 and 199–200."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          168
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash HIGH text 26-of-30 vs Flash MINIMAL-T0.7 text 29-of-30 | thinking_level | consensus threshold (26 vs 29) | Minor (threshold) |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 26-of-30",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL-T0.7 text 29-of-30",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash HIGH text 5-of-5 vs Flash HIGH image 3-of-5 | modality (text vs image) | example_count (17 vs 13), threshold (5 vs 3) | YES -- example_count differs because text config has more examples than image config |",
+      "values": [
+        {
+          "quantity": "example_count, text prompt config (detect_brief-text.json)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": "read"
+        },
+        {
+          "quantity": "example_count, image prompt config (library_plus-hp.json)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_plus-hp.json#len:$.examples",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 5-of-5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH image 3-of-5",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confound-matrix row. example_count values anchor to the two prompt configs the document names at lines 203–204 (detect_brief-text.json, library_plus-hp.json); consensus thresholds have no locatable anchor. Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          171
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash HIGH text 5-of-5 vs Flash MINIMAL text 5-of-5 (consensus-384) | thinking_level | **temperature (0.7 vs 1.0)** | **YES -- T=1.0 bug confounds this comparison** |",
+      "values": [
+        {
+          "quantity": "temperature, Flash HIGH text condition",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, Flash MINIMAL text (consensus-384)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confound-matrix row; the bolded 'temperature (0.7 vs 1.0)' cell asserts both temperatures. The 'T=1.0' in the Confounded? cell restates the second value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          172
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash HIGH text 9-of-10 vs Flash HIGH image 7-of-10 | modality | example_count (17 vs 13), threshold (9 vs 7) | YES -- example_count differs |",
+      "values": [
+        {
+          "quantity": "example_count, text prompt config (detect_brief-text.json)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": "read"
+        },
+        {
+          "quantity": "example_count, image prompt config (library_plus-hp.json)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_plus-hp.json#len:$.examples",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 9-of-10",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH image 7-of-10",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confound-matrix row. Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash HIGH text 9-of-10 vs Flash MINIMAL-T0.7 text 10-of-10 | thinking_level | consensus threshold (9 vs 10) | Minor (threshold) |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 9-of-10",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL-T0.7 text 10-of-10",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          175
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash-b HIGH text 3-of-5 vs Flash-b HIGH image 3-of-5 | modality | example_count (17 vs 13) | YES -- example_count differs |",
+      "values": [
+        {
+          "quantity": "example_count, text prompt config (detect_brief-text.json)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": "read"
+        },
+        {
+          "quantity": "example_count, image prompt config (library_plus-hp.json)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_plus-hp.json#len:$.examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confound-matrix row; the row asserts the same two example counts as the rows at lines 169 and 172, for the Flash-b batch pair."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          176,
+          176
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash-b HIGH text 3-of-5 vs Flash HIGH text 5-of-5 | batch identity | consensus threshold (3 vs 5) | Minor (threshold) |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash-b HIGH text 3-of-5",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold, Flash HIGH text 5-of-5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash-b HIGH text 3-of-5 vs Flash MINIMAL-T0.7 text 5-of-5 | thinking_level | consensus threshold (3 vs 5) | Minor (threshold) |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash-b HIGH text 3-of-5",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL-T0.7 text 5-of-5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          178,
+          178
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash-b HIGH text 3-of-5 vs Flash MINIMAL text 5-of-5 (consensus-384) | thinking_level | **temperature (0.7 vs 1.0)**, threshold (3 vs 5) | **YES -- T=1.0 bug confounds** |",
+      "values": [
+        {
+          "quantity": "temperature, Flash-b HIGH text condition",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperature, Flash MINIMAL text (consensus-384)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash-b HIGH text 3-of-5",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text 5-of-5 (consensus-384)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confound-matrix row. The Flash-b ('-b' batch) condition directories named by this audit (flash-high-text-n5-b, flash-high-image-n5-b) do not exist under outputs/h11/pv-diag-384/ in the working tree at this blob, so the Flash-b temperature is anchor-unknown. Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          179
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash MINIMAL text T0.7 10-of-10 vs Flash MINIMAL text T1.0 9-of-10 (consensus-384) | temperature | consensus threshold (10 vs 9) | **YES -- but this comparison was designed to test the T=0.7 vs T=1.0 difference, so the temperature difference is intentional. However, the consensus-384 side was NOT intentionally T=1.0.** |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text T0.7 10-of-10",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text T1.0 9-of-10 (consensus-384)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperature, flash-minimal-text-n30-t07 side of the comparison",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, consensus-384 side of the comparison",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confound-matrix row. The Confounded? cell asserts the tested temperature difference ('the T=0.7 vs T=1.0 difference') and restates the consensus-384 temperature ('NOT intentionally T=1.0'); the restatement is covered by the last value. Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          180,
+          180
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash MINIMAL text T0.7 29-of-30 vs Flash MINIMAL text T1.0 28-of-30 (consensus-384) | temperature | consensus threshold (29 vs 28) | Same as above |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text T0.7 29-of-30",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold, Flash MINIMAL text T1.0 28-of-30 (consensus-384)",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          181,
+          181
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Flash MINIMAL text T0.7 5-of-5 vs Flash MINIMAL text T1.0 5-of-5 (consensus-384) | temperature | None | **Partially valid** -- both sides use minimal thinking and same model, temperature IS the only varying config param. But consensus-384 T=1.0 was unintentional. |",
+      "values": [
+        {
+          "quantity": "temperature, consensus-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Confound-matrix row; the Confounded? cell asserts 'consensus-384 T=1.0 was unintentional', i.e. that the condition ran at T=1.0."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          182
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "| Image MINIMAL N=10 6-of-10 vs Image MINIMAL N=30 14-of-30 | consensus params (pool size) | None (same underlying data) | NO (same condition) |",
+      "values": [
+        {
+          "quantity": "consensus pool size, Image MINIMAL N=10",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size, Image MINIMAL N=30",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Confound-matrix row. The 'N=10' / 'N=30' tokens are read as explicit pool-size assertions (the Intended Variable cell names 'consensus params (pool size)') rather than pure label text; doubt flagged — if triage treats them as label tokens they prune with the rest of the label policy. The '6-of-10' and '14-of-30' thresholds in the same labels are not extracted per that policy. Consensus vote thresholds asserted for the pairwise comparison pair. The document names results/h11-384-pairwise-n5/ (line 160) as the source for this matrix; that directory does not exist in the working tree at this blob, so no anchor is locatable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          186
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "**T=1.0 bug-affected comparisons (3):**",
+      "values": [
+        {
+          "quantity": "count of T=1.0-bug-affected pairwise comparisons",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The count summarises the three bullets listed immediately below it at lines 188–190 of this same document; hard rule 2 forbids anchoring prose to prose, and results/h11-384-pairwise-n5/ (the named source directory) is absent from the working tree at this blob. The 'T=1.0' in the label names the bug, not a separately checkable temperature here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          192,
+          192
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "These comparisons used consensus-384 data that ran at T=1.0 instead of T=0.7.",
+      "values": [
+        {
+          "quantity": "actual temperature of the consensus-384 data",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "study-YAML-intended temperature, h11-384-consensus.yaml",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h11-384-consensus.yaml#$.fixed.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          192,
+          195
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "Any\ncomparison involving consensus-384 as a \"T=1.0\" condition is scientifically valid\n(the data genuinely was T=1.0), but comparisons using it as a \"minimal thinking at\nT=0.7\" baseline are confounded by the unintended temperature difference.",
+      "values": [
+        {
+          "quantity": "actual temperature of the consensus-384 data",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Separate span from the sentence at line 192: this one asserts 'the data genuinely was T=1.0'. The 'T=0.7' at line 195 belongs to a quoted mislabel ('a \"minimal thinking at T=0.7\" baseline') and is a negative assertion, so it is not extracted — see the negative-assertion batch note on the claim at lines 242–243."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          197,
+          197
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "**Modality comparisons with example_count confound (3):**",
+      "values": [
+        {
+          "quantity": "count of modality comparisons carrying the example_count confound",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The count summarises the bullets at lines 199–200 of this same document; hard rule 2 forbids anchoring prose to prose, and results/h11-384-pairwise-n5/ is absent from the working tree at this blob."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          202
+        ],
+        "section": "Section 3: Confound Matrix"
+      },
+      "claim_text": "Text configs have example_count=17; image configs have example_count=13.",
+      "values": [
+        {
+          "quantity": "example_count, text prompt configs",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": "read"
+        },
+        {
+          "quantity": "example_count, image prompt configs",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_plus-hp.json#len:$.examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names the two configs in the following sentence (detect_brief-text.json vs library_plus-hp.json), so the counts anchor to the examples array in each."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          215,
+          215
+        ],
+        "section": "Section 4: Cross-Run Consistency Exceptions"
+      },
+      "claim_text": "| h11/proposer-verifier-384 | instruction_hash | 2518d529... (n=5) | 4 runs (brief-*) | ded339c9... |",
+      "values": [
+        {
+          "quantity": "runs sharing the majority instruction_hash, h11/proposer-verifier-384",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "outlier runs (brief-* variants) with a different instruction_hash, h11/proposer-verifier-384",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Cross-run consistency table row. Census of system_instruction_hash across the *.meta.json files under outputs/h11/proposer-verifier-384. Hash prefixes (2518d529…, ded339c9…) are identifiers and are not extracted (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          216,
+          216
+        ],
+        "section": "Section 4: Cross-Run Consistency Exceptions"
+      },
+      "claim_text": "| h11/proposer-verifier-384 | instruction_hash | 2518d529... (n=5) | 5 runs (checklist-*, cascade-*) | 81c3485d... |",
+      "values": [
+        {
+          "quantity": "runs sharing the majority instruction_hash, h11/proposer-verifier-384",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "outlier runs (checklist-*, cascade-*) with a different instruction_hash, h11/proposer-verifier-384",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Cross-run consistency table row. Census of system_instruction_hash across the *.meta.json files under outputs/h11/proposer-verifier-384."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          217,
+          217
+        ],
+        "section": "Section 4: Cross-Run Consistency Exceptions"
+      },
+      "claim_text": "| h11/proposer-verifier-384 | example_count | 0 (n=7) | 4 runs (image variants) | 6 |",
+      "values": [
+        {
+          "quantity": "majority example_count value, h11/proposer-verifier-384",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs at the majority example_count, h11/proposer-verifier-384",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "outlier runs (image variants) at a different example_count, h11/proposer-verifier-384",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "outlier example_count value (image variants), h11/proposer-verifier-384",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Cross-run consistency table row. Census of configuration.example_count across the *.meta.json files under outputs/h11/proposer-verifier-384."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          218,
+          218
+        ],
+        "section": "Section 4: Cross-Run Consistency Exceptions"
+      },
+      "claim_text": "| h11/proposer-verifier-384 | example_count | 0 (n=7) | 3 runs (image variants) | 9 |",
+      "values": [
+        {
+          "quantity": "majority example_count value, h11/proposer-verifier-384",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs at the majority example_count, h11/proposer-verifier-384",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "outlier runs (image variants) at a different example_count, h11/proposer-verifier-384",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "outlier example_count value (image variants), h11/proposer-verifier-384",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Cross-run consistency table row. Census of configuration.example_count across the *.meta.json files under outputs/h11/proposer-verifier-384."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          226,
+          226
+        ],
+        "section": "Section 4: Cross-Run Consistency Exceptions"
+      },
+      "claim_text": "All other conditions (173 multi-run conditions and 28 single-run conditions) are",
+      "values": [
+        {
+          "quantity": "multi-run conditions found internally consistent, whole audited corpus",
+          "value_verbatim": "173",
+          "value_parsed": 173,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "single-run conditions, whole audited corpus",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Corpus-wide census spanning the Phase 1-2 and Phase 3 original subtrees, which are absent from the working tree at this blob; no committed artefact records the multi-run / single-run condition split."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          234,
+          234
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "### HIGH-1: consensus-384 T=1.0 Bug (30 runs)",
+      "values": [
+        {
+          "quantity": "runs affected, consensus-384 T=1.0 bug",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
+        "path": "$.runs_per_condition"
+      },
+      "method": "read",
+      "notes": "Section heading asserting the affected-run count. 'T=1.0' in the heading names the bug and is covered as a temperature elsewhere (lines 132, 192, 354)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          236,
+          238
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "The flash-minimal-text-n30-t07\ncondition was created as the corrected replacement (verified: T=0.7, minimal thinking,\n30 runs, all consistent).",
+      "values": [
+        {
+          "quantity": "temperature, flash-minimal-text-n30-t07 (corrected replacement)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "run count, flash-minimal-text-n30-t07",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Session 56' is a session identifier and is not extracted (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          242,
+          243
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "- The consensus-384 data is usable **as T=1.0 minimal-thinking data** (which is what\n  it actually is). It should NOT be treated as T=0.7 data.",
+      "values": [
+        {
+          "quantity": "actual temperature of the consensus-384 data",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b033] Negative-assertion policy: statements of what the data is NOT — 'It should NOT be treated as T=0.7 data.' (line 243), the quoted '\"minimal thinking at T=0.7 baseline\"' (lines 247–249), and 'confounded by T=0.7 vs T=1.0' (lines 251–253) — are deliberately not extracted as live claims, because recomputing them would manufacture mismatches against values the document itself denies. Logged as an explicit scope decision, not a silent omission."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          244,
+          246
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "- The pairwise comparisons labelled \"T0.7 vs T1.0\" that use consensus-384 as the\n  T=1.0 side are scientifically valid -- they genuinely compare T=0.7 (flash-minimal-\n  text-n30-t07) against T=1.0 (consensus-384).",
+      "values": [
+        {
+          "quantity": "temperature, consensus-384 (the T=1.0 side of the comparison)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, flash-minimal-text-n30-t07 (the T=0.7 side)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The consensus-384 temperature is asserted twice in this span ('the T=1.0 side', 'against T=1.0 (consensus-384)'); recorded once. The quoted label \"T0.7 vs T1.0\" is label text, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          255,
+          255
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "### HIGH-2: single-pass-384 T=1.0 Bug (10 runs)",
+      "values": [
+        {
+          "quantity": "runs affected, single-pass-384 T=1.0 bug",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No outputs/h11/single-pass-384 directory exists in the working tree at this blob; the nearest artefact is outputs/retest/h11-single-pass-384-t0, which is the T=0.0 re-execution rather than the affected condition."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          259,
+          261
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "The study YAML\n(`h11-384-single-pass.yaml`) specifies `fixed.temperature: 0.0` and\n`carried_forward.optimal_temperature: 0.0`, but has no `conditions` block.",
+      "values": [
+        {
+          "quantity": "fixed.temperature specified in h11-384-single-pass.yaml",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "carried_forward.optimal_temperature in h11-384-single-pass.yaml",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-single-pass.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          261,
+          263
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "The\nconfig JSON default `temperature: 1.0` was not overridden because `extract_conditions()`\nhad nothing to propagate.",
+      "values": [
+        {
+          "quantity": "config JSON default temperature, detect_brief-text.json",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          265,
+          265
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "The data represents single-pass detection at T=1.0, not T=0.0.",
+      "values": [
+        {
+          "quantity": "actual temperature of the single-pass-384 data",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "intended temperature of the single-pass-384 condition",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No outputs/h11/single-pass-384 directory exists in the working tree at this blob, so neither the run-level temperature nor its contrast can be resolved. The intended 0.0 is separately anchored at lines 259–261 to studies/h11-384-single-pass.yaml."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          272,
+          280
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "for run in $(seq 1 10); do\n    python scripts/4_detect_mounds_batch.py \\\n        --config prompts/configs/detect_brief-text.json \\\n        --manifest inputs/tiles_384/validation_manifest.json \\\n        --output-dir outputs/h11/single-pass-384-t00/384/run_${run} \\\n        --tile-size 384 \\\n        --tiles-dir inputs/tiles_384 \\\n        --temperature 0.0 \\\n        --workers 12",
+      "values": [
+        {
+          "quantity": "number of re-execution runs proposed for single-pass-384 at T=0.0",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size proposed for the re-execution",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature proposed for the re-execution",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "worker count proposed for the re-execution",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b033] Prospective, not asserted-as-run: this fenced bash block is a recommended re-execution command for the single-pass-384 condition, so its parameters describe what the audit proposes to run, not what was run. Extracted with doubt flagged (instrument § Task) and left anchor-unknown; triage may prune the whole claim as out of scope. The same reasoning excludes the prospective 'T=0.0' at lines 266–267 ('T=0.0 is the deterministic baseline', 'the runs must be re-executed at T=0.0'), which describe the intended remedy rather than what was run."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          284,
+          284
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "### WARNING-1: Phase 3a \"-high\" Directory Mislabelling (180 runs)",
+      "values": [
+        {
+          "quantity": "runs affected, Phase 3a '-high' directory mislabelling",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/phase3a/track1-image-high and outputs/phase3a/track2-text-high are absent from the working tree at this blob."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          288,
+          291
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "The directories `outputs/phase3a/track1-image-high/` and\n`outputs/phase3a/track2-text-high/` contain runs that were intended to use HIGH\nthinking but actually used minimal thinking (confirmed by meta.json across all 180\nruns).",
+      "values": [
+        {
+          "quantity": "runs confirmed by meta.json across the two mislabelled Phase 3a directories",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/phase3a/track1-image-high and outputs/phase3a/track2-text-high are absent from the working tree at this blob."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          299,
+          299
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "### WARNING-2: Pairwise Test Files Reference Deleted Paths (7 files)",
+      "values": [
+        {
+          "quantity": "pairwise test JSON files referencing deleted study_dir paths",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document names results/h11-384-pairwise-n5/ as the location of these files (lines 160, 301); that directory does not exist in the working tree at this blob."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          301,
+          303
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "Seven pairwise test JSON files in `results/h11-384-pairwise-n5/` reference study\ndirectories `outputs/h11/pv-diag-384/pro-high-text-n5` and\n`outputs/h11/pv-diag-384/pro-high-image-n5`.",
+      "values": [
+        {
+          "quantity": "pairwise test JSON files referencing deleted study_dir paths",
+          "value_verbatim": "Seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Spelled-out count. results/h11-384-pairwise-n5/ does not exist in the working tree at this blob, so the file count has no locatable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          311,
+          312
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "Update the `study_dir` and `label` fields in these 7 files to\nreflect the corrected directory names and \"Flash HIGH\" labels.",
+      "values": [
+        {
+          "quantity": "pairwise test JSON files needing study_dir and label updates",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the count at lines 299 and 301 in a separate span (one claim per span, hard rule 1). results/h11-384-pairwise-n5/ is absent from the working tree."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          315,
+          315
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "### INFO-1: Older Phase Runs Missing Meta Fields (265 runs)",
+      "values": [
+        {
+          "quantity": "runs missing thinking_level / system_instruction_hash / example_count in meta.json",
+          "value_verbatim": "265",
+          "value_parsed": 265,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The affected runs sit in the Phase 1 through 2e original subtrees, which are absent from the working tree at this blob."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          322,
+          323
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "The\ntemperature and model fields are present and correct in all 265 runs.",
+      "values": [
+        {
+          "quantity": "runs whose temperature and model meta fields are present and correct (Phase 1–2e)",
+          "value_verbatim": "265",
+          "value_parsed": 265,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Phase 1 through 2e original subtrees are absent from the working tree at this blob."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          325,
+          325
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "### INFO-2: Incomplete Retest Runs (6 runs)",
+      "values": [
+        {
+          "quantity": "incomplete retest runs (JSONL submitted, no results)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Census of run directories under outputs/retest/phase3c/track1-image holding a JSONL file but no *.meta.json and no output geojson."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          327,
+          328
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "Six runs in `outputs/retest/phase3c/track1-image/` have JSONL files (batch requests\nwere submitted) but no meta.json or output geojson.",
+      "values": [
+        {
+          "quantity": "incomplete runs in outputs/retest/phase3c/track1-image/",
+          "value_verbatim": "Six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Spelled-out count; same census as the heading at line 325, in a separate span. The six run identifiers listed at lines 330–331 are names, not values (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          333,
+          334
+        ],
+        "section": "Section 5: Recommendations"
+      },
+      "claim_text": "The corresponding conditions\nhave 4 successful runs instead of 5, which is noted in the run counts above.",
+      "values": [
+        {
+          "quantity": "successful runs per affected retest/phase3c track1-image condition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "intended runs per affected retest/phase3c track1-image condition",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Census of successful runs (those with a *.meta.json and output) in the conditions hit by the six incomplete runs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          344,
+          344
+        ],
+        "section": "Known Issue Verification"
+      },
+      "claim_text": "All 1,740 runs use `model: gemini-3-flash` in their meta.json.",
+      "values": [
+        {
+          "quantity": "runs using model gemini-3-flash, whole audited corpus",
+          "value_verbatim": "1,740",
+          "value_parsed": 1740,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Corpus-wide census spanning the Phase 1-2 and Phase 3 original subtrees, which are absent from the working tree at this blob. 'Session 57' and 'E42' are identifiers and are not extracted (hard rule 5). The '-b' study YAMLs named in the same paragraph (h11-384-flash-high-text-n5-b.yaml, h11-384-flash-high-image-n5-b.yaml) do not exist under studies/ in the working tree, but that paragraph asserts no number about them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          352,
+          352
+        ],
+        "section": "Known Issue Verification"
+      },
+      "claim_text": "**Status: CONFIRMED in 2 conditions.**",
+      "values": [
+        {
+          "quantity": "conditions with a confirmed T=1.0 temperature bug",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The count summarises the two numbered items at lines 354–357 of this same document; hard rule 2 forbids anchoring prose to prose. One of the two conditions (single-pass-384) has no surviving output directory in the working tree at this blob."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          354,
+          355
+        ],
+        "section": "Known Issue Verification"
+      },
+      "claim_text": "1. **consensus-384** (30 runs): All runs at T=1.0 instead of YAML-intended T=0.7.\n   Corrected replacement: flash-minimal-text-n30-t07 (30 runs at T=0.7, verified).",
+      "values": [
+        {
+          "quantity": "run count, consensus-384",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "actual temperature, consensus-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "study-YAML-intended temperature, h11-384-consensus.yaml",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h11-384-consensus.yaml#$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "run count, flash-minimal-text-n30-t07",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, flash-minimal-text-n30-t07",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Numbered list item; the leading '1.' is a list marker, not a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          356,
+          356
+        ],
+        "section": "Known Issue Verification"
+      },
+      "claim_text": "2. **single-pass-384** (10 runs): All runs at T=1.0 instead of YAML-intended T=0.0.",
+      "values": [
+        {
+          "quantity": "run count, single-pass-384",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "actual temperature, single-pass-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "study-YAML-intended temperature, h11-384-single-pass.yaml",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-single-pass.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Numbered list item; the leading '2.' is a list marker, not a value. No outputs/h11/single-pass-384 directory exists in the working tree at this blob, so the run count and the actual temperature are anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          361,
+          362
+        ],
+        "section": "Known Issue Verification"
+      },
+      "claim_text": "without one, the config JSON\ndefault (`temperature: 1.0` in `detect_brief-text.json`) prevails.",
+      "values": [
+        {
+          "quantity": "config JSON default temperature, detect_brief-text.json",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          366,
+          367
+        ],
+        "section": "Known Issue Verification"
+      },
+      "claim_text": "No run in the entire corpus used a Pro model (all 1,740\nruns are gemini-3-flash).",
+      "values": [
+        {
+          "quantity": "runs on gemini-3-flash (no Pro model in the corpus)",
+          "value_verbatim": "1,740",
+          "value_parsed": 1740,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Corpus-wide census spanning subtrees absent from the working tree at this blob. 'E40' is an erratum identifier and is not extracted (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          374,
+          375
+        ],
+        "section": "Final Completeness Check"
+      },
+      "claim_text": "**Total runs inventoried:** 1,740 across 239 conditions. This matches the count\n   from the filesystem scan (1,740 meta.json files found, excluding retry files).",
+      "values": [
+        {
+          "quantity": "total runs inventoried, whole audited corpus",
+          "value_verbatim": "1,740",
+          "value_parsed": 1740,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total conditions inventoried, whole audited corpus",
+          "value_verbatim": "239",
+          "value_parsed": 239,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "meta.json files found by the filesystem scan (excluding retry files)",
+          "value_verbatim": "1,740",
+          "value_parsed": 1740,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Corpus-wide census spanning the Phase 1-2 and Phase 3 original subtrees, absent from the working tree at this blob. The third value restates the run total as a file count, which is a distinct assertion about the scan and is recorded separately."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          377,
+          379
+        ],
+        "section": "Final Completeness Check"
+      },
+      "claim_text": "**Runs with at least one UNVERIFIABLE check:** 265 (all in Phase 1-2 original\n   runs, due to missing thinking_level/instruction_hash/example_count in older\n   meta.json schema).",
+      "values": [
+        {
+          "quantity": "runs with at least one UNVERIFIABLE check",
+          "value_verbatim": "265",
+          "value_parsed": 265,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The affected runs sit in the Phase 1-2 original subtree, absent from the working tree at this blob."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          379,
+          379
+        ],
+        "section": "Final Completeness Check"
+      },
+      "claim_text": "Plus 6 incomplete retest runs with no meta.json at all.",
+      "values": [
+        {
+          "quantity": "incomplete retest runs with no meta.json",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Census of run directories under outputs/retest/phase3c/track1-image with no *.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          384,
+          385
+        ],
+        "section": "Final Completeness Check"
+      },
+      "claim_text": "**Conditions with >10 runs (Check 5):** 24 conditions have 30 runs each (Phase\n   3a, retest/phase3a, consensus-384, flash-high-text-n5, flash-minimal-text-n30-t07).",
+      "values": [
+        {
+          "quantity": "run-count threshold defining a large condition for Check 5",
+          "value_verbatim": ">10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "conditions with 30 runs each",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per large condition",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Corpus-wide census; the named conditions span outputs/phase3a (absent from the working tree at this blob) as well as outputs/retest/phase3a and outputs/h11/pv-diag-384. The '>10' threshold is an audit selection criterion rather than a run parameter — doubt flagged per instrument § Task; triage may prune it. 'Check 5' is an identifier and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          389,
+          390
+        ],
+        "section": "Final Completeness Check"
+      },
+      "claim_text": "**Audit completion: 1,740/1,740 runs audited across 239 conditions. All 6 checks\napplied to every run. All check results recorded as PASS, FAIL, or UNVERIFIABLE.**",
+      "values": [
+        {
+          "quantity": "runs audited / total runs, whole audited corpus",
+          "value_verbatim": "1,740/1,740",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "conditions audited, whole audited corpus",
+          "value_verbatim": "239",
+          "value_parsed": 239,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "audit checks applied to every run",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Closing completeness statement. Corpus-wide census spanning subtrees absent from the working tree at this blob; the check count describes the audit procedure and has no repo artefact recording it."
+    }
+  ]
+}

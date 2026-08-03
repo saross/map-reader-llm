@@ -1,0 +1,1919 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+    "git_blob": "6f2ceb7ad30c",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          516,
+          516
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/probabilities.json` — gap 1",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), cell pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "[BATCH NOTE b046] Batch b046 covers current lines 515-680 (EOF); line 515 is blank, so the b045 boundary at 514 falls cleanly between sections and no span was split. Scope decisions applied throughout this batch per instrument rule 5: dates, session numbers, Obs identifiers, commit hashes, runbook section numbers (' 6.1 / 6.2'), the 'line 196 of the full table' citation, tier labels (Tier 1/2/3) used as triage categories, and numbers inside path or condition names (pv-diag-384, image-t1.0, verified-v1-n5, 55-maps, session-78, *-487tile.json) are not extracted. The table row at line 554 carries no numeric cells and yields no claim. Gap asserted in the section header; defined by the document as input-set entries minus probability entries (see the two bullets that follow at lines 518-519). Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          518,
+          518
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/probabilities.json` (2839 entries)",
+      "values": [
+        {
+          "quantity": "probabilities.json result entries, cell pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5",
+          "value_verbatim": "2839",
+          "value_parsed": 2839,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Absolute path in the source normalised to the repo-relative anchor. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          519,
+          519
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "- **Input set (manifest-in-crops-subdir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/crops/candidate_manifest.json` (2840 expected)",
+      "values": [
+        {
+          "quantity": "expected input candidates (candidate manifest), cell pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5",
+          "value_verbatim": "2840",
+          "value_parsed": 2840,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Absolute path in the source normalised to the repo-relative anchor. The manifest also carries a scalar $.total_detections holding the same count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          521,
+          521
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "### `outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json` — gap 1",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), cell pv-diag-384/scale-4-optimal-487/verified-v1-n10",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Gap asserted in the section header. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          523,
+          523
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json` (3600 entries)",
+      "values": [
+        {
+          "quantity": "probabilities.json result entries, cell pv-diag-384/scale-4-optimal-487/verified-v1-n10",
+          "value_verbatim": "3600",
+          "value_parsed": 3600,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Absolute path in the source normalised to the repo-relative anchor. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          524,
+          524
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "- **Input set (manifest-in-crops-subdir)**: `/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/crops/candidate_manifest.json` (3601 expected)",
+      "values": [
+        {
+          "quantity": "expected input candidates (candidate manifest), cell pv-diag-384/scale-4-optimal-487/verified-v1-n10",
+          "value_verbatim": "3601",
+          "value_parsed": 3601,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/crops/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Absolute path in the source normalised to the repo-relative anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          526,
+          526
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "### `outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json` — gap 1",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), cell proposer-verifier-384/verified-adversarial-text-v1-prompt",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/proposer-verifier-384/candidates/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Gap asserted in the section header. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          528,
+          528
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "- **Probabilities (output)**: `/home/shawn/Code/map-reader-llm/outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json` (571 entries)",
+      "values": [
+        {
+          "quantity": "probabilities.json result entries, cell proposer-verifier-384/verified-adversarial-text-v1-prompt",
+          "value_verbatim": "571",
+          "value_parsed": 571,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json",
+        "path": "len:$.results"
+      },
+      "method": "read",
+      "notes": "Absolute path in the source normalised to the repo-relative anchor. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          529,
+          529
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "- **Input set (manifest-sibling-candidates)**: `/home/shawn/Code/map-reader-llm/outputs/h11/proposer-verifier-384/candidates/candidate_manifest.json` (572 expected)",
+      "values": [
+        {
+          "quantity": "expected input candidates (sibling candidates manifest), cell proposer-verifier-384/verified-adversarial-text-v1-prompt",
+          "value_verbatim": "572",
+          "value_parsed": 572,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384/candidates/candidate_manifest.json",
+        "path": "len:$.candidates"
+      },
+      "method": "read",
+      "notes": "Absolute path in the source normalised to the repo-relative anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          530,
+          530
+        ],
+        "section": "Gap-positive cells, expanded"
+      },
+      "claim_text": "- **Sample missing candidate IDs** (first 1 of 1): `candidate_00567`",
+      "values": [
+        {
+          "quantity": "sample missing candidate IDs listed, cell proposer-verifier-384/verified-adversarial-text-v1-prompt",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "identifiers",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total missing candidate IDs, cell proposer-verifier-384/verified-adversarial-text-v1-prompt",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/proposer-verifier-384/candidates/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "First value is a display count produced by the ad hoc /tmp/missing_ids.py script named in the document's Provenance section (not committed), hence anchor-unknown; the second value is the cell's missing-ID total, i.e. its gap. The identifier candidate_00567 is a name, not a claim (instrument rule 5). Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          536,
+          537
+        ],
+        "section": "Recovery effort estimate > Headline numbers"
+      },
+      "claim_text": "- **Total cells with gap > 0 (genuine):** 30 (excludes the `verified-cleanup`\n  partial-output artefact).",
+      "values": [
+        {
+          "quantity": "cells with gap > 0, genuine (excluding the verified-cleanup partial-output artefact)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. The 'gap > 0' threshold is a definition rather than an asserted value and is not extracted. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          538,
+          538
+        ],
+        "section": "Recovery effort estimate > Headline numbers"
+      },
+      "claim_text": "- **Cumulative dropped candidates (genuine):** 835.",
+      "values": [
+        {
+          "quantity": "cumulative dropped candidates across genuine gap-positive cells",
+          "value_verbatim": "835",
+          "value_parsed": 835,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          539,
+          539
+        ],
+        "section": "Recovery effort estimate > Headline numbers"
+      },
+      "claim_text": "- **Paper-feeding subset:** 19 cells, cumulative gap **773 candidates**.",
+      "values": [
+        {
+          "quantity": "paper-feeding gap-positive cells",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cumulative gap across paper-feeding cells",
+          "value_verbatim": "773",
+          "value_parsed": 773,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. Paper-feeding classification is an analyst judgement recorded by the document, so even the constituent counts are not mechanically derivable without that classification. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          540,
+          542
+        ],
+        "section": "Recovery effort estimate > Headline numbers"
+      },
+      "claim_text": "- **Non-paper / legacy diagnostic:** 11 cells, cumulative gap 62 candidates\n  (10 cells under `pv-diag-384/verified/` plus the unreferenced\n  `proposer-verifier-384/verified-adversarial-text-v1-prompt`).",
+      "values": [
+        {
+          "quantity": "non-paper / legacy diagnostic gap-positive cells",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cumulative gap across non-paper / legacy cells",
+          "value_verbatim": "62",
+          "value_parsed": 62,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "non-paper cells located under pv-diag-384/verified/",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          548,
+          548
+        ],
+        "section": "Recovery effort estimate > Paper-feeding cells (priority for cleanup)"
+      },
+      "claim_text": "| `flash-high-image-n5` matrix (`pv-diag-384/`) | 4 | 473 | Drives the image-temperature sweep cells `flash-high-image-n5-t{0.3,0.7,1.0}-greedy-v1-487tile.json`. The image-t0.0 cell with gap=460 is the largest single offender in the entire audit and should be cleaned first. |",
+      "values": [
+        {
+          "quantity": "cells affected, flash-high-image-n5 matrix group",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cumulative gap, flash-high-image-n5 matrix group",
+          "value_verbatim": "473",
+          "value_parsed": 473,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "gap (dropped candidates), cell pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10 - largest single gap in the audit",
+          "value_verbatim": "460",
+          "value_parsed": 460,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Table row. The group aggregate (4 cells, 473 candidates) has no committed artefact and is left anchor-unknown; the named image-t0.0 cell gap is anchorable. The filename flash-high-image-n5-t{0.3,0.7,1.0}-greedy-v1-487tile.json is a name, not a claim. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          549,
+          549
+        ],
+        "section": "Recovery effort estimate > Paper-feeding cells (priority for cleanup)"
+      },
+      "claim_text": "| `e47-propose-brief/verified/flash-high-text-{1..5}of5` | 5 | 127 | Per-pass production verifier outputs feeding `compare_wbf_vs_greedy_production.py` and the e47 leaderboard cells. |",
+      "values": [
+        {
+          "quantity": "cells affected, e47-propose-brief per-pass verifier group",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cumulative gap, e47-propose-brief per-pass verifier group",
+          "value_verbatim": "127",
+          "value_parsed": 127,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row; group aggregate over five per-pass cells (flash-high-text-1of5 .. 5of5) under outputs/h11/e47-propose-brief/verified/. Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          550,
+          550
+        ],
+        "section": "Recovery effort estimate > Paper-feeding cells (priority for cleanup)"
+      },
+      "claim_text": "| `pv-diag-384/.../session-78-matrix/verified-*-text` | 7 | 154 | Drives the `session-78-*-487tile.json` leaderboard cells (image and text adversarial/brief/checklist matrices). |",
+      "values": [
+        {
+          "quantity": "cells affected, session-78-matrix verifier group",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cumulative gap, session-78-matrix verifier group",
+          "value_verbatim": "154",
+          "value_parsed": 154,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row; group aggregate. Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          551,
+          551
+        ],
+        "section": "Recovery effort estimate > Paper-feeding cells (priority for cleanup)"
+      },
+      "claim_text": "| `h8-v2/wbf/scale-4/verified` | 1 | 15 | h8-v2 production cell, scale-4 WBF variant. |",
+      "values": [
+        {
+          "quantity": "cells affected, h8-v2/wbf/scale-4/verified group",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "gap (dropped candidates), cell h8-v2/wbf/scale-4/verified",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h8-v2/wbf/scale-4/verified/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h8-v2/wbf/scale-4/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h8-v2/wbf/scale-4/verified/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Table row. Single-cell group, so the cumulative gap is that cell's gap; input manifest located at outputs/h8-v2/wbf/scale-4/crops/candidate_manifest.json. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          552,
+          552
+        ],
+        "section": "Recovery effort estimate > Paper-feeding cells (priority for cleanup)"
+      },
+      "claim_text": "| `55maps-generalisation/verified-v2` | 1 | 3 | Note: canonical `verified/` is gap=0; v2 appears to be a partially-re-verified copy. Investigate whether `verified-v2` is in active use. |",
+      "values": [
+        {
+          "quantity": "cells affected, 55maps-generalisation/verified-v2 group",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "gap (dropped candidates), cell 55maps-generalisation/verified-v2",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "gap (dropped candidates), canonical cell 55maps-generalisation/verified",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row. Anchor left unknown because neither outputs/55maps-generalisation/verified-v2/ nor outputs/55maps-generalisation/verified/ contains a candidate_manifest.json, so the expected-input side of the gap cannot be located from within this batch's range. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          553,
+          553
+        ],
+        "section": "Recovery effort estimate > Paper-feeding cells (priority for cleanup)"
+      },
+      "claim_text": "| `pv-diag-384/scale-4-optimal-487/verified-v1-n10` | 1 | 1 | Trivial single-candidate gap. |",
+      "values": [
+        {
+          "quantity": "cells affected, pv-diag-384/scale-4-optimal-487/verified-v1-n10 group",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "gap (dropped candidates), cell pv-diag-384/scale-4-optimal-487/verified-v1-n10",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Table row; single-cell group, so the cumulative gap is that cell's gap (same cell as the section at line 521). Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          555,
+          555
+        ],
+        "section": "Recovery effort estimate > Paper-feeding cells (priority for cleanup)"
+      },
+      "claim_text": "| **Total paper-feeding** | **19** | **773** | |",
+      "values": [
+        {
+          "quantity": "total paper-feeding cells",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total cumulative gap across paper-feeding cells",
+          "value_verbatim": "773",
+          "value_parsed": 773,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table total row; restates the headline figures at line 539. Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          559,
+          560
+        ],
+        "section": "Recovery effort estimate > Non-paper / legacy cells (defer or skip)"
+      },
+      "claim_text": "The remaining 11 cells (cumulative gap 62) live under\n`pv-diag-384/verified/` and `proposer-verifier-384/`.",
+      "values": [
+        {
+          "quantity": "non-paper / legacy gap-positive cells",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cumulative gap across non-paper / legacy cells",
+          "value_verbatim": "62",
+          "value_parsed": 62,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the headline figures at lines 540-542. Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          560,
+          563
+        ],
+        "section": "Recovery effort estimate > Non-paper / legacy cells (defer or skip)"
+      },
+      "claim_text": "They are small (gaps of\n1–21) and are the products of cross-verifier exploratory runs (e.g.\n`pro-verifier`, `medium-verifier`, `flash-medium-verifier` suffixes) that were\nnot used in any leaderboard or production analysis.",
+      "values": [
+        {
+          "quantity": "per-cell gap range across the non-paper / legacy cells, minimum",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-cell gap range across the non-paper / legacy cells, maximum",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Range over eleven cells; no single committed artefact decides it. Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          572,
+          577
+        ],
+        "section": "Recovery effort estimate > Recovery mechanics"
+      },
+      "claim_text": "python scripts/run_pv.py cleanup \\\n  --crops-dir <CROPS_DIR_FROM_TABLE> \\\n  --verified-dir <DIR_CONTAINING_PROBABILITIES_JSON> \\\n  --verifier-config <THE_CELL'S_ORIGINAL_VERIFIER_CONFIG> \\\n  --max-attempts 3 \\\n  --safe-mode-tokens 4096   # only on final attempt",
+      "values": [
+        {
+          "quantity": "--max-attempts, recommended cleanup invocation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "attempts",
+          "kind": "parameter",
+          "path": "argparse:--max-attempts.default",
+          "method": null
+        },
+        {
+          "quantity": "--safe-mode-tokens, recommended cleanup invocation (final attempt only)",
+          "value_verbatim": "4096",
+          "value_parsed": 4096,
+          "unit": "tokens",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_pv.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Prospective recipe, not an assertion about what was run - flagged as doubtful per the instrument's include-and-flag rule. scripts/run_pv.py declares an argparse default for --max-attempts, so that value has a (non-JSON) anchor the harness can route to triage; no artefact was located that carries 4096 for --safe-mode-tokens, so that value is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          582,
+          583
+        ],
+        "section": "Recovery effort estimate > Recovery mechanics"
+      },
+      "claim_text": "Compute load is small: 773 candidates @ ~1–2 verifier calls each = roughly\n1,000 verifier API calls total, distributed over ~19 cleanup invocations.",
+      "values": [
+        {
+          "quantity": "candidates to recover across paper-feeding cells",
+          "value_verbatim": "773",
+          "value_parsed": 773,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier calls per candidate, estimated lower bound",
+          "value_verbatim": "~1",
+          "value_parsed": 1,
+          "unit": "calls",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier calls per candidate, estimated upper bound",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "calls",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total verifier API calls for the recovery, estimated (stated as 'roughly')",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": "API calls",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cleanup invocations, estimated",
+          "value_verbatim": "~19",
+          "value_parsed": 19,
+          "unit": "invocations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking compute estimate; the 773 restates the paper-feeding cumulative gap. Approximation markers retained verbatim per instrument v1.2 amendment 5; the 'roughly' qualifier on 1,000 sits on the preceding line and is recorded here in the quantity field instead. Audit-wide aggregate. The document's Provenance section attributes the audit to /tmp/verifier_audit.py, which is not committed; no committed artefact in the repo was identified that holds this aggregate. "
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          584,
+          584
+        ],
+        "section": "Recovery effort estimate > Recovery mechanics"
+      },
+      "claim_text": "Most cells need <30 calls.",
+      "values": [
+        {
+          "quantity": "verifier API calls per cleanup for most cells, stated upper bound",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "API calls",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Stated as a strict upper bound ('<30'), and prospective; recorded per the include-and-flag rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          584,
+          586
+        ],
+        "section": "Recovery effort estimate > Recovery mechanics"
+      },
+      "claim_text": "The single largest cell\n(`flash-high-image-n5/image-t0.0/verified-v1-n10`, gap=460) will dominate\nelapsed time but is still small relative to a fresh full verifier pass.",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), cell pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10",
+          "value_verbatim": "460",
+          "value_parsed": 460,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Restates the largest single-cell gap named in the table row at line 548. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          590,
+          591
+        ],
+        "section": "Recovery effort estimate > Risk to leaderboard / Obs framings"
+      },
+      "claim_text": "- **Tier rankings most at risk:** the 4 `flash-high-image-n5` matrix cells\n  (gap 1, 1, 11, 460).",
+      "values": [
+        {
+          "quantity": "flash-high-image-n5 matrix cells at risk",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-cell gap, flash-high-image-n5 matrix cell (first listed)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-cell gap, flash-high-image-n5 matrix cell (second listed)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-cell gap, flash-high-image-n5 matrix cell (third listed)",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-cell gap, flash-high-image-n5 matrix cell (fourth listed)",
+          "value_verbatim": "460",
+          "value_parsed": 460,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The four gaps are listed without a per-cell mapping, so no value can be anchored unambiguously from this span alone; the 460 cell is identified in the following sentence and at line 585 as pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10. The four listed gaps sum to the 473 group total at line 548. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          591,
+          593
+        ],
+        "section": "Recovery effort estimate > Risk to leaderboard / Obs framings"
+      },
+      "claim_text": "The image-t0.0/v1-n10 cell sits at the lowest verifier\n  threshold; its 460-candidate gap (57% of the input pool) is large enough\n  that recovery may shift its F1 / MCC rankings appreciably.",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), cell pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10",
+          "value_verbatim": "460",
+          "value_parsed": 460,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "gap as a share of the input candidate pool, cell pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10",
+          "value_verbatim": "57",
+          "value_parsed": 57.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null,
+          "expression": "100 * (a - b) / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/crops/candidate_manifest.json",
+              "path": "len:$.candidates"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+              "path": "len:$.results"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Two derived values, so the percentage carries its own expression per instrument v1.2 amendment 1; the claim-level expression covers the 460 gap only. 'Lowest verifier threshold' is a qualitative assertion with no number attached. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          593,
+          595
+        ],
+        "section": "Recovery effort estimate > Risk to leaderboard / Obs framings"
+      },
+      "claim_text": "The other three\n  have gap ≤ 11 against pools of ~2,000–3,000, so the F1 movement is likely\n  in the 0.001–0.005 range.",
+      "values": [
+        {
+          "quantity": "remaining flash-high-image-n5 matrix cells",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-cell gap for the remaining three cells, stated upper bound",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "input candidate pool for the remaining three cells, approximate lower bound",
+          "value_verbatim": "~2,000",
+          "value_parsed": 2000,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "input candidate pool for the remaining three cells, approximate upper bound",
+          "value_verbatim": "3,000",
+          "value_parsed": 3000,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "predicted F1 movement on recovery, lower bound",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "predicted F1 movement on recovery, upper bound",
+          "value_verbatim": "0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The F1-movement figures are a forecast, not a measured result - included and flagged per the instrument's include-and-flag rule; a post-recovery check would need the recomputed leaderboard F1s. Shared unit/approximation markers handled per v1.2 amendments 5-6. Spelled-out count 'three' recorded verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          595,
+          596
+        ],
+        "section": "Recovery effort estimate > Risk to leaderboard / Obs framings"
+      },
+      "claim_text": "Comparable to the GS-v2 +0.013 correction landed\n  today.",
+      "values": [
+        {
+          "quantity": "F1 correction landed for the GS-v2 cleanup (delta)",
+          "value_verbatim": "+0.013",
+          "value_parsed": 0.013,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The GS-v2 correction is attributed to work landed the same day but is not tied to a named cell or artefact in this span; triage would need the GS-v2 cleanup record. Cross-reference only - not chased beyond anchor identification (instrument rule 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          597,
+          599
+        ],
+        "section": "Recovery effort estimate > Risk to leaderboard / Obs framings"
+      },
+      "claim_text": "- **WBF-vs-greedy comparison (Obs 277/280):** the 5 e47 production cells (gap\n  9–57 against pools of 487–4,358) and `h8-v2/wbf/scale-4` (gap 15) feed\n  this comparison.",
+      "values": [
+        {
+          "quantity": "e47 production cells feeding the WBF-vs-greedy comparison",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "per-cell gap across the e47 production cells, minimum",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "per-cell gap across the e47 production cells, maximum",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "input candidate pool across the e47 production cells, minimum",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "input candidate pool across the e47 production cells, maximum",
+          "value_verbatim": "4,358",
+          "value_parsed": 4358,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "gap (dropped candidates), cell h8-v2/wbf/scale-4/verified",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h8-v2/wbf/scale-4/verified/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h8-v2/wbf/scale-4/crops/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h8-v2/wbf/scale-4/verified/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Range endpoints over five e47 cells cannot be mapped to individual cells from this span, so they are left anchor-unknown; the named h8-v2/wbf/scale-4 gap is anchorable. Note that 487 here is an asserted pool size, not the corpus name (instrument rule 5). Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          599,
+          601
+        ],
+        "section": "Recovery effort estimate > Risk to leaderboard / Obs framings"
+      },
+      "claim_text": "Recovery is expected to shift greedy-side F1s by\n  ≤ 0.005 across the comparison, but the specific direction cannot be\n  predicted without running cleanup.",
+      "values": [
+        {
+          "quantity": "predicted shift in greedy-side F1 across the WBF-vs-greedy comparison, stated upper bound",
+          "value_verbatim": "0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forecast rather than a measured result; included and flagged per the include-and-flag rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          602,
+          603
+        ],
+        "section": "Recovery effort estimate > Risk to leaderboard / Obs framings"
+      },
+      "claim_text": "- **Session-78 matrix (Obs 297):** 7 cells with gaps of 1–41 against\n  pools of ~2,000–3,800.",
+      "values": [
+        {
+          "quantity": "session-78 matrix cells affected",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-cell gap across the session-78 matrix cells, minimum",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-cell gap across the session-78 matrix cells, maximum",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "input candidate pool across the session-78 matrix cells, approximate minimum",
+          "value_verbatim": "~2,000",
+          "value_parsed": 2000,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "input candidate pool across the session-78 matrix cells, approximate maximum",
+          "value_verbatim": "3,800",
+          "value_parsed": 3800,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Group ranges over seven cells with no per-cell mapping in the span; cell count restates the table row at line 550. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          604,
+          605
+        ],
+        "section": "Recovery effort estimate > Risk to leaderboard / Obs framings"
+      },
+      "claim_text": "- **GS-v2 production cell:** already cleaned today (gap=0 confirmed in this\n  audit, line 196 of the full table).",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), GS-v2 production cell after the same-day cleanup",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The GS-v2 production cell is not path-identified in this span; 'line 196 of the full table' is a line-number citation and is out of C4 scope. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          625,
+          627
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Cleanup phase"
+      },
+      "claim_text": "- **17 of 20 cells cleaned** during the unattended sapphire run, 530\n  candidates recovered, total cleanup-phase API spend $0.905. Ground truth\n  in `logs/phase3a-recovery-overnight-resume/launch-summary.md`.",
+      "values": [
+        {
+          "quantity": "cells cleaned during the overnight sapphire run",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cells attempted in the overnight cleanup run",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "candidates recovered during the cleanup phase",
+          "value_verbatim": "530",
+          "value_parsed": 530,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cleanup-phase API spend, audited (USD)",
+          "value_verbatim": "0.905",
+          "value_parsed": 0.905,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document names logs/phase3a-recovery-overnight-resume/launch-summary.md as ground truth, but that is another markdown document; instrument rule 2 forbids anchoring prose to prose, so the anchor is left unknown for triage to chase to an artefact. No JSON sits beside the launch summary in logs/phase3a-recovery-overnight-resume/. The spend is an audited internal figure rather than a billing-console figure, so it is not classed external. Per-cell cleanup_history entries in the cleaned probabilities.json files would be the artefact-side evidence, but they are spread over 17 files and no committed roll-up was located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          628,
+          629
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Cleanup phase"
+      },
+      "claim_text": "- **3 cells skipped**, all with `reason: missing_crops_gitignored` (the\n  bulk crop PNGs are gitignored intermediates not present on every machine):",
+      "values": [
+        {
+          "quantity": "cells skipped in the overnight cleanup run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document names logs/phase3a-recovery-overnight-resume/launch-summary.md as ground truth, but that is another markdown document; instrument rule 2 forbids anchoring prose to prose, so the anchor is left unknown for triage to chase to an artefact. No JSON sits beside the launch summary in logs/phase3a-recovery-overnight-resume/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          630,
+          632
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Cleanup phase"
+      },
+      "claim_text": "  - `e47-flash-high-text-1of5` (Tier 1, gap 57) — schema-transformation\n    diagnostic in the launch-summary § \"Surprise\"; data-integrity question\n    first.",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), skipped cell e47-propose-brief/verified/flash-high-text-1of5",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Cell identified as outputs/h11/e47-propose-brief/verified/flash-high-text-1of5 from the table row at line 549 of this same document; its candidate_manifest.json sits in the same directory. 'Tier 1' is a triage-priority label, not extracted. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          633,
+          634
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Cleanup phase"
+      },
+      "claim_text": "  - `55maps-gen-verified-v2` (Tier 2, gap 3) — clean-cut; regenerate crops\n    + re-run.",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), skipped cell 55maps-generalisation/verified-v2",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No candidate_manifest.json was located in outputs/55maps-generalisation/verified-v2/ or its parent, so the expected-input side of the gap cannot be anchored from within this range. 'Tier 2' is a triage-priority label, not extracted. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's. Alternative mechanical locator for triage: reports/verifier-completeness-audit-2026-05-06.json is a 211-entry per-cell list with expected/actual/gap keys, addressable as $[?(@.path=='<cell probabilities.json>')].gap; it post-dates this audit by three days (after the 2026-05-03/04 overnight cleanup), so it is offered as a second locator, not as the primary anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          635,
+          636
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Cleanup phase"
+      },
+      "claim_text": "  - `proposer-verifier-384-adversarial-text-v1-prompt` (Tier 3, gap 1) —\n    clean-cut; regenerate crops + re-run.",
+      "values": [
+        {
+          "quantity": "gap (dropped candidates), skipped cell proposer-verifier-384/verified-adversarial-text-v1-prompt",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/h11/proposer-verifier-384/candidates/candidate_manifest.json",
+            "path": "len:$.candidates"
+          },
+          {
+            "name": "b",
+            "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/probabilities.json",
+            "path": "len:$.results"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Same cell as the section at line 526. 'Tier 3' is a triage-priority label, not extracted. Top-of-file banner (lines 3-13) marks the audited completeness-gap figures as superseded era figures (the May-July 2026 recovery campaigns closed the audited gaps; current gap 0), so this is a dated historical record of the 2026-05-03 state; anchored to the live artefact per instrument rule 2 - whether supersession excuses a diff is triage's call, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          640,
+          640
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Propagation status"
+      },
+      "claim_text": "- **Tier 1 (Session-78 6 cells)**: COMPLETE.",
+      "values": [
+        {
+          "quantity": "Session-78 cells in the Tier 1 propagation batch",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Tier-1 batch membership is a campaign-planning fact recorded in the recovery runbook and launch summary (markdown), so no artefact anchor was identified; note the table row at line 550 counts 7 session-78 gap-positive cells, a discrepancy left for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          642,
+          644
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Propagation status"
+      },
+      "claim_text": "Audit anchor: 38 unchanged Era-2-pv cells\n  byte-identical F1 vs pre-recovery `b4c28d5b`; 6 cleaned cells show\n  expected ΔF1 in range −0.0007 to +0.0103 absolute.",
+      "values": [
+        {
+          "quantity": "unchanged Era-2-pv cells with byte-identical F1 versus pre-recovery",
+          "value_verbatim": "38",
+          "value_parsed": 38,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cleaned cells showing an expected F1 change",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 change across the six cleaned cells, range minimum (absolute)",
+          "value_verbatim": "−0.0007",
+          "value_parsed": -0.0007,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 change across the six cleaned cells, range maximum (absolute)",
+          "value_verbatim": "+0.0103",
+          "value_parsed": 0.0103,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Verification requires diffing the Era-2-pv leaderboard cells against their state at the pre-recovery commit named in the span, i.e. a two-commit recompute; no single committed artefact holds these figures, and the commit identifier itself is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          644,
+          646
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Propagation status"
+      },
+      "claim_text": "One tier flip in\n  combined view (`session-78-image-brief-text` 5→4, an improvement); other\n  13 Session-78 cells preserved tier rank.",
+      "values": [
+        {
+          "quantity": "tier flips in the combined view after Tier-1 recovery",
+          "value_verbatim": "One",
+          "value_parsed": 1,
+          "unit": "flips",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tier of session-78-image-brief-text before recovery, combined view",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "tier",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tier of session-78-image-brief-text after recovery, combined view",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "tier",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Session-78 cells preserving tier rank after recovery",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Tier assignment is a scripted recomputation over the combined leaderboard; the before-side tier (5) is a pre-recovery state, so a live read of the current tiering cannot decide it. No committed artefact holding both states was identified. Spelled-out count 'One' recorded verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          656,
+          660
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Methodological note - wrong-driver detour"
+      },
+      "claim_text": "The Tier-1 per-architecture rebuild on 2026-05-05 evening initially used\n`scripts/run_per_arch_leaderboards.sh` (default `--top-n 20`) instead of\nthe canonical `scripts/build_per_arch_redesign.sh` (`--top-n 0`),\nsilently thinning three strata (era1/consensus 72→37, era2/consensus\n29→22, era2/pv 44→26).",
+      "values": [
+        {
+          "quantity": "--top-n default applied by the non-canonical per-arch runner",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "cells",
+          "kind": "parameter",
+          "path": "scripts/build_tiered_leaderboard.py#DEFAULT_TOP_N",
+          "method": null
+        },
+        {
+          "quantity": "--top-n passed by the canonical per-arch driver",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "cells",
+          "kind": "parameter",
+          "path": "scripts/build_per_arch_redesign.sh#--top-n",
+          "method": null
+        },
+        {
+          "quantity": "strata thinned by the wrong driver",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "strata",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "era1/consensus stratum size before thinning",
+          "value_verbatim": "72",
+          "value_parsed": 72,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "era1/consensus stratum size after thinning",
+          "value_verbatim": "37",
+          "value_parsed": 37,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "era2/consensus stratum size before thinning",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "era2/consensus stratum size after thinning",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "era2/pv stratum size before thinning",
+          "value_verbatim": "44",
+          "value_parsed": 44,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "era2/pv stratum size after thinning",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_per_arch_leaderboards.sh",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document attributes the '--top-n 20' default to scripts/run_per_arch_leaderboards.sh, but the constant lives downstream in scripts/build_tiered_leaderboard.py (DEFAULT_TOP_N); a cross-file locator is used per v1.2 amendment 2, and the runner script is kept as the claim anchor because it is the source the document names. Doubt flagged: the runner was subsequently fixed to pass --top-n 0 explicitly (see the next span), so a live read of the runner may no longer show 20. The six stratum sizes are transient states of an intermediate rebuild that was corrected the same session - neither a clean live read nor a changelog 'was X' - so they are left anchor-unknown; the document points triage at archive/investigations/session-86-tier-regression-investigation.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          662,
+          665
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Methodological note - wrong-driver detour"
+      },
+      "claim_text": "Fixes landed in commits\n`baa271bf` (runner now passes `--top-n 0` + `--seed 42`) and `ef3ec4fe`\n(runbook § 6.1 / 6.2 corrected: tier rebuild now separated from\npost-processing).",
+      "values": [
+        {
+          "quantity": "--top-n now passed by scripts/run_per_arch_leaderboards.sh",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "cells",
+          "kind": "parameter",
+          "path": "shellvar:TOP_N",
+          "method": null
+        },
+        {
+          "quantity": "--seed now passed by scripts/run_per_arch_leaderboards.sh",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "shellvar:SEED",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_per_arch_leaderboards.sh",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both values are asserted as what the fixed runner now passes, so they anchor to the shell variable assignments in the runner script (non-JSON anchor, expected per the v1.1 calibration rule). Commit identifiers and the runbook section numbers are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          676,
+          677
+        ],
+        "section": "Recovery status (annotated post-execution, partial) > Outstanding work"
+      },
+      "claim_text": "**Resolve the 3 skipped cells**: e47 needs the schema-integrity\n   investigation first; the other two are clean-cut crop-regen + cleanup.",
+      "values": [
+        {
+          "quantity": "skipped cells still to resolve",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "skipped cells that are clean-cut crop-regeneration plus cleanup",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the three skipped cells enumerated at lines 628-636; forward-looking work item. Document names logs/phase3a-recovery-overnight-resume/launch-summary.md as ground truth, but that is another markdown document; instrument rule 2 forbids anchoring prose to prose, so the anchor is left unknown for triage to chase to an artefact. No JSON sits beside the launch summary in logs/phase3a-recovery-overnight-resume/."
+    }
+  ]
+}

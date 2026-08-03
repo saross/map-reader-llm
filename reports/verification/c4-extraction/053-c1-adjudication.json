@@ -1,0 +1,483 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/apparatus/c1-adjudication-2026-07-29.md",
+    "git_blob": "cbbcea9fa663",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          4,
+          5
+        ],
+        "section": "Header (adjudicator, inputs, outcome, verifier tally)"
+      },
+      "claim_text": "**Inputs**: eight fresh-context reconstruct-and-diff\nverifier reports",
+      "values": [
+        {
+          "quantity": "number of fresh-context reconstruct-and-diff verifier reports adjudicated",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": "reports",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b053] No committed directory of C1 verifier reports was located under reports/verification/ (the sibling directories are c2-census, c3-rederivation, c4-extraction, c4-regen, c4-triage, drafts, ledgers, apparatus); the reports appear to be session-scratchpad artefacts. SCOPE DECISIONS for the three c1-* apparatus documents in this batch: version strings (v1.0, v1.1, v4.6), verifier ids (v1-v8), dispute ids (D4, D12, D13), commitment ids (CMT-NNNN), erratum ids (E52), hypothesis ids (H1-H15), gate names (GATE 1, Tier C, Stage-2), section and rule citations (§ 5 rule 3, charter rule 13), source line citations (prereg 317-321, coverage 258, line 2388) and commit hashes are all out of C4 scope per hard rule 5. Instrument parameters stated numerically (five-element trigger blocks, one-entry-per-commitment grain) ARE extracted, per the batch brief, with the doubt flagged."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          7
+        ],
+        "section": "Header (adjudicator, inputs, outcome, verifier tally)"
+      },
+      "claim_text": "**Outcome**: ledger v1.0 (696 rows) → v1.1 (702\nrows).",
+      "values": [
+        {
+          "quantity": "commitment ledger row count, version 1.0 (superseded)",
+          "value_verbatim": "696",
+          "value_parsed": 696,
+          "unit": "rows",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "commitment ledger row count, version 1.1 (current)",
+          "value_verbatim": "702",
+          "value_parsed": 702,
+          "unit": "rows",
+          "kind": "count",
+          "path": "len:$.commitments",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": "len:$.commitments"
+      },
+      "method": "read",
+      "notes": "Before->after pair: the v1.0 count is historical, the v1.1 count live. Version strings themselves are out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          7
+        ],
+        "section": "Header (adjudicator, inputs, outcome, verifier tally)"
+      },
+      "claim_text": "**Verifier tally**: 5 missed obligations, 16 disputes",
+      "values": [
+        {
+          "quantity": "number of missed obligations raised by the verifiers",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "obligations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "number of disputes raised by the verifiers",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "disputes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Tally over the verifier reports, which are not committed artefacts; the five accepted misses correspond to the rows added in the § Misses table, but no artefact field records the tally."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          10,
+          10
+        ],
+        "section": "Misses"
+      },
+      "claim_text": "## Misses — all five accepted, rows added",
+      "values": [
+        {
+          "quantity": "number of verifier-raised misses accepted",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "misses",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the tally at line 7; the five new rows are CMT-0697 to CMT-0701, but the ledger carries no field marking adjudication origin."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "Misses"
+      },
+      "claim_text": "| CMT-0699 | prereg 1156 | H5 Stage-2 advancement is a three-conjunct rule; the interaction-non-significance conjunct had no row (v6). Five-element trigger block added, with ABSENT markers for the unoperationalised recall-stability criterion. |",
+      "values": [
+        {
+          "quantity": "number of conjuncts in the lodged H5 Stage-2 advancement rule",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "conjuncts",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "number of elements in a trigger block (extraction instrument parameter)",
+          "value_verbatim": "Five",
+          "value_parsed": 5,
+          "unit": "elements",
+          "kind": "count",
+          "path": "docs/manifest-schemas/commitments.schema.json#len:$['$defs'].triggerRule.required",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.1 calibration rule: a numeric claim about what the registration specifies anchors to the lodged document with a null path. The five-element count is a parameter of the C1 extraction instrument itself, mechanically checkable against the trigger-rule schema; included with the doubt flagged per the batch brief."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Disputes — rulings"
+      },
+      "claim_text": "CMT-0203 and CMT-0257 retyped disclosure→trigger with five-element blocks",
+      "values": [
+        {
+          "quantity": "number of elements in a trigger block (extraction instrument parameter)",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "elements",
+          "kind": "count",
+          "path": "len:$['$defs'].triggerRule.required",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/manifest-schemas/commitments.schema.json",
+        "path": "len:$['$defs'].triggerRule.required"
+      },
+      "method": "read",
+      "notes": "Instrument parameter rather than a study result; included with the doubt flagged per the batch brief."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          57
+        ],
+        "section": "Source-document findings carried to GATE 1"
+      },
+      "claim_text": "the two\nincompatible Stage-2 gate formulations (v2)",
+      "values": [
+        {
+          "quantity": "number of incompatible Stage-2 gate formulations in the lodged text",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "formulations",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Property of the lodged text (v1.1 calibration rule: anchor to the lodged preregistration, null path)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          58
+        ],
+        "section": "Source-document findings carried to GATE 1"
+      },
+      "claim_text": "two-tailed power calculation\nvs one-tailed default (v2)",
+      "values": [
+        {
+          "quantity": "number of tails in the lodged power calculation",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "number of tails in the lodged default test specification",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "tails",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "DOUBT FLAGGED: 'two-tailed' and 'one-tailed' are compound adjectives naming test types as much as counts; included under the include-when-in-doubt rule. Anchored to the lodged text per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "Source-document findings carried to GATE 1"
+      },
+      "claim_text": "two different blocks headed \"Tier C\" (v5)",
+      "values": [
+        {
+          "quantity": "number of blocks headed \"Tier C\" in the lodged text",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "blocks",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Property of the lodged text; 'Tier C' is a name, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          61
+        ],
+        "section": "Source-document findings carried to GATE 1"
+      },
+      "claim_text": "and the ≥3/10\ncount impossible from a 5-pass baseline",
+      "values": [
+        {
+          "quantity": "hard-example vote-count threshold stated in the lodged text (numerator)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "pass denominator of the lodged hard-example threshold",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "pass count of the baseline the threshold is applied to",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "All three are properties of the lodged text (v1.1 calibration rule). The document's point is that a >=3/10 threshold cannot be evaluated on a 5-pass baseline; extraction records the numbers, not the adjudication."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          63
+        ],
+        "section": "Source-document findings carried to GATE 1"
+      },
+      "claim_text": "unexplained ×5 in the 3,000-calls-per-cell arithmetic\nunderlying the ~$286 budget (v6)",
+      "values": [
+        {
+          "quantity": "unexplained multiplier in the lodged budget arithmetic",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "calls per factorial cell stated in the lodged budget arithmetic",
+          "value_verbatim": "3,000",
+          "value_parsed": 3000,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "registered budget underlying the calls-per-cell arithmetic",
+          "value_verbatim": "~$286",
+          "value_parsed": 286.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered-budget arithmetic: v1.1 calibration rule anchors these to the lodged document, never to executed configs. Approximation marker retained in value_verbatim (v1.2 amendment 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          70
+        ],
+        "section": "Session process notes"
+      },
+      "claim_text": "Two commit messages this session carried unverified counts, both wrong,\nboth corrected in-thread (526edfda9: \"295\" for 213; 2f5a9ae2d:\n\"560/55/81\" for 515/81/100).",
+      "values": [
+        {
+          "quantity": "number of commit messages carrying unverified counts",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": "commit messages",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "incorrect count stated in the first commit message",
+          "value_verbatim": "295",
+          "value_parsed": 295,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "corrected count for the first commit message",
+          "value_verbatim": "213",
+          "value_parsed": 213,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "first incorrect count in the second commit message",
+          "value_verbatim": "560",
+          "value_parsed": 560,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "second incorrect count in the second commit message",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "third incorrect count in the second commit message",
+          "value_verbatim": "81",
+          "value_parsed": 81,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "first corrected count for the second commit message",
+          "value_verbatim": "515",
+          "value_parsed": 515,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "second corrected count for the second commit message",
+          "value_verbatim": "81",
+          "value_parsed": 81,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "third corrected count for the second commit message",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document does not say what these counts count, so no anchor can be proposed without leaving the assigned document (hard rule 7). The quoted-wrong values are typed historical, the corrected values anchor-unknown. Commit hashes are out of scope."
+    }
+  ]
+}

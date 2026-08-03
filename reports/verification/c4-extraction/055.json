@@ -1,0 +1,2208 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/drafts/errata-drafts-2026-07-29.md",
+    "git_blob": "704b09391c6b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          6
+        ],
+        "section": "Header — Status"
+      },
+      "claim_text": "**E61**; these drafts claim **E62–E67** plus three append-style correction blocks",
+      "values": [
+        {
+          "quantity": "count of append-style correction blocks drafted in this file",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] Self-referential count of the correction blocks this draft file contains. Erratum identifiers (E61, E62–E67, E36, E16, E20) are out of C4 scope per instrument rule 5. No artefact anchor proposed: the count is a property of this prose draft and rule 2 forbids anchoring prose to prose. Batch-level scope decisions for lines 1–273, logged here once: dates, git hashes, session numbers (S110), Obs/erratum/commitment/Decision identifiers, § and line-number citations, model version strings (gemini-3.5-flash, claude-4.5-sonnet, gpt-5.2-thinking, gemini-3.1-pro-preview), and numbers inside condition/scope/pool names (era-2-487 as a bare label, px256-1032, 16of30, t0-3, n5, 1of10, 1of5, 5of5, min6-style slugs) were treated as out of scope; bare ordinals and non-numeral quantifiers ('a third level', 'a single value', 'millions') were also left. Prospective statements ('the paper's deviations table gains one row', line 157) were left as not-yet-checkable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "Draft 1 — heading"
+      },
+      "claim_text": "## Draft 1 — queue item 1: the three unlicensed study families + verifier-parameter levels",
+      "values": [
+        {
+          "quantity": "count of UNLICENSED study families in the execution→errata inverse census",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Sub-count of the census's UNLICENSED verdicts restricted to pairs whose key has the `family=` prefix; no single JSONPath scalar holds it, so a filtered count over `$.pairs` is required."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          26
+        ],
+        "section": "Draft 1 — Drafting note (arithmetic)"
+      },
+      "claim_text": "> **Drafting note (arithmetic)**: the brief and the gate package (§ 1 item 4, § 3\n> item 1) both say \"**four** verifier-parameter levels\", then enumerate five —\n> model `gemini-3.5-flash`, temperatures 0.3 and 0.7, thinking `medium` and `high`.",
+      "values": [
+        {
+          "quantity": "count of unregistered verifier-parameter levels as stated by the brief and the phase-1 gate package (superseded figure)",
+          "value_verbatim": "**four**",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of unregistered verifier-parameter levels enumerated by the draft (live figure)",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Correction-block discipline: 'four' is the quoted-old-value side of a was-X-now-Y correction (attributed to the brief and to `reports/verification/phase1-gate-package.md` §§ 1 and 3) and is logged `historical`; 'five' is the live claim. Scope decision: the enumerated level labels in the same span (temperatures 0.3 and 0.7, thinking `medium`/`high`, model `gemini-3.5-flash`) are factor-level names here, not asserted measurements, and are excluded per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          29
+        ],
+        "section": "Draft 1 — Drafting note (arithmetic)"
+      },
+      "claim_text": "> `reports/verification/c2-census/licence-census.json` confirms **five** UNLICENSED\n> `verifier_*` pairs (13 UNLICENSED total = 3 families + 5 verifier-parameter\n> levels + 5 derivative `proposer_pool` slugs). The draft below covers five.",
+      "values": [
+        {
+          "quantity": "count of UNLICENSED `verifier_*` factor=level pairs in the census",
+          "value_verbatim": "**five**",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total count of UNLICENSED factor=level pairs in the census",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": "read"
+        },
+        {
+          "quantity": "count of UNLICENSED study families",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of UNLICENSED verifier-parameter levels",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of UNLICENSED derivative `proposer_pool` slugs",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of unregistered verifier-parameter levels the draft covers",
+          "value_verbatim": "five.",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] The 13 total reads directly from `$.summary.UNLICENSED`; the three sub-counts (3 families + 5 verifier-parameter levels + 5 proposer_pool slugs) need a prefix-filtered count over `$.pairs` restricted to `verdict == 'UNLICENSED'`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          33
+        ],
+        "section": "Draft 1 — Drafting note (scope surprise)"
+      },
+      "claim_text": "> **Drafting note (scope surprise)**: `verifier_thinking_level=medium` has 13 observed\n> sites and **none of them is in the three families** — all 13 are in `pv-diag-384`,",
+      "values": [
+        {
+          "quantity": "observed sites for factor=level pair `verifier_thinking_level=medium`",
+          "value_verbatim": "13 observed",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=medium')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "count of UNLICENSED study families (denominator of the 'none of them' claim)",
+          "value_verbatim": "three families",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of `verifier_thinking_level=medium` sites located in the `pv-diag-384` family",
+          "value_verbatim": "all 13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] The per-family location of the 13 medium sites is not a scalar in the census; it needs a grouped count over `reports/verification/c2-census/observed-factor-levels.json` (the census's own site-level input)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "Draft 1 — Drafting note (scope surprise)"
+      },
+      "claim_text": "> which the census verdicts `registration+erratum` (ten errata attached, E37/E39/E40/",
+      "values": [
+        {
+          "quantity": "count of errata attached to the `family=pv-diag-384` census pair",
+          "value_verbatim": "ten errata",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": "len:$.pairs[?(@.pair=='family=pv-diag-384')].errata"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Erratum identifiers themselves (E37/E39/E40/E41/E42/E43/E53/E56/E57/E58) are out of C4 scope; only the count is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          37
+        ],
+        "section": "Draft 1 — Drafting note (scope surprise)"
+      },
+      "claim_text": "> an otherwise-licensed *family*. E62 as drafted says so explicitly; if the PI prefers\n> the families erratum to stay strictly about the three families, the `medium` limb",
+      "values": [
+        {
+          "quantity": "count of UNLICENSED study families the E62 erratum covers",
+          "value_verbatim": "three families",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Repetition of the family count; prefix-filtered count over `$.pairs` with `verdict == 'UNLICENSED'`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          42
+        ],
+        "section": "Draft 1 — Drafting note (`purpose` field)"
+      },
+      "claim_text": "> cited from `results/runs-manifest.json`. Two of the three carry a populated\n> `purpose`; **`pv-diag-256`'s `purpose` is `null`**. The draft cites the manifest",
+      "values": [
+        {
+          "quantity": "count of the three unregistered families carrying a populated `purpose` in the runs manifest",
+          "value_verbatim": "Two of the three",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of unregistered study families (denominator)",
+          "value_verbatim": "the three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Needs a null-check over `$.runs[?(@.run_id in ['flash35-pv-2x2','pv-diag-256','verifier-robustness'])].purpose`. The denominator 'three' is the census family count (`reports/verification/c2-census/licence-census.json`). Not adjudicated at extraction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "E62 — heading"
+      },
+      "claim_text": "### E62: Three unregistered proposer-verifier extension studies (`flash35-pv-2x2`, `pv-diag-256`, `verifier-robustness`) and five unregistered verifier-parameter levels — additional exploratory extensions of the registered PV contingency",
+      "values": [
+        {
+          "quantity": "count of unregistered proposer-verifier extension study families",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of unregistered verifier-parameter levels",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Both are prefix-filtered counts over the census's UNLICENSED pairs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "E62 — field table (Impact)"
+      },
+      "claim_text": "| Impact | Low. No registered hypothesis test is conditioned on these runs; no reported registered result changes. The disclosure closes the last thirteen unlicensed factor=level pairs in the execution→errata inverse census |",
+      "values": [
+        {
+          "quantity": "total count of UNLICENSED factor=level pairs closed by the disclosure",
+          "value_verbatim": "thirteen",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": "$.summary.UNLICENSED"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          63
+        ],
+        "section": "E62 — Framing"
+      },
+      "claim_text": "`osf/preregistration.md:491`. The three families recorded here are **additional,\nunregistered, serendipitous extensions of that same programme** — exploratory",
+      "values": [
+        {
+          "quantity": "count of unregistered study families recorded by E62",
+          "value_verbatim": "three families",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Repetition of the family count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          72
+        ],
+        "section": "E62 — How they surfaced"
+      },
+      "claim_text": "census triaged all 213 observed factor=level pairs against the 702-obligation\ncommitment ledger and all 61 existing errata. 200 pairs were licensed (43 by the\nregistration, 14 by an erratum, 143 by both); 13 were UNLICENSED",
+      "values": [
+        {
+          "quantity": "count of observed factor=level pairs triaged by the inverse census",
+          "value_verbatim": "213",
+          "value_parsed": 213,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.pairs",
+          "method": "read"
+        },
+        {
+          "quantity": "count of obligations in the commitment ledger",
+          "value_verbatim": "702",
+          "value_parsed": 702,
+          "unit": null,
+          "kind": "count",
+          "path": "results/commitments.json#len:$.commitments",
+          "method": "read"
+        },
+        {
+          "quantity": "count of existing errata entries in the errata licence register",
+          "value_verbatim": "61",
+          "value_parsed": 61,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/c2-census/errata-licence-register.json#len:$.entries",
+          "method": "read"
+        },
+        {
+          "quantity": "count of licensed factor=level pairs",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary.registration"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary.erratum"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary['registration+erratum']"
+            }
+          ]
+        },
+        {
+          "quantity": "count of pairs licensed by the registration alone",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.registration",
+          "method": "read"
+        },
+        {
+          "quantity": "count of pairs licensed by an erratum alone",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.erratum",
+          "method": "read"
+        },
+        {
+          "quantity": "count of pairs licensed by both registration and erratum",
+          "value_verbatim": "143",
+          "value_parsed": 143,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary['registration+erratum']",
+          "method": "read"
+        },
+        {
+          "quantity": "count of UNLICENSED factor=level pairs",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Instrument v1.2 amendment 1: the three operands of the 200 derivation each carry their own `read` path so they are not compared against the sum."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          75
+        ],
+        "section": "E62 — How they surfaced"
+      },
+      "claim_text": "(`reports/verification/c2-census/licence-census.json`, `summary`). Those 13 reduce to\nthree study families, five verifier-parameter levels, and five derivative\n`proposer_pool` slugs that are licensed at run level and carry no independent content.",
+      "values": [
+        {
+          "quantity": "count of UNLICENSED factor=level pairs",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": "read"
+        },
+        {
+          "quantity": "count of UNLICENSED study families",
+          "value_verbatim": "three study families",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of UNLICENSED verifier-parameter levels",
+          "value_verbatim": "five verifier-parameter",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of UNLICENSED derivative `proposer_pool` slugs",
+          "value_verbatim": "five derivative",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Sub-counts need prefix-filtered counts over the UNLICENSED pairs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "E62 — The three families (table row: flash35-pv-2x2)"
+      },
+      "claim_text": "| `flash35-pv-2x2` | `runs-manifest.json`: \"Model-role 2x2x2: is Flash 3.5 a better bare proposer, PV proposer, or verifier than Flash 3 at the minimal operating point? (The S110 parking note: bare proposer was the only angle a stronger model might win.)\" | 1 × `consensus`, 3 × `proposer-verifier` (4 citable conditions) | era-2-487 (487 tiles, 384 px, 4-map gold standard, curator ground truth) |",
+      "values": [
+        {
+          "quantity": "factorial design size of the flash35-pv-2x2 model-role comparison, as quoted from the runs manifest `purpose`",
+          "value_verbatim": "2x2x2",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "other",
+          "path": "$.runs[?(@.run_id=='flash35-pv-2x2')].purpose",
+          "method": "read"
+        },
+        {
+          "quantity": "count of `consensus` conditions in family flash35-pv-2x2",
+          "value_verbatim": "1 ×",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#$.decomposition['flash35-pv-2x2'].conditions[*].architecture (count where == 'consensus')",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of `proposer-verifier` conditions in family flash35-pv-2x2",
+          "value_verbatim": "3 ×",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#$.decomposition['flash35-pv-2x2'].conditions[*].architecture (count where == 'proposer-verifier')",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of citable conditions in family flash35-pv-2x2",
+          "value_verbatim": "4 citable conditions",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#len:$.decomposition['flash35-pv-2x2'].conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation tile count, era-2-487 scope of flash35-pv-2x2",
+          "value_verbatim": "487 tiles",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='flash35-pv-2x2')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, flash35-pv-2x2",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.runs[?(@.run_id=='flash35-pv-2x2')].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "map count of the gold-standard corpus used by flash35-pv-2x2",
+          "value_verbatim": "4-map gold standard",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='flash35-pv-2x2')].corpus",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Table row extracted whole (instrument rule 6). The purpose string is quoted verbatim from the manifest; the '2x2x2' design label sits inside that free-text field, so its path resolves to the string rather than a scalar. 'era-2-487' as a bare scope label is a name (rule 5); the parenthetical '487 tiles' is the claim. Session identifier S110 out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "E62 — The three families (table row: pv-diag-256)"
+      },
+      "claim_text": "| `pv-diag-256` | `runs-manifest.json` `purpose` is **`null`**. `run-conditions.json` `_note`: \"256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT) … 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79).\" | 1 × `single-pass`, 1 × `consensus`, 1 × `proposer-verifier` (3 citable conditions) | px256-1032 (1 032 tiles, 256 px, 4-map gold standard, curator ground truth) |",
+      "values": [
+        {
+          "quantity": "evaluation tile count, px256-1032 scope of pv-diag-256 (quoted from the run-conditions `_note`)",
+          "value_verbatim": "1032 tiles",
+          "value_parsed": 1032,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='pv-diag-256')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20m, 256 px tile-size level",
+          "value_verbatim": "0.46",
+          "value_parsed": 0.46,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1@20m, 512 px tile-size level",
+          "value_verbatim": "0.69",
+          "value_parsed": 0.69,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1@20m, 384 px tile-size level",
+          "value_verbatim": "0.79",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of `single-pass` conditions in family pv-diag-256",
+          "value_verbatim": "1 × `single-pass`",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#$.decomposition['pv-diag-256'].conditions[*].architecture (count where == 'single-pass')",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of `consensus` conditions in family pv-diag-256",
+          "value_verbatim": "1 × `consensus`",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#$.decomposition['pv-diag-256'].conditions[*].architecture (count where == 'consensus')",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of `proposer-verifier` conditions in family pv-diag-256",
+          "value_verbatim": "1 × `proposer-verifier`",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#$.decomposition['pv-diag-256'].conditions[*].architecture (count where == 'proposer-verifier')",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of citable conditions in family pv-diag-256",
+          "value_verbatim": "3 citable conditions",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#len:$.decomposition['pv-diag-256'].conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation tile count, px256-1032 scope",
+          "value_verbatim": "1 032 tiles",
+          "value_parsed": 1032,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='pv-diag-256')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, pv-diag-256",
+          "value_verbatim": "256 px",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.runs[?(@.run_id=='pv-diag-256')].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "map count of the gold-standard corpus used by pv-diag-256",
+          "value_verbatim": "4-map gold standard",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='pv-diag-256')].corpus",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Table row extracted whole. The quoted `_note` is attributed to `results/run-conditions.json` `$.decomposition['pv-diag-256']._note`; the three F1@20m figures (0.46 / 0.69 / 0.79) live inside that free-text string, so their numeric homes are the per-condition evaluation JSONs for the 256 px, 512 px and 384 px tile-size levels — not located at extraction, hence `anchor-unknown`. The tile-size labels in '256 < 512 < 384' are ordering names (rule 5). The claim that `pv-diag-256`'s manifest `purpose` is `null` is non-numeric and is not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "E62 — The three families (table row: verifier-robustness)"
+      },
+      "claim_text": "| `verifier-robustness` | `runs-manifest.json`: \"Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config.\" | 8 × `proposer-verifier` (8 citable conditions) | era-2-487, with one condition scope-overridden to px256-1032 |",
+      "values": [
+        {
+          "quantity": "determinism pass count vindicated in the verifier-robustness programme, as quoted from the runs manifest `purpose`",
+          "value_verbatim": "n=1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.runs[?(@.run_id=='verifier-robustness')].purpose",
+          "method": "read"
+        },
+        {
+          "quantity": "count of `proposer-verifier` conditions in family verifier-robustness",
+          "value_verbatim": "8 × `proposer-verifier`",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#len:$.decomposition['verifier-robustness'].conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "count of citable conditions in family verifier-robustness",
+          "value_verbatim": "8 citable conditions",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#len:$.decomposition['verifier-robustness'].conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier-robustness conditions whose scope is overridden to px256-1032",
+          "value_verbatim": "one condition scope-overridden",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Table row extracted whole. 'n=1' sits inside the quoted manifest `purpose` free-text field. The scope-override count needs a per-condition scan of `$.decomposition['verifier-robustness'].conditions` for a condition-level scope override."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          87
+        ],
+        "section": "E62 — The three families (closing note)"
+      },
+      "claim_text": "conditions[].architecture`. Every condition in all three families is either a PV\ncondition or a proposer-side baseline built to be compared against one — which is the",
+      "values": [
+        {
+          "quantity": "count of unregistered study families whose conditions are all PV or proposer-side baselines",
+          "value_verbatim": "all three families",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Repetition of the family count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          96
+        ],
+        "section": "E62 — Why each is an extension (item 1, flash35-pv-2x2)"
+      },
+      "claim_text": "   lodged model set is closed at four values — \"| Model | gemini-3-flash, gemini-3-pro,\n   claude-4.5-sonnet, gpt-5.2-thinking | H6, H14 | Overrides config file value |\"\n   (CMT-0591) and \"**Primary**: Gemini 3 Flash, Gemini 3 Pro\" (CMT-0377) — and admits no",
+      "values": [
+        {
+          "quantity": "count of model values in the lodged registration's closed model set",
+          "value_verbatim": "four values",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Instrument v1.1 calibration rule: this is a claim about what the REGISTRATION specifies (CMT-0591 / CMT-0377), so it anchors to the lodged preregistration with a null path, never to an executed config. Model version strings in the quoted table (gemini-3-flash, gemini-3-pro, claude-4.5-sonnet, gpt-5.2-thinking) are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          105
+        ],
+        "section": "E62 — Why each is an extension (item 1, headline_rationale)"
+      },
+      "claim_text": "   none — a model comparison, not a champion search: Flash 3.5 wins in NO role\n   (bare-proposer numerical tie 0.6196 vs 0.6204; PV proposer -0.0355, p=0.035 targeted\n   tile-swap — the one resolved role gap; verifier -0.012..-0.015, within-noise ties, at\n   3x the price). The all-Flash-3 production stack stands\").",
+      "values": [
+        {
+          "quantity": "F1, Flash 3.5 bare proposer, flash35-pv-2x2",
+          "value_verbatim": "0.6196",
+          "value_parsed": 0.6196,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1, Flash 3 bare proposer, flash35-pv-2x2",
+          "value_verbatim": "0.6204",
+          "value_parsed": 0.6204,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 delta, Flash 3.5 as PV proposer versus Flash 3",
+          "value_verbatim": "-0.0355",
+          "value_parsed": -0.0355,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "p-value, targeted tile-swap permutation test on the PV-proposer role gap",
+          "value_verbatim": "p=0.035",
+          "value_parsed": 0.035,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of resolved model-role gaps in flash35-pv-2x2",
+          "value_verbatim": "the one resolved role gap",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 delta range (upper end), Flash 3.5 as verifier",
+          "value_verbatim": "-0.012",
+          "value_parsed": -0.012,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 delta range (lower end), Flash 3.5 as verifier",
+          "value_verbatim": "-0.015",
+          "value_parsed": -0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "price multiplier, Flash 3.5 verifier versus Flash 3",
+          "value_verbatim": "3x",
+          "value_parsed": 3,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": "$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale"
+      },
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] All eight figures are quoted verbatim from the runs manifest's `headline_rationale` free-text string (the anchor path resolves to that string, not to scalars), so mechanical comparison would compare a number against prose. Their numeric homes are the flash35-pv-2x2 per-condition evaluation JSONs and the targeted tile-swap permutation output — not located at extraction. Triage to chase the chain. Version strings 'Flash 3.5' / 'Flash 3' out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          108
+        ],
+        "section": "E62 — Why each is an extension (item 2, registered H11)"
+      },
+      "claim_text": "   Registered H11 has exactly two conditions — \"| A | 512×512 | 1× (baseline) | 1× |\n   Lower |\" (CMT-0310) and \"| B | 384×384 | 0.56× | ~1.8× | Higher |\" (CMT-0311). The",
+      "values": [
+        {
+          "quantity": "count of conditions in the registered H11 tile-size hypothesis",
+          "value_verbatim": "exactly two conditions",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered tile size, H11 condition A",
+          "value_verbatim": "512×512",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered relative cost, H11 condition A (baseline)",
+          "value_verbatim": "1× (baseline)",
+          "value_parsed": 1,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered relative tile count, H11 condition A",
+          "value_verbatim": "| 1× |",
+          "value_parsed": 1,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered tile size, H11 condition B",
+          "value_verbatim": "384×384",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered relative cost, H11 condition B",
+          "value_verbatim": "0.56×",
+          "value_parsed": 0.56,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered relative tile count, H11 condition B",
+          "value_verbatim": "~1.8×",
+          "value_parsed": 1.8,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Instrument v1.1 calibration rule: registration-spec claims (CMT-0310 / CMT-0311) anchor to the lodged preregistration with a null path. Approx marker retained verbatim on '~1.8×' per v1.2 amendment 5. The composite tile dimensions are recorded with a null parsed value. The ordinal 'a third level' (line 106) was treated as out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          111
+        ],
+        "section": "E62 — Why each is an extension (item 2, registered pilot)"
+      },
+      "claim_text": "   \"Pilot testing at 256px confirmed high recall (0.90) but very low precision (0.10) at\n   2/5 consensus voting threshold, suggesting smaller tiles may over-detect\"",
+      "values": [
+        {
+          "quantity": "registered pilot tile size",
+          "value_verbatim": "256px",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered pilot recall at 256 px",
+          "value_verbatim": "0.90",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered pilot precision at 256 px",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered consensus voting threshold used in the 256 px pilot",
+          "value_verbatim": "2/5",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Instrument v1.1 calibration rule: values quoted from the lodged preregistration's §-level pilot discussion anchor to the lodged document with a null path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          115
+        ],
+        "section": "E62 — Why each is an extension (item 2, materialisation)"
+      },
+      "claim_text": "   passes were **not** materialised as `run_*` directories (only consensus outputs and\n   crops survive), so no per-pass metadata exists; the six consensus GeoJSONs were first",
+      "values": [
+        {
+          "quantity": "count of consensus GeoJSON files surviving on disk for pv-diag-256",
+          "value_verbatim": "six consensus GeoJSONs",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-256",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Needs a file-count sweep of consensus GeoJSONs under the pv-diag-256 output tree; no JSON scalar records it. Commit date and hash on the following line are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          124
+        ],
+        "section": "E62 — Why each is an extension (item 3, lodged verifier config)"
+      },
+      "claim_text": "   lodged verifier config fixes thinking at minimal: \"| `thinking_level` | `minimal` |\n   Calibrated via pilot; minimal achieves equivalent F1 to high at 1/3 latency (see",
+      "values": [
+        {
+          "quantity": "registered latency ratio of `minimal` thinking relative to `high`",
+          "value_verbatim": "1/3 latency",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Instrument v1.1 calibration rule: CMT-0605 is a registration-spec claim and anchors to the lodged preregistration with a null path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          129
+        ],
+        "section": "E62 — Why each is an extension (item 3, headline_rationale)"
+      },
+      "claim_text": "   negative (`runs-manifest.json`, verbatim): \"Deliberately none — NO new champion. The\n   carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands:\n   the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT\n   significant over it (paired tile-swap permutation p=0.363, …), so per the cost",
+      "values": [
+        {
+          "quantity": "F1@20m, carry-forward headline condition pv-diag-384::verified-adv-text-consensus-16of30",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, verifier-robustness operational maximum verified-384-16of30-t0-3-n5-opmax",
+          "value_verbatim": "0.8951",
+          "value_parsed": 0.8951,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "p-value, paired tile-swap permutation test of the operational maximum against the carry-forward headline",
+          "value_verbatim": "p=0.363",
+          "value_parsed": 0.363,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": "$.runs[?(@.run_id=='verifier-robustness')].headline_rationale"
+      },
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] Quoted verbatim from the runs manifest's `headline_rationale` free-text string; the anchor path resolves to that string rather than to scalars. Numeric homes are the pv-diag-384 and verifier-robustness per-condition evaluation JSONs and the paired tile-swap permutation output — not located at extraction. Condition-name numerals (16of30, 384, t0-3, n5) are names per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          136
+        ],
+        "section": "E62 — The five verifier-parameter levels (row: verifier_model)"
+      },
+      "claim_text": "| `verifier_model=gemini-3.5-flash` | 2 | `flash35-pv-2x2` | E3 resolves a registered model *name* to its API endpoint; it does not admit a new model generation |",
+      "values": [
+        {
+          "quantity": "observed sites for factor=level pair `verifier_model=gemini-3.5-flash`",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": "$.pairs[?(@.pair=='verifier_model=gemini-3.5-flash')].n_sites"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          137
+        ],
+        "section": "E62 — The five verifier-parameter levels (row: verifier_temperature=0.3)"
+      },
+      "claim_text": "| `verifier_temperature=0.3` | 4 | `verifier-robustness` | CMT-0590 registers 0.3 as a runtime temperature level, but hooked to **H7 detection** temperature; no commitment extends the H7 sweep to the verifier stage |",
+      "values": [
+        {
+          "quantity": "observed sites for factor=level pair `verifier_temperature=0.3`",
+          "value_verbatim": "| 4 |",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_temperature=0.3')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "registered runtime temperature level asserted to be registered by CMT-0590 (hooked to H7 detection temperature)",
+          "value_verbatim": "registers 0.3 as a runtime temperature level",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] The 0.3 limb is a registration-spec claim (CMT-0590): per the instrument v1.1 calibration rule it anchors to the lodged preregistration (`docs/methodology/preregistration/osf/preregistration.md`, path null), not to the census that anchors the site count, so it is flagged `anchor-unknown` rather than forced onto this claim's anchor file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          138
+        ],
+        "section": "E62 — The five verifier-parameter levels (row: verifier_temperature=0.7)"
+      },
+      "claim_text": "| `verifier_temperature=0.7` | 2 | `verifier-robustness` | as above; E55 licenses a verifier-temperature sweep only at 0.5/1.0, in `verifier-t-pilot` |",
+      "values": [
+        {
+          "quantity": "observed sites for factor=level pair `verifier_temperature=0.7`",
+          "value_verbatim": "| 2 |",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_temperature=0.7')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier-temperature levels licensed by E55 for `verifier-t-pilot`",
+          "value_verbatim": "0.5/1.0",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] The 0.5/1.0 limb is a claim about what erratum E55 licenses; its source is `docs/methodology/preregistration/protocol-errata.md` (E55), which is prose — rule 2 forbids anchoring prose to prose, so it is flagged for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "E62 — The five verifier-parameter levels (row: verifier_thinking_level=high)"
+      },
+      "claim_text": "| `verifier_thinking_level=high` | 3 | `verifier-robustness` (2), `pv-diag-384` (1) | E40 licenses HIGH only for `gemini-3.1-pro-preview` consensus runs; these sites run `gemini-3-flash-preview` |",
+      "values": [
+        {
+          "quantity": "observed sites for factor=level pair `verifier_thinking_level=high`",
+          "value_verbatim": "| 3 |",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=high')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "count of `verifier_thinking_level=high` sites in family verifier-robustness",
+          "value_verbatim": "`verifier-robustness` (2)",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of `verifier_thinking_level=high` sites in family pv-diag-384",
+          "value_verbatim": "`pv-diag-384` (1)",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] The per-family breakdown is not a census scalar; it needs a grouped count over `reports/verification/c2-census/observed-factor-levels.json`. Model version string 'gemini-3.1-pro-preview' out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "E62 — The five verifier-parameter levels (row: verifier_thinking_level=medium)"
+      },
+      "claim_text": "| `verifier_thinking_level=medium` | 13 | **`pv-diag-384` only** | as above — E40's MEDIUM licence is for single-pass **Pro** experiments |",
+      "values": [
+        {
+          "quantity": "observed sites for factor=level pair `verifier_thinking_level=medium`",
+          "value_verbatim": "| 13 |",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": "$.pairs[?(@.pair=='verifier_thinking_level=medium')].n_sites"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          145
+        ],
+        "section": "E62 — The five derivative proposer_pool slugs"
+      },
+      "claim_text": "The five derivative `proposer_pool` slugs (`f3-min-text-1of10`,\n`flash35-min-text-1of10`, `text`, `text-1of5`, `text-consensus-5of5`) are per-study\npool identifiers with no independent experimental content; they are licensed at run\nlevel and are disclosed here only so the census's thirteen are fully accounted for.",
+      "values": [
+        {
+          "quantity": "count of UNLICENSED derivative `proposer_pool` slugs",
+          "value_verbatim": "The five derivative",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total count of UNLICENSED factor=level pairs in the census",
+          "value_verbatim": "thirteen",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Numerals inside the slug names (1of10, 1of5, 5of5) are names per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          154
+        ],
+        "section": "E62 — Protocol impact"
+      },
+      "claim_text": "**Protocol impact**: none on registered results. All three families are exploratory\nextensions of the registered H2 Condition-B architecture; none is cited as evidence for\na registered hypothesis; two of the three report deliberately null headlines, and the",
+      "values": [
+        {
+          "quantity": "count of unregistered study families that are exploratory extensions",
+          "value_verbatim": "All three families",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of the three families reporting deliberately null headlines",
+          "value_verbatim": "two of the three",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] The 'two of the three' count needs a null-check over `results/runs-manifest.json` `$.runs[...].headline_condition_id` / `headline_rationale` for the three families; the denominator is the census family count. Prospective claim 'the paper's deviations table gains one row' (line 157) left as not-yet-checkable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          156
+        ],
+        "section": "E62 — Protocol impact"
+      },
+      "claim_text": "third (`pv-diag-256`) contributes only the low anchor of a tile-size curve whose two\nregistered levels (512 px, 384 px) are unaffected. Reporting requirement: the paper's",
+      "values": [
+        {
+          "quantity": "count of registered H11 tile-size levels",
+          "value_verbatim": "whose two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered H11 tile size, condition A",
+          "value_verbatim": "512 px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered H11 tile size, condition B",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Instrument v1.1 calibration rule: registered-level claims anchor to the lodged preregistration with a null path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          160
+        ],
+        "section": "E62 — Cross-references"
+      },
+      "claim_text": "exercised), E39 (verifier strategy not load-bearing), E40 (Pro thinking levels), E41\n(384 px / 487-tile evaluation scope), E55 (verifier-temperature pilot), E56 (in-sample",
+      "values": [
+        {
+          "quantity": "tile size of the E41 evaluation scope",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.runs[?(@.run_id=='pv-diag-384')].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation tile count of the E41 (era-2-487) scope",
+          "value_verbatim": "487-tile",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Parenthetical gloss on erratum E41; per rule 5 a number used both as a name and as an asserted fact ('487-tile evaluation scope') is a claim. Erratum identifiers out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "E63 — field table (Files)"
+      },
+      "claim_text": "| Files | `studies/phase3c-h9-diversity-track1.yaml`, `studies/phase3c-h9-diversity-track2.yaml`; `prompts/configs/phase3c-t{1,2}-*.json` (22 configs); `outputs/retest/phase3c/**/*.meta.json` (225 files) |",
+      "values": [
+        {
+          "quantity": "count of `phase3c` prompt config JSON files",
+          "value_verbatim": "(22 configs)",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": "len: prompts/configs/phase3c-t{1,2}-*.json",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of `phase3c` per-pass meta files",
+          "value_verbatim": "(225 files)",
+          "value_parsed": 225,
+          "unit": null,
+          "kind": "count",
+          "path": "len: outputs/retest/phase3c/**/*.meta.json",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Both are glob file counts, not JSON scalars; the second counts under `outputs/retest/phase3c/` rather than the anchor directory. Non-JSON anchors are expected per instrument v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          178
+        ],
+        "section": "E63 — The registered commitment"
+      },
+      "claim_text": "**The registered commitment**: §8.9 calibrates thinking level on a 20-tile, K=10 pilot\nand concludes, verbatim, \"**Decision:** Use `thinking_level=minimal` for main",
+      "values": [
+        {
+          "quantity": "registered thinking-level calibration pilot tile count",
+          "value_verbatim": "20-tile",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered thinking-level calibration pilot pool size",
+          "value_verbatim": "K=10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Instrument v1.1 calibration rule: §8.9 pilot parameters are registration-spec claims and anchor to the lodged preregistration with a null path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          180,
+          181
+        ],
+        "section": "E63 — The registered commitment"
+      },
+      "claim_text": "\"| `thinking_level` | `minimal` | Calibrated via pilot; minimal achieves equivalent F1\nto high at 1/3 latency (see §8.9) |\" (CMT-0605). No erratum names `phase3c`.",
+      "values": [
+        {
+          "quantity": "registered latency ratio of `minimal` thinking relative to `high` (CMT-0605)",
+          "value_verbatim": "1/3 latency",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Instrument v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          183,
+          183
+        ],
+        "section": "E63 — What was executed"
+      },
+      "claim_text": "**What was executed**: all 22 `phase3c` prompt configs and both study YAMLs set HIGH",
+      "values": [
+        {
+          "quantity": "count of `phase3c` prompt configs setting HIGH thinking",
+          "value_verbatim": "all 22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Glob count over `prompts/configs/phase3c-t*.json` with a `thinking_level == \"high\"` check."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          184,
+          185
+        ],
+        "section": "E63 — What was executed"
+      },
+      "claim_text": "thinking. Both YAMLs state, verbatim and identically, \"All conditions use HIGH thinking\nlevel. Temperature is fixed at T=0.7\" (`studies/phase3c-h9-diversity-track1.yaml:40`;",
+      "values": [
+        {
+          "quantity": "temperature declared for all phase3c conditions in the study YAMLs",
+          "value_verbatim": "T=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase3c-h9-diversity-track1.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b055] Claim about what was RUN (not what was registered), so it anchors to the executed study YAML per the v1.1 calibration rule's converse. Non-JSON (YAML) anchor; line-number citations out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          191
+        ],
+        "section": "E63 — What was executed"
+      },
+      "claim_text": "`phase3c` API execution timestamp is **2026-03-18** — the declaration therefore\npre-dates execution by 11 days and cannot be a post-hoc reconstruction. Execution ran",
+      "values": [
+        {
+          "quantity": "interval between the phase3c config/YAML commit and the first phase3c API execution",
+          "value_verbatim": "11 days",
+          "value_parsed": 11,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] Derived from two dates (2026-03-07 commit, 2026-03-18 first execution); dates themselves are out of C4 scope per rule 5, so the derived interval has no in-scope operands. Recorded with the doubt flagged rather than dropped."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          192,
+          192
+        ],
+        "section": "E63 — What was executed"
+      },
+      "claim_text": "2026-03-18 to 2026-03-25 across 225 passes.",
+      "values": [
+        {
+          "quantity": "count of `phase3c` execution passes",
+          "value_verbatim": "225 passes",
+          "value_parsed": 225,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] File/directory count sweep over the phase3c output tree."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          196
+        ],
+        "section": "E63 — Verification caveat"
+      },
+      "claim_text": "**Verification caveat (recorded at the PI's explicit mis-recording warning)**: all 225\n`phase3c` meta files record `configuration.thinking_level: \"high\"` — a mechanical count,\n225/225, zero exceptions. **But the retest-era pipeline left `usage_stats` wholesale",
+      "values": [
+        {
+          "quantity": "count of `phase3c` meta files",
+          "value_verbatim": "all 225",
+          "value_parsed": 225,
+          "unit": null,
+          "kind": "count",
+          "path": "len: outputs/retest/phase3c/**/*.meta.json",
+          "method": null
+        },
+        {
+          "quantity": "count of `phase3c` metas recording `configuration.thinking_level: \"high\"`, over the total",
+          "value_verbatim": "225/225",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.thinking_level across outputs/retest/phase3c/**/*.meta.json",
+          "method": null
+        },
+        {
+          "quantity": "count of `phase3c` metas not recording HIGH thinking",
+          "value_verbatim": "zero exceptions",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.thinking_level across outputs/retest/phase3c/**/*.meta.json",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Needs a sweep of `$.configuration.thinking_level` across every meta under the phase3c tree; no single scalar holds the 225/225 tally."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          197,
+          200
+        ],
+        "section": "E63 — Verification caveat"
+      },
+      "claim_text": "unpopulated**, so token-level corroboration is unavailable. Every one of the 225 metas\ncarries `usage_stats` with `total_tokens: 0`, `total_thoughts_tokens: 0`, and every\nother counter at zero; the sibling `retest/phase3a` (180 metas, all `minimal`) and\n`retest/phase3a-high` (90 metas, all `high`) directories are identically empty. The",
+      "values": [
+        {
+          "quantity": "count of `phase3c` metas",
+          "value_verbatim": "the 225 metas",
+          "value_parsed": 225,
+          "unit": null,
+          "kind": "count",
+          "path": "len: outputs/retest/phase3c/**/*.meta.json",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total tokens recorded in phase3c `usage_stats`",
+          "value_verbatim": "`total_tokens: 0`",
+          "value_parsed": 0,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "unverifiable-era"
+        },
+        {
+          "quantity": "total thoughts tokens recorded in phase3c `usage_stats`",
+          "value_verbatim": "`total_thoughts_tokens: 0`",
+          "value_parsed": 0,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "unverifiable-era"
+        },
+        {
+          "quantity": "count of `retest/phase3a` metas",
+          "value_verbatim": "(180 metas",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": "len: outputs/retest/phase3a/**/*.meta.json",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of `retest/phase3a-high` metas",
+          "value_verbatim": "(90 metas",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": "len: outputs/retest/phase3a-high/**/*.meta.json",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] The two zero-token assertions are retest-era (phase2a–3c) token/usage claims and are flagged `unverifiable-era` per instrument rule 3 — note that here the document asserts the ABSENCE itself, which is the same condition the era map describes. Retest-era file counts remain verifiable and are recorded as recompute-script sweeps."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          203
+        ],
+        "section": "E63 — Verification caveat (known-HIGH comparison)"
+      },
+      "claim_text": "thoughts tokens** (e.g. `outputs/55maps-text-high-generalisation/` passes record\n45.7–46.4 M `total_thoughts_tokens`; `outputs/gs/` passes record 1.3–2.7 M) and",
+      "values": [
+        {
+          "quantity": "total thoughts tokens per pass, lower bound, 55maps-text-high-generalisation",
+          "value_verbatim": "45.7",
+          "value_parsed": 45.7,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "min of $.usage_stats.total_thoughts_tokens across outputs/55maps-text-high-generalisation/**/run.meta.json",
+          "method": null
+        },
+        {
+          "quantity": "total thoughts tokens per pass, upper bound, 55maps-text-high-generalisation",
+          "value_verbatim": "46.4",
+          "value_parsed": 46.4,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "max of $.usage_stats.total_thoughts_tokens across outputs/55maps-text-high-generalisation/**/run.meta.json",
+          "method": null
+        },
+        {
+          "quantity": "total thoughts tokens per pass, lower bound, gs runs",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "min of $.usage_stats.total_thoughts_tokens across outputs/gs/**/run.meta.json",
+          "method": null
+        },
+        {
+          "quantity": "total thoughts tokens per pass, upper bound, gs runs",
+          "value_verbatim": "2.7",
+          "value_parsed": 2.7,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "max of $.usage_stats.total_thoughts_tokens across outputs/gs/**/run.meta.json",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Ranges: per instrument v1.2 amendment 6 every value carries the shared 'M tokens' unit so the harness can bridge scales. These are NOT retest-era runs, so the token claims are verifiable; each bound needs a min/max sweep across the pass metas. The last two values live under `outputs/gs/`, not the anchor directory."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          205
+        ],
+        "section": "E63 — Verification caveat (known-minimal comparison)"
+      },
+      "claim_text": "**known-minimal runs show zero thoughts tokens against a non-zero total** (e.g.\n`outputs/gs/**/run.meta.json`: `total_thoughts_tokens: 0`, `total_tokens: 21633`).",
+      "values": [
+        {
+          "quantity": "total thoughts tokens, an example minimal-thinking gs pass",
+          "value_verbatim": "`total_thoughts_tokens: 0`",
+          "value_parsed": 0,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": "$.usage_stats.total_thoughts_tokens",
+          "method": null
+        },
+        {
+          "quantity": "total tokens, the same minimal-thinking gs pass",
+          "value_verbatim": "`total_tokens: 21633`",
+          "value_parsed": 21633,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": "$.usage_stats.total_tokens",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/gs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] The document cites a glob (`outputs/gs/**/run.meta.json`) rather than a single pass, so the exact meta is not identified; a sweep is needed to confirm a pass matching both figures exists. Not a retest-era run, so the token figures are verifiable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          211
+        ],
+        "section": "E63 — What can be established structurally"
+      },
+      "claim_text": "**What can be established structurally** (defence search, charter rule 13). Three\nindependent facts narrow the gap without closing it:",
+      "values": [
+        {
+          "quantity": "count of independent structural facts enumerated",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] Self-referential count of the list items that follow in this prose draft; rule 2 forbids anchoring prose to prose. 'charter rule 13' is an identifier and out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          214
+        ],
+        "section": "E63 — What can be established structurally (item 1)"
+      },
+      "claim_text": "1. **No CLI override was in play.** `thinking_level` is set in the 22 config JSONs\n   themselves (22/22 `\"high\"`), not passed as a runtime flag. E42's failure mode — meta",
+      "values": [
+        {
+          "quantity": "count of `phase3c` config JSONs setting `thinking_level` internally",
+          "value_verbatim": "the 22 config JSONs",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": "len: prompts/configs/phase3c-t{1,2}-*.json",
+          "method": null
+        },
+        {
+          "quantity": "count of `phase3c` configs recording `\"high\"`, over the total",
+          "value_verbatim": "22/22",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": "$.thinking_level across prompts/configs/phase3c-t{1,2}-*.json",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Glob count plus a per-file `thinking_level` sweep."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          224,
+          225
+        ],
+        "section": "E63 — What can be established structurally (item 3)"
+      },
+      "claim_text": "   `run_phase2.py` — landed 2026-03-15 (`5d7260335`), three days before `phase3c`\n   execution began; and Decision 20 (2026-03-15) had just established the mitigation",
+      "values": [
+        {
+          "quantity": "interval between the E34 propagation fix landing and the start of phase3c execution",
+          "value_verbatim": "three days",
+          "value_parsed": 3,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] Derived from two dates (2026-03-15 fix, 2026-03-18 execution start); dates are out of C4 scope per rule 5, so the derived interval has no in-scope operands. Recorded with the doubt flagged."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          237,
+          239
+        ],
+        "section": "E63 — Aggravator (Obs 140)"
+      },
+      "claim_text": "\"HIGH thinking consensus outperforms MINIMAL thinking consensus by +6.8 percentage\npoints on F1\", by a mechanism Obs 140 names explicitly — \"At N=30, HIGH thinking\nproduces 3–4× more detection clusters than MINIMAL\" — and concludes \"Thinking level",
+      "values": [
+        {
+          "quantity": "F1 uplift of HIGH-thinking consensus over MINIMAL-thinking consensus",
+          "value_verbatim": "+6.8 percentage",
+          "value_parsed": 6.8,
+          "unit": "percentage points",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size at which the cluster-count comparison was made",
+          "value_verbatim": "N=30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "detection-cluster multiplier, HIGH versus MINIMAL thinking at N=30 (range)",
+          "value_verbatim": "3–4×",
+          "value_parsed": null,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] All three figures are quoted from Obs 140 in `docs/notes/working-notes.md`, which is prose — instrument rule 2 forbids anchoring prose to prose, so triage must chase the chain to the underlying HIGH/MINIMAL consensus evaluations. Line-number citation and the Obs identifier are out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          251,
+          253
+        ],
+        "section": "E63 — Mitigating scope"
+      },
+      "claim_text": "H9 — both tracks, all five track-1 conditions (h9-A through h9-E) and all four track-2\nconditions (h9-A, h9-B, h9-D, h9-E; h9-C image diversity is degenerate for the text-only\ntrack), across all 225 passes. No H9 contrast is between a HIGH condition and a minimal",
+      "values": [
+        {
+          "quantity": "count of track-1 H9 conditions",
+          "value_verbatim": "all five track-1 conditions",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "count of track-1 conditions in $.decomposition['retest-phase3c'].conditions",
+          "method": null
+        },
+        {
+          "quantity": "count of track-2 H9 conditions",
+          "value_verbatim": "all four track-2",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "count of track-2 conditions in $.decomposition['retest-phase3c'].conditions",
+          "method": null
+        },
+        {
+          "quantity": "count of `phase3c` execution passes",
+          "value_verbatim": "all 225 passes",
+          "value_parsed": 225,
+          "unit": null,
+          "kind": "count",
+          "path": "len: outputs/retest/phase3c/**/*.meta.json",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b055] Track-level condition counts need a per-track split of the retest-phase3c decomposition (or of the two study YAMLs); the pass count is a file-count sweep under `outputs/retest/phase3c/`. Condition identifiers (h9-A … h9-E) are names."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          255,
+          257
+        ],
+        "section": "E63 — Mitigating scope"
+      },
+      "claim_text": "verification campaign's finding 9 records that of the 41 configs originally flagged for\nunlicensed HIGH thinking, **17 were already licensed by name** (E49, E51, E52, E53,\nDecision 20); the residue this erratum addresses is the **22 `phase3c` configs**.",
+      "values": [
+        {
+          "quantity": "count of configs originally flagged for unlicensed HIGH thinking by the verification campaign's finding 9",
+          "value_verbatim": "41 configs",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of those configs already licensed by name",
+          "value_verbatim": "**17 were already licensed by name**",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of residue `phase3c` configs this erratum addresses",
+          "value_verbatim": "**22 `phase3c` configs**",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": "len: prompts/configs/phase3c-t{1,2}-*.json",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] The 41 and 17 come from finding 9 of the verification campaign, whose visible source is `reports/verification/phase1-gate-package.md` (prose) — rule 2 forbids anchoring prose to prose, so triage must chase the chain. The 22 is a glob count over the phase3c configs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          265,
+          266
+        ],
+        "section": "E63 — Protocol impact"
+      },
+      "claim_text": "The H9 result must be reported with two riders: (a) the runs were executed at HIGH\nthinking, not the registered `minimal`; (b) HIGH thinking is itself a diversity",
+      "values": [
+        {
+          "quantity": "count of riders required when reporting the H9 result",
+          "value_verbatim": "two riders",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b055] Self-referential count of the (a)/(b) riders enumerated in this prose draft; rule 2 forbids anchoring prose to prose."
+    }
+  ]
+}

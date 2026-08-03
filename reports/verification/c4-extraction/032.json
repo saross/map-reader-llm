@@ -1,0 +1,4370 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/configuration-audit-2026-03-25.md",
+    "git_blob": "60103a88fe7f",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          9
+        ],
+        "section": "Executive Summary"
+      },
+      "claim_text": "Audited **1,740 runs** across **239 conditions**.",
+      "values": [
+        {
+          "quantity": "run count audited, all production runs across outputs/h11/, outputs/phase*, outputs/retest/",
+          "value_verbatim": "1,740",
+          "value_parsed": 1740,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "condition count audited, same scope",
+          "value_verbatim": "239",
+          "value_parsed": 239,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b032] Batch b032 covers reports/configuration-audit-2026-03-25.md lines 1-112 only; the Grand Totals table (H3 at line 114, rows 118-122) begins after line 112 and is left to the later batch. This is the superseded v1 audit of 2026-03-25 — claims are extracted as v1 asserts them; no correction from any v2 document is imported, and nothing in this range is marked superseded in-body, so no value in this file is method 'historical'. Out-of-scope per instrument rule 5 throughout: the 'gemini-3-flash' model string, instruction-hash prefixes (e169b723...), tile-size tokens inside condition and study-YAML names (384, 256, 512, n5, n10, n30, t07), erratum ids (E40, E42) and session numbers. Anchor-unknown here: no committed artefact aggregates run and condition counts across the audit's whole scope — results/passes-manifest.json (len:$.passes) covers only the h11 and retest strata, and results/conditions-manifest.json likewise; the Phase 1-2 and Phase 3 'original' trees are not in results/*-manifest.json at all. Verification needs a directory walk over outputs/h11/, archive/outputs-pre-retest-60-tile/phase*/ and outputs/retest/phase*/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          11
+        ],
+        "section": "Executive Summary"
+      },
+      "claim_text": "Found **2 confirmed temperature\npropagation failures** (40 runs), **1 known label mislabelling** (180 runs), and\n**6 incomplete runs** (JSONL submitted but no results).",
+      "values": [
+        {
+          "quantity": "count of confirmed temperature propagation failures",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count affected by temperature propagation failures",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of known label mislabelling incidents",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "run count affected by label mislabelling",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of incomplete runs (JSONL submitted, no results)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Finding counts asserted by the audit itself; no committed artefact enumerates them. The affected-run totals are restated with their attributions at lines 19-21, where anchors are proposed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          18
+        ],
+        "section": "Executive Summary > Severity summary"
+      },
+      "claim_text": "- CRITICAL: 0 new (E42 already remediated by Session 57 rename)",
+      "values": [
+        {
+          "quantity": "count of new CRITICAL discrepancies found by this audit",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'E42' is an erratum identifier and 'Session 57' a session number — both out of C4 scope per instrument rule 5. The zero itself is an assertion about this audit's own findings; no artefact records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "Executive Summary > Severity summary"
+      },
+      "claim_text": "- HIGH: 40 runs with temperature propagation failures (consensus-384 and single-pass-384)",
+      "values": [
+        {
+          "quantity": "run count with temperature propagation failures (consensus-384 plus single-pass-384)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
+              "path": "$.runs_per_condition"
+            },
+            {
+              "name": "b",
+              "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The span names its own two constituents (consensus-384, single-pass-384), so the derivation is the sum of their study manifests' runs_per_condition (both are single-condition studies). Both directories carry the later '-UNINTENDED-T1.0' suffix in the working tree; the audit predates that rename. '384' in the condition names is a name, not a claim (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "Executive Summary > Severity summary"
+      },
+      "claim_text": "- WARNING: 180 runs with misleading directory labels (Phase 3a \"-high\" dirs)",
+      "values": [
+        {
+          "quantity": "run count with misleading directory labels, Phase 3a '-high' directories",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a * b) + (c * d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+              "path": "$.runs_per_condition"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "d",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The span names the Phase 3a '-high' directories; the two such tracks are track1-image-high and track2-text-high, archived under archive/outputs-pre-retest-60-tile/phase3a/ (outputs/phase3a no longer exists in the working tree). Proposed derivation is conditions x runs_per_condition summed over both tracks. '3a' is a phase label, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "Executive Summary > Severity summary"
+      },
+      "claim_text": "- INFO: 265 runs missing thinking_level/instruction_hash fields (older Phase 1-2 runs)",
+      "values": [
+        {
+          "quantity": "run count missing thinking_level/instruction_hash fields in run metadata",
+          "value_verbatim": "265",
+          "value_parsed": 265,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Requires a scan of $.configuration.thinking_level / $.configuration.system_instruction_hash across every run meta under archive/outputs-pre-retest-60-tile/phase1-library/ and phase2*/ — no committed artefact aggregates the absence count. Looked for a field-completeness summary in results/passes-manifest.json and results/runs-manifest.json; neither records missing-field counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/text-baseline | 1 | h11-384-pv-diag-text-baseline.yaml | detect_brief-text.json | gemini-3-flash | 0.0 | minimal | e169b723... | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/text-baseline/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/text-baseline-611tiles | 1 | — | detect_brief-text.json | gemini-3-flash | 0.0 | minimal | e169b723... | 1/1 |",
+      "values": [
+        {
+          "quantity": "tile count processed, pv-diag-384 text-baseline-611tiles run",
+          "value_verbatim": "611",
+          "value_parsed": 611,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/text-baseline-611tiles/text-t0.0/run_1/detections_text-t0.0_run01.meta.json#$.execution_stats.items_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/text-baseline-611tiles/text-t0.0/run_1/detections_text-t0.0_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/text-baseline-611tiles/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3). DOUBT FLAGGED: '611' appears only inside the condition/directory name 'text-baseline-611tiles'. Instrument rule 5 excludes numbers inside condition names, but this one is also the only assertion of the run's tile count on the row (the '487-tile Era 2 corpus' pattern), so it is included as a claim rather than pruned. Triage may drop it as a pure name."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/text-n10 | 10 | h11-384-pv-diag-text-n10.yaml | detect_brief-text.json | gemini-3-flash | 0.7 | minimal | e169b723... | 10/10 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_1/detections_text-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/text-n10/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/image-baseline | 1 | h11-384-pv-diag-image-baseline.yaml | library_plus-hp.json | gemini-3-flash | 0.0 | minimal | e169b723... | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/image-baseline/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/image-n5 | 10 | h11-384-pv-diag-image-n5.yaml | library_plus-hp.json | gemini-3-flash | 0.7 | minimal | e169b723... | 10/10 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/image-n5/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-high-text-n5 | 30 | h11-384-flash-high-text-n5.yaml | detect_brief-text.json | gemini-3-flash | 0.7 | high | e169b723... | 30/30 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-high-text-n5-b | 5 | h11-384-flash-high-text-n5-b.yaml | detect_brief-text.json | gemini-3-flash | 0.7 | high | e169b723... | 5/5 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/pv-diag-384/flash-high-text-n5-b is not present in the working tree (the sibling flash-high-text-n5 is), so no study manifest or run meta could be located for this row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-high-image-n5 | 10 | h11-384-flash-high-image-n5.yaml | library_plus-hp.json | gemini-3-flash | 0.7 | high | e169b723... | 10/10 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-high-image-n5-b | 5 | h11-384-flash-high-image-n5-b.yaml | library_plus-hp.json | gemini-3-flash | 0.7 | high | e169b723... | 5/5 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/pv-diag-384/flash-high-image-n5-b is not present in the working tree (the sibling flash-high-image-n5 is), so no study manifest or run meta could be located for this row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-medium-text-baseline | 1 | h11-384-flash-medium-text-baseline.yaml | detect_brief-text.json | gemini-3-flash | 0.0 | medium | e169b723... | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/pv-diag-384/flash-medium-text-baseline is not present in the working tree; the only medium-thinking text baseline directory under pv-diag-384 is pro-medium-text-baseline. Not adjudicating the mapping — flagging that the named directory could not be located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-medium-image-baseline | 1 | h11-384-flash-medium-image-baseline.yaml | library_plus-hp.json | gemini-3-flash | 0.0 | medium | e169b723... | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/pv-diag-384/flash-medium-image-baseline is not present in the working tree; the only medium-thinking image baseline directory under pv-diag-384 is pro-medium-image-baseline. Not adjudicating the mapping."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-384/flash-minimal-text-n30-t07 | 30 | h11-384-flash-minimal-text-n30-t07.yaml | detect_brief-text.json | gemini-3-flash | 0.7 | minimal | e169b723... | 30/30 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| consensus-384 | 30 | h11-384-consensus.yaml | detect_brief-text.json | gemini-3-flash | **1.0** | minimal | e169b723... | 0/30 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| single-pass-384 | 10 | h11-384-single-pass.yaml | detect_brief-text.json | gemini-3-flash | **1.0** | minimal | e169b723... | 0/10 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Runs and the JSONL denominator anchor to the condition's study manifest ($.runs_per_condition; the study is single-condition). Temperature anchors to the run_1 meta of the matching temperature sub-directory. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method rather than falling back to the anchor path (instrument v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-256/text-baseline | 1 | h11-256-pv-diag-text-baseline.yaml | detect_brief-text.json | gemini-3-flash | 0.0 | minimal | — | 1/1 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/pv-diag-256 contains only consensus/ and crops/ in the working tree — no per-run directories, study manifest or run metas survive for the 256 px proposer runs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| pv-diag-256/text-n5 | 5 | h11-256-pv-diag-text-n5.yaml | detect_brief-text.json | gemini-3-flash | 0.7 | minimal | — | 5/5 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/pv-diag-256 contains only consensus/ and crops/ in the working tree — no per-run directories, study manifest or run metas survive for the 256 px proposer runs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| proposer-verifier-384 | 15 | h11-384-proposer-verifier.yaml | mixed (verifiers) | gemini-3-flash | 0.0 | minimal | mixed | 0/15 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/proposer-verifier-384/verified-adversarial-text.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No study manifest exists under outputs/h11/proposer-verifier-384/ or outputs/h11/proposer-verifier-512/, so the run and JSONL counts (which the row records as verifier passes) have no committed locator; the temperature anchors to one of the row's verifier metas. The row's Config JSON cell reads 'mixed (verifiers)' and its hash cell 'mixed', so no single config decides the whole row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Proposer Runs"
+      },
+      "claim_text": "| proposer-verifier-512 | 2 | h11-384-proposer-verifier.yaml | mixed (verifiers) | gemini-3-flash | 0.0 | minimal | — | 0/2 |",
+      "values": [
+        {
+          "quantity": "run count, H11 proposer condition on this row",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperature as run, H11 proposer condition on this row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/proposer-verifier-512/verified-adversarial-text.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-512/verified-adversarial-text.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No study manifest exists under outputs/h11/proposer-verifier-384/ or outputs/h11/proposer-verifier-512/, so the run and JSONL counts (which the row records as verifier passes) have no committed locator; the temperature anchors to one of the row's verifier metas. The row's Config JSON cell reads 'mixed (verifiers)' and its hash cell 'mixed', so no single config decides the whole row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| text-baseline | 1 | gemini-3-flash | 0.0 | minimal | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/text-baseline/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/text-baseline/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| text-{1..5}of5 | 5 | gemini-3-flash | 0.0 | minimal | 0/5 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/text-2of5/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/text-2of5/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json. This row asserts five verifier runs text-1of5..text-5of5; verified/text-1of5 is absent from the working tree, so the temperature anchor uses the member directory verified/text-2of5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          56
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| text-{1..10}of10 | 10 | gemini-3-flash | 0.0 | minimal | 0/10 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/text-1of10/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/text-1of10/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| image-baseline | 1 | gemini-3-flash | 0.0 | minimal | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/image-baseline/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/image-baseline/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| image-{1..5}of5 | 5 | gemini-3-flash | 0.0 | minimal | 0/5 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/image-1of5/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/image-1of5/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| image-1of10 | 1 | gemini-3-flash | 0.0 | minimal | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/image-1of10/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/image-1of10/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-high-text-1of5 | 1 | gemini-3-flash | 0.0 | minimal | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-high-text-b-1of5 | 1 | gemini-3-flash | 0.0 | medium | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No directory of this name exists under outputs/h11/pv-diag-384/verified/ in the working tree, so neither the run count nor the temperature could be anchored. Directories present with adjacent names are listed in the sibling rows; not adjudicating any mapping."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-medium-text-medium-verifier | 1 | gemini-3-flash | 0.0 | medium | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No directory of this name exists under outputs/h11/pv-diag-384/verified/ in the working tree, so neither the run count nor the temperature could be anchored. Directories present with adjacent names are listed in the sibling rows; not adjudicating any mapping."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-medium-text-minimal-verifier | 1 | gemini-3-flash | 0.0 | minimal | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No directory of this name exists under outputs/h11/pv-diag-384/verified/ in the working tree, so neither the run count nor the temperature could be anchored. Directories present with adjacent names are listed in the sibling rows; not adjudicating any mapping."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-medium-image-medium-verifier | 1 | gemini-3-flash | 0.0 | medium | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No directory of this name exists under outputs/h11/pv-diag-384/verified/ in the working tree, so neither the run count nor the temperature could be anchored. Directories present with adjacent names are listed in the sibling rows; not adjudicating any mapping."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-medium-image-minimal-verifier | 1 | gemini-3-flash | 0.0 | minimal | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No directory of this name exists under outputs/h11/pv-diag-384/verified/ in the working tree, so neither the run count nor the temperature could be anchored. Directories present with adjacent names are listed in the sibling rows; not adjudicating any mapping."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-minimal-text-medium-verifier | 1 | gemini-3-flash | 0.0 | medium | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/flash-minimal-text-medium-verifier/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-minimal-text-medium-verifier/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-384/verified/)"
+      },
+      "claim_text": "| flash-minimal-image-medium-verifier | 1 | gemini-3-flash | 0.0 | medium | 0/1 |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier temperature as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/flash-minimal-image-medium-verifier/run.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total verifier run count in the JSONL denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-minimal-image-medium-verifier/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The Runs cell counts verifier run directories under outputs/h11/pv-diag-384/verified/ — a filesystem count with no committed JSON locator, so it and the JSONL cells take explicit anchor-unknown methods (instrument v1.2 amendment 3). Temperature anchors to the row's verifier run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-256/verified/)"
+      },
+      "claim_text": "| text-baseline | 1 | gemini-3-flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row, 256 px",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier temperature as run, 256 px",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/pv-diag-256 holds only consensus/ and crops/ in the working tree; there is no verified/ sub-tree, so neither the run count nor the verifier temperature could be anchored. This table has no JSONL column."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "Section 1: Run Inventory Summary > H11 Verifier Runs (pv-diag-256/verified/)"
+      },
+      "claim_text": "| text-{1..5}of5 | 5 | gemini-3-flash | 0.0 | minimal |",
+      "values": [
+        {
+          "quantity": "verifier run count for this row, 256 px",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier temperature as run, 256 px",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/pv-diag-256 holds only consensus/ and crops/ in the working tree; there is no verified/ sub-tree, so neither the run count nor the verifier temperature could be anchored. This table has no JSONL column."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 1-2 Original Runs"
+      },
+      "claim_text": "| phase1-library | 1 | 5 | gemini-3-flash | 0.0 | MISSING | 0/5 |",
+      "values": [
+        {
+          "quantity": "condition count, phase1-library original runs",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "run count, phase1-library original runs",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperature as run, phase1-library original runs",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "archive/outputs-pre-retest-60-tile/phase1-library/pass_01/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase1-library/pass_01/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "archive/outputs-pre-retest-60-tile/phase1-library/ holds pass_01..pass_05 and no study_manifest.json, so the condition and run counts are directory counts with no committed locator; only the temperature could be anchored. The Thinking cell reads MISSING (not numeric). outputs/phase1-library no longer exists in the working tree — the pre-retest originals live under archive/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 1-2 Original Runs"
+      },
+      "claim_text": "| phase2a (modality) | 5 | 50 | gemini-3-flash | 1.0 | MISSING | 0/50 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2a/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2a/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "archive/outputs-pre-retest-60-tile/phase2a/brief-text/run_1/detections_brief-text_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2a/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2a/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2a/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 1-2 Original Runs"
+      },
+      "claim_text": "| phase2b (temperature) | 10 | 100 | gemini-3-flash | 0.0-1.3 | MISSING | 0/100 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2b/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2b/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            }
+          ]
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2b/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2b/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2b/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2b/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2b/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2b/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read. Row spans 2 track manifests: archive/outputs-pre-retest-60-tile/phase2b/track1-image/study_manifest.json; archive/outputs-pre-retest-60-tile/phase2b/track2-text/study_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 1-2 Original Runs"
+      },
+      "claim_text": "| phase2c (library) | 8 | 80 | gemini-3-flash | 0.0 | MISSING | 0/80 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json",
+              "path": "len:$.conditions"
+            }
+          ]
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). Row spans 2 track manifests: archive/outputs-pre-retest-60-tile/phase2c/track1-image/study_manifest.json; archive/outputs-pre-retest-60-tile/phase2c/track1-image-exploratory/study_manifest.json. archive/outputs-pre-retest-60-tile/phase2c/ contains only track1-image and track1-image-exploratory (no track2-text)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 1-2 Original Runs"
+      },
+      "claim_text": "| phase2d (neg-text) | 6 | 60 | gemini-3-flash | 1.0 | MISSING | 0/60 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2d/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2d/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            }
+          ]
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2d/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2d/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2d/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "archive/outputs-pre-retest-60-tile/phase2d/track1-image/terse/run_1/detections_terse_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2d/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2d/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "archive/outputs-pre-retest-60-tile/phase2d/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2d/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). Row spans 2 track manifests: archive/outputs-pre-retest-60-tile/phase2d/track1-image/study_manifest.json; archive/outputs-pre-retest-60-tile/phase2d/track2-text/study_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 1-2 Original Runs"
+      },
+      "claim_text": "| phase2e (ordering) | 4 | 40 | gemini-3-flash | 1.0 | MISSING | 0/40 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2e/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2e/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "archive/outputs-pre-retest-60-tile/phase2e/canonical-first/run_1/detections_canonical-first_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase2e/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase2e/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2e/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 3 Original Runs"
+      },
+      "claim_text": "| phase3a track1-image | 3 | 90 | gemini-3-flash | 0.3-1.0 | minimal | 0/90 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 3 Original Runs"
+      },
+      "claim_text": "| phase3a track1-image-high | 3 | 90 | gemini-3-flash | 0.3-1.0 | **minimal** | 0/90 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read. The Thinking cell is emphasised as **minimal** — the audit's WARNING row at line 20 concerns this directory's '-high' label; the emphasis marks a label/config disagreement, not a superseded numeric value, so nothing here is historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 3 Original Runs"
+      },
+      "claim_text": "| phase3a track2-text | 3 | 90 | gemini-3-flash | 0.3-1.0 | minimal | 0/90 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 3 Original Runs"
+      },
+      "claim_text": "| phase3a track2-text-high | 3 | 90 | gemini-3-flash | 0.3-1.0 | **minimal** | 0/90 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read. The Thinking cell is emphasised as **minimal**, as on line 92."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 3 Original Runs"
+      },
+      "claim_text": "| phase3c track1-image | 25 | 125 | gemini-3-flash | 0.4-1.0 | minimal | 0/125 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3c/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.4",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3c/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase3c/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Section 1: Run Inventory Summary > Phase 3 Original Runs"
+      },
+      "claim_text": "| phase3c track2-text | 20 | 100 | gemini-3-flash | 0.4-1.0 | minimal | 0/100 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3c/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3c/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.4",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/outputs-pre-retest-60-tile/phase3c/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "archive/outputs-pre-retest-60-tile/phase3c/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase3c/track2-text/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase2a | 5 | 15 | gemini-3-flash | 1.0 | minimal | 0/15 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2a/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2a/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase2a/brief-text/run_1/detections_brief-text_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2a/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2a/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2a/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          103
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase2b | 10 | 30 | gemini-3-flash | 0.0-1.3 | minimal | 0/30 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2b/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2b/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            }
+          ]
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2b/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2b/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "outputs/retest/phase2b/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2b/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2b/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "outputs/retest/phase2b/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2b/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read. Row spans 2 track manifests: outputs/retest/phase2b/track1-image/study_manifest.json; outputs/retest/phase2b/track2-text/study_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase2c | 13 | 13 | gemini-3-flash | 0.0 | minimal | 0/13 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2c/track1-image-exploratory/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "outputs/retest/phase2c/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            }
+          ]
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b + c) * d",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2c/track1-image-exploratory/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "outputs/retest/phase2c/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "d",
+              "file": "outputs/retest/phase2c/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase2c/track1-image/canonical/run_1/detections_canonical_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b + c) * d",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2c/track1-image-exploratory/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "outputs/retest/phase2c/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "d",
+              "file": "outputs/retest/phase2c/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2c/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). Row spans 3 track manifests: outputs/retest/phase2c/track1-image/study_manifest.json; outputs/retest/phase2c/track1-image-exploratory/study_manifest.json; outputs/retest/phase2c/track2-text/study_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase2d | 2 | 4 | gemini-3-flash | 1.0 | minimal | 0/4 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2d/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2d/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            }
+          ]
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2d/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2d/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "outputs/retest/phase2d/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase2d/track1-image/terse/run_1/detections_terse_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2d/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2d/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "outputs/retest/phase2d/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2d/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). Row spans 2 track manifests: outputs/retest/phase2d/track1-image/study_manifest.json; outputs/retest/phase2d/track2-text/study_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase2e | 4 | 4 | gemini-3-flash | 1.0 | minimal | 0/4 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2e/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2e/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase2e/canonical-first/run_1/detections_canonical-first_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase2e/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase2e/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2e/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase3a image | 3 | 90 | gemini-3-flash | 0.3-1.0 | minimal | 0/90 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3a/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3a/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3a/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3a/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase3a text | 3 | 90 | gemini-3-flash | 0.3-1.0 | minimal | 0/90 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3a/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3a/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3a/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3a/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a/track2-text/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase3a-high text | 3 | 90 | gemini-3-flash | 0.3-1.0 | high | 14/90 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3a-high/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3a-high/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3a-high/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3a-high/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a-high/track2-text/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase3a-replication | 2 | 60 | gemini-3-flash | 0.7 | min/high | 0/60 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3a-replication/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3a-replication/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature as run for this phase row",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase3a-replication/minimal/run_1/detections_minimal_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3a-replication/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3a-replication/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a-replication/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The Thinking cell reads 'min/high' (two levels, not numeric)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase3c track1-image | 25 | 119 | gemini-3-flash | 0.4-1.0 | minimal | 84/119 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "119",
+          "value_parsed": 119,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3c/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.4",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "84",
+          "value_parsed": 84,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "119",
+          "value_parsed": 119,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3c/track1-image/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3c/track1-image/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Section 1: Run Inventory Summary > Retest Runs"
+      },
+      "claim_text": "| retest/phase3c track2-text | 20 | 100 | gemini-3-flash | 0.4-1.0 | minimal | 94/100 |",
+      "values": [
+        {
+          "quantity": "condition count for this phase row",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "run count for this phase row",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3c/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3c/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        },
+        {
+          "quantity": "temperature range minimum for this phase row",
+          "value_verbatim": "0.4",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "temperature range maximum for this phase row",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs with a submitted batch JSONL request file",
+          "value_verbatim": "94",
+          "value_parsed": 94,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the JSONL denominator",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/retest/phase3c/track2-text/study_manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "outputs/retest/phase3c/track2-text/study_manifest.json",
+              "path": "$.runs_per_condition"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track2-text/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. Conditions and Runs are proposed against the study manifest(s) for the phase: Conditions as len:$.conditions, Runs as the planned product conditions x runs_per_condition. The audit's Runs cell is a count of executed run directories, so a row whose runs were left incomplete will diverge from the planned product — the harness owns that diff, not the extractor. The JSONL numerator counts batch-request .jsonl files on disk and has no committed JSON locator, so it takes an explicit anchor-unknown method (v1.2 amendment 3). The temperature cell is a range: its endpoints are the min and max of $.configuration.temperature over the run metas beneath the manifest's directory (the manifest's $.conditions labels encode the same set), which needs a scripted sweep rather than a single read."
+    }
+  ]
+}

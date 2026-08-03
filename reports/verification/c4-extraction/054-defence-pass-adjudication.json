@@ -1,0 +1,918 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md",
+    "git_blob": "6a7cca6bf4ac",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          4
+        ],
+        "section": "Trigger"
+      },
+      "claim_text": "the PI, reviewing the GATE 1 package from memory, found 2 of\n12 headline findings needing serious qualification",
+      "values": [
+        {
+          "quantity": "headline findings judged to need serious qualification on the PI's review",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "headline findings in the GATE 1 package",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b054] Scope decisions logged for this document per hard rule 5: finding identifiers (findings 3 and 10, F1-F12, defence-2/-4/-10), erratum, Obs, Decision and commitment identifiers, section and line-number citations (§ 8.4.7, line 1451, 815, 1443/1450-1, prereg :968, docs/pipelines.md:54, execution-plan.md:683-694), the commit hash 5e7601d77, dates, and the model version string \"Opus 5\" are not extracted. Also not extracted as numeric claims: the tailedness descriptors (\"one-tailed\", \"two-tailed\", \"two-sided\"), the hedged phrase \"specified two or three ways\", and the ordinal in \"ranks H14 first in Phase 5\". This claim itself: the counts are about the GATE 1 package, a markdown document (reports/verification/phase2-gate-package.md), and rule 2 forbids anchoring prose to prose, so anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          7
+        ],
+        "section": "Trigger"
+      },
+      "claim_text": "a blind adversarial defence pass — twelve fresh-context\nOpus 5 agents, one per finding",
+      "values": [
+        {
+          "quantity": "defence agents run, one per finding",
+          "value_verbatim": "twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Count of fresh-context defence agents. Looked for a committed directory of defence outputs under reports/verification/ and found none, so no artefact enumerates the twelve; the document states the defence outputs are first-party."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          19
+        ],
+        "section": "Calibration result"
+      },
+      "claim_text": "defence-10 independently recovered E27/Decision 16 and went\nfurther (§ 8.4.7 operative clause; H1-P3 falsification p = 0.004;",
+      "values": [
+        {
+          "quantity": "permutation p-value, registered H1-P3 planned contrast",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Looked for the H1-P3 planned-contrast p-value as a scalar in results/pairwise/20m/fdr/pairwise_results_fdr.json and results/family-fdr/family_fdr.json without finding a matching row (the 0.0042 row there is the Pro-vs-Flash text-consensus contrast); the figure is quoted in prose inside results/commitments.json, which is not an anchor for it. Triage will need to chase the H1 contrast artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          22
+        ],
+        "section": "Calibration result"
+      },
+      "claim_text": "so its verdicts on the other ten\ncarry evidential weight.",
+      "values": [
+        {
+          "quantity": "findings not used as calibration probes",
+          "value_verbatim": "ten",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The residual of the twelve findings after the two calibration probes; no committed artefact enumerates the defence findings, so the derivation has no mechanical operands."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "Aggregate verdict"
+      },
+      "claim_text": "**12/12 needs-qualification; 0 overturned; 0 unqualified.**",
+      "values": [
+        {
+          "quantity": "findings adjudicated",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "findings ruled needs-qualification",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "findings overturned",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "findings ruled unqualified",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Aggregate tally of the defence pass. No committed artefact records the per-finding verdicts (the ledger rows referenced in the per-finding rulings are obligation rows in results/commitments.json, not verdict counts), so the tally cannot be anchored mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          28
+        ],
+        "section": "Aggregate verdict"
+      },
+      "claim_text": "finding's factual core survived citation checks (three sub-claims\noverturned; small precision fixes).",
+      "values": [
+        {
+          "quantity": "sub-claims overturned across the twelve findings",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Count asserted about the defence pass's own outputs; no committed artefact enumerates the overturned sub-claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "Meta-finding"
+      },
+      "claim_text": "K=10/any-run vs 5-pass/≥3-of-5 (F6)",
+      "values": [
+        {
+          "quantity": "registered K for hard-positive mining",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered pass count per condition",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered minimum votes for the majority rule",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered pass count in the majority rule denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "All four values are claims about what the lodged registration specifies, so they anchor to the lodged document with path null per the v1.1 calibration rule, never to the configs that executed. The span is the document's demonstration that the registration specifies the same parameter two ways."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          40
+        ],
+        "section": "Meta-finding"
+      },
+      "claim_text": "361 vs ~360 vs a 321\nreserve (F7);",
+      "values": [
+        {
+          "quantity": "registered test-corpus tile count, first statement",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered test-corpus tile count, second statement (approximate)",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered reserve tile count",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Three mutually inconsistent corpus figures attributed to the registration; anchored to the lodged document per the v1.1 calibration rule. The approximation marker is kept verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          42
+        ],
+        "section": "Meta-finding"
+      },
+      "claim_text": "64 px overlap vs constant-fraction cost arithmetic\n(F11);",
+      "values": [
+        {
+          "quantity": "registered tile overlap",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "A claim about what the registration specifies, so it anchors to the lodged document (v1.1 calibration rule). The executed 512 px tiling used the same 64 px overlap (config.py OVERLAP), which triage may use as a corroborating non-JSON anchor; the 384 px tiling did not."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          52
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "K=10\n   waived by E36;",
+      "values": [
+        {
+          "quantity": "registered K for the voted statistics",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claim about what the registration specifies (subsequently waived by erratum E36), so it anchors to the lodged registration per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          54
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "E52 records WBF-primary for two v2\n   analyses)",
+      "values": [
+        {
+          "quantity": "v2 analyses for which E52 records WBF as primary",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A count of analyses recorded in erratum E52, a markdown document (docs/methodology/preregistration/protocol-errata.md); rule 2 forbids anchoring prose to prose, so triage must chase the erratum to the underlying analysis manifests."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          58
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "registered eight-hypothesis\n   family never constituted",
+      "values": [
+        {
+          "quantity": "hypotheses in the registered confirmatory family",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "A claim about the registered family size, anchored to the lodged document per the v1.1 calibration rule. Note that results/family-fdr/family_fdr.json records family_size 7 for the executed correction (H6 never ran) — a different quantity; do not conflate the two at recompute."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          61
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "Corrected: a single\n   project-wide 26-row confirmatory family WAS BH-corrected jointly\n   (re-derived);",
+      "values": [
+        {
+          "quantity": "rows in the project-wide confirmatory family that was BH-corrected jointly",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the pairwise FDR artefact whose comparisons carry family tags; the count is the number of rows tagged confirmatory (len: prefix per v1.2 amendment 4, filter per amendment 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          76
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "all drift is\n   post-lodgement in five commits (2026-02-02–11), four erratum'd\n   within 24 h;",
+      "values": [
+        {
+          "quantity": "post-lodgement commits carrying prompt drift",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "drift commits erratum'd within a day",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "window within which the four commits were erratum'd",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "h",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counts of commits and an elapsed-time bound; decidable only from git history plus the errata document, neither of which is a committed artefact holding these as values. Commit hashes themselves are out of C4 scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "propagated to four documents, escaped the 2026-07-28 sweep.",
+      "values": [
+        {
+          "quantity": "documents to which the E36 misreport propagated",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A count of affected markdown documents; no committed artefact enumerates them, and rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "(register arithmetic 82+26=108 confirms)",
+      "values": [
+        {
+          "quantity": "registered hard-positive count, first term",
+          "value_verbatim": "82",
+          "value_parsed": 82,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered hard-positive count, second term",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered hard-positive total",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Arithmetic attributed to the lodged registration, so all three terms anchor to the lodged document per the v1.1 calibration rule; 108 is recorded as read rather than arithmetic because the registration anchor exposes no JSONPath operands for a mechanical derivation (triage may re-cast it as 82 + 26 once the register lines are located). Note the coincidence of 26 here with the 26-row confirmatory family elsewhere in the document — different quantities."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "E15/E49/E51 license the K=5 substance",
+      "values": [
+        {
+          "quantity": "executed K for hard-positive mining",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is a claim about what was RUN (the K=5 substance the errata license), not about the registration, so the v1.1 rule sends it to a config or run meta; the document names no run or study YAML, so the anchor cannot be identified from this document alone."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          95
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "registration states the corpus three ways (361 / ~360 / a 321\n   reserve figure); artefacts match § 8.6's ~360; the 361st tile never\n   existed;",
+      "values": [
+        {
+          "quantity": "mutually inconsistent corpus statements in the registration",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "registered test-corpus tile count, first statement",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered test-corpus tile count, second statement (approximate)",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered reserve tile count",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "test-corpus tile count the artefacts match (approximate)",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "the tile that never existed, ordinal position in the registered corpus",
+          "value_verbatim": "361st",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span. The three registration figures anchor to the lodged document (v1.1 calibration rule). The count of statements is a property of the document rather than a value in it. The artefact-side ~360 refers to the physical 512 px tile inventory, which is not held as a scalar in a committed manifest (inputs/tiles/full_evaluation_manifest.json holds the 340 test tiles), so it takes anchor-unknown; the 361st-tile assertion is a negative existence claim over the same inventory."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          101
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "materiality bounded, ~21 %\n   non-mound subtypes)",
+      "values": [
+        {
+          "quantity": "share of non-burial_mound subtypes bounding the label-clause materiality (approximate)",
+          "value_verbatim": "~21",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The defence-pass subtype-share figure. It carries no recorded pool or denominator here; the approximation marker is kept verbatim per v1.2 amendment 5. (The same figure recurs in this batch's cluster label-heterogeneity document, which records it as unanchored and superseded — noted as a reference only, per hard rule 7.)"
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          106
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "the 22 executed phase3c\n   configs remain unlicensed",
+      "values": [
+        {
+          "quantity": "executed phase3c configurations still unlicensed",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A count of study configurations. Looked for a committed artefact enumerating the unlicensed phase3c configs (the queued erratum is named as the vehicle, but errata are prose); no manifest of the 22 was identified from this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          107
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "but 17 of the\n   41 flagged configs were already licensed by name",
+      "values": [
+        {
+          "quantity": "flagged configurations already licensed by name",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "configurations flagged in total",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counts over the flagged HIGH-thinking configuration set; no committed artefact enumerating the flagged set was identified from this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "(Obs 140, +6.8 pp)",
+      "values": [
+        {
+          "quantity": "F1 gain attributed to HIGH thinking as a diversity mechanism",
+          "value_verbatim": "+6.8",
+          "value_parsed": 6.8,
+          "unit": "pp",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Sourced to Obs 140, an entry in docs/notes/working-notes.md; rule 2 forbids anchoring prose to prose, so triage must chase the observation to the underlying diversity analysis."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "designation appears at three sites",
+      "values": [
+        {
+          "quantity": "sites in the registration carrying the academic-baseline designation",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A count of occurrences inside the lodged registration rather than a value stated by it; countable only by searching the lodged document, so no mechanical read exists."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "falsified by the study's own registered test (H1-P3, p = 0.004)",
+      "values": [
+        {
+          "quantity": "permutation p-value, registered H1-P3 planned contrast",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Second appearance of the H1-P3 p-value in this document (see the Calibration result claim); the same anchor search applies and found no scalar artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          117
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "the image track completed and leads the board on the registered\n    secondary outcome (MCC 0.710);",
+      "values": [
+        {
+          "quantity": "tile-level MCC, image-track 55-map generalisation (registered secondary outcome)",
+          "value_verbatim": "0.710",
+          "value_parsed": 0.71,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='55maps-image-generalisation::verified-k3-canonical-gt')].metrics.tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchor identified by locating the conditions-manifest cell at this value on the image track (55maps-image-generalisation::verified-k3-canonical-gt, tile_classification.mcc); triage should confirm this is the intended board leader, since the claim also asserts a ranking that a single read cannot decide."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          122
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "the registered 64 px overlap clause is\n    internally inconsistent with the registration's own ~1.8× cost\n    arithmetic (which implies the executed stride 336);",
+      "values": [
+        {
+          "quantity": "registered tile overlap",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cost multiplier implied by the registration's own arithmetic (approximate)",
+          "value_verbatim": "~1.8",
+          "value_parsed": 1.8,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "executed tile stride, 384 px tiling",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered overlap and the registration's own cost arithmetic anchor to the lodged document (v1.1 calibration rule). The executed stride is not held as a scalar anywhere: scripts/preprocess_tiling.py computes it as tile_size - overlap at run time and inputs/tiles_384/tile_selection_metadata.json records only tile_size 384, so 336 takes anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          133
+        ],
+        "section": "Per-finding rulings"
+      },
+      "claim_text": "five of seven\n    open interaction rows instantiate registered if-resources/deferred\n    qualifiers.",
+      "values": [
+        {
+          "quantity": "open interaction rows instantiating registered if-resources/deferred qualifiers",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "open interaction rows in total",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counts over the open-obligation ledger. results/commitments.json holds the obligation rows, but the \"open interaction rows\" subset is not a filterable field identified from this document, so the anchor is left for triage."
+    }
+  ]
+}
