@@ -223,3 +223,35 @@ untracked strata split into regenerable-by-recipe, non-regenerable
 evidence, and by-omission strays — each wants a different referent,
 and the proxies keep every quoted verification figure checkable by an
 external reader.
+
+## Session-126 rulings — 2026-08-03 (fourth batch)
+
+Collected interactively at the S126 wave-6 escalation review; same
+force as rulings 1–15.
+
+## 16. Approximate-equality threshold for cost/ratio claims
+
+**Ruling (PI, verbatim intent): "anything within ~5 % can be called
+'approximately equal'."** Applied first to escalation W6-E1: the
+audited 55-map production costs (image $200.83 vs text-HIGH $207.34,
+ratio 0.97×) supersede the cross-track report's "2.9× lower API cost"
+conclusion, and the corrected claim is **approximately equal API
+cost**, not a new ordering. The threshold generalises to future
+cost/ratio repair wording: differences within ~5 % are presented as
+approximate equality rather than a ranking.
+
+## 17. Partial-refresh residue in living documents — the two-layer rule (resolves W6-E3)
+
+**Ruling: adopted as recommended.** Ruling 14 and the Document
+Revision Policy operate at DIFFERENT LAYERS and do not compete.
+Ruling 14 remains the TRIAGE vocabulary: a clause faithful when
+written whose artefact later moved books as SNAPSHOT-DIVERGENCE, not
+a defect — the historical verdict stands. The Document Revision
+Policy remains the REPAIR policy for living documents
+(`results/**.md`, `reports/**.md` in scope): stale clauses are
+refreshed in place with a changelog entry, ledger cross-referenced,
+so readers see current truth on first read. "Divergence ⇒
+ledger-only" was a triage-lane verdict, never a repair rule. Dated
+snapshot records keep ruling-1 banner/rider treatment. Where a
+refresh changes a cited 3-d.p. form, downstream citations are swept
+in the same pass (P2 R9's coupling discipline).
