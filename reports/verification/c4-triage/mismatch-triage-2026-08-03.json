@@ -1,0 +1,316 @@
+{
+ "_meta": {
+  "title": "C4 wave-5 triage — Session 126 (92 new MISMATCH + 2 new APPROX from the wave-5 fleet batches)",
+  "date": "2026-08-03",
+  "triager": "Claude Fable 5 session (Session 126)",
+  "recompute_report": "canonical post-wave-5 on sapphire, commit 3fdff7803 (9,588 rows: 3589/222/3599/2168/10)",
+  "obs382_standing_check": "CLEAN — exactly 12 pre-wave rows moved in any field, all attributed: ruling-15 phase 1 (044#84[0]/[2], 044#88[0]/[2] UNRESOLVED->MATCH, manifests committed 3beea8eaa); ruling-15 phase 2 re-anchoring (037#37[0] ->MATCH; 006-output-dir-standard#32[1]/#34[1] honest MISMATCH abs_error 41 on both hosts); S125 repairs (009#30[1]/[3], 012#48[3] ->MATCH); E39 fix 01c84b841 (017#52[2] ->MATCH at 0.7701); e43-matched-temperature analysis registration (050#42[0] live count 20->21, stays MISMATCH). Zero rows moved from the 0.7.1 passes-manifest fix — the beacon's conditional prediction resolved to none.",
+  "verification": "ruling-11 discipline: draft stories pre-registered (c4-triage/wave5-draft-stories-2026-08-03.md, commit e97c08c7b) BEFORE four blind Opus passes (archived in c4-triage/blind-passes/). The blind layer corrected the author-side stories on five family-level calls — the sixth consecutive wave in which blind verification corrects the triager: (1) 046#28[1] drafted SNAPSHOT-DIVERGENCE with its family, is EXTRACTION-DEFECT (percentage inheriting a candidate-count anchor); (2) 031#12[3] had no draft story — pass BC found the v2 corrections document misattributing the Pro arm's 0.840 to Flash (DOC-DEFECT-AT-ERA, materiality notice); (3) 049#2[1] drafted divergence, is DOC-DEFECT-AT-ERA (era artefact says 10-of-10); (4) 049#25/#26 drafted divergence, are EXTRACTION-DEFECT with ruling-15 anchored-to-neither exposure (no t=0.95 cell exists in any tracked artefact); (5) 051#1[0] drafted divergence-via-BCa, is EXTRACTION-DEFECT (locator counted the n=1 prior's tier; the BCa caveat was checked by the pass and does not apply — no CI-derived quantity among the 14 F/G rows).",
+  "disposition_totals": {
+   "SNAPSHOT-DIVERGENCE": 57,
+   "EXTRACTION-DEFECT": 19,
+   "DOC-DEFECT-AT-ERA": 11,
+   "INSTRUMENT-DEFECT": 5
+  }
+ },
+ "families": [
+  {
+   "name": "w5-phase3a-recovery-backfill",
+   "pass": "A",
+   "rows": [
+    "045#19[0]",
+    "045#22[0]",
+    "045#26[0]",
+    "045#30[0]",
+    "045#34[0]",
+    "045#38[0]",
+    "045#42[0]",
+    "045#46[0]",
+    "045#50[0]",
+    "045#54[0]",
+    "045#58[0]",
+    "045#62[0]",
+    "045#66[0]",
+    "045#70[0]",
+    "045#73[0]",
+    "045#77[0]",
+    "045#81[0]",
+    "045#85[0]",
+    "045#89[0]",
+    "045#93[0]",
+    "045#97[0]",
+    "045#101[0]",
+    "045#105[0]",
+    "045#109[0]",
+    "045#113[0]",
+    "045#117[0]",
+    "045#120[0]",
+    "046#0[0]",
+    "046#1[0]",
+    "046#3[0]",
+    "046#4[0]",
+    "046#6[0]",
+    "046#7[0]",
+    "046#9[1]",
+    "046#14[2]",
+    "046#17[1]",
+    "046#19[1]",
+    "046#26[0]",
+    "046#28[0]",
+    "046#31[5]",
+    "046#37[0]",
+    "046#39[0]"
+   ],
+   "disposition": "SNAPSHOT-DIVERGENCE (42 rows; era-faithful at true eras adf95dbf9 / d78601b62)",
+   "mechanism": "The May–July recovery campaign backfilled verifier cells after the 2026-05-03 audit; probabilities-side counts grew by exactly the audited gaps (sum of deltas over the 30 read rows = 835 = the audit's own 'Cumulative dropped candidates (genuine)'), gap arithmetic collapsed to 0. Named artefact-moving commits: 414ee8a4b, c6b5e6b10, 49703010b, 6683952ac, 005e6c715, ff475e810, b2bfc446e, 6f8bc7140. Dated rider added to the audit (a577f1ef3); ledger rows only for the 42.",
+   "action": "rider + ledger; extraction repair for the one exception (below)"
+  },
+  {
+   "name": "w5-phase3a-percentage-anchor",
+   "pass": "A",
+   "rows": [
+    "046#28[1]"
+   ],
+   "disposition": "EXTRACTION-DEFECT (repaired 963ab91dc)",
+   "mechanism": "'57' is a percentage (460/802 = 57.36% at era) inheriting the claim's candidate-count arithmetic anchor; extractor convention for sibling rows is anchor-unknown. Repaired to anchor-unknown.",
+   "action": "extraction repaired"
+  },
+  {
+   "name": "w5-h11-pro-run-population",
+   "pass": "BC",
+   "rows": [
+    "031#3[0]",
+    "031#4[0]",
+    "031#5[0]",
+    "031#6[0]",
+    "031#10[0]",
+    "031#17[0]",
+    "031#17[2]",
+    "031#20[0]",
+    "031#21[0]",
+    "031#22[2]"
+   ],
+   "disposition": "SNAPSHOT-DIVERGENCE (era-faithful; era arithmetic 5+5+1+1=12 from run-start timestamps)",
+   "mechanism": "pro-high-text-n5 extended to N=10 on 2026-03-29 (study_manifest rewritten in place); present-day manifests give 17, directory census 21 (Pro MEDIUM baselines gained runs 2–3 on 2026-06-03, manifests stale in both directions). Dated rider on the v2 audit records the era scope.",
+   "action": "rider + ledger"
+  },
+  {
+   "name": "w5-v2-consensus-vs-pairwise-binding",
+   "pass": "BC",
+   "rows": [
+    "031#12[0]",
+    "031#13[0]"
+   ],
+   "disposition": "EXTRACTION-DEFECT (repaired 963ab91dc)",
+   "mechanism": "Document quotes the consensus sweeps (0.8489 / 0.7031 at pool 5, threshold 3, 20 m); extraction bound the pairwise permutation records (0.8404 / 0.6998). Artefacts byte-identical at era and today (directory moved to archive/ in 276e4ca80). Re-bound; both MATCH.",
+   "action": "extraction repaired"
+  },
+  {
+   "name": "w5-v2-flash-misattribution",
+   "pass": "BC",
+   "rows": [
+    "031#12[3]"
+   ],
+   "disposition": "DOC-DEFECT-AT-ERA (materiality notice)",
+   "mechanism": "v2 'Scientific Implications' item 2 quotes 'Flash HIGH text (F1=0.840 at 3-of-5)': the cited record's Flash arm is 5-of-5 at 0.7788, Flash 3-of-5 is 0.6034, and 0.840 is the Pro arm's own 0.8404. Working-notes cross-references independently label 0.840 as Pro. Qualitative conclusion unaffected (p=0.874). A corrections document carrying its own misattribution; no downstream artefact found repeating it. Extraction re-bound to the honest Flash referent so the row mismatches for the documented reason; dated rider corrects the record.",
+   "action": "rider + ledger + honest re-anchor"
+  },
+  {
+   "name": "w5-v1-temperature-column",
+   "pass": "BC",
+   "rows": [
+    "032#40[2]",
+    "032#44[2]",
+    "032#45[2]",
+    "032#55[2]",
+    "032#56[2]"
+   ],
+   "disposition": "DOC-DEFECT-AT-ERA",
+   "mechanism": "The v1 audit's 'T (range)' column reproduces prompt-config JSON defaults as at 2026-03-25, not run metadata: phase1-library ran at 1.0 (config edited 1.0->0.0 a week later, 953e2d26d); phase2d/2e and retests ran at 0.0 under a study-YAML override the config doesn't carry. Metas uniform in every affected phase; phase2a/2b/2c rows verified correct (control). Dated rider on the v1 audit.",
+   "action": "rider + ledger"
+  },
+  {
+   "name": "w5-phase2d-symlink-census",
+   "pass": "BC",
+   "rows": [
+    "032#44[0]",
+    "032#44[1]",
+    "032#44[4]"
+   ],
+   "disposition": "EXTRACTION-DEFECT (repaired 963ab91dc)",
+   "mechanism": "Document's 6/60 census is correct at era and today; the 'minimal' conditions are git-tracked carried-forward symlinks the study manifests (and len:$.conditions) cannot see. Repaired to registered glob-count census specs (count_symlink_entries mirrors find's entry-listing semantics); all three MATCH.",
+   "action": "extraction repaired + registry specs + runner opt-in (5f2f79856)"
+  },
+  {
+   "name": "w5-v1-phase2d-conditions-cell",
+   "pass": "BC",
+   "rows": [
+    "032#55[0]"
+   ],
+   "disposition": "DOC-DEFECT-AT-ERA",
+   "mechanism": "retest/phase2d Conditions cell reads 2; the era and current tree hold 4 (2 tracks x terse/verbose). Runs cell (4) correct. Dated rider on the v1 audit.",
+   "action": "rider + ledger"
+  },
+  {
+   "name": "w5-phase3c-track1-inflight",
+   "pass": "BC",
+   "rows": [
+    "032#61[1]",
+    "032#61[5]"
+   ],
+   "disposition": "SNAPSHOT-DIVERGENCE (dual mechanism — ledger caveat)",
+   "mechanism": "Exactly 119 runs had started before 2026-03-25T02:30Z; six landed 03:23–06:38Z the same day (era-faithful, artefact grew same-day). CAVEAT: the bound expression is a planned product (25x5=125) that equals 125 at era too, so an era re-run of the current locator would NOT exonerate the document — the exoneration rests on run-start timestamps.",
+   "action": "ledger with caveat"
+  },
+  {
+   "name": "w5-611-name-token",
+   "pass": "BC",
+   "rows": [
+    "032#7[0]"
+   ],
+   "disposition": "EXTRACTION-DEFECT (repaired 963ab91dc)",
+   "mechanism": "'611' bound to items_processed (609); read as a tile-pool count the tiles sidecar records total_tiles 611 = 609 completed + 2 batch-api failures. Re-anchored; MATCH.",
+   "action": "extraction repaired"
+  },
+  {
+   "name": "w5-pn-ratio-half-boundary",
+   "pass": "DE",
+   "rows": [
+    "041-phase2c-pn-ratio#25[3]",
+    "041-phase2c-pn-ratio#29[2]",
+    "041-phase2c-pn-ratio#30[0]",
+    "041-phase2c-pn-ratio#44[0]",
+    "041-phase2c-pn-ratio#45[1]"
+   ],
+   "disposition": "INSTRUMENT-DEFECT (fixed 1e4a13ff7)",
+   "mechanism": "Exact decimal midpoints (0.6027-0.5502=0.0525; 0.6087-0.5502=0.0585) evaluate with binary-float noise that falls below the midpoint and defeats the comparer's own ROUND_HALF_UP branch. Fixed with a dp+6 pre-quantise; measured blast radius corpus-wide is exactly these 5 rows, zero collateral. Rows flip to MATCH at the next canonical recompute, attributed to 1e4a13ff7.",
+   "action": "instrument fixed + regression test"
+  },
+  {
+   "name": "w5-pn-ratio-display-mean",
+   "pass": "DE",
+   "rows": [
+    "041-phase2c-pn-ratio#51[3]"
+   ],
+   "disposition": "DOC-DEFECT-AT-ERA (immaterial, 1 ulp at 3 d.p.)",
+   "mechanism": "Mean-of-displayed-cells (0.667+0.684+0.634)/3 -> 0.662 vs full-precision mean 0.66145 -> 0.661; pp-4hp is the only cell where the convention bites. Ledger row only (ruling-10 style).",
+   "action": "ledger only"
+  },
+  {
+   "name": "w5-session58-orientation",
+   "pass": "DE",
+   "rows": [
+    "048#48[0]",
+    "048#48[2]",
+    "048#48[3]"
+   ],
+   "disposition": "EXTRACTION-DEFECT (repaired 963ab91dc)",
+   "mechanism": "Document states Flash-vs-Pro; artefact fixes condition_a=Pro. 16 of 17 section-8 rows bind first-named->condition_a; line 283 is the sole re-oriented row (sign, wins, and losses flipped together). Negated diff + swapped paths; 3x MATCH.",
+   "action": "extraction repaired"
+  },
+  {
+   "name": "w5-session58-double-rounding",
+   "pass": "DE",
+   "rows": [
+    "048#59[0]"
+   ],
+   "disposition": "DOC-DEFECT-AT-ERA (immaterial, ns row)",
+   "mechanism": "+0.021 vs 0.020485 (-> 0.020 under every single-rounding mode); double rounding via 4 d.p. reproduces it exactly. Artefact byte-identical at the authoring commit. Ledger row only.",
+   "action": "ledger only"
+  },
+  {
+   "name": "w5-session58-sweep-argmax",
+   "pass": "FG",
+   "rows": [
+    "049#2[1]"
+   ],
+   "disposition": "DOC-DEFECT-AT-ERA",
+   "mechanism": "Section 9's '5-of-10' contradicts its own era artefact (single commit a371376c1, same day as the doc): global optimum threshold 10 / pool 10 / F1 0.5521; 5-of-10 scores 0.5322; sibling values MATCH. Dated banner addendum (a577f1ef3).",
+   "action": "rider + ledger"
+  },
+  {
+   "name": "w5-session58-572-denominator",
+   "pass": "FG",
+   "rows": [
+    "049#13[0]"
+   ],
+   "disposition": "DOC-DEFECT-AT-ERA (with a framing finding escalated)",
+   "mechanism": "'% of 572' matches no reference population at any era: reference set 569 (single commit cfc10c133), doc's own preamble says 569, percentages derive from 572 (the PV-384 candidate count). Deeper finding: the in-bounds GT population the era's scorers used is 435 — the doc's '487 tiles, 569 reference mounds' framing conflates full-corpus with in-bounds GT, so a 572->569 rescale would be wrong. Banner addendum says treat the column as uncited.",
+   "action": "rider + ledger + escalation (framing)"
+  },
+  {
+   "name": "w5-session58-t095-binding",
+   "pass": "FG",
+   "rows": [
+    "049#25[0]",
+    "049#25[1]",
+    "049#25[2]",
+    "049#26[0]",
+    "049#26[1]",
+    "049#26[2]"
+   ],
+   "disposition": "EXTRACTION-DEFECT with ruling-15 exposure (repaired 963ab91dc)",
+   "mechanism": "Doc section 1c fixes these cells at t=0.95; the manifest cells are constrained-grid selections (PROB_TS capped at 0.5 in the June re-derivation, score_high_thinking_prior.py). No t=0.95 cell exists in any tracked artefact -> anchored-to-neither NAMED family (ruling 15); repaired to anchor-unknown so they stop comparing a different operating point.",
+   "action": "extraction repaired; NAMED family for GATE 3"
+  },
+  {
+   "name": "w5-session58-june-anchor",
+   "pass": "FG",
+   "rows": [
+    "049#30[0]",
+    "049#30[1]",
+    "049#30[2]"
+   ],
+   "disposition": "SNAPSHOT-DIVERGENCE (era-faithfulness untestable)",
+   "mechanism": "Anchor created 2026-06-11/12, ~2.5 months post-doc; June accepts 434 candidates / 309 matches vs the doc's implied 431/306; boundary explanation tested and rejected; no March artefact exists in the tracked tree. dF1 0.0042, immaterial.",
+   "action": "ledger with untestable-era caveat"
+  },
+  {
+   "name": "w5-locator-population",
+   "pass": "FG",
+   "rows": [
+    "051#1[0]",
+    "056#41[0]",
+    "058#38[0]"
+   ],
+   "disposition": "EXTRACTION-DEFECT (repaired 963ab91dc)",
+   "mechanism": "Three locators resolving different populations than the prose means: len:$.tiers counted the n=1 prior the sentence excludes (N=5 restriction -> 1 tier); the H9-A run-1 pool is run 1 of all five prompt arms (five-file sum 4,954 reproduces all four subtype shares + the 17.2% roll-up); the FDR registration's 26 is the confirmatory family of a 32-row file (26+6, both stated by the doc's own section 8.4). Registration integrity CLEARED: artefact byte-stable since 2026-03-28, four months pre-registration.",
+   "action": "extraction repaired (needed the != filter and filtered-subset len locator extensions, 6af00ffad)"
+  }
+ ],
+ "non_mismatch_dispositions": {
+  "APPROX": "053-token-load-audit#12[1] (~$207.4 vs 207.3382) and #14[1] (~$195.4 vs 195.3499): ACCEPT — well within approx markers.",
+  "UNRESOLVED_463": "structural classes routed per standing practice: non-JSON anchors docs/studies/scripts/archive/tests/inputs (~276) triage scope; path-resolution failures (~117) and unparseable quotes (52) + non-numeric source values (13) to the repair queue; era1-phase3c and confirmatory locator failures (6) to the comparer queue — NOTE the filtered-subset locator extension (6af00ffad) may resolve some at the next recompute (attributed transition).",
+  "SKIPPED_1314": "anchor-unknown 681; recompute-script without registered runner 504 (runner tranches 2–3, queue item (c) — NAMED lines for GATE 3 per ruling 7); historical 116; external 11; unverifiable-era 2."
+ },
+ "escalations_for_pi": [
+  {
+   "id": "W5-E1",
+   "kind": "INSTRUMENT — era_check resolves at the wrong era for banner-carrying snapshot documents",
+   "severity": "high (process); zero wave-5 verdicts depended on it (all passes re-resolved eras manually)",
+   "detail": "find_era_commit picks the newest commit holding the extraction's blob; ruling-1 banners rewrite the blob, so the computed era lands at the banner date and era_check degenerates into a HEAD restatement. Three blind passes confirmed independently; quantified: 134 of 178 era_check rows report actual_era == actual with era commits clustering at 2026-08-01/02; all 110 MISMATCH rows on the phase3a audit repo-wide carry a false faithful:false, 67 of them in batch 043 (wave 3) — earlier triage was blind-pass-driven, not era_check-driven, so no adjudication is known to be contaminated, but the field cannot separate divergence from defect anywhere in the corpus today. Candidate fixes (PI to choose; charter-adjacent instrument redesign): resolve the era over the claim's own source lines (git log -L), select by verbatim-span presence, use the oldest commit holding the blob, and emit an explicit anchor-absent-at-era status. Per ruling 14 the era_check extension is registered instrument work.",
+   "obs_candidate": "reports/verification/drafts/obs-candidate-era-check-banner-interaction-2026-08-03.md"
+  },
+  {
+   "id": "W5-E2",
+   "kind": "materiality notice — corrections document carrying its own misattribution",
+   "detail": "031#12[3]: the v2 configuration audit misattributes the Pro arm's 0.840 to Flash HIGH text 3-of-5 (real Flash 3-of-5: 0.6034). Qualitative conclusion unaffected; no downstream repetition found; dated rider landed. PI visibility because the defect sits in a document whose purpose is correcting another document."
+  },
+  {
+   "id": "W5-E3",
+   "kind": "framing finding — session-58 cross-modal table denominators",
+   "detail": "049#13[0] adjudication surfaced that the document's '487 tiles, 569 reference mounds' framing conflates the full-corpus reference set (569) with the in-bounds GT population its era scorers used (435), while the table divides by 572 (the PV-384 candidate count). The banner addendum says treat the percentage column as uncited. Whether any paper-side text inherits the 572 or the 569-in-bounds conflation is UNCHECKED — flagged for the paper-corpus sweep."
+  },
+  {
+   "id": "W5-E4",
+   "kind": "banner under-coverage",
+   "detail": "Pass A: the phase3a audit's banner says '35 gap figures below no longer reproduce'; the wave-5 partition alone holds 42 non-reproducing figures (30 entry counts + 12 gap figures). The '35' claim row (045#0[0]) was not a MISMATCH this wave; recommend the banner's counter be treated as approximate or amended at next touch."
+  }
+ ],
+ "carry_forward_notes": [
+  "Next canonical recompute (post-wave-6) expected attributed transitions: 5 pn-ratio rows MISMATCH->MATCH (comparer fix 1e4a13ff7); 12 repaired rows ->MATCH and 7 ->SKIPPED/anchor-unknown (repairs 963ab91dc); 031#12[3] stays MISMATCH at 0.6034 (honest referent); some UNRESOLVED multi-match-filter rows may newly resolve (locator extensions 6af00ffad); era_check fields will move wholesale if the W5-E1 instrument fix lands — attribute to that named fix.",
+  "046#37/#39 rows live in the 2026-05-06 annotation whose true era is d78601b62 (2026-05-06), not the body's adf95dbf9 — within-file multi-era case for the W5-E1 fix design.",
+  "049#25/#26 constitute the first concrete members of the ruling-15 anchored-to-neither NAMED family — carry into the GATE 3 package.",
+  "Wave-5 extraction files were re-serialised at indent=1 during repairs (formatting churn in 963ab91dc); future repair passes should match the file's existing serialisation."
+ ]
+}

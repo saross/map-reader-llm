@@ -1,0 +1,124 @@
+{
+  "pass": "A",
+  "adjudicator": "blind Opus pass, Session 126",
+  "scope": {
+    "rows_assigned": 43,
+    "rows_adjudicated": 43,
+    "source_document": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+    "extraction_batches": ["reports/verification/c4-extraction/045.json", "reports/verification/c4-extraction/046.json"],
+    "blindness_attested": "No file under reports/verification/c4-triage/ was opened; no repo file was edited. Evidence base: the recompute report, the two extraction blobs, the source document, scripts/recompute_c4_claims.py, and git history."
+  },
+  "era_resolution_method": {
+    "problem": "The recompute's era_check resolved every one of these 43 rows at commit 5d91c2a97a73 (2026-08-01 10:22 +1000) and reported faithful=false. That commit is NOT the era of the claims: find_era_commit (scripts/recompute_c4_claims.py:238-255) returns 'the newest commit whose tree holds the extraction's recorded blob of the source document', and the extraction blob 6f2ceb7ad30c is the POST-BANNER blob of the file, first appearing at 5d91c2a97a73 — three months after the body was written and after every recovery commit.",
+    "true_eras_established": [
+      {"era": "adf95dbf9", "date": "2026-05-03 17:02:34 +1000", "commit_subject": "docs(audit): Phase 3a verifier completeness audit — 30 cells silently dropped 835 candidates", "doc_blob_at_commit": "bb9c831d6029", "covers": "the document body (41 of my 43 claim texts verbatim-present in this blob)"},
+      {"era": "d78601b62", "date": "2026-05-06 11:03:24 +0800", "commit_subject": "docs(p3a-recovery): Tier-1 propagation closure — continuity beacon + audit annotation", "doc_blob_at_commit": "791eae7bff4a", "covers": "the '## Recovery status (annotated post-execution, partial — 2026-05-06)' section; the 2 claim texts at current lines 630 and 635 (046#37[0], 046#39[0]) are absent from the 2026-05-03 blob and present only here"}
+    ],
+    "verification_performed": "Every anchor was re-resolved by `git show <era>:<path>` and re-evaluated (len:$.results, len:$.candidates, and the a-b expression) at the era commit above. Claim-text presence in each era blob was checked verbatim for all 43 rows; zero rows were absent from both era blobs. Commit ancestry was checked with `git merge-base --is-ancestor`: adf95dbf9 precedes 414ee8a4b, and d78601b62 precedes 6683952ac and c6b5e6b10, so no era commit post-dates the recovery it is being used to measure.",
+    "result": "42 of 43 rows are ERA-FAITHFUL at their own era. The single non-match (046#28[1]) is an extraction unit error, not a document error — see row_level_exceptions."
+  },
+  "families": [
+    {
+      "name": "A — recovery backfill, entry-count reads (`len:$.results` at audit)",
+      "rows": ["045#19[0]", "045#22[0]", "045#26[0]", "045#30[0]", "045#34[0]", "045#38[0]", "045#42[0]", "045#46[0]", "045#50[0]", "045#54[0]", "045#58[0]", "045#62[0]", "045#66[0]", "045#70[0]", "045#73[0]", "045#77[0]", "045#81[0]", "045#85[0]", "045#89[0]", "045#93[0]", "045#97[0]", "045#101[0]", "045#105[0]", "045#109[0]", "045#113[0]", "045#117[0]", "045#120[0]", "046#1[0]", "046#4[0]", "046#7[0]"],
+      "row_count": 30,
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Each row quotes the audited 2026-05-03 count of `probabilities.results` for one verifier cell, from the 'Gap-positive cells, expanded' section. The Phase-3a recovery campaign then re-ran `run_pv.py cleanup` on every one of these cells and backfilled the dropped candidates, so the live artefact now holds MORE entries than the audit recorded. Two exact arithmetic identities hold for all 30 rows without exception: (1) current_value - quoted_value == the document's OWN stated gap for that cell in its Full-results table; (2) current_value == the cell's candidate-manifest length, which is byte-identical at 2026-05-03 and now (manifest stability verified independently for all 30 rows: era len == current len == the doc's 'expected' figure on the adjacent Input-set line). Worked example, 045#19: quoted 342; manifest len:$.candidates == 802 at adf95dbf9 AND at HEAD; current len:$.results == 802; 802 - 342 == 460 == the doc's stated gap for that cell. The strongest confirmation is aggregate: summing (current - quoted) across all 30 read rows gives EXACTLY 835, which is the document's own headline 'Cumulative dropped candidates (genuine): 835' (line 538; also lines 21-23, 348). So these 30 rows are precisely the 30 genuine gap-positive cells, and the entire audited gap was subsequently recovered.",
+      "era_evidence": "All 30 rows are era-faithful: `len:$.results` resolved at adf95dbf9 equals the quoted value in every case (342, 4301, 3695, 1626, 3709, 1991, 3715, 1026, 1998, 1998, 1053, 1099, 739, 2179, 509, 478, 833, 833, 8939, 294, 468, 580, 388, 3735, 3735, 2016, 2016, 2839, 3600, 571). The artefacts moved AFTER the document's era, in named recovery commits: 414ee8a4b (2026-05-03, 'cleanup Session-78 matrix verifier outputs (6 cells, 153 cands)' — descendant of adf95dbf9, verified by merge-base), c6b5e6b10 (2026-05-06, 'cleanup Tier-2 cells (6 cells, 474 cands)'), 49703010b (2026-05-06, 'cleanup Tier-3 cells (3 Pro-medium, 39 cands)'), 6683952ac (2026-05-06, 'close 3 skipped cells — Cell 1+2+3 cleanup + e47 5-of-5 derivatives'), 005e6c715 (2026-05-06, 'regen pro-high-image-pro-vf-Nof5 derivatives'), ff475e810 (2026-05-06, 'regen flash-high-text-medium-vf-Nof5 derivatives'), b2bfc446e (2026-05-06, 'cleanup flash-high-text-1of5-flash-medium-verifier (1 cand)'), 6f8bc7140 (2026-05-06, 'cleanup h8v2-wbf-scale-4 (Tier 1, 15 cands)'). Era-faithful document + artefact moved after ⇒ SNAPSHOT-DIVERGENCE under ruling 14."
+    },
+    {
+      "name": "B — recovery backfill, gap arithmetic collapsed to zero",
+      "rows": ["046#0[0]", "046#3[0]", "046#6[0]", "046#9[1]", "046#14[2]", "046#17[1]", "046#19[1]", "046#26[0]", "046#28[0]", "046#31[5]", "046#37[0]", "046#39[0]"],
+      "row_count": 12,
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Same physical event as family A, seen through the arithmetic anchor rather than the read anchor. Each row's claim-level anchor is `a - b` with a = len:$.candidates of the cell's candidate_manifest.json and b = len:$.results of its probabilities.json — the document's own gap definition (line 61: `gap = expected_input - len(probabilities.results)`). Operand-by-operand: the manifest operand `a` is UNCHANGED era-to-now in all 12 rows (2840/2840, 3601/3601, 572/572, 572/572, 802/802, 1114/1114, 3601/3601, 802/802, 802/802, 1114/1114, 4358/4358, 572/572 — moved=False in every case), while the probabilities operand `b` grew by exactly the quoted gap and landed on the manifest count. Hence current gap == 0 for all 12 rows (verified: every arithmetic row's `actual` is 0.0). The systematic offset is therefore precisely quoted_gap → 0, with the whole movement carried by operand b. Note that the two 460-rows (046#26[0], 046#28[0]) and 046#14[2] are three separate prose restatements of the same single cell figure (image-t0.0/verified-v1-n10), and 046#17[1]/046#31[5] are two restatements of the h8-v2/wbf/scale-4 gap of 15 — same mechanism, same cell, so no independent verification burden beyond the one cell each.",
+      "era_evidence": "All 12 rows are era-faithful: the `a - b` expression evaluated at the claim's own era commit reproduces the quoted value exactly (1, 1, 1, 1, 460, 15, 1, 460, 460, 15, 57, 1). Ten rows resolve at the body era adf95dbf9. Two rows — 046#37[0] (quoted 57) and 046#39[0] (quoted 1) — sit in the 2026-05-06 annotation section, whose text is absent from the 2026-05-03 blob; they were resolved at d78601b62 instead, and are era-faithful there (gap 57 and gap 1 still stood when that annotation was written, at 11:03 +0800; the closure commit 6683952ac landed at 16:38 +0800 the same day, five and a half hours later, and is a descendant of d78601b62 by merge-base). This is the ruling-14 entry-level snapshot unit applied within a single file: the body and the appended recovery-status section have different eras, and both are faithful at theirs."
+    }
+  ],
+  "row_level_exceptions": [
+    {
+      "row": "046#28[1]",
+      "disposition": "EXTRACTION-DEFECT",
+      "quoted": "57",
+      "unit_quoted": "percentage",
+      "recompute_actual": 0.0,
+      "mechanism": "The verbatim span is line 591-593: 'its 460-candidate gap (57% of the input pool) is large enough that recovery may shift its F1 / MCC rankings appreciably.' Value index 1 is correctly typed in the extraction as kind 'percentage' with quantity 'gap as a share of the input candidate pool', but it carries no per-value `method` or `path`, so it silently inherits the claim-level anchor `a - b`, which yields a count of CANDIDATES, not a share. The comparer therefore measured a percentage against a candidate count. The document is arithmetically correct at its era: 460/802 = 57.36%, which presents as '57%'. My era re-resolution reproduces the defect's signature — the expression returns 460 at adf95dbf9 against a quoted 57, the only ERA-DIVERGE result in the partition — and that is exactly the false DOC-DEFECT-AT-ERA signal this class of extraction error manufactures.",
+      "why_not_snapshot_divergence": "The primary MISMATCH verdict (57 vs 0) happens to be directionally right by coincidence, because the current gap is 0 candidates AND the current share is also 0%. But the comparison is not unit-commensurable, the recorded abs_error of 57 is meaningless, and the era axis is inverted. The defect must be repaired in the extraction before the row can be dispositioned on evidence rather than luck.",
+      "evidence_of_extractor_convention_breach": "The extractor's own convention within this same batch is to mark values that the claim anchor cannot derive with `method: \"anchor-unknown\"` — it did so for 046#14 values 0 and 1, and for 046#31 values 0 through 4, leaving only the anchor-derivable value inheriting the arithmetic method. It failed to apply that convention to 046#28 value 1.",
+      "repair": "Set 046#28 value 1 `method` to 'anchor-unknown', OR give it a per-value expression `100*(a-b)/a` over the existing operands. Under the second repair the row re-derives as era 57.36% vs current 0.0%, i.e. it joins family B as a SNAPSHOT-DIVERGENCE. Document unchanged either way.",
+      "document_status": "The source document is correct at its era and needs no repair for this row."
+    }
+  ],
+  "mechanical_relationships_found": [
+    {
+      "name": "Recovery-completeness identity",
+      "statement": "For all 30 family-A cells: current len($.results) == len($.candidates) of the cell's manifest at BOTH eras == the document's n_consensus column. Equivalently current == quoted + doc_stated_gap.",
+      "verification": "30/30 rows, manifests resolved at adf95dbf9 and at HEAD; zero manifest movement."
+    },
+    {
+      "name": "Aggregate identity — the audited gap closed exactly",
+      "statement": "sum(current - quoted) over the 30 family-A read rows == 835, which equals the document's own headline 'Cumulative dropped candidates (genuine): 835' (line 538; restated lines 21-23 and 348).",
+      "significance": "Confirms (a) that my 30 read rows are exactly the 30 genuine gap-positive cells the audit identified, (b) that the recovery closed the full audited gap with no residual and no overshoot, and (c) that no cell in this partition regressed. The one known post-audit regression named in the document's banner (`text-t0.0/verified-v1-n3`, gap 63, Obs 377) is NOT in this partition."
+    },
+    {
+      "name": "Systematic offset — arithmetic rows",
+      "statement": "quoted_gap → 0 for all 12 family-B rows, with the entire movement carried by operand b (probabilities) and operand a (manifest) invariant in 12/12 rows."
+    },
+    {
+      "name": "Restatement clusters (not independent evidence)",
+      "statement": "460 appears at 046#14[2], 046#26[0], 046#28[0] — three prose restatements of one cell (pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10). 15 appears at 046#17[1] and 046#31[5] — two restatements of h8-v2/wbf/scale-4/verified. 57 appears at 045#22[0] (as an entry count 4301) and 046#37[0] (as the gap). 1 appears at 046#0/#3/#6/#9/#19/#39 across four distinct cells. Each restatement was verified at its own era separately; none were extrapolated."
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "R1",
+      "target": "C4 ledger",
+      "recommendation": "Emit ledger rows only for the 42 SNAPSHOT-DIVERGENCE rows. No body edit to reports/phase3a-verifier-completeness-audit-2026-05-03.md — ruling 1 governs, and the document is a C6 attestation source whose body must stay unedited.",
+      "materiality": "low — the divergence is the intended, documented outcome of a successful recovery campaign, not an error."
+    },
+    {
+      "id": "R2",
+      "target": "reports/phase3a-verifier-completeness-audit-2026-05-03.md — existing top banner, lines 3-13",
+      "recommendation": "Consider an append-only widening of the banner's scope wording. It currently reads '35 gap figures below no longer reproduce'. My partition alone contains 42 non-reproducing figures, of which only 12 are gap figures — the other 30 are probabilities ENTRY COUNTS, which a narrow reading of 'gap figures' does not cover. Batch 043 carries a further 67 MISMATCH rows on this same document. Recommend re-deriving the count from the finished ledger and phrasing it to cover both the gap figures and the audited entry counts.",
+      "caveat": "The '35' claim itself is 045#0[0], which is SKIPPED (method anchor-unknown) and NOT in my partition — I am flagging the wording, not adjudicating that row. Whoever owns 045#0 should confirm the recount.",
+      "materiality": "low-moderate — presentational, but it affects whether a reader treats the entry-count figures as superseded."
+    },
+    {
+      "id": "R3",
+      "target": "reports/phase3a-verifier-completeness-audit-2026-05-03.md — the 2026-05-06 annotation section (current lines 617-680)",
+      "recommendation": "Append-only rider at the end of that section noting that the three cells it lists as skipped (`e47-flash-high-text-1of5`, `55maps-gen-verified-v2`, `proposer-verifier-384-adversarial-text-v1-prompt`) and 'Outstanding work' items 1-3 were overtaken by commit 6683952ac ('close 3 skipped cells', 2026-05-06 16:38 +0800), five and a half hours after the annotation itself (d78601b62, 11:03 +0800). All three are now at gap 0 (verified: 4358/4358, 8942/8942, 572/572). Never a body edit — the annotation is era-faithful and is itself an attestation of what was known at 11:03 that morning.",
+      "materiality": "moderate — a reader of the annotation alone would believe three cells remain open and a data-integrity investigation is outstanding."
+    },
+    {
+      "id": "R4",
+      "target": "reports/verification/c4-extraction/046.json, claim 28, value 1",
+      "recommendation": "Repair per row_level_exceptions: mark `method: \"anchor-unknown\"`, or attach the per-value expression `100*(a-b)/a`. Then re-run the recompute for that row.",
+      "materiality": "low in isolation, but see E1 — the same shape (a multi-unit value list under a single claim-level anchor) will recur across the fleet."
+    },
+    {
+      "id": "R5",
+      "target": "extraction instrument (schema v1.1 / instrument v1.2)",
+      "recommendation": "Add a validator rule: within a claim, any value whose `kind` is not commensurable with the claim-level anchor's output unit (e.g. `kind: percentage` or `kind: ratio` under a difference/count expression) must carry its own `method`/`path` or be marked `anchor-unknown`. This is mechanically checkable and would have caught 046#28[1] at validation rather than at triage."
+    }
+  ],
+  "escalations": [
+    {
+      "id": "E1",
+      "kind": "INSTRUMENT — era_check resolves at the wrong era for banner-carrying historical documents",
+      "severity": "high (process); zero disposition change within my partition",
+      "finding": "scripts/recompute_c4_claims.py:238-255 `find_era_commit` selects the newest commit whose tree holds the extraction's recorded blob of the source document. For any historical document that has since received a superseded-figures banner or an appended annotation — which is precisely what ruling 1 MANDATES for this document class — the recorded blob is the post-banner blob, so the 'era' resolved is the banner-edit date, not the era of the claims. Here the extraction blob 6f2ceb7ad30c first appears at 5d91c2a97a73 (2026-08-01), three months after the body (adf95dbf9, 2026-05-03) and after every recovery commit. Consequence: era_check reported `faithful: false` for all 43 of my rows, when 42 are era-faithful on re-resolution at the true era.",
+      "blast_radius": "All 110 MISMATCH rows in c4-recompute-report.json whose source_file is this document carry era_check.commit == 5d91c2a97a73 and faithful == false: 67 in batch 043, 27 in batch 045, 16 in batch 046. My partition holds 43 of them; the remaining 67 (batch 043) belong to another partition and are exposed to the same false signal. Report-wide, 136 of 222 MISMATCH rows carry era_check.faithful == false across 7 source documents; reports/results-summary-session-58.md (15 rows) has the same structural exposure — first commit 8b596c00d 2026-03-26, last commit a6f58d1b7 2026-08-02.",
+      "why_this_matters": "Ruling 14 makes per-claim era-faithfulness THE deciding axis and demotes the dated filename to advisory. A triager who trusts era_check.faithful==false here would land 42 era-faithful rows as DOC-DEFECT-AT-ERA — the exact inversion ruling 14 was written to prevent, arriving through the machinery ruling 14 relies on. The banner policy (ruling 1) and the era machinery (ruling 12) interact adversely: applying the banner is what breaks the era resolution.",
+      "recommended_fix": "Make era-commit selection content-aware rather than blob-aware: resolve each claim at the newest commit whose blob still contains the claim's verbatim span (falling back to the first commit introducing the source document). That single change handles both failure modes seen here — the post-hoc banner AND the within-file multi-era case (my 046#37[0] and 046#39[0] correctly resolve to d78601b62, not adf95dbf9, under a span-presence rule). Until fixed, era_check on banner-carrying documents should be suppressed or explicitly labelled unreliable rather than emitted as `faithful: false`.",
+      "action_requested": "PI decision on (a) whether to re-run era_check under a span-presence rule before GATE 3, and (b) notifying the partition holding batch 043's 67 rows on this document that their era_check field is unreliable."
+    }
+  ],
+  "disposition_summary": {
+    "SNAPSHOT-DIVERGENCE": 42,
+    "DOC-DEFECT-AT-ERA": 0,
+    "EXTRACTION-DEFECT": 1,
+    "INSTRUMENT-DEFECT": 0,
+    "ESCALATE-PI": 0,
+    "note": "Zero rows dispositioned ESCALATE-PI. The single escalation E1 is an instrument/process escalation that does not change any row's disposition in this partition, but does invalidate the era_check signal for 67 rows outside it."
+  }
+}

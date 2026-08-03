@@ -1,0 +1,149 @@
+{
+  "pass": "BC",
+  "adjudicator": "blind Opus pass, Session 126",
+  "scope": {
+    "rows_assigned": 25,
+    "rows_adjudicated": 25,
+    "documents": [
+      "reports/configuration-audit-2026-03-25-v2.md (batch 031)",
+      "reports/configuration-audit-2026-03-25.md (batch 032)"
+    ],
+    "era_commit_used": "8b596c00d (2026-03-26, 'docs(reports): add session 58 results summary and config audits') — the commit that landed both audit documents; artefact era resolved at this commit plus, for untracked-at-era output trees, the per-run execution timestamps inside the run metadata",
+    "method_note": "outputs/** was gitignored at the documents' era (first tracked at 3d22184d6, 2026-04-15, 'data(outputs): track detection GeoJSON and verifier results from gitignored dirs'), which is why the harness returned '0 candidates' for every outputs/ anchor. Era population was therefore reconstructed from per-run execution timestamps in the run metadata (which are written at execution time and are immutable thereafter), cross-checked against manifest study.created/generated fields and against git blobs for the results/ trees that WERE tracked at era."
+  },
+  "families": [
+    {
+      "name": "A. H11 Pro run-count — post-era N=10 extension overwrote the manifest operand in place",
+      "rows": [
+        "031#3[0]",
+        "031#4[0]",
+        "031#5[0]",
+        "031#6[0]",
+        "031#10[0]",
+        "031#17[0]",
+        "031#17[2]",
+        "031#20[0]",
+        "031#21[0]",
+        "031#22[2]"
+      ],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Every row in this family reduces to one operand: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json $.runs_per_condition. That file was rewritten in place on 2026-03-29 by an N=10 --resume extension: it now carries $.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created '2026-03-29', $.generated '2026-03-29T01:09:52.043996+00:00', $.conditions ['text-t0.7'], $.runs_per_condition 10, $.total_units 5 and an $.execution_order listing only run_6..run_10 — i.e. the artefact records the EXTENSION, not the original study. Arithmetic: era 5 + 5 + 1 + 1 = 12 (the document's figure); current 10 + 5 + 1 + 1 = 17 (the recompute's 'actual' for 031#4/5/6/10/17[0]/20/21/22, abs_error 5.0 on every one). 031#3[0] is the same operand read directly ('all 5 runs within pro-high-text-n5'), era 5 vs current 10. 031#17[2] is the two-condition subtotal, era 5 + 5 = 10 vs current 10 + 5 = 15. The document was faithful at its own era on every one of these ten values; the artefact moved four days later. Under ruling 14 (era-faithful + artefact moved) this is SNAPSHOT-DIVERGENCE, and the dated filename is advisory only — it did not decide the disposition, the run timestamps did.",
+      "era_evidence": "Execution timestamps in outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_N/detections_text-t0.7_runNN.meta.json ($.timestamp.start): run_1 2026-03-24T04:00:25Z, run_2 2026-03-24T04:00:20Z, run_3 2026-03-24T04:00:30Z, run_4 2026-03-24T03:49:23Z, run_5 2026-03-24T03:49:19Z; run_6 2026-03-29T04:09:22Z, run_7 2026-03-29T04:10:59Z, run_8 2026-03-29T04:11:04Z, run_9 2026-03-29T04:11:08Z, run_10 2026-03-29T04:14:45Z. Runs 6-10 post-date the 2026-03-25 audit by four days. The other three operands are era-stable: pro-high-image-n5 (study.created 2026-03-24, runs_per_condition 5; all five runs timestamped 2026-03-24T03:59-07:09Z), pro-medium-text-baseline (created 2026-03-23, runs_per_condition 1; run_1 2026-03-23T14:21:48Z), pro-medium-image-baseline (created 2026-03-23, runs_per_condition 1; run_1 2026-03-23T15:11:34Z). Corroboration inside the source document itself (independent of the operand): reports/configuration-audit-2026-03-25-v2.md:64-68 tabulates pro-high-text-n5 at 5 runs, pro-high-image-n5 at 5, and the two Pro MEDIUM baselines at 1 each, and its 'Model Verification Evidence for Pro Runs' table (lines ~78-92) enumerates exactly twelve verified runs, run_1..run_5 of each n5 condition plus run_1 of each baseline. Git cannot show the era blob: the manifest's first tracked version (3d22184d6, 2026-04-15) already reads 10, because tracking began after the extension. NOTE for the ledger: the two Pro MEDIUM baselines each gained a run_2 and run_3 on 2026-06-03 (detections-*-3.1-pro-2026-06-03.meta.json, $.timestamp.start 2026-06-03T11:53-11:57Z) while their manifests still read runs_per_condition 1 — so a present-day directory census of the four Pro conditions would give 10+5+3+3 = 21, not 17. The manifest field is a plan value, and it is stale in both directions."
+    },
+    {
+      "name": "B. v2 audit F1 figures bound to the pairwise permutation record instead of the consensus sweep the document actually quotes",
+      "rows": [
+        "031#12[0]",
+        "031#13[0]"
+      ],
+      "disposition": "EXTRACTION-DEFECT",
+      "mechanism": "The extraction anchored the whole of claims 12 and 13 to the pairwise permutation records (condition_a.global_f1 = 0.8404 text / 0.6998 image), and the recompute duly reported those as 'actual'. But the document's quoted figures come from the per-condition consensus sweeps, and they match those to the digit: Pro HIGH text pool 5 / threshold 3 F1 = 0.8489 -> the document's 0.849 (031#12[0]); Pro HIGH image pool 5 / threshold 3 F1 = 0.7031 -> the document's 0.703 (031#13[0]). Both sweeps carry metadata.buffer_metres = 20, so the 'F1 at 20 m' framing is satisfied. Neither artefact moved — the pairwise records and the consensus reports are byte-identical at the era commit and today (only their directory moved, results/ -> archive/results-60-tile-validation/, in 276e4ca80, 2026-04-16). So this is neither divergence nor a document defect: the extractor picked the wrong artefact for these two values. Re-anchoring makes both rows MATCH. Note the extraction's own anchor note on claim 12 flagged the possibility ('a Flash HIGH text 3-of-5 F1 may instead live in the sibling ... consensus-analysis-report.json ... Triage should choose between the two'); the sibling is indeed the right source, for value 0 as well as for the Flash value (see family C).",
+      "era_evidence": "git show 8b596c00d:results/h11-384-consensus-pro-high-text-n5/consensus-analysis-report.json -> $.results[] pool 5: thr1 0.7527, thr2 0.8285, thr3 0.8489, thr4 0.8383, thr5 0.8058; $.metadata.buffer_metres 20, $.metadata.study_dir 'outputs/h11/pv-diag-384/pro-high-text-n5', clustering_tolerance_metres 20. git show 8b596c00d:results/h11-384-consensus-pro-high-image-n5/consensus-analysis-report.json -> pool 5: thr1 0.5710, thr2 0.6726, thr3 0.7031, thr4 0.7011, thr5 0.6538; buffer_metres 20. Both files exist today, unchanged, at archive/results-60-tile-validation/h11-384-consensus-pro-high-text-n5/consensus-analysis-report.json (thr 3 = 0.8489) and archive/results-60-tile-validation/h11-384-consensus-pro-high-image-n5/consensus-analysis-report.json (thr 3 = 0.7031). The anchored pairwise record at era (git show 8b596c00d:results/h11-384-pairwise-n5/permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json) reads condition_a {label 'Pro HIGH text 3-of-5', global_f1 0.8404}, condition_b {label 'Flash HIGH text 5-of-5', global_f1 0.7788}, permutation_test.p_value 0.874 — identical to the current archived copy."
+    },
+    {
+      "name": "C. v2 audit misattributes the Pro arm's own pairwise F1 to Flash",
+      "rows": [
+        "031#12[3]"
+      ],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "reports/configuration-audit-2026-03-25-v2.md:313-315 reads: 'Pro HIGH text consensus F1=0.849 (3-of-5 threshold) is a real Pro result ... close to but not clearly better than Flash HIGH text (F1=0.840 at 3-of-5 from the same comparison).' No era artefact supports 'Flash HIGH text F1=0.840 at 3-of-5' at 20 m. The cited pairwise record's Flash arm is labelled 'Flash HIGH text 5-of-5' with global_f1 0.7788, and the Flash HIGH text consensus sweep gives 3-of-5 = 0.6034 and 5-of-5 = 0.7761. I swept every consensus-analysis-report.json in the era tree for an f1 beginning 0.84: the only 20 m hit is the PRO text sweep's own 0.8489; the remaining hits are 30/40/50 m buffer-sensitivity rows (flash-high-image-50m 0.8427/0.8458, pro-high-image-40m 0.8477, pro-high-text-30m 0.8452/0.8474). The maximum era F1 for any Flash text condition at 20 m is 0.8136 (flash-high-text-n30, pool 30 threshold 26). 0.840 is instead the rounded value of condition_a.global_f1 = 0.8404 — the PRO arm of the very comparison the sentence cites. Both the number and the '3-of-5' label attached to it are therefore wrong at the document's own era; the sentence restates the Pro figure as if it were the Flash comparator. This is a mechanism (b) defect-at-era, not divergence: the artefact has not changed since the era commit. Corroboration that 0.840 belongs to Pro elsewhere in the project: docs/notes/working-notes.md:4963 ('Pro HIGH text N=5: F1=0.840'), :5719 (table row 'Consensus N=5 (Pro HIGH) | 0.840'), :6163 ('Pro H text 3/5 consensus: $54.06 for F1=0.840').",
+      "era_evidence": "git show 8b596c00d:results/h11-384-pairwise-n5/permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json -> condition_a {label 'Pro HIGH text 3-of-5', study_dir 'outputs/h11/pv-diag-384/pro-high-text-n5', config {pool_size 5, threshold 3}, global_f1 0.8404, tp 337, fp 30, fn 98}; condition_b {label 'Flash HIGH text 5-of-5', study_dir 'outputs/h11/pv-diag-384/flash-high-text-n5', config {pool_size 5, threshold 5}, global_f1 0.7788, tp 331, fp 84, fn 104}; metadata.buffer_metres 20; permutation_test {observed_mean_diff 0.001772, p_value 0.874, n_tiles 487}. git show 8b596c00d:results/h11-384-consensus-flash-high-text-n5/consensus-analysis-report.json -> pool 5: thr1 0.1988, thr2 0.4313, thr3 0.6034, thr4 0.7215, thr5 0.7761; optima.global_optimum {threshold 5, f1 0.7761}. Sweep over all era consensus-analysis-report.json files for f1 ~0.84 returned only the four files named above."
+    },
+    {
+      "name": "D. v1 audit 'T (range)' column sourced from the prompt-config default as it stood at audit time, not from the executed run metadata",
+      "rows": [
+        "032#40[2]",
+        "032#44[2]",
+        "032#45[2]",
+        "032#55[2]",
+        "032#56[2]"
+      ],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "Five inventory-table cells report a temperature that contradicts every run meta in the phase, in both directions — phase1-library document 0.0 / executed 1.0; phase2d, phase2e, retest/phase2d, retest/phase2e document 1.0 / executed 0.0. The common cause is that the column reproduces the prompt-config JSON's temperature as it stood on 2026-03-25, not the temperature the runs actually used. At the era commit, prompts/configs/library_pure-positive-canon.json = 0.0, detect_brief-text-image_terse.json = 1.0 and detect_brief-text-image.json = 1.0 — exactly the five documented cells. Two independent drift paths made those config values wrong for the runs: (i) phase1-library executed 2026-02-01, when library_pure-positive-canon.json still read temperature 1.0 (commit d06eacd0e, 2026-02-01); the config was edited to 0.0 a week later (953e2d26d, 2026-02-08), so the March audit read a post-execution value; (ii) phase2d/phase2e (and their retests) ran under a study-level override — studies/phase2d-h5-negtext.yaml:50 'optimal_temperature: 0.0' and :76 'temperature: 0.0', studies/phase2e-h4-ordering.yaml:31 'optimal_temperature: 0.0' — which the runner DID propagate into the metadata (0.0), while the config file kept its 1.0 default. Either way, at the document's own era the run metadata already recorded the executed value, and the document contradicts it. Not divergence: these metas are dated February/mid-March 2026 and are unchanged. Control that isolates the defect to these rows: the same column is correct for the phases where config default and executed value coincide — phase2a 50/50 metas at 1.0 (document 1.0), phase2b 20 each at 0.0/0.3/0.7/1.0/1.3 (document '0.0-1.3'), phase2c 80/80 at 0.0 (document 0.0).",
+      "era_evidence": "Census of $.configuration.temperature over every meta.json in each tree (both $.configuration.temperature and $.configuration.full_config_snapshot.temperature agree in each file, so there is no meta-internal ambiguity of the kind v2 found for configuration.model): archive/outputs-pre-retest-60-tile/phase1-library 5/5 at 1.0 (pass_01 detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json, timing.start 2026-02-01T05:55:20Z, instruction_file detect_image-only.md); archive/outputs-pre-retest-60-tile/phase2d 40/40 at 0.0 (track1-image/terse/run_1 timing.start 2026-02-11T10:32:52Z, instruction_file detect_brief-text-image_terse.md); archive/outputs-pre-retest-60-tile/phase2e 30/30 at 0.0 (canonical-first/run_1 timing.start 2026-02-11T14:04:00Z, instruction_file detect_brief-text-image.md); outputs/retest/phase2d 4/4 at 0.0 (track1-image/terse/run_1 timestamp.start 2026-03-15T11:02:20Z); outputs/retest/phase2e 4/4 at 0.0 (canonical-first/run_1 timestamp.start 2026-03-15T11:02:17Z). Config values at the era commit: git show 8b596c00d:prompts/configs/library_pure-positive-canon.json -> 0.0; .../detect_brief-text-image_terse.json -> 1.0; .../detect_brief-text-image.json -> 1.0. Config drift: git show d06eacd0e:prompts/configs/library_pure-positive-canon.json -> 1.0 (2026-02-01); git show 953e2d26d:... -> 0.0 (2026-02-08). Control phases: archive/outputs-pre-retest-60-tile/phase2a 50/50 at 1.0; phase2b 20 each at 0.0/0.3/0.7/1.0/1.3; phase2c 80/80 at 0.0."
+    },
+    {
+      "name": "E. phase2d census — carried-forward conditions are tracked symlinks the manifest locator cannot see",
+      "rows": [
+        "032#44[0]",
+        "032#44[1]",
+        "032#44[4]"
+      ],
+      "disposition": "EXTRACTION-DEFECT",
+      "mechanism": "The document's row 'phase2d (neg-text) | 6 | 60' is a directory census and is correct both at era and today. Each of the two phase2d tracks holds THREE condition directories — minimal, terse, verbose — with ten run directories each: 2 x 3 x 10 = 6 conditions, 60 runs. The 'minimal' condition is a carried-forward baseline realised as symlinks (track1-image/minimal/run_N -> ../../../phase2c/track1-image/plus-hp/run_N; track2-text/minimal/run_N -> ../../../phase2b/track2-text/T0.0/run_N), and those symlinks are themselves git-tracked, so the 6/60 census is verifiable from the tracked tree. The extraction instead computed the planned product from the two study manifests, whose $.conditions lists only ['terse','verbose'] (the executed-natively subset) with runs_per_condition 10: (2+2) = 4 conditions and (2+2) x 10 = 40 runs — the recompute's 'actual' values. The manifests are era-stable; nothing moved. This is a locator failure: len:$.conditions and conditions x runs_per_condition systematically miss carried-forward/symlinked conditions. Re-anchoring to a directory census (following symlinks) makes all three rows MATCH. Cross-check that the census reading is the document's convention: the sibling phase2e row '4 | 40' is likewise a census in which one of the four conditions (config-default) is a symlinked carry-forward of phase2c plus-hp, and that row matched.",
+      "era_evidence": "git ls-files archive/outputs-pre-retest-60-tile/phase2d, grouped by condition directory: minimal 20 tracked entries (the symlinks, 10 per track), terse 60, verbose 60, plus 2 checkpoint.json, 2 study_manifest.json, 2 per_run_metrics.csv. Symlink mtimes 2026-03-12 17:02 — pre-era (era path was outputs/phase2d/; the tree moved to archive/outputs-pre-retest-60-tile/ later, first appearing at 276e4ca80, 2026-04-16). find -L over each minimal/ directory resolves 10 meta.json files per track, so the symlinks still point at live runs. Manifests: archive/outputs-pre-retest-60-tile/phase2d/track1-image/study_manifest.json {conditions ['terse','verbose'], runs_per_condition 10}; track2-text identical. Native (non-symlinked) metas: 20 per track = 40, which is exactly the recompute's 'actual'. phase2e comparator: archive/outputs-pre-retest-60-tile/phase2e/study_manifest.json {conditions ['config-default','canonical-first','canonical-last','random'], runs_per_condition 10}, with config-default/run_N symlinked to ../../../outputs/phase2c/track1-image/plus-hp/run_N (resolved at era from outputs/phase2e/, broken only by the later archive move) — 30 native metas + 10 symlinked = 40."
+    },
+    {
+      "name": "F. retest/phase2d condition count under-reported",
+      "rows": [
+        "032#55[0]"
+      ],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "The retest table row reads 'retest/phase2d | 2 | 4'. The tree held four condition directories at era — track1-image/{terse,verbose} and track2-text/{terse,verbose}, one run each — so the census is 4 conditions / 4 runs. The Runs cell (4) is right; the Conditions cell (2) is not, and the row is internally inconsistent with itself at 1 run per condition. The '2' is not an alternative convention: applied consistently, unique-condition-name counting would give 5 for retest/phase2b (document 10) and 8 for retest/phase2c (document 13). The document's convention everywhere else in this table is the track-qualified directory census, and I verified it against the tree for the four sibling rows: retest/phase2a 5 conditions / 15 runs, retest/phase2b 10 / 30, retest/phase2c 13 / 13, retest/phase2e 4 / 4 — all exact. Nothing moved: both tracks were populated on 2026-03-15, ten days before the audit. So the cell was wrong at its own era.",
+      "era_evidence": "outputs/retest/phase2d run metadata timestamps ($.timestamp.start): track1-image/terse/run_1 2026-03-15T11:02:20Z; track2-text/terse/run_1 2026-03-15T10:39:38Z; track2-text/verbose/run_1 2026-03-15T10:42:15Z — all pre-era, both tracks present. Directory census today: 4 leaf condition directories, 4 run directories, 4 meta.json. Study manifests: track1-image {conditions ['terse','verbose'], runs_per_condition 1}, track2-text identical -> 2 + 2 = 4, the recompute's 'actual'. Sibling-row census verification: retest/phase2a 15 run dirs / 15 metas across 5 leaf conditions; retest/phase2b 30/30 across 10 (2 tracks x T0.0/T0.3/T0.7/T1.0/T1.3); retest/phase2c 13/13 across 13 (track1-image 5, track2-text 5, track1-image-exploratory 3); retest/phase2e 4/4 across 4."
+    },
+    {
+      "name": "G. retest/phase3c track1-image — six in-flight batch runs landed hours after the audit",
+      "rows": [
+        "032#61[1]",
+        "032#61[5]"
+      ],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "The document reports 119 runs for retest/phase3c track1-image; the tree now holds 125. Reconstructing the era population from execution timestamps: exactly 119 of the 125 runs had started before 2026-03-25T02:30Z, and the remaining six started at 03:23:55Z, 04:09:12Z, 04:38:57Z, 05:08:16Z, 05:51:52Z and 06:38:32Z on 2026-03-25 — i.e. after the audit ran, on the same day. The document corroborates this internally: its INFO discrepancy table records 'retest/phase3c track1-image | 6 | SOURCE_MISSING:meta | 6 runs have JSONL but no meta.json and no output (incomplete/failed runs)', and the row's JSONL cell reads 84/119. 125 - 6 = 119. The document was faithful at its era; the artefact population grew within hours. Ruling 14: era-faithful + artefact moved => SNAPSHOT-DIVERGENCE. SECONDARY MECHANISM, recorded so the ledger is not misled: the extraction's expression is the PLANNED product (25 conditions x runs_per_condition 5 = 125), which equalled 125 at era too — so a naive era re-run of this expression would NOT have exonerated the document. The correct locator for this cell is an executed-run census; under that locator the row is era-MATCH and current-MISMATCH, which is the honest divergence reading. Both mechanisms are live here and the repairs differ (rider vs re-anchor), so both are recorded.",
+      "era_evidence": "outputs/retest/phase3c/track1-image: 25 condition directories, 125 run directories, 125 meta.json; study_manifest.json {conditions 25, runs_per_condition 5}. Date histogram of $.timestamp.start across the 125 metas: 32 on 2026-03-21, 42 on 2026-03-22, 30 on 2026-03-23, 13 on 2026-03-24, 8 on 2026-03-25. Count with start < 2026-03-25T02:30Z = 119 (also 119 with start < 2026-03-25T03:00Z). The six late runs, in order: h9-A-p5/run_1 03:23:55Z, h9-A-p1/run_1 04:09:12Z, h9-E-p3/run_5 04:38:57Z, h9-C-img4/run_3 05:08:16Z, h9-D-t5/run_2 05:51:52Z, h9-B-v4/run_5 06:38:32Z. Document corroboration at reports/configuration-audit-2026-03-25.md (Section 1 retest table row 'retest/phase3c track1-image | 25 | 119 | ... | 84/119' and the Section 2 INFO row naming the 6 meta-less runs)."
+    },
+    {
+      "name": "H. '611' is a directory-name token bound to the wrong counter",
+      "rows": [
+        "032#7[0]"
+      ],
+      "disposition": "EXTRACTION-DEFECT",
+      "mechanism": "The value is the '611' inside the condition name 'pv-diag-384/text-baseline-611tiles'. The extraction bound it to $.execution_stats.items_processed (609) while itself flagging doubt ('611 appears only inside the condition/directory name ... Triage may drop it as a pure name'). Read as a tile-pool count — the only reading under which it is a claim at all — it is exactly right and there is a committed locator that says so: the run's tiles sidecar records $.total_tiles = 611, $.completed = 609, $.failed = 2, and the meta agrees ($.execution_stats.items_processed 609, items_failed 2, both failures 'batch_api_error' at 2026-03-21T11:57:05Z). 609 + 2 = 611. The artefact is unchanged since execution (file mtime 2026-03-21, first tracked at 3d22184d6 on 2026-04-15). Neither divergence nor a document defect: the extractor chose a counter that excludes the two failed tiles. Re-anchor to the sidecar's $.total_tiles and the row MATCHes; alternatively prune it under instrument rule 5 as a pure name token.",
+      "era_evidence": "outputs/h11/pv-diag-384/text-baseline-611tiles/text-t0.0/run_1/detections_text-t0.0_run01.tiles.json -> {total_tiles: 611, completed: 609, failed: 2}. Sibling detections_text-t0.0_run01.meta.json -> $.execution_stats {items_processed 609, items_failed 2, items_skipped 0, parse_failures 0}, $.execution_stats.failed_items = two entries, K-35-052-4_32635_x0_y2352.png and K-35-053-3_Elenovo_x0_y2352.png, both reason 'batch_api_error', timestamp 2026-03-21T11:57:05Z. Directory mtimes 2026-03-21 22:57; git log shows a single commit touching the file, 3d22184d6 (2026-04-15), the bulk tracking commit."
+    }
+  ],
+  "row_level_exceptions": [
+    {
+      "row": "031#12[3]",
+      "note": "Sits in a claim whose other four values belong to family B/its sibling; adjudicated separately as family C because its mechanism is a document misattribution, not an anchor choice. Within claim 13 the same split appears benignly: 13[0] (0.703) comes from the consensus sweep while 13[3] (0.727 Flash image) and 13[4] (p=0.018) come from the pairwise record and matched — so the document mixes two sources inside a single sentence. That mixing is what made a single claim-level anchor unsafe."
+    },
+    {
+      "row": "032#61[1] / 032#61[5]",
+      "note": "Dual mechanism. Primary disposition SNAPSHOT-DIVERGENCE (era population 119, verified by timestamps; grew to 125 the same day). Secondary EXTRACTION issue: the bound expression is a planned product (25 x 5) that equals 125 at era as well, so era re-resolution of the CURRENT expression would not have shown the document faithful. Any ledger row should carry both, or the divergence will look unverifiable when the era_check lands."
+    },
+    {
+      "row": "032#44[0] / 44[1] / 44[4]",
+      "note": "The document's 6/60 census is right, but note in passing (not one of my rows) that the same audit's 'Has meta.json 1,740/1,740' and 'Phase 1-2 original 335 runs' totals count 30 run directories whose payload is symlinked (20 phase2d minimal, 10 phase2e config-default) as if they were native meta-bearing runs. That is defensible at era — the symlinks resolved — but a present-day recount of native metas gives 305, not 335. Flagged for whoever adjudicates the grand-total rows; I did not adjudicate them."
+    }
+  ],
+  "recommendations": [
+    {
+      "target": "reports/configuration-audit-2026-03-25-v2.md",
+      "style": "append-only rider (ruling 1: snapshot-class report; body untouched)",
+      "content": "Dated rider covering two items. (1) Era scope of the '12 Pro runs' figure: correct as at 2026-03-25; the pro-high-text-n5 pool was extended to N=10 on 2026-03-29 (runs 6-10, study_manifest.json rewritten in place), so a present-day recount from the manifests gives 17 and a directory census gives 21 (the two Pro MEDIUM baselines each gained runs 2-3 on 2026-06-03). (2) Correction to 'Scientific Implications' item 2, lines 313-315: the Flash comparator quoted as 'F1=0.840 at 3-of-5 from the same comparison' is neither Flash nor 3-of-5 — the cited pairwise record's Flash arm is Flash HIGH text 5-of-5 at global_f1 0.7788, and Flash HIGH text at 3-of-5 is 0.6034; 0.840 is the rounded Pro arm value 0.8404 from that same record. The sentence's qualitative conclusion is unaffected (the paired permutation gives p=0.874 on a per-tile mean difference of 0.001772), but the quoted comparator must not be cited as a Flash figure."
+    },
+    {
+      "target": "reports/configuration-audit-2026-03-25.md (v1)",
+      "style": "append-only rider (same class)",
+      "content": "Dated rider covering two items. (1) The 'T (range)' column in the Phase 1-2 Original Runs and Retest tables reproduces the prompt-config JSON default as it stood on 2026-03-25, not the temperature recorded in the run metadata. Affected rows and executed values: phase1-library 1.0 (documented 0.0), phase2d 0.0 (documented 1.0), phase2e 0.0 (documented 1.0), retest/phase2d 0.0 (documented 1.0), retest/phase2e 0.0 (documented 1.0). Cause: library_pure-positive-canon.json was edited 1.0 -> 0.0 on 2026-02-08 (953e2d26d), after phase1-library ran on 2026-02-01; and phase2d/2e ran under a study-YAML temperature override of 0.0 that the config file does not carry. Rows for phase2a, phase2b and phase2c are unaffected and verified correct. (2) The retest/phase2d Conditions cell should read 4 (track1-image and track2-text, terse and verbose each), not 2; the Runs cell (4) is correct."
+    },
+    {
+      "target": "extraction / recompute instrument",
+      "style": "registered instrument work",
+      "content": "Four locator lessons from these 25 rows. (a) Do not anchor run-population claims to study_manifest.json $.runs_per_condition: it is a PLAN field, overwritten in place by --resume extensions (family A, 5 -> 10 on 2026-03-29) and left stale by out-of-study additions (the Pro MEDIUM baselines, still 1 after gaining runs 2-3). Prefer a run-directory census keyed on per-run execution timestamps, which are immutable and give era resolution for free even where the tree was gitignored at era. (b) Condition and run censuses must follow symlinks: len:$.conditions missed the two carried-forward 'minimal' conditions in phase2d (family E), and the same construction would misread phase2e. (c) Extend era_check to arithmetic and runner rows (registered under rulings 12/14): families A and G were only separable by hand, and family G shows an era re-run of the CURRENT expression can still fail to exonerate a faithful document when the expression itself is the wrong quantity. (d) Prune or re-anchor directory-name-token values: '611' should bind to the tiles sidecar $.total_tiles, not $.execution_stats.items_processed (family H)."
+    },
+    {
+      "target": "C4 ledger",
+      "style": "triage bookkeeping",
+      "content": "Six of the 25 rows (031#12[0], 031#13[0], 032#7[0], 032#44[0], 032#44[1], 032#44[4]) are extraction-side and should be re-anchored and re-run rather than carried as document findings — all six become MATCH under the corrected locators named above. Twelve are SNAPSHOT-DIVERGENCE (families A and G) and want ledger rows plus the v2 rider. Seven are genuine document defects at era (families C, D, F) and want the two riders above."
+    }
+  ],
+  "escalations": [
+    {
+      "kind": "materiality notice (not an unresolved row — 031#12[3] is adjudicated DOC-DEFECT-AT-ERA)",
+      "row": "031#12[3]",
+      "why": "The defect sits in the document whose entire purpose is to CORRECT the v1 audit, in the section headed 'Scientific Implications of Corrected Model Identification'. A corrections document carrying its own value misattribution is worth PI awareness beyond a ledger row. Materiality check performed: I grepped the tracked markdown for 0.840 and found no downstream artefact that repeats the erroneous Flash attribution — docs/notes/working-notes.md:4963, :5719 and :6163 all correctly label 0.840 as the Pro HIGH text N=5 figure, which is further evidence that the v2 sentence is the outlier. So the exposure appears confined to this one document, but confirming that no paper text depends on 'Flash HIGH text 3-of-5 = 0.840' is a judgement call above my scope."
+    }
+  ],
+  "blindness_attestation": "No file under reports/verification/c4-triage/ was opened (no wave5 draft stories, no mismatch-triage-*.json, no spot-audit material). No repo file was created or modified; the only write is this output. Verdicts were formed from the recompute rows, the two extraction files, the two source documents, git blobs at and around the era commit, and the run/results artefacts themselves."
+}
