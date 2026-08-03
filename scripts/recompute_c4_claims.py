@@ -223,7 +223,14 @@ def _census_scope(params: dict) -> dict:
                 tracked_n += 1
         elif rel in tracked:
             tracked_n += 1
-    scope = "repo-reproducible" if tracked_n == total else "machine-relative"
+    # A zero-match census proves nothing about reproducibility — the
+    # entries may simply not exist on THIS host (Obs 385: the crops row,
+    # 6 files on the work machine and 0 here, was being stamped
+    # "repo-reproducible" by the vacuous tracked==total==0 equality).
+    if total == 0:
+        scope = "machine-relative"
+    else:
+        scope = "repo-reproducible" if tracked_n == total else "machine-relative"
     return {"census_total": total, "census_tracked": tracked_n,
             "machine_scope": scope}
 

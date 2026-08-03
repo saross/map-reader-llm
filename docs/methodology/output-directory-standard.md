@@ -1,11 +1,9 @@
 # Output Directory Standard
 
-> **Last revised**: 2026-08-02 (C4 wave-3 triage — post-run-report
-> census corrected 4 → 2 + 1 retrospective and compliance cells to
-> match audit plan § 5.1; schema-provenance sentence clarified; the
-> 2026-05-26 changelog "After" cell corrected to quote the wording the
-> Status section actually carried). See [§ Changelog](#changelog)
-> for revision history.
+> **Last revised**: 2026-08-03 (governance: `docs/methodology/reports/**`
+> split-by-citation rule added to the Revision-Policy scope section —
+> PI ruling closing the gap that directory sat in). See
+> [§ Changelog](#changelog) for revision history.
 
 ## Purpose
 
@@ -341,6 +339,22 @@ records), `docs/methodology/preregistration/*.md` (governed separately
 by the preregistration process), `docs/methodology/research/*.md`
 (third-party Deep Research reports), and `archive/**` (frozen state).
 
+**`docs/methodology/reports/**` — split by citation (PI ruling
+2026-08-03, closing the governance gap this directory sat in)**: scope
+follows CONSUMPTION, not location. A file in this directory that the
+lodged registration (or, in future, paper text) cites as authoritative
+is IN full Revision-Policy scope — currently exactly one,
+`docs/methodology/reports/tile-selection-methodology.md`
+(`preregistration.md` § 8.6), whose header flags this status. The
+remaining files are frozen planning-stage records and are explicitly
+OUT of scope, under the lighter convention practised 2026-08-02: never
+rewrite their bodies to current truth (that falsifies the planning
+record); on supersession, add a dated `**STALE — …**` banner under the
+H1 naming the superseding design with a line-anchored citation, an
+explicit do-not-cite directive, and a `Banner added <date>` line. A
+new citation of any file here moves it into full scope; the C4 fleet's
+extraction of registration citations is the drift check.
+
 ## Immediate TODOs
 
 ### 1. Track pv-diag-384 in git (requires sapphire access)
@@ -403,6 +417,20 @@ directory with a README documenting the run configuration, cost, and
 the ground truth filtering applied (hairy-only symbols from student data).
 
 ## Changelog
+
+### 2026-08-03 — Governance: reports-directory split-by-citation rule (Session 125, D3)
+
+**Trigger**: the C4 wave-4 triage bannered/corrected three
+`docs/methodology/reports/` files and found the directory in neither
+the scope list nor the out-of-scope list (escalation item 5 of
+`reports/verification/c4-triage/mismatch-triage-2026-08-02-wave4.json`).
+PI ruling after a grounded cost-benefit pass (6 files, one
+prereg-cited, zero paper/results references): scope follows
+consumption. The prereg-cited `tile-selection-methodology.md` enters
+full scope; the five frozen planning records are explicitly out of
+scope with the dated-STALE-banner-on-supersession convention; a new
+citation moves a file into scope, with the C4 registration-citation
+extraction as the drift check. No figures changed.
 
 ### 2026-08-02 — C4 wave-3 triage corrections (Session 125)
 

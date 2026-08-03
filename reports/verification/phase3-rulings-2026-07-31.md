@@ -174,3 +174,52 @@ establish (Obs 380).
 `n1-baseline-matrix.md` "board-vs-micro F1 gap ≤ 0.0003" bound versus
 `tiering_20m.json` `f1_gap` spanning to 0.000466: blind verification
 before any edit; LIVING-DOC-FIX with changelog if confirmed.
+
+---
+
+## Session-125 rulings — 2026-08-03 (third batch)
+
+Collected interactively via the D1–D6 decision sequence; same force as
+rulings 1–13. (D1 landed Obs 385; D2 the E39 fix, commit `01c84b841`;
+D3 is a documentation-governance ruling recorded in
+`output-directory-standard.md`'s scope section; D6's root-cause fix is
+commit `75aa47125`.)
+
+## 14. Snapshot classification finalised — the two-axis rule (supersedes ruling 12's provisional sentence)
+
+**Ruling: adopted as recommended.** The presentation class (dated
+filename or dated title) is ADVISORY ONLY — it never decides a
+disposition. The deciding axis is per-claim era-faithfulness (the
+`era_check` machinery; extending it to runner rows is registered
+instrument work). For entry-dated registers (protocol-errata,
+decisions-log), the snapshot unit is the ENTRY, not the file.
+Dispositions follow evidence: era-faithful + artefact moved ⇒
+SNAPSHOT-DIVERGENCE; wrong at its own era ⇒ DOC-DEFECT-AT-ERA,
+regardless of filename. Motivating cases: the S125 wave-4 triage's
+three misleads (h11 dated-filename report carrying doc-defects-at-era
+on a file unchanged since five weeks before it;
+session-111-discoveries behaving as living despite its dated title;
+E-entry dating in the errata register).
+
+## 15. Machine scope — the tracked-proxies rule (GATE 3 ruling on Obs 383's question)
+
+**Ruling: adopted with phasing.** Mechanical verification scope =
+git-tracked artefacts PLUS tracked proxies: a **regeneration
+manifest** (generator + tracked inputs + params + expected
+count/content-hash) is the tracked, machine-independent referent for a
+regenerable untracked tree; a **bundle index** (tracked
+checksums/sizes) is the referent for non-regenerable bulk whose
+payload lives outside git (cross-machine syncable now;
+Zenodo-depositable at publication, alongside the GitHub-integration
+code DOI). Claims anchored to neither are a NAMED triage family, never
+silently mechanical. Phasing: (1) tracking-gap audit + commit of
+small analysis-relevant strays (the 044-class) and (2) regeneration-
+manifest pilots for the two census-implicated crop trees execute in
+S125; (3) bundle-index pilot on one run with mass bundling deferred to
+a dedicated session (storage decision); (4) charter § 4/§ 5 amendment
+plus registry re-anchoring ride the queued register re-anchoring; (5)
+Zenodo assembly at publication. Rationale (PI, 2026-08-03): the
+untracked strata split into regenerable-by-recipe, non-regenerable
+evidence, and by-omission strays — each wants a different referent,
+and the proxies keep every quoted verification figure checkable by an
+external reader.

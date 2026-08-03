@@ -100,11 +100,17 @@ def glob_entries(params: dict) -> list[Path]:
 
     The census is symlink-consistent with a plain ``find`` (which does
     not follow directory symlinks): entries that are symlinks, or that
-    are reachable only through a symlinked directory, are excluded —
-    ``Path.glob`` traverses them on Python 3.13, and a follow-symlinks
-    census double-counts (wave-3 finding: it inflated the
-    ``experiment_intent.md`` census 174 → 184 through ``proposer-all``
-    links, contaminating an Obs 383 sub-example).
+    are reachable only through a symlinked directory, are excluded.
+    Scope of the underlying behaviour (corrected per Obs 385 — the
+    original rationale here overgeneralised): on Python 3.13,
+    single-star path components in ``Path.glob`` DO traverse symlinked
+    directories (the regression test demonstrates it), but ``**``
+    defaults to ``recurse_symlinks=False`` and does NOT — so the
+    harness never produced the 174 → 184 ``experiment_intent.md``
+    inflation; that figure came from a ``find -L``-style measurement
+    outside the harness (Obs 383's contaminated sub-example, Obs 385).
+    The guard exists for the single-star case and for
+    measurement-method consistency.
     """
     from fnmatch import fnmatch
     root = REPO_ROOT / params["root"]

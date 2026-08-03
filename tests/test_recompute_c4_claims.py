@@ -239,6 +239,14 @@ def test_glob_count_census_scope_stamp(tmp_path, monkeypatch):
     assert row["machine_scope"] == "repo-reproducible"
     assert (row["census_total"], row["census_tracked"]) == (2, 2)
 
+    # Obs 385: a zero-match census must never read repo-reproducible —
+    # absence on this host is not evidence the census reproduces.
+    empty_spec = {"batch": "b", "claim_index": 0, "value_index": 0,
+                  "runner": "glob-count",
+                  "params": {"root": "outputs", "glob": "*.nothing"}}
+    (row,) = process_claim("b", 0, claim, {("b", 0, 0): empty_spec})
+    assert (row["census_total"], row["machine_scope"]) == (0, "machine-relative")
+
 
 @pytest.mark.tier1
 def test_git_era_resolution(tmp_path, monkeypatch):
