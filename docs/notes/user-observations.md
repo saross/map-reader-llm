@@ -384,4 +384,3 @@ exception-question was answered by reframing (two metrics, two levels
 of analysis, a replication of Obs 274 rather than an exception)
 instead of by a p-value — the explanation landed because it dissolved
 the apparent contradiction rather than adjudicating it.
-
