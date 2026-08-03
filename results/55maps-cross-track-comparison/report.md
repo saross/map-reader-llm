@@ -531,7 +531,7 @@ way); §9.2's "+0.059 from 0.771 to 0.830 at 50 m" likewise quotes pre-recovery 
 the new values — image [0.845, 0.862] and text-HIGH [0.822, 0.842] are disjoint — but changing it would move
 a conclusion, which this pass is not authorised to do.
 
-**Commit**: (this commit).
+**Commit**: `723d56a29`.
 
 ### 2026-05-03 — Original publication
 
