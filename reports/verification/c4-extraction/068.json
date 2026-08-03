@@ -1,0 +1,1400 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-attractor-pull-v2/report.md",
+    "git_blob": "62fb719484f8",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "4. Cross-reference to Obs 272 — Cross-run disagreement (range 100–125 m)"
+      },
+      "claim_text": "### Cross-run disagreement (range 100–125 m)",
+      "values": [
+        {
+          "quantity": "per-run attractor-pull cutoff, lower end of the cross-run disagreement range (T=0.3 text-HIGH and text-MIN)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "per-run attractor-pull cutoff, upper end of the cross-run disagreement range (T=0.7 text-HIGH and image)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].cutoff_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b068] Scope decisions applied throughout this batch (lines 117–161; b067 covers 1–116). (a) Bracketed shell-interval notation — \"(0, 50]\", \"(100, 125]\", \"(125, 150]\" — is treated as a bin identifier (a name) rather than a fresh claim, because the shell edge set is asserted once at line 31, outside this batch, and re-extracting the same edges eight times would flood triage; where a bare radius is asserted as a cap, cutoff, or floor it IS extracted. (b) Run labels \"T=0.3\", \"T=0.7\", \"text-HIGH\", \"text-MIN\" are condition names per instrument rule 5 and are not extracted, except at line 143 where \"at T = 0.7\" asserts the image run's decoding temperature. (c) \"55-map\" is extracted as a map count per the \"487-tile Era 2 corpus\" precedent in rule 5, anchored to the distinct map_name count in the 55-map evaluation bounds; if triage judges it a pure name, every such value prunes together. This heading asserts the span of per-run cutoff_m values across the four runs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "4. Cross-reference to Obs 272 — Cross-run disagreement (range 100–125 m)"
+      },
+      "claim_text": "Per-run cutoffs differ by 25 m.",
+      "values": [
+        {
+          "quantity": "difference between the deepest and shallowest per-run attractor-pull cutoff across the four 55-map runs",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+            "path": "$.runs[?(@.key=='t0.7')].cutoff_m"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+            "path": "$.runs[?(@.key=='t0.3')].cutoff_m"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Derived from the per-run cutoff_m fields: 125 m (T=0.7 text-HIGH, image) minus 100 m (T=0.3 text-HIGH, text-MIN)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "5. Reproducibility"
+      },
+      "claim_text": "Seed 42, M = 1000 permutations per run.",
+      "values": [
+        {
+          "quantity": "permutation seed, 55-map attractor-pull v2 analysis",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "M, within-tile permutations per run",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "The named script scripts/analyse_attractor_pull_v2.py writes this artefact; the JSON is the less-writable anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "6. Paper implications"
+      },
+      "claim_text": "This section is **discussion-load-bearing** for the paper's Methods and Results sections; it is the practitioner-cap reference the paper relies upon when citing recall and F1 numbers on the 55-map generalisation corpus.",
+      "values": [
+        {
+          "quantity": "map count, 55-map generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "path": "$.features[*].properties.map_name (distinct count)"
+      },
+      "method": "read",
+      "notes": "Map count asserted as a property of the generalisation corpus; anchored to the distinct map_name values in the 384 px 55-map evaluation bounds (the tile manifest inputs/tiles_384_55maps/full_evaluation_manifest.json is not present in the working tree)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "6.1 Practitioner cap recommendation"
+      },
+      "claim_text": "For downstream consumers of the 55-map detection results, the paper recommends **100 m as the conservative practitioner cap and 125 m as the extended cap**:",
+      "values": [
+        {
+          "quantity": "map count, 55-map detection corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": "read"
+        },
+        {
+          "quantity": "conservative practitioner cap (most-permissive cross-run consensus cutoff), 4-run 55-map attractor-pull",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "extended practitioner cap (majority breakpoint), 4-run 55-map attractor-pull",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          134
+        ],
+        "section": "6.1 Practitioner cap recommendation"
+      },
+      "claim_text": "- **Cite 100 m** as the most-permissive cap — \"all four corrected 55-map runs (two decoding temperatures, two thinking budgets, both text and image tracks) show detection density above ground-truth mounds significantly distinguishable from random within-tile placement up to 100 m\".",
+      "values": [
+        {
+          "quantity": "most-permissive practitioner cap, 4-run 55-map attractor-pull",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "number of corrected 55-map runs entering the cross-run consensus",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, 55-map run corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": "read"
+        },
+        {
+          "quantity": "number of distinct decoding temperatures represented across the four runs",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "number of distinct thinking budgets represented across the four runs",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "deepest shell outer edge at which all four runs reject the within-tile null",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "The two factor-level counts have no single mechanical locator: they are distinct-value counts over the four runs' launch manifests ($.resolved_config.proposer.temperature and .thinking_level in outputs/55maps-{text-high-t0.3-,text-high-,image-,text-min-}generalisation/launch_manifest.json), which no one path resolves. Flagged anchor-unknown for triage rather than approximated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          135
+        ],
+        "section": "6.1 Practitioner cap recommendation"
+      },
+      "claim_text": "- **Cite 125 m** as the majority / extended cap — \"T=0.7 text-HIGH and image (T=0.7) extend significant signal to 125 m with clean monotonic decay; T=0.3 text-HIGH and text-MIN cut at 100 m\".",
+      "values": [
+        {
+          "quantity": "majority / extended practitioner cap, 4-run 55-map attractor-pull",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        },
+        {
+          "quantity": "per-run cutoff for the two runs extending to 125 m (T=0.7 text-HIGH shown; image carries the same value)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "per-run cutoff for the two runs cutting at 100 m (T=0.3 text-HIGH shown; text-MIN carries the same value)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].cutoff_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "Each of the last two values is asserted of two runs at once; the companion locators are $.runs[?(@.key=='image')].cutoff_m and $.runs[?(@.key=='text-min')].cutoff_m in the same file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          135
+        ],
+        "section": "6.1 Practitioner cap recommendation"
+      },
+      "claim_text": "Use this cap when the analysis specifically benefits from the wider buffer (e.g., when comparing against Obs 272's original 125 m anchor) and when the run under discussion is one of the two that supports it.",
+      "values": [
+        {
+          "quantity": "cutoff originally reported by Obs 272 (image-generalisation review only)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "number of runs rejecting the within-tile null at the (100, 125] shell",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==125)].n_runs_significant",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "The 125 m figure is attributed to Obs 272 in docs/notes/reflections/working-notes.md, a prose document; instrument rule 2 forbids anchoring prose to prose, so that value is flagged anchor-unknown for triage to chase to an artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          136
+        ],
+        "section": "6.1 Practitioner cap recommendation"
+      },
+      "claim_text": "- **Do not cite buffers in (125, 150] m** as practitioner-meaningful for the 55-map corpus.",
+      "values": [
+        {
+          "quantity": "map count, 55-map corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "path": "$.features[*].properties.map_name (distinct count)"
+      },
+      "method": "read",
+      "notes": "The interval bounds 125 and 150 in \"(125, 150] m\" are treated as a shell-bin identifier per the batch scope decision on the first claim, not re-extracted; triage may revisit if the edge set should be re-asserted here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "The two consensus operating points are not in tension; they describe different consensus thresholds for a real cross-run pattern.",
+      "values": [
+        {
+          "quantity": "number of consensus operating points reported by the 4-run analysis",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The two intended referents are $.consensus.most_permissive_consensus_cutoff_m and $.consensus.majority_breakpoint_m in results/55maps-attractor-pull-v2/attractor-pull-v2.json, but no single locator counts them (len:$.consensus resolves to 3, including per_shell). Flagged for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "Two specific observations support this reading:",
+      "values": [
+        {
+          "quantity": "number of supporting observations enumerated in § 6.2",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b068] Self-referential list counts (\"Two specific observations…\" at line 140, \"Two concrete choices…\" at line 147) are extracted as anchor-unknown: they count this document's own enumerated lists, so no external artefact decides them. Triage may prune them as discourse structure rather than facts about the study."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "1. **Text-MIN cleanly corroborates T=0.3's previously thin-sample 100 m floor.**",
+      "values": [
+        {
+          "quantity": "per-run attractor-pull cutoff, T=0.3 text-HIGH",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "$.runs[?(@.key=='t0.3')].cutoff_m"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "T=0.3 text-HIGH cut at 100 m in the original 3-run analysis (Obs 294), but with a non-monotonic dip at the (100, 125] shell from only n = 7 mound calls (p = 0.093).",
+      "values": [
+        {
+          "quantity": "per-run attractor-pull cutoff, T=0.3 text-HIGH",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "number of runs in the original (Obs 294) attractor-pull consensus",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "number of mound calls in the (100, 125] shell, T=0.3 text-HIGH",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+              "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].obs_rate_in_shell"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+              "path": "$.runs[?(@.key=='t0.3')].n_candidates"
+            }
+          ]
+        },
+        {
+          "quantity": "bias-corrected permutation p-value, (100, 125] shell, T=0.3 text-HIGH",
+          "value_verbatim": "0.093",
+          "value_parsed": 0.093,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].p_value_bias_corrected",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "n = 7 is the shell occupancy implied by obs_rate_in_shell × n_candidates, rounded to the nearest integer; the artefact stores the rate, not the raw count. The 3-run figure describes the earlier Obs 294 analysis in docs/notes/reflections/working-notes.md (prose — rule 2 bars a prose anchor); no v1 55-map attractor-pull artefact exists under results/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "Obs 294 editorially collapsed that dip to thin-sample noise so the unified 125 m claim could stand.",
+      "values": [
+        {
+          "quantity": "unified practitioner cap asserted by Obs 294 (3-run consensus)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Attributed to Obs 294 in docs/notes/reflections/working-notes.md, a prose document; instrument rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "Text-MIN's cut at 100 m is **clean and monotonic** — no dip, no thin-sample concern, monotonic decay across (0, 50] → (50, 75] → (75, 100] → (100, 125] (rates 42.7 % → 3.4 % → 1.2 % → 0.85 %).",
+      "values": [
+        {
+          "quantity": "per-run attractor-pull cutoff, text-MIN",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed detection rate in the (0, 50] shell, text-MIN",
+          "value_verbatim": "42.7 %",
+          "value_parsed": 42.7,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+              "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==50)].obs_rate_in_shell"
+            }
+          ]
+        },
+        {
+          "quantity": "observed detection rate in the (50, 75] shell, text-MIN",
+          "value_verbatim": "3.4 %",
+          "value_parsed": 3.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+              "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==75)].obs_rate_in_shell"
+            }
+          ]
+        },
+        {
+          "quantity": "observed detection rate in the (75, 100] shell, text-MIN",
+          "value_verbatim": "1.2 %",
+          "value_parsed": 1.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+              "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==100)].obs_rate_in_shell"
+            }
+          ]
+        },
+        {
+          "quantity": "observed detection rate in the (100, 125] shell, text-MIN",
+          "value_verbatim": "0.85 %",
+          "value_parsed": 0.85,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+              "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==125)].obs_rate_in_shell"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "The four rates are quoted as percentages; the artefact stores them as fractions in obs_rate_in_shell, hence the per-value 100 × conversion (instrument v1.2 amendment 1: one derivation per value)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "This independent corroboration removes the precarity of the 3-run editorial reading and establishes the 100 m floor as a genuine cross-run pattern visible in two of four runs.",
+      "values": [
+        {
+          "quantity": "number of runs in the original (Obs 294) attractor-pull consensus",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "most-permissive cross-run consensus cutoff (the 100 m floor)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "number of runs whose per-run cutoff is 100 m",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs[?(@.cutoff_m==100)]",
+          "method": "read"
+        },
+        {
+          "quantity": "total number of corrected 55-map runs analysed",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "The 3-run figure describes the earlier Obs 294 analysis in docs/notes/reflections/working-notes.md (prose — rule 2 bars a prose anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "2. **The 100 m / 125 m split is patterned.**",
+      "values": [
+        {
+          "quantity": "most-permissive cross-run consensus cutoff",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "majority breakpoint (extended cap)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "The two runs reaching 125 m are T=0.7 text-HIGH and image (HIGH thinking by default at T = 0.7); the two cutting at 100 m are T=0.3 text-HIGH (HIGH thinking, lower decoding temperature) and text-MIN (lower thinking budget at the canonical text temperature).",
+      "values": [
+        {
+          "quantity": "number of runs whose per-run cutoff is 125 m",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs[?(@.cutoff_m==125)]",
+          "method": "read"
+        },
+        {
+          "quantity": "per-run attractor-pull cutoff, image (T=0.7)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "decoding temperature of the 55-map image generalisation run as run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/launch_manifest.json#$.resolved_config.proposer.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "number of runs whose per-run cutoff is 100 m",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs[?(@.cutoff_m==100)]",
+          "method": "read"
+        },
+        {
+          "quantity": "per-run attractor-pull cutoff, text-MIN",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].cutoff_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "\"T=0.7 text-HIGH\", \"T=0.3 text-HIGH\" and \"text-MIN\" are run labels (names) and are not extracted; \"at T = 0.7\" in the image parenthesis asserts that run's decoding temperature and is extracted against the run's launch manifest. The companion cutoff locators are $.runs[?(@.key=='t0.7')].cutoff_m and $.runs[?(@.key=='t0.3')].cutoff_m."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "One reading is causal — that HIGH thinking *plus* diverse decoding extends spatial reach by one shell.",
+      "values": [
+        {
+          "quantity": "number of shells by which the claimed spatial reach extends between the 100 m and 125 m cutoff groups",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Implied by 100 m and 125 m being adjacent entries in $.shell_edges_m of results/55maps-attractor-pull-v2/attractor-pull-v2.json, but no locator yields the shell-index difference mechanically. Included per the instrument's include-when-in-doubt rule; triage may prune it as narrative rather than a checkable quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "6.2 Cross-run consensus interpretation"
+      },
+      "claim_text": "The alternative is coincidence at n = 4.",
+      "values": [
+        {
+          "quantity": "number of runs entering the cross-run comparison",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "len:$.runs"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "6.3 Practitioner-cap framing for the paper"
+      },
+      "claim_text": "Two concrete choices follow from this:",
+      "values": [
+        {
+          "quantity": "number of concrete choices enumerated in § 6.3",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b068] Self-referential list counts (\"Two specific observations…\" at line 140, \"Two concrete choices…\" at line 147) are extracted as anchor-unknown: they count this document's own enumerated lists, so no external artefact decides them. Triage may prune them as discourse structure rather than facts about the study."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "6.3 Practitioner-cap framing for the paper"
+      },
+      "claim_text": "- The corrected-F1 multi-buffer tables (50, 75, 100, 125, 150 m) should report 150 m visually distinct (italics / asterisk / footnote),",
+      "values": [
+        {
+          "quantity": "first buffer radius of the corrected-F1 multi-buffer table",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[0].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "second buffer radius of the corrected-F1 multi-buffer table",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[1].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "third buffer radius of the corrected-F1 multi-buffer table",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[2].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "fourth buffer radius of the corrected-F1 multi-buffer table",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[3].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "fifth buffer radius of the corrected-F1 multi-buffer table",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[4].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius whose row is to be marked visually distinct",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[4].R_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json"
+      },
+      "method": "read",
+      "notes": "The report does not name which corrected-F1 multi-buffer table; the image run's summary.json is used as the representative anchor. Parallel tables exist at results/55maps-text-high-generalisation/corrected-f1-multi-buffer/ and for the T=0.3 and text-MIN runs. Shared unit m is carried on every value; the source states it once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          150,
+          150
+        ],
+        "section": "6.3 Practitioner-cap framing for the paper"
+      },
+      "claim_text": "- Pairwise-permutation buffer sweeps (Obs 297 and earlier) cap at 125 m on this principle.",
+      "values": [
+        {
+          "quantity": "largest buffer radius in the 55-map pairwise-permutation v2 sweep",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.3-vs-t0.7/summary.json",
+        "path": "$.buffers[9]"
+      },
+      "method": "read",
+      "notes": "Anchored to the last (largest) element of the 10-entry $.buffers list in the t0.3-vs-t0.7 pair; the other five pair directories under results/55maps-pairwise-permutation-v2/ carry the same sweep. Obs 297 is cited in docs/notes/reflections/working-notes.md (prose), so the artefact is used instead."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          151
+        ],
+        "section": "6.3 Practitioner-cap framing for the paper"
+      },
+      "claim_text": "- Where a single headline number is needed, **100 m is the safer choice** (cross-run unanimity); 125 m is acceptable when the analysis is restricted to the runs that support it (T=0.7 text-HIGH or image).",
+      "values": [
+        {
+          "quantity": "safer single headline cap (most-permissive cross-run consensus cutoff)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "acceptable extended cap (majority breakpoint)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          155
+        ],
+        "section": "6.4 Relation to the cross-corpus story"
+      },
+      "claim_text": "The 100 m / 125 m within-corpus split is itself a small-scale reflection of the cross-corpus cap-difference observation in Obs 296: the cap is set by **whichever failure mode dominates each run**, not by a single fundamental detector spatial-precision floor.",
+      "values": [
+        {
+          "quantity": "most-permissive cross-run consensus cutoff",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "majority breakpoint (extended cap)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          155
+        ],
+        "section": "6.4 Relation to the cross-corpus story"
+      },
+      "claim_text": "The 100 m vs 125 m split among the four 55-map runs is a within-corpus instance of the same failure-mode-driven cap variation that Obs 296 documents at the 25 m (gold-standard, post-calibration) vs 125 m (55-map, native unfamiliar-map) cross-corpus scale.",
+      "values": [
+        {
+          "quantity": "most-permissive cross-run consensus cutoff, 55-map corpus",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "majority breakpoint, 55-map corpus",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        },
+        {
+          "quantity": "number of 55-map runs in the within-corpus split",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, 55-map corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": "read"
+        },
+        {
+          "quantity": "most-permissive cross-run consensus cutoff, gold-standard corpus (post-calibration)",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/gold-standard-attractor-pull/attractor-pull-gs.json#$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "cap cited for the 55-map native unfamiliar-map corpus",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, 55-map native unfamiliar-map corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": "The 25 m gold-standard figure is attributed to Obs 296 (prose); it is anchored instead to the gold-standard attractor-pull artefact, whose consensus block carries the same quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "7. Cross-references"
+      },
+      "claim_text": "125 m practitioner cap from the original 3-run consensus (T=0.3, T=0.7, image).",
+      "values": [
+        {
+          "quantity": "practitioner cap reported by Obs 294",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "number of runs in the original Obs 294 consensus",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Both figures describe Obs 294 in docs/notes/reflections/working-notes.md, a prose document; instrument rule 2 forbids anchoring prose to prose. No v1 55-map attractor-pull artefact exists under results/ to chase to."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "7. Cross-references"
+      },
+      "claim_text": "Clarified — not superseded — by the 4-run extension reported here.",
+      "values": [
+        {
+          "quantity": "number of runs in the extended (v2) attractor-pull consensus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "len:$.runs"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "7. Cross-references"
+      },
+      "claim_text": "The 125 m claim still holds for the *majority* of the four runs; Obs 298 reframes the implication that the cap is *unanimous* across runs.",
+      "values": [
+        {
+          "quantity": "majority breakpoint (the cap holding for a majority of runs)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        },
+        {
+          "quantity": "total number of runs in the v2 consensus",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "7. Cross-references"
+      },
+      "claim_text": "GS-vs-55-map cap difference is a failure-of-generalisation effect (cap-as-calibration-vs-native), not a fundamental detector-precision shift.",
+      "values": [
+        {
+          "quantity": "map count, 55-map corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "path": "$.features[*].properties.map_name (distinct count)"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "7. Cross-references"
+      },
+      "claim_text": "The 100 m / 125 m within-corpus split documented here is consistent with the same failure-mode-driven cap variation that Obs 296 observes cross-corpus.",
+      "values": [
+        {
+          "quantity": "most-permissive cross-run consensus cutoff",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "majority breakpoint (extended cap)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          161
+        ],
+        "section": "7. Cross-references"
+      },
+      "claim_text": "4-run attractor-pull consensus refines the 55-map cap to 100 m most-permissive / 125 m majority; text-MIN cleanly corroborates T=0.3's previously thin-sample 100 m floor.",
+      "values": [
+        {
+          "quantity": "number of runs in the v2 attractor-pull consensus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, 55-map corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": "read"
+        },
+        {
+          "quantity": "most-permissive cross-run consensus cutoff",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": "read"
+        },
+        {
+          "quantity": "majority breakpoint (extended cap)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": "read"
+        },
+        {
+          "quantity": "per-run attractor-pull cutoff, T=0.3 text-HIGH (the thin-sample 100 m floor)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].cutoff_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          161
+        ],
+        "section": "7. Cross-references"
+      },
+      "claim_text": "Includes the off-by-one fix in the majority-threshold formula (`(N // 2) + 1`) so the 4-run majority breakpoint correctly reports the (100, 125] shell.",
+      "values": [
+        {
+          "quantity": "majority-threshold formula implemented in the analysis script",
+          "value_verbatim": "(N // 2) + 1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "number of runs whose majority threshold the formula sets",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-attractor-pull-v2/attractor-pull-v2.json#len:$.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "majority breakpoint reported by the fixed formula",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-attractor-pull-v2/attractor-pull-v2.json#$.consensus.majority_breakpoint_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_attractor_pull_v2.py"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (instrument v1.1: config/script constants are legitimate anchors routed to triage). The formula appears as the majority_threshold assignment in scripts/analyse_attractor_pull_v2.py. The trailing \"(100, 125] shell\" is extracted only for its 125 m breakpoint value, per the batch scope decision on shell-interval notation."
+    }
+  ]
+}

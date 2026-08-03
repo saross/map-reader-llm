@@ -1,0 +1,2546 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/report.md",
+    "git_blob": "b1905f341dbd",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          10,
+          10
+        ],
+        "section": "§ 1 Executive summary"
+      },
+      "claim_text": "identical to v1 apart from the student false-negative prior, which is derived from the combined human-review labels on the VLM-only candidate slice rather than the 5 % global estimate of Sobotkova et al. (2023).",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the v1 D-S run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": "$.parameters.student_fn_rate_prior"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Method convention across b079: the batch brief nominated recompute-script for bootstrap CIs / permutation p-values / Dawid-Skene estimates. Where the statistic is stored verbatim at a resolvable path in a committed sibling artefact, 'read' is used instead (instrument rule 3: read = the value should sit at anchor.path) — stricter and mechanically resolvable. recompute-script is reserved for statistics with no stored scalar (e.g. 'AUC = 0.5 across every prior tested', the ~0.22 phase-transition prior). Citation year (2023) excluded per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "§ 1 Executive summary — headline findings"
+      },
+      "claim_text": "Plugging the empirical VLM-only mound rate (0.7247) in as the student-FN prior does **not** produce a well-calibrated D-S run.",
+      "values": [
+        {
+          "quantity": "empirical mound rate on the VLM-only slice",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.empirical_prior_derivation.empirical_vlm_only_mound_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.empirical_prior_derivation.empirical_vlm_only_mound_rate"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Scope decision: '2-annotator' / '2 binary annotators' / 'three-annotator' / '2 x 2 cross-tab' are model-class and table-shape descriptors, treated as names rather than asserted counts (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "§ 1 Executive summary — headline findings"
+      },
+      "claim_text": "Above student-FN priors of roughly 0.22 the EM estimate of prevalence collapses to 1.0 and every item's posterior becomes 1.0.",
+      "values": [
+        {
+          "quantity": "student-FN prior above which the EM prevalence estimate collapses (phase transition)",
+          "value_verbatim": "0.22",
+          "value_parsed": 0.22,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/prior_sensitivity_sweep.csv#lowest student_fn_prior with prevalence == 1.0",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "estimated prevalence in the collapsed regime",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.model_estimates.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "per-item posterior in the collapsed regime",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Method convention across b079: the batch brief nominated recompute-script for bootstrap CIs / permutation p-values / Dawid-Skene estimates. Where the statistic is stored verbatim at a resolvable path in a committed sibling artefact, 'read' is used instead (instrument rule 3: read = the value should sit at anchor.path) — stricter and mechanically resolvable. recompute-script is reserved for statistics with no stored scalar (e.g. 'AUC = 0.5 across every prior tested', the ~0.22 phase-transition prior). 'roughly 0.22' is an approximate threshold read off the prior sweep; no stored scalar, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "§ 1 Executive summary — headline findings"
+      },
+      "claim_text": "The v2 \"empirical prior\" run falls into this collapsed regime; the v2 VLM-only posterior is 1.0000 everywhere.",
+      "values": [
+        {
+          "quantity": "v2 VLM-only posterior at prior = 0.7247",
+          "value_verbatim": "1.0000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "§ 1 Executive summary — headline findings"
+      },
+      "claim_text": "- **A separate calibrated prior exists at 0.17** (about half the empirical rate).",
+      "values": [
+        {
+          "quantity": "calibrated student-FN prior",
+          "value_verbatim": "0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibrated_prior_search.calibrated_student_fn_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.calibrated_prior_search.calibrated_student_fn_prior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "§ 1 Executive summary — headline findings"
+      },
+      "claim_text": "At this calibrated prior the v2 VLM-only posterior matches the empirical rate to 4 decimals (0.7246 vs 0.7247), ECE drops to 0.0001, Brier to 0.1995 — but **AUC stays at 0.5000 (degenerate)**.",
+      "values": [
+        {
+          "quantity": "decimal places of agreement between posterior and empirical rate",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "v2 VLM-only posterior at the calibrated prior",
+          "value_verbatim": "0.7246",
+          "value_parsed": 0.7246,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.calibrated_prior_search.calibrated_vlm_only_posterior",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical mound rate on the VLM-only slice",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.calibrated_prior_search.empirical_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE at the calibrated prior",
+          "value_verbatim": "0.0001",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score at the calibrated prior",
+          "value_verbatim": "0.1995",
+          "value_parsed": 0.1995,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.brier",
+          "method": "read"
+        },
+        {
+          "quantity": "AUC at the calibrated prior",
+          "value_verbatim": "0.5000",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] 'to 4 decimals' included under the 'when in doubt, include and flag' rule — it is a precision descriptor rather than a measured quantity; derivable by comparing the two anchored values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "§ 1 Executive summary — headline findings"
+      },
+      "claim_text": "Across **every** prior value tested (sweep in `prior_sensitivity_sweep.csv`), the item-level AUC of the D-S posterior on the VLM-only slice is 0.5000.",
+      "values": [
+        {
+          "quantity": "item-level AUC of the D-S posterior on the VLM-only slice, across every prior in the sweep",
+          "value_verbatim": "0.5000",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/prior_sensitivity_sweep.csv"
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b079] prior_sensitivity_sweep.csv carries no AUC column (student_fn_prior, student_sensitivity, converged, n_iter, prevalence, vlm_sensitivity, vlm_specificity, vlm_only_posterior, abs_gap_vs_empirical) — the invariance claim needs recomputation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "§ 1 Executive summary — headline findings"
+      },
+      "claim_text": "- **Held-out sensitivity check (80 / 20, seed 42)**: train-derived prior 0.7214 vs test empirical rate 0.7379 — the genuine held-out calibration error is 0.2621 absolute.",
+      "values": [
+        {
+          "quantity": "training fraction of the held-out split",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "test fraction of the held-out split",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 - 100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        },
+        {
+          "quantity": "held-out split seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "train-derived student-FN prior (empirical rate on the 80 % train split)",
+          "value_verbatim": "0.7214",
+          "value_parsed": 0.7214,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.train_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "test-set empirical mound rate",
+          "value_verbatim": "0.7379",
+          "value_parsed": 0.7379,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.test_empirical_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "absolute held-out calibration gap (posterior − test rate)",
+          "value_verbatim": "0.2621",
+          "value_parsed": 0.2621,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.gap_posterior_vs_test",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "§ 1 Executive summary — headline findings"
+      },
+      "claim_text": "This is well below v1's ECE (0.5385) but well above the calibrated-prior ECE (0.0001), so the calibrated-prior result is partly a circularity artefact.",
+      "values": [
+        {
+          "quantity": "v1 ECE (fixed 5 % prior)",
+          "value_verbatim": "0.5385",
+          "value_parsed": 0.5385,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v1_reference.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE at the calibrated prior",
+          "value_verbatim": "0.0001",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "§ 1 Executive summary — one-line paper claim"
+      },
+      "claim_text": "A data-driven Dawid-Skene variant that replaces the original 5 % student-FN prior (from Sobotkova et al. 2023; D-S is post-hoc, not preregistered — D17 audit FALSE-12) with a prior derived from the same human-review labels finds a calibrated posterior at prior = 0.17 (ECE = 0.0001) but preserves the AUC = 0.500 rank degeneracy observed in the v1 run.",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the v1 D-S run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.parameters.student_fn_rate_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "calibrated student-FN prior",
+          "value_verbatim": "0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibrated_prior_search.calibrated_student_fn_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE at the calibrated prior",
+          "value_verbatim": "0.0001",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "item-level AUC in the v1 run",
+          "value_verbatim": "0.500",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v1_reference.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] D17 / FALSE-12 are audit identifiers, excluded per instrument rule 5; '2 binary annotators' treated as a model-class descriptor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "§ 2 Circularity caveat"
+      },
+      "claim_text": "An 80 / 20 held-out sensitivity check is included below (§7) to partially address this caveat.",
+      "values": [
+        {
+          "quantity": "training fraction of the held-out split",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "test fraction of the held-out split",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 - 100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "§ 3 Prior derivation"
+      },
+      "claim_text": "- VLM-only candidates joined to human review: **1,028**.",
+      "values": [
+        {
+          "quantity": "VLM-only candidates joined to human review",
+          "value_verbatim": "1,028",
+          "value_parsed": 1028,
+          "unit": null,
+          "kind": "count",
+          "path": "$.empirical_prior_derivation.vlm_only_joined",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.empirical_prior_derivation.vlm_only_joined"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "§ 3 Prior derivation"
+      },
+      "claim_text": "- Human-confirmed mounds among those: **745**.",
+      "values": [
+        {
+          "quantity": "human-confirmed mounds among the joined VLM-only candidates",
+          "value_verbatim": "745",
+          "value_parsed": 745,
+          "unit": null,
+          "kind": "count",
+          "path": "$.empirical_prior_derivation.vlm_only_human_mound",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.empirical_prior_derivation.vlm_only_human_mound"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "§ 3 Prior derivation"
+      },
+      "claim_text": "- Empirical mound rate on VLM-only slice: **0.7247**.",
+      "values": [
+        {
+          "quantity": "empirical mound rate on the VLM-only slice",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.empirical_prior_derivation.empirical_vlm_only_mound_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.empirical_prior_derivation.empirical_vlm_only_mound_rate"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "§ 3 Prior derivation"
+      },
+      "claim_text": "- Student-FN prior used for v2 EM: **0.7247** (student sensitivity = 0.2753).",
+      "values": [
+        {
+          "quantity": "student-FN prior used for the v2 EM run",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.student_fn_prior_v2",
+          "method": "read"
+        },
+        {
+          "quantity": "estimated student sensitivity in the v2 run",
+          "value_verbatim": "0.2753",
+          "value_parsed": 0.2753,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json#$.dawid_skene.model_estimates.student_sensitivity",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "§ 4 v2 D-S model outputs"
+      },
+      "claim_text": "## 4. v2 D-S model outputs (with prior = 0.7247)",
+      "values": [
+        {
+          "quantity": "student-FN prior used for the v2 EM run",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": "$.parameters.student_fn_rate_prior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "§ 4 v2 D-S model outputs"
+      },
+      "claim_text": "- Converged: True (11 iterations).",
+      "values": [
+        {
+          "quantity": "EM iterations to convergence, v2 run",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": "$.dawid_skene.model_estimates.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": "$.dawid_skene.model_estimates.n_iterations"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "§ 4 v2 D-S model outputs"
+      },
+      "claim_text": "- Estimated prevalence: **1.0000** (the pathology — see §8).",
+      "values": [
+        {
+          "quantity": "estimated prevalence, v2 run",
+          "value_verbatim": "1.0000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.model_estimates.prevalence",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": "$.dawid_skene.model_estimates.prevalence"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "§ 4 v2 D-S model outputs"
+      },
+      "claim_text": "- Estimated VLM sensitivity: 0.8046.",
+      "values": [
+        {
+          "quantity": "estimated VLM sensitivity, v2 run",
+          "value_verbatim": "0.8046",
+          "value_parsed": 0.8046,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.model_estimates.vlm_sensitivity",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": "$.dawid_skene.model_estimates.vlm_sensitivity"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "§ 4 v2 D-S model outputs"
+      },
+      "claim_text": "- Estimated VLM specificity: 0.0000.",
+      "values": [
+        {
+          "quantity": "estimated VLM specificity, v2 run",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.model_estimates.vlm_specificity",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": "$.dawid_skene.model_estimates.vlm_specificity"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "§ 4 v2 D-S model outputs"
+      },
+      "claim_text": "- VLM-only posterior P(true = 1): **1.0000**.",
+      "values": [
+        {
+          "quantity": "v2 VLM-only posterior P(true = 1)",
+          "value_verbatim": "1.0000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] The '1' in 'P(true = 1)' is a class label, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "§ 4 v2 D-S model outputs"
+      },
+      "claim_text": "- Unique posterior values on VLM-only slice: **1**.",
+      "values": [
+        {
+          "quantity": "distinct posterior values on the VLM-only slice, v2 run",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.unique_v2_posteriors",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "len:$.unique_v2_posteriors"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "§ 5 v2 calibration vs. human review — table header"
+      },
+      "claim_text": "| Metric | v1 (fixed 5 %) | v2 (data-driven prior = 0.7247) | Verifier |",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the v1 D-S run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.parameters.student_fn_rate_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "student-FN prior used for the v2 EM run",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.student_fn_prior_v2",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "§ 5 v2 calibration vs. human review — ECE row"
+      },
+      "claim_text": "| ECE | 0.5385 | 0.2753 | 0.2689 |",
+      "values": [
+        {
+          "quantity": "ECE, v1 run (fixed 5 % prior)",
+          "value_verbatim": "0.5385",
+          "value_parsed": 0.5385,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v1_reference.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE, v2 run (data-driven prior)",
+          "value_verbatim": "0.2753",
+          "value_parsed": 0.2753,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v2_calibration.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE, verifier probability (Obs 269 reference)",
+          "value_verbatim": "0.2689",
+          "value_parsed": 0.2689,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.verifier_reference_obs_269.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "§ 5 v2 calibration vs. human review — Brier row"
+      },
+      "claim_text": "| Brier | 0.4895 | 0.2753 | 0.3226 |",
+      "values": [
+        {
+          "quantity": "Brier score, v1 run (fixed 5 % prior)",
+          "value_verbatim": "0.4895",
+          "value_parsed": 0.4895,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v1_reference.brier",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, v2 run (data-driven prior)",
+          "value_verbatim": "0.2753",
+          "value_parsed": 0.2753,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v2_calibration.brier",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, verifier probability (Obs 269 reference)",
+          "value_verbatim": "0.3226",
+          "value_parsed": 0.3226,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.verifier_reference_obs_269.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "§ 5 v2 calibration vs. human review — AUC row"
+      },
+      "claim_text": "| AUC | 0.5000 | 0.5000 | 0.6545 |",
+      "values": [
+        {
+          "quantity": "AUC, v1 run (fixed 5 % prior)",
+          "value_verbatim": "0.5000",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v1_reference.auc",
+          "method": "read"
+        },
+        {
+          "quantity": "AUC, v2 run (data-driven prior)",
+          "value_verbatim": "0.5000",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v2_calibration.auc",
+          "method": "read"
+        },
+        {
+          "quantity": "AUC, verifier probability (Obs 269 reference)",
+          "value_verbatim": "0.6545",
+          "value_parsed": 0.6545,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.verifier_reference_obs_269.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "§ 6 2 × 2 cross-tab at threshold 0.5 (v2)"
+      },
+      "claim_text": "## 6. 2 × 2 cross-tab at threshold 0.5 (v2)",
+      "values": [
+        {
+          "quantity": "cross-tab decision threshold",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.v2_coarse_crosstab.threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.v2_coarse_crosstab.threshold"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Scope decision: '2-annotator' / '2 binary annotators' / 'three-annotator' / '2 x 2 cross-tab' are model-class and table-shape descriptors, treated as names rather than asserted counts (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "§ 6 2 × 2 cross-tab — D-S > 0.5 row"
+      },
+      "claim_text": "| **D-S > 0.5** | 745 | 283 |",
+      "values": [
+        {
+          "quantity": "cross-tab decision threshold",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.v2_coarse_crosstab.threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "D-S > 0.5 and human mound (TP)",
+          "value_verbatim": "745",
+          "value_parsed": 745,
+          "unit": null,
+          "kind": "count",
+          "path": "$.v2_coarse_crosstab.tp",
+          "method": "read"
+        },
+        {
+          "quantity": "D-S > 0.5 and human not_mound (FP)",
+          "value_verbatim": "283",
+          "value_parsed": 283,
+          "unit": null,
+          "kind": "count",
+          "path": "$.v2_coarse_crosstab.fp",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "§ 6 2 × 2 cross-tab — D-S ≤ 0.5 row"
+      },
+      "claim_text": "| **D-S ≤ 0.5** | 0 | 0 |",
+      "values": [
+        {
+          "quantity": "cross-tab decision threshold",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.v2_coarse_crosstab.threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "D-S ≤ 0.5 and human mound (FN)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.v2_coarse_crosstab.fn",
+          "method": "read"
+        },
+        {
+          "quantity": "D-S ≤ 0.5 and human not_mound (TN)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.v2_coarse_crosstab.tn",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "§ 6 2 × 2 cross-tab at threshold 0.5 (v2)"
+      },
+      "claim_text": "The cross-tab now flips from v1 (D-S ≤ 0.5 for all rows) to v2 (D-S > 0.5 for all rows).",
+      "values": [
+        {
+          "quantity": "cross-tab decision threshold",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.v2_coarse_crosstab.threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.v2_coarse_crosstab.threshold"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Span-level convention across b079: where one span repeats the SAME asserted quantity verbatim (e.g. '50 m' three times in one sentence), the quantity is enumerated once; distinct quantities that share a numeral are enumerated separately."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "## 7. Held-out sensitivity check (80 / 20, seed 42)",
+      "values": [
+        {
+          "quantity": "training fraction of the held-out split",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "test fraction of the held-out split",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 - 100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        },
+        {
+          "quantity": "held-out split seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "- Train set size: 822 VLM-only items.",
+      "values": [
+        {
+          "quantity": "train-set size, VLM-only items",
+          "value_verbatim": "822",
+          "value_parsed": 822,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_train",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+        "path": "$.n_train"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "- Test set size: 206 VLM-only items.",
+      "values": [
+        {
+          "quantity": "test-set size, VLM-only items",
+          "value_verbatim": "206",
+          "value_parsed": 206,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_test",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+        "path": "$.n_test"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "- Train-derived prior (empirical rate on 80 %): 0.7214.",
+      "values": [
+        {
+          "quantity": "training fraction of the held-out split",
+          "value_verbatim": "80 %",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "train-derived student-FN prior",
+          "value_verbatim": "0.7214",
+          "value_parsed": 0.7214,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.train_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "- Test-set empirical rate (20 %): 0.7379.",
+      "values": [
+        {
+          "quantity": "test fraction of the held-out split",
+          "value_verbatim": "20 %",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 - 100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        },
+        {
+          "quantity": "test-set empirical mound rate",
+          "value_verbatim": "0.7379",
+          "value_parsed": 0.7379,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.test_empirical_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "- D-S posterior fit with train prior: 1.0000.",
+      "values": [
+        {
+          "quantity": "D-S posterior fitted under the train-derived prior",
+          "value_verbatim": "1.0000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.posterior_under_train_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+        "path": "$.posterior_under_train_prior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          71,
+          71
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "- Absolute gap (posterior − test rate): **+0.2621**.",
+      "values": [
+        {
+          "quantity": "absolute gap (posterior − test rate)",
+          "value_verbatim": "+0.2621",
+          "value_parsed": 0.2621,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.gap_posterior_vs_test",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+        "path": "$.gap_posterior_vs_test"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "- Test-set ECE: **0.2621** (v1 was 0.5385).",
+      "values": [
+        {
+          "quantity": "test-set ECE",
+          "value_verbatim": "0.2621",
+          "value_parsed": 0.2621,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.test_ece",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE, v1 run (fixed 5 % prior)",
+          "value_verbatim": "0.5385",
+          "value_parsed": 0.5385,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json#$.v1_reference.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] 'v1 was 0.5385' is a cross-run comparison, not a superseded value of the same quantity, so treated as a live read claim rather than 'historical'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "§ 7 Held-out sensitivity check"
+      },
+      "claim_text": "- Test-set Brier: **0.2621** (v1 was 0.4895).",
+      "values": [
+        {
+          "quantity": "test-set Brier score",
+          "value_verbatim": "0.2621",
+          "value_parsed": 0.2621,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.test_brier",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, v1 run (fixed 5 % prior)",
+          "value_verbatim": "0.4895",
+          "value_parsed": 0.4895,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json#$.v1_reference.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "§ 7 Held-out sensitivity check — interpretation"
+      },
+      "claim_text": "The 0.2621 absolute gap is about half of v1's 0.5385 ECE — a meaningful improvement but not the near-perfect calibration seen in the circular-prior-on-full-sample variant (ECE = 0.0001 at the calibrated prior).",
+      "values": [
+        {
+          "quantity": "absolute held-out calibration gap",
+          "value_verbatim": "0.2621",
+          "value_parsed": 0.2621,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json#$.gap_posterior_vs_test",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE, v1 run (fixed 5 % prior)",
+          "value_verbatim": "0.5385",
+          "value_parsed": 0.5385,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v1_reference.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE at the calibrated prior",
+          "value_verbatim": "0.0001",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "§ 7 Held-out sensitivity check — interpretation"
+      },
+      "claim_text": "The held-out check confirms that v2's calibration gains are partly real (the 5 % prior was substantially wrong for this slice) and partly circular (the data-driven-prior run benefits from fitting and evaluating on the same labels).",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the v1 D-S run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": "$.parameters.student_fn_rate_prior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "§ 8 Surprising finding"
+      },
+      "claim_text": "The brief asked to plug the empirical VLM-only mound rate (0.7247) in as the student-FN prior.",
+      "values": [
+        {
+          "quantity": "empirical mound rate on the VLM-only slice",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.empirical_prior_derivation.empirical_vlm_only_mound_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.empirical_prior_derivation.empirical_vlm_only_mound_rate"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "§ 8 Surprising finding"
+      },
+      "claim_text": "It does not: the two-annotator D-S posterior is a **non-linear function of the prior**, and above a student-FN prior of roughly 0.22 the estimated prevalence snaps to 1.0 and every item's posterior becomes 1.0.",
+      "values": [
+        {
+          "quantity": "student-FN prior above which prevalence snaps to 1.0 (phase transition)",
+          "value_verbatim": "0.22",
+          "value_parsed": 0.22,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/prior_sensitivity_sweep.csv#lowest student_fn_prior with prevalence == 1.0",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "estimated prevalence in the collapsed regime",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.model_estimates.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "per-item posterior in the collapsed regime",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "§ 8 Surprising finding"
+      },
+      "claim_text": "The v2 run with prior = 0.7247 falls into this collapsed regime (posterior = 1.0 for every item, including the VLM-only slice).",
+      "values": [
+        {
+          "quantity": "student-FN prior used for the v2 EM run",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "per-item posterior in the collapsed regime",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "§ 8 Surprising finding — calibrated prior"
+      },
+      "claim_text": "- **Calibrated prior**: **0.1700**.",
+      "values": [
+        {
+          "quantity": "calibrated student-FN prior",
+          "value_verbatim": "0.1700",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibrated_prior_search.calibrated_student_fn_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.calibrated_prior_search.calibrated_student_fn_prior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "§ 8 Surprising finding — calibrated prior"
+      },
+      "claim_text": "- **VLM-only posterior at calibrated prior**: **0.7246**.",
+      "values": [
+        {
+          "quantity": "VLM-only posterior at the calibrated prior",
+          "value_verbatim": "0.7246",
+          "value_parsed": 0.7246,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.calibrated_prior_search.calibrated_vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.calibrated_prior_search.calibrated_vlm_only_posterior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "§ 8 Surprising finding — calibrated prior"
+      },
+      "claim_text": "- **ECE at calibrated prior**: **0.0001**.",
+      "values": [
+        {
+          "quantity": "ECE at the calibrated prior",
+          "value_verbatim": "0.0001",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.calibrated_prior_search.metrics.ece"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "§ 8 Surprising finding — calibrated prior"
+      },
+      "claim_text": "- **Brier at calibrated prior**: **0.1995**.",
+      "values": [
+        {
+          "quantity": "Brier score at the calibrated prior",
+          "value_verbatim": "0.1995",
+          "value_parsed": 0.1995,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.calibrated_prior_search.metrics.brier"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "§ 8 Surprising finding — calibrated prior"
+      },
+      "claim_text": "- **AUC at calibrated prior**: **0.5000** (degenerate).",
+      "values": [
+        {
+          "quantity": "AUC at the calibrated prior",
+          "value_verbatim": "0.5000",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.calibrated_prior_search.metrics.auc"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "§ 9 Does D-S become useful with a better prior?"
+      },
+      "claim_text": "Two-annotator D-S is mathematically degenerate — every VLM-only item receives the same posterior, so AUC stays at 0.5 regardless of prior.",
+      "values": [
+        {
+          "quantity": "item-level AUC of the D-S posterior, invariant across priors",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/prior_sensitivity_sweep.csv"
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b079] Scope decision: '2-annotator' / '2 binary annotators' / 'three-annotator' / '2 x 2 cross-tab' are model-class and table-shape descriptors, treated as names rather than asserted counts (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "§ 9 Does D-S become useful with a better prior?"
+      },
+      "claim_text": "The verifier probability (AUC 0.6545 on this slice) remains the only graded item-level signal.",
+      "values": [
+        {
+          "quantity": "AUC, verifier probability on the VLM-only slice (Obs 269)",
+          "value_verbatim": "0.6545",
+          "value_parsed": 0.6545,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.verifier_reference_obs_269.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.verifier_reference_obs_269.auc"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "§ 9 Does D-S become useful with a better prior?"
+      },
+      "claim_text": "D-S with the fixed 5 % prior understated the VLM-only mound rate by roughly a factor of four.",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the v1 D-S run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.parameters.student_fn_rate_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "factor by which the v1 D-S posterior understates the empirical VLM-only mound rate",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+              "path": "$.empirical_prior_derivation.empirical_vlm_only_mound_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] 'roughly a factor of four' spelled in words; parsed as 4 and derived as empirical rate / v1 VLM-only posterior."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "§ 9 Does D-S become useful with a better prior?"
+      },
+      "claim_text": "With a slice-specific human-review-derived prior it is roughly right at the calibrated-prior value (0.17), but it adds no value beyond reporting the empirical rate itself.",
+      "values": [
+        {
+          "quantity": "calibrated student-FN prior",
+          "value_verbatim": "0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibrated_prior_search.calibrated_student_fn_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.calibrated_prior_search.calibrated_student_fn_prior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "§ 10 Caveats / risk register — item 1"
+      },
+      "claim_text": "The 80 / 20 held-out check partially addresses this; the 0.2621 held-out ECE is the honest calibration floor, not the 0.0001 circular-ECE.",
+      "values": [
+        {
+          "quantity": "training fraction of the held-out split",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json#$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "test fraction of the held-out split",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 - 100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        },
+        {
+          "quantity": "held-out test-set ECE",
+          "value_verbatim": "0.2621",
+          "value_parsed": 0.2621,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json#$.test_ece",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE at the calibrated prior (circular)",
+          "value_verbatim": "0.0001",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibrated_prior_search.metrics.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "§ 10 Caveats / risk register — item 2"
+      },
+      "claim_text": "At prior = 0.22 there is a phase transition to posterior = 1.0. The \"calibrated prior = 0.17\" finding would not generalise to a different annotator-error structure; it is specific to this D-S fit on this slice.",
+      "values": [
+        {
+          "quantity": "student-FN prior at the phase transition",
+          "value_verbatim": "0.22",
+          "value_parsed": 0.22,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/prior_sensitivity_sweep.csv#lowest student_fn_prior with prevalence == 1.0",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "posterior after the phase transition",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json#$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        },
+        {
+          "quantity": "calibrated student-FN prior",
+          "value_verbatim": "0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibrated_prior_search.calibrated_student_fn_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "§ 10 Caveats / risk register — item 3"
+      },
+      "claim_text": "3. **AUC = 0.500 is invariant across all priors tested**.",
+      "values": [
+        {
+          "quantity": "item-level AUC, invariant across all priors tested",
+          "value_verbatim": "0.500",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/prior_sensitivity_sweep.csv"
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "§ 10 Caveats / risk register — item 4"
+      },
+      "claim_text": "4. **Sobotkova et al. (2023) 5 % prior is not \"wrong\" in the abstract**: it was the preregistered prior.",
+      "values": [
+        {
+          "quantity": "preregistered student-FN prior",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Instrument v1.1 calibration rule: a claim about what the REGISTRATION specifies anchors to the lodged preregistration (path null), never to the executed config. Note the document asserts elsewhere (line 21, line 120) that D-S was post-hoc and not preregistered — recorded, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "§ 10 Caveats / risk register — item 4"
+      },
+      "claim_text": "The 5 % value is a reasonable estimate of the student-FN rate on the *full* corpus (where most mounds are digitised correctly). On the VLM-only slice the empirical student-FN rate is ~72 % by construction (the VLM flagged candidates the student had NOT digitised).",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the v1 D-S run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.parameters.student_fn_rate_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical student-FN rate on the VLM-only slice",
+          "value_verbatim": "~72 %",
+          "value_parsed": 72,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.empirical_prior_derivation.empirical_vlm_only_mound_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Approx marker retained in value_verbatim per instrument v1.2 amendment 5; unit '%' set so the harness can bridge the 0.7247 vs 72 scale (amendment 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "§ 11.1 D-S inadequacy is structural"
+      },
+      "claim_text": "The v1 (fixed 5 %) and v2 (data-driven) runs both return AUC = 0.500 as a necessary consequence of the 2-annotator identifiability class structure.",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the v1 D-S run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.parameters.student_fn_rate_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "item-level AUC returned by both the v1 and v2 runs",
+          "value_verbatim": "0.500",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v2_calibration.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] The single 0.500 covers both runs; the v1 twin sits at $.v1_reference.auc in the same anchor file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "§ 11.2 Sobotkova et al. prior slice-mismatched"
+      },
+      "claim_text": "The 5 % student-FN prior from Sobotkova et al. (2023) was the preregistered choice and is a defensible estimate for the *full* corpus where student GT digitisation is close to complete.",
+      "values": [
+        {
+          "quantity": "preregistered student-FN prior",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Registration claim ('was the preregistered choice') — anchored to the lodged preregistration per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "§ 11.4 Suggested paper text"
+      },
+      "claim_text": "The Dawid-Skene analysis — a post-hoc method adopted for ground-truth reconciliation, not preregistered — used a 5 % student-false-negative prior (Sobotkova et al. 2023).",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the D-S analysis as run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": "$.parameters.student_fn_rate_prior"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] This sentence states the method was NOT preregistered, so the 5 % is anchored to the executed v1 run (what-was-run) rather than the lodged preregistration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "§ 11.4 Suggested paper text"
+      },
+      "claim_text": "On the 55-map VLM-only slice — where every candidate has the (student = 0, VLM = 1) response pattern by construction — the 2-annotator D-S model assigns an identical posterior to all items, rendering item-level AUC degenerate at 0.500.",
+      "values": [
+        {
+          "quantity": "maps in the image-generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "item-level AUC on the VLM-only slice",
+          "value_verbatim": "0.500",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.v2_calibration.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "§ 11.4 Suggested paper text"
+      },
+      "claim_text": "Replacing the 5 % prior with a data-driven prior derived from the human-review labels on the same slice yields a calibrated aggregate posterior (calibrated prior = 0.17; posterior = 0.7246 vs empirical 0.7247; held-out 80 / 20 ECE = 0.2621) but does not restore item-level ranking: the AUC remains 0.500 across every prior tested.",
+      "values": [
+        {
+          "quantity": "student-FN prior used by the v1 D-S run",
+          "value_verbatim": "5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.parameters.student_fn_rate_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "calibrated student-FN prior",
+          "value_verbatim": "0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibrated_prior_search.calibrated_student_fn_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "VLM-only posterior at the calibrated prior",
+          "value_verbatim": "0.7246",
+          "value_parsed": 0.7246,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.calibrated_prior_search.calibrated_vlm_only_posterior",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical mound rate on the VLM-only slice",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.calibrated_prior_search.empirical_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "training fraction of the held-out split",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json#$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "test fraction of the held-out split",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 - 100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        },
+        {
+          "quantity": "held-out test-set ECE",
+          "value_verbatim": "0.2621",
+          "value_parsed": 0.2621,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json#$.test_ece",
+          "method": "read"
+        },
+        {
+          "quantity": "item-level AUC across every prior tested",
+          "value_verbatim": "0.500",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b079] Method convention across b079: the batch brief nominated recompute-script for bootstrap CIs / permutation p-values / Dawid-Skene estimates. Where the statistic is stored verbatim at a resolvable path in a committed sibling artefact, 'read' is used instead (instrument rule 3: read = the value should sit at anchor.path) — stricter and mechanically resolvable. recompute-script is reserved for statistics with no stored scalar (e.g. 'AUC = 0.5 across every prior tested', the ~0.22 phase-transition prior)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "§ 11.4 Suggested paper text"
+      },
+      "claim_text": "For per-item ranking the analysis relies on the verifier probability (Obs 269; AUC = 0.6545 on this slice) and the human-review labels; D-S is retained as a comparator and is explicitly flagged as inadequate for item-level use on this slice.",
+      "values": [
+        {
+          "quantity": "AUC, verifier probability on the VLM-only slice (Obs 269)",
+          "value_verbatim": "0.6545",
+          "value_parsed": 0.6545,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.verifier_reference_obs_269.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.verifier_reference_obs_269.auc"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "§ 12 Files manifest — outputs"
+      },
+      "claim_text": "- `item-posteriors.csv` — v2 per-item posteriors at prior = 0.7247.",
+      "values": [
+        {
+          "quantity": "student-FN prior for the v2 per-item posteriors",
+          "value_verbatim": "0.7247",
+          "value_parsed": 0.7247,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": "$.parameters.student_fn_rate_prior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "§ 12 Files manifest — outputs"
+      },
+      "claim_text": "- `item-posteriors-calibrated.csv` — per-item posteriors at calibrated prior = 0.17.",
+      "values": [
+        {
+          "quantity": "calibrated student-FN prior",
+          "value_verbatim": "0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibrated_prior_search.calibrated_student_fn_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json",
+        "path": "$.calibrated_prior_search.calibrated_student_fn_prior"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          134
+        ],
+        "section": "§ 12 Files manifest — outputs"
+      },
+      "claim_text": "- `holdout.json` — 80 / 20 held-out sensitivity check.",
+      "values": [
+        {
+          "quantity": "training fraction of the held-out split",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "test fraction of the held-out split",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 - 100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "§ 13 Reproducibility"
+      },
+      "claim_text": "- **Prior sweep**: 100 prior values in [0.01, 0.99]; the \"calibrated prior\" is the posterior-vs-empirical-rate minimum-gap selection across that sweep.",
+      "values": [
+        {
+          "quantity": "prior values in the sensitivity sweep",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": "len: data rows (non-JSON anchor)",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum student-FN prior in the sweep range",
+          "value_verbatim": "0.01",
+          "value_parsed": 0.01,
+          "unit": null,
+          "kind": "parameter",
+          "path": "min of the student_fn_prior column (non-JSON anchor)",
+          "method": "read"
+        },
+        {
+          "quantity": "maximum student-FN prior in the sweep range",
+          "value_verbatim": "0.99",
+          "value_parsed": 0.99,
+          "unit": null,
+          "kind": "parameter",
+          "path": "max of the student_fn_prior column (non-JSON anchor)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/prior_sensitivity_sweep.csv"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          148
+        ],
+        "section": "§ 13 Reproducibility"
+      },
+      "claim_text": "- **Held-out check**: 80 / 20 split at seed 42; 206 test items.",
+      "values": [
+        {
+          "quantity": "training fraction of the held-out split",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "test fraction of the held-out split",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 - 100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        },
+        {
+          "quantity": "held-out split seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "test-set size, VLM-only items",
+          "value_verbatim": "206",
+          "value_parsed": 206,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_test",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json"
+      },
+      "method": "read",
+      "notes": null
+    }
+  ]
+}

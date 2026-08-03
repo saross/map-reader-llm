@@ -1,0 +1,3239 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-cross-track-comparison/report.md",
+    "git_blob": "8bb2dc62f997",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "Twelve paired-permutation tests exist across the three pairwise contrasts × four buffer tolerances. All tests: 10,000 permutations, seed 42, tile-level paired bootstrap on tile-level F1. The ~7,200–7,650 ties per test reflect the long tail of tiles with zero detections and zero GT mounds in both tracks — tiles with identical behaviour under both conditions.",
+      "values": [
+        {
+          "quantity": "count of v1 paired-permutation tests in the cross-track suite",
+          "value_verbatim": "Twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of pairwise contrasts in the v1 suite",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of buffer tolerances per contrast in the v1 suite",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutations per v1 paired-permutation test",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, v1 paired-permutation tests",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum ties per test across the 12 v1 tests (approximate)",
+          "value_verbatim": "~7,200",
+          "value_parsed": 7200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum ties per test across the 12 v1 tests",
+          "value_verbatim": "7,650",
+          "value_parsed": 7650,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b071] Batch b071 covers lines 186-267 (sections 5, 5.1-5.4, 6, 7) of results/55maps-cross-track-comparison/report.md. Scope decisions applied throughout: (a) statistical quantities that are stored verbatim in a committed JSON artefact (bootstrap CI bounds, permutation p-values, wins/losses/ties) are recorded as 'read' with an exact path, per instrument rule 3 ('the value should sit at anchor.path'); only quantities that no artefact stores as a scalar (range minima/maxima across files, cross-CI overlap judgements) take 'recompute-script'. (b) Candidate identifiers such as 'cand 2397', session numbers, dates, commit hashes, and section cross-references are excluded per instrument rule 5. (c) Buffer radii are extracted as physical values where they qualify a reported statistic and are mechanically anchorable. The 12 v1 tests live across three directory families: results/55maps-cross-track-comparison/paired-image-vs-text-high-{20,30,40,50}m/, results/55maps-cross-track-comparison/paired-image-vs-text-min-{20,30,40,50}m/, and results/55maps-text-high-generalisation/paired-vs-min-{20,30,40,50}m/ — no single artefact records the count of tests, the count of contrasts, or the ties range, hence anchor-unknown / recompute-script for those. Note a second candidate family exists at results/55maps-text-min-generalisation/paired-vs-high-{20,30,40,50}m/; the anchors here use the text-high-generalisation family, whose condition labels match the section 5.1 contrast direction (text-HIGH as condition A)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          191,
+          191
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "**Source-of-truth note (post-recovery 2026-05-03; cross-track-v2 commit `42ed1d32`)**: the 12 v1 tests below were computed against the pre-recovery T=0.7 detection set (4,143 detections; uncorrected GT). The post-recovery detection sets — T=0.7 = 4,164 (+21), image = 4,680 (+15 incl. cand 2397), text-MIN = 3,865 (+4) — were used to regenerate a v2 corrected-GT pairwise-permutation suite at 10 buffers × 6 contrasts (the family includes T=0.3 as the fourth corrected run); see `results/55maps-pairwise-permutation-v2/summary.md`. v2 headline at R = 50 m, all six pairs:",
+      "values": [
+        {
+          "quantity": "count of v1 paired-permutation tests superseded by the v2 suite",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "detection count, pre-recovery T=0.7 (text-HIGH) set used by the v1 tests",
+          "value_verbatim": "4,143",
+          "value_parsed": 4143,
+          "unit": null,
+          "kind": "count",
+          "path": "$.condition_b.n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "detection count, post-recovery T=0.7 (text-HIGH) verified set",
+          "value_verbatim": "4,164",
+          "value_parsed": 4164,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.unit_costs.final_detection_count",
+          "method": "read"
+        },
+        {
+          "quantity": "increase in T=0.7 (text-HIGH) detections, pre- to post-recovery",
+          "value_verbatim": "+21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.unit_costs.final_detection_count"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+              "path": "$.condition_b.n_detections"
+            }
+          ]
+        },
+        {
+          "quantity": "detection count, post-recovery image verified set",
+          "value_verbatim": "4,680",
+          "value_parsed": 4680,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.unit_costs.final_detection_count",
+          "method": "read"
+        },
+        {
+          "quantity": "increase in image detections, pre- to post-recovery",
+          "value_verbatim": "+15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.unit_costs.final_detection_count"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+              "path": "$.condition_a.n_detections"
+            }
+          ]
+        },
+        {
+          "quantity": "detection count, post-recovery text-MIN verified set",
+          "value_verbatim": "3,865",
+          "value_parsed": 3865,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.unit_costs.final_detection_count",
+          "method": "read"
+        },
+        {
+          "quantity": "increase in text-MIN detections, pre- to post-recovery",
+          "value_verbatim": "+4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.unit_costs.final_detection_count"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json",
+              "path": "$.condition_b.n_detections"
+            }
+          ]
+        },
+        {
+          "quantity": "count of buffer tolerances in the v2 corrected-GT pairwise-permutation suite",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/summary.json#len:$.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "count of pairwise contrasts in the v2 corrected-GT suite",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of corrected runs in the v2 pairwise-permutation family (T=0.3 is the fourth)",
+          "value_verbatim": "fourth",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer tolerance of the v2 headline table",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/summary.json#$.per_buffer[?(@.buffer_metres==50)].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "count of pairs in the v2 headline table",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b071] 'cand 2397' is a candidate identifier, excluded per instrument rule 5. 'cross-track-v2 commit `42ed1d32`' is a git hash, excluded. The pre-recovery counts used as arithmetic operands are the condition_a/condition_b n_detections recorded inside the v1 permutation result JSONs; the post-recovery counts are read from each track's cost_manifest.json $.unit_costs.final_detection_count (the verified_detections.geojson feature count is an equivalent alternative anchor). The v2 contrast count (6) and corrected-run count (4) are not recorded as scalars in any single artefact — results/55maps-pairwise-permutation-v2/ holds six paired-* directories."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "| Pair | ΔF1 | 95 % CI | BH-FDR sig (q=0.05) |",
+      "values": [
+        {
+          "quantity": "bootstrap confidence-interval coverage level, v2 headline table",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Benjamini-Hochberg FDR q threshold, v2 suite",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table header row for the v2 headline table (lines 195-200). The 95 % CI coverage level is not stored as a scalar in the v2 pair summaries (the bounds are stored as delta_f1_ci_lower / delta_f1_ci_upper), hence anchor-unknown for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "| T=0.3 vs T=0.7 | +0.0162 | [+0.0089, +0.0238] | \\*\\*\\* |",
+      "values": [
+        {
+          "quantity": "ΔF1 at R = 50 m, corrected-GT v2 pair T=0.3 vs T=0.7",
+          "value_verbatim": "+0.0162",
+          "value_parsed": 0.0162,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound on ΔF1 at R = 50 m, v2 pair T=0.3 vs T=0.7",
+          "value_verbatim": "+0.0089",
+          "value_parsed": 0.0089,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound on ΔF1 at R = 50 m, v2 pair T=0.3 vs T=0.7",
+          "value_verbatim": "+0.0238",
+          "value_parsed": 0.0238,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_upper",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.3-vs-t0.7/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row of the v2 headline table at R = 50 m. The significance marker column is a star/ns glyph, not a numeric value; the underlying BH-adjusted p sits at $.per_buffer[?(@.buffer_metres==50)].p_bh and the boolean at $.per_buffer[?(@.buffer_metres==50)].significant_at_q in the same file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          196,
+          196
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "| T=0.3 vs image | +0.0102 | [+0.0009, +0.0193] | \\* |",
+      "values": [
+        {
+          "quantity": "ΔF1 at R = 50 m, corrected-GT v2 pair T=0.3 vs image",
+          "value_verbatim": "+0.0102",
+          "value_parsed": 0.0102,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound on ΔF1 at R = 50 m, v2 pair T=0.3 vs image",
+          "value_verbatim": "+0.0009",
+          "value_parsed": 0.0009,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound on ΔF1 at R = 50 m, v2 pair T=0.3 vs image",
+          "value_verbatim": "+0.0193",
+          "value_parsed": 0.0193,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_upper",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.3-vs-image/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row of the v2 headline table at R = 50 m. The significance marker column is a star/ns glyph, not a numeric value; the underlying BH-adjusted p sits at $.per_buffer[?(@.buffer_metres==50)].p_bh and the boolean at $.per_buffer[?(@.buffer_metres==50)].significant_at_q in the same file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          197,
+          197
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "| T=0.7 vs image | −0.0060 | [−0.0156, +0.0035] | ns |",
+      "values": [
+        {
+          "quantity": "ΔF1 at R = 50 m, corrected-GT v2 pair T=0.7 vs image",
+          "value_verbatim": "−0.0060",
+          "value_parsed": -0.006,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound on ΔF1 at R = 50 m, v2 pair T=0.7 vs image",
+          "value_verbatim": "−0.0156",
+          "value_parsed": -0.0156,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound on ΔF1 at R = 50 m, v2 pair T=0.7 vs image",
+          "value_verbatim": "+0.0035",
+          "value_parsed": 0.0035,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_upper",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row of the v2 headline table at R = 50 m. The significance marker column is a star/ns glyph, not a numeric value; the underlying BH-adjusted p sits at $.per_buffer[?(@.buffer_metres==50)].p_bh and the boolean at $.per_buffer[?(@.buffer_metres==50)].significant_at_q in the same file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          198,
+          198
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "| T=0.3 vs T=MIN | +0.0467 | [+0.0374, +0.0562] | \\*\\*\\* |",
+      "values": [
+        {
+          "quantity": "ΔF1 at R = 50 m, corrected-GT v2 pair T=0.3 vs T=MIN",
+          "value_verbatim": "+0.0467",
+          "value_parsed": 0.0467,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound on ΔF1 at R = 50 m, v2 pair T=0.3 vs T=MIN",
+          "value_verbatim": "+0.0374",
+          "value_parsed": 0.0374,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound on ΔF1 at R = 50 m, v2 pair T=0.3 vs T=MIN",
+          "value_verbatim": "+0.0562",
+          "value_parsed": 0.0562,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_upper",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.3-vs-tmin/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row of the v2 headline table at R = 50 m. The significance marker column is a star/ns glyph, not a numeric value; the underlying BH-adjusted p sits at $.per_buffer[?(@.buffer_metres==50)].p_bh and the boolean at $.per_buffer[?(@.buffer_metres==50)].significant_at_q in the same file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          199,
+          199
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "| T=0.7 vs T=MIN | +0.0305 | [+0.0210, +0.0400] | \\*\\*\\* |",
+      "values": [
+        {
+          "quantity": "ΔF1 at R = 50 m, corrected-GT v2 pair T=0.7 vs T=MIN",
+          "value_verbatim": "+0.0305",
+          "value_parsed": 0.0305,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound on ΔF1 at R = 50 m, v2 pair T=0.7 vs T=MIN",
+          "value_verbatim": "+0.0210",
+          "value_parsed": 0.021,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound on ΔF1 at R = 50 m, v2 pair T=0.7 vs T=MIN",
+          "value_verbatim": "+0.0400",
+          "value_parsed": 0.04,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_upper",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-tmin/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row of the v2 headline table at R = 50 m. The significance marker column is a star/ns glyph, not a numeric value; the underlying BH-adjusted p sits at $.per_buffer[?(@.buffer_metres==50)].p_bh and the boolean at $.per_buffer[?(@.buffer_metres==50)].significant_at_q in the same file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          200,
+          200
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "| image vs T=MIN | +0.0365 | [+0.0256, +0.0476] | \\*\\*\\* |",
+      "values": [
+        {
+          "quantity": "ΔF1 at R = 50 m, corrected-GT v2 pair image vs T=MIN",
+          "value_verbatim": "+0.0365",
+          "value_parsed": 0.0365,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound on ΔF1 at R = 50 m, v2 pair image vs T=MIN",
+          "value_verbatim": "+0.0256",
+          "value_parsed": 0.0256,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound on ΔF1 at R = 50 m, v2 pair image vs T=MIN",
+          "value_verbatim": "+0.0476",
+          "value_parsed": 0.0476,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[?(@.buffer_metres==50)].delta_f1_ci_upper",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-image-vs-tmin/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row of the v2 headline table at R = 50 m. The significance marker column is a star/ns glyph, not a numeric value; the underlying BH-adjusted p sits at $.per_buffer[?(@.buffer_metres==50)].p_bh and the boolean at $.per_buffer[?(@.buffer_metres==50)].significant_at_q in the same file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          202
+        ],
+        "section": "5. Paired permutation tests"
+      },
+      "claim_text": "All six pairs preserve sign and significance vs the pre-recovery v2 baseline. The cross-track-v2 refresh is paper-citable for corrected-GT significance claims; use the v1 tables below only for the uncorrected-GT comparison footnote. The v1 tables remain valid for their stated scope (uncorrected GT, pre-recovery T=0.7) but should not be cited as the apples-to-apples cross-track significance claim.",
+      "values": [
+        {
+          "quantity": "count of v2 pairs preserving sign and significance vs the pre-recovery baseline",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The count of v2 pairs is not recorded as a scalar in any artefact; results/55maps-pairwise-permutation-v2/ holds six paired-* directories, each with its own summary.json. The 'preserve sign and significance' assertion itself is a comparison against a pre-recovery baseline whose artefacts survive only as *.pre-recovery-*.backup / *.pre-rerun-*.backup files in the same directory."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          204
+        ],
+        "section": "5.1 text-HIGH vs text-MIN (4 tests)"
+      },
+      "claim_text": "### 5.1 text-HIGH vs text-MIN (4 tests)",
+      "values": [
+        {
+          "quantity": "count of v1 paired-permutation tests, text-HIGH vs text-MIN contrast",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Section heading. The four tests are the results/55maps-text-high-generalisation/paired-vs-min-{20,30,40,50}m/ result files; no artefact records the count itself. '5.1' is a section number, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          206
+        ],
+        "section": "5.1 text-HIGH vs text-MIN (4 tests)"
+      },
+      "claim_text": "| Contrast | Buffer | Observed ΔF1 | p-value | Wins_A / Losses_A / Ties | Significant (α = 0.05) |",
+      "values": [
+        {
+          "quantity": "significance level α for the v1 text-HIGH vs text-MIN tests",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table header row. α is a reporting convention; the v1 pairwise_permutation_result.json files record n_permutations and seed but no alpha field."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          208,
+          208
+        ],
+        "section": "5.1 text-HIGH vs text-MIN (4 tests)"
+      },
+      "claim_text": "| text-HIGH vs text-MIN | 20 m | +0.0047 | 0.4647 | 496 / 464 / 7,581 | no |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, text-HIGH vs text-MIN",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 20 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "+0.0047",
+          "value_parsed": 0.0047,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 20 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "0.4647",
+          "value_parsed": 0.4647,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 20 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "496",
+          "value_parsed": 496,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 20 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "464",
+          "value_parsed": 464,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 20 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "7,581",
+          "value_parsed": 7581,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          209,
+          209
+        ],
+        "section": "5.1 text-HIGH vs text-MIN (4 tests)"
+      },
+      "claim_text": "| text-HIGH vs text-MIN | 30 m | +0.0259 | 0.0 | 534 / 393 / 7,614 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, text-HIGH vs text-MIN",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 30 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "+0.0259",
+          "value_parsed": 0.0259,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 30 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 30 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "534",
+          "value_parsed": 534,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 30 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "393",
+          "value_parsed": 393,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 30 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "7,614",
+          "value_parsed": 7614,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-30m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          210
+        ],
+        "section": "5.1 text-HIGH vs text-MIN (4 tests)"
+      },
+      "claim_text": "| text-HIGH vs text-MIN | 40 m | +0.0291 | 0.0 | 535 / 362 / 7,644 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, text-HIGH vs text-MIN",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 40 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "+0.0291",
+          "value_parsed": 0.0291,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 40 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 40 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "535",
+          "value_parsed": 535,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 40 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "362",
+          "value_parsed": 362,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 40 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "7,644",
+          "value_parsed": 7644,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-40m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          211
+        ],
+        "section": "5.1 text-HIGH vs text-MIN (4 tests)"
+      },
+      "claim_text": "| text-HIGH vs text-MIN | 50 m | +0.0292 | 0.0 | 532 / 359 / 7,650 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, text-HIGH vs text-MIN",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 50 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "+0.0292",
+          "value_parsed": 0.0292,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 50 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 50 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "532",
+          "value_parsed": 532,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 50 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "359",
+          "value_parsed": 359,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 50 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "7,650",
+          "value_parsed": 7650,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          213
+        ],
+        "section": "5.2 image vs text-HIGH (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "### 5.2 image vs text-HIGH (4 tests, added Session 77 2026-04-24)",
+      "values": [
+        {
+          "quantity": "count of v1 paired-permutation tests, image vs text-HIGH contrast",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Section heading. The four tests are the results/55maps-cross-track-comparison/paired-image-vs-text-high-{20,30,40,50}m/ result files. 'Session 77' and '2026-04-24' are a session number and a date, excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          215,
+          215
+        ],
+        "section": "5.2 image vs text-HIGH (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| Contrast | Buffer | Observed ΔF1 | p-value | Wins_A / Losses_A / Ties | Significant (α = 0.05) |",
+      "values": [
+        {
+          "quantity": "significance level α for the v1 image vs text-HIGH tests",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table header row; no alpha field exists in the v1 result JSONs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          217,
+          217
+        ],
+        "section": "5.2 image vs text-HIGH (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| image vs text-HIGH | 20 m | **−0.1178** | 0.0000 | 415 / 794 / 7,332 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, image vs text-HIGH",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 20 m, v1 image vs text-HIGH",
+          "value_verbatim": "**−0.1178**",
+          "value_parsed": -0.1178,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 20 m, v1 image vs text-HIGH",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 20 m, v1 image vs text-HIGH",
+          "value_verbatim": "415",
+          "value_parsed": 415,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 20 m, v1 image vs text-HIGH",
+          "value_verbatim": "794",
+          "value_parsed": 794,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 20 m, v1 image vs text-HIGH",
+          "value_verbatim": "7,332",
+          "value_parsed": 7332,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "ΔF1 is bolded in the source; the markdown emphasis markers are part of the verbatim cell but not part of the numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          218,
+          218
+        ],
+        "section": "5.2 image vs text-HIGH (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| image vs text-HIGH | 30 m | **−0.0683** | 0.0000 | 465 / 666 / 7,410 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, image vs text-HIGH",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 30 m, v1 image vs text-HIGH",
+          "value_verbatim": "**−0.0683**",
+          "value_parsed": -0.0683,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 30 m, v1 image vs text-HIGH",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 30 m, v1 image vs text-HIGH",
+          "value_verbatim": "465",
+          "value_parsed": 465,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 30 m, v1 image vs text-HIGH",
+          "value_verbatim": "666",
+          "value_parsed": 666,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 30 m, v1 image vs text-HIGH",
+          "value_verbatim": "7,410",
+          "value_parsed": 7410,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-30m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "ΔF1 is bolded in the source; the markdown emphasis markers are part of the verbatim cell but not part of the numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          219,
+          219
+        ],
+        "section": "5.2 image vs text-HIGH (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| image vs text-HIGH | 40 m | **−0.0351** | 0.0000 | 515 / 571 / 7,455 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, image vs text-HIGH",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 40 m, v1 image vs text-HIGH",
+          "value_verbatim": "**−0.0351**",
+          "value_parsed": -0.0351,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 40 m, v1 image vs text-HIGH",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 40 m, v1 image vs text-HIGH",
+          "value_verbatim": "515",
+          "value_parsed": 515,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 40 m, v1 image vs text-HIGH",
+          "value_verbatim": "571",
+          "value_parsed": 571,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 40 m, v1 image vs text-HIGH",
+          "value_verbatim": "7,455",
+          "value_parsed": 7455,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-40m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "ΔF1 is bolded in the source; the markdown emphasis markers are part of the verbatim cell but not part of the numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          220,
+          220
+        ],
+        "section": "5.2 image vs text-HIGH (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| image vs text-HIGH | 50 m | **−0.0177** | 0.0008 | 536 / 514 / 7,491 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, image vs text-HIGH",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 50 m, v1 image vs text-HIGH",
+          "value_verbatim": "**−0.0177**",
+          "value_parsed": -0.0177,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 50 m, v1 image vs text-HIGH",
+          "value_verbatim": "0.0008",
+          "value_parsed": 0.0008,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 50 m, v1 image vs text-HIGH",
+          "value_verbatim": "536",
+          "value_parsed": 536,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 50 m, v1 image vs text-HIGH",
+          "value_verbatim": "514",
+          "value_parsed": 514,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 50 m, v1 image vs text-HIGH",
+          "value_verbatim": "7,491",
+          "value_parsed": 7491,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "ΔF1 is bolded in the source; the markdown emphasis markers are part of the verbatim cell but not part of the numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          222,
+          222
+        ],
+        "section": "5.3 image vs text-MIN (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "### 5.3 image vs text-MIN (4 tests, added Session 77 2026-04-24)",
+      "values": [
+        {
+          "quantity": "count of v1 paired-permutation tests, image vs text-MIN contrast",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Section heading. The four tests are the results/55maps-cross-track-comparison/paired-image-vs-text-min-{20,30,40,50}m/ result files."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          224,
+          224
+        ],
+        "section": "5.3 image vs text-MIN (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| Contrast | Buffer | Observed ΔF1 | p-value | Wins_A / Losses_A / Ties | Significant (α = 0.05) |",
+      "values": [
+        {
+          "quantity": "significance level α for the v1 image vs text-MIN tests",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table header row; no alpha field exists in the v1 result JSONs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          226,
+          226
+        ],
+        "section": "5.3 image vs text-MIN (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| image vs text-MIN | 20 m | **−0.1129** | 0.0000 | 516 / 795 / 7,230 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, image vs text-MIN",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 20 m, v1 image vs text-MIN",
+          "value_verbatim": "**−0.1129**",
+          "value_parsed": -0.1129,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 20 m, v1 image vs text-MIN",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 20 m, v1 image vs text-MIN",
+          "value_verbatim": "516",
+          "value_parsed": 516,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 20 m, v1 image vs text-MIN",
+          "value_verbatim": "795",
+          "value_parsed": 795,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 20 m, v1 image vs text-MIN",
+          "value_verbatim": "7,230",
+          "value_parsed": 7230,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          227,
+          227
+        ],
+        "section": "5.3 image vs text-MIN (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| image vs text-MIN | 30 m | **−0.0424** | 0.0000 | 606 / 659 / 7,276 | yes |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, image vs text-MIN",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 30 m, v1 image vs text-MIN",
+          "value_verbatim": "**−0.0424**",
+          "value_parsed": -0.0424,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 30 m, v1 image vs text-MIN",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 30 m, v1 image vs text-MIN",
+          "value_verbatim": "606",
+          "value_parsed": 606,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 30 m, v1 image vs text-MIN",
+          "value_verbatim": "659",
+          "value_parsed": 659,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 30 m, v1 image vs text-MIN",
+          "value_verbatim": "7,276",
+          "value_parsed": 7276,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          228,
+          228
+        ],
+        "section": "5.3 image vs text-MIN (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| image vs text-MIN | 40 m | **−0.0059** | 0.3412 | 653 / 564 / 7,324 | no |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, image vs text-MIN",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 40 m, v1 image vs text-MIN",
+          "value_verbatim": "**−0.0059**",
+          "value_parsed": -0.0059,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 40 m, v1 image vs text-MIN",
+          "value_verbatim": "0.3412",
+          "value_parsed": 0.3412,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 40 m, v1 image vs text-MIN",
+          "value_verbatim": "653",
+          "value_parsed": 653,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 40 m, v1 image vs text-MIN",
+          "value_verbatim": "564",
+          "value_parsed": 564,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 40 m, v1 image vs text-MIN",
+          "value_verbatim": "7,324",
+          "value_parsed": 7324,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          229,
+          229
+        ],
+        "section": "5.3 image vs text-MIN (4 tests, added Session 77 2026-04-24)"
+      },
+      "claim_text": "| image vs text-MIN | 50 m | **+0.0115** | 0.0543 | 681 / 518 / 7,342 | no (marginal) |",
+      "values": [
+        {
+          "quantity": "buffer tolerance of this v1 test, image vs text-MIN",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 50 m, v1 image vs text-MIN",
+          "value_verbatim": "**+0.0115**",
+          "value_parsed": 0.0115,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 50 m, v1 image vs text-MIN",
+          "value_verbatim": "0.0543",
+          "value_parsed": 0.0543,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles won by condition A at 50 m, v1 image vs text-MIN",
+          "value_verbatim": "681",
+          "value_parsed": 681,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.wins_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles lost by condition A at 50 m, v1 image vs text-MIN",
+          "value_verbatim": "518",
+          "value_parsed": 518,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.losses_a",
+          "method": "read"
+        },
+        {
+          "quantity": "tied tiles at 50 m, v1 image vs text-MIN",
+          "value_verbatim": "7,342",
+          "value_parsed": 7342,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutation_test.ties",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          233
+        ],
+        "section": "5.4 Cross-contrast interpretation"
+      },
+      "claim_text": "- **text-HIGH is significantly better than both image and text-MIN at every buffer ≥ 30 m**. At 20 m text-HIGH vs text-MIN is not significant (p = 0.465) but text-HIGH vs image IS (ΔF1 = −0.118, p = 0.0000) — text-HIGH is the clean top-of-order.",
+      "values": [
+        {
+          "quantity": "buffer tolerance above which text-HIGH is claimed significantly better than both image and text-MIN",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer tolerance of the cited non-significant text-HIGH vs text-MIN test",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 20 m, v1 text-HIGH vs text-MIN",
+          "value_verbatim": "0.465",
+          "value_parsed": 0.465,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 20 m, v1 image vs text-HIGH",
+          "value_verbatim": "−0.118",
+          "value_parsed": -0.118,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json#$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 20 m, v1 image vs text-HIGH",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '≥ 30 m' bound is a scope statement spanning the 30 / 40 / 50 m tests of two contrasts; no artefact records it, hence anchor-unknown for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          234,
+          234
+        ],
+        "section": "5.4 Cross-contrast interpretation"
+      },
+      "claim_text": "- **image vs text-MIN is the most nuanced contrast**. Text-MIN significantly beats image at tight buffers (20 m ΔF1 = −0.113, p = 0.0000; 30 m ΔF1 = −0.042, p = 0.0000) but image and text-MIN converge at 40 / 50 m (p = 0.34, p = 0.054). At 50 m image marginally edges text-MIN (ΔF1 = +0.012; not significant). The buffer axis flips the ordering.",
+      "values": [
+        {
+          "quantity": "buffer tolerance of the first cited image vs text-MIN test",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 20 m, v1 image vs text-MIN",
+          "value_verbatim": "−0.113",
+          "value_parsed": -0.113,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json#$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 20 m, v1 image vs text-MIN",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the second cited image vs text-MIN test",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 30 m, v1 image vs text-MIN",
+          "value_verbatim": "−0.042",
+          "value_parsed": -0.042,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json#$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 30 m, v1 image vs text-MIN",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-30m/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the first convergence test, image vs text-MIN",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the second convergence test, image vs text-MIN",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 40 m, v1 image vs text-MIN",
+          "value_verbatim": "0.34",
+          "value_parsed": 0.34,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-40m/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 50 m, v1 image vs text-MIN",
+          "value_verbatim": "0.054",
+          "value_parsed": 0.054,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance at which image marginally edges text-MIN",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 50 m, v1 image vs text-MIN",
+          "value_verbatim": "+0.012",
+          "value_parsed": 0.012,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json#$.permutation_test.observed_f1_diff",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Values are quoted at lower precision than the source artefacts record them (e.g. '−0.113' for the 20 m ΔF1); the harness owns rounding tolerance at quoted precision."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          235
+        ],
+        "section": "5.4 Cross-contrast interpretation"
+      },
+      "claim_text": "- **text-HIGH vs image gap narrows with buffer** but remains significant: ΔF1 goes from −0.118 at 20 m to −0.018 at 50 m (p = 0.0008 still rejecting the null). This is consistent with the attractor-pull / GT-precision-noise argument (`gold-standard-extended-buffer-sweep/extended-buffer-report.md`): image-proposer detections are less spatially-precise, so the image track loses more to tight buffers than the text tracks.",
+      "values": [
+        {
+          "quantity": "observed ΔF1 at 20 m, v1 image vs text-HIGH",
+          "value_verbatim": "−0.118",
+          "value_parsed": -0.118,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json#$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance at the tight end of the text-HIGH vs image gap",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed ΔF1 at 50 m, v1 image vs text-HIGH",
+          "value_verbatim": "−0.018",
+          "value_parsed": -0.018,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json#$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance at the wide end of the text-HIGH vs image gap",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value at 50 m, v1 image vs text-HIGH",
+          "value_verbatim": "0.0008",
+          "value_parsed": 0.0008,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The bullet also cites gold-standard-extended-buffer-sweep/extended-buffer-report.md as supporting prose; instrument rule 7 — reference noted, not chased."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          236,
+          236
+        ],
+        "section": "5.4 Cross-contrast interpretation"
+      },
+      "claim_text": "- **Scope-pair label on the GS extended-buffer anchor**: the cited `gold-standard-extended-buffer-sweep/extended-buffer-report.md` artefact is computed on the **Era 3 scope (327 tiles, F1 = 0.8155 at 20 m; F1 = 0.826 at 50 m)**, intentionally bounds-filtered for sibling-comparability with the h8/h10/h12 v2 library-design cells. A scope-paired Era 2 companion (487 tiles, **380 detections post-recovery 2026-05-03**; was 371) on the same text-HIGH pipeline gives **F1 = 0.8663 [0.8591, 0.8726] at 20 m** and **F1 = 0.8859 [0.8798, 0.8919] at 50 m** (`results/gold-standard-extended-buffer-sweep-era2/evaluation.json`; Session 78 baseline 2026-04-24, refreshed Session 82 2026-05-03 at commits `90890ae9..c6023034`; pre-recovery values were 0.854 [0.821, 0.883] @ 20 m and 0.873 [0.844, 0.901] @ 50 m). The Era 3 and Era 2 bootstrap CIs no longer overlap at 20 m post-recovery (the BCa N=10K CI on the refreshed Era 2 evaluation is tighter than the 1K-iter Era 3 CI, and Era 2 lifted by ~+0.013 F1), but the residual gap is consistent with random scope sampling rather than a systematic shift. The cross-corpus gap interpretation above is unaffected — only the scope label on the GS anchor changes. See `results/evaluation-scopes.md` §5.3 for the hierarchical stratified random sampling that constructs Era 3 from Era 2.",
+      "values": [
+        {
+          "quantity": "tile count, Era 3 scope of the gold-standard extended-buffer sweep",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "results/gold-standard-extended-buffer-sweep/with-mcc/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].coverage.n_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 20 m, Era 3 gold-standard extended-buffer sweep",
+          "value_verbatim": "0.8155",
+          "value_parsed": 0.8155,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/gold-standard-extended-buffer-sweep/with-mcc/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the first Era 3 F1 quoted",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/gold-standard-extended-buffer-sweep/with-mcc/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m, Era 3 gold-standard extended-buffer sweep",
+          "value_verbatim": "0.826",
+          "value_parsed": 0.826,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/gold-standard-extended-buffer-sweep/with-mcc/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the second Era 3 F1 quoted",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/gold-standard-extended-buffer-sweep/with-mcc/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Era 2 scope of the gold-standard extended-buffer sweep",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].coverage.n_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "detection count, Era 2 companion sweep post-recovery",
+          "value_verbatim": "380",
+          "value_parsed": 380,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "detection count, Era 2 companion sweep pre-recovery (superseded)",
+          "value_verbatim": "371",
+          "value_parsed": 371,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 20 m, Era 2 companion sweep post-recovery",
+          "value_verbatim": "0.8663",
+          "value_parsed": 0.8663,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound on F1 at 20 m, Era 2 companion sweep",
+          "value_verbatim": "0.8591",
+          "value_parsed": 0.8591,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound on F1 at 20 m, Era 2 companion sweep",
+          "value_verbatim": "0.8726",
+          "value_parsed": 0.8726,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1_ci_upper",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the first Era 2 F1 quoted",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m, Era 2 companion sweep post-recovery",
+          "value_verbatim": "0.8859",
+          "value_parsed": 0.8859,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound on F1 at 50 m, Era 2 companion sweep",
+          "value_verbatim": "0.8798",
+          "value_parsed": 0.8798,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound on F1 at 50 m, Era 2 companion sweep",
+          "value_verbatim": "0.8919",
+          "value_parsed": 0.8919,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1_ci_upper",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the second Era 2 F1 quoted",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 20 m, Era 2 companion sweep pre-recovery (superseded)",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "pre-recovery 95 % CI lower bound on F1 at 20 m, Era 2 (superseded)",
+          "value_verbatim": "0.821",
+          "value_parsed": 0.821,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "pre-recovery 95 % CI upper bound on F1 at 20 m, Era 2 (superseded)",
+          "value_verbatim": "0.883",
+          "value_parsed": 0.883,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m, Era 2 companion sweep pre-recovery (superseded)",
+          "value_verbatim": "0.873",
+          "value_parsed": 0.873,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "pre-recovery 95 % CI lower bound on F1 at 50 m, Era 2 (superseded)",
+          "value_verbatim": "0.844",
+          "value_parsed": 0.844,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "pre-recovery 95 % CI upper bound on F1 at 50 m, Era 2 (superseded)",
+          "value_verbatim": "0.901",
+          "value_parsed": 0.901,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "buffer tolerance at which the Era 3 and Era 2 CIs are claimed not to overlap",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, refreshed Era 2 evaluation",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, Era 3 evaluation",
+          "value_verbatim": "1K",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/gold-standard-extended-buffer-sweep/with-mcc/evaluation.json#$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 lift of the Era 2 companion sweep at 20 m, pre- to post-recovery (approximate)",
+          "value_verbatim": "~+0.013",
+          "value_parsed": 0.013,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchors: Era 3 values come from results/gold-standard-extended-buffer-sweep/with-mcc/evaluation.json, which is the sibling of the cited extended-buffer-report.md that carries the 20 m and 50 m buffer rows (the top-level results/gold-standard-extended-buffer-sweep/evaluation.json carries a different buffer set). Era 2 values come from the artefact the document itself names, results/gold-standard-extended-buffer-sweep-era2/evaluation.json. Pre-recovery values ('was 371'; the 0.854 / 0.873 CI quartet) are historical per instrument rule 3. The '~+0.013 F1' lift is a difference against the superseded pre-recovery Era 2 F1, which is not committed as a live artefact value, so no mechanical operand pair exists — anchor-unknown. 'h8/h10/h12' are condition names and 'Session 78 / 82', the dates, and the commit range `90890ae9..c6023034` are excluded per rule 5. The CI non-overlap assertion itself is a comparison across two evaluations, not a stored scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          237,
+          237
+        ],
+        "section": "5.4 Cross-contrast interpretation"
+      },
+      "claim_text": "- **Three-way raw F1 ordering at 50 m (uncorrected GT, post-recovery)**: text-HIGH (0.792) > image (0.774) > text-MIN (0.762) with only the text-HIGH > image gap surviving paired-permutation v1 significance at α = 0.05. Under corrected-GT v2 (the paper-headline framing), the ordering at R = 50 m flips to image (0.833) ≈ text-HIGH (0.827) > text-MIN (0.797), with image vs text-HIGH non-significant and both significantly above text-MIN — see the v2 summary table immediately above.",
+      "values": [
+        {
+          "quantity": "buffer tolerance of the three-way raw F1 ordering",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "raw (uncorrected-GT) F1 at 50 m, text-HIGH track, post-recovery",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "raw (uncorrected-GT) F1 at 50 m, image track, post-recovery",
+          "value_verbatim": "0.774",
+          "value_parsed": 0.774,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-image-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "raw (uncorrected-GT) F1 at 50 m, text-MIN track, post-recovery",
+          "value_verbatim": "0.762",
+          "value_parsed": 0.762,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "significance level α for the v1 paired-permutation significance claim",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer tolerance of the corrected-GT v2 ordering",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-GT F1 at R = 50 m, image track",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-GT F1 at R = 50 m, text-HIGH track",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-GT F1 at R = 50 m, text-MIN track",
+          "value_verbatim": "0.797",
+          "value_parsed": 0.797,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Raw F1 values anchor to each track's primary evaluation.json (buffers 20/30/40/50); the full-buffer-eval sibling carries the same 50 m row. Corrected-GT F1 values anchor to each track's corrected-f1-multi-buffer/summary.json at R_m = 50."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          239,
+          239
+        ],
+        "section": "5.4 Cross-contrast interpretation"
+      },
+      "claim_text": "**Pipeline-control caveat**: the pipelines differ in consensus vote-threshold (image `vote_t = 3`; text `vote_t = 4`; see §8 Caveat 8). The paired tests reflect the pipelines as deployed, including the vote_t asymmetry. A vote_t-matched re-run on image would likely raise its precision and reduce its recall, shifting the comparison; we do not re-run here because the as-deployed comparison is the paper-citation target.",
+      "values": [
+        {
+          "quantity": "consensus vote threshold as run, image track",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/resolved_config.yaml#$.consensus.vote_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold as run, text tracks",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.consensus.vote_threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/resolved_config.yaml",
+        "path": "$.consensus.vote_threshold"
+      },
+      "method": "read",
+      "notes": "Non-JSON (YAML) anchor — legitimate per the v1.1 note; the harness routes these to triage. The text-track claim covers both text-HIGH and text-MIN; outputs/55maps-text-min-generalisation/resolved_config.yaml is the equivalent second anchor. '§8 Caveat 8' is a section cross-reference, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          245,
+          245
+        ],
+        "section": "6. Cost comparison"
+      },
+      "claim_text": "| image | $364.70 | $353.62 | $11.08 | 785.7 M | 91 % (621.3 M cached) |",
+      "values": [
+        {
+          "quantity": "total cost USD, image track, 55-map production (audited manifest figure)",
+          "value_verbatim": "$364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer-stage cost USD, image track",
+          "value_verbatim": "$353.62",
+          "value_parsed": 353.62,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.proposer.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier-stage cost USD, image track",
+          "value_verbatim": "$11.08",
+          "value_parsed": 11.08,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.verifier.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total tokens, image track",
+          "value_verbatim": "785.7",
+          "value_parsed": 785.7,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "$.totals.total_tokens",
+          "method": "read"
+        },
+        {
+          "quantity": "prompt-cache hit rate, image track",
+          "value_verbatim": "91",
+          "value_parsed": 91.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "cached prompt tokens, image track",
+          "value_verbatim": "621.3",
+          "value_parsed": 621.3,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "$.totals.cached_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Token figures are quoted in millions; the manifest stores raw token counts, so the unit field carries the scale (v1.2 amendment 6). Cache hit rate is quoted as a percentage; the manifest stores a fraction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          246,
+          246
+        ],
+        "section": "6. Cost comparison"
+      },
+      "claim_text": "| text-HIGH | $126.81 | $113.96 | $12.84 | 393.6 M | 0 % (no caching) |",
+      "values": [
+        {
+          "quantity": "total cost USD, text-HIGH track, 55-map production (audited manifest figure)",
+          "value_verbatim": "$126.81",
+          "value_parsed": 126.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer-stage cost USD, text-HIGH track",
+          "value_verbatim": "$113.96",
+          "value_parsed": 113.96,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.proposer.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier-stage cost USD, text-HIGH track",
+          "value_verbatim": "$12.84",
+          "value_parsed": 12.84,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.verifier.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total tokens, text-HIGH track",
+          "value_verbatim": "393.6",
+          "value_parsed": 393.6,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "$.totals.total_tokens",
+          "method": "read"
+        },
+        {
+          "quantity": "prompt-cache hit rate, text-HIGH track",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Token figures are quoted in millions; the manifest stores raw token counts, so the unit field carries the scale (v1.2 amendment 6). Cache hit rate is quoted as a percentage; the manifest stores a fraction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          247,
+          247
+        ],
+        "section": "6. Cost comparison"
+      },
+      "claim_text": "| text-MIN | $60.79 | $46.72 | $14.06 | 88.8 M | 0 % (no caching) |",
+      "values": [
+        {
+          "quantity": "total cost USD, text-MIN track, 55-map production (audited manifest figure)",
+          "value_verbatim": "$60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer-stage cost USD, text-MIN track",
+          "value_verbatim": "$46.72",
+          "value_parsed": 46.72,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.proposer.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier-stage cost USD, text-MIN track",
+          "value_verbatim": "$14.06",
+          "value_parsed": 14.06,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.verifier.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total tokens, text-MIN track",
+          "value_verbatim": "88.8",
+          "value_parsed": 88.8,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "$.totals.total_tokens",
+          "method": "read"
+        },
+        {
+          "quantity": "prompt-cache hit rate, text-MIN track",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Token figures are quoted in millions; the manifest stores raw token counts, so the unit field carries the scale (v1.2 amendment 6). Cache hit rate is quoted as a percentage; the manifest stores a fraction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          249,
+          249
+        ],
+        "section": "6. Cost comparison"
+      },
+      "claim_text": "Image and text-MIN verified 2026-04-24; text-HIGH refreshed post-recovery 2026-05-03 from `outputs/55maps-text-high-generalisation/cost_manifest.json` (pre-recovery $69.60 + $57.10 recovery + $0.10 cleanup + $0.58 FP-classify = $126.81).",
+      "values": [
+        {
+          "quantity": "pre-recovery total cost USD, text-HIGH track (superseded component)",
+          "value_verbatim": "$69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "recovery-stage cost USD, text-HIGH track",
+          "value_verbatim": "$57.10",
+          "value_parsed": 57.1,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cleanup-stage cost USD, text-HIGH track",
+          "value_verbatim": "$0.10",
+          "value_parsed": 0.1,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "FP-classify-stage cost USD, text-HIGH track",
+          "value_verbatim": "$0.58",
+          "value_parsed": 0.58,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total cost USD, text-HIGH track post-recovery",
+          "value_verbatim": "$126.81",
+          "value_parsed": 126.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The four addends are not recorded as separate scalars in the current outputs/55maps-text-high-generalisation/cost_manifest.json (which reports totals and per-stage proposer/verifier costs only), so no mechanical operand set exists for an arithmetic derivation of the $126.81 total from them; the total itself is a direct read. $69.60 is the superseded pre-recovery figure — historical per instrument rule 3. Dates are excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          253,
+          253
+        ],
+        "section": "6. Cost comparison"
+      },
+      "claim_text": "- Image is 2.9× the cost of text-HIGH (post-recovery) despite the 91 % prompt-cache hit rate — the ~47 M uncached input tokens (668.7 M input − 621.3 M cached) plus ~95 M thinking tokens dominate. The text-HIGH cost roughly doubled in recovery owing to additional proposer / verifier tokens to backfill missing tiles.",
+      "values": [
+        {
+          "quantity": "cost ratio, image track relative to text-HIGH track (post-recovery)",
+          "value_verbatim": "2.9",
+          "value_parsed": 2.9,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "prompt-cache hit rate, image track",
+          "value_verbatim": "91",
+          "value_parsed": 91.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cache_hit_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "uncached input tokens, image track (approximate)",
+          "value_verbatim": "~47",
+          "value_parsed": 47.0,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a - b) / 1000000",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.input_tokens"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.cached_tokens"
+            }
+          ]
+        },
+        {
+          "quantity": "input tokens, image track",
+          "value_verbatim": "668.7",
+          "value_parsed": 668.7,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.input_tokens",
+          "method": "read"
+        },
+        {
+          "quantity": "cached prompt tokens, image track",
+          "value_verbatim": "621.3",
+          "value_parsed": 621.3,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cached_tokens",
+          "method": "read"
+        },
+        {
+          "quantity": "thinking tokens, image track (approximate)",
+          "value_verbatim": "~95",
+          "value_parsed": 95.0,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.thinking_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per v1.2 amendment 1 the two derived values (2.9× and ~47 M) each carry their own expression and operands, and the operand quantities quoted in the same span (668.7 M, 621.3 M) are independent 'read' values. Approx markers are kept verbatim per amendment 5. 'roughly doubled' is a qualitative claim with no numeral."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          254,
+          254
+        ],
+        "section": "6. Cost comparison"
+      },
+      "claim_text": "- text-HIGH's verifier cost ($12.84) is comparable to image's verifier cost ($11.08). The image-track savings are entirely in the verifier stage (fewer candidates survive the image-proposer stage despite its precision deficit).",
+      "values": [
+        {
+          "quantity": "verifier-stage cost USD, text-HIGH track",
+          "value_verbatim": "$12.84",
+          "value_parsed": 12.84,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.verifier.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier-stage cost USD, image track",
+          "value_verbatim": "$11.08",
+          "value_parsed": 11.08,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.by_stage.verifier.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          255,
+          255
+        ],
+        "section": "6. Cost comparison"
+      },
+      "claim_text": "- text-MIN's 88.8 M total tokens reflect the MINIMAL thinking setting eliminating thinking-token output on the proposer side.",
+      "values": [
+        {
+          "quantity": "total tokens, text-MIN track",
+          "value_verbatim": "88.8",
+          "value_parsed": 88.8,
+          "unit": "M tokens",
+          "kind": "tokens",
+          "path": "$.totals.total_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": "$.totals.total_tokens"
+      },
+      "method": "read",
+      "notes": "Quoted in millions; the manifest stores the raw token count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          257,
+          257
+        ],
+        "section": "6. Cost comparison"
+      },
+      "claim_text": "**Paper implication**: for a cost-constrained deployment, the text-MIN track is the Pareto floor at $60.79 / raw F1 = 0.762 at 50 m (corrected F1 = 0.797 post-cross-track-v2); the text-HIGH track is $126.81 for raw F1 = 0.792 (corrected F1 = 0.827; +0.030 corrected F1 for +$66.02); the image track is $364.70 for corrected F1 = 0.833 (≈ +0.006 corrected-F1 over text-HIGH at 2.9× the cost — the corrected-F1 ceiling is statistically indistinguishable between image and text-HIGH per cross-track-v2).",
+      "values": [
+        {
+          "quantity": "total cost USD, text-MIN track",
+          "value_verbatim": "$60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "raw (uncorrected-GT) F1 at 50 m, text-MIN track",
+          "value_verbatim": "0.762",
+          "value_parsed": 0.762,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the quoted text-MIN raw F1",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-GT F1 at R = 50 m, text-MIN track",
+          "value_verbatim": "0.797",
+          "value_parsed": 0.797,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, text-HIGH track",
+          "value_verbatim": "$126.81",
+          "value_parsed": 126.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "raw (uncorrected-GT) F1 at 50 m, text-HIGH track",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-GT F1 at R = 50 m, text-HIGH track",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-F1 gain of text-HIGH over text-MIN at R = 50 m",
+          "value_verbatim": "+0.030",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            }
+          ]
+        },
+        {
+          "quantity": "cost increment USD, text-HIGH over text-MIN",
+          "value_verbatim": "+$66.02",
+          "value_parsed": 66.02,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "total cost USD, image track",
+          "value_verbatim": "$364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-GT F1 at R = 50 m, image track",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-F1 gain of image over text-HIGH at R = 50 m (approximate)",
+          "value_verbatim": "≈ +0.006",
+          "value_parsed": 0.006,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            }
+          ]
+        },
+        {
+          "quantity": "cost ratio, image track relative to text-HIGH track",
+          "value_verbatim": "2.9",
+          "value_parsed": 2.9,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Four derived values in one span, each with its own expression and operands per v1.2 amendment 1; the quantities they consume are separately recorded as 'read' values with their own cross-file paths so they are never compared against their own difference. The '≈' on +0.006 is retained verbatim per amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          261,
+          261
+        ],
+        "section": "7. Detection volumes and human-review coverage"
+      },
+      "claim_text": "| Track | VLM candidates (post-PV) | Human-reviewed at 50 m | Human-review scope |",
+      "values": [
+        {
+          "quantity": "buffer tolerance at which human-review coverage is reported",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[?(@.R_m==50)].R_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": "$.results[?(@.R_m==50)].R_m"
+      },
+      "method": "read",
+      "notes": "Table header row; the 50 m column label is the review tolerance the three rows below report against."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          263,
+          263
+        ],
+        "section": "7. Detection volumes and human-review coverage"
+      },
+      "claim_text": "| image | 4,680 (post-recovery; +15 incl. cand 2397) | 1,029 (multi-buffer 557 + cand 2397) | VLM-only (pipeline-flagged, not-in-student-GT) slice; calibrated UI |",
+      "values": [
+        {
+          "quantity": "VLM candidate count post-PV, image track (post-recovery)",
+          "value_verbatim": "4,680",
+          "value_parsed": 4680,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.unit_costs.final_detection_count",
+          "method": "read"
+        },
+        {
+          "quantity": "increase in image detections, pre- to post-recovery",
+          "value_verbatim": "+15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.unit_costs.final_detection_count"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+              "path": "$.condition_a.n_detections"
+            }
+          ]
+        },
+        {
+          "quantity": "human-reviewed candidate count at 50 m, image track",
+          "value_verbatim": "1,029",
+          "value_parsed": 1029,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json#$.n_total",
+          "method": "read"
+        },
+        {
+          "quantity": "multi-buffer human-review row count, image track",
+          "value_verbatim": "557",
+          "value_parsed": 557,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/human-review-multi-buffer.csv#len:$.rows",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'cand 2397' is a candidate identifier, excluded per rule 5. The 1,029 figure is described in the source as the multi-buffer review plus cand 2397; candidate anchors are the calibration crosstab's $.n_total and the row counts of results/55maps-image-generalisation/human-review.csv and human-review-multi-buffer.csv (CSV anchors are non-JSON — legitimate per the v1.1 note, routed to triage). 'len:$.rows' means data rows excluding the header line."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          264,
+          264
+        ],
+        "section": "7. Detection volumes and human-review coverage"
+      },
+      "claim_text": "| text-HIGH | 4,164 (post-recovery; +21) | 630 | VLM-only slice; multi-buffer review (Session 78 2026-04-24; corrected-GT counts refreshed post-recovery 2026-05-03); 32 `>150 m` sentinel labels excluded |",
+      "values": [
+        {
+          "quantity": "VLM candidate count post-PV, text-HIGH track (post-recovery)",
+          "value_verbatim": "4,164",
+          "value_parsed": 4164,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.unit_costs.final_detection_count",
+          "method": "read"
+        },
+        {
+          "quantity": "increase in text-HIGH detections, pre- to post-recovery",
+          "value_verbatim": "+21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.unit_costs.final_detection_count"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-cross-track-comparison/paired-image-vs-text-high-20m/pairwise_permutation_result.json",
+              "path": "$.condition_b.n_detections"
+            }
+          ]
+        },
+        {
+          "quantity": "human-reviewed candidate count at 50 m, text-HIGH track",
+          "value_verbatim": "630",
+          "value_parsed": 630,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.n_total",
+          "method": "read"
+        },
+        {
+          "quantity": "sentinel-shell labels excluded from the text-HIGH extended-GT build",
+          "value_verbatim": "32",
+          "value_parsed": 32,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.exclusions.n_excluded_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "sentinel-shell distance label for the excluded text-HIGH review labels",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '>150 m' sentinel shell is a review-ring label; the corrected-f1 summary records the sentinel ring at $.exclusions.sentinel_buffer_metres, which is a different quantity, so the 150 m label is left anchor-unknown rather than pointed at a mismatched field. Session numbers and dates are excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          265,
+          265
+        ],
+        "section": "7. Detection volumes and human-review coverage"
+      },
+      "claim_text": "| text-MIN | 3,865 (post-recovery; +4) | 586 | VLM-only slice; multi-buffer review added in cross-track-v2 commit `42ed1d32` (250 reviewer-promoted at R = 50 m) |",
+      "values": [
+        {
+          "quantity": "VLM candidate count post-PV, text-MIN track (post-recovery)",
+          "value_verbatim": "3,865",
+          "value_parsed": 3865,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.unit_costs.final_detection_count",
+          "method": "read"
+        },
+        {
+          "quantity": "increase in text-MIN detections, pre- to post-recovery",
+          "value_verbatim": "+4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.unit_costs.final_detection_count"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-cross-track-comparison/paired-image-vs-text-min-20m/pairwise_permutation_result.json",
+              "path": "$.condition_b.n_detections"
+            }
+          ]
+        },
+        {
+          "quantity": "human-reviewed candidate count at 50 m, text-MIN track",
+          "value_verbatim": "586",
+          "value_parsed": 586,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-min-generalisation/verifier-calibration-crosstab/calibration.json#$.n_total",
+          "method": "read"
+        },
+        {
+          "quantity": "reviewer-promoted candidates at R = 50 m, text-MIN track",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].n_reviewer_promoted_at_R",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer tolerance of the text-MIN reviewer-promotion count",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].R_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 586 figure is the human-reviewed candidate count; candidate anchors are the text-MIN calibration crosstab's $.n_total and the row count of results/55maps-text-min-generalisation/human-review-multi-buffer.csv. 'cross-track-v2 commit `42ed1d32`' is a git hash, excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          267,
+          267
+        ],
+        "section": "7. Detection volumes and human-review coverage"
+      },
+      "claim_text": "The human-review process produced a 474 / 555 mound / not-mound split on the image track (underpinning its corrected-F1 analysis post cand 2397 promotion), a 352 / 278 split on text-HIGH (prevalence 55.9 %), and a 324 / 261 split on text-MIN (prevalence 55.4 %; cross-track-v2 review).",
+      "values": [
+        {
+          "quantity": "human-review 'mound' label count, image track",
+          "value_verbatim": "474",
+          "value_parsed": 474,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review 'not_mound' label count, image track",
+          "value_verbatim": "555",
+          "value_parsed": 555,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review 'mound' label count, text-HIGH track",
+          "value_verbatim": "352",
+          "value_parsed": 352,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review 'not_mound' label count, text-HIGH track",
+          "value_verbatim": "278",
+          "value_parsed": 278,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review mound prevalence, text-HIGH track",
+          "value_verbatim": "55.9",
+          "value_parsed": 55.9,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review 'mound' label count, text-MIN track",
+          "value_verbatim": "324",
+          "value_parsed": 324,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-min-generalisation/verifier-calibration-crosstab/calibration.json#$.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review 'not_mound' label count, text-MIN track",
+          "value_verbatim": "261",
+          "value_parsed": 261,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-min-generalisation/verifier-calibration-crosstab/calibration.json#$.n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review mound prevalence, text-MIN track",
+          "value_verbatim": "55.4",
+          "value_parsed": 55.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "results/55maps-text-min-generalisation/verifier-calibration-crosstab/calibration.json#$.prevalence",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The image split is qualified in the source as 'post cand 2397 promotion', so an alternative anchor for the mound side is results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json $.results[?(@.R_m==50)].n_reviewer_promoted_at_R; both candidates are named here for triage. Prevalences are quoted as percentages; the calibration JSONs store fractions (the unit field carries the scale). 'cand 2397' is an identifier, excluded."
+    }
+  ]
+}

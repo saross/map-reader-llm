@@ -1,0 +1,3704 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-attractor-pull-v2/report.md",
+    "git_blob": "62fb719484f8",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          3
+        ],
+        "section": "Anchor"
+      },
+      "claim_text": "**Anchor**: Obs 272 (`docs/notes/reflections/working-notes.md`, 2026-04-21) established the attractor-pull cutoff at ~125 m using the image-generalisation review only.",
+      "values": [
+        {
+          "quantity": "attractor-pull cutoff reported by Obs 272 (image-generalisation review only)",
+          "value_verbatim": "~125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Named source is a prose document (docs/notes/reflections/working-notes.md, Obs 272); instrument rule 2 forbids anchoring prose to prose, so triage must chase Obs 272 to an artefact. Approx marker retained in value_verbatim per v1.2 amendment 5. [BATCH NOTE b067] Every shell-table cell, per-run header figure, consensus cell, and permutation p-value in this report is materialised verbatim in the sibling artefact results/55maps-attractor-pull-v2/attractor-pull-v2.json, which the report's own generator writes. Those values are therefore anchored 'read' into that JSON (instrument rule 2: least-writable artefact) rather than 'recompute-script'; a full permutation recomputation (M = 1,000, seed 42, scripts/analyse_attractor_pull_v2.py) is only required if the JSON itself is disputed. Values with no JSON home are given an explicit non-read method."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          3
+        ],
+        "section": "Anchor"
+      },
+      "claim_text": "v2 re-runs the same shell-wise within-tile permutation null on each of the 4 corrected 55-map runs and synthesises a consensus cutoff.",
+      "values": [
+        {
+          "quantity": "number of corrected 55-map runs analysed",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": null
+        },
+        {
+          "quantity": "map count of the corpus underlying each run",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 55 is a corpus-size assertion, not a bare name (instrument rule 5, the '487-tile Era 2 corpus' precedent); anchored cross-file to the evaluation bounds GeoJSON named in scripts/analyse_attractor_pull_v2.py (constant BOUNDS), whose features are tiles, so a distinct count over map_name is required. [BATCH NOTE b067] Scope decisions for this document (instrument rule 5, logged not silent): the temperature tokens in run labels (T=0.3, T=0.7, t0.3, t0.7) are treated as condition names, not asserted parameters; dates (2026-04-21, 2026-05-03), the commit hash 42ed1d32, Obs identifiers (272, 294, 298), section references (§3, §6), the '4-corner' GT variant name, the candidate identifier 2397, and the mathematical constant √2 are all excluded. Non-numeric table cells ('sig', '—', 'True', 'False', 'yes', 'no') are booleans, not values, and are not extracted; the numeric n_runs_significant column carries the same information."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          5,
+          6
+        ],
+        "section": "Post-recovery 2026-05-03"
+      },
+      "claim_text": "**Post-recovery 2026-05-03**: all four runs re-evaluated against the\ncanonical post-recovery review cohorts (cross-track-v2 commit `42ed1d32`).",
+      "values": [
+        {
+          "quantity": "number of runs re-evaluated against the post-recovery review cohorts",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "len:$.runs"
+      },
+      "method": "read",
+      "notes": "Date and commit hash excluded per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          8
+        ],
+        "section": "Post-recovery 2026-05-03"
+      },
+      "claim_text": "T=0.7 row refreshed against the post-recovery T=0.7 evaluation\n(n_candidates 630 → 637, bias_correction 0.9309 → 0.9302);",
+      "values": [
+        {
+          "quantity": "n_candidates, T=0.7 text-HIGH run, pre-recovery (superseded)",
+          "value_verbatim": "630",
+          "value_parsed": 630,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "n_candidates, T=0.7 text-HIGH run, post-recovery (live)",
+          "value_verbatim": "637",
+          "value_parsed": 637,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='t0.7')].n_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "bias_correction, T=0.7 text-HIGH run, pre-recovery (superseded)",
+          "value_verbatim": "0.9309",
+          "value_parsed": 0.9309,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "bias_correction, T=0.7 text-HIGH run, post-recovery (live)",
+          "value_verbatim": "0.9302",
+          "value_parsed": 0.9302,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].bias_correction",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Before-to-after correction block: the left-hand side of each '→' pair is the quoted superseded value (method historical), the right-hand side is the live claim (instrument rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          8,
+          10
+        ],
+        "section": "Post-recovery 2026-05-03"
+      },
+      "claim_text": "image row\nrefreshed against the +1 phantom-promoted cand 2397 review\n(n_candidates 1,029 → 1,030, bias_correction 0.8641 → 0.864);",
+      "values": [
+        {
+          "quantity": "phantom-promoted candidates added to the image review at post-recovery",
+          "value_verbatim": "+1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "n_candidates, image (T=0.7) run, pre-recovery (superseded)",
+          "value_verbatim": "1,029",
+          "value_parsed": 1029,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "n_candidates, image (T=0.7) run, post-recovery (live)",
+          "value_verbatim": "1,030",
+          "value_parsed": 1030,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='image')].n_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "bias_correction, image (T=0.7) run, pre-recovery (superseded)",
+          "value_verbatim": "0.8641",
+          "value_parsed": 0.8641,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "bias_correction, image (T=0.7) run, post-recovery (live)",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].bias_correction",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '+1' promotion count has no scalar home in the sibling JSON (it is the gap between the superseded and live n_candidates, and the superseded side is not committed anywhere resolvable), so it takes an explicit anchor-unknown method rather than an arithmetic derivation over an unanchorable operand. Candidate identifier 2397 excluded per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          12,
+          15
+        ],
+        "section": "Post-recovery 2026-05-03"
+      },
+      "claim_text": "The qualitative finding is preserved: per-run cutoffs\nunchanged (T=0.3 = 100 m, T=0.7 = 125 m, image = 125 m,\ntext-MIN = 100 m); 100 m most-permissive cap and 125 m majority\nbreakpoint are stable.",
+      "values": [
+        {
+          "quantity": "per-run cutoff, T=0.3 text-HIGH",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "per-run cutoff, T=0.7 text-HIGH",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "per-run cutoff, image (T=0.7)",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "per-run cutoff, text-MIN",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "most-permissive cross-run consensus cap",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "majority breakpoint, cross-run consensus",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "0. Executive summary"
+      },
+      "claim_text": "The shell-wise within-tile permutation null was applied independently to all four corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH, image at T=0.7, text-MIN).",
+      "values": [
+        {
+          "quantity": "number of corrected 55-map runs the shell-wise null was applied to",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": null
+        },
+        {
+          "quantity": "map count of the corpus underlying each run",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "0. Executive summary"
+      },
+      "claim_text": "Two consensus operating points emerge from the cross-run synthesis (§3):",
+      "values": [
+        {
+          "quantity": "number of consensus operating points emerging from the cross-run synthesis",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged (instrument task note: include and flag). This is a count of the report's own headline operating points rather than a measured quantity; $.consensus in the sibling JSON does carry exactly two cutoff scalars (most_permissive_consensus_cutoff_m, majority_breakpoint_m), but that is an inference rather than a locatable path. Section reference §3 excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "0. Executive summary"
+      },
+      "claim_text": "- **Most-permissive cap = 100 m** — the deepest shell outer edge at which **all four** runs reject the within-tile null at α = 0.05.",
+      "values": [
+        {
+          "quantity": "most-permissive consensus cap (deepest shell outer edge significant in all runs)",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "number of runs rejecting the within-tile null at the 100 m shell",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==100)].n_runs_significant",
+          "method": null
+        },
+        {
+          "quantity": "significance level alpha",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.alpha",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "0. Executive summary"
+      },
+      "claim_text": "- **Majority cap = 125 m** — the deepest shell outer edge at which **≥ 3 of 4** runs reject the null.",
+      "values": [
+        {
+          "quantity": "majority cap / majority breakpoint, cross-run consensus",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": null
+        },
+        {
+          "quantity": "majority threshold: minimum runs required to reject the null",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total number of runs in the cross-run consensus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The majority threshold 3 is computed rather than stored: scripts/analyse_attractor_pull_v2.py defines majority_threshold = (n_runs // 2) + 1 (two occurrences, in the consensus builder and the report writer), so no JSON path locates it. Separately, the same 125 m figure is restated at line 99 with a different verbal definition ('first shell where < 3/4 runs are significant'); flagged for triage, not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "0. Executive summary"
+      },
+      "claim_text": "T=0.7 text-HIGH and image (T=0.7) extend cleanly to 125 m with monotonic decay; T=0.3 text-HIGH dips at the (100, 125] shell from a thin n = 7 sample (p = 0.093), and text-MIN cuts cleanly at 100 m with no thin-sample uncertainty.",
+      "values": [
+        {
+          "quantity": "per-run cutoff, T=0.7 text-HIGH (asserted jointly with image (T=0.7))",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "candidate count in the (100, 125] shell, T=0.3 text-HIGH",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+              "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].obs_rate_in_shell"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+              "path": "$.runs[?(@.key=='t0.3')].n_candidates"
+            }
+          ]
+        },
+        {
+          "quantity": "bias-corrected permutation p-value, T=0.3 text-HIGH, (100, 125] shell",
+          "value_verbatim": "0.093",
+          "value_parsed": 0.093,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].p_value_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "per-run cutoff, text-MIN",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].cutoff_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '125 m' asserts the cutoff for both T=0.7 text-HIGH and image (T=0.7); anchored to the T=0.7 run, with $.runs[?(@.key=='image')].cutoff_m carrying the same assertion. The n = 7 shell sample is not stored as a scalar anywhere in the sibling JSON; it is derivable as obs_rate_in_shell x n_candidates rounded to the nearest integer, so integer-rounding tolerance is required. The shell bounds '(100, 125]' are a shell label, not an independent claim (the same edges are extracted at line 31)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "0. Executive summary"
+      },
+      "claim_text": "These two operating points are the headline finding for the Methods / Results sections of the paper.",
+      "values": [
+        {
+          "quantity": "number of consensus operating points forming the headline finding",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged; restatement of the line-19 count with the same anchoring problem."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "0. Executive summary"
+      },
+      "claim_text": "They tie directly to Obs 298 (4-run consensus refinement) and clarify — without contradicting — Obs 294's earlier 3-run 125 m framing.",
+      "values": [
+        {
+          "quantity": "number of runs in the Obs 298 consensus refinement",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "number of runs in Obs 294's earlier framing",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cutoff reported in Obs 294's earlier 3-run framing",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "All three values are assertions about the content of other prose entries (Obs 298 and Obs 294 in docs/notes/reflections/working-notes.md); instrument rule 2 forbids anchoring prose to prose. Obs identifiers themselves are out of scope per rule 5. Section reference §6 excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "1. Method"
+      },
+      "claim_text": "For each run, observed shell rates are taken directly from the reviewer's ``buffer_metres`` label (the band at which a real mound is visible inside the buffer; ``not_mound`` rows are mapped to the > 286 m shell).",
+      "values": [
+        {
+          "quantity": "outer edge of the final shell, to which not_mound rows are mapped",
+          "value_verbatim": "286 m",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[5]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "$.shell_edges_m[5]"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "1. Method"
+      },
+      "claim_text": "The null distribution is M = 1,000 within-tile permutations (seed 42) of student GT distances.",
+      "values": [
+        {
+          "quantity": "number of within-tile permutations in the null distribution (M)",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutations",
+          "method": null
+        },
+        {
+          "quantity": "random seed for the permutation null",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "1. Method"
+      },
+      "claim_text": "Per-shell significance is the one-sided permutation p-value against the bias-corrected null (P(null_corrected ≥ obs)), alpha = 0.05.",
+      "values": [
+        {
+          "quantity": "significance level alpha for the one-sided permutation test",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.alpha",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "$.alpha"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "1. Method"
+      },
+      "claim_text": "Student-GT reference set: 4744 mounds (4-corner of the corrected reviewed reference).",
+      "values": [
+        {
+          "quantity": "student-GT reference set size (mounds)",
+          "value_verbatim": "4744",
+          "value_parsed": 4744,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_student_gt",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "$.n_student_gt"
+      },
+      "method": "read",
+      "notes": "'4-corner' is the name of the ground-truth variant, not a claim (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "1. Method"
+      },
+      "claim_text": "Shell edges (m): 50, 75, 100, 125, 150, 286.",
+      "values": [
+        {
+          "quantity": "shell edge 1 (m)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[0]",
+          "method": null
+        },
+        {
+          "quantity": "shell edge 2 (m)",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[1]",
+          "method": null
+        },
+        {
+          "quantity": "shell edge 3 (m)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[2]",
+          "method": null
+        },
+        {
+          "quantity": "shell edge 4 (m)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[3]",
+          "method": null
+        },
+        {
+          "quantity": "shell edge 5 (m)",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[4]",
+          "method": null
+        },
+        {
+          "quantity": "shell edge 6 (m)",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[5]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "1. Method"
+      },
+      "claim_text": "The (200, 286] shell corresponds to the >150-m / not_mound review label, with effective tolerance 286 m (200 × √2 + 5 display-pixels on the 400 m × 400 m crop).",
+      "values": [
+        {
+          "quantity": "inner bound of the final shell as stated in this sentence",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "outer bound of the final shell",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[5]",
+          "method": "read"
+        },
+        {
+          "quantity": "review-label threshold above which rows fall into the final shell",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[4]",
+          "method": "read"
+        },
+        {
+          "quantity": "effective tolerance of the final shell",
+          "value_verbatim": "286 m",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_edges_m[5]",
+          "method": "read"
+        },
+        {
+          "quantity": "half-width of the context crop used in the corner tolerance geometry",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "display-pixel allowance added to the corner tolerance",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "pixels",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "context crop width",
+          "value_verbatim": "400",
+          "value_parsed": 400,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "context crop height",
+          "value_verbatim": "400",
+          "value_parsed": 400,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The sibling JSON stores only the shell-edge array ($.shell_edges_m), so the geometry constants (200 m half-width, 5 display-pixels, 400 m x 400 m crop) and the '200' inner bound quoted here have no JSON path; the same wording appears as a literal in scripts/analyse_attractor_pull_v2.py (the SHELL_EDGES comment block and the report-writer string), which is a legitimate non-JSON anchor for triage (v1.1). The mathematical constant sqrt(2) is not a study quantity and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "2. Per-run shell tables / T=0.3 text-HIGH"
+      },
+      "claim_text": "### T=0.3 text-HIGH — n=692, bias_correction=0.9231",
+      "values": [
+        {
+          "quantity": "n_candidates, T=0.3 text-HIGH run",
+          "value_verbatim": "692",
+          "value_parsed": 692,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='t0.3')].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "bias_correction, T=0.3 text-HIGH run",
+          "value_verbatim": "0.9231",
+          "value_parsed": 0.9231,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].bias_correction",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "2. Per-run shell tables / T=0.3 text-HIGH"
+      },
+      "claim_text": "|           0 |          50 |              0.4451 |                     0.0031 |                      145.88 |                           0.9931 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (0, 50] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==50)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (0, 50] m, T=0.3 text-HIGH run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==50)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (0, 50] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.4451",
+          "value_parsed": 0.4451,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==50)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (0, 50] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0031",
+          "value_parsed": 0.0031,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==50)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (0, 50] m, T=0.3 text-HIGH run",
+          "value_verbatim": "145.88",
+          "value_parsed": 145.88,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==50)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (0, 50] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.9931",
+          "value_parsed": 0.9931,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==50)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (0, 50] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==50)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Generated table pasted into a hand-written report; extracted as a claim the document makes (instrument rule 6). The 'significant' column is boolean and carries no numeric value. [BATCH NOTE b067] Every shell-table cell, per-run header figure, consensus cell, and permutation p-value in this report is materialised verbatim in the sibling artefact results/55maps-attractor-pull-v2/attractor-pull-v2.json, which the report's own generator writes. Those values are therefore anchored 'read' into that JSON (instrument rule 2: least-writable artefact) rather than 'recompute-script'; a full permutation recomputation (M = 1,000, seed 42, scripts/analyse_attractor_pull_v2.py) is only required if the JSON itself is disputed. Values with no JSON home are given an explicit non-read method."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "2. Per-run shell tables / T=0.3 text-HIGH"
+      },
+      "claim_text": "|          50 |          75 |              0.0347 |                     0.0038 |                        9.23 |                           0.8917 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (50, 75] m, T=0.3 text-HIGH run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==75)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (50, 75] m, T=0.3 text-HIGH run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==75)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (50, 75] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0347",
+          "value_parsed": 0.0347,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==75)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (50, 75] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0038",
+          "value_parsed": 0.0038,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==75)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (50, 75] m, T=0.3 text-HIGH run",
+          "value_verbatim": "9.23",
+          "value_parsed": 9.23,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==75)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (50, 75] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.8917",
+          "value_parsed": 0.8917,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==75)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (50, 75] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==75)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "2. Per-run shell tables / T=0.3 text-HIGH"
+      },
+      "claim_text": "|          75 |         100 |              0.0202 |                     0.005  |                        4.03 |                           0.7521 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (75, 100] m, T=0.3 text-HIGH run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==100)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (75, 100] m, T=0.3 text-HIGH run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==100)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (75, 100] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0202",
+          "value_parsed": 0.0202,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==100)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (75, 100] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==100)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (75, 100] m, T=0.3 text-HIGH run",
+          "value_verbatim": "4.03",
+          "value_parsed": 4.03,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==100)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (75, 100] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.7521",
+          "value_parsed": 0.7521,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==100)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (75, 100] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==100)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "2. Per-run shell tables / T=0.3 text-HIGH"
+      },
+      "claim_text": "|         100 |         125 |              0.0101 |                     0.0059 |                        1.71 |                           0.416  |                    0.093 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (100, 125] m, T=0.3 text-HIGH run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (100, 125] m, T=0.3 text-HIGH run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (100, 125] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0101",
+          "value_parsed": 0.0101,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (100, 125] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0059",
+          "value_parsed": 0.0059,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (100, 125] m, T=0.3 text-HIGH run",
+          "value_verbatim": "1.71",
+          "value_parsed": 1.71,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (100, 125] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.416",
+          "value_parsed": 0.416,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (100, 125] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.093",
+          "value_parsed": 0.093,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==125)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "2. Per-run shell tables / T=0.3 text-HIGH"
+      },
+      "claim_text": "|         125 |         150 |              0.0145 |                     0.0069 |                        2.08 |                           0.5203 |                    0.013 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (125, 150] m, T=0.3 text-HIGH run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==150)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (125, 150] m, T=0.3 text-HIGH run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==150)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (125, 150] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0145",
+          "value_parsed": 0.0145,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==150)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (125, 150] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0069",
+          "value_parsed": 0.0069,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==150)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (125, 150] m, T=0.3 text-HIGH run",
+          "value_verbatim": "2.08",
+          "value_parsed": 2.08,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==150)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (125, 150] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.5203",
+          "value_parsed": 0.5203,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==150)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (125, 150] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.013",
+          "value_parsed": 0.013,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==150)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "2. Per-run shell tables / T=0.3 text-HIGH"
+      },
+      "claim_text": "|         150 |         286 |              0.0462 |                     0.0552 |                        0.84 |                          -0.1931 |                    0.842 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (150, 286] m, T=0.3 text-HIGH run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==286)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (150, 286] m, T=0.3 text-HIGH run",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==286)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (150, 286] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0462",
+          "value_parsed": 0.0462,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==286)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (150, 286] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.0552",
+          "value_parsed": 0.0552,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==286)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (150, 286] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.84",
+          "value_parsed": 0.84,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==286)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (150, 286] m, T=0.3 text-HIGH run",
+          "value_verbatim": "-0.1931",
+          "value_parsed": -0.1931,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==286)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (150, 286] m, T=0.3 text-HIGH run",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.3')].shell[?(@.R_outer_m==286)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "2. Per-run shell tables / T=0.3 text-HIGH"
+      },
+      "claim_text": "**Per-run cutoff**: 100 m (deepest shell outer edge with bias-corrected p < 0.05)",
+      "values": [
+        {
+          "quantity": "per-run cutoff, T=0.3 text-HIGH",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "significance threshold applied to the bias-corrected p-value",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.alpha",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "2. Per-run shell tables / T=0.7 text-HIGH"
+      },
+      "claim_text": "### T=0.7 text-HIGH — n=637, bias_correction=0.9302",
+      "values": [
+        {
+          "quantity": "n_candidates, T=0.7 text-HIGH run",
+          "value_verbatim": "637",
+          "value_parsed": 637,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='t0.7')].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "bias_correction, T=0.7 text-HIGH run",
+          "value_verbatim": "0.9302",
+          "value_parsed": 0.9302,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].bias_correction",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "2. Per-run shell tables / T=0.7 text-HIGH"
+      },
+      "claim_text": "|           0 |          50 |              0.4239 |                     0.0029 |                      146.96 |                           0.9932 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (0, 50] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==50)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (0, 50] m, T=0.7 text-HIGH run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==50)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (0, 50] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.4239",
+          "value_parsed": 0.4239,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==50)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (0, 50] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0029",
+          "value_parsed": 0.0029,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==50)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (0, 50] m, T=0.7 text-HIGH run",
+          "value_verbatim": "146.96",
+          "value_parsed": 146.96,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==50)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (0, 50] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.9932",
+          "value_parsed": 0.9932,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==50)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (0, 50] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==50)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "2. Per-run shell tables / T=0.7 text-HIGH"
+      },
+      "claim_text": "|          50 |          75 |              0.0298 |                     0.0034 |                        8.69 |                           0.8849 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (50, 75] m, T=0.7 text-HIGH run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==75)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (50, 75] m, T=0.7 text-HIGH run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==75)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (50, 75] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0298",
+          "value_parsed": 0.0298,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==75)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (50, 75] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0034",
+          "value_parsed": 0.0034,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==75)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (50, 75] m, T=0.7 text-HIGH run",
+          "value_verbatim": "8.69",
+          "value_parsed": 8.69,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==75)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (50, 75] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.8849",
+          "value_parsed": 0.8849,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==75)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (50, 75] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==75)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "2. Per-run shell tables / T=0.7 text-HIGH"
+      },
+      "claim_text": "|          75 |         100 |              0.0298 |                     0.0048 |                        6.27 |                           0.8406 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (75, 100] m, T=0.7 text-HIGH run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==100)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (75, 100] m, T=0.7 text-HIGH run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==100)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (75, 100] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0298",
+          "value_parsed": 0.0298,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==100)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (75, 100] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0048",
+          "value_parsed": 0.0048,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==100)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (75, 100] m, T=0.7 text-HIGH run",
+          "value_verbatim": "6.27",
+          "value_parsed": 6.27,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==100)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (75, 100] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.8406",
+          "value_parsed": 0.8406,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==100)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (75, 100] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==100)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "2. Per-run shell tables / T=0.7 text-HIGH"
+      },
+      "claim_text": "|         100 |         125 |              0.0173 |                     0.0061 |                        2.83 |                           0.6464 |                    0.002 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (100, 125] m, T=0.7 text-HIGH run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==125)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (100, 125] m, T=0.7 text-HIGH run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==125)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (100, 125] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0173",
+          "value_parsed": 0.0173,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==125)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (100, 125] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0061",
+          "value_parsed": 0.0061,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==125)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (100, 125] m, T=0.7 text-HIGH run",
+          "value_verbatim": "2.83",
+          "value_parsed": 2.83,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==125)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (100, 125] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.6464",
+          "value_parsed": 0.6464,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==125)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (100, 125] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==125)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          56
+        ],
+        "section": "2. Per-run shell tables / T=0.7 text-HIGH"
+      },
+      "claim_text": "|         125 |         150 |              0.0078 |                     0.0071 |                        1.11 |                           0.1017 |                    0.396 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (125, 150] m, T=0.7 text-HIGH run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==150)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (125, 150] m, T=0.7 text-HIGH run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==150)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (125, 150] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0078",
+          "value_parsed": 0.0078,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==150)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (125, 150] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0071",
+          "value_parsed": 0.0071,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==150)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (125, 150] m, T=0.7 text-HIGH run",
+          "value_verbatim": "1.11",
+          "value_parsed": 1.11,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==150)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (125, 150] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.1017",
+          "value_parsed": 0.1017,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==150)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (125, 150] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.396",
+          "value_parsed": 0.396,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==150)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "2. Per-run shell tables / T=0.7 text-HIGH"
+      },
+      "claim_text": "|         150 |         286 |              0.0502 |                     0.0548 |                        0.92 |                          -0.0913 |                    0.707 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (150, 286] m, T=0.7 text-HIGH run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==286)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (150, 286] m, T=0.7 text-HIGH run",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==286)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (150, 286] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0502",
+          "value_parsed": 0.0502,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==286)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (150, 286] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.0548",
+          "value_parsed": 0.0548,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==286)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (150, 286] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.92",
+          "value_parsed": 0.92,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==286)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (150, 286] m, T=0.7 text-HIGH run",
+          "value_verbatim": "-0.0913",
+          "value_parsed": -0.0913,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==286)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (150, 286] m, T=0.7 text-HIGH run",
+          "value_verbatim": "0.707",
+          "value_parsed": 0.707,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='t0.7')].shell[?(@.R_outer_m==286)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "2. Per-run shell tables / T=0.7 text-HIGH"
+      },
+      "claim_text": "**Per-run cutoff**: 125 m (deepest shell outer edge with bias-corrected p < 0.05)",
+      "values": [
+        {
+          "quantity": "per-run cutoff, T=0.7 text-HIGH",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "significance threshold applied to the bias-corrected p-value",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.alpha",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "2. Per-run shell tables / image (T=0.7)"
+      },
+      "claim_text": "### image (T=0.7) — n=1030, bias_correction=0.864",
+      "values": [
+        {
+          "quantity": "n_candidates, image (T=0.7) run",
+          "value_verbatim": "1030",
+          "value_parsed": 1030,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='image')].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "bias_correction, image (T=0.7) run",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].bias_correction",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "2. Per-run shell tables / image (T=0.7)"
+      },
+      "claim_text": "|           0 |          50 |              0.4612 |                     0.0047 |                       98.46 |                           0.9898 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (0, 50] m, image (T=0.7) run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==50)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (0, 50] m, image (T=0.7) run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==50)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (0, 50] m, image (T=0.7) run",
+          "value_verbatim": "0.4612",
+          "value_parsed": 0.4612,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==50)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (0, 50] m, image (T=0.7) run",
+          "value_verbatim": "0.0047",
+          "value_parsed": 0.0047,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==50)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (0, 50] m, image (T=0.7) run",
+          "value_verbatim": "98.46",
+          "value_parsed": 98.46,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==50)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (0, 50] m, image (T=0.7) run",
+          "value_verbatim": "0.9898",
+          "value_parsed": 0.9898,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==50)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (0, 50] m, image (T=0.7) run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==50)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "2. Per-run shell tables / image (T=0.7)"
+      },
+      "claim_text": "|          50 |          75 |              0.1175 |                     0.0058 |                       20.24 |                           0.9506 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (50, 75] m, image (T=0.7) run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==75)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (50, 75] m, image (T=0.7) run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==75)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (50, 75] m, image (T=0.7) run",
+          "value_verbatim": "0.1175",
+          "value_parsed": 0.1175,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==75)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (50, 75] m, image (T=0.7) run",
+          "value_verbatim": "0.0058",
+          "value_parsed": 0.0058,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==75)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (50, 75] m, image (T=0.7) run",
+          "value_verbatim": "20.24",
+          "value_parsed": 20.24,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==75)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (50, 75] m, image (T=0.7) run",
+          "value_verbatim": "0.9506",
+          "value_parsed": 0.9506,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==75)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (50, 75] m, image (T=0.7) run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==75)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "2. Per-run shell tables / image (T=0.7)"
+      },
+      "claim_text": "|          75 |         100 |              0.0456 |                     0.0077 |                        5.95 |                           0.8319 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (75, 100] m, image (T=0.7) run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==100)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (75, 100] m, image (T=0.7) run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==100)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (75, 100] m, image (T=0.7) run",
+          "value_verbatim": "0.0456",
+          "value_parsed": 0.0456,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==100)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (75, 100] m, image (T=0.7) run",
+          "value_verbatim": "0.0077",
+          "value_parsed": 0.0077,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==100)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (75, 100] m, image (T=0.7) run",
+          "value_verbatim": "5.95",
+          "value_parsed": 5.95,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==100)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (75, 100] m, image (T=0.7) run",
+          "value_verbatim": "0.8319",
+          "value_parsed": 0.8319,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==100)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (75, 100] m, image (T=0.7) run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==100)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "2. Per-run shell tables / image (T=0.7)"
+      },
+      "claim_text": "|         100 |         125 |              0.0184 |                     0.0093 |                        1.99 |                           0.4985 |                    0.002 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (100, 125] m, image (T=0.7) run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==125)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (100, 125] m, image (T=0.7) run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==125)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (100, 125] m, image (T=0.7) run",
+          "value_verbatim": "0.0184",
+          "value_parsed": 0.0184,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==125)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (100, 125] m, image (T=0.7) run",
+          "value_verbatim": "0.0093",
+          "value_parsed": 0.0093,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==125)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (100, 125] m, image (T=0.7) run",
+          "value_verbatim": "1.99",
+          "value_parsed": 1.99,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==125)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (100, 125] m, image (T=0.7) run",
+          "value_verbatim": "0.4985",
+          "value_parsed": 0.4985,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==125)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (100, 125] m, image (T=0.7) run",
+          "value_verbatim": "0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==125)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "2. Per-run shell tables / image (T=0.7)"
+      },
+      "claim_text": "|         125 |         150 |              0.0107 |                     0.0107 |                        1.00 |                           0.0003 |                    0.469 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (125, 150] m, image (T=0.7) run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==150)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (125, 150] m, image (T=0.7) run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==150)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (125, 150] m, image (T=0.7) run",
+          "value_verbatim": "0.0107",
+          "value_parsed": 0.0107,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==150)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (125, 150] m, image (T=0.7) run",
+          "value_verbatim": "0.0107",
+          "value_parsed": 0.0107,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==150)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (125, 150] m, image (T=0.7) run",
+          "value_verbatim": "1.00",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==150)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (125, 150] m, image (T=0.7) run",
+          "value_verbatim": "0.0003",
+          "value_parsed": 0.0003,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==150)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (125, 150] m, image (T=0.7) run",
+          "value_verbatim": "0.469",
+          "value_parsed": 0.469,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==150)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "2. Per-run shell tables / image (T=0.7)"
+      },
+      "claim_text": "|         150 |         286 |              0.0718 |                     0.0818 |                        0.88 |                          -0.1385 |                    0.881 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (150, 286] m, image (T=0.7) run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==286)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (150, 286] m, image (T=0.7) run",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==286)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (150, 286] m, image (T=0.7) run",
+          "value_verbatim": "0.0718",
+          "value_parsed": 0.0718,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==286)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (150, 286] m, image (T=0.7) run",
+          "value_verbatim": "0.0818",
+          "value_parsed": 0.0818,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==286)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (150, 286] m, image (T=0.7) run",
+          "value_verbatim": "0.88",
+          "value_parsed": 0.88,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==286)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (150, 286] m, image (T=0.7) run",
+          "value_verbatim": "-0.1385",
+          "value_parsed": -0.1385,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==286)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (150, 286] m, image (T=0.7) run",
+          "value_verbatim": "0.881",
+          "value_parsed": 0.881,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='image')].shell[?(@.R_outer_m==286)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "2. Per-run shell tables / image (T=0.7)"
+      },
+      "claim_text": "**Per-run cutoff**: 125 m (deepest shell outer edge with bias-corrected p < 0.05)",
+      "values": [
+        {
+          "quantity": "per-run cutoff, image (T=0.7)",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "significance threshold applied to the bias-corrected p-value",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.alpha",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "2. Per-run shell tables / text-MIN"
+      },
+      "claim_text": "### text-MIN — n=585, bias_correction=0.9361",
+      "values": [
+        {
+          "quantity": "n_candidates, text-MIN run",
+          "value_verbatim": "585",
+          "value_parsed": 585,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='text-min')].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "bias_correction, text-MIN run",
+          "value_verbatim": "0.9361",
+          "value_parsed": 0.9361,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].bias_correction",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "2. Per-run shell tables / text-MIN"
+      },
+      "claim_text": "|           0 |          50 |              0.4274 |                     0.0028 |                      151.76 |                           0.9934 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (0, 50] m, text-MIN run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==50)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (0, 50] m, text-MIN run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==50)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (0, 50] m, text-MIN run",
+          "value_verbatim": "0.4274",
+          "value_parsed": 0.4274,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==50)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (0, 50] m, text-MIN run",
+          "value_verbatim": "0.0028",
+          "value_parsed": 0.0028,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==50)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (0, 50] m, text-MIN run",
+          "value_verbatim": "151.76",
+          "value_parsed": 151.76,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==50)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (0, 50] m, text-MIN run",
+          "value_verbatim": "0.9934",
+          "value_parsed": 0.9934,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==50)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (0, 50] m, text-MIN run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==50)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "2. Per-run shell tables / text-MIN"
+      },
+      "claim_text": "|          50 |          75 |              0.0342 |                     0.0034 |                       10.08 |                           0.9008 |                    0.001 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (50, 75] m, text-MIN run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==75)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (50, 75] m, text-MIN run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==75)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (50, 75] m, text-MIN run",
+          "value_verbatim": "0.0342",
+          "value_parsed": 0.0342,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==75)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (50, 75] m, text-MIN run",
+          "value_verbatim": "0.0034",
+          "value_parsed": 0.0034,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==75)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (50, 75] m, text-MIN run",
+          "value_verbatim": "10.08",
+          "value_parsed": 10.08,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==75)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (50, 75] m, text-MIN run",
+          "value_verbatim": "0.9008",
+          "value_parsed": 0.9008,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==75)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (50, 75] m, text-MIN run",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==75)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "2. Per-run shell tables / text-MIN"
+      },
+      "claim_text": "|          75 |         100 |              0.012  |                     0.0045 |                        2.68 |                           0.6262 |                    0.015 | True          |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (75, 100] m, text-MIN run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==100)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (75, 100] m, text-MIN run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==100)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (75, 100] m, text-MIN run",
+          "value_verbatim": "0.012",
+          "value_parsed": 0.012,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==100)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (75, 100] m, text-MIN run",
+          "value_verbatim": "0.0045",
+          "value_parsed": 0.0045,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==100)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (75, 100] m, text-MIN run",
+          "value_verbatim": "2.68",
+          "value_parsed": 2.68,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==100)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (75, 100] m, text-MIN run",
+          "value_verbatim": "0.6262",
+          "value_parsed": 0.6262,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==100)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (75, 100] m, text-MIN run",
+          "value_verbatim": "0.015",
+          "value_parsed": 0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==100)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "2. Per-run shell tables / text-MIN"
+      },
+      "claim_text": "|         100 |         125 |              0.0085 |                     0.0056 |                        1.54 |                           0.3486 |                    0.199 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (100, 125] m, text-MIN run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==125)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (100, 125] m, text-MIN run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==125)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (100, 125] m, text-MIN run",
+          "value_verbatim": "0.0085",
+          "value_parsed": 0.0085,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==125)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (100, 125] m, text-MIN run",
+          "value_verbatim": "0.0056",
+          "value_parsed": 0.0056,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==125)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (100, 125] m, text-MIN run",
+          "value_verbatim": "1.54",
+          "value_parsed": 1.54,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==125)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (100, 125] m, text-MIN run",
+          "value_verbatim": "0.3486",
+          "value_parsed": 0.3486,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==125)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (100, 125] m, text-MIN run",
+          "value_verbatim": "0.199",
+          "value_parsed": 0.199,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==125)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "2. Per-run shell tables / text-MIN"
+      },
+      "claim_text": "|         125 |         150 |              0.012  |                     0.0068 |                        1.76 |                           0.433  |                    0.082 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (125, 150] m, text-MIN run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==150)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (125, 150] m, text-MIN run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==150)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (125, 150] m, text-MIN run",
+          "value_verbatim": "0.012",
+          "value_parsed": 0.012,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==150)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (125, 150] m, text-MIN run",
+          "value_verbatim": "0.0068",
+          "value_parsed": 0.0068,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==150)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (125, 150] m, text-MIN run",
+          "value_verbatim": "1.76",
+          "value_parsed": 1.76,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==150)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (125, 150] m, text-MIN run",
+          "value_verbatim": "0.433",
+          "value_parsed": 0.433,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==150)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (125, 150] m, text-MIN run",
+          "value_verbatim": "0.082",
+          "value_parsed": 0.082,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==150)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "2. Per-run shell tables / text-MIN"
+      },
+      "claim_text": "|         150 |         286 |              0.0598 |                     0.0527 |                        1.14 |                           0.1193 |                    0.254 | False         |",
+      "values": [
+        {
+          "quantity": "inner radius of shell (150, 286] m, text-MIN run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==286)].R_inner_m",
+          "method": null
+        },
+        {
+          "quantity": "outer radius of shell (150, 286] m, text-MIN run",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==286)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "observed detection rate in shell (150, 286] m, text-MIN run",
+          "value_verbatim": "0.0598",
+          "value_parsed": 0.0598,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==286)].obs_rate_in_shell",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell (150, 286] m, text-MIN run",
+          "value_verbatim": "0.0527",
+          "value_parsed": 0.0527,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==286)].null_mean_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected lift ratio in shell (150, 286] m, text-MIN run",
+          "value_verbatim": "1.14",
+          "value_parsed": 1.14,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==286)].lift_ratio_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected signal fraction in shell (150, 286] m, text-MIN run",
+          "value_verbatim": "0.1193",
+          "value_parsed": 0.1193,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==286)].signal_fraction_bias_corrected",
+          "method": null
+        },
+        {
+          "quantity": "bias-corrected one-sided permutation p-value for shell (150, 286] m, text-MIN run",
+          "value_verbatim": "0.254",
+          "value_parsed": 0.254,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.runs[?(@.key=='text-min')].shell[?(@.R_outer_m==286)].p_value_bias_corrected",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "2. Per-run shell tables / text-MIN"
+      },
+      "claim_text": "**Per-run cutoff**: 100 m (deepest shell outer edge with bias-corrected p < 0.05)",
+      "values": [
+        {
+          "quantity": "per-run cutoff, text-MIN",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "significance threshold applied to the bias-corrected p-value",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.alpha",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "3. Cross-run consensus"
+      },
+      "claim_text": "|          50 | sig    | sig    | sig     | sig        |                    4 | yes               |",
+      "values": [
+        {
+          "quantity": "shell outer radius, cross-run consensus row",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==50)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "number of runs significant at the 50 m shell outer edge",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==50)].n_runs_significant",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per-run 'sig'/'—' cells and the all_significant 'yes'/'no' cell are boolean and carry no numeric value; the numeric n_runs_significant column encodes the same information. [BATCH NOTE b067] Scope decisions for this document (instrument rule 5, logged not silent): the temperature tokens in run labels (T=0.3, T=0.7, t0.3, t0.7) are treated as condition names, not asserted parameters; dates (2026-04-21, 2026-05-03), the commit hash 42ed1d32, Obs identifiers (272, 294, 298), section references (§3, §6), the '4-corner' GT variant name, the candidate identifier 2397, and the mathematical constant √2 are all excluded. Non-numeric table cells ('sig', '—', 'True', 'False', 'yes', 'no') are booleans, not values, and are not extracted; the numeric n_runs_significant column carries the same information."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "3. Cross-run consensus"
+      },
+      "claim_text": "|          75 | sig    | sig    | sig     | sig        |                    4 | yes               |",
+      "values": [
+        {
+          "quantity": "shell outer radius, cross-run consensus row",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==75)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "number of runs significant at the 75 m shell outer edge",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==75)].n_runs_significant",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "3. Cross-run consensus"
+      },
+      "claim_text": "|         100 | sig    | sig    | sig     | sig        |                    4 | yes               |",
+      "values": [
+        {
+          "quantity": "shell outer radius, cross-run consensus row",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==100)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "number of runs significant at the 100 m shell outer edge",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==100)].n_runs_significant",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "3. Cross-run consensus"
+      },
+      "claim_text": "|         125 | —      | sig    | sig     | —          |                    2 | no                |",
+      "values": [
+        {
+          "quantity": "shell outer radius, cross-run consensus row",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==125)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "number of runs significant at the 125 m shell outer edge",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==125)].n_runs_significant",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "3. Cross-run consensus"
+      },
+      "claim_text": "|         150 | sig    | —      | —       | —          |                    1 | no                |",
+      "values": [
+        {
+          "quantity": "shell outer radius, cross-run consensus row",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==150)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "number of runs significant at the 150 m shell outer edge",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==150)].n_runs_significant",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "3. Cross-run consensus"
+      },
+      "claim_text": "|         286 | —      | —      | —       | —          |                    0 | no                |",
+      "values": [
+        {
+          "quantity": "shell outer radius, cross-run consensus row",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==286)].R_outer_m",
+          "method": null
+        },
+        {
+          "quantity": "number of runs significant at the 286 m shell outer edge",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.consensus.per_shell[?(@.R_outer_m==286)].n_runs_significant",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "3. Cross-run consensus"
+      },
+      "claim_text": "**Most-permissive consensus cutoff**: 100 m (largest shell outer edge significant in all 4 runs).",
+      "values": [
+        {
+          "quantity": "most-permissive consensus cutoff",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": null
+        },
+        {
+          "quantity": "number of runs in which the cutoff shell must be significant",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "3. Cross-run consensus"
+      },
+      "claim_text": "**Majority-loses breakpoint**: 125 m (first shell where < 3/4 runs are significant).",
+      "values": [
+        {
+          "quantity": "majority-loses breakpoint",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.majority_breakpoint_m",
+          "method": null
+        },
+        {
+          "quantity": "majority threshold: minimum runs required for majority significance",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total number of runs in the cross-run consensus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The majority threshold 3 is computed in scripts/analyse_attractor_pull_v2.py as (n_runs // 2) + 1 and has no JSON path, so it takes an explicit anchor-unknown method."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "3. Cross-run consensus / Per-run cutoff summary"
+      },
+      "claim_text": "| T=0.3 text-HIGH |            692 |        100 |",
+      "values": [
+        {
+          "quantity": "n_candidates, T=0.3 text-HIGH run",
+          "value_verbatim": "692",
+          "value_parsed": 692,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='t0.3')].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "per-run cutoff, T=0.3 text-HIGH",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.3')].cutoff_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "3. Cross-run consensus / Per-run cutoff summary"
+      },
+      "claim_text": "| T=0.7 text-HIGH |            637 |        125 |",
+      "values": [
+        {
+          "quantity": "n_candidates, T=0.7 text-HIGH run",
+          "value_verbatim": "637",
+          "value_parsed": 637,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='t0.7')].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "per-run cutoff, T=0.7 text-HIGH",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='t0.7')].cutoff_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "3. Cross-run consensus / Per-run cutoff summary"
+      },
+      "claim_text": "| image (T=0.7)   |           1029 |        125 |",
+      "values": [
+        {
+          "quantity": "n_candidates, image (T=0.7) run",
+          "value_verbatim": "1029",
+          "value_parsed": 1029,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='image')].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "per-run cutoff, image (T=0.7)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].cutoff_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "3. Cross-run consensus / Per-run cutoff summary"
+      },
+      "claim_text": "| text-MIN        |            585 |        100 |",
+      "values": [
+        {
+          "quantity": "n_candidates, text-MIN run",
+          "value_verbatim": "585",
+          "value_parsed": 585,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.key=='text-min')].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "per-run cutoff, text-MIN",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='text-min')].cutoff_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "4. Cross-reference to Obs 272"
+      },
+      "claim_text": "Obs 272 reported a 125-m cutoff using only the image-generalisation review and a 1,000-permutation within-tile null.",
+      "values": [
+        {
+          "quantity": "cutoff reported by Obs 272 (image-generalisation review only)",
+          "value_verbatim": "125-m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "permutation count used by the Obs 272 within-tile null",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Both values are assertions about the content of Obs 272 in docs/notes/reflections/working-notes.md; instrument rule 2 forbids anchoring prose to prose, so triage must chase Obs 272 to an artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "4. Cross-reference to Obs 272"
+      },
+      "claim_text": "The v2 image-only cutoff is **125 m** — corroborates Obs 272 exactly.",
+      "values": [
+        {
+          "quantity": "per-run cutoff, image (T=0.7) run (v2 image-only)",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.runs[?(@.key=='image')].cutoff_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "$.runs[?(@.key=='image')].cutoff_m"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "4. Cross-reference to Obs 272"
+      },
+      "claim_text": "The cross-run **consensus cutoff** (most permissive value significant in every run) is **100 m**.",
+      "values": [
+        {
+          "quantity": "cross-run consensus cutoff (most permissive value significant in every run)",
+          "value_verbatim": "100 m",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.consensus.most_permissive_consensus_cutoff_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": "$.consensus.most_permissive_consensus_cutoff_m"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "4. Cross-reference to Obs 272"
+      },
+      "claim_text": "**Verdict**: Obs 272's 125 m claim is revised downward by the multi-run consensus — at least one run shows the cutoff at a tighter radius.",
+      "values": [
+        {
+          "quantity": "cutoff claimed by Obs 272, quoted as the value being revised downward",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Assertion about the content of Obs 272 in docs/notes/reflections/working-notes.md (instrument rule 2: no prose-to-prose anchoring). The qualifier 'at least one run' is rhetorical rather than a measured count and is not extracted."
+    }
+  ]
+}

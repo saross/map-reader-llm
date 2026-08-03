@@ -1,0 +1,3367 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/phase0-scope.md",
+    "git_blob": "b5467e398571",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "1.1 The mine, by charter § 2 clause"
+      },
+      "claim_text": "| `results/**.md` | 2,241 | 1,325,118 | Dominated by generated artefacts (§ 1.3) |",
+      "values": [
+        {
+          "quantity": "file count, mine clause `results/**.md`",
+          "value_verbatim": "2,241",
+          "value_parsed": 2241,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, mine clause `results/**.md`",
+          "value_verbatim": "1,325,118",
+          "value_parsed": 1325118,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b061] Batch b061 covers reports/verification/phase0-scope.md lines 1-267 only; § 7 (GATE 0 decision list, from line 269) is left to a later batch. Systematic anchoring choices for this document: (i) Phase-0 corpus/word censuses were produced by uncommitted scratchpad scripts, so they are logged `recompute-script` against the committed generated-file registry that later hardened the same classification (lines 72-74); (ii) forward-looking budget, session and agent-count forecasts have no repo artefact and are logged `anchor-unknown` rather than anchored to a realised artefact that would manufacture a false mismatch; (iii) OpenAI list and stacked rates are `external`; (iv) charter statements are prose and are never anchored to prose (instrument rule 2). Phase-0 census figure computed this session by scratchpad scripts (`enumerate_corpus.py`, per lines 11-13) that are not committed; the committed enumeration of the mine's markdown files is the generated-file registry (`$.files[].path`, `$.files[].stratum`). Recompute by filtering registry paths and running a word census over the named files — no committed artefact stores word counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "1.1 The mine, by charter § 2 clause"
+      },
+      "claim_text": "| `reports/**.md` (excl. `d17-inventory/`) | 18 | 43,511 | All hand-written |",
+      "values": [
+        {
+          "quantity": "file count, mine clause `reports/**.md` excluding `d17-inventory/`",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, mine clause `reports/**.md` excluding `d17-inventory/`",
+          "value_verbatim": "43,511",
+          "value_parsed": 43511,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "Registry holds 31 `reports/**.md` entries at HEAD; the claim's exclusion of `d17-inventory/` and its Phase-0 vintage both bear on the recompute. Phase-0 census figure computed this session by scratchpad scripts (`enumerate_corpus.py`, per lines 11-13) that are not committed; the committed enumeration of the mine's markdown files is the generated-file registry (`$.files[].path`, `$.files[].stratum`). Recompute by filtering registry paths and running a word census over the named files — no committed artefact stores word counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "1.1 The mine, by charter § 2 clause"
+      },
+      "claim_text": "| Six manifests (§ 1.2) | 6 JSON + 5 companion `.md` | — | Companions are generated |",
+      "values": [
+        {
+          "quantity": "JSON manifest-family file count, `results/`",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "companion `.md` rendering count, `results/`",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results"
+      },
+      "method": "recompute-script",
+      "notes": "The six manifest-family JSON files are named in § 1.2 (passes-, conditions-, runs-, analyses-manifest, run-registry, run-conditions); the companions are the `results/*-manifest.md` renderings. Row label 'Six manifests' restates the same count extracted at lines 33-35 and 50-51. Directory anchor (non-JSON) routes to triage per instrument v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "1.1 The mine, by charter § 2 clause"
+      },
+      "claim_text": "| `docs/methodology/**` mine subset (§ 1.4) | 24 | 63,249 | 10 top-level + 6 `reports/`+`transparency/` + 6 errata/tracking + 2 spatial/index (counted within top-level) |",
+      "values": [
+        {
+          "quantity": "file count, `docs/methodology/**` mine subset",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, `docs/methodology/**` mine subset",
+          "value_verbatim": "63,249",
+          "value_parsed": 63249,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, top-level methodology docs",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, `methodology/reports/` + `methodology/transparency/`",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, errata + tracking docs inside `preregistration/`",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, spatial/index docs (counted within top-level)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "Registry lists 24 `docs/methodology/` entries at HEAD. The note cells decompose the 24; the § 1.4 bullet at lines 81-86 restates the same sub-counts with different groupings (10 / 6 / 2 / five tracking docs). Phase-0 census figure computed this session by scratchpad scripts (`enumerate_corpus.py`, per lines 11-13) that are not committed; the committed enumeration of the mine's markdown files is the generated-file registry (`$.files[].path`, `$.files[].stratum`). Recompute by filtering registry paths and running a word census over the named files — no committed artefact stores word counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "1.1 The mine, by charter § 2 clause"
+      },
+      "claim_text": "| `docs/methods-outline.md` | 1 | 2,605 | Hand-written |",
+      "values": [
+        {
+          "quantity": "file count, `docs/methods-outline.md`",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, `docs/methods-outline.md`",
+          "value_verbatim": "2,605",
+          "value_parsed": 2605,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methods-outline.md"
+      },
+      "method": "recompute-script",
+      "notes": "Word count over a markdown file; non-JSON anchor routes to triage. Restated at lines 70-73."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "1.1 The mine, by charter § 2 clause"
+      },
+      "claim_text": "| Lodged registration (fixed root) | 3 | 31,708 | Never edited; anchor only |",
+      "values": [
+        {
+          "quantity": "file count, lodged registration (fixed root)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "files",
+          "kind": "count",
+          "path": "len:$.source_documents",
+          "method": "read"
+        },
+        {
+          "quantity": "word count, lodged registration (fixed root)",
+          "value_verbatim": "31,708",
+          "value_parsed": 31708,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json"
+      },
+      "method": "recompute-script",
+      "notes": "`results/commitments.json` `$.source_documents` enumerates the three lodged OSF documents (the C1 extraction's own source list); the word total needs a census over `docs/methodology/preregistration/osf/preregistration.md`, `preregistration-appendix-prompts.md` and `preregistration-coverage.md` (per-file counts claimed at lines 92-95). Per instrument v1.1 these are word counts OF the lodged documents, not claims about what the registration specifies."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          34
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "Charter § 2 says \"six manifests (`results/*-manifest.json` + sources)\",\nbut that glob matches only four files.",
+      "values": [
+        {
+          "quantity": "manifest count as stated in charter § 2",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "manifests",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "files matched by the glob `results/*-manifest.json`",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results"
+      },
+      "method": "recompute-script",
+      "notes": "The 'six' is a quotation of `planning/audit-charter.md` § 2 — prose, so not anchored to prose (instrument rule 2); triage should chase the charter text. The 'four' is a filesystem glob count over `results/`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          35
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "The six manifest-family files in\n`results/` are",
+      "values": [
+        {
+          "quantity": "manifest-family file count, `results/`",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results"
+      },
+      "method": "recompute-script",
+      "notes": "The six files are enumerated in the table at lines 39-44: passes-manifest.json, conditions-manifest.json, runs-manifest.json, analyses-manifest.json, run-registry.json, run-conditions.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "| `passes-manifest.json` | 1,132 | 20 | 22,640 |",
+      "values": [
+        {
+          "quantity": "row count, `passes-manifest.json`",
+          "value_verbatim": "1,132",
+          "value_parsed": 1132,
+          "unit": "rows",
+          "kind": "count",
+          "path": "len:$.passes",
+          "method": "read"
+        },
+        {
+          "quantity": "fields per row, `passes-manifest.json`",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "fields",
+          "kind": "count",
+          "path": "len:$.passes[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "field checks, `passes-manifest.json` (rows × fields)",
+          "value_verbatim": "22,640",
+          "value_parsed": 22640,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/passes-manifest.json",
+              "path": "len:$.passes"
+            },
+            {
+              "name": "b",
+              "file": "results/passes-manifest.json",
+              "path": "len:$.passes[0]"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json"
+      },
+      "method": "read",
+      "notes": "Fields/row read off the first row (uniform across rows at HEAD); if rows vary the cell needs a distinct-key census. Field-check cell is the product; operands carry method `read` so they are not compared against their own derivation (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "| `conditions-manifest.json` | 322 | 16 | 5,152 |",
+      "values": [
+        {
+          "quantity": "row count, `conditions-manifest.json`",
+          "value_verbatim": "322",
+          "value_parsed": 322,
+          "unit": "rows",
+          "kind": "count",
+          "path": "len:$.conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "fields per row, `conditions-manifest.json`",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "fields",
+          "kind": "count",
+          "path": "len:$.conditions[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "field checks, `conditions-manifest.json` (rows × fields)",
+          "value_verbatim": "5,152",
+          "value_parsed": 5152,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/conditions-manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "b",
+              "file": "results/conditions-manifest.json",
+              "path": "len:$.conditions[0]"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json"
+      },
+      "method": "read",
+      "notes": "Fields/row read off the first row (uniform across rows at HEAD)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "| `runs-manifest.json` | 31 | 16 | 496 |",
+      "values": [
+        {
+          "quantity": "row count, `runs-manifest.json`",
+          "value_verbatim": "31",
+          "value_parsed": 31,
+          "unit": "rows",
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "fields per row, `runs-manifest.json`",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "fields",
+          "kind": "count",
+          "path": "len:$.runs[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "field checks, `runs-manifest.json` (rows × fields)",
+          "value_verbatim": "496",
+          "value_parsed": 496,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/runs-manifest.json",
+              "path": "len:$.runs"
+            },
+            {
+              "name": "b",
+              "file": "results/runs-manifest.json",
+              "path": "len:$.runs[0]"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json"
+      },
+      "method": "read",
+      "notes": "Fields/row read off the first row (uniform across rows at HEAD)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "| `analyses-manifest.json` | 18 | 15 | 270 |",
+      "values": [
+        {
+          "quantity": "row count, `analyses-manifest.json`",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "rows",
+          "kind": "count",
+          "path": "len:$.analyses",
+          "method": "read"
+        },
+        {
+          "quantity": "fields per row, `analyses-manifest.json`",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "fields",
+          "kind": "count",
+          "path": "len:$.analyses[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "field checks, `analyses-manifest.json` (rows × fields)",
+          "value_verbatim": "270",
+          "value_parsed": 270,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/analyses-manifest.json",
+              "path": "len:$.analyses"
+            },
+            {
+              "name": "b",
+              "file": "results/analyses-manifest.json",
+              "path": "len:$.analyses[0]"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/analyses-manifest.json"
+      },
+      "method": "read",
+      "notes": "Fields/row read off the first row (uniform across rows at HEAD)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "| `run-registry.json` | 31 | 4 | 124 |",
+      "values": [
+        {
+          "quantity": "row count, `run-registry.json`",
+          "value_verbatim": "31",
+          "value_parsed": 31,
+          "unit": "rows",
+          "kind": "count",
+          "path": "len:$.registry",
+          "method": "read"
+        },
+        {
+          "quantity": "fields per row, `run-registry.json`",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "fields",
+          "kind": "count",
+          "path": "len:$.registry[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "field checks, `run-registry.json` (rows × fields)",
+          "value_verbatim": "124",
+          "value_parsed": 124,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/run-registry.json",
+              "path": "len:$.registry"
+            },
+            {
+              "name": "b",
+              "file": "results/run-registry.json",
+              "path": "len:$.registry[0]"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/run-registry.json"
+      },
+      "method": "read",
+      "notes": "Fields/row read off the first row (uniform across rows at HEAD)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "| `run-conditions.json` | 31 study families | ~5,448 leaf entries | (C2 census source) |",
+      "values": [
+        {
+          "quantity": "study-family count, `run-conditions.json`",
+          "value_verbatim": "31",
+          "value_parsed": 31,
+          "unit": "families",
+          "kind": "count",
+          "path": "len:$.decomposition",
+          "method": "read"
+        },
+        {
+          "quantity": "leaf factor-level entries, `run-conditions.json`",
+          "value_verbatim": "~5,448",
+          "value_parsed": 5448,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json"
+      },
+      "method": "read",
+      "notes": "Leaf-entry total needs a recursive leaf census over `$.decomposition`; `reports/verification/c2-census/observed-factor-levels.json` ($.n_families, $.n_distinct_factor_levels) is the C2 census artefact derived from the same source and may be the better anchor for the family count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          47
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "The charter's settled Phase 2 figures (1,132 passes / 322 conditions)\nare **confirmed against source**.",
+      "values": [
+        {
+          "quantity": "pass count, charter-settled Phase 2 figure",
+          "value_verbatim": "1,132",
+          "value_parsed": 1132,
+          "unit": "passes",
+          "kind": "count",
+          "path": "len:$.passes",
+          "method": "read"
+        },
+        {
+          "quantity": "condition count, charter-settled Phase 2 figure",
+          "value_verbatim": "322",
+          "value_parsed": 322,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "results/conditions-manifest.json#len:$.conditions",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json"
+      },
+      "method": "read",
+      "notes": "Restates the table rows at lines 39-40; second value uses a cross-file locator (instrument v1.2 amendment 2). Reconfirmed again at line 261."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          49
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "The five companion `.md` renderings\n(`passes-manifest.md` etc.) carry explicit `GENERATED FILE — DO NOT\nEDIT` headers",
+      "values": [
+        {
+          "quantity": "companion `.md` rendering count, `results/`",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "Count `results/*-manifest.md` renderings; the registry records their generator attribution (`$.files[].generator`). Restates the '5 companion `.md`' cell at line 26."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          51
+        ],
+        "section": "1.2 The six manifests, resolved"
+      },
+      "claim_text": "`docs/manifest-schemas/` holds six schemas (one is shared definitions),\ncorroborating the six-manifest count.",
+      "values": [
+        {
+          "quantity": "schema file count, `docs/manifest-schemas/`",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "shared-definitions schema count, `docs/manifest-schemas/`",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/manifest-schemas"
+      },
+      "method": "recompute-script",
+      "notes": "Directory-listing count (non-JSON anchor, routes to triage). Note the directory has grown since Phase 0 — it now also holds schemas added by the verification programme itself, so the recompute needs the Phase-0 era file set."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "1.3 Two strata: generated vs hand-written"
+      },
+      "claim_text": "| **Generated** | 2,136 | 1,128,898 | Script: re-derive from source artefacts + diff (Phase 3); file-level ledger rows |",
+      "values": [
+        {
+          "quantity": "file count, generated stratum of the mine",
+          "value_verbatim": "2,136",
+          "value_parsed": 2136,
+          "unit": "files",
+          "kind": "count",
+          "path": "$._meta.counts.generated",
+          "method": "read"
+        },
+        {
+          "quantity": "word count, generated stratum of the mine",
+          "value_verbatim": "1,128,898",
+          "value_parsed": 1128898,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "read",
+      "notes": "Phase-0 heuristic classification; the document itself says (lines 72-74) that Phase 3's first step hardens it into the committed generated-file registry, which is therefore the anchor. Word total has no committed artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "1.3 Two strata: generated vs hand-written"
+      },
+      "claim_text": "| **Hand-written** | 148 | 306,360 | Large Language Model (LLM) claim extraction + script recompute |",
+      "values": [
+        {
+          "quantity": "file count, hand-written stratum of the mine",
+          "value_verbatim": "148",
+          "value_parsed": 148,
+          "unit": "files",
+          "kind": "count",
+          "path": "$._meta.counts.hand_written",
+          "method": "read"
+        },
+        {
+          "quantity": "word count, hand-written stratum of the mine",
+          "value_verbatim": "306,360",
+          "value_parsed": 306360,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "read",
+      "notes": "Phase-0 heuristic classification, later hardened into the registry (lines 72-74). Word total restated as '306 k' at line 145."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "1.3 Two strata: generated vs hand-written"
+      },
+      "claim_text": "The generated stratum is 79 % of mine words but costs no LLM reading:",
+      "values": [
+        {
+          "quantity": "share of mine words in the generated stratum",
+          "value_verbatim": "79 %",
+          "value_parsed": 79.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "Derived from the stratum word totals at lines 63-64 (1,128,898 / (1,128,898 + 306,360)); no committed artefact stores word counts, so it needs the same word census as those rows."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "1.3 Two strata: generated vs hand-written"
+      },
+      "claim_text": "`evaluation.md` (1,633 files), `report_autogen.md`, leaderboard tiers,",
+      "values": [
+        {
+          "quantity": "file count, `evaluation.md` files in the generated stratum",
+          "value_verbatim": "1,633",
+          "value_parsed": 1633,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "Count registry entries whose path basename is `evaluation.md`. Sentence context continues from line 66 ('costs no LLM reading:')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          72
+        ],
+        "section": "1.3 Two strata: generated vs hand-written"
+      },
+      "claim_text": "The hand-written stratum breaks down as: `results/` 105 files\n(196,220 w), `reports/` 18 (43,511 w), `docs/methodology/` 24\n(63,249 w), `docs/methods-outline.md` (2,605 w).",
+      "values": [
+        {
+          "quantity": "file count, hand-written `results/`",
+          "value_verbatim": "105",
+          "value_parsed": 105,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, hand-written `results/`",
+          "value_verbatim": "196,220",
+          "value_parsed": 196220,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, hand-written `reports/`",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, hand-written `reports/`",
+          "value_verbatim": "43,511",
+          "value_parsed": 43511,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, hand-written `docs/methodology/`",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, hand-written `docs/methodology/`",
+          "value_verbatim": "63,249",
+          "value_parsed": 63249,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, `docs/methods-outline.md`",
+          "value_verbatim": "2,605",
+          "value_parsed": 2605,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "Restates the § 1.1 rows (lines 25, 27, 28) for the hand-written stratum. Phase-0 census figure computed this session by scratchpad scripts (`enumerate_corpus.py`, per lines 11-13) that are not committed; the committed enumeration of the mine's markdown files is the generated-file registry (`$.files[].path`, `$.files[].stratum`). Recompute by filtering registry paths and running a word census over the named files — no committed artefact stores word counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "1.4 Proposed scope rulings (GATE 0 decisions)"
+      },
+      "claim_text": "- **In the mine**: the 10 top-level methodology docs;",
+      "values": [
+        {
+          "quantity": "file count, top-level methodology docs in the mine",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology"
+      },
+      "method": "recompute-script",
+      "notes": "Directory-listing count of top-level `docs/methodology/*.md` (non-JSON anchor, routes to triage). Restated in the note cell at line 27."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "1.4 Proposed scope rulings (GATE 0 decisions)"
+      },
+      "claim_text": "`methodology/reports/` (6) and `methodology/transparency/` (2)",
+      "values": [
+        {
+          "quantity": "file count, `docs/methodology/reports/`",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, `docs/methodology/transparency/`",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology"
+      },
+      "method": "recompute-script",
+      "notes": "Directory-listing counts for the two subdirectories; the line-27 note cell groups the same files as a single '6'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          86
+        ],
+        "section": "1.4 Proposed scope rulings (GATE 0 decisions)"
+      },
+      "claim_text": "the errata register\n  (`protocol-errata.md`, 19,628 w) plus the five tracking docs\n  (`decisions-log.md`, `hypothesis-tracking.md`, `execution-plan.md`,\n  `execution-checklist.md`, `analysis-summary.md`; 18,575 w together).",
+      "values": [
+        {
+          "quantity": "word count, `protocol-errata.md`",
+          "value_verbatim": "19,628",
+          "value_parsed": 19628,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tracking-doc count inside `preregistration/`",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, the five tracking docs together",
+          "value_verbatim": "18,575",
+          "value_parsed": 18575,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration"
+      },
+      "method": "recompute-script",
+      "notes": "The five tracking docs are named in the span (decisions-log, hypothesis-tracking, execution-plan, execution-checklist, analysis-summary); word census over those files plus `protocol-errata.md`. Non-JSON anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          89
+        ],
+        "section": "1.4 Proposed scope rulings (GATE 0 decisions)"
+      },
+      "claim_text": "`references/` (3 files, 672,477 w of third-party\n  literature), `research/` (9 commissioned external reports),",
+      "values": [
+        {
+          "quantity": "file count, `docs/methodology/references/` (excluded from the mine)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, `docs/methodology/references/` third-party literature",
+          "value_verbatim": "672,477",
+          "value_parsed": 672477,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, `docs/methodology/research/` commissioned reports",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology"
+      },
+      "method": "recompute-script",
+      "notes": "Directory censuses over `references/` and `research/`; the 672 k figure is restated at line 240. Non-JSON anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          95
+        ],
+        "section": "1.4 Proposed scope rulings (GATE 0 decisions)"
+      },
+      "claim_text": "- **Anchor only, never edited**: `preregistration/osf/` — the three\n  lodged documents (`preregistration.md` 18,904 w, appendix-prompts\n  10,768 w, coverage 2,036 w; identified from `osf/README.md:3,9-11`,\n  matching the charter's C5 anchor exactly) plus four supporting files.",
+      "values": [
+        {
+          "quantity": "lodged document count, `preregistration/osf/`",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, lodged `preregistration.md`",
+          "value_verbatim": "18,904",
+          "value_parsed": 18904,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, lodged appendix-prompts document",
+          "value_verbatim": "10,768",
+          "value_parsed": 10768,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "word count, lodged coverage document",
+          "value_verbatim": "2,036",
+          "value_parsed": 2036,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "supporting file count, `preregistration/osf/`",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf"
+      },
+      "method": "recompute-script",
+      "notes": "Word census over the three lodged documents plus a directory listing for the 3 + 4 split. `osf/README.md:3,9-11` is a line-number citation (out of C4 scope, instrument rule 5). Per instrument v1.1 these are word counts of the lodged artefacts, not claims about what the registration specifies."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "2. Estimated claim counts per class"
+      },
+      "claim_text": "| C1 Commitment | ~150–250 commitments | 201 commitment-candidate sentences across the 3 lodged docs (149 + 42 + 10) |",
+      "values": [
+        {
+          "quantity": "estimated C1 commitment count, lower bound",
+          "value_verbatim": "~150",
+          "value_parsed": 150,
+          "unit": "commitments",
+          "kind": "count",
+          "path": "len:$.commitments",
+          "method": "read"
+        },
+        {
+          "quantity": "estimated C1 commitment count, upper bound",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": "commitments",
+          "kind": "count",
+          "path": "len:$.commitments",
+          "method": "read"
+        },
+        {
+          "quantity": "commitment-candidate sentences across the 3 lodged docs",
+          "value_verbatim": "201",
+          "value_parsed": 201,
+          "unit": "sentences",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lodged document count",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "files",
+          "kind": "count",
+          "path": "len:$.source_documents",
+          "method": "read"
+        },
+        {
+          "quantity": "commitment-candidate sentences, first lodged doc",
+          "value_verbatim": "149",
+          "value_parsed": 149,
+          "unit": "sentences",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "commitment-candidate sentences, second lodged doc",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": "sentences",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "commitment-candidate sentences, third lodged doc",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "sentences",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json"
+      },
+      "method": "read",
+      "notes": "The ~150-250 range is a Phase-0 forecast; `results/commitments.json` is the realised C1 extraction output and the least-writable artefact for a commitment count — triage owns the forecast-vs-realised comparison. The sentence counts came from an uncommitted regex script (`count_claims.py`, line 12) and need a regex recompute over the three lodged OSF documents. 149 + 42 + 10 = 201 is an internal check on the same span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "2. Estimated claim counts per class"
+      },
+      "claim_text": "| C2 Execution | 61 errata entries; 31 study families, ~5,448 leaf factor-level entries | Parsed `run-conditions.json`; counted `E<n>` headings in the errata register (E1–E61 range seen) |",
+      "values": [
+        {
+          "quantity": "errata entry count, protocol errata register",
+          "value_verbatim": "61",
+          "value_parsed": 61,
+          "unit": "entries",
+          "kind": "count",
+          "path": "len:$.entries",
+          "method": "read"
+        },
+        {
+          "quantity": "study-family count, `run-conditions.json`",
+          "value_verbatim": "31",
+          "value_parsed": 31,
+          "unit": "families",
+          "kind": "count",
+          "path": "results/run-conditions.json#len:$.decomposition",
+          "method": "read"
+        },
+        {
+          "quantity": "leaf factor-level entries, `run-conditions.json`",
+          "value_verbatim": "~5,448",
+          "value_parsed": 5448,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/errata-licence-register.json"
+      },
+      "method": "read",
+      "notes": "`reports/verification/c2-census/errata-licence-register.json` is the C2 census artefact built from `protocol-errata.md` ($.source) and is the least-writable place the errata-entry count lives. The 'E1-E61 range' is an erratum-identifier range (out of C4 scope, instrument rule 5). Leaf count needs a recursive census over `$.decomposition`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          103
+        ],
+        "section": "2. Estimated claim counts per class"
+      },
+      "claim_text": "| C3 Provenance | **28,682 field checks** (27,792 charter-settled passes+conditions, + 890 proposed extension to runs/analyses/registry) | Row × field counts, § 1.2 |",
+      "values": [
+        {
+          "quantity": "total C3 provenance field checks (all six manifest families)",
+          "value_verbatim": "28,682",
+          "value_parsed": 28682,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b + c * d + e * f + g * h + i * j",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/passes-manifest.json",
+              "path": "len:$.passes"
+            },
+            {
+              "name": "b",
+              "file": "results/passes-manifest.json",
+              "path": "len:$.passes[0]"
+            },
+            {
+              "name": "c",
+              "file": "results/conditions-manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "d",
+              "file": "results/conditions-manifest.json",
+              "path": "len:$.conditions[0]"
+            },
+            {
+              "name": "e",
+              "file": "results/runs-manifest.json",
+              "path": "len:$.runs"
+            },
+            {
+              "name": "f",
+              "file": "results/runs-manifest.json",
+              "path": "len:$.runs[0]"
+            },
+            {
+              "name": "g",
+              "file": "results/analyses-manifest.json",
+              "path": "len:$.analyses"
+            },
+            {
+              "name": "h",
+              "file": "results/analyses-manifest.json",
+              "path": "len:$.analyses[0]"
+            },
+            {
+              "name": "i",
+              "file": "results/run-registry.json",
+              "path": "len:$.registry"
+            },
+            {
+              "name": "j",
+              "file": "results/run-registry.json",
+              "path": "len:$.registry[0]"
+            }
+          ]
+        },
+        {
+          "quantity": "charter-settled field checks (passes + conditions)",
+          "value_verbatim": "27,792",
+          "value_parsed": 27792,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b + c * d",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/passes-manifest.json",
+              "path": "len:$.passes"
+            },
+            {
+              "name": "b",
+              "file": "results/passes-manifest.json",
+              "path": "len:$.passes[0]"
+            },
+            {
+              "name": "c",
+              "file": "results/conditions-manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "d",
+              "file": "results/conditions-manifest.json",
+              "path": "len:$.conditions[0]"
+            }
+          ]
+        },
+        {
+          "quantity": "proposed extension field checks (runs + analyses + registry)",
+          "value_verbatim": "890",
+          "value_parsed": 890,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b + c * d + e * f",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/runs-manifest.json",
+              "path": "len:$.runs"
+            },
+            {
+              "name": "b",
+              "file": "results/runs-manifest.json",
+              "path": "len:$.runs[0]"
+            },
+            {
+              "name": "c",
+              "file": "results/analyses-manifest.json",
+              "path": "len:$.analyses"
+            },
+            {
+              "name": "d",
+              "file": "results/analyses-manifest.json",
+              "path": "len:$.analyses[0]"
+            },
+            {
+              "name": "e",
+              "file": "results/run-registry.json",
+              "path": "len:$.registry"
+            },
+            {
+              "name": "f",
+              "file": "results/run-registry.json",
+              "path": "len:$.registry[0]"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json"
+      },
+      "method": "arithmetic",
+      "notes": "Each derived value carries its own expression and operands (instrument v1.2 amendment 1); the row × field inputs are the § 1.2 table cells (lines 39-43). Claim-level anchor file is nominal — every operand names its own file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "2. Estimated claim counts per class"
+      },
+      "claim_text": "| C4 Quantitative | Hand-written: 18,971 numeric spans (≈ 12–18 k genuine claims after excluding dates/identifiers); generated: 2,136 file-level re-derivations | Regex over the hand-written stratum; span counts concentrate — top 50 files hold ~54 % |",
+      "values": [
+        {
+          "quantity": "numeric spans, hand-written stratum (regex heuristic)",
+          "value_verbatim": "18,971",
+          "value_parsed": 18971,
+          "unit": "spans",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "estimated genuine C4 claims, lower bound",
+          "value_verbatim": "≈ 12",
+          "value_parsed": 12000,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated genuine C4 claims, upper bound",
+          "value_verbatim": "18 k",
+          "value_parsed": 18000,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file-level re-derivations, generated stratum",
+          "value_verbatim": "2,136",
+          "value_parsed": 2136,
+          "unit": "files",
+          "kind": "count",
+          "path": "$._meta.counts.generated",
+          "method": "read"
+        },
+        {
+          "quantity": "top-N hand-written files by numeric-span count",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "share of numeric spans held by the top 50 files",
+          "value_verbatim": "~54 %",
+          "value_parsed": 54.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "Span census needs the Phase-0 regex rerun over the hand-written stratum (script `count_claims.py` not committed). The 12-18 k figure is a judgement estimate of genuine claims after excluding dates/identifiers and has no artefact; verbatim 'k' values parsed as thousands."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "2. Estimated claim counts per class"
+      },
+      "claim_text": "| C5 Attribution | ~560 sites | `preregist*`/`prespecif*`/`lodged`/\"registration says\" matches; 162 in the errata register alone |",
+      "values": [
+        {
+          "quantity": "estimated C5 attribution sites, hand-written stratum",
+          "value_verbatim": "~560",
+          "value_parsed": 560,
+          "unit": "sites",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "C5 attribution matches in the errata register",
+          "value_verbatim": "162",
+          "value_parsed": 162,
+          "unit": "matches",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md"
+      },
+      "method": "recompute-script",
+      "notes": "The 162 is a regex count within `protocol-errata.md` (non-JSON anchor, routes to triage); the ~560 needs the same grep across the whole hand-written stratum as enumerated in `reports/verification/generated-file-registry.json`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "2. Estimated claim counts per class"
+      },
+      "claim_text": "| C6 Rationale & event | ~426 rationale sentences (≈ 150–250 claim families after grouping) | Sentence-level rationale-marker matches |",
+      "values": [
+        {
+          "quantity": "estimated C6 rationale sentences, hand-written stratum",
+          "value_verbatim": "~426",
+          "value_parsed": 426,
+          "unit": "sentences",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "estimated C6 claim families after grouping, lower bound",
+          "value_verbatim": "≈ 150",
+          "value_parsed": 150,
+          "unit": "families",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated C6 claim families after grouping, upper bound",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": "families",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "Rationale-marker sentence census over the hand-written stratum (uncommitted Phase-0 script); the post-grouping family range is a judgement estimate with no artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          109
+        ],
+        "section": "2. Estimated claim counts per class"
+      },
+      "claim_text": "Session-119 corrections (first Sol target, Phase 4): **~150 sites**,\nlanded in six waves",
+      "values": [
+        {
+          "quantity": "correction sites, Session-119 correction campaign",
+          "value_verbatim": "~150",
+          "value_parsed": 150,
+          "unit": "sites",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "commit waves, Session-119 correction campaign",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "waves",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Located by the document via `planning/paper-writeup-continuity.md`, a prose document — instrument rule 2 forbids anchoring prose to prose. The commit range `2c354ca2e`→`df16d855a` is a git-hash locator (out of C4 scope, instrument rule 5) but is the natural evidence trail for triage. Restated at lines 130 and 186 and in the stumble log at lines 255-256."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "3. Executor assignment per class"
+      },
+      "claim_text": "| C4 | Opus 5 agents (hand-written stratum, ~40–60 background runs) | **Script recompute + diff**; generated stratum by re-derivation | Opus 5 triage; Fable for load-bearing items |",
+      "values": [
+        {
+          "quantity": "planned C4 extraction background runs, lower bound",
+          "value_verbatim": "~40",
+          "value_parsed": 40,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "planned C4 extraction background runs, upper bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking fleet-size forecast. Candidate artefact: `reports/verification/apparatus/c4-batch-plan.json` (`len:$.batches`) records the realised batch plan, but batches are not the same unit as background agent runs, so anchoring there would compare unlike quantities; flagged for triage rather than anchored."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "3. Executor assignment per class"
+      },
+      "claim_text": "| C5 | Script grep census → Opus 5 verification against the 3 lodged docs | **Sol cross-family** (proposed Stage B) | Gemini 3.1 Pro tiebreak |",
+      "values": [
+        {
+          "quantity": "lodged document count, C5 verification targets",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": "len:$.source_documents"
+      },
+      "method": "read",
+      "notes": "Single-value claim; `$.source_documents` in the C1 extraction output enumerates the three lodged OSF documents. Restated at lines 29 and 101."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          130
+        ],
+        "section": "3. Executor assignment per class"
+      },
+      "claim_text": "| C6 | Fable/Opus 5 tracing through § 4 hierarchy | **Sol cross-family**: S119 corrections first (~150), then C6 verdicts (proposed Stage B) | Gemini 3.1 Pro tiebreak; PI for residuals |",
+      "values": [
+        {
+          "quantity": "correction sites, Session-119 correction campaign (Stage A scope)",
+          "value_verbatim": "~150",
+          "value_parsed": 150,
+          "unit": "sites",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same quantity as lines 108-109; no charter or ledger locator exists (the document says so at lines 255-258)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          134
+        ],
+        "section": "4.1 Deterministic scripts (sapphire) — US$0"
+      },
+      "claim_text": "### 4.1 Deterministic scripts (sapphire) — US$0",
+      "values": [
+        {
+          "quantity": "API cost, deterministic-script executor class",
+          "value_verbatim": "US$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Asserted zero marginal API cost for sapphire script runs; no billing or repo artefact records it. Restated per-phase at lines 211-213 and 215."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          138
+        ],
+        "section": "4.1 Deterministic scripts (sapphire) — US$0"
+      },
+      "claim_text": "Phase 2 field re-derivation runs in minutes once written (~1 session to\nwrite and test)",
+      "values": [
+        {
+          "quantity": "sessions to write and test the Phase 2 field re-derivation",
+          "value_verbatim": "~1",
+          "value_parsed": 1,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking wall-clock estimate; no artefact records session counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          139
+        ],
+        "section": "4.1 Deterministic scripts (sapphire) — US$0"
+      },
+      "claim_text": "Phase 3 re-derivation of 2,136 generated files is\nhours on sapphire",
+      "values": [
+        {
+          "quantity": "file count, generated stratum re-derived in Phase 3",
+          "value_verbatim": "2,136",
+          "value_parsed": 2136,
+          "unit": "files",
+          "kind": "count",
+          "path": "$._meta.counts.generated",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "read",
+      "notes": "Restates the generated-stratum file count at line 63."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "4.2 Claude (Max plan) — US$0 marginal; session budget"
+      },
+      "claim_text": "### 4.2 Claude (Max plan) — US$0 marginal; session budget",
+      "values": [
+        {
+          "quantity": "marginal API cost, Claude executor class (Max plan)",
+          "value_verbatim": "US$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Plan-inclusive marginal cost assertion; no billing artefact in the repo."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          147
+        ],
+        "section": "4.2 Claude (Max plan) — US$0 marginal; session budget"
+      },
+      "claim_text": "Biggest sink: the\nPhase 3 extraction fleet — the 306 k-word hand-written stratum is\n~410 k input tokens, chunked over ~40–60 Opus 5 background agents\nacross 1–2 sessions.",
+      "values": [
+        {
+          "quantity": "word count, hand-written stratum",
+          "value_verbatim": "306 k",
+          "value_parsed": 306000,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "input tokens, hand-written stratum for the extraction fleet",
+          "value_verbatim": "~410 k",
+          "value_parsed": 410000,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "planned C4 extraction background agents, lower bound",
+          "value_verbatim": "~40",
+          "value_parsed": 40,
+          "unit": "agents",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "planned C4 extraction background agents, upper bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "agents",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "sessions for the Phase 3 extraction fleet, lower bound",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "sessions for the Phase 3 extraction fleet, upper bound",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json"
+      },
+      "method": "recompute-script",
+      "notes": "306 k restates the hand-written word total at line 64 (306,360); the token estimate is a word→token conversion forecast with no artefact, as are the agent and session counts. Verbatim 'k' values parsed as thousands."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          148
+        ],
+        "section": "4.2 Claude (Max plan) — US$0 marginal; session budget"
+      },
+      "claim_text": "Phase 1 decomposition (31.7 k words → 150–250\ncommitments): 1 session.",
+      "values": [
+        {
+          "quantity": "word count, the three lodged documents",
+          "value_verbatim": "31.7 k",
+          "value_parsed": 31700,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "estimated C1 commitment count, lower bound",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "commitments",
+          "kind": "count",
+          "path": "len:$.commitments",
+          "method": "read"
+        },
+        {
+          "quantity": "estimated C1 commitment count, upper bound",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": "commitments",
+          "kind": "count",
+          "path": "len:$.commitments",
+          "method": "read"
+        },
+        {
+          "quantity": "sessions for Phase 1 decomposition",
+          "value_verbatim": "1 session",
+          "value_parsed": 1,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json"
+      },
+      "method": "read",
+      "notes": "31.7 k restates the lodged-registration word total at line 29 (31,708); the commitment range restates line 101 and is anchored to the realised C1 output for triage. Session count is a forecast."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          149
+        ],
+        "section": "4.2 Claude (Max plan) — US$0 marginal; session budget"
+      },
+      "claim_text": "C6 tracing and all adjudication: foreground,\n1–2 sessions.",
+      "values": [
+        {
+          "quantity": "sessions for C6 tracing and adjudication, lower bound",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "sessions for C6 tracing and adjudication, upper bound",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking session forecast; no artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "4.2 Claude (Max plan) — US$0 marginal; session budget"
+      },
+      "claim_text": "Programme total: **roughly 6–9 working sessions**.",
+      "values": [
+        {
+          "quantity": "total working sessions for the verification programme, lower bound",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total working sessions for the verification programme, upper bound",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Programme-level session forecast; no artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          156,
+          157
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "standard **$5.00 / $0.50 / $6.25 / $30.00 per million\ntokens** (input / cached read / cache write / output)",
+      "values": [
+        {
+          "quantity": "OpenAI standard rate, fresh input",
+          "value_verbatim": "$5.00",
+          "value_parsed": 5.0,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "OpenAI standard rate, cached read",
+          "value_verbatim": "$0.50",
+          "value_parsed": 0.5,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "OpenAI standard rate, cache write",
+          "value_verbatim": "$6.25",
+          "value_parsed": 6.25,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "OpenAI standard rate, output",
+          "value_verbatim": "$30.00",
+          "value_parsed": 30.0,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor list prices quoted from the official OpenAI pricing page (`https://developers.openai.com/api/docs/pricing`); attestation material only — no repo artefact can decide them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          158
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "**Batch API is\n50 % off across all four token types**",
+      "values": [
+        {
+          "quantity": "Batch API discount",
+          "value_verbatim": "50 %",
+          "value_parsed": 50.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "token types covered by the Batch discount",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "token types",
+          "kind": "count",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor pricing-policy figures; attestation only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          162
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "Effective stacked rates:\n**$2.50 fresh input, $0.25 cached read, $3.125 cache write, $15.00\noutput per million**.",
+      "values": [
+        {
+          "quantity": "stacked (batch + cache) rate, fresh input",
+          "value_verbatim": "$2.50",
+          "value_parsed": 2.5,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "stacked (batch + cache) rate, cached read",
+          "value_verbatim": "$0.25",
+          "value_parsed": 0.25,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "stacked (batch + cache) rate, cache write",
+          "value_verbatim": "$3.125",
+          "value_parsed": 3.125,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "stacked (batch + cache) rate, output",
+          "value_verbatim": "$15.00",
+          "value_parsed": 15.0,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Each figure is half the corresponding standard rate quoted at lines 156-157 (50 % batch discount); the operands are vendor figures with no repo file, so this is logged `external` rather than `arithmetic`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          163
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "Long-context columns ($10 / $1 / $12.50 / $45)\nnever trigger at our call sizes.",
+      "values": [
+        {
+          "quantity": "OpenAI long-context rate, fresh input",
+          "value_verbatim": "$10",
+          "value_parsed": 10.0,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "OpenAI long-context rate, cached read",
+          "value_verbatim": "$1",
+          "value_parsed": 1.0,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "OpenAI long-context rate, cache write",
+          "value_verbatim": "$12.50",
+          "value_parsed": 12.5,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "OpenAI long-context rate, output",
+          "value_verbatim": "$45",
+          "value_parsed": 45.0,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor list prices; attestation only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          166,
+          167
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "static preamble ~1.5 k\ntokens with `cache_control` breakpoint",
+      "values": [
+        {
+          "quantity": "static preamble size, per-call Sol structure",
+          "value_verbatim": "~1.5 k",
+          "value_parsed": 1500,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Design assumption for the per-call cost model; no artefact records it at Phase 0. Restated as '~1,500' in the table at line 171."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          171
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| Preamble (cached read) | ~1,500 | $0.25 /M | $0.0004 |",
+      "values": [
+        {
+          "quantity": "preamble tokens per Sol call",
+          "value_verbatim": "~1,500",
+          "value_parsed": 1500,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "stacked rate applied to cached-read preamble",
+          "value_verbatim": "$0.25 /M",
+          "value_parsed": 0.25,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "modelled preamble cost per call",
+          "value_verbatim": "$0.0004",
+          "value_parsed": 0.0004,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Cost cell is the modelled product of the token count and the vendor stacked rate (1,500 / 1e6 × $0.25 = $0.000375, quoted rounded); token count is a design assumption. No repo artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          172
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| Payload (claim + verbatim source context) | ~2,000 | $2.50 /M | $0.0050 |",
+      "values": [
+        {
+          "quantity": "payload tokens per Sol call",
+          "value_verbatim": "~2,000",
+          "value_parsed": 2000,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "stacked rate applied to fresh-input payload",
+          "value_verbatim": "$2.50 /M",
+          "value_parsed": 2.5,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "modelled payload cost per call",
+          "value_verbatim": "$0.0050",
+          "value_parsed": 0.005,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Modelled product of token count and vendor stacked rate; no repo artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          173,
+          173
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| Output incl. reasoning (medium effort) | ~1,000 | $15.00 /M | $0.0150 |",
+      "values": [
+        {
+          "quantity": "output tokens per Sol call, medium reasoning effort",
+          "value_verbatim": "~1,000",
+          "value_parsed": 1000,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "stacked rate applied to output",
+          "value_verbatim": "$15.00 /M",
+          "value_parsed": 15.0,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "modelled output cost per call, medium effort",
+          "value_verbatim": "$0.0150",
+          "value_parsed": 0.015,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Modelled product of token count and vendor stacked rate; no repo artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| **Total, medium effort** | | | **≈ $0.02** |",
+      "values": [
+        {
+          "quantity": "modelled total cost per Sol call, medium effort",
+          "value_verbatim": "≈ $0.02",
+          "value_parsed": 0.02,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Sum of the three component rows at lines 171-173 ($0.0004 + $0.0050 + $0.0150 = $0.0204, quoted approximate); operands are modelled vendor figures with no repo file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          175
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| **Total, high effort** (~2.5–3 k output) | | | **≈ $0.04–0.05** |",
+      "values": [
+        {
+          "quantity": "output tokens per Sol call, high effort, lower bound",
+          "value_verbatim": "~2.5",
+          "value_parsed": 2500,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "output tokens per Sol call, high effort, upper bound",
+          "value_verbatim": "3 k",
+          "value_parsed": 3000,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "modelled total cost per Sol call, high effort, lower bound",
+          "value_verbatim": "≈ $0.04",
+          "value_parsed": 0.04,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "modelled total cost per Sol call, high effort, upper bound",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Approximation markers kept verbatim (instrument v1.2 amendment 5); 'k' values parsed as thousands and the second cost value shares the USD unit of the first (amendment 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          176,
+          176
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| **Worst case** (high effort + ~10 k-token source excerpt + ~5 k reasoning/output) | ~11,500 in / ~5,000 out | | **≈ $0.10** |",
+      "values": [
+        {
+          "quantity": "source-excerpt size, worst-case Sol call",
+          "value_verbatim": "~10 k",
+          "value_parsed": 10000,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "reasoning/output size, worst-case Sol call",
+          "value_verbatim": "~5 k",
+          "value_parsed": 5000,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "input tokens, worst-case Sol call",
+          "value_verbatim": "~11,500",
+          "value_parsed": 11500,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "output tokens, worst-case Sol call",
+          "value_verbatim": "~5,000",
+          "value_parsed": 5000,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "modelled worst-case cost per Sol call",
+          "value_verbatim": "≈ $0.10",
+          "value_parsed": 0.1,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Worst-case design assumptions plus the modelled cost; no repo artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          178,
+          178
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "Cache writes (~$0.005 per 30-minute window) are negligible.",
+      "values": [
+        {
+          "quantity": "cache-write cost per window",
+          "value_verbatim": "~$0.005",
+          "value_parsed": 0.005,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "cache retention window",
+          "value_verbatim": "30-minute",
+          "value_parsed": 30,
+          "unit": "minutes",
+          "kind": "parameter",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor cache pricing and time-to-live window; attestation only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          181
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "with the worst-case column\nassuming *every* call hits ~$0.10 — deliberately pessimistic",
+      "values": [
+        {
+          "quantity": "per-call cost assumed in the worst-case column",
+          "value_verbatim": "~$0.10",
+          "value_parsed": 0.1,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Restates the worst-case per-call figure from the table row at line 176."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          185,
+          185
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| Pilot (~30 items, two effort levels) | ~60 | ~$2 | $6 |",
+      "values": [
+        {
+          "quantity": "pilot item count",
+          "value_verbatim": "~30",
+          "value_parsed": 30,
+          "unit": "items",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "reasoning-effort levels tested in the pilot",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "pilot Sol call count",
+          "value_verbatim": "~60",
+          "value_parsed": 60,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected pilot cost",
+          "value_verbatim": "~$2",
+          "value_parsed": 2,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "worst-case pilot cost",
+          "value_verbatim": "$6",
+          "value_parsed": 6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking budget forecast made at GATE 0; no repo artefact records planned call counts or costs. Call count is the item count × two effort levels."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          186
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| **Stage A — S119 corrections** | ~150 | **$3–8** | **$15** |",
+      "values": [
+        {
+          "quantity": "Stage A Sol call count",
+          "value_verbatim": "~150",
+          "value_parsed": 150,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected Stage A cost, lower bound",
+          "value_verbatim": "$3",
+          "value_parsed": 3,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected Stage A cost, upper bound",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "worst-case Stage A cost",
+          "value_verbatim": "$15",
+          "value_parsed": 15,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Budget forecast; the ~150 call count derives from the S119 correction site count (lines 108-109). Range upper bound shares the USD unit of the lower bound (instrument v1.2 amendment 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| Stage B — full C5 sweep | ~560 | $11–28 | $56 |",
+      "values": [
+        {
+          "quantity": "Stage B C5 sweep Sol call count",
+          "value_verbatim": "~560",
+          "value_parsed": 560,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected Stage B C5 cost, lower bound",
+          "value_verbatim": "$11",
+          "value_parsed": 11,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected Stage B C5 cost, upper bound",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "worst-case Stage B C5 cost",
+          "value_verbatim": "$56",
+          "value_parsed": 56,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Budget forecast; the call count derives from the C5 site estimate at line 105."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          188,
+          188
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| Stage B — full C6 sweep | ~426 | $9–21 | $43 |",
+      "values": [
+        {
+          "quantity": "Stage B C6 sweep Sol call count",
+          "value_verbatim": "~426",
+          "value_parsed": 426,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected Stage B C6 cost, lower bound",
+          "value_verbatim": "$9",
+          "value_parsed": 9,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected Stage B C6 cost, upper bound",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "worst-case Stage B C6 cost",
+          "value_verbatim": "$43",
+          "value_parsed": 43,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Budget forecast; the call count derives from the C6 rationale-sentence estimate at line 106."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "| **Programme total (all stages + retries)** | ~1,200 | **$25–60** | **~$120** |",
+      "values": [
+        {
+          "quantity": "programme total Sol call count (all stages + retries)",
+          "value_verbatim": "~1,200",
+          "value_parsed": 1200,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected programme total cost, lower bound",
+          "value_verbatim": "$25",
+          "value_parsed": 25,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected programme total cost, upper bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "worst-case programme total cost",
+          "value_verbatim": "~$120",
+          "value_parsed": 120,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Budget forecast; sums the stage rows above (pilot + Stage A + Stage B C5 + C6 + retries). Restated as the '~$120 absolute worst case' benchmark at line 275 (outside this batch's range)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          196,
+          197
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "Gemini 3.1 Pro tiebreak on two-way disagreements (5–15 % of Sol-checked\nitems ≈ 60–170 calls): estimated < $10;",
+      "values": [
+        {
+          "quantity": "two-way disagreement rate among Sol-checked items, lower bound",
+          "value_verbatim": "5",
+          "value_parsed": 5.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "two-way disagreement rate among Sol-checked items, upper bound",
+          "value_verbatim": "15 %",
+          "value_parsed": 15.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Gemini tiebreak call count, lower bound",
+          "value_verbatim": "≈ 60",
+          "value_parsed": 60,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Gemini tiebreak call count, upper bound",
+          "value_verbatim": "170",
+          "value_parsed": 170,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated Gemini tiebreak cost",
+          "value_verbatim": "< $10",
+          "value_parsed": 10,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forecast disagreement rate and derived call band (5-15 % of the ~1,200 programme calls); the lower-bound percentage shares the '%' unit of the upper bound (instrument v1.2 amendment 6). No artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          203
+        ],
+        "section": "4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts"
+      },
+      "claim_text": "approve the pilot + Stage A now (expected $5–10\nall-in, bounded at **≤ $21 absolute worst case**)",
+      "values": [
+        {
+          "quantity": "expected all-in cost, pilot + Stage A, lower bound",
+          "value_verbatim": "$5",
+          "value_parsed": 5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "expected all-in cost, pilot + Stage A, upper bound",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "absolute worst-case bound, pilot + Stage A",
+          "value_verbatim": "≤ $21",
+          "value_parsed": 21,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Recommendation-level budget forecast; the ≤ $21 bound is the sum of the pilot ($6) and Stage A ($15) worst-case cells at lines 185-186."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          211
+        ],
+        "section": "4.4 Per-phase summary"
+      },
+      "claim_text": "| 1 (C1, C2) | Opus agents + script | $0 | 1–2 sessions |",
+      "values": [
+        {
+          "quantity": "API cost, Phase 1 (C1, C2)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "wall-clock sessions, Phase 1, lower bound",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "wall-clock sessions, Phase 1, upper bound",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Per-phase forecast row; the leading '1' is the phase identifier (out of C4 scope, instrument rule 5) — the extracted session bounds are the wall-clock cell."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          212
+        ],
+        "section": "4.4 Per-phase summary"
+      },
+      "claim_text": "| 2 (C3) | Script (sapphire); Opus triage | $0 | 1 session + minutes runtime |",
+      "values": [
+        {
+          "quantity": "API cost, Phase 2 (C3)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "wall-clock sessions, Phase 2",
+          "value_verbatim": "1 session",
+          "value_parsed": 1,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Per-phase forecast row; phase number is an identifier (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          213
+        ],
+        "section": "4.4 Per-phase summary"
+      },
+      "claim_text": "| 3 (C4) | Script + Opus fleet (background) | $0 | 1–2 sessions + hours on sapphire |",
+      "values": [
+        {
+          "quantity": "API cost, Phase 3 (C4)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "wall-clock sessions, Phase 3, lower bound",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "wall-clock sessions, Phase 3, upper bound",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Per-phase forecast row; phase number is an identifier (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "4.4 Per-phase summary"
+      },
+      "claim_text": "| 4 (C5, C6) | Fable/Opus + **Sol batch** + Gemini | $5–60 (staged) | 2–3 sessions + ≤ 24 h/batch turnaround |",
+      "values": [
+        {
+          "quantity": "API cost, Phase 4 (C5, C6), lower bound",
+          "value_verbatim": "$5",
+          "value_parsed": 5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "API cost, Phase 4 (C5, C6), upper bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "wall-clock sessions, Phase 4, lower bound",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "wall-clock sessions, Phase 4, upper bound",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Sol batch turnaround ceiling",
+          "value_verbatim": "24 h",
+          "value_parsed": 24,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Per-phase forecast row restating the § 4.3 programme cost band; the 24 h batch turnaround is a vendor service ceiling (external). Phase number is an identifier (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          215,
+          215
+        ],
+        "section": "4.4 Per-phase summary"
+      },
+      "claim_text": "| 5 (monitoring) | Script | $0 | 1 session |",
+      "values": [
+        {
+          "quantity": "API cost, Phase 5 (monitoring)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "wall-clock sessions, Phase 5",
+          "value_verbatim": "1 session",
+          "value_parsed": 1,
+          "unit": "sessions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Per-phase forecast row; phase number is an identifier (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          223,
+          224
+        ],
+        "section": "5. Proposed foreground/background split"
+      },
+      "claim_text": "Sol Batch jobs\n  (asynchronous by design, ≤ 24 h turnaround)",
+      "values": [
+        {
+          "quantity": "Sol Batch job turnaround ceiling",
+          "value_verbatim": "≤ 24 h",
+          "value_parsed": 24,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor Batch API service-level figure; attestation only. Restated in the Phase 4 row at line 214."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          234,
+          235
+        ],
+        "section": "6. Charter stumble log"
+      },
+      "claim_text": "the glob `results/*-manifest.json`\n   matches 4 of the 6",
+      "values": [
+        {
+          "quantity": "files matched by the glob `results/*-manifest.json`",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "manifest-family file count, `results/`",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results"
+      },
+      "method": "recompute-script",
+      "notes": "Restates lines 33-35; directory glob census (non-JSON anchor, routes to triage)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          240,
+          240
+        ],
+        "section": "6. Charter stumble log"
+      },
+      "claim_text": "sweeps in 672 k words of third-party literature (`references/`),",
+      "values": [
+        {
+          "quantity": "word count, `docs/methodology/references/` third-party literature",
+          "value_verbatim": "672 k",
+          "value_parsed": 672000,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/references"
+      },
+      "method": "recompute-script",
+      "notes": "Restates the 672,477 w figure at lines 88-89 at lower precision; word census over the directory (non-JSON anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          245,
+          246
+        ],
+        "section": "6. Charter stumble log"
+      },
+      "claim_text": "names `protocol-errata.md` without a path; three\n   errata-named files exist.",
+      "values": [
+        {
+          "quantity": "errata-named files existing in the repository",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs"
+      },
+      "method": "recompute-script",
+      "notes": "Filename census for files whose names contain 'errata' (the span resolves the intended one as `docs/methodology/preregistration/protocol-errata.md`); non-JSON directory anchor, routes to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          255,
+          256
+        ],
+        "section": "6. Charter stumble log"
+      },
+      "claim_text": "the ~150 Session-119 corrections have no\n   locator in the charter; found via the continuity beacon (six waves,",
+      "values": [
+        {
+          "quantity": "correction sites, Session-119 correction campaign",
+          "value_verbatim": "~150",
+          "value_parsed": 150,
+          "unit": "sites",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "commit waves, Session-119 correction campaign",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "waves",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates lines 108-109; the locator is the continuity beacon `planning/paper-writeup-continuity.md` (prose — instrument rule 2 forbids prose anchors) and a git commit range (out of C4 scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          261,
+          261
+        ],
+        "section": "6. Charter stumble log"
+      },
+      "claim_text": "the Phase 2 row counts (1,132 / 322) reconfirmed at source.",
+      "values": [
+        {
+          "quantity": "pass count, Phase 2 row count reconfirmed at source",
+          "value_verbatim": "1,132",
+          "value_parsed": 1132,
+          "unit": "passes",
+          "kind": "count",
+          "path": "len:$.passes",
+          "method": "read"
+        },
+        {
+          "quantity": "condition count, Phase 2 row count reconfirmed at source",
+          "value_verbatim": "322",
+          "value_parsed": 322,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "results/conditions-manifest.json#len:$.conditions",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json"
+      },
+      "method": "read",
+      "notes": "Third statement of the same two counts (lines 39-40, 46-47); second value uses a cross-file locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          263,
+          263
+        ],
+        "section": "6. Charter stumble log"
+      },
+      "claim_text": "**Status**: all six fixes approved at GATE 0 (decision 6, with the",
+      "values": [
+        {
+          "quantity": "charter self-sufficiency fixes approved at GATE 0",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "fixes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The six fixes are the numbered stumble-log items in § 6 of this same document (lines 234-258) and their landing is recorded in `planning/audit-charter.md` — both prose, so not anchored (instrument rule 2). Decision numbers, rule numbers, section numbers and the commit hash in the surrounding sentence are out of C4 scope (rule 5)."
+    }
+  ]
+}

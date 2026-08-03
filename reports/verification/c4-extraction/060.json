@@ -1,0 +1,1483 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/family-fdr-registration.md",
+    "git_blob": "169e4a603e0d",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          842,
+          843
+        ],
+        "section": "§ 8.3 Resolution floors and ties"
+      },
+      "claim_text": "Two primaries sit at instrument resolution floors and must be recorded as\ninequalities, not point values:",
+      "values": [
+        {
+          "quantity": "count of family primaries whose p-value is recorded as an instrument-resolution-floor inequality rather than a point value",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b060] Batch covers lines 832-1088 (§ 8.2 to end of Changelog) of a pre-execution registration. Per the assignment, what the document REGISTERS (family size, q, test choices, floors, tie rule) is anchored to the least-writable artefact that carries it — for this registration that is the deliverable pair results/family-fdr/family_fdr.json and results/family-fdr/h1_cmt0106_pooled_modality.json, both of which exist in the working tree; values quoted FROM elsewhere are anchored to the artefact they live in, never to the prose that quotes them. Out-of-scope per instrument rule 5 and logged here rather than silently dropped: section references (§ 5.1.1, § 8.3), hypothesis and deviation identifiers (H1-H8, E28-E64, CMT-0106, GATE 1 ruling 7(c/d), Obs 375, Session 121), option numerals ((i)-(iv)), array indices inside backticked locators (comparisons[29]), line-number citations (§ 4 line 119), version strings (v1.0.0), dates, and commit hashes (2159d25b4, 562d185a...). || This claim: derivable from `inputs_ranked[i].report_as` in the anchor (entries whose text names a floor). Recorded verbatim without adjudication — the § 8.3 bullets below discuss H7 and H1 (bootstrap floor) and H2 plus H3 (permutation floor); the harness owns the comparison."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          845,
+          846
+        ],
+        "section": "§ 8.3 Resolution floors and ties"
+      },
+      "claim_text": "- **Bootstrap floor**: H7 at `f1_p_value` = 0.001 with B = 1 000 is\n  **p ≤ 0.001**.",
+      "values": [
+        {
+          "quantity": "bootstrap p-value (f1_p_value), H7 primary contrast T0.3 vs T1.0, Era-1 retest",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[25].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations B, Era-1 retest pairwise bootstrap artefact",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap resolution floor for H7, recorded as an inequality (1/B)",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/retest/pairwise-bootstrap-comparisons.json",
+              "path": "$.metadata.bootstrap_iterations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "H7's primary is § 5.7 option (i), `comparisons[25]` (T0.3 vs T1.0, text track), per the PI ruling recorded at line 1023. The third value is the same number restated as the instrument floor 1/B; it is given its own derivation so it is not compared against the operands."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          846,
+          847
+        ],
+        "section": "§ 8.3 Resolution floors and ties"
+      },
+      "claim_text": "H1's § 5.1.1 computation runs at B = 10 000, so its\n  floor, if reached, is **p ≤ 0.0002** (two-sided doubling of 1/10 000).",
+      "values": [
+        {
+          "quantity": "bootstrap iterations B registered for the H1 CMT-0106 pooled modality computation (§ 5.1.1)",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided bootstrap resolution floor for H1 at B = 10 000 (2/B)",
+          "value_verbatim": "0.0002",
+          "value_parsed": 0.0002,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "2 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+              "path": "$.n_iterations"
+            }
+          ]
+        },
+        {
+          "quantity": "bootstrap iterations B, restated as the one-sided quantum 1/10 000",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "B = 10 000 is specified by this registration itself (§ 5.1.1, E54 narrow-effects licence), so the least-writable artefact carrying it is the registration's own deliverable, which exists in the working tree. A mismatch here would be a protocol deviation, not a documentation error."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          848,
+          849
+        ],
+        "section": "§ 8.3 Resolution floors and ties"
+      },
+      "claim_text": "- **Permutation floor**: H2 and H3 at `p_value` = 0.0 with 10 000\n  permutations are **p < 1 × 10⁻⁴**.",
+      "values": [
+        {
+          "quantity": "permutation p-value, H2 primary contrast (two-stage PV vs single-stage consensus, Era 2)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, H3 primary contrast (consensus vs matched single-pass, Era 2)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/diversity-dividend-384/tiering-champions/tiering_20m.json#$.headline_contrasts[2].p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation count, H2/H3 permutation instrument",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation resolution floor bound (1/B)",
+          "value_verbatim": "1 × 10⁻⁴",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+              "path": "$.permutation_test.n_permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span asserts the same 0.0 of two hypotheses; both are recorded, H3's via a cross-file per-value path (instrument v1.2 amendment 2). H2's artefact is the § 5.2 executed artefact; H3's is the § 5.3 tiering-champions headline contrast."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          849,
+          851
+        ],
+        "section": "§ 8.3 Resolution floors and ties"
+      },
+      "claim_text": "The literature-standard reporting is\n  (b + 1)/(B + 1) = 1/10 001 ≈ 9.999 × 10⁻⁵; this registration adopts\n  that convention rather than a literal zero.",
+      "values": [
+        {
+          "quantity": "permutation reporting denominator B + 1",
+          "value_verbatim": "10 001",
+          "value_parsed": 10001,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+              "path": "$.permutation_test.n_permutations"
+            }
+          ]
+        },
+        {
+          "quantity": "adopted numeric p at the permutation floor, (b + 1)/(B + 1)",
+          "value_verbatim": "≈ 9.999 × 10⁻⁵",
+          "value_parsed": 9.999e-05,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / (a + 1)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+              "path": "$.permutation_test.n_permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Approximation marker kept in value_verbatim per instrument v1.2 amendment 5. The adopted value is also carried at `results/family-fdr/family_fdr.json` `$.inputs_ranked[0].numeric_p`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          859,
+          861
+        ],
+        "section": "§ 8.3 Resolution floors and ties"
+      },
+      "claim_text": "**H8 asymmetry, disclosed**: H8's input is the within-H8 BH-adjusted\nminimum — the Simes global-null p-value over its seven registered\ncontrasts — where the other six primaries are raw contrast p-values.",
+      "values": [
+        {
+          "quantity": "count of registered H8 contrasts corrected within H8",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_contrasts",
+          "method": "read"
+        },
+        {
+          "quantity": "count of family primaries supplied as raw contrast p-values (family size minus H8)",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/family-fdr/family_fdr.json",
+              "path": "$.family_size"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          878,
+          878
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "| total rows | 32 | `metadata.n_comparisons` |",
+      "values": [
+        {
+          "quantity": "total comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "32",
+          "value_parsed": 32,
+          "unit": null,
+          "kind": "count",
+          "path": "$.metadata.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": "$.metadata.n_comparisons"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          879,
+          879
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "| **confirmatory rows** | **26** | `comparisons[i].family == \"confirmatory\"` |",
+      "values": [
+        {
+          "quantity": "confirmatory comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": "len:$.comparisons[?(@.family=='confirmatory')]"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          880,
+          880
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "| exploratory rows | 6 | same field |",
+      "values": [
+        {
+          "quantity": "exploratory comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='exploratory')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": "len:$.comparisons[?(@.family=='exploratory')]"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          883,
+          883
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "| test | tile-swap permutation, 10 000 permutations, seed 42 | `metadata` |",
+      "values": [
+        {
+          "quantity": "permutation count, all-contrasts FDR artefact",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, all-contrasts FDR artefact",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          884,
+          884
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "| buffer / corpus | 20 m / 487 tiles (Era 2) | `metadata.buffer_metres`, `comparisons[i].n_tiles` |",
+      "values": [
+        {
+          "quantity": "spatial tolerance buffer, all-contrasts FDR artefact",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Era 2 corpus, all-contrasts FDR artefact",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.comparisons[*].n_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`Era 2` is a corpus name, not a claim (instrument rule 5); the 487 tile count that names it is."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          885,
+          885
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "| significant | 20 of 26 confirmatory | `results/pairwise/20m/fdr/pairwise_results_fdr.md` § \"Confirmatory (20/26 significant)\" |",
+      "values": [
+        {
+          "quantity": "count of confirmatory rows significant after within-family BH correction",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "confirmatory comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document cites the sibling markdown `results/pairwise/20m/fdr/pairwise_results_fdr.md`; re-anchored to the JSON per instrument rule 2 (never anchor prose to prose). The 20 is a count of `comparisons[i]` with `family == \"confirmatory\"` and `significant` not equal to \"ns\" — a filtered count rather than a stored scalar, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          887,
+          890
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "The correction is applied **within family**: the 26 confirmatory rows are\ncorrected together and the 6 exploratory rows separately (verified by\nre-deriving the adjusted values — e.g. `comparisons[29].p_value_raw` =\n0.0375 → `p_value_adj` = 0.0488 = 0.0375 × 26/20).",
+      "values": [
+        {
+          "quantity": "confirmatory comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": "read"
+        },
+        {
+          "quantity": "exploratory comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='exploratory')]",
+          "method": "read"
+        },
+        {
+          "quantity": "raw permutation p-value, comparisons[29] (N=30 vs N=10, HIGH text)",
+          "value_verbatim": "0.0375",
+          "value_parsed": 0.0375,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[29].p_value_raw",
+          "method": "read"
+        },
+        {
+          "quantity": "BH-adjusted p-value, comparisons[29]",
+          "value_verbatim": "0.0488",
+          "value_parsed": 0.0488,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[29].p_value_adj",
+          "method": "read"
+        },
+        {
+          "quantity": "raw permutation p-value, comparisons[29] (restated as the derivation's operand)",
+          "value_verbatim": "0.0375",
+          "value_parsed": 0.0375,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[29].p_value_raw",
+          "method": "read"
+        },
+        {
+          "quantity": "confirmatory family size used as the BH multiplier numerator",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": "read"
+        },
+        {
+          "quantity": "BH rank of comparisons[29] within the 26-row confirmatory family",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The BH rank (20) is not stored as a scalar in the artefact; it must be re-derived by ordering the 26 confirmatory raw p-values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          892,
+          895
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "**How the two are contrasted in the paper**: the family-level correction\nanswers \"which of the seven registered confirmatory hypotheses survives\nFDR control?\"; the all-contrasts correction answers \"which of the 26\nexecuted confirmatory comparisons survives?\".",
+      "values": [
+        {
+          "quantity": "count of registered confirmatory hypotheses in the BH family",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "results/family-fdr/family_fdr.json#$.family_size",
+          "method": "read"
+        },
+        {
+          "quantity": "count of executed confirmatory comparisons in the all-contrasts correction",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          899,
+          900
+        ],
+        "section": "§ 8.4 The sensitivity analysis"
+      },
+      "claim_text": "**Caveat to record**: the 26-row family is not a superset of the seven\nprimaries.",
+      "values": [
+        {
+          "quantity": "confirmatory comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of registered confirmatory hypotheses in the BH family",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "results/family-fdr/family_fdr.json#$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          907,
+          907
+        ],
+        "section": "§ 8.5 Deliverables"
+      },
+      "claim_text": "1. `results/family-fdr/family_fdr.json` — the seven inputs (with artefact",
+      "values": [
+        {
+          "quantity": "count of p-value inputs in the family-level BH correction",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.inputs_ranked",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "len:$.inputs_ranked"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          921,
+          922
+        ],
+        "section": "§ 9 predicted_outcome"
+      },
+      "claim_text": "**This registration does not, and cannot, claim outcome blindness for six\nof the seven primaries.**",
+      "values": [
+        {
+          "quantity": "count of family primaries whose p-value was already committed and visible at registration (family size minus the outcome-blind H1)",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/family-fdr/family_fdr.json",
+              "path": "$.family_size"
+            }
+          ]
+        },
+        {
+          "quantity": "family size (count of registered confirmatory primaries)",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          945,
+          946
+        ],
+        "section": "§ 9 predicted_outcome"
+      },
+      "claim_text": "1. H2, H3 and H7 will be rejected at q = 0.05 (all at or near their\n   instrument floors).",
+      "values": [
+        {
+          "quantity": "registered false discovery rate level q for the family BH correction",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.1 calibration rule: q = 0.05 is what the lodged registration specifies (preregistration.md § 3.1, \"Benjamini-Hochberg FDR at q = 0.05 across confirmatory hypotheses\"), so it anchors to the lodged document rather than to the executed `results/family-fdr/family_fdr.json` `$.q`. Non-JSON anchor, expected to route to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          948,
+          956
+        ],
+        "section": "§ 9 predicted_outcome"
+      },
+      "claim_text": "Directional expectation, stated\n   honestly from the visible level pairs: the text-only pool's members\n   sit at or above every image-using member except that `image-only`\n   drags its group down (brief-text beats image-only by +0.088), while\n   the two `+image` conditions sit within ~0.02 of `brief-text`; the\n   pooled delta should therefore be positive (text-only higher) but of\n   modest size (~+0.03 on the crude full-set arithmetic), and whether it\n   clears the family's BH threshold is **not predictable from the pair\n   p-values**.",
+      "values": [
+        {
+          "quantity": "F1 delta, brief-text minus image-only, Era-1 Phase 2a bootstrap",
+          "value_verbatim": "+0.088",
+          "value_parsed": 0.088,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.comparisons[1].f1_delta",
+          "method": "read"
+        },
+        {
+          "quantity": "count of text-plus-image (\"+image\") conditions among the five Era-1 Phase 2a M/E levels",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "largest absolute F1 gap between brief-text and either +image condition, Era-1 Phase 2a",
+          "value_verbatim": "~0.02",
+          "value_parsed": 0.02,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "predicted pooled F1 delta, text-only minus image-using, on the crude full-set arithmetic",
+          "value_verbatim": "~+0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The \"two +image conditions\" count has no clean artefact locator: `results/family-fdr/h1_cmt0106_pooled_modality.json` `$.conditions.image_using` holds three entries (image-only plus the two +image levels), so anchoring there would compare the wrong quantity; left anchor-unknown. The ~0.02 bound spans `comparisons[0].f1_delta` (brief-text vs brief-text-image) and `comparisons[3].f1_delta` (brief-text vs verbose-text-image). The ~+0.03 is a pre-computation directional prediction; the executed point estimate lives at `results/family-fdr/h1_cmt0106_pooled_modality.json` `$.point_estimate.delta_text_minus_image` — recorded as recompute-script so the harness does not treat a stated expectation as a hard read. Approximation markers kept verbatim (v1.2 amendment 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          959,
+          960
+        ],
+        "section": "§ 9 predicted_outcome"
+      },
+      "claim_text": "3. H4 (p = 0.124), H5 (p = 0.756) and H8 (Simes 0.8344) will not be\n   rejected.",
+      "values": [
+        {
+          "quantity": "bootstrap f1_p_value, H4 primary contrast canonical-first vs canonical-last, Era-1 retest",
+          "value_verbatim": "0.124",
+          "value_parsed": 0.124,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[55].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap precision_p, H5 primary contrast terse vs verbose (image track), Era-1 retest",
+          "value_verbatim": "0.756",
+          "value_parsed": 0.756,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[53].precision_p",
+          "method": "read"
+        },
+        {
+          "quantity": "within-H8 BH-adjusted minimum (Simes global-null p), H8 primary",
+          "value_verbatim": "0.8344",
+          "value_parsed": 0.8344,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/h8-v2/permutation-t4/fdr_summary.json#$.contrasts[3].bh_adjusted_p",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "H8's value lives in a different artefact; recorded via a cross-file per-value path (v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          963,
+          963
+        ],
+        "section": "§ 9 predicted_outcome"
+      },
+      "claim_text": "the 26-row family says nothing about H4, H5, H7 or H8.",
+      "values": [
+        {
+          "quantity": "confirmatory comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": "len:$.comparisons[?(@.family=='confirmatory')]"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          982,
+          984
+        ],
+        "section": "§ 10 Companion metadata"
+      },
+      "claim_text": "Per `planning/audit-and-completion-plan.md` § 6.4, two entries committed\nto `results/run-analyses.json` with this document (outcomes null until\ncomputed):",
+      "values": [
+        {
+          "quantity": "count of planned analysis entries committed to results/run-analyses.json with this registration",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-analyses.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Count of `$.analyses[i]` with `analysis_id` in {`h1-cmt0106-pooled-modality`, `family-bh-fdr-confirmatory`}; a two-member filtered count rather than a stored scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          993,
+          993
+        ],
+        "section": "§ 10 Companion metadata"
+      },
+      "claim_text": "Directional expectation only: pooled text-only minus image-using positive, modest (~+0.03); significance genuinely unknown",
+      "values": [
+        {
+          "quantity": "predicted pooled F1 delta, text-only minus image-using (registration's directional expectation)",
+          "value_verbatim": "~+0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+        "path": "$.point_estimate.delta_text_minus_image"
+      },
+      "method": "recompute-script",
+      "notes": "Span is inside the § 10 JSON block the document asserts is committed to `results/run-analyses.json`; the numeric claim itself is about the H1 pooled contrast, so it anchors to the H1 deliverable. Same quantity as the § 9 item-2 prediction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1007,
+          1007
+        ],
+        "section": "§ 10 Companion metadata"
+      },
+      "claim_text": "six of seven p-values visible in-repo, H1's outcome-blind.",
+      "values": [
+        {
+          "quantity": "count of family primaries whose p-value was already visible in repo at registration (family size minus the outcome-blind H1)",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/family-fdr/family_fdr.json",
+              "path": "$.family_size"
+            }
+          ]
+        },
+        {
+          "quantity": "family size (count of registered confirmatory primaries)",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1016,
+          1016
+        ],
+        "section": "§ 11 PI rulings"
+      },
+      "claim_text": "## 11. PI rulings (collected 2026-07-30 — all six resolved)",
+      "values": [
+        {
+          "quantity": "count of PI ruling items collected and resolved for this registration",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document names `reports/verification/phase2-rulings-2026-07-30.md` § 3 as the verbatim record; that is another hand-written markdown document, so per instrument rule 2 no prose-to-prose anchor is set. The count is also checkable against the six numbered items at lines 1020-1032 of this document. Triage should chase the chain."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1023,
+          1023
+        ],
+        "section": "§ 11 PI rulings"
+      },
+      "claim_text": "2. **H7**: default option (i) confirmed — text track, p ≤ 0.001.",
+      "values": [
+        {
+          "quantity": "bootstrap f1_p_value floor, H7 primary contrast T0.3 vs T1.0 (text track), Era-1 retest",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[25].f1_p_value",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": "$.comparisons[25].f1_p_value"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1026,
+          1026
+        ],
+        "section": "§ 11 PI rulings"
+      },
+      "claim_text": "4. **H5**: constrained substitute **accepted**; family stays at m = 7.",
+      "values": [
+        {
+          "quantity": "family size m for the BH-FDR correction",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.family_size"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1029,
+          1030
+        ],
+        "section": "§ 11 PI rulings"
+      },
+      "claim_text": "6. **Reporting of H2**: confirmed — reported as a falsified directional\n   prediction (two-stage significantly improves F1 by +0.076, clearing",
+      "values": [
+        {
+          "quantity": "observed F1 difference, H2 primary contrast (two-stage PV minus single-stage consensus), Era 2",
+          "value_verbatim": "+0.076",
+          "value_parsed": 0.076,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+        "path": "$.permutation_test.observed_f1_diff"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1030,
+          1032
+        ],
+        "section": "§ 11 PI rulings"
+      },
+      "claim_text": "clearing\n   the registered ≥ 0.05 stopping-rule threshold in the direction the\n   registration predicted it would not).",
+      "values": [
+        {
+          "quantity": "registered H2 stopping-rule threshold (minimum F1 improvement required to pursue two-stage architectures)",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.1 calibration rule: the 0.05 stopping-rule threshold is what the lodged registration specifies (quoted verbatim at § 5.2 of this document from `preregistration.md:491`), so it anchors to the lodged document. Non-JSON anchor, expected to route to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1040,
+          1044
+        ],
+        "section": "Changelog — 2026-07-31 Prose range corrected"
+      },
+      "claim_text": "§ 5.1's lead-in said the three executed candidates' p-values \"span\n0.004 to 0.94\"; the option table (and the artefact) give 0.004, 0.006,\nand 0.38 — the 0.94 belonged to the elaboration limb discussed\nseparately below the table, a residue of the pre-ruling draft wording.\nCorrected to 0.38.",
+      "values": [
+        {
+          "quantity": "count of executed candidate primary contrasts for H1 listed in § 5.1",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "superseded prose range, low end (quoted old wording)",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "superseded prose range, high end (quoted old wording)",
+          "value_verbatim": "0.94",
+          "value_parsed": 0.94,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "bootstrap f1_p_value, H1 candidate (iii) brief-text vs image-only, Era-1 Phase 2a",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[1].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap f1_p_value, H1 candidate (i) brief-text-image vs image-only, Era-1 Phase 2a",
+          "value_verbatim": "0.006",
+          "value_parsed": 0.006,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[4].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap f1_p_value, H1 candidate (ii) brief-text vs brief-text-image, Era-1 Phase 2a",
+          "value_verbatim": "0.38",
+          "value_parsed": 0.38,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[0].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap f1_p_value, elaboration limb brief-text-image vs verbose-text-image, Era-1 Phase 2a",
+          "value_verbatim": "0.94",
+          "value_parsed": 0.94,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[6].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected prose range, high end (live value)",
+          "value_verbatim": "0.38",
+          "value_parsed": 0.38,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[0].f1_p_value",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Correction block: the two values inside the quoted old wording (\"span 0.004 to 0.94\") are marked historical per instrument rule 3; the corrected trio and the elaboration-limb 0.94 are live reads. The \"three executed candidates\" count is a property of this document's own § 5.1 option table (rows (i)-(iii) of four), with no artefact locator — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1052,
+          1052
+        ],
+        "section": "Changelog — 2026-07-30 REGISTERED"
+      },
+      "claim_text": "All six § 11 questions ruled by the PI (Session 121 morning rulings,",
+      "values": [
+        {
+          "quantity": "count of PI ruling items resolved for this registration",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same quantity as the § 11 heading claim; the named record `reports/verification/phase2-rulings-2026-07-30.md` § 3 is prose, so no prose-to-prose anchor is set (instrument rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1056,
+          1057
+        ],
+        "section": "Changelog — 2026-07-30 REGISTERED"
+      },
+      "claim_text": "(the family's one outcome-blind primary — H1 was the one\noutcome-material selection);",
+      "values": [
+        {
+          "quantity": "count of outcome-blind primaries in the seven-hypothesis family",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of outcome-material primary selections in the family",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Doubt flagged per the instrument's include-when-in-doubt rule: both are counts of one asserted about the family, derivable from `$.inputs_ranked[i].source` (H1 alone is sourced from the newly-computed contrast rather than a pre-existing artefact), but neither is a stored scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1057,
+          1057
+        ],
+        "section": "Changelog — 2026-07-30 REGISTERED"
+      },
+      "claim_text": "H5 substitute accepted (m = 7);",
+      "values": [
+        {
+          "quantity": "family size m for the BH-FDR correction",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.family_size"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1063,
+          1064
+        ],
+        "section": "Changelog — 2026-07-30 REGISTERED"
+      },
+      "claim_text": "§ 10 now\ncarries two planned analysis entries (committed to",
+      "values": [
+        {
+          "quantity": "count of planned analysis entries committed to results/run-analyses.json with this revision",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/run-analyses.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Same quantity as the § 10 lead-in claim: `$.analyses[i]` with `analysis_id` in {`h1-cmt0106-pooled-modality`, `family-bh-fdr-confirmatory`}."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1077,
+          1078
+        ],
+        "section": "Changelog — 2026-07-30 Original publication"
+      },
+      "claim_text": "the executed artefact, JSON field, and p-value\nfor each of the seven executable hypotheses;",
+      "values": [
+        {
+          "quantity": "count of executable confirmatory hypotheses supplying a family p-value",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.family_size"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1080,
+          1080
+        ],
+        "section": "Changelog — 2026-07-30 Original publication"
+      },
+      "claim_text": "three AMBIGUOUS flags (H1, H7, H8) with candidate options and p-values;",
+      "values": [
+        {
+          "quantity": "count of hypotheses flagged AMBIGUOUS at the selection stage",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The AMBIGUOUS flag is a § 5 verdict of this document (H1, H7, H8); no committed artefact records it, so no anchor is proposed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1081,
+          1081
+        ],
+        "section": "Changelog — 2026-07-30 Original publication"
+      },
+      "claim_text": "BH procedure at q = 0.05 over seven primaries;",
+      "values": [
+        {
+          "quantity": "registered false discovery rate level q for the family BH correction",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "family size (count of registered confirmatory primaries)",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "results/family-fdr/family_fdr.json#$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "q anchors to the lodged registration per instrument v1.1 (non-JSON anchor, path null); the family size is carried cross-file to the registration's own deliverable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1081,
+          1083
+        ],
+        "section": "Changelog — 2026-07-30 Original publication"
+      },
+      "claim_text": "the all-contrasts sensitivity\n(26 confirmatory rows at\n`results/pairwise/20m/fdr/pairwise_results_fdr.json`);",
+      "values": [
+        {
+          "quantity": "confirmatory comparison rows, all-contrasts FDR artefact",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": "len:$.comparisons[?(@.family=='confirmatory')]"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1087,
+          1088
+        ],
+        "section": "Changelog — 2026-07-30 Original publication"
+      },
+      "claim_text": "**Status: DRAFT — not yet\nexecuted, awaiting PI rulings on the six items in § 11.**",
+      "values": [
+        {
+          "quantity": "count of unresolved PI ruling items at drafting",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same six § 11 items as the heading claim; the record is prose, so no anchor is set (instrument rule 2)."
+    }
+  ]
+}

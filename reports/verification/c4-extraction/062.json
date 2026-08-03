@@ -1,0 +1,495 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/phase0-scope.md",
+    "git_blob": "b5467e398571",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          271,
+          275
+        ],
+        "section": "§ 7 GATE 0 decision list"
+      },
+      "claim_text": "**Ruling status — GATE 0 PASSED (PI, 2026-07-29)**: decisions 1–4\napproved as proposed; decision 6 approved with the generalise/cascade\ninstruction (landed, § 6); decision 5 approved after verification of\nthe § 4.3 figures, with headroom — **cross-model spend capped at\nUS$150 programme-wide** (above the ~$120 absolute worst case).",
+      "values": [
+        {
+          "quantity": "cross-model API spend cap, verification programme (PI GATE 0 ruling)",
+          "value_verbatim": "US$150",
+          "value_parsed": 150,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        },
+        {
+          "quantity": "programme total Sol API cost, absolute worst case (§ 4.3 aggregate)",
+          "value_verbatim": "~$120",
+          "value_parsed": 120,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b062] Range 268–357 (batch start boundary firm at 268; 357 is EOF). Scope decisions logged per instrument rule 5, not silently: the GATE 0 decision numerals (\"decisions 1–4\", \"decision 5/6\", the PI's blockquote list \"1. Approve\" … \"6. Approve\") are item identifiers, not quantitative claims; likewise § references (§ 1.4, § 4.3, § 6, § 7), gate and phase labels (GATE 0/3, Phase 1/3), the 2026-07-29 dates, the commit hashes a1bd74f49 / a8dcbb5b6 / 2794539b8 / 2c354ca2e / df16d855a, and the model names gpt-5.6-sol and Claude Fable 5. That is the bulk of the gap between the plan's ~94 broad-regex spans and the 12 genuine claims here — this range is a ruling record, quoted PI turns, and a changelog. Cost figures in this range (US$150 cap, ~$120 worst case, ≤$10/≤$60 asks, $5–10/≤$21, $25–60) all trace to the § 4.3 cost model at lines 166–205, outside this batch's range and prose in any case; per instrument rule 2 (never anchor prose to prose) they are recorded anchor-unknown for triage to chase to the OpenAI pricing anchor in charter § 8 (external) or the charter § 10 ruling record. This claim: the US$150 cap is a PI ruling whose only in-repo records are prose (this document's § 8 verbatim turn at lines 318–319 and the charter § 10 ruling record in planning/audit-charter.md); the ~$120 restates the worst-case cell of the § 4.3 aggregate table (line 189, outside this batch's range). Approx marker kept verbatim per instrument v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          278,
+          279
+        ],
+        "section": "§ 7 GATE 0 decision list"
+      },
+      "claim_text": "1. **Scope**: approve § 1.4 rulings (methodology-subset reading;\n   exclusions; six tracking/errata docs in the mine).",
+      "values": [
+        {
+          "quantity": "count of tracking/errata documents ruled into the mine (charter § 2 scope)",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "§ 1.4 of this document (lines 81–86, outside this batch's range) enumerates them as the errata register plus five tracking docs under docs/methodology/preregistration/. Looked for a committed enumeration of the mine's hand-written scope: reports/verification/generated-file-registry.json classifies files by stratum but does not carry a \"tracking/errata\" grouping, and no mine-inventory manifest exists under reports/verification/ or docs/manifest-schemas/. The only visible source is prose (planning/audit-charter.md § 2 explicit scope lists, landed by the decision-6 fixes), so anchor-unknown per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          280,
+          282
+        ],
+        "section": "§ 7 GATE 0 decision list"
+      },
+      "claim_text": "2. **Generated stratum**: approve re-derive-and-diff with file-level\n   ledger rows for the 2,136 generated files (in place of LLM reading),\n   with the generated-file registry as Phase 3's first deliverable.",
+      "values": [
+        {
+          "quantity": "count of generated-stratum files in the mine",
+          "value_verbatim": "2,136",
+          "value_parsed": 2136,
+          "unit": null,
+          "kind": "count",
+          "path": "$._meta.counts.generated",
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json",
+        "path": "$._meta.counts.generated",
+        "expression": null,
+        "operands": null
+      },
+      "method": "read",
+      "notes": "Anchored to the generated-file registry this very decision commissioned as Phase 3's first deliverable — the least-writable artefact for the generated-file count. Note for triage: the Phase-0 figure is a heuristic marker-based estimate (§ 1.3, lines 61–74, outside this batch's range) that predates the registry, so a difference is a scoping-estimate-vs-census question, not necessarily a defect. Not adjudicated here (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          283,
+          284
+        ],
+        "section": "§ 7 GATE 0 decision list"
+      },
+      "claim_text": "3. **C3 extension**: approve adding runs/analyses/run-registry manifests\n   (+890 field checks → 28,682 total).",
+      "values": [
+        {
+          "quantity": "additional C3 field checks from the runs/analyses/run-registry extension",
+          "value_verbatim": "890",
+          "value_parsed": 890,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "16 * a + 15 * b + 4 * c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/runs-manifest.json",
+              "path": "len:$.runs"
+            },
+            {
+              "name": "b",
+              "file": "results/analyses-manifest.json",
+              "path": "len:$.analyses"
+            },
+            {
+              "name": "c",
+              "file": "results/run-registry.json",
+              "path": "len:$.registry"
+            }
+          ]
+        },
+        {
+          "quantity": "total C3 field checks after the extension (passes + conditions + runs + analyses + registry)",
+          "value_verbatim": "28,682",
+          "value_parsed": 28682,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "20 * a + 16 * b + 16 * c + 15 * d + 4 * e",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/passes-manifest.json",
+              "path": "len:$.passes"
+            },
+            {
+              "name": "b",
+              "file": "results/conditions-manifest.json",
+              "path": "len:$.conditions"
+            },
+            {
+              "name": "c",
+              "file": "results/runs-manifest.json",
+              "path": "len:$.runs"
+            },
+            {
+              "name": "d",
+              "file": "results/analyses-manifest.json",
+              "path": "len:$.analyses"
+            },
+            {
+              "name": "e",
+              "file": "results/run-registry.json",
+              "path": "len:$.registry"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null,
+        "expression": null,
+        "operands": null
+      },
+      "method": "arithmetic",
+      "notes": "Both values are row × field products summed over the manifest family; each carries its own expression per instrument v1.2 amendment 1 so neither is compared against the other's derivation. The fields-per-row multipliers (20 passes, 16 conditions, 16 runs, 15 analyses, 4 registry) are asserted in § 1.2's table at lines 39–43 — outside this batch's range and prose, hence carried as literals in the expressions rather than as operands; row counts are read mechanically from the manifests. 27,792 (the charter-settled passes+conditions component) appears inside the span as part of a parenthetical but is not quoted here as a separate value: it sits in the line 103 § 2 table row, outside this batch's range. No committed artefact carries a field-check total scalar — reports/verification/c3-rederivation/rederivation-report.json holds per-verdict counts, not a field-check census total."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          286,
+          287
+        ],
+        "section": "§ 7 GATE 0 decision list"
+      },
+      "claim_text": "5. **Sol budget**: approve pilot + Stage A (≤ $10); defer Stage B\n   (≤ $60 ceiling) to GATE 3 with pilot-calibrated numbers.",
+      "values": [
+        {
+          "quantity": "Sol API budget ask, pilot + Stage A (as proposed at GATE 0)",
+          "value_verbatim": "≤ $10",
+          "value_parsed": 10,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        },
+        {
+          "quantity": "Sol API budget ceiling, Stage B (as proposed at GATE 0)",
+          "value_verbatim": "≤ $60",
+          "value_parsed": 60,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Budget figures derived from the § 4.3 cost model (lines 183–205, outside this batch's range); prose only, so anchor-unknown per rule 2. Triage should note the changelog at lines 341–342 lists both as the \"Before\" column of a revision (superseded by expected $5–10 / worst case ≤ $21 and expected $25–60 / worst case ~$120), yet § 7's decision text still states them — flagged, not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          288,
+          288
+        ],
+        "section": "§ 7 GATE 0 decision list"
+      },
+      "claim_text": "6. **Charter fixes**: approve landing § 6's six text fixes as commits.",
+      "values": [
+        {
+          "quantity": "count of charter text fixes proposed in § 6 (stumble log)",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counts the numbered items of this document's own § 6 stumble log (lines 234–258, outside this batch's range); § 6's closing status paragraph (lines 263–267) repeats \"all six fixes\". Prose-to-prose only — the landing commit a1bd74f49 in planning/audit-charter.md is a markdown document, so no artefact anchor. Included with the doubt flagged per the instrument's in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          318,
+          319
+        ],
+        "section": "§ 8 PI decision record — verbatim"
+      },
+      "claim_text": "> I approve this spend up to $150 (just to give us a bit more\n> headroom). Gate 0 passed, please proceed to Phase 1.",
+      "values": [
+        {
+          "quantity": "approved cross-model API spend cap, verification programme (PI's verbatim words)",
+          "value_verbatim": "$150",
+          "value_parsed": 150,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Value sits inside a verbatim quotation of the PI's GATE 0 turn, which the document presents as the attestation source for the § 7 ruling summary — the quotation is itself the least-writable record available in-repo, and prose. Restated at lines 274–275 and 348 and (per the document) in the charter § 10 ruling record."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          325,
+          327
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "At the PI's request, the two in-session GATE 0 ruling turns are now\nquoted verbatim in § 8 as the attestation source for the § 7 ruling\nsummaries (previously paraphrase-only). No ruling content changed.",
+      "values": [
+        {
+          "quantity": "count of in-session GATE 0 PI turns quoted verbatim in § 8",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of the blockquoted turns in this document's § 8 (Turn 1 at lines 297–314, Turn 2 at lines 316–319). Prose-to-prose, no artefact anchor. Borderline as a checkable claim — included with the doubt flagged per the instrument's in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          341,
+          341
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "| Pilot + Stage A ask | ≤ $10 | Expected $5–10, worst case ≤ $21 |",
+      "values": [
+        {
+          "quantity": "Sol API budget ask, pilot + Stage A — pre-revision value",
+          "value_verbatim": "≤ $10",
+          "value_parsed": 10,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical",
+          "expression": null,
+          "operands": null
+        },
+        {
+          "quantity": "Sol API budget, pilot + Stage A — expected range, lower bound",
+          "value_verbatim": "$5",
+          "value_parsed": 5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        },
+        {
+          "quantity": "Sol API budget, pilot + Stage A — expected range, upper bound",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        },
+        {
+          "quantity": "Sol API budget, pilot + Stage A — worst case",
+          "value_verbatim": "≤ $21",
+          "value_parsed": 21,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Changelog before→after row (instrument rule 6, one claim per table row): the \"Before\" cell ≤ $10 is historical; the three \"After\" figures are live claims tracing to the § 4.3 recommendation at lines 202–205 (prose, outside this batch's range) — anchor-unknown per rule 2. Range split per v1.2 amendment 6, with the shared unit carried on the pathless upper bound; the upper bound's verbatim \"10\" also occurs inside the historical \"≤ $10\" cell of the same row, so triage should read it in the \"Expected $5–10\" position."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          342,
+          342
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "| Programme ceiling | ≤ $60 | Expected $25–60, absolute worst case ~$120 |",
+      "values": [
+        {
+          "quantity": "Sol API programme ceiling — pre-revision value",
+          "value_verbatim": "≤ $60",
+          "value_parsed": 60,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical",
+          "expression": null,
+          "operands": null
+        },
+        {
+          "quantity": "Sol API programme total — expected range, lower bound",
+          "value_verbatim": "$25",
+          "value_parsed": 25,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        },
+        {
+          "quantity": "Sol API programme total — expected range, upper bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        },
+        {
+          "quantity": "Sol API programme total — absolute worst case",
+          "value_verbatim": "~$120",
+          "value_parsed": 120,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Changelog before→after row: the \"Before\" cell ≤ $60 is historical; the \"After\" figures are live claims restating the § 4.3 aggregate table's programme-total row (line 189, outside this batch's range) — prose, so anchor-unknown per rule 2. Range split per v1.2 amendment 6 (shared unit on the upper bound) and the ~ kept verbatim per amendment 5; the upper bound's verbatim \"60\" also occurs inside the historical \"≤ $60\" cell of the same row, so triage should read it in the \"Expected $25–60\" position."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          347,
+          349
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "from the git history of this file. Later the same day the PI approved\ndecision 5 with a US$150 programme-wide cross-model spend cap —\n**GATE 0 PASSED**, Phase 1 unlocked.",
+      "values": [
+        {
+          "quantity": "cross-model API spend cap approved by the PI, programme-wide",
+          "value_verbatim": "US$150",
+          "value_parsed": 150,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Third statement of the same cap in this range (see also lines 274–275 and the verbatim PI turn at lines 318–319); prose only, so anchor-unknown per rule 2, with the charter § 10 ruling record named as the chain to chase."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          353,
+          354
+        ],
+        "section": "Changelog"
+      },
+      "claim_text": "Phase 0 scoping report produced per charter § 7 by the Claude Fable 5\nsession of 2026-07-29: corpus enumeration (two strata), per-class claim",
+      "values": [
+        {
+          "quantity": "count of strata in the mine corpus enumeration",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.files[*].stratum (distinct count)",
+          "method": null,
+          "expression": null,
+          "operands": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/generated-file-registry.json",
+        "path": "$.files[*].stratum (distinct count)",
+        "expression": null,
+        "operands": null
+      },
+      "method": "read",
+      "notes": "The registry is the least-writable artefact carrying the stratum classification; the distinct-count annotation follows v1.2 amendment 4 and the [*] collection projection of amendment 7. § 1.3 (lines 61–64, outside this batch's range) names the two strata as generated and hand-written. Low-stakes count, included per the instrument's in-doubt rule; if the harness cannot resolve a distinct count, treat as anchor-unknown."
+    }
+  ]
+}

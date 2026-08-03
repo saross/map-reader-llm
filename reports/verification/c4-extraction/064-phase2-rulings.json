@@ -1,0 +1,926 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/phase2-rulings-2026-07-30.md",
+    "git_blob": "f6105b7f1d77",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          8
+        ],
+        "section": "Header — status and scope"
+      },
+      "claim_text": "the three\nnew erratum candidates born from the C3 provenance triage\n(`reports/verification/c3-rederivation/c3-triage-tiles.json`)",
+      "values": [
+        {
+          "quantity": "erratum candidates born from the C3 provenance triage",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b064] Scope decisions applied across both b064 documents (instrument v1.2 rule 5): dates, session numbers, git hashes, erratum/commitment/claim/Obs/ruling identifiers (E62-E71, CMT-0106, c3-0093, Obs 187, GAP-8, rule 10, option (iv), 'authority 1'), version strings (v0.6.0), line-number citations (preregistration.md:2110, generate_post_run_report.py:368), section references, and numbers inside condition or pool names (pv-diag-384, t0.0, 3of10, r3-hp-heavy) were NOT extracted; numbers used as asserted facts about the study or the verification corpus were. || This count is document-internal (§ 2.1–2.3 are the three candidates); no artefact enumerates them. Low verification value — flagged as doubtful inclusion per the instrument's include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          27
+        ],
+        "section": "§ 1(a) verifier_thinking_level=medium — SPLIT"
+      },
+      "claim_text": "the 13 census sites\ncarry configuration-side (`run.meta.json` `configuration.thinking_level`)\nAND API-side corroboration (non-zero `total_thoughts_tokens`: 1,933 on\nthe Flash-medium union segment, 4,013 on a Pro-medium meta)",
+      "values": [
+        {
+          "quantity": "census sites carrying verifier_thinking_level=medium",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=medium')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "total_thoughts_tokens, Flash-medium verifier union segment",
+          "value_verbatim": "1,933",
+          "value_parsed": 1933,
+          "unit": null,
+          "kind": "tokens",
+          "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/run.meta.json#$.usage_stats.total_thoughts_tokens",
+          "method": "read"
+        },
+        {
+          "quantity": "total_thoughts_tokens, Pro-medium verifier meta",
+          "value_verbatim": "4,013",
+          "value_parsed": 4013,
+          "unit": null,
+          "kind": "tokens",
+          "path": "outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/run.meta.json#$.usage_stats.total_thoughts_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document does not name the two metas; the cross-file locators were identified by matching the quoted token totals in committed pv-diag-384 verifier metas — triage should confirm they are the intended sites. These are gs-v2-era metas, so the token fields are verifiable (not the retest-era unverifiable class)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          29
+        ],
+        "section": "§ 1(a) verifier_thinking_level=medium — SPLIT"
+      },
+      "claim_text": "behavioural evidence (Obs 187: minimal-vs-medium verifier ΔF1 = +0.010,\np = 0.001).",
+      "values": [
+        {
+          "quantity": "Δ F1, minimal-vs-medium verifier thinking level",
+          "value_verbatim": "+0.010",
+          "value_parsed": 0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "p-value, minimal-vs-medium verifier comparison",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The only visible source is Obs 187 in docs/notes/working-notes.md (prose — rule 2 forbids anchoring prose to prose). A candidate artefact is the verifier-thinking contrast at results/pairwise/20m/fdr/pairwise_results_fdr.json $.comparisons[3] (Flash HIGH text 4-of-5 + medium vs 5-of-5), but the reported statistics differ in kind; triage must chase the chain."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          34
+        ],
+        "section": "§ 1(a) verifier_thinking_level=medium — SPLIT"
+      },
+      "claim_text": "Census evidence splits the\n13 sites: 7 Pro-verifier cells within E40's *rationale* (the\n`gemini-3.1-pro-preview` endpoint cannot run MINIMAL — Obs 185), 6\nFlash-verifier cells that nothing forced",
+      "values": [
+        {
+          "quantity": "census sites carrying verifier_thinking_level=medium",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=medium')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "Pro-verifier cells among the 13 medium sites",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "Flash-verifier cells among the 13 medium sites",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The census pair entry records n_sites but not the per-site verifier model, so the 7/6 split needs recomputation from the run configs/metas behind the medium sites."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          43
+        ],
+        "section": "§ 1(a) verifier_thinking_level=medium — SPLIT"
+      },
+      "claim_text": "E62 narrows to the three unlicensed families plus\nthe verifier-parameter levels those families themselves carry.",
+      "values": [
+        {
+          "quantity": "UNLICENSED family-level pairs in the C2 licence census",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Count of UNLICENSED pairs whose `pair` key is of the form `family=…` in $.pairs; the census summary aggregates all UNLICENSED pairs (13) without separating the family-level ones."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          46
+        ],
+        "section": "§ 1(a) verifier_thinking_level=medium — SPLIT"
+      },
+      "claim_text": "erratum (E69) covers the deliberate-but-unlicensed Flash-verifier\nthinking exploration in `pv-diag-384` (6 medium sites + the 1\n`pv-diag-384` Flash-at-HIGH site",
+      "values": [
+        {
+          "quantity": "Flash-verifier medium sites in pv-diag-384 covered by E69",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "pv-diag-384 Flash-at-HIGH verifier sites folded into E69",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "$.pairs[?(@.pair=='verifier_thinking_level=high')].n_sites (3) is the superset for the HIGH site; isolating the pv-diag-384 Flash-at-HIGH one, and the 6 Flash-verifier medium sites, needs per-site recomputation from the run configs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          49
+        ],
+        "section": "§ 1(a) verifier_thinking_level=medium — SPLIT"
+      },
+      "claim_text": "its endpoint-constraint rationale extends to the 7\nPro-as-verifier medium sites.",
+      "values": [
+        {
+          "quantity": "Pro-as-verifier medium sites covered by E40's clarification",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Same 7/6 split of the 13 verifier_thinking_level=medium census sites as § 1(a) context; needs per-site verifier-model recomputation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          60
+        ],
+        "section": "§ 1(c) E64(iii) subtype materiality figure"
+      },
+      "claim_text": "the draft's 17.2% reproduced exactly in-session\n(phase3c track-1 H9-A run-1 pool, 4,954 detections: 4,102/501/316/35);",
+      "values": [
+        {
+          "quantity": "subtype-share materiality proxy, phase3c H9-A run-1 pool",
+          "value_verbatim": "17.2",
+          "value_parsed": 17.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "detections in the phase3c track-1 H9-A run-1 pool",
+          "value_verbatim": "4,954",
+          "value_parsed": 4954,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "detections of the dominant subtype in that pool",
+          "value_verbatim": "4,102",
+          "value_parsed": 4102,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "detections of the second subtype in that pool",
+          "value_verbatim": "501",
+          "value_parsed": 501,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "detections of the third subtype in that pool",
+          "value_verbatim": "316",
+          "value_parsed": 316,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "detections of the fourth subtype in that pool",
+          "value_verbatim": "35",
+          "value_parsed": 35,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3c/track1-image/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pool identification is provisional: phase3c track-1 H9-A is stored as five pools (h9-A-p1 … h9-A-p5) and the document says 'H9-A run-1 pool'; the anchor names h9-A-p1/run_1. Triage must confirm the pool before comparing. The subtype tallies and the 17.2 % share need a group-by over the features' subtype property."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          62
+        ],
+        "section": "§ 1(c) E64(iii) subtype materiality figure"
+      },
+      "claim_text": "the gate package's ~21% is a defence-pass figure with **no recorded pool\nor denominator** (unanchored, cannot be re-verified).",
+      "values": [
+        {
+          "quantity": "superseded subtype-share proxy (defence-pass figure)",
+          "value_verbatim": "~21",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document itself states this figure has no recorded pool or denominator and cannot be re-verified; recorded as unanchorable by the source's own account."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          64
+        ],
+        "section": "§ 1(c) E64(iii) subtype materiality figure"
+      },
+      "claim_text": "the true materiality quantity is the fraction of spatial\n(20 m) clusters whose members disagree on subtype",
+      "values": [
+        {
+          "quantity": "spatial clustering distance threshold for the materiality quantity",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.distance_threshold_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.json",
+        "path": "$.distance_threshold_metres"
+      },
+      "method": "read",
+      "notes": "The executed analysis records the threshold as 20.0 metres."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          90
+        ],
+        "section": "§ 2.1 --patch-tiles recovery campaign"
+      },
+      "claim_text": "the 127\nvindicated C3 triage rows cite it.",
+      "values": [
+        {
+          "quantity": "C3 triage rows vindicating the manifest (patch-tiles campaign)",
+          "value_verbatim": "127",
+          "value_parsed": 127,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.ruling=='MANIFEST_CORRECT')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c3-rederivation/c3-triage-tiles.json",
+        "path": "len:$[?(@.ruling=='MANIFEST_CORRECT')]"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          92
+        ],
+        "section": "§ 2.1 --patch-tiles recovery campaign"
+      },
+      "claim_text": "In-session recount from the triage\nartefact: 127 passes / 350 patched tiles (beacon said 126/349; to be\nreconciled at drafting).",
+      "values": [
+        {
+          "quantity": "passes touched by the --patch-tiles recovery campaign",
+          "value_verbatim": "127",
+          "value_parsed": 127,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.ruling=='MANIFEST_CORRECT')]",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles patched by the --patch-tiles recovery campaign",
+          "value_verbatim": "350",
+          "value_parsed": 350,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes touched, superseded beacon figure",
+          "value_verbatim": "126",
+          "value_parsed": 126,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tiles patched, superseded beacon figure",
+          "value_verbatim": "349",
+          "value_parsed": 349,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c3-rederivation/c3-triage-tiles.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The patched-tile total is the sum of (manifest − derived) across the 127 MANIFEST_CORRECT triage rows; the beacon's 126/349 are explicitly marked superseded by this sentence, hence historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          102
+        ],
+        "section": "§ 2.2 Tile-count semantics + generator defects"
+      },
+      "claim_text": "one erratum covering the dispatched-vs-completed\ncolumn semantics (`generate_post_run_report.py:368` vs `:398`), the\nGAP-8 request-count placeholder",
+      "values": [
+        {
+          "quantity": "errata filed for the tile-count-semantics defect cluster",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Checks that a single erratum (E71) covers the dispatched-vs-completed semantics, the GAP-8 placeholder, and the live-condition impact. Non-JSON anchor (register of record); doubtful inclusion — a drafting decision rather than a study fact, included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          104
+        ],
+        "section": "§ 2.2 Tile-count semantics + generator defects"
+      },
+      "claim_text": "the live-condition impact (two live\nt0.0 consensus conditions carrying 19–34 dead tiles as artificial false",
+      "values": [
+        {
+          "quantity": "LIVE t0.0 consensus conditions affected by dead tiles",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "dead tiles per affected live pass, range minimum",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "dead tiles per affected live pass, range maximum",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Range over $.passes[?(@.group=='live-pv-diag-t0.0')].n_dead (six passes feeding the two live consensus conditions); the two conditions correspond to the directories under results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          112
+        ],
+        "section": "§ 2.3 E55 unfulfilled run.log-provenance promise"
+      },
+      "claim_text": "no manifest row lists `run.log`\nin `provenance.source_files`;",
+      "values": [
+        {
+          "quantity": "manifest rows listing run.log in provenance.source_files",
+          "value_verbatim": "no",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A zero-count claim: needs a scan of $.passes[*].provenance.source_files for any entry ending in run.log."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          122
+        ],
+        "section": "§ 2.4 Standing-policy items"
+      },
+      "claim_text": "isolated to two\n  cells\" — counterexample: board cell\n  `pv-diag-384::baseline-flash-image-minimal-t-0-0` at 483/487).",
+      "values": [
+        {
+          "quantity": "cells the superseded working-notes claim called affected",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tiles processed, pv-diag-384 image baseline t0.0 run1",
+          "value_verbatim": "483",
+          "value_parsed": 483,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::image-baseline-image-t0.0::run1')].n_tiles_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "Era 2 (384 px) full-evaluation tile corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles_384/full_evaluation_manifest.json#len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'isolated to two cells' is the quoted working-notes claim being corrected, hence historical. Mapping the board cell name pv-diag-384::baseline-flash-image-minimal-t-0-0 to the manifest pass id pv-diag-384::image-baseline-image-t0.0::run1 is provisional — triage should confirm."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "§ 2.4 Standing-policy items"
+      },
+      "claim_text": "- Draft 5 lands as three separate entries (E65/E66/E67) per house style.",
+      "values": [
+        {
+          "quantity": "errata entries the draft-5 material lands as",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Checks that E65, E66 and E67 exist as three separate entries in the errata register of record. Non-JSON anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          130
+        ],
+        "section": "§ 3.1 H1 primary — OPTION (iv)"
+      },
+      "claim_text": "the four registered H1 contrasts with re-verified\np-values",
+      "values": [
+        {
+          "quantity": "registered H1 contrasts in the lodged preregistration",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.1 calibration rule: a claim about what the REGISTRATION specifies anchors to the lodged document with path null, never to an executed artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          130
+        ],
+        "section": "§ 3.1 H1 primary — OPTION (iv)"
+      },
+      "claim_text": "the four registered H1 contrasts with re-verified\np-values (0.006 / 0.94 / 0.38 / never-executed);",
+      "values": [
+        {
+          "quantity": "bootstrap p, Phase 2a H1 contrast brief-text-image vs image-only",
+          "value_verbatim": "0.006",
+          "value_parsed": 0.006,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[4].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap p, Phase 2a H1 contrast brief-text-image vs verbose-text-image",
+          "value_verbatim": "0.94",
+          "value_parsed": 0.94,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[6].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap p, Phase 2a H1 contrast brief-text vs brief-text-image",
+          "value_verbatim": "0.38",
+          "value_parsed": 0.38,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[0].f1_p_value",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Indices into the retest pairwise bootstrap comparisons were matched to the Phase 2a H1 Modality condition pairs (brief-text-image vs image-only; brief-text-image vs verbose-text-image; brief-text vs brief-text-image); triage should confirm the intended registered contrasts. The fourth contrast (CMT-0106) is recorded as never executed at the time of the ruling."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          139
+        ],
+        "section": "§ 3.1 H1 primary — OPTION (iv)"
+      },
+      "claim_text": "pooling rule registered before\ncomputing; sapphire, US$0.",
+      "values": [
+        {
+          "quantity": "API spend for the CMT-0106 execution",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Zero-spend attestation (computed on sapphire); no repo artefact records per-run billing."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          144
+        ],
+        "section": "§ 3.2 H5 — ACCEPT SUBSTITUTE"
+      },
+      "claim_text": "terse vs verbose,\nimage track, precision (`precision_p` = 0.756)",
+      "values": [
+        {
+          "quantity": "H5 substitute primary p-value (terse vs verbose, image track, precision)",
+          "value_verbatim": "0.756",
+          "value_parsed": 0.756,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.inputs_ranked[?(@.hypothesis=='H5')].numeric_p",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.inputs_ranked[?(@.hypothesis=='H5')].numeric_p"
+      },
+      "method": "read",
+      "notes": "The family-FDR inputs record this as the registered-artefact p for H5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          158
+        ],
+        "section": "§ 3.3 H8 — within-H8 BH-adjusted minimum"
+      },
+      "claim_text": "B1 at\n`bh_adjusted_p` = 0.8344",
+      "values": [
+        {
+          "quantity": "H8 within-family BH-adjusted minimum (Simes) p-value",
+          "value_verbatim": "0.8344",
+          "value_parsed": 0.8344,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.inputs_ranked[?(@.hypothesis=='H8')].numeric_p",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.inputs_ranked[?(@.hypothesis=='H8')].numeric_p"
+      },
+      "method": "read",
+      "notes": "'B1' is a contrast identifier (out of scope); the value is the within-H8 BH minimum carried into the family correction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          165
+        ],
+        "section": "§ 3.4 Bundled confirmations"
+      },
+      "claim_text": "H7 primary = text track T0.3 vs T1.0, recorded as p ≤ 0.001\n   (bootstrap floor).",
+      "values": [
+        {
+          "quantity": "H7 primary p-value (text track T0.3 vs T1.0, bootstrap floor)",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.inputs_ranked[?(@.hypothesis=='H7')].numeric_p",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.inputs_ranked[?(@.hypothesis=='H7')].numeric_p"
+      },
+      "method": "read",
+      "notes": "Reported as a floor (p ≤ 0.001, B = 1000); $.inputs_ranked[…].report_as records the floor wording."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          169
+        ],
+        "section": "§ 3.4 Bundled confirmations"
+      },
+      "claim_text": "H2 reported as a FALSIFIED directional prediction — two-stage\n   significantly improves F1 (+0.076, p < 1 × 10⁻⁴),",
+      "values": [
+        {
+          "quantity": "Δ F1, two-stage PV vs optimal single-stage (H2)",
+          "value_verbatim": "+0.076",
+          "value_parsed": 0.076,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.comparisons[0].delta_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "H2 permutation p-value (floor)",
+          "value_verbatim": "1 × 10⁻⁴",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/family-fdr/family_fdr.json#$.inputs_ranked[?(@.hypothesis=='H2')].numeric_p",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "$.comparisons[0] of the 20 m pairwise-FDR artefact is the PV-vs-consensus contrast (Flash HIGH text 16-of-30 + PV vs Flash HIGH text 26-of-30) that the family-FDR results document names as H2's primary; triage should confirm. The p is quoted at the permutation floor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          171
+        ],
+        "section": "§ 3.4 Bundled confirmations"
+      },
+      "claim_text": "clearing the\n   registered ≥ 0.05 stopping threshold",
+      "values": [
+        {
+          "quantity": "registered stopping threshold for the H2 directional prediction",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Instrument v1.1 calibration rule: a registered threshold anchors to the lodged preregistration with path null, not to the executing config. Distinct from the family-FDR q = 0.05 recorded at results/family-fdr/family_fdr.json $.q."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          180
+        ],
+        "section": "§ 4 Consequences for the landing sequence"
+      },
+      "claim_text": "Obs riders (×2) →\nreport fixes (×2)",
+      "values": [
+        {
+          "quantity": "Obs riders landed in the Session 121 sequence",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "report corrections landed in the Session 121 sequence",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Both targets are prose: the Obs riders are Obs 372/373 in docs/notes/working-notes.md and the report fixes are reports/experimental-progression.md and reports/gs-tile-pool-mapping-2026-05-28.md (rule 2 forbids anchoring prose to prose)."
+    }
+  ]
+}

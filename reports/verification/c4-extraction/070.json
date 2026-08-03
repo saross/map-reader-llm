@@ -1,0 +1,3011 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-cross-track-comparison/report.md",
+    "git_blob": "8bb2dc62f997",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "3.5 Extended buffers (75 / 100 / 125 m) — text tracks only"
+      },
+      "claim_text": "### 3.5 Extended buffers (75 / 100 / 125 m) — text tracks only",
+      "values": [
+        {
+          "quantity": "extended buffer tolerance evaluated, first rung",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.summary.buffers[?(@.buffer_metres==75)].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "extended buffer tolerance evaluated, second rung",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.summary.buffers[?(@.buffer_metres==100)].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "extended buffer tolerance evaluated, third rung",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.summary.buffers[?(@.buffer_metres==125)].buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b070] Scope decisions applied consistently across this batch: (a) buffer radii used in prose merely to index a metric ('at 50 m', 'from 50 m to 125 m') are treated as quantity descriptors and carried in `quantity`, not as separate values; buffer radii that are table row keys (they map to `buffer_metres` / `R_m` fields in the anchor artefacts) ARE extracted; (b) the bootstrap confidence level ('95 %') is treated as methodology boilerplate — no artefact field records it; (c) narrative structural counts ('All three tracks', 'Two likely drivers', 'three convergent corrected-F1 values') are not extracted; (d) qualitative ratios with no numeral ('Brier halved', 'ECE cut by two-thirds') are not extracted. This heading claim duplicates the §3.5 table rows (lines 111-113); retained per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "3.5 Extended buffers (75 / 100 / 125 m) — text tracks only"
+      },
+      "claim_text": "`evaluate_detections.py` run on sapphire (1,000 iterations, seed 42).",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, §3.5 extended-buffer evaluation",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap random seed, §3.5 extended-buffer evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both text tracks' extended-buffer evaluations were produced by the same script invocation pattern; the text-MIN sibling (outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json) carries the same two metadata fields."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "3.5 Extended buffers (75 / 100 / 125 m) — text tracks only"
+      },
+      "claim_text": "| 75 m | 0.794 [0.784, 0.804] | 0.850 | 0.746 | 0.764 [0.752, 0.777] | 0.852 | 0.693 |",
+      "values": [
+        {
+          "quantity": "extended-buffer tolerance, §3.5 row 75 m",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.summary.buffers[?(@.buffer_metres==75)].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.794",
+          "value_parsed": 0.794,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==75)].f1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 95 % CI lower bound @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.784",
+          "value_parsed": 0.784,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==75)].f1_ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 95 % CI upper bound @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==75)].f1_ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH precision @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==75)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH recall @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.746",
+          "value_parsed": 0.746,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==75)].recall",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.764",
+          "value_parsed": 0.764,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==75)].f1",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 95 % CI lower bound @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.752",
+          "value_parsed": 0.752,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==75)].f1_ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 95 % CI upper bound @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.777",
+          "value_parsed": 0.777,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==75)].f1_ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN precision @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==75)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN recall @ 75 m, 55-map generalisation",
+          "value_verbatim": "0.693",
+          "value_parsed": 0.693,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==75)].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row: text-HIGH columns anchor in the claim-level file; text-MIN columns use cross-file locators (instrument v1.2 amendment 2). CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "3.5 Extended buffers (75 / 100 / 125 m) — text tracks only"
+      },
+      "claim_text": "| 100 m | 0.796 [0.786, 0.805] | 0.851 | 0.747 | 0.765 [0.753, 0.777] | 0.852 | 0.694 |",
+      "values": [
+        {
+          "quantity": "extended-buffer tolerance, §3.5 row 100 m",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.summary.buffers[?(@.buffer_metres==100)].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.796",
+          "value_parsed": 0.796,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==100)].f1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 95 % CI lower bound @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.786",
+          "value_parsed": 0.786,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==100)].f1_ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 95 % CI upper bound @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.805",
+          "value_parsed": 0.805,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==100)].f1_ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH precision @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.851",
+          "value_parsed": 0.851,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==100)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH recall @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.747",
+          "value_parsed": 0.747,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==100)].recall",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.765",
+          "value_parsed": 0.765,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==100)].f1",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 95 % CI lower bound @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.753",
+          "value_parsed": 0.753,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==100)].f1_ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 95 % CI upper bound @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.777",
+          "value_parsed": 0.777,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==100)].f1_ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN precision @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==100)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN recall @ 100 m, 55-map generalisation",
+          "value_verbatim": "0.694",
+          "value_parsed": 0.694,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==100)].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row: text-HIGH columns anchor in the claim-level file; text-MIN columns use cross-file locators (instrument v1.2 amendment 2). CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "3.5 Extended buffers (75 / 100 / 125 m) — text tracks only"
+      },
+      "claim_text": "| 125 m | 0.797 [0.787, 0.806] | 0.852 | 0.748 | 0.766 [0.754, 0.778] | 0.854 | 0.695 |",
+      "values": [
+        {
+          "quantity": "extended-buffer tolerance, §3.5 row 125 m",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.summary.buffers[?(@.buffer_metres==125)].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.797",
+          "value_parsed": 0.797,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==125)].f1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 95 % CI lower bound @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.787",
+          "value_parsed": 0.787,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==125)].f1_ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH F1 95 % CI upper bound @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.806",
+          "value_parsed": 0.806,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==125)].f1_ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH precision @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==125)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH recall @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.748",
+          "value_parsed": 0.748,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==125)].recall",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.766",
+          "value_parsed": 0.766,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==125)].f1",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 95 % CI lower bound @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.754",
+          "value_parsed": 0.754,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==125)].f1_ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN F1 95 % CI upper bound @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.778",
+          "value_parsed": 0.778,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==125)].f1_ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN precision @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==125)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-MIN recall @ 125 m, 55-map generalisation",
+          "value_verbatim": "0.695",
+          "value_parsed": 0.695,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==125)].recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row: text-HIGH columns anchor in the claim-level file; text-MIN columns use cross-file locators (instrument v1.2 amendment 2). CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "3.5 Extended buffers (75 / 100 / 125 m) — text tracks only"
+      },
+      "claim_text": "Both text tracks **plateau strongly above 50 m**: text-HIGH gains only +0.005 F1 from 50 m (0.792) to 125 m (0.797); text-MIN gains +0.005 from 50 m (0.762) to 125 m (0.767).",
+      "values": [
+        {
+          "quantity": "ΔF1, text-HIGH raw F1 from 50 m to 125 m",
+          "value_verbatim": "+0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==125)].f1"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
+            }
+          ]
+        },
+        {
+          "quantity": "text-HIGH raw F1 @ 50 m",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "text-HIGH raw F1 @ 125 m",
+          "value_verbatim": "0.797",
+          "value_parsed": 0.797,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==125)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1, text-MIN raw F1 from 50 m to 125 m",
+          "value_verbatim": "+0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "c - d",
+          "operands": [
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==125)].f1"
+            },
+            {
+              "name": "d",
+              "file": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
+            }
+          ]
+        },
+        {
+          "quantity": "text-MIN raw F1 @ 50 m",
+          "value_verbatim": "0.762",
+          "value_parsed": 0.762,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "text-MIN raw F1 @ 125 m",
+          "value_verbatim": "0.767",
+          "value_parsed": 0.767,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json#$.summary.buffers[?(@.buffer_metres==125)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The prose quotes text-MIN @ 125 m as 0.767 while the §3.5 table at line 113 quotes 0.766 for the same cell; recorded verbatim on both rows without adjudication (instrument hard rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "3.5 Extended buffers (75 / 100 / 125 m) — text tracks only"
+      },
+      "claim_text": "This is sharply different from the image track's multi-buffer behaviour (corrected F1 0.832 → 0.854 from 50 m → 125 m; ΔF1 = +0.022, i.e., **4× the text-track buffer sensitivity**).",
+      "values": [
+        {
+          "quantity": "image-track corrected F1 @ 50 m",
+          "value_verbatim": "0.832",
+          "value_parsed": 0.832,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "image-track corrected F1 @ 125 m",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==125)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1, image-track corrected F1 from 50 m to 125 m",
+          "value_verbatim": "+0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==125)].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            }
+          ]
+        },
+        {
+          "quantity": "ratio of image-track buffer sensitivity to text-track buffer sensitivity (50 m → 125 m)",
+          "value_verbatim": "4×",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a - b) / (c - d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==125)].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==125)].f1"
+            },
+            {
+              "name": "d",
+              "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==50)].f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 4× ratio is a rounded comparison of a corrected-F1 delta (image) against a raw-F1 delta (text tracks); operands chosen as image corrected F1 at 125/50 m over text-HIGH raw F1 at 125/50 m. Doubt flagged per instrument task note — the document does not state the denominator track explicitly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "Tile-level classification metrics complement mound-level F1: they answer \"does each 384 px tile contain *any* mound?\" rather than \"is each mound matched?\".",
+      "values": [
+        {
+          "quantity": "tile edge length, 55-map evaluation tiling",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/resolved_config.yaml",
+        "path": "$.proposer.tile_size"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (resolved run config, YAML) — legitimate per instrument v1.1; the same field appears in the image and text-MIN resolved configs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "1,000-iter bootstrap CIs, seed 42.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, §3.6 tile-level MCC CIs",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap random seed, §3.6 tile-level MCC CIs",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "All three tracks' full-buffer evaluations carry the same two metadata fields; image chosen as the claim-level anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "| image | **0.692** | [0.678, 0.706] | 0.708 | 0.948 | 2,394 / 4,891 / 270 / 986 |",
+      "values": [
+        {
+          "quantity": "tile-level MCC, image track, 55-map generalisation",
+          "value_verbatim": "0.692",
+          "value_parsed": 0.692,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC 95 % CI lower bound, image track, 55-map generalisation",
+          "value_verbatim": "0.678",
+          "value_parsed": 0.678,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC 95 % CI upper bound, image track, 55-map generalisation",
+          "value_verbatim": "0.706",
+          "value_parsed": 0.706,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "tile-level sensitivity, image track, 55-map generalisation",
+          "value_verbatim": "0.708",
+          "value_parsed": 0.708,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.sensitivity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level specificity, image track, 55-map generalisation",
+          "value_verbatim": "0.948",
+          "value_parsed": 0.948,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.specificity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level true positives, image track, 55-map generalisation",
+          "value_verbatim": "2,394",
+          "value_parsed": 2394,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.tp",
+          "method": null
+        },
+        {
+          "quantity": "tile-level true negatives, image track, 55-map generalisation",
+          "value_verbatim": "4,891",
+          "value_parsed": 4891,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.tn",
+          "method": null
+        },
+        {
+          "quantity": "tile-level false positives, image track, 55-map generalisation",
+          "value_verbatim": "270",
+          "value_parsed": 270,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.fp",
+          "method": null
+        },
+        {
+          "quantity": "tile-level false negatives, image track, 55-map generalisation",
+          "value_verbatim": "986",
+          "value_parsed": 986,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.fn",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; MCC CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "| text-HIGH | 0.648 | [0.633, 0.662] | 0.644 | 0.953 | 2,176 / 4,918 / 243 / 1,204 |",
+      "values": [
+        {
+          "quantity": "tile-level MCC, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "0.648",
+          "value_parsed": 0.648,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC 95 % CI lower bound, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "0.633",
+          "value_parsed": 0.633,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC 95 % CI upper bound, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "0.662",
+          "value_parsed": 0.662,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "tile-level sensitivity, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "0.644",
+          "value_parsed": 0.644,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.sensitivity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level specificity, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "0.953",
+          "value_parsed": 0.953,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.specificity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level true positives, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "2,176",
+          "value_parsed": 2176,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.tp",
+          "method": null
+        },
+        {
+          "quantity": "tile-level true negatives, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "4,918",
+          "value_parsed": 4918,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.tn",
+          "method": null
+        },
+        {
+          "quantity": "tile-level false positives, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "243",
+          "value_parsed": 243,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.fp",
+          "method": null
+        },
+        {
+          "quantity": "tile-level false negatives, text-HIGH track, 55-map generalisation",
+          "value_verbatim": "1,204",
+          "value_parsed": 1204,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.fn",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; MCC CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "| text-MIN | 0.626 | [0.611, 0.641] | 0.614 | 0.955 | 2,075 / 4,927 / 234 / 1,305 |",
+      "values": [
+        {
+          "quantity": "tile-level MCC, text-MIN track, 55-map generalisation",
+          "value_verbatim": "0.626",
+          "value_parsed": 0.626,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC 95 % CI lower bound, text-MIN track, 55-map generalisation",
+          "value_verbatim": "0.611",
+          "value_parsed": 0.611,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC 95 % CI upper bound, text-MIN track, 55-map generalisation",
+          "value_verbatim": "0.641",
+          "value_parsed": 0.641,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "tile-level sensitivity, text-MIN track, 55-map generalisation",
+          "value_verbatim": "0.614",
+          "value_parsed": 0.614,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.sensitivity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level specificity, text-MIN track, 55-map generalisation",
+          "value_verbatim": "0.955",
+          "value_parsed": 0.955,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.specificity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level true positives, text-MIN track, 55-map generalisation",
+          "value_verbatim": "2,075",
+          "value_parsed": 2075,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.tp",
+          "method": null
+        },
+        {
+          "quantity": "tile-level true negatives, text-MIN track, 55-map generalisation",
+          "value_verbatim": "4,927",
+          "value_parsed": 4927,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.tn",
+          "method": null
+        },
+        {
+          "quantity": "tile-level false positives, text-MIN track, 55-map generalisation",
+          "value_verbatim": "234",
+          "value_parsed": 234,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.fp",
+          "method": null
+        },
+        {
+          "quantity": "tile-level false negatives, text-MIN track, 55-map generalisation",
+          "value_verbatim": "1,305",
+          "value_parsed": 1305,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.fn",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; MCC CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "Image leads on tile-level MCC (0.692, post-recovery) while text-HIGH leads on mound-level corrected F1 (0.827).",
+      "values": [
+        {
+          "quantity": "tile-level MCC, image track",
+          "value_verbatim": "0.692",
+          "value_parsed": 0.692,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, text-HIGH track",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "Image's tile-level sensitivity (0.708) is notably higher than the text tracks' (0.644 / 0.614)",
+      "values": [
+        {
+          "quantity": "tile-level sensitivity, image track",
+          "value_verbatim": "0.708",
+          "value_parsed": 0.708,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.sensitivity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level sensitivity, text-HIGH track",
+          "value_verbatim": "0.644",
+          "value_parsed": 0.644,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.sensitivity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level sensitivity, text-MIN track",
+          "value_verbatim": "0.614",
+          "value_parsed": 0.614,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.sensitivity.point",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "Text tracks achieve marginally higher tile-level specificity (≈0.95 vs 0.95) but sacrifice sensitivity.",
+      "values": [
+        {
+          "quantity": "tile-level specificity, text tracks (approximate)",
+          "value_verbatim": "≈0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.specificity.point",
+          "method": null
+        },
+        {
+          "quantity": "tile-level specificity, image track (approximate)",
+          "value_verbatim": "0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.specificity.point",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approximation marker retained verbatim (instrument v1.2 amendment 5). The document does not say which text track the ≈0.95 refers to; text-HIGH chosen as the claim-level anchor, text-MIN specificity sits at the same locator in outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "3.6 Tile-level MCC (buffer-independent)"
+      },
+      "claim_text": "The cross-metric tension is the same pattern flagged in the leaderboard-20m-annotated Tier 5 analysis (row #15 \"Image baseline + PV\" has the highest tile-level MCC of any condition, 0.877, alongside low mound-level F1=0.717 at 20 m).",
+      "values": [
+        {
+          "quantity": "highest tile-level MCC of any condition, row #15 'Image baseline + PV', leaderboard-20m-annotated Tier 5",
+          "value_verbatim": "0.877",
+          "value_parsed": 0.877,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "mound-level F1 @ 20 m, row #15 'Image baseline + PV', leaderboard-20m-annotated Tier 5",
+          "value_verbatim": "0.717",
+          "value_parsed": 0.717,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Only visible source is another markdown document, results/paper-tables/leaderboard-20m-annotated.md (instrument hard rule 2 forbids anchoring prose to prose). Looked for a condition labelled 'Image baseline + PV' in results/leaderboard/era1|era2|era3/leaderboard_tiers_20m.json — no such label present. Triage to chase the chain to the generating artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          137
+        ],
+        "section": "4. Corrected-F1 availability"
+      },
+      "claim_text": "586-row review CSV at `results/55maps-text-min-generalisation/human-review-multi-buffer.csv`",
+      "values": [
+        {
+          "quantity": "rows in the text-MIN multi-buffer human-review CSV",
+          "value_verbatim": "586",
+          "value_parsed": 586,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (CSV). Whether the quoted 586 counts the header row is for the harness to decide; no adjudication at extraction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "4. Corrected-F1 availability"
+      },
+      "claim_text": "| image | **0.833** [0.824, 0.842] | 0.833 → 0.857 @ 50 → 150 m | 1,028 candidates (calibrated UI, 50 m single-buffer) + 557 re-reviewed multi-buffer + 74 sentinel additions + 1 cand 2397 promoted in cross-track-v2 | `corrected-f1-human-reviewed.md` + `corrected-f1-multi-buffer/report.md` |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, image track",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI lower bound, image track",
+          "value_verbatim": "0.824",
+          "value_parsed": 0.824,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI upper bound, image track",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "multi-buffer corrected F1 @ 50 m, image track",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "multi-buffer corrected F1 @ 150 m, image track",
+          "value_verbatim": "0.857",
+          "value_parsed": 0.857,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].F1",
+          "method": null
+        },
+        {
+          "quantity": "candidates human-reviewed in the calibrated-UI single-buffer pass, image track",
+          "value_verbatim": "1,028",
+          "value_parsed": 1028,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json#$.n_total",
+          "method": null
+        },
+        {
+          "quantity": "candidates re-reviewed in the multi-buffer pass, image track",
+          "value_verbatim": "557",
+          "value_parsed": 557,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/human-review-multi-buffer.csv#(row count)",
+          "method": null
+        },
+        {
+          "quantity": "sentinel-shell candidates excluded, image track",
+          "value_verbatim": "74",
+          "value_parsed": 74,
+          "unit": null,
+          "kind": "count",
+          "path": "$.exclusions.n_excluded_candidates",
+          "method": null
+        },
+        {
+          "quantity": "additional candidate promoted in cross-track-v2, image track",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The '1 cand 2397 promoted' count has no locatable artefact field (cand 2397 is an identifier, out of scope per hard rule 5); marked anchor-unknown at value level. The 557 figure anchors to a CSV row count (non-JSON anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "4. Corrected-F1 availability"
+      },
+      "claim_text": "| text-HIGH | **0.827** [0.817, 0.837] | 0.827 → 0.835 @ 50 → 150 m | 630 candidates (multi-buffer review; 32 `>150 m` sentinels excluded; refreshed post-recovery 2026-05-03) | `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/` |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, text-HIGH track",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI lower bound, text-HIGH track",
+          "value_verbatim": "0.817",
+          "value_parsed": 0.817,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI upper bound, text-HIGH track",
+          "value_verbatim": "0.837",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "multi-buffer corrected F1 @ 50 m, text-HIGH track",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "multi-buffer corrected F1 @ 150 m, text-HIGH track",
+          "value_verbatim": "0.835",
+          "value_parsed": 0.835,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].F1",
+          "method": null
+        },
+        {
+          "quantity": "candidates human-reviewed in the multi-buffer pass, text-HIGH track",
+          "value_verbatim": "630",
+          "value_parsed": 630,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.n_total",
+          "method": null
+        },
+        {
+          "quantity": "sentinel-shell candidates excluded, text-HIGH track",
+          "value_verbatim": "32",
+          "value_parsed": 32,
+          "unit": null,
+          "kind": "count",
+          "path": "$.exclusions.n_excluded_candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The '>150 m' string is a sentinel-shell label, not a claim (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "4. Corrected-F1 availability"
+      },
+      "claim_text": "| text-MIN | **0.797** [0.786, 0.808] | 0.797 → 0.802 @ 50 → 150 m | 586 candidates (multi-buffer review added in cross-track-v2; 250 reviewer-promoted at R=50 m) | `results/55maps-text-min-generalisation/corrected-f1-multi-buffer/` |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, text-MIN track",
+          "value_verbatim": "0.797",
+          "value_parsed": 0.797,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI lower bound, text-MIN track",
+          "value_verbatim": "0.786",
+          "value_parsed": 0.786,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI upper bound, text-MIN track",
+          "value_verbatim": "0.808",
+          "value_parsed": 0.808,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "multi-buffer corrected F1 @ 50 m, text-MIN track",
+          "value_verbatim": "0.797",
+          "value_parsed": 0.797,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "multi-buffer corrected F1 @ 150 m, text-MIN track",
+          "value_verbatim": "0.802",
+          "value_parsed": 0.802,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].F1",
+          "method": null
+        },
+        {
+          "quantity": "candidates human-reviewed in the multi-buffer pass, text-MIN track",
+          "value_verbatim": "586",
+          "value_parsed": 586,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv#(row count)",
+          "method": null
+        },
+        {
+          "quantity": "reviewer-promoted candidates at R = 50 m, text-MIN track",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==50)].n_reviewer_promoted_at_R",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row. The 586 candidate count anchors to a CSV row count (non-JSON anchor); the same figure is asserted at line 137."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "4.1 Text-HIGH multi-buffer corrected F1"
+      },
+      "claim_text": "Approach B (extended-GT-at-R Hungarian matching); 10,000-iter bootstrap; seed 42; 630 reviewed candidates with 32 excluded as `>150 m` sentinel-shell labels.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-HIGH multi-buffer corrected F1",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_n",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap random seed, text-HIGH multi-buffer corrected F1",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": null
+        },
+        {
+          "quantity": "candidates reviewed, text-HIGH multi-buffer review",
+          "value_verbatim": "630",
+          "value_parsed": 630,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.n_total",
+          "method": null
+        },
+        {
+          "quantity": "candidates excluded as '>150 m' sentinel-shell labels, text-HIGH",
+          "value_verbatim": "32",
+          "value_parsed": 32,
+          "unit": null,
+          "kind": "count",
+          "path": "$.exclusions.n_excluded_candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          151
+        ],
+        "section": "4.1 Text-HIGH multi-buffer corrected F1"
+      },
+      "claim_text": "| 50 | 3,797 | 367 | 1,218 | 0.9119 | 0.7571 | **0.8273** | [0.8173, 0.8370] |",
+      "values": [
+        {
+          "quantity": "matching radius, §4.1 row R = 50 m",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.results[?(@.R_m==50)].R_m",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected true positives @ R = 50 m (Approach B extended-GT)",
+          "value_verbatim": "3,797",
+          "value_parsed": 3797,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==50)].TP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false positives @ R = 50 m (Approach B extended-GT)",
+          "value_verbatim": "367",
+          "value_parsed": 367,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==50)].FP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false negatives @ R = 50 m (Approach B extended-GT)",
+          "value_verbatim": "1,218",
+          "value_parsed": 1218,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==50)].FN",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected precision @ R = 50 m (Approach B extended-GT)",
+          "value_verbatim": "0.9119",
+          "value_parsed": 0.9119,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected recall @ R = 50 m (Approach B extended-GT)",
+          "value_verbatim": "0.7571",
+          "value_parsed": 0.7571,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].recall",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ R = 50 m (Approach B extended-GT)",
+          "value_verbatim": "0.8273",
+          "value_parsed": 0.8273,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI lower bound @ R = 50 m (Approach B extended-GT)",
+          "value_verbatim": "0.8173",
+          "value_parsed": 0.8173,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI upper bound @ R = 50 m (Approach B extended-GT)",
+          "value_verbatim": "0.8370",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; F1 CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          152
+        ],
+        "section": "4.1 Text-HIGH multi-buffer corrected F1"
+      },
+      "claim_text": "| 75 | 3,817 | 347 | 1,217 | 0.9167 | 0.7582 | 0.8300 | [0.8199, 0.8395] |",
+      "values": [
+        {
+          "quantity": "matching radius, §4.1 row R = 75 m",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.results[?(@.R_m==75)].R_m",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected true positives @ R = 75 m (Approach B extended-GT)",
+          "value_verbatim": "3,817",
+          "value_parsed": 3817,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==75)].TP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false positives @ R = 75 m (Approach B extended-GT)",
+          "value_verbatim": "347",
+          "value_parsed": 347,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==75)].FP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false negatives @ R = 75 m (Approach B extended-GT)",
+          "value_verbatim": "1,217",
+          "value_parsed": 1217,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==75)].FN",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected precision @ R = 75 m (Approach B extended-GT)",
+          "value_verbatim": "0.9167",
+          "value_parsed": 0.9167,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==75)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected recall @ R = 75 m (Approach B extended-GT)",
+          "value_verbatim": "0.7582",
+          "value_parsed": 0.7582,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==75)].recall",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ R = 75 m (Approach B extended-GT)",
+          "value_verbatim": "0.8300",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==75)].F1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI lower bound @ R = 75 m (Approach B extended-GT)",
+          "value_verbatim": "0.8199",
+          "value_parsed": 0.8199,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==75)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI upper bound @ R = 75 m (Approach B extended-GT)",
+          "value_verbatim": "0.8395",
+          "value_parsed": 0.8395,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==75)].F1_CI[1]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; F1 CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "4.1 Text-HIGH multi-buffer corrected F1"
+      },
+      "claim_text": "| 100 | 3,836 | 328 | 1,217 | 0.9212 | 0.7592 | 0.8324 | [0.8225, 0.8418] |",
+      "values": [
+        {
+          "quantity": "matching radius, §4.1 row R = 100 m",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.results[?(@.R_m==100)].R_m",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected true positives @ R = 100 m (Approach B extended-GT)",
+          "value_verbatim": "3,836",
+          "value_parsed": 3836,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==100)].TP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false positives @ R = 100 m (Approach B extended-GT)",
+          "value_verbatim": "328",
+          "value_parsed": 328,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==100)].FP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false negatives @ R = 100 m (Approach B extended-GT)",
+          "value_verbatim": "1,217",
+          "value_parsed": 1217,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==100)].FN",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected precision @ R = 100 m (Approach B extended-GT)",
+          "value_verbatim": "0.9212",
+          "value_parsed": 0.9212,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==100)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected recall @ R = 100 m (Approach B extended-GT)",
+          "value_verbatim": "0.7592",
+          "value_parsed": 0.7592,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==100)].recall",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ R = 100 m (Approach B extended-GT)",
+          "value_verbatim": "0.8324",
+          "value_parsed": 0.8324,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==100)].F1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI lower bound @ R = 100 m (Approach B extended-GT)",
+          "value_verbatim": "0.8225",
+          "value_parsed": 0.8225,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==100)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI upper bound @ R = 100 m (Approach B extended-GT)",
+          "value_verbatim": "0.8418",
+          "value_parsed": 0.8418,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==100)].F1_CI[1]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; F1 CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          154
+        ],
+        "section": "4.1 Text-HIGH multi-buffer corrected F1"
+      },
+      "claim_text": "| 125 | 3,847 | 317 | 1,217 | 0.9239 | 0.7597 | 0.8338 | [0.8240, 0.8432] |",
+      "values": [
+        {
+          "quantity": "matching radius, §4.1 row R = 125 m",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.results[?(@.R_m==125)].R_m",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected true positives @ R = 125 m (Approach B extended-GT)",
+          "value_verbatim": "3,847",
+          "value_parsed": 3847,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==125)].TP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false positives @ R = 125 m (Approach B extended-GT)",
+          "value_verbatim": "317",
+          "value_parsed": 317,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==125)].FP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false negatives @ R = 125 m (Approach B extended-GT)",
+          "value_verbatim": "1,217",
+          "value_parsed": 1217,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==125)].FN",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected precision @ R = 125 m (Approach B extended-GT)",
+          "value_verbatim": "0.9239",
+          "value_parsed": 0.9239,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==125)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected recall @ R = 125 m (Approach B extended-GT)",
+          "value_verbatim": "0.7597",
+          "value_parsed": 0.7597,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==125)].recall",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ R = 125 m (Approach B extended-GT)",
+          "value_verbatim": "0.8338",
+          "value_parsed": 0.8338,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==125)].F1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI lower bound @ R = 125 m (Approach B extended-GT)",
+          "value_verbatim": "0.8240",
+          "value_parsed": 0.824,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==125)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI upper bound @ R = 125 m (Approach B extended-GT)",
+          "value_verbatim": "0.8432",
+          "value_parsed": 0.8432,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==125)].F1_CI[1]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; F1 CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          155
+        ],
+        "section": "4.1 Text-HIGH multi-buffer corrected F1"
+      },
+      "claim_text": "| 150 | 3,853 | 311 | 1,216 | 0.9253 | 0.7601 | 0.8346 | [0.8248, 0.8440] |",
+      "values": [
+        {
+          "quantity": "matching radius, §4.1 row R = 150 m",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.results[?(@.R_m==150)].R_m",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected true positives @ R = 150 m (Approach B extended-GT)",
+          "value_verbatim": "3,853",
+          "value_parsed": 3853,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==150)].TP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false positives @ R = 150 m (Approach B extended-GT)",
+          "value_verbatim": "311",
+          "value_parsed": 311,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==150)].FP",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected false negatives @ R = 150 m (Approach B extended-GT)",
+          "value_verbatim": "1,216",
+          "value_parsed": 1216,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[?(@.R_m==150)].FN",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected precision @ R = 150 m (Approach B extended-GT)",
+          "value_verbatim": "0.9253",
+          "value_parsed": 0.9253,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].precision",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected recall @ R = 150 m (Approach B extended-GT)",
+          "value_verbatim": "0.7601",
+          "value_parsed": 0.7601,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].recall",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ R = 150 m (Approach B extended-GT)",
+          "value_verbatim": "0.8346",
+          "value_parsed": 0.8346,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].F1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI lower bound @ R = 150 m (Approach B extended-GT)",
+          "value_verbatim": "0.8248",
+          "value_parsed": 0.8248,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 95 % CI upper bound @ R = 150 m (Approach B extended-GT)",
+          "value_verbatim": "0.8440",
+          "value_parsed": 0.844,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].F1_CI[1]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; F1 CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          161
+        ],
+        "section": "4.2 Image vs text-HIGH corrected F1 — side-by-side at paper-primary anchors"
+      },
+      "claim_text": "| 50 | 0.833 [0.824, 0.842] | 0.827 [0.817, 0.837] | +0.006 | yes (substantial) |",
+      "values": [
+        {
+          "quantity": "matching radius, §4.2 row R = 50 m",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.results[?(@.R_m==50)].R_m",
+          "method": null
+        },
+        {
+          "quantity": "image-track corrected F1 @ 50 m",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "image-track corrected F1 @ 50 m 95 % CI lower bound",
+          "value_verbatim": "0.824",
+          "value_parsed": 0.824,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "image-track corrected F1 @ 50 m 95 % CI upper bound",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ 50 m",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ 50 m 95 % CI lower bound",
+          "value_verbatim": "0.817",
+          "value_parsed": 0.817,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ 50 m 95 % CI upper bound",
+          "value_verbatim": "0.837",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "ΔF1 (image − text-HIGH), corrected F1 @ 50 m",
+          "value_verbatim": "+0.006",
+          "value_parsed": 0.006,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; text-HIGH columns use cross-file locators (instrument v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          162
+        ],
+        "section": "4.2 Image vs text-HIGH corrected F1 — side-by-side at paper-primary anchors"
+      },
+      "claim_text": "| 100 | 0.854 [0.845, 0.862] | 0.832 [0.823, 0.842] | +0.022 | yes (partial) |",
+      "values": [
+        {
+          "quantity": "matching radius, §4.2 row R = 100 m",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.results[?(@.R_m==100)].R_m",
+          "method": null
+        },
+        {
+          "quantity": "image-track corrected F1 @ 100 m",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==100)].F1",
+          "method": null
+        },
+        {
+          "quantity": "image-track corrected F1 @ 100 m 95 % CI lower bound",
+          "value_verbatim": "0.845",
+          "value_parsed": 0.845,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==100)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "image-track corrected F1 @ 100 m 95 % CI upper bound",
+          "value_verbatim": "0.862",
+          "value_parsed": 0.862,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==100)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ 100 m",
+          "value_verbatim": "0.832",
+          "value_parsed": 0.832,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==100)].F1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ 100 m 95 % CI lower bound",
+          "value_verbatim": "0.823",
+          "value_parsed": 0.823,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==100)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH corrected F1 @ 100 m 95 % CI upper bound",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==100)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "ΔF1 (image − text-HIGH), corrected F1 @ 100 m",
+          "value_verbatim": "+0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==100)].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==100)].F1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; text-HIGH columns use cross-file locators (instrument v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          164
+        ],
+        "section": "4.2 Image vs text-HIGH corrected F1 — side-by-side at paper-primary anchors"
+      },
+      "claim_text": "**Convergence finding**: after per-candidate human review, both tracks reach **F1 ≈ 0.83 at 50 m** — the image track's single-buffer headline (0.833, post-recovery) and text-HIGH's multi-buffer 50 m value (0.827) differ by only +0.006 F1, well inside overlapping bootstrap 95 % CIs.",
+      "values": [
+        {
+          "quantity": "cross-track corrected F1 @ 50 m, both tracks (approximate)",
+          "value_verbatim": "≈ 0.83",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "image-track single-buffer corrected F1 headline @ 50 m",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "text-HIGH multi-buffer corrected F1 @ 50 m",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "ΔF1 (image − text-HIGH), corrected F1 @ 50 m",
+          "value_verbatim": "+0.006",
+          "value_parsed": 0.006,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[?(@.R_m==50)].F1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approximation marker retained verbatim on the ≈ 0.83 convergence value (instrument v1.2 amendment 5); it is asserted of both tracks jointly, so the image locator is a partial anchor only. '95 %' treated as CI-level boilerplate per the batch scope decision."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          164
+        ],
+        "section": "4.2 Image vs text-HIGH corrected F1 — side-by-side at paper-primary anchors"
+      },
+      "claim_text": "At wider buffers (100 m) the image track pulls ahead by +0.022 F1, consistent with its larger buffer-sensitivity (see §3.5).",
+      "values": [
+        {
+          "quantity": "ΔF1 (image − text-HIGH), corrected F1 @ 100 m",
+          "value_verbatim": "+0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+            "path": "$.results[?(@.R_m==100)].F1"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+            "path": "$.results[?(@.R_m==100)].F1"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          164
+        ],
+        "section": "4.2 Image vs text-HIGH corrected F1 — side-by-side at paper-primary anchors"
+      },
+      "claim_text": "The corrected-GT v2 paired-permutation test confirms the no-significant-difference reading at R=50 m (T=0.7 vs image ΔF1 = −0.0060 ns; image marginally edges by 0.006).",
+      "values": [
+        {
+          "quantity": "ΔF1 (T=0.7 − image), corrected-GT v2 paired permutation at R = 50 m",
+          "value_verbatim": "−0.0060",
+          "value_parsed": -0.006,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "magnitude of the image margin over text-HIGH, corrected-GT v2 at R = 50 m",
+          "value_verbatim": "0.006",
+          "value_parsed": 0.006,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "0 - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/permutation-R50m.json",
+              "path": "$.permutation_test.observed_f1_diff"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The v2 permutation ΔF1 is stored at a resolvable path in the sibling artefact, so anchored `read` rather than `recompute-script`; triage may re-tier. The document cites results/55maps-pairwise-permutation-v2/summary.md (markdown) as its source — the per-buffer JSON is the least-writable artefact behind it. 'ns' is a qualitative significance marker, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          172
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "| n reviewed | 1,028 | 630 |",
+      "values": [
+        {
+          "quantity": "candidates reviewed, image-track verifier-calibration subset",
+          "value_verbatim": "1,028",
+          "value_parsed": 1028,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_total",
+          "method": null
+        },
+        {
+          "quantity": "candidates reviewed, text-HIGH verifier-calibration subset",
+          "value_verbatim": "630",
+          "value_parsed": 630,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.n_total",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          173,
+          173
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "| Prevalence (p_mound) | 0.459 | 0.559 |",
+      "values": [
+        {
+          "quantity": "prevalence (p_mound), image-track review subset",
+          "value_verbatim": "0.459",
+          "value_parsed": 0.459,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.prevalence",
+          "method": null
+        },
+        {
+          "quantity": "prevalence (p_mound), text-HIGH review subset",
+          "value_verbatim": "0.559",
+          "value_parsed": 0.559,
+          "unit": null,
+          "kind": "ratio",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.prevalence",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "| AUC | 0.655 [0.622, 0.687] | **0.829 [0.796, 0.860]** |",
+      "values": [
+        {
+          "quantity": "verifier AUC, image-track review subset",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": null
+        },
+        {
+          "quantity": "verifier AUC 95 % CI lower bound, image track",
+          "value_verbatim": "0.622",
+          "value_parsed": 0.622,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.lo",
+          "method": null
+        },
+        {
+          "quantity": "verifier AUC 95 % CI upper bound, image track",
+          "value_verbatim": "0.687",
+          "value_parsed": 0.687,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.hi",
+          "method": null
+        },
+        {
+          "quantity": "verifier AUC, text-HIGH review subset",
+          "value_verbatim": "0.829",
+          "value_parsed": 0.829,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.auc.point",
+          "method": null
+        },
+        {
+          "quantity": "verifier AUC 95 % CI lower bound, text-HIGH track",
+          "value_verbatim": "0.796",
+          "value_parsed": 0.796,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.auc.lo",
+          "method": null
+        },
+        {
+          "quantity": "verifier AUC 95 % CI upper bound, text-HIGH track",
+          "value_verbatim": "0.860",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.auc.hi",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Bootstrap CI bounds are stored in the artefact, so anchored `read` rather than `recompute-script`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          175
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "| Brier | 0.323 [0.297, 0.348] | **0.167 [0.145, 0.189]** |",
+      "values": [
+        {
+          "quantity": "verifier Brier score, image-track review subset",
+          "value_verbatim": "0.323",
+          "value_parsed": 0.323,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.brier.point",
+          "method": null
+        },
+        {
+          "quantity": "verifier Brier 95 % CI lower bound, image track",
+          "value_verbatim": "0.297",
+          "value_parsed": 0.297,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.brier.lo",
+          "method": null
+        },
+        {
+          "quantity": "verifier Brier 95 % CI upper bound, image track",
+          "value_verbatim": "0.348",
+          "value_parsed": 0.348,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.brier.hi",
+          "method": null
+        },
+        {
+          "quantity": "verifier Brier score, text-HIGH review subset",
+          "value_verbatim": "0.167",
+          "value_parsed": 0.167,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.brier.point",
+          "method": null
+        },
+        {
+          "quantity": "verifier Brier 95 % CI lower bound, text-HIGH track",
+          "value_verbatim": "0.145",
+          "value_parsed": 0.145,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.brier.lo",
+          "method": null
+        },
+        {
+          "quantity": "verifier Brier 95 % CI upper bound, text-HIGH track",
+          "value_verbatim": "0.189",
+          "value_parsed": 0.189,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.brier.hi",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          176,
+          176
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "| ECE | 0.269 | **0.081** |",
+      "values": [
+        {
+          "quantity": "verifier expected calibration error (ECE), image-track review subset",
+          "value_verbatim": "0.269",
+          "value_parsed": 0.269,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece",
+          "method": null
+        },
+        {
+          "quantity": "verifier expected calibration error (ECE), text-HIGH review subset",
+          "value_verbatim": "0.081",
+          "value_parsed": 0.081,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.ece",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "| P(mound \\| p ≤ 0.25) | 0.174 [0.126, 0.224] | 0.207 [0.153, 0.262] |",
+      "values": [
+        {
+          "quantity": "low-probability tail cutoff used for P(mound | p ≤ cutoff)",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.low_p_deep_dive.cutoff",
+          "method": null
+        },
+        {
+          "quantity": "P(mound | p ≤ 0.25), image-track review subset",
+          "value_verbatim": "0.174",
+          "value_parsed": 0.174,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.p_mound_low_tail.point",
+          "method": null
+        },
+        {
+          "quantity": "P(mound | p ≤ 0.25) 95 % CI lower bound, image track",
+          "value_verbatim": "0.126",
+          "value_parsed": 0.126,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.p_mound_low_tail.lo",
+          "method": null
+        },
+        {
+          "quantity": "P(mound | p ≤ 0.25) 95 % CI upper bound, image track",
+          "value_verbatim": "0.224",
+          "value_parsed": 0.224,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.p_mound_low_tail.hi",
+          "method": null
+        },
+        {
+          "quantity": "P(mound | p ≤ 0.25), text-HIGH review subset",
+          "value_verbatim": "0.207",
+          "value_parsed": 0.207,
+          "unit": null,
+          "kind": "ratio",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.p_mound_low_tail.point",
+          "method": null
+        },
+        {
+          "quantity": "P(mound | p ≤ 0.25) 95 % CI lower bound, text-HIGH track",
+          "value_verbatim": "0.153",
+          "value_parsed": 0.153,
+          "unit": null,
+          "kind": "ratio",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.p_mound_low_tail.lo",
+          "method": null
+        },
+        {
+          "quantity": "P(mound | p ≤ 0.25) 95 % CI upper bound, text-HIGH track",
+          "value_verbatim": "0.262",
+          "value_parsed": 0.262,
+          "unit": null,
+          "kind": "ratio",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.p_mound_low_tail.hi",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          179
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "the text-HIGH track's verifier behaviour on its own review subset is **substantially better-calibrated** than on the image-track subset (AUC +0.17, Brier halved, ECE cut by two-thirds)",
+      "values": [
+        {
+          "quantity": "ΔAUC (text-HIGH − image), verifier calibration",
+          "value_verbatim": "+0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json",
+            "path": "$.auc.point"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+            "path": "$.auc.point"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "'Brier halved' and 'ECE cut by two-thirds' carry no numeral and are not extracted per the batch scope decision; the underlying Brier and ECE values are extracted at lines 175-176."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          179
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "(i) the text-HIGH candidate pool has a different symbol-class mix and higher base-rate prevalence (55.9 % vs 45.9 %), making the binary decision easier",
+      "values": [
+        {
+          "quantity": "base-rate prevalence, text-HIGH review subset",
+          "value_verbatim": "55.9 %",
+          "value_parsed": 55.9,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.prevalence"
+            }
+          ]
+        },
+        {
+          "quantity": "base-rate prevalence, image-track review subset",
+          "value_verbatim": "45.9 %",
+          "value_parsed": 45.9,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * b",
+          "operands": [
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.prevalence"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Both values are the line-173 prevalences expressed as percentages; given per-value expressions so each is compared against its own derivation (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          179
+        ],
+        "section": "4.3 Verifier calibration — cross-track"
+      },
+      "claim_text": "(ii) the image-track candidates include a larger `not_mound` mass in the saturated `p = 1.0` bin (167 / 370 = 45.1 %), a failure mode absent from text-HIGH (23 / 155 = 14.8 %).",
+      "values": [
+        {
+          "quantity": "not_mound candidates in the saturated (0.99, 1.00] verifier-probability bin, image track",
+          "value_verbatim": "167",
+          "value_parsed": 167,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[?(@.bin=='(0.99, 1.00]')].n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "total candidates in the saturated (0.99, 1.00] verifier-probability bin, image track",
+          "value_verbatim": "370",
+          "value_parsed": 370,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[?(@.bin=='(0.99, 1.00]')].count",
+          "method": "read"
+        },
+        {
+          "quantity": "not_mound share of the saturated bin, image track",
+          "value_verbatim": "45.1 %",
+          "value_parsed": 45.1,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[?(@.bin=='(0.99, 1.00]')].n_not_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[?(@.bin=='(0.99, 1.00]')].count"
+            }
+          ]
+        },
+        {
+          "quantity": "not_mound candidates in the saturated (0.99, 1.00] verifier-probability bin, text-HIGH track",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.calibration_bins[?(@.bin=='(0.99, 1.00]')].n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "total candidates in the saturated (0.99, 1.00] verifier-probability bin, text-HIGH track",
+          "value_verbatim": "155",
+          "value_parsed": 155,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json#$.calibration_bins[?(@.bin=='(0.99, 1.00]')].count",
+          "method": "read"
+        },
+        {
+          "quantity": "not_mound share of the saturated bin, text-HIGH track",
+          "value_verbatim": "14.8 %",
+          "value_parsed": 14.8,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * c / d",
+          "operands": [
+            {
+              "name": "c",
+              "file": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[?(@.bin=='(0.99, 1.00]')].n_not_mound"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-text-high-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[?(@.bin=='(0.99, 1.00]')].count"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The operand counts are given `read` methods with their own paths so they are not compared against their own ratio (instrument v1.2 amendment 1). 'p = 1.0' is a bin label, not a claim (hard rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          183,
+          183
+        ],
+        "section": "4.4 Paper citation rule (updated)"
+      },
+      "claim_text": "- The **paper's detection-performance headline** for the 55-map corpus can now cite **three convergent corrected-F1 values at 50 m**: image = 0.833 [0.824, 0.842], text-HIGH = 0.827 [0.817, 0.837], text-MIN = 0.797 [0.786, 0.808] (all refreshed post-recovery 2026-05-03 via cross-track-v2 commit `42ed1d32`).",
+      "values": [
+        {
+          "quantity": "map sheets in the generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, image track",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI lower bound, image track",
+          "value_verbatim": "0.824",
+          "value_parsed": 0.824,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI upper bound, image track",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, text-HIGH track",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI lower bound, text-HIGH track",
+          "value_verbatim": "0.817",
+          "value_parsed": 0.817,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI upper bound, text-HIGH track",
+          "value_verbatim": "0.837",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, text-MIN track",
+          "value_verbatim": "0.797",
+          "value_parsed": 0.797,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI lower bound, text-MIN track",
+          "value_verbatim": "0.786",
+          "value_parsed": 0.786,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[0]",
+          "method": null
+        },
+        {
+          "quantity": "corrected F1 @ 50 m 95 % CI upper bound, text-MIN track",
+          "value_verbatim": "0.808",
+          "value_parsed": 0.808,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1_CI[1]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'55-map corpus' is a number used both as a name and as an asserted fact, so extracted per hard rule 5; anchored to the distinct map_name count in the 55-map evaluation bounds. 'three convergent corrected-F1 values' is a narrative structural count, not extracted."
+    }
+  ]
+}

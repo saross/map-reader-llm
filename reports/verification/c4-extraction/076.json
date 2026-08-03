@@ -1,0 +1,4446 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-image-generalisation/buffer-band-lift/report.md",
+    "git_blob": "886f2dc9f710",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          5,
+          5
+        ],
+        "section": "Front matter"
+      },
+      "claim_text": "The attractor-pull effect on VLM detections ends at ~125 m; mounds visible beyond that are indistinguishable from random coincidence",
+      "values": [
+        {
+          "quantity": "attractor-pull cut-off radius (last shell with a significant permutation p), 55-map image-generalisation set",
+          "value_verbatim": "~125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b076] Quoted title of Obs 272 in docs/notes/reflections/working-notes.md, reproduced inside this report; the ~125 m endpoint is the same finding asserted at lines 11 and 20. Endpoint is derived from the shell p-value sequence ($.shell[*].p_value: significant through $.shell[3], 0.381 at $.shell[4]), so it needs recomputation rather than a single read. Prose reference only; per instrument rule 7 the working-notes entry was not chased."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          11
+        ],
+        "section": "1. Executive summary"
+      },
+      "claim_text": "The 55-map image-generalisation VLM-only set shows a **spatially bounded attractor-pull** relationship with real mound locations: detections are drawn toward ground-truth mounds at a high rate within 50 m (observed rate 46.06 %, lift ratio 118× over the within-tile random-placement null) and the effect **decays to statistical indistinguishability by the 125–150 m shell** (lift ratio 0.99×, p = 0.381).",
+      "values": [
+        {
+          "quantity": "map-sheet count, 55-map image-generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": "read"
+        },
+        {
+          "quantity": "cumulative radius for the headline attractor-pull rate",
+          "value_verbatim": "50 m",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[0].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "cumulative P(mound within 50 m | candidate), observed rate, as a percentage",
+          "value_verbatim": "46.06 %",
+          "value_parsed": 46.06,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+              "path": "$.cumulative[0].obs_rate"
+            }
+          ]
+        },
+        {
+          "quantity": "lift ratio (observed / null) at 50 m cumulative, quoted to three significant figures",
+          "value_verbatim": "118×",
+          "value_parsed": 118,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[0].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "inner radius of the shell at which the effect decays to indistinguishability",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[4].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "outer radius of the shell at which the effect decays to indistinguishability",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[4].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, (125, 150] m shell",
+          "value_verbatim": "0.99×",
+          "value_parsed": 0.99,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[4].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, (125, 150] m shell",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b076] Batch conventions for this document. (1) Anchoring: the sibling summary.json holds every cumulative and shell cell, so it is the least-writable artefact for §§1-4; ripley.csv anchors §5 (no JSON sibling carries the Ripley curve). (2) Method split: permutation p-values and permutation CI/envelope bounds carry per-value method 'recompute-script' per the batch brief, even though the recorded values also sit in the anchor file; recorded scalars that are not CI/p quantities (observed rates, null means, lift ratios, signal fractions, counts, parameters) carry 'read'. (3) Percentages quoted against fractions stored in summary.json use per-value arithmetic (100 * a) rather than a scale-bridging unit, to avoid a false hard mismatch. (4) Radii quoted in prose are anchored to the corresponding R_m / R_inner_m / R_outer_m cell rather than dropped as names."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          11
+        ],
+        "section": "1. Executive summary"
+      },
+      "claim_text": "This **125 m endpoint** is the practitioner-useful tolerance cap for claiming a detection is attributable to a nearby mound rather than a coincidental within-tile co-occurrence.",
+      "values": [
+        {
+          "quantity": "practitioner-useful tolerance cap (attractor-pull endpoint), 55-map image-generalisation set",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Endpoint is a derived finding over the shell p-value sequence ($.shell[*].p_value), not a single recorded cell."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "1. Executive summary"
+      },
+      "claim_text": "Cumulative `P(mound within 50 m | candidate)` = **46.06 %** (lift ratio 118.32× observed / null; bias-corrected 102.24×; p = 0.001).",
+      "values": [
+        {
+          "quantity": "cumulative radius",
+          "value_verbatim": "50 m",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[0].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "cumulative P(mound within 50 m | candidate), observed rate, as a percentage",
+          "value_verbatim": "46.06 %",
+          "value_parsed": 46.06,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+              "path": "$.cumulative[0].obs_rate"
+            }
+          ]
+        },
+        {
+          "quantity": "lift ratio (observed / null), 50 m cumulative",
+          "value_verbatim": "118.32×",
+          "value_parsed": 118.32,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[0].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, 50 m cumulative",
+          "value_verbatim": "102.24×",
+          "value_parsed": 102.24,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[0].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, 50 m cumulative",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[0].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "1. Executive summary"
+      },
+      "claim_text": "Signal fraction at 50 m: **99.15 %** (genuine attractor-pull; < 1 % attributable to within-tile coincidence).",
+      "values": [
+        {
+          "quantity": "cumulative radius",
+          "value_verbatim": "50 m",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[0].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "signal fraction at 50 m cumulative, as a percentage",
+          "value_verbatim": "99.15 %",
+          "value_parsed": 99.15,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+              "path": "$.cumulative[0].signal_fraction"
+            }
+          ]
+        },
+        {
+          "quantity": "upper bound on the share of mound-within-50 m candidates attributable to within-tile coincidence",
+          "value_verbatim": "< 1 %",
+          "value_parsed": 1,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Third value is an inequality (upper bound), not a point value: its complement is 100 * (1 - $.cumulative[0].signal_fraction) = 0.85 %, or 0.98 % on the bias-corrected fraction. Recorded as anchor-unknown so the harness does not compare an inequality against a scalar; triage should adjudicate the bound against $.cumulative[0].signal_fraction(_bias_corrected)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "1. Executive summary"
+      },
+      "claim_text": "Shell-specific attractor-pull is statistically significant through (100, 125] m (p = 0.002 bias-corrected; lift 1.93×) and **ends at (125, 150]** (p = **0.381**; lift 0.99×).",
+      "values": [
+        {
+          "quantity": "inner radius, last significant shell",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[3].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "outer radius, last significant shell",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[3].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, (100, 125] m shell",
+          "value_verbatim": "0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[3].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, (100, 125] m shell",
+          "value_verbatim": "1.93×",
+          "value_parsed": 1.93,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[3].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "inner radius, first non-significant shell",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[4].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "outer radius, first non-significant shell",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[4].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, (125, 150] m shell",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, (125, 150] m shell",
+          "value_verbatim": "0.99×",
+          "value_parsed": 0.99,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[4].lift_ratio_bias_corrected",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The claim that the p = 0.002 shell is the last significant one is a derived ordering over $.shell[*].p_value; the individual cells extracted here are the checkable parts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          18
+        ],
+        "section": "1. Executive summary"
+      },
+      "claim_text": "Ripley's cross-L confirms clustering against null out to at least 320 m; the ambiguity is not \"are detections clustered near mounds?\" (yes, at all scales up to 320 m) but \"can we claim causal attractor-pull for a given detection at this tolerance?\" (only out to ~125 m).",
+      "values": [
+        {
+          "quantity": "maximum radius at which the observed Ripley cross-L stays outside the null envelope (measurement window maximum)",
+          "value_verbatim": "320 m",
+          "value_parsed": 320,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==320.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "upper radius of the clustered range, restated",
+          "value_verbatim": "320 m",
+          "value_parsed": 320,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==320.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "tolerance out to which causal attractor-pull can be claimed",
+          "value_verbatim": "~125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-image-generalisation/buffer-band-lift/summary.json#$.shell[4].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Ripley values anchor to the sibling ripley.csv (a CSV, not JSON: instrument v1.1 expects non-JSON anchors to route to triage). The 'at least 320 m' claim also depends on outside_envelope being True for every row up to r_m = 320.0. The ~125 m value is the shell-based endpoint, cross-filed to summary.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "1. Executive summary"
+      },
+      "claim_text": "The attractor-pull effect that underwrites the 55-map corrected-F1 lower bound ends at ~125 m; at tolerances beyond 125 m, mounds near detections are indistinguishable from random within-tile co-occurrences (p = 0.381 at the 125–150 m shell).",
+      "values": [
+        {
+          "quantity": "map-sheet count, 55-map corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": "read"
+        },
+        {
+          "quantity": "attractor-pull endpoint radius",
+          "value_verbatim": "~125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tolerance beyond which mounds near detections are indistinguishable from random co-occurrence",
+          "value_verbatim": "125 m",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, (125, 150] m shell",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "inner radius of the quoted shell",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[4].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "outer radius of the quoted shell",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[4].R_outer_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Paper-facing restatement of the §1 headline. 'corrected-F1 lower bound' is referenced without a number here, so nothing is extracted for it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "**Corpus**: 55 topographic map sheets, 8,541 evaluable tiles at 384 px (Era 2 bounds; see `results/evaluation-scopes.md`).",
+      "values": [
+        {
+          "quantity": "map-sheet count, 55-map image-generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluable tile count, 55maps-image-generalisation scope",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": null,
+          "kind": "count",
+          "path": "$.facts.55maps-image-generalisation.scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, 55maps-image-generalisation run",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "$.facts.55maps-image-generalisation.tile_size_px",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-facts.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document cites results/evaluation-scopes.md, which is prose; per instrument rule 2 the anchor is redirected to the artefact-backed results/run-facts.json scope block, with the map-sheet count taken as a distinct count of map_name over the 384 px evaluation-bounds GeoJSON. 'Era 2' is a scope name, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "Total study area 31,817.94 sq km.",
+      "values": [
+        {
+          "quantity": "total study area, 55-map corpus",
+          "value_verbatim": "31,817.94",
+          "value_parsed": 31817.94,
+          "unit": "sq km",
+          "kind": "physical",
+          "path": "$.study_area_km2",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "**Candidate set (combined review)**: 1,029 rows — 474 mound-at-50-m calls from the initial calibrated UI review plus 555 rows from the multi-buffer re-review (274 mound calls distributed across {50, 75, 100, 125, 150, >150} m bands + 283 confirmed FPs).",
+      "values": [
+        {
+          "quantity": "combined-review candidate row count",
+          "value_verbatim": "1,029",
+          "value_parsed": 1029,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_combined",
+          "method": "read"
+        },
+        {
+          "quantity": "mound-at-50-m calls from the initial calibrated UI review",
+          "value_verbatim": "474",
+          "value_parsed": 474,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_yesterday_mound_50m",
+          "method": "read"
+        },
+        {
+          "quantity": "review buffer radius used by the initial calibrated UI review",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.target_radii_m[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "rows from the multi-buffer re-review",
+          "value_verbatim": "555",
+          "value_parsed": 555,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_today_reviewed",
+          "method": "read"
+        },
+        {
+          "quantity": "mound calls in the multi-buffer re-review",
+          "value_verbatim": "274",
+          "value_parsed": 274,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "multi-buffer re-review band boundary",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.target_radii_m[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "multi-buffer re-review band boundary",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.target_radii_m[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "multi-buffer re-review band boundary",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.target_radii_m[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "multi-buffer re-review band boundary",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.target_radii_m[3]",
+          "method": "read"
+        },
+        {
+          "quantity": "multi-buffer re-review band boundary",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.target_radii_m[4]",
+          "method": "read"
+        },
+        {
+          "quantity": "confirmed false positives in the multi-buffer re-review",
+          "value_verbatim": "283",
+          "value_parsed": 283,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "274 and 283 have no counterpart key in the sibling summary.json (which records n_candidates_combined, n_yesterday_mound_50m and n_today_reviewed only) and no per-review artefact was located from within this document, so both are anchor-unknown. Internal-consistency observation for triage, not an adjudication: the span states 555 rows decomposing into 274 + 283, which sum to 557. The '50' inside 'mound-at-50-m calls' is name-like; included per the instrument's when-in-doubt-include rule. '>150' is an open band label with no comparable scalar and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "**Reference (positive) set**: 5,490 real mounds — 4,744 student-GT + 746 reviewer-promoted from the human-review pass.",
+      "values": [
+        {
+          "quantity": "real-mound universe (reference positive set)",
+          "value_verbatim": "5,490",
+          "value_parsed": 5490,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_real_mound_universe",
+          "method": "read"
+        },
+        {
+          "quantity": "student ground-truth mounds",
+          "value_verbatim": "4,744",
+          "value_parsed": 4744,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_student_gt",
+          "method": "read"
+        },
+        {
+          "quantity": "reviewer-promoted mounds from the human-review pass",
+          "value_verbatim": "746",
+          "value_parsed": 746,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_reviewer_promoted",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span asserts 4,744 + 746 = 5,490; all three are kept as 'read' values with their own paths (instrument v1.2 amendment 1 — operands must not inherit an arithmetic method)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "Density 0.173 mounds / sq km.",
+      "values": [
+        {
+          "quantity": "real-mound density over the 55-map study area",
+          "value_verbatim": "0.173",
+          "value_parsed": 0.173,
+          "unit": "mounds / sq km",
+          "kind": "ratio",
+          "path": "$.real_mound_density_per_km2",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "Bias-correction factor 0.8641 (= 4,744 / 5,490) is applied to the null rate to prevent under-estimation of the null baseline.",
+      "values": [
+        {
+          "quantity": "bias-correction factor applied to the null rate",
+          "value_verbatim": "0.8641",
+          "value_parsed": 0.8641,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.bias_correction_factor",
+          "method": "read"
+        },
+        {
+          "quantity": "student ground-truth mounds (numerator of the asserted derivation)",
+          "value_verbatim": "4,744",
+          "value_parsed": 4744,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_student_gt",
+          "method": "read"
+        },
+        {
+          "quantity": "real-mound universe (denominator of the asserted derivation)",
+          "value_verbatim": "5,490",
+          "value_parsed": 5490,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_real_mound_universe",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span asserts 0.8641 = 4,744 / 5,490. All three values are read from their own recorded keys rather than making the factor arithmetic over its own operands (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "For each permutation, each detection is replaced by a random point drawn uniformly within its parent tile; the distribution of `P(mound within R | random-point)` over 1,000 permutations (seed 42) forms the null.",
+      "values": [
+        {
+          "quantity": "permutation count for the within-tile random-placement null",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed for the permutation null",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "Bias-corrected variant uses `obs_rate / (null_mean / 0.8641)` = `obs_rate / null_mean_bias_corrected`.",
+      "values": [
+        {
+          "quantity": "bias-correction factor in the lift-statistic definition",
+          "value_verbatim": "0.8641",
+          "value_parsed": 0.8641,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.bias_correction_factor",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The surrounding '1×', '> 1×' and '< 1×' in the same bullet are definitional reference points for the lift scale, not asserted results, and are not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "2. Methods"
+      },
+      "claim_text": "Minimum attainable value at 1,000 permutations is 0.001.",
+      "values": [
+        {
+          "quantity": "permutation count",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum attainable two-sided permutation p-value at 1,000 permutations",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+              "path": "$.permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "3. Cumulative lift — P(mound within R | candidate)"
+      },
+      "claim_text": "|    50 |     0.4606 |      0.0039 |                     0.0045 |       0.001  |       0.0078 |       118.32 |                      102.24 |            0.9915 |                           0.9902 |     0.001 |",
+      "values": [
+        {
+          "quantity": "cumulative radius R, cumulative table, R = 50 m",
+          "value_verbatim": "50",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[0].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed rate P(mound within R | candidate), cumulative table, R = 50 m",
+          "value_verbatim": "0.4606",
+          "value_parsed": 0.4606,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[0].obs_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate (within-tile random placement), cumulative table, R = 50 m",
+          "value_verbatim": "0.0039",
+          "value_parsed": 0.0039,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[0].null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate, cumulative table, R = 50 m",
+          "value_verbatim": "0.0045",
+          "value_parsed": 0.0045,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[0].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, cumulative table, R = 50 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[0].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, cumulative table, R = 50 m",
+          "value_verbatim": "0.0078",
+          "value_parsed": 0.0078,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[0].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lift ratio (observed / null), cumulative table, R = 50 m",
+          "value_verbatim": "118.32",
+          "value_parsed": 118.32,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[0].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, cumulative table, R = 50 m",
+          "value_verbatim": "102.24",
+          "value_parsed": 102.24,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[0].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "signal fraction, cumulative table, R = 50 m",
+          "value_verbatim": "0.9915",
+          "value_parsed": 0.9915,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[0].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected signal fraction, cumulative table, R = 50 m",
+          "value_verbatim": "0.9902",
+          "value_parsed": 0.9902,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[0].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, cumulative table, R = 50 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[0].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "3. Cumulative lift — P(mound within R | candidate)"
+      },
+      "claim_text": "|    75 |     0.5782 |      0.0087 |                     0.0101 |       0.0029 |       0.0146 |        66.55 |                       57.51 |            0.985  |                           0.9826 |     0.001 |",
+      "values": [
+        {
+          "quantity": "cumulative radius R, cumulative table, R = 75 m",
+          "value_verbatim": "75",
+          "value_parsed": 75.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[1].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed rate P(mound within R | candidate), cumulative table, R = 75 m",
+          "value_verbatim": "0.5782",
+          "value_parsed": 0.5782,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[1].obs_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate (within-tile random placement), cumulative table, R = 75 m",
+          "value_verbatim": "0.0087",
+          "value_parsed": 0.0087,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[1].null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate, cumulative table, R = 75 m",
+          "value_verbatim": "0.0101",
+          "value_parsed": 0.0101,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[1].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, cumulative table, R = 75 m",
+          "value_verbatim": "0.0029",
+          "value_parsed": 0.0029,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[1].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, cumulative table, R = 75 m",
+          "value_verbatim": "0.0146",
+          "value_parsed": 0.0146,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[1].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lift ratio (observed / null), cumulative table, R = 75 m",
+          "value_verbatim": "66.55",
+          "value_parsed": 66.55,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[1].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, cumulative table, R = 75 m",
+          "value_verbatim": "57.51",
+          "value_parsed": 57.51,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[1].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "signal fraction, cumulative table, R = 75 m",
+          "value_verbatim": "0.985",
+          "value_parsed": 0.985,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[1].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected signal fraction, cumulative table, R = 75 m",
+          "value_verbatim": "0.9826",
+          "value_parsed": 0.9826,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[1].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, cumulative table, R = 75 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[1].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "3. Cumulative lift — P(mound within R | candidate)"
+      },
+      "claim_text": "|   100 |     0.6239 |      0.0153 |                     0.0178 |       0.0078 |       0.0233 |        40.65 |                       35.12 |            0.9754 |                           0.9715 |     0.001 |",
+      "values": [
+        {
+          "quantity": "cumulative radius R, cumulative table, R = 100 m",
+          "value_verbatim": "100",
+          "value_parsed": 100.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[2].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed rate P(mound within R | candidate), cumulative table, R = 100 m",
+          "value_verbatim": "0.6239",
+          "value_parsed": 0.6239,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[2].obs_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate (within-tile random placement), cumulative table, R = 100 m",
+          "value_verbatim": "0.0153",
+          "value_parsed": 0.0153,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[2].null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate, cumulative table, R = 100 m",
+          "value_verbatim": "0.0178",
+          "value_parsed": 0.0178,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[2].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, cumulative table, R = 100 m",
+          "value_verbatim": "0.0078",
+          "value_parsed": 0.0078,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[2].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, cumulative table, R = 100 m",
+          "value_verbatim": "0.0233",
+          "value_parsed": 0.0233,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[2].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lift ratio (observed / null), cumulative table, R = 100 m",
+          "value_verbatim": "40.65",
+          "value_parsed": 40.65,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[2].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, cumulative table, R = 100 m",
+          "value_verbatim": "35.12",
+          "value_parsed": 35.12,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[2].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "signal fraction, cumulative table, R = 100 m",
+          "value_verbatim": "0.9754",
+          "value_parsed": 0.9754,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[2].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected signal fraction, cumulative table, R = 100 m",
+          "value_verbatim": "0.9715",
+          "value_parsed": 0.9715,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[2].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, cumulative table, R = 100 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[2].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "3. Cumulative lift — P(mound within R | candidate)"
+      },
+      "claim_text": "|   125 |     0.6424 |      0.0236 |                     0.0273 |       0.0146 |       0.033  |        27.2  |                       23.5  |            0.9632 |                           0.9575 |     0.001 |",
+      "values": [
+        {
+          "quantity": "cumulative radius R, cumulative table, R = 125 m",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[3].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed rate P(mound within R | candidate), cumulative table, R = 125 m",
+          "value_verbatim": "0.6424",
+          "value_parsed": 0.6424,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[3].obs_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate (within-tile random placement), cumulative table, R = 125 m",
+          "value_verbatim": "0.0236",
+          "value_parsed": 0.0236,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[3].null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate, cumulative table, R = 125 m",
+          "value_verbatim": "0.0273",
+          "value_parsed": 0.0273,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[3].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, cumulative table, R = 125 m",
+          "value_verbatim": "0.0146",
+          "value_parsed": 0.0146,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[3].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, cumulative table, R = 125 m",
+          "value_verbatim": "0.033",
+          "value_parsed": 0.033,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[3].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lift ratio (observed / null), cumulative table, R = 125 m",
+          "value_verbatim": "27.2",
+          "value_parsed": 27.2,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[3].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, cumulative table, R = 125 m",
+          "value_verbatim": "23.5",
+          "value_parsed": 23.5,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[3].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "signal fraction, cumulative table, R = 125 m",
+          "value_verbatim": "0.9632",
+          "value_parsed": 0.9632,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[3].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected signal fraction, cumulative table, R = 125 m",
+          "value_verbatim": "0.9575",
+          "value_parsed": 0.9575,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[3].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, cumulative table, R = 125 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[3].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "3. Cumulative lift — P(mound within R | candidate)"
+      },
+      "claim_text": "|   150 |     0.6531 |      0.0329 |                     0.0381 |       0.0224 |       0.0437 |        19.83 |                       17.14 |            0.9496 |                           0.9416 |     0.001 |",
+      "values": [
+        {
+          "quantity": "cumulative radius R, cumulative table, R = 150 m",
+          "value_verbatim": "150",
+          "value_parsed": 150.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[4].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed rate P(mound within R | candidate), cumulative table, R = 150 m",
+          "value_verbatim": "0.6531",
+          "value_parsed": 0.6531,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[4].obs_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate (within-tile random placement), cumulative table, R = 150 m",
+          "value_verbatim": "0.0329",
+          "value_parsed": 0.0329,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[4].null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate, cumulative table, R = 150 m",
+          "value_verbatim": "0.0381",
+          "value_parsed": 0.0381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[4].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, cumulative table, R = 150 m",
+          "value_verbatim": "0.0224",
+          "value_parsed": 0.0224,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[4].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, cumulative table, R = 150 m",
+          "value_verbatim": "0.0437",
+          "value_parsed": 0.0437,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[4].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lift ratio (observed / null), cumulative table, R = 150 m",
+          "value_verbatim": "19.83",
+          "value_parsed": 19.83,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[4].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, cumulative table, R = 150 m",
+          "value_verbatim": "17.14",
+          "value_parsed": 17.14,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[4].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "signal fraction, cumulative table, R = 150 m",
+          "value_verbatim": "0.9496",
+          "value_parsed": 0.9496,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[4].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected signal fraction, cumulative table, R = 150 m",
+          "value_verbatim": "0.9416",
+          "value_parsed": 0.9416,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[4].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, cumulative table, R = 150 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[4].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "3. Cumulative lift — P(mound within R | candidate)"
+      },
+      "claim_text": "|   286 |     0.725  |      0.1034 |                     0.1197 |       0.0855 |       0.1224 |         7.01 |                        6.06 |            0.8573 |                           0.8349 |     0.001 |",
+      "values": [
+        {
+          "quantity": "cumulative radius R, cumulative table, R = 286 m",
+          "value_verbatim": "286",
+          "value_parsed": 286.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cumulative[5].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed rate P(mound within R | candidate), cumulative table, R = 286 m",
+          "value_verbatim": "0.725",
+          "value_parsed": 0.725,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[5].obs_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate (within-tile random placement), cumulative table, R = 286 m",
+          "value_verbatim": "0.1034",
+          "value_parsed": 0.1034,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[5].null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate, cumulative table, R = 286 m",
+          "value_verbatim": "0.1197",
+          "value_parsed": 0.1197,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[5].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, cumulative table, R = 286 m",
+          "value_verbatim": "0.0855",
+          "value_parsed": 0.0855,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[5].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, cumulative table, R = 286 m",
+          "value_verbatim": "0.1224",
+          "value_parsed": 0.1224,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[5].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lift ratio (observed / null), cumulative table, R = 286 m",
+          "value_verbatim": "7.01",
+          "value_parsed": 7.01,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[5].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, cumulative table, R = 286 m",
+          "value_verbatim": "6.06",
+          "value_parsed": 6.06,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[5].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "signal fraction, cumulative table, R = 286 m",
+          "value_verbatim": "0.8573",
+          "value_parsed": 0.8573,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[5].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected signal fraction, cumulative table, R = 286 m",
+          "value_verbatim": "0.8349",
+          "value_parsed": 0.8349,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[5].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, cumulative table, R = 286 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[5].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "4. Annular (shell) lift — new mounds per band"
+      },
+      "claim_text": "|           0 |          50 |              0.4606 |               0.0039 |                     0.0045 |       0.001  |       0.0078 |       118.32 |                      102.24 |            0.9915 |                           0.9902 |     0.001 |",
+      "values": [
+        {
+          "quantity": "shell inner radius, shell table, (0, 50] m shell",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[0].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "shell outer radius, shell table, (0, 50] m shell",
+          "value_verbatim": "50",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[0].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed new-mound rate within the shell, shell table, (0, 50] m shell",
+          "value_verbatim": "0.4606",
+          "value_parsed": 0.4606,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[0].obs_rate_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate within the shell, shell table, (0, 50] m shell",
+          "value_verbatim": "0.0039",
+          "value_parsed": 0.0039,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[0].null_mean_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell, shell table, (0, 50] m shell",
+          "value_verbatim": "0.0045",
+          "value_parsed": 0.0045,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[0].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, shell table, (0, 50] m shell",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[0].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, shell table, (0, 50] m shell",
+          "value_verbatim": "0.0078",
+          "value_parsed": 0.0078,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[0].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "shell lift ratio (observed / null), shell table, (0, 50] m shell",
+          "value_verbatim": "118.32",
+          "value_parsed": 118.32,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[0].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, shell table, (0, 50] m shell",
+          "value_verbatim": "102.24",
+          "value_parsed": 102.24,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[0].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "shell signal fraction, shell table, (0, 50] m shell",
+          "value_verbatim": "0.9915",
+          "value_parsed": 0.9915,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[0].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell signal fraction, shell table, (0, 50] m shell",
+          "value_verbatim": "0.9902",
+          "value_parsed": 0.9902,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[0].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, shell table, (0, 50] m shell",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[0].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "4. Annular (shell) lift — new mounds per band"
+      },
+      "claim_text": "|          50 |          75 |              0.1176 |               0.0048 |                     0.0055 |       0.001  |       0.0087 |        24.52 |                       21.19 |            0.9592 |                           0.9528 |     0.001 |",
+      "values": [
+        {
+          "quantity": "shell inner radius, shell table, (50, 75] m shell",
+          "value_verbatim": "50",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[1].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "shell outer radius, shell table, (50, 75] m shell",
+          "value_verbatim": "75",
+          "value_parsed": 75.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[1].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed new-mound rate within the shell, shell table, (50, 75] m shell",
+          "value_verbatim": "0.1176",
+          "value_parsed": 0.1176,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[1].obs_rate_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate within the shell, shell table, (50, 75] m shell",
+          "value_verbatim": "0.0048",
+          "value_parsed": 0.0048,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[1].null_mean_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell, shell table, (50, 75] m shell",
+          "value_verbatim": "0.0055",
+          "value_parsed": 0.0055,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[1].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, shell table, (50, 75] m shell",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[1].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, shell table, (50, 75] m shell",
+          "value_verbatim": "0.0087",
+          "value_parsed": 0.0087,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[1].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "shell lift ratio (observed / null), shell table, (50, 75] m shell",
+          "value_verbatim": "24.52",
+          "value_parsed": 24.52,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[1].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, shell table, (50, 75] m shell",
+          "value_verbatim": "21.19",
+          "value_parsed": 21.19,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[1].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "shell signal fraction, shell table, (50, 75] m shell",
+          "value_verbatim": "0.9592",
+          "value_parsed": 0.9592,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[1].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell signal fraction, shell table, (50, 75] m shell",
+          "value_verbatim": "0.9528",
+          "value_parsed": 0.9528,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[1].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, shell table, (50, 75] m shell",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[1].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "4. Annular (shell) lift — new mounds per band"
+      },
+      "claim_text": "|          75 |         100 |              0.0457 |               0.0067 |                     0.0077 |       0.0019 |       0.0126 |         6.86 |                        5.93 |            0.8542 |                           0.8312 |     0.001 |",
+      "values": [
+        {
+          "quantity": "shell inner radius, shell table, (75, 100] m shell",
+          "value_verbatim": "75",
+          "value_parsed": 75.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[2].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "shell outer radius, shell table, (75, 100] m shell",
+          "value_verbatim": "100",
+          "value_parsed": 100.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[2].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed new-mound rate within the shell, shell table, (75, 100] m shell",
+          "value_verbatim": "0.0457",
+          "value_parsed": 0.0457,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[2].obs_rate_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate within the shell, shell table, (75, 100] m shell",
+          "value_verbatim": "0.0067",
+          "value_parsed": 0.0067,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[2].null_mean_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell, shell table, (75, 100] m shell",
+          "value_verbatim": "0.0077",
+          "value_parsed": 0.0077,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[2].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, shell table, (75, 100] m shell",
+          "value_verbatim": "0.0019",
+          "value_parsed": 0.0019,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[2].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, shell table, (75, 100] m shell",
+          "value_verbatim": "0.0126",
+          "value_parsed": 0.0126,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[2].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "shell lift ratio (observed / null), shell table, (75, 100] m shell",
+          "value_verbatim": "6.86",
+          "value_parsed": 6.86,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[2].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, shell table, (75, 100] m shell",
+          "value_verbatim": "5.93",
+          "value_parsed": 5.93,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[2].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "shell signal fraction, shell table, (75, 100] m shell",
+          "value_verbatim": "0.8542",
+          "value_parsed": 0.8542,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[2].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell signal fraction, shell table, (75, 100] m shell",
+          "value_verbatim": "0.8312",
+          "value_parsed": 0.8312,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[2].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, shell table, (75, 100] m shell",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[2].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "4. Annular (shell) lift — new mounds per band"
+      },
+      "claim_text": "|         100 |         125 |              0.0185 |               0.0083 |                     0.0096 |       0.0029 |       0.0146 |         2.23 |                        1.93 |            0.5522 |                           0.4817 |     0.002 |",
+      "values": [
+        {
+          "quantity": "shell inner radius, shell table, (100, 125] m shell",
+          "value_verbatim": "100",
+          "value_parsed": 100.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[3].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "shell outer radius, shell table, (100, 125] m shell",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[3].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed new-mound rate within the shell, shell table, (100, 125] m shell",
+          "value_verbatim": "0.0185",
+          "value_parsed": 0.0185,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[3].obs_rate_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate within the shell, shell table, (100, 125] m shell",
+          "value_verbatim": "0.0083",
+          "value_parsed": 0.0083,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[3].null_mean_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell, shell table, (100, 125] m shell",
+          "value_verbatim": "0.0096",
+          "value_parsed": 0.0096,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[3].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, shell table, (100, 125] m shell",
+          "value_verbatim": "0.0029",
+          "value_parsed": 0.0029,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[3].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, shell table, (100, 125] m shell",
+          "value_verbatim": "0.0146",
+          "value_parsed": 0.0146,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[3].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "shell lift ratio (observed / null), shell table, (100, 125] m shell",
+          "value_verbatim": "2.23",
+          "value_parsed": 2.23,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[3].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, shell table, (100, 125] m shell",
+          "value_verbatim": "1.93",
+          "value_parsed": 1.93,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[3].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "shell signal fraction, shell table, (100, 125] m shell",
+          "value_verbatim": "0.5522",
+          "value_parsed": 0.5522,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[3].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell signal fraction, shell table, (100, 125] m shell",
+          "value_verbatim": "0.4817",
+          "value_parsed": 0.4817,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[3].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, shell table, (100, 125] m shell",
+          "value_verbatim": "0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[3].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "4. Annular (shell) lift — new mounds per band"
+      },
+      "claim_text": "|         125 |         150 |              0.0107 |               0.0093 |                     0.0108 |       0.0039 |       0.0155 |         1.15 |                        0.99 |            0.129  |                          -0.008  |     0.381 |",
+      "values": [
+        {
+          "quantity": "shell inner radius, shell table, (125, 150] m shell",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[4].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "shell outer radius, shell table, (125, 150] m shell",
+          "value_verbatim": "150",
+          "value_parsed": 150.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[4].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed new-mound rate within the shell, shell table, (125, 150] m shell",
+          "value_verbatim": "0.0107",
+          "value_parsed": 0.0107,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[4].obs_rate_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate within the shell, shell table, (125, 150] m shell",
+          "value_verbatim": "0.0093",
+          "value_parsed": 0.0093,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].null_mean_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell, shell table, (125, 150] m shell",
+          "value_verbatim": "0.0108",
+          "value_parsed": 0.0108,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, shell table, (125, 150] m shell",
+          "value_verbatim": "0.0039",
+          "value_parsed": 0.0039,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, shell table, (125, 150] m shell",
+          "value_verbatim": "0.0155",
+          "value_parsed": 0.0155,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "shell lift ratio (observed / null), shell table, (125, 150] m shell",
+          "value_verbatim": "1.15",
+          "value_parsed": 1.15,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[4].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, shell table, (125, 150] m shell",
+          "value_verbatim": "0.99",
+          "value_parsed": 0.99,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[4].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "shell signal fraction, shell table, (125, 150] m shell",
+          "value_verbatim": "0.129",
+          "value_parsed": 0.129,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[4].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell signal fraction, shell table, (125, 150] m shell",
+          "value_verbatim": "-0.008",
+          "value_parsed": -0.008,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[4].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, shell table, (125, 150] m shell",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "4. Annular (shell) lift — new mounds per band"
+      },
+      "claim_text": "|         150 |         286 |              0.0719 |               0.0705 |                     0.0816 |       0.0554 |       0.0865 |         1.02 |                        0.88 |            0.0198 |                          -0.1343 |     0.433 |",
+      "values": [
+        {
+          "quantity": "shell inner radius, shell table, (150, 286] m shell",
+          "value_verbatim": "150",
+          "value_parsed": 150.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[5].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "shell outer radius, shell table, (150, 286] m shell",
+          "value_verbatim": "286",
+          "value_parsed": 286.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[5].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed new-mound rate within the shell, shell table, (150, 286] m shell",
+          "value_verbatim": "0.0719",
+          "value_parsed": 0.0719,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[5].obs_rate_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean rate within the shell, shell table, (150, 286] m shell",
+          "value_verbatim": "0.0705",
+          "value_parsed": 0.0705,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[5].null_mean_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected null mean rate in shell, shell table, (150, 286] m shell",
+          "value_verbatim": "0.0816",
+          "value_parsed": 0.0816,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[5].null_mean_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "null distribution CI lower bound, shell table, (150, 286] m shell",
+          "value_verbatim": "0.0554",
+          "value_parsed": 0.0554,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[5].null_ci_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null distribution CI upper bound, shell table, (150, 286] m shell",
+          "value_verbatim": "0.0865",
+          "value_parsed": 0.0865,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[5].null_ci_hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "shell lift ratio (observed / null), shell table, (150, 286] m shell",
+          "value_verbatim": "1.02",
+          "value_parsed": 1.02,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[5].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell lift ratio, shell table, (150, 286] m shell",
+          "value_verbatim": "0.88",
+          "value_parsed": 0.88,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[5].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "shell signal fraction, shell table, (150, 286] m shell",
+          "value_verbatim": "0.0198",
+          "value_parsed": 0.0198,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[5].signal_fraction",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected shell signal fraction, shell table, (150, 286] m shell",
+          "value_verbatim": "-0.1343",
+          "value_parsed": -0.1343,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.shell[5].signal_fraction_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value, shell table, (150, 286] m shell",
+          "value_verbatim": "0.433",
+          "value_parsed": 0.433,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[5].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    10 |          126.65 |                 -2.49 |                  -10    |                   35.55 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 10 m",
+          "value_verbatim": "10",
+          "value_parsed": 10.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==10.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 10 m",
+          "value_verbatim": "126.65",
+          "value_parsed": 126.65,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==10.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 10 m",
+          "value_verbatim": "-2.49",
+          "value_parsed": -2.49,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==10.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 10 m",
+          "value_verbatim": "-10",
+          "value_parsed": -10.0,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==10.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 10 m",
+          "value_verbatim": "35.55",
+          "value_parsed": 35.55,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==10.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b076] §5 rows anchor to the sibling ripley.csv (row-filter locators on r_m); summary.json carries no Ripley block. The non-numeric outside_envelope cell is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    20 |          233.61 |                  5.8  |                  -20    |                   58.89 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 20 m",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==20.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 20 m",
+          "value_verbatim": "233.61",
+          "value_parsed": 233.61,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==20.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 20 m",
+          "value_verbatim": "5.8",
+          "value_parsed": 5.8,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==20.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 20 m",
+          "value_verbatim": "-20",
+          "value_parsed": -20.0,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==20.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 20 m",
+          "value_verbatim": "58.89",
+          "value_parsed": 58.89,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==20.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    30 |          397.29 |                 16.65 |                  -30    |                   61.1  | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 30 m",
+          "value_verbatim": "30",
+          "value_parsed": 30.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==30.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 30 m",
+          "value_verbatim": "397.29",
+          "value_parsed": 397.29,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==30.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 30 m",
+          "value_verbatim": "16.65",
+          "value_parsed": 16.65,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==30.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 30 m",
+          "value_verbatim": "-30",
+          "value_parsed": -30.0,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==30.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 30 m",
+          "value_verbatim": "61.1",
+          "value_parsed": 61.1,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==30.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    40 |          493.14 |                 28.04 |                  -40    |                   71.8  | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 40 m",
+          "value_verbatim": "40",
+          "value_parsed": 40.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==40.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 40 m",
+          "value_verbatim": "493.14",
+          "value_parsed": 493.14,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==40.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 40 m",
+          "value_verbatim": "28.04",
+          "value_parsed": 28.04,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==40.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 40 m",
+          "value_verbatim": "-40",
+          "value_parsed": -40.0,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==40.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 40 m",
+          "value_verbatim": "71.8",
+          "value_parsed": 71.8,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==40.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    50 |          577.85 |                 37.77 |                   -4.45 |                   78.83 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 50 m",
+          "value_verbatim": "50",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==50.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 50 m",
+          "value_verbatim": "577.85",
+          "value_parsed": 577.85,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==50.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 50 m",
+          "value_verbatim": "37.77",
+          "value_parsed": 37.77,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==50.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 50 m",
+          "value_verbatim": "-4.45",
+          "value_parsed": -4.45,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==50.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 50 m",
+          "value_verbatim": "78.83",
+          "value_parsed": 78.83,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==50.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    60 |          696.72 |                 47.64 |                    4.42 |                   91.07 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 60 m",
+          "value_verbatim": "60",
+          "value_parsed": 60.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==60.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 60 m",
+          "value_verbatim": "696.72",
+          "value_parsed": 696.72,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==60.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 60 m",
+          "value_verbatim": "47.64",
+          "value_parsed": 47.64,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==60.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 60 m",
+          "value_verbatim": "4.42",
+          "value_parsed": 4.42,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==60.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 60 m",
+          "value_verbatim": "91.07",
+          "value_parsed": 91.07,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==60.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    70 |          767.41 |                 57.28 |                    8.89 |                  100.43 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 70 m",
+          "value_verbatim": "70",
+          "value_parsed": 70.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==70.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 70 m",
+          "value_verbatim": "767.41",
+          "value_parsed": 767.41,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==70.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 70 m",
+          "value_verbatim": "57.28",
+          "value_parsed": 57.28,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==70.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 70 m",
+          "value_verbatim": "8.89",
+          "value_parsed": 8.89,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==70.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 70 m",
+          "value_verbatim": "100.43",
+          "value_parsed": 100.43,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==70.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    80 |          809.09 |                 66.01 |                   21.85 |                  113.25 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 80 m",
+          "value_verbatim": "80",
+          "value_parsed": 80.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==80.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 80 m",
+          "value_verbatim": "809.09",
+          "value_parsed": 809.09,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==80.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 80 m",
+          "value_verbatim": "66.01",
+          "value_parsed": 66.01,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==80.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 80 m",
+          "value_verbatim": "21.85",
+          "value_parsed": 21.85,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==80.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 80 m",
+          "value_verbatim": "113.25",
+          "value_parsed": 113.25,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==80.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|    90 |          832.3  |                 75.62 |                   30.29 |                  118.73 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 90 m",
+          "value_verbatim": "90",
+          "value_parsed": 90.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==90.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 90 m",
+          "value_verbatim": "832.3",
+          "value_parsed": 832.3,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==90.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 90 m",
+          "value_verbatim": "75.62",
+          "value_parsed": 75.62,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==90.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 90 m",
+          "value_verbatim": "30.29",
+          "value_parsed": 30.29,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==90.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 90 m",
+          "value_verbatim": "118.73",
+          "value_parsed": 118.73,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==90.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   100 |          842.33 |                 84.45 |                   36.65 |                  132.26 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 100 m",
+          "value_verbatim": "100",
+          "value_parsed": 100.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==100.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 100 m",
+          "value_verbatim": "842.33",
+          "value_parsed": 842.33,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==100.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 100 m",
+          "value_verbatim": "84.45",
+          "value_parsed": 84.45,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==100.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 100 m",
+          "value_verbatim": "36.65",
+          "value_parsed": 36.65,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==100.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 100 m",
+          "value_verbatim": "132.26",
+          "value_parsed": 132.26,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==100.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          71,
+          71
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   110 |          849.78 |                 93.71 |                   41.07 |                  143.61 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 110 m",
+          "value_verbatim": "110",
+          "value_parsed": 110.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==110.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 110 m",
+          "value_verbatim": "849.78",
+          "value_parsed": 849.78,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==110.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 110 m",
+          "value_verbatim": "93.71",
+          "value_parsed": 93.71,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==110.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 110 m",
+          "value_verbatim": "41.07",
+          "value_parsed": 41.07,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==110.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 110 m",
+          "value_verbatim": "143.61",
+          "value_parsed": 143.61,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==110.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   120 |          862.22 |                102.49 |                   50.43 |                  149.47 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 120 m",
+          "value_verbatim": "120",
+          "value_parsed": 120.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==120.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 120 m",
+          "value_verbatim": "862.22",
+          "value_parsed": 862.22,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==120.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 120 m",
+          "value_verbatim": "102.49",
+          "value_parsed": 102.49,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==120.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 120 m",
+          "value_verbatim": "50.43",
+          "value_parsed": 50.43,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==120.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 120 m",
+          "value_verbatim": "149.47",
+          "value_parsed": 149.47,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==120.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   130 |          870.01 |                111.22 |                   57.8  |                  154.45 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 130 m",
+          "value_verbatim": "130",
+          "value_parsed": 130.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==130.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 130 m",
+          "value_verbatim": "870.01",
+          "value_parsed": 870.01,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==130.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 130 m",
+          "value_verbatim": "111.22",
+          "value_parsed": 111.22,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==130.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 130 m",
+          "value_verbatim": "57.8",
+          "value_parsed": 57.8,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==130.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 130 m",
+          "value_verbatim": "154.45",
+          "value_parsed": 154.45,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==130.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   140 |          868.28 |                119.54 |                   68.73 |                  165.55 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 140 m",
+          "value_verbatim": "140",
+          "value_parsed": 140.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==140.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 140 m",
+          "value_verbatim": "868.28",
+          "value_parsed": 868.28,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==140.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 140 m",
+          "value_verbatim": "119.54",
+          "value_parsed": 119.54,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==140.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 140 m",
+          "value_verbatim": "68.73",
+          "value_parsed": 68.73,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==140.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 140 m",
+          "value_verbatim": "165.55",
+          "value_parsed": 165.55,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==140.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   150 |          874.6  |                127.87 |                   77.75 |                  175.29 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 150 m",
+          "value_verbatim": "150",
+          "value_parsed": 150.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==150.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 150 m",
+          "value_verbatim": "874.6",
+          "value_parsed": 874.6,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==150.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 150 m",
+          "value_verbatim": "127.87",
+          "value_parsed": 127.87,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==150.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 150 m",
+          "value_verbatim": "77.75",
+          "value_parsed": 77.75,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==150.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 150 m",
+          "value_verbatim": "175.29",
+          "value_parsed": 175.29,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==150.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          76
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   160 |          881.67 |                136.28 |                   89.48 |                  183.89 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 160 m",
+          "value_verbatim": "160",
+          "value_parsed": 160.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==160.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 160 m",
+          "value_verbatim": "881.67",
+          "value_parsed": 881.67,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==160.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 160 m",
+          "value_verbatim": "136.28",
+          "value_parsed": 136.28,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==160.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 160 m",
+          "value_verbatim": "89.48",
+          "value_parsed": 89.48,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==160.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 160 m",
+          "value_verbatim": "183.89",
+          "value_parsed": 183.89,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==160.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          77
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   170 |          879.61 |                144.55 |                   95.6  |                  191.54 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 170 m",
+          "value_verbatim": "170",
+          "value_parsed": 170.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==170.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 170 m",
+          "value_verbatim": "879.61",
+          "value_parsed": 879.61,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==170.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 170 m",
+          "value_verbatim": "144.55",
+          "value_parsed": 144.55,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==170.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 170 m",
+          "value_verbatim": "95.6",
+          "value_parsed": 95.6,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==170.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 170 m",
+          "value_verbatim": "191.54",
+          "value_parsed": 191.54,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==170.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   180 |          888.22 |                152.98 |                  104.45 |                  201.09 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 180 m",
+          "value_verbatim": "180",
+          "value_parsed": 180.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==180.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 180 m",
+          "value_verbatim": "888.22",
+          "value_parsed": 888.22,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==180.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 180 m",
+          "value_verbatim": "152.98",
+          "value_parsed": 152.98,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==180.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 180 m",
+          "value_verbatim": "104.45",
+          "value_parsed": 104.45,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==180.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 180 m",
+          "value_verbatim": "201.09",
+          "value_parsed": 201.09,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==180.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   190 |          907.92 |                161.57 |                  112.14 |                  209.69 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 190 m",
+          "value_verbatim": "190",
+          "value_parsed": 190.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==190.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 190 m",
+          "value_verbatim": "907.92",
+          "value_parsed": 907.92,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==190.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 190 m",
+          "value_verbatim": "161.57",
+          "value_parsed": 161.57,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==190.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 190 m",
+          "value_verbatim": "112.14",
+          "value_parsed": 112.14,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==190.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 190 m",
+          "value_verbatim": "209.69",
+          "value_parsed": 209.69,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==190.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   200 |          923.14 |                169.91 |                  122.08 |                  219.94 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 200 m",
+          "value_verbatim": "200",
+          "value_parsed": 200.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==200.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 200 m",
+          "value_verbatim": "923.14",
+          "value_parsed": 923.14,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==200.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 200 m",
+          "value_verbatim": "169.91",
+          "value_parsed": 169.91,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==200.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 200 m",
+          "value_verbatim": "122.08",
+          "value_parsed": 122.08,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==200.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 200 m",
+          "value_verbatim": "219.94",
+          "value_parsed": 219.94,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==200.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   210 |          943.21 |                178.47 |                  130.86 |                  226.89 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 210 m",
+          "value_verbatim": "210",
+          "value_parsed": 210.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==210.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 210 m",
+          "value_verbatim": "943.21",
+          "value_parsed": 943.21,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==210.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 210 m",
+          "value_verbatim": "178.47",
+          "value_parsed": 178.47,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==210.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 210 m",
+          "value_verbatim": "130.86",
+          "value_parsed": 130.86,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==210.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 210 m",
+          "value_verbatim": "226.89",
+          "value_parsed": 226.89,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==210.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   220 |          943.07 |                186.8  |                  135.75 |                  233.27 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 220 m",
+          "value_verbatim": "220",
+          "value_parsed": 220.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==220.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 220 m",
+          "value_verbatim": "943.07",
+          "value_parsed": 943.07,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==220.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 220 m",
+          "value_verbatim": "186.8",
+          "value_parsed": 186.8,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==220.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 220 m",
+          "value_verbatim": "135.75",
+          "value_parsed": 135.75,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==220.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 220 m",
+          "value_verbatim": "233.27",
+          "value_parsed": 233.27,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==220.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   230 |          949.01 |                195.02 |                  145.61 |                  243.36 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 230 m",
+          "value_verbatim": "230",
+          "value_parsed": 230.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==230.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 230 m",
+          "value_verbatim": "949.01",
+          "value_parsed": 949.01,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==230.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 230 m",
+          "value_verbatim": "195.02",
+          "value_parsed": 195.02,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==230.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 230 m",
+          "value_verbatim": "145.61",
+          "value_parsed": 145.61,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==230.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 230 m",
+          "value_verbatim": "243.36",
+          "value_parsed": 243.36,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==230.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   240 |          953.88 |                203.15 |                  154.4  |                  250.58 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 240 m",
+          "value_verbatim": "240",
+          "value_parsed": 240.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==240.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 240 m",
+          "value_verbatim": "953.88",
+          "value_parsed": 953.88,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==240.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 240 m",
+          "value_verbatim": "203.15",
+          "value_parsed": 203.15,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==240.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 240 m",
+          "value_verbatim": "154.4",
+          "value_parsed": 154.4,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==240.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 240 m",
+          "value_verbatim": "250.58",
+          "value_parsed": 250.58,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==240.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   250 |          960.27 |                211.35 |                  162.47 |                  261.29 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 250 m",
+          "value_verbatim": "250",
+          "value_parsed": 250.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==250.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 250 m",
+          "value_verbatim": "960.27",
+          "value_parsed": 960.27,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==250.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 250 m",
+          "value_verbatim": "211.35",
+          "value_parsed": 211.35,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==250.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 250 m",
+          "value_verbatim": "162.47",
+          "value_parsed": 162.47,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==250.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 250 m",
+          "value_verbatim": "261.29",
+          "value_parsed": 261.29,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==250.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   260 |          962.21 |                219.44 |                  167.29 |                  269.23 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 260 m",
+          "value_verbatim": "260",
+          "value_parsed": 260.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==260.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 260 m",
+          "value_verbatim": "962.21",
+          "value_parsed": 962.21,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==260.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 260 m",
+          "value_verbatim": "219.44",
+          "value_parsed": 219.44,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==260.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 260 m",
+          "value_verbatim": "167.29",
+          "value_parsed": 167.29,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==260.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 260 m",
+          "value_verbatim": "269.23",
+          "value_parsed": 269.23,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==260.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   270 |          963.2  |                227.13 |                  176.29 |                  276.59 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 270 m",
+          "value_verbatim": "270",
+          "value_parsed": 270.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==270.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 270 m",
+          "value_verbatim": "963.2",
+          "value_parsed": 963.2,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==270.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 270 m",
+          "value_verbatim": "227.13",
+          "value_parsed": 227.13,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==270.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 270 m",
+          "value_verbatim": "176.29",
+          "value_parsed": 176.29,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==270.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 270 m",
+          "value_verbatim": "276.59",
+          "value_parsed": 276.59,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==270.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          88
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   280 |          967.42 |                235.24 |                  184.46 |                  283.41 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 280 m",
+          "value_verbatim": "280",
+          "value_parsed": 280.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==280.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 280 m",
+          "value_verbatim": "967.42",
+          "value_parsed": 967.42,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==280.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 280 m",
+          "value_verbatim": "235.24",
+          "value_parsed": 235.24,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==280.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 280 m",
+          "value_verbatim": "184.46",
+          "value_parsed": 184.46,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==280.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 280 m",
+          "value_verbatim": "283.41",
+          "value_parsed": 283.41,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==280.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   290 |          961.57 |                243.19 |                  189.89 |                  291.58 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 290 m",
+          "value_verbatim": "290",
+          "value_parsed": 290.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==290.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 290 m",
+          "value_verbatim": "961.57",
+          "value_parsed": 961.57,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==290.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 290 m",
+          "value_verbatim": "243.19",
+          "value_parsed": 243.19,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==290.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 290 m",
+          "value_verbatim": "189.89",
+          "value_parsed": 189.89,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==290.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 290 m",
+          "value_verbatim": "291.58",
+          "value_parsed": 291.58,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==290.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   300 |          970.49 |                251.52 |                  198.97 |                  302.56 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 300 m",
+          "value_verbatim": "300",
+          "value_parsed": 300.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==300.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 300 m",
+          "value_verbatim": "970.49",
+          "value_parsed": 970.49,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==300.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 300 m",
+          "value_verbatim": "251.52",
+          "value_parsed": 251.52,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==300.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 300 m",
+          "value_verbatim": "198.97",
+          "value_parsed": 198.97,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==300.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 300 m",
+          "value_verbatim": "302.56",
+          "value_parsed": 302.56,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==300.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   310 |          971.87 |                259.51 |                  209.34 |                  309.54 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 310 m",
+          "value_verbatim": "310",
+          "value_parsed": 310.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==310.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 310 m",
+          "value_verbatim": "971.87",
+          "value_parsed": 971.87,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==310.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 310 m",
+          "value_verbatim": "259.51",
+          "value_parsed": 259.51,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==310.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 310 m",
+          "value_verbatim": "209.34",
+          "value_parsed": 209.34,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==310.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 310 m",
+          "value_verbatim": "309.54",
+          "value_parsed": 309.54,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==310.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "5. Ripley's cross-L (centred at zero)"
+      },
+      "claim_text": "|   320 |          969.94 |                267.34 |                  215.08 |                  319.35 | True               |",
+      "values": [
+        {
+          "quantity": "Ripley evaluation radius r, Ripley table, r = 320 m",
+          "value_verbatim": "320",
+          "value_parsed": 320.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$[?(@.r_m==320.0)].r_m",
+          "method": "read"
+        },
+        {
+          "quantity": "observed centred Ripley cross-L, L_12(r) - r, Ripley table, r = 320 m",
+          "value_verbatim": "969.94",
+          "value_parsed": 969.94,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==320.0)].L_minus_r_obs",
+          "method": "read"
+        },
+        {
+          "quantity": "null mean centred Ripley cross-L, Ripley table, r = 320 m",
+          "value_verbatim": "267.34",
+          "value_parsed": 267.34,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==320.0)].L_minus_r_null_mean",
+          "method": "read"
+        },
+        {
+          "quantity": "null envelope lower bound, Ripley table, r = 320 m",
+          "value_verbatim": "215.08",
+          "value_parsed": 215.08,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==320.0)].L_minus_r_envelope_lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "null envelope upper bound, Ripley table, r = 320 m",
+          "value_verbatim": "319.35",
+          "value_parsed": 319.35,
+          "unit": "m",
+          "kind": "statistic",
+          "path": "$[?(@.r_m==320.0)].L_minus_r_envelope_hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    }
+  ]
+}

@@ -1,0 +1,926 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-image-generalisation/buffer-band-lift/report.md",
+    "git_blob": "886f2dc9f710",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "6. Interpretation"
+      },
+      "claim_text": "A signal fraction per shell falling below ~50 % is the honest ceiling for practitioner-useful detection at that tolerance — the 125 m shell is the *last* shell at which the bias-corrected signal fraction stays above zero (0.4817).",
+      "values": [
+        {
+          "quantity": "signal-fraction floor criterion for practitioner-useful detection at a given tolerance (authored heuristic, not a measured quantity)",
+          "value_verbatim": "~50 %",
+          "value_parsed": 50.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "outer radius of the last shell whose bias-corrected signal fraction remains above zero",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[?(@.R_outer_m==125)].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected signal fraction, (100, 125] m shell",
+          "value_verbatim": "0.4817",
+          "value_parsed": 0.4817,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[?(@.R_outer_m==125)].signal_fraction_bias_corrected",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b077] Scope decisions applied across lines 93-160 (logged, not silent): (a) band/shell labels that name a table row -- '0-50 m shell', 'the 125-150 m shell', 'R = 125 m', '< 50 m detections', 'the 50-125 m band' -- treated as names under instrument rule 5, NOT extracted; assertions where the same figure is the finding (the ~125 m endpoint / tolerance cap) ARE extracted. (b) Definitional constants in sec 6 bullets ('A value near 1 ... near 0', 'Decays toward 1') not extracted -- they define the statistics, they assert nothing about this study. (c) Section references (secs 3-5, sec 8.3, sec 1), dates, session numbers, Obs ids, and git hashes (712cadb7, f623652d) out of scope per rule 5. (d) Toolchain version strings on line 160 (Python >= 3.11, GeoPandas >= 0.14) out of scope as version strings. (e) Per the batch brief, permutation p-values and null CI bounds carry method recompute-script even where the sibling summary.json holds a stored copy; the stored path is still supplied so triage can resolve mechanically. This claim: the '~50 %' figure is an authored decision criterion with no artefact counterpart, hence anchor-unknown at value level; the 125 m and 0.4817 values read from the (100, 125] shell row of the sibling summary.json (same numbers also in shell.csv)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "6. Interpretation"
+      },
+      "claim_text": "The Ripley envelope remains violated out to the full 320 m measurement window",
+      "values": [
+        {
+          "quantity": "maximum radius of the Ripley's cross-L measurement window",
+          "value_verbatim": "320",
+          "value_parsed": 320.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/ripley.csv",
+        "path": "$[-1].r_m"
+      },
+      "method": "read",
+      "notes": "ripley.csv is a CSV; path denotes the final data row's r_m (the window maximum). The span also asserts outside_envelope holds throughout (boolean, not a numeric value). summary.json carries no Ripley block, so the CSV is the anchor. The second '320 m' later in the same sentence restates this window and is not double-counted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "7. Caveats / risk register"
+      },
+      "claim_text": "**1,000 permutations bounds the minimum p-value at 0.001**.",
+      "values": [
+        {
+          "quantity": "permutation count, within-tile null",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum attainable two-sided p-value at 1,000 permutations",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 / a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+              "path": "$.permutations"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.001 floor is derived (1 / permutations); the 1,000 operand itself is a plain read so it is not compared against its own derivation (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "7. Caveats / risk register"
+      },
+      "claim_text": "Shells with p = 0.001 should not be over-interpreted as \"significant at p < 0.001\" — the data caps the resolution at that floor.",
+      "values": [
+        {
+          "quantity": "permutation p-value reported at the floor for the innermost shells",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[?(@.R_outer_m==50)].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "nominal significance threshold quoted in the phrase 'significant at p < 0.001' (rhetorical threshold, not a measured value)",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Doubtful case flagged per instrument task note: the second 0.001 is a quoted significance threshold rather than a study measurement, so it takes anchor-unknown; the first refers generically to the shells sitting at the floor (0-50, 50-75, 75-100 rows) and is anchored to the innermost of them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "7. Caveats / risk register"
+      },
+      "claim_text": "Up to the 100–125 m shell, effects are so large that 10,000 permutations would not meaningfully change the conclusion; at the 125–150 m shell where p = 0.381, the permutation count is adequate.",
+      "values": [
+        {
+          "quantity": "hypothetical permutation count invoked counterfactually ('would not meaningfully change the conclusion') -- not what was run",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation p-value, (125, 150] m shell",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[?(@.R_outer_m==150)].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "10,000 is a counterfactual permutation count (the run used 1,000 per $.permutations), included per the include-and-flag rule; it asserts no fact about what was executed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "7. Caveats / risk register"
+      },
+      "claim_text": "The 0.8641 correction factor assumes the reviewer-promoted mounds are a representative sample of the mounds-missed-by-student-GT population.",
+      "values": [
+        {
+          "quantity": "bias-correction factor applied to the null rate (student-GT / total real-mound universe)",
+          "value_verbatim": "0.8641",
+          "value_parsed": 0.8641,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": "$.bias_correction_factor"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "7. Caveats / risk register"
+      },
+      "claim_text": "The signal-fraction direction is robust to reasonable perturbations of the correction factor; the endpoint 125 m is robust.",
+      "values": [
+        {
+          "quantity": "attractor-pull endpoint asserted as robust to perturbation of the bias-correction factor",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The endpoint is a conclusion drawn from where the shell permutation p-values cross significance ($.shell[*].p_value); it is not stored as a scalar anywhere, hence recompute-script against the shell array."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "8.1 Practitioner tolerance cap"
+      },
+      "claim_text": "The 125 m endpoint is the paper's headline attractor-pull scale.",
+      "values": [
+        {
+          "quantity": "attractor-pull endpoint / headline scale",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Restatement of the endpoint conclusion; derived from the shell permutation p-value sequence rather than stored as a scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "8.1 Practitioner tolerance cap"
+      },
+      "claim_text": "Claims about \"mounds near detections\" beyond 125 m should not be made on this corpus: the 125–150 m shell (p = 0.381, lift 0.99×) is indistinguishable from within-tile random, and the 150–286 m shell confirms the plateau (p = 0.433, lift 0.88×).",
+      "values": [
+        {
+          "quantity": "attractor-pull endpoint beyond which near-mound claims are disallowed",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, (125, 150] m shell",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[?(@.R_outer_m==150)].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, (125, 150] m shell",
+          "value_verbatim": "0.99",
+          "value_parsed": 0.99,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[?(@.R_outer_m==150)].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, (150, 286] m shell",
+          "value_verbatim": "0.433",
+          "value_parsed": 0.433,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[?(@.R_outer_m==286)].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, (150, 286] m shell",
+          "value_verbatim": "0.88",
+          "value_parsed": 0.88,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[?(@.R_outer_m==286)].lift_ratio_bias_corrected",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Anchor identification only: the quoted lifts (0.99x, 0.88x) match the bias-corrected column rather than the raw lift_ratio column, consistent with the report's sec 1 phrasing; triage owns the adjudication."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "8.1 Practitioner tolerance cap"
+      },
+      "claim_text": "tolerance buffers beyond 125 m yield spuriously high mound-hit rates from incidental co-occurrence.",
+      "values": [
+        {
+          "quantity": "tolerance-buffer cap beyond which mound-hit rates are called spurious",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Third restatement of the 125 m endpoint within sec 8.1; kept as a distinct span per hard rule 1 (one claim row per span), prunable at triage as a duplicate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "8.2 Complementarity with verifier miscalibration (Obs 269)"
+      },
+      "claim_text": "The detections in the 50–125 m band are precisely the cases where the verifier scores at saturated high confidence (Obs 269: verifier ECE = 0.269, AUC = 0.655).",
+      "values": [
+        {
+          "quantity": "verifier Expected Calibration Error (ECE), 55-map image-generalisation verifier-calibration crosstab",
+          "value_verbatim": "0.269",
+          "value_parsed": 0.269,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier ROC AUC (point estimate), 55-map image-generalisation verifier-calibration crosstab",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document attributes these to Obs 269 in docs/notes/reflections/working-notes.md (prose); per hard rule 2 the anchor is the calibration artefact for the same corpus, not the notes file. Not chased beyond anchor identification (rule 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "8.2 Complementarity with verifier miscalibration (Obs 269)"
+      },
+      "claim_text": "The 125 m tolerance cap established here is therefore a hard upper bound the downstream pipeline must respect — no post-hoc verifier filter can relax it without new information.",
+      "values": [
+        {
+          "quantity": "tolerance cap asserted as a hard upper bound on the downstream pipeline",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Restatement of the endpoint conclusion."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "8.3 Interaction with corrected-F1 lower bound"
+      },
+      "claim_text": "The corrected-F1 multi-buffer curve (`corrected-f1-multi-buffer/report.md`) caps at 125 m on paper-citation grounds: the 0.854 figure at R = 125 m is practitioner-useful, whereas the 0.855 figure at R = 150 m counts co-occurrences the attractor-pull analysis rules out as causal.",
+      "values": [
+        {
+          "quantity": "radius at which the corrected-F1 multi-buffer curve is capped for paper citation",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "corrected F1 at R = 125 m, 55-map image generalisation (Approach B extended-GT Hungarian matching)",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==125)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 150 m, 55-map image generalisation (Approach B extended-GT Hungarian matching)",
+          "value_verbatim": "0.855",
+          "value_parsed": 0.855,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==150)].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span cites the sibling prose document corrected-f1-multi-buffer/report.md; per hard rule 2 prose is not anchored to prose, so the anchor is that directory's summary.json, where the multi-buffer F1 curve lives. The 125 m cap value itself is this report's own endpoint conclusion (recompute-script, buffer-band-lift shell array), not a corrected-F1 quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "8.3 Interaction with corrected-F1 lower bound"
+      },
+      "claim_text": "The ≥ 0.830 headline corrected-F1 at 50 m remains the conservative paper-claim; the 0.854 at 125 m is the practitioner-tolerant upper bound.",
+      "values": [
+        {
+          "quantity": "headline corrected-F1 lower bound at R = 50 m, 55-map image generalisation",
+          "value_verbatim": "≥ 0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==50)].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 125 m, 55-map image generalisation",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[?(@.R_m==125)].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '>=' marker is preserved verbatim (v1.2 amendment 5): the claim is a lower bound, so triage may need to decide between the R = 50 m point estimate ($.results[?(@.R_m==50)].F1) and the bootstrap CI floor ($.results[?(@.R_m==50)].F1_CI[0]); the point estimate is proposed here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "8.4 Suggested paper text (Results)"
+      },
+      "claim_text": "A buffer-band lift analysis on the 55-map VLM-only candidate set (n = 1,029 reviewed candidates against 5,490 mounds across 31,818 sq km; within-tile random-placement null, 1,000 permutations, seed 42) quantifies the scale of VLM-detection attractor-pull.",
+      "values": [
+        {
+          "quantity": "map-sheet count of the image-generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson#len:distinct($.features[*].properties.map_name)",
+          "method": "read"
+        },
+        {
+          "quantity": "combined reviewed candidate count (initial review + multi-buffer re-review)",
+          "value_verbatim": "1,029",
+          "value_parsed": 1029,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_combined",
+          "method": "read"
+        },
+        {
+          "quantity": "real-mound universe (student GT + reviewer-promoted)",
+          "value_verbatim": "5,490",
+          "value_parsed": 5490,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_real_mound_universe",
+          "method": "read"
+        },
+        {
+          "quantity": "total study area (report rounds the artefact's 31,817.94)",
+          "value_verbatim": "31,818",
+          "value_parsed": 31818,
+          "unit": "sq km",
+          "kind": "physical",
+          "path": "$.study_area_km2",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation count, within-tile null",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed for the permutation null",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'55-map' doubles as a corpus name and an asserted sheet count (rule 5's '487-tile Era 2 corpus' case), so it is extracted with a cross-file locator (v1.2 amendment 2) into the evaluation-bounds GeoJSON, which carries a map_name property per tile feature."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "8.4 Suggested paper text (Results)"
+      },
+      "claim_text": "The cumulative P(mound within 50 m | candidate) is 46.06 % (bias-corrected lift 102.24×, p = 0.001); the shell-specific attractor-pull is statistically significant through the 100–125 m shell (p = 0.002 bias-corrected) but ends abruptly at the 125–150 m shell (p = 0.381, lift 0.99×).",
+      "values": [
+        {
+          "quantity": "cumulative P(mound within 50 m | candidate); artefact stores the proportion 0.4606",
+          "value_verbatim": "46.06",
+          "value_parsed": 46.06,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.cumulative[?(@.R_m==50)].obs_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "bias-corrected cumulative lift ratio at R = 50 m",
+          "value_verbatim": "102.24",
+          "value_parsed": 102.24,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.cumulative[?(@.R_m==50)].lift_ratio_bias_corrected",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, cumulative R = 50 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.cumulative[?(@.R_m==50)].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, (100, 125] m shell",
+          "value_verbatim": "0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[?(@.R_outer_m==125)].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, (125, 150] m shell",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[?(@.R_outer_m==150)].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bias-corrected lift ratio, (125, 150] m shell",
+          "value_verbatim": "0.99",
+          "value_parsed": 0.99,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "$.shell[?(@.R_outer_m==150)].lift_ratio_bias_corrected",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Unit '%' set on the 46.06 value so the harness can bridge the percent/proportion scale (v1.2 amendment 6); the artefact stores obs_rate as a proportion."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "8.4 Suggested paper text (Results)"
+      },
+      "claim_text": "We therefore use 125 m as the practitioner-useful tolerance cap: corrected-F1 beyond this distance counts incidental co-occurrences that the within-tile null cannot distinguish from random placement.",
+      "values": [
+        {
+          "quantity": "practitioner-useful tolerance cap adopted in the paper text",
+          "value_verbatim": "125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Restatement of the endpoint conclusion inside the suggested Results paragraph."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "9. Files manifest"
+      },
+      "claim_text": "- `results/55maps-image-generalisation/human-review.csv` — initial calibrated UI review (474 mound@50 m calls).",
+      "values": [
+        {
+          "quantity": "count of 'mound' calls in the initial calibrated UI review (50 m ring)",
+          "value_verbatim": "474",
+          "value_parsed": 474,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review.csv",
+        "path": "len:$[?(@.human_label=='mound')]"
+      },
+      "method": "read",
+      "notes": "The span names its own source file, so the CSV is the anchor (hard rule 2); rows are treated as records with the header as keys. The same count is mirrored at $.n_yesterday_mound_50m in the buffer-band-lift summary.json if the CSV filter cannot be resolved mechanically. '50 m' here is the review ring label, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "9. Files manifest"
+      },
+      "claim_text": "- `results/55maps-image-generalisation/human-review-multi-buffer.csv` — multi-buffer re-review (555 rows).",
+      "values": [
+        {
+          "quantity": "row count of the multi-buffer re-review",
+          "value_verbatim": "555",
+          "value_parsed": 555,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "Data rows excluding the header. Mirrored at $.n_today_reviewed in the buffer-band-lift summary.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "9. Files manifest"
+      },
+      "claim_text": "- `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` — student GT reference (4,744 mounds).",
+      "values": [
+        {
+          "quantity": "student ground-truth mound count, 55-map reference layer",
+          "value_verbatim": "4,744",
+          "value_parsed": 4744,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Span names its own source, so the GeoJSON feature count is the anchor (v1.2 amendment 4 spelling). Mirrored at $.n_student_gt in the buffer-band-lift summary.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "9. Files manifest"
+      },
+      "claim_text": "- `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` — 55-map evaluation bounds (8,541 tiles).",
+      "values": [
+        {
+          "quantity": "map-sheet count covered by the evaluation bounds",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "len:distinct($.features[*].properties.map_name)",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluable tile count at 384 px (Era 2 bounds)",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'55' also appears inside the filename (a name, out of scope), but the descriptor '55-map evaluation bounds' asserts the sheet count, so it is extracted; '384' in the path is a crop-size name and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          151
+        ],
+        "section": "10. Reproducibility"
+      },
+      "claim_text": "**Bootstrap/permutation**: 1,000 within-tile permutations, seed 42.",
+      "values": [
+        {
+          "quantity": "permutation count, within-tile null",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "count",
+          "path": "$.permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed for the permutation null",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          151
+        ],
+        "section": "10. Reproducibility"
+      },
+      "claim_text": "Compute ~1–2 min on sapphire.",
+      "values": [
+        {
+          "quantity": "lower bound of the quoted wall-clock compute time on sapphire",
+          "value_verbatim": "~1",
+          "value_parsed": 1.0,
+          "unit": "min",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of the quoted wall-clock compute time on sapphire",
+          "value_verbatim": "2",
+          "value_parsed": 2.0,
+          "unit": "min",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed artefact records wall-clock runtime for this analysis (summary.json holds no timing field and there is no run.meta sibling). Approx marker kept verbatim on the lower bound and the shared unit set on both (v1.2 amendments 5 and 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "10. Reproducibility"
+      },
+      "claim_text": "`data(55maps-image): buffer-band lift analysis — pull effect ends at ~125 m`",
+      "values": [
+        {
+          "quantity": "attractor-pull endpoint as stated in the quoted commit subject of the original data run",
+          "value_verbatim": "~125",
+          "value_parsed": 125.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Doubtful case flagged: this is a quoted git commit subject rather than the report's own assertion, and the surrounding commit hash is out of scope; included under the include-and-flag rule because the quoted text restates the study's headline endpoint. Prunable at triage."
+    }
+  ]
+}

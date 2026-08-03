@@ -1,0 +1,2858 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/recovery-rerun-registration.md",
+    "git_blob": "629bd96ab8dd",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          4
+        ],
+        "section": "Header banner (Last revised)"
+      },
+      "claim_text": "EXECUTED — 255/288 recovered",
+      "values": [
+        {
+          "quantity": "dead tiles recovered, E71 recovery rerun (main run: original + safe mode)",
+          "value_verbatim": "255",
+          "value_parsed": 255,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered_safe_mode"
+            }
+          ]
+        },
+        {
+          "quantity": "registered dead tiles, E71 recovery rerun",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.registered_total",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b065] Whole-file sweep of a pre-execution registration that was later revised in place with execution outcomes. Registered parameters and expected counts anchor to reports/verification/recovery-rerun-worklists.json (the artefact committed with the registration, before any API call); executed outcomes anchor to reports/verification/recovery-rerun-results{,-deep,-deep-b}.json and the evaluation/consensus artefacts; pre-recovery metric values anchor to the preserved results/rescore-2026-06-05/ evaluations and the archive/pre-recovery-2026-07-30/ artefacts. Prose is never used as an anchor. Out-of-C4-scope numerals skipped throughout per instrument rule 5: dates, erratum/session/ledger identifiers (E40, E47, E57, E70, E71, c2-discharge-0003/0004), section and rule numbers (§ 2.2, rule 10, rule 12, authority 1), version strings (v0.6.0, script_version, `gemini-3-pro` (3.0)), the line-number citation `scripts/lib_batch_api.py:2343`, and numerals inside run/condition/tile names (run_3, 1of3, 3of3, pv-diag-384, K-35-053-3_Elenovo_x672_y2352). Word-form numerals asserting counts about the study ARE extracted (two, three, four, six, one, zero). This banner's 255/288 is the main-run figure; the document's newest changelog entry (line 125) records 265/288 as final — flagged for triage, not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "§ 1 Scope — the worklists (group table)"
+      },
+      "claim_text": "| **live-pv-diag-t0.0** (feeds two evaluated conditions) | 6 | **143** (16/34/34 image; 19/20/20 text) | `gemini-3-flash-preview`, HIGH thinking, T=0.0 |",
+      "values": [
+        {
+          "quantity": "evaluated conditions fed by the live-pv-diag-t0.0 group",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "passes, live-pv-diag-t0.0 group",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes[?(@.group=='live-pv-diag-t0.0')]",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, live-pv-diag-t0.0 group (total)",
+          "value_verbatim": "143",
+          "value_parsed": 143,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d + e + f",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run1')].n_dead"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run2')].n_dead"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run3')].n_dead"
+            },
+            {
+              "name": "d",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run1')].n_dead"
+            },
+            {
+              "name": "e",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run2')].n_dead"
+            },
+            {
+              "name": "f",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run3')].n_dead"
+            }
+          ]
+        },
+        {
+          "quantity": "dead tiles, pv-diag-384 flash-high-image-n5 image-t0.0 run1",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run1')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, pv-diag-384 flash-high-image-n5 image-t0.0 run2",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run2')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, pv-diag-384 flash-high-image-n5 image-t0.0 run3",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run3')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, pv-diag-384 flash-high-text-n5 text-t0.0 run1",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run1')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, pv-diag-384 flash-high-text-n5 text-t0.0 run2",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run2')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, pv-diag-384 flash-high-text-n5 text-t0.0 run3",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::flash-high-text-n5-text-t0.0::run3')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, live-pv-diag-t0.0 passes",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/passes-manifest.json#$.passes[?(@.pass_id=='pv-diag-384::flash-high-image-n5-image-t0.0::run1')].temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Group-level table row. The 'two evaluated conditions' count has no mechanical locator; the two condition_ids are present in results/conditions-manifest.json (pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3 and pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3) but a count of 2 is not a single filter result. The temperature is asserted for all six passes; the locator names run1 as representative."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "§ 1 Scope — the worklists (group table)"
+      },
+      "claim_text": "| n1-outstanding **Flash corners** (E57 mis-dispatched; quarantined, off-board) | 6 | **136** (15/19/17 image; 29/29/27 text) | `gemini-3-flash-preview`, HIGH thinking, T=0.0 — **NOT Pro**: all four meta identity fields (config, per-item used, per-item version, pricing) record Flash; E57 preserves these passes precisely as genuine Flash data at Pro-intended corners |",
+      "values": [
+        {
+          "quantity": "passes, n1-outstanding Flash-corners group",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes[?(@.group=='n1-outstanding-flash-corners')]",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, n1-outstanding Flash-corners group (total)",
+          "value_verbatim": "136",
+          "value_parsed": 136,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d + e + f",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run1')].n_dead"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run2')].n_dead"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run3')].n_dead"
+            },
+            {
+              "name": "d",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run1')].n_dead"
+            },
+            {
+              "name": "e",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run2')].n_dead"
+            },
+            {
+              "name": "f",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run3')].n_dead"
+            }
+          ]
+        },
+        {
+          "quantity": "dead tiles, n1-outstanding-384 pro-image-high-t0 run1",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run1')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, n1-outstanding-384 pro-image-high-t0 run2",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run2')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, n1-outstanding-384 pro-image-high-t0 run3",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run3')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, n1-outstanding-384 pro-text-high-t0 run1",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run1')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, n1-outstanding-384 pro-text-high-t0 run2",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run2')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, n1-outstanding-384 pro-text-high-t0 run3",
+          "value_verbatim": "27",
+          "value_parsed": 27,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run3')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, n1-outstanding Flash-corner passes",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/passes-manifest.json#$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run1')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "meta identity fields recording Flash for the n1-outstanding corners",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'all four meta identity fields (config, per-item used, per-item version, pricing)' count is a structural assertion about the run metas under archive/pre-recovery-2026-07-30/n1-outstanding-384__*/ ; no single scalar records the number of identity fields, so it is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "§ 1 Scope — the worklists (group table)"
+      },
+      "claim_text": "| single-tile shortfalls | 3 | **9** (e47 ×7; h12-v2 ×1 ×1) | `gemini-3-flash-preview` |",
+      "values": [
+        {
+          "quantity": "passes, single-tile shortfall group contributing dead tiles",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "dead tiles, single-tile shortfall group (total)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='e47-propose-brief::propose_brief-text::run4')].n_dead"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='h12-v2::r3-hp-heavy::run3')].n_dead"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='h12-v2::r3-hp-heavy::run5')].n_dead"
+            }
+          ]
+        },
+        {
+          "quantity": "dead tiles, e47-propose-brief propose_brief-text run4",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='e47-propose-brief::propose_brief-text::run4')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, h12-v2 r3-hp-heavy run3",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='h12-v2::r3-hp-heavy::run3')].n_dead",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, h12-v2 r3-hp-heavy run5",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='h12-v2::r3-hp-heavy::run5')].n_dead",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The pass count of 3 needs a scripted count: the worklists 'single-tile' group holds four entries, one of which (flash35-pv-2x2::flash35-min-text-1of10::run3) carries n_dead 0 and is the dropped row of line 28."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "§ 1 Scope — the worklists (group table)"
+      },
+      "claim_text": "| ~~flash35-pv-2x2 run_3~~ | 0 | **0 — dropped** | — |",
+      "values": [
+        {
+          "quantity": "passes contributed by the dropped flash35-pv-2x2 run_3 row",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "dead tiles, flash35-pv-2x2 flash35-min-text-1of10 run3",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='flash35-pv-2x2::flash35-min-text-1of10::run3')].n_dead",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Struck-through (dropped) table row. The first 0 is the row's pass contribution to the rerun, which no artefact records as a scalar; the second is the recorded n_dead for that pass in the worklists."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "§ 1 Scope — the worklists"
+      },
+      "claim_text": "**Total: 288 tiles across 15 passes — ALL `gemini-3-flash-preview`.**",
+      "values": [
+        {
+          "quantity": "dead tiles, E71 recovery rerun (total)",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_dead_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "passes carrying dead tiles, E71 recovery rerun",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/recovery-rerun-results.json#len:$.results",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The worklists file lists 16 pass entries, one of which (flash35-pv-2x2 run3) has n_dead 0 and was dropped; the 15 passes actually dispatched are the entries of reports/verification/recovery-rerun-results.json $.results."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          38
+        ],
+        "section": "§ 1 Scope — model-consistency rule"
+      },
+      "claim_text": "The check that produced this rule also established: the project\nhas **never executed `gemini-3-pro` (3.0)** — the manifest model census\nover all 1,132 passes shows `gemini-3-flash` (774, the era-1 alias),\n`gemini-3-flash-preview` (305), `gemini-3.1-pro-preview` (40, the only\nPro ever run — E40's \"current Pro model\"), and `gemini-3.5-flash` (12).",
+      "values": [
+        {
+          "quantity": "passes in the manifest model census (all passes, project-wide)",
+          "value_verbatim": "1,132",
+          "value_parsed": 1132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes",
+          "method": "read"
+        },
+        {
+          "quantity": "passes run at gemini-3-flash (era-1 alias)",
+          "value_verbatim": "774",
+          "value_parsed": 774,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes[?(@.model_used=='gemini-3-flash')]",
+          "method": "read"
+        },
+        {
+          "quantity": "passes run at gemini-3-flash-preview",
+          "value_verbatim": "305",
+          "value_parsed": 305,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes[?(@.model_used=='gemini-3-flash-preview')]",
+          "method": "read"
+        },
+        {
+          "quantity": "passes run at gemini-3.1-pro-preview",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes[?(@.model_used=='gemini-3.1-pro-preview')]",
+          "method": "read"
+        },
+        {
+          "quantity": "passes run at gemini-3.5-flash",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes[?(@.model_used=='gemini-3.5-flash')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Model-string version digits (`gemini-3-pro` (3.0)) are names, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          51
+        ],
+        "section": "§ 1 Scope — notes recorded at derivation"
+      },
+      "claim_text": "`e47-propose-brief::propose_brief-text::run4` is messier than the\n  triage grain: GeoJSON 480 processed, sidecar dual-lists 6 tiles as both\n  completed and failed (the `clean_meta_failed_items` class), meta says\n  486. The GeoJSON governs (evaluations consume it): **7 dead**.",
+      "values": [
+        {
+          "quantity": "tiles in processed_tiles, pre-recovery e47 propose_brief-text run4 GeoJSON",
+          "value_verbatim": "480",
+          "value_parsed": 480,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.processed_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles listed as both completed and failed in the pre-recovery e47 run4 sidecar",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "items_processed recorded by the pre-recovery e47 run4 meta",
+          "value_verbatim": "486",
+          "value_parsed": 486,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/pre-recovery-2026-07-30/e47-propose-brief__propose_brief-text__run4/detections-propose_brief-text-3-flash-2026-04-09.meta.json#$.execution_stats.items_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "dead tiles, e47-propose-brief propose_brief-text run4",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/recovery-rerun-worklists.json#$.passes[?(@.pass_id=='e47-propose-brief::propose_brief-text::run4')].n_dead",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/pre-recovery-2026-07-30/e47-propose-brief__propose_brief-text__run4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The live outputs/ meta, sidecar and GeoJSON for this pass have since been merged by the recovery patcher, so the pre-recovery figures anchor to the preserved copies under archive/pre-recovery-2026-07-30/. The dual-listed count of 6 is the intersection of $.completed and $.failed in archive/pre-recovery-2026-07-30/e47-propose-brief__propose_brief-text__run4/detections-propose_brief-text-3-flash-2026-04-09.tiles.json — a set operation, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "§ 2 Mechanism"
+      },
+      "claim_text": "Real-time (not batch) — 288 calls do not justify batch latency.",
+      "values": [
+        {
+          "quantity": "real-time API calls required by the recovery rerun",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_dead_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": "$.total_dead_tiles"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "§ 3 Post-recovery pipeline"
+      },
+      "claim_text": "(all US$0, sapphire/zbook)",
+      "values": [
+        {
+          "quantity": "cost of the post-recovery pipeline (local compute, estimate)",
+          "value_verbatim": "US$0",
+          "value_parsed": 0,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Asserted zero API spend for the post-recovery pipeline (run on sapphire/zbook); no committed artefact records a cost for these steps."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "§ 3 Post-recovery pipeline"
+      },
+      "claim_text": "Re-materialise the consensus pools for the two live conditions",
+      "values": [
+        {
+          "quantity": "live conditions whose consensus pools were re-materialised",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The two condition_ids are named on lines 68-69 and both exist in results/conditions-manifest.json, but a count of 2 has no single mechanical locator there."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "§ 3 Post-recovery pipeline"
+      },
+      "claim_text": "re-evaluate at the standard 14-buffer + MCC protocol.",
+      "values": [
+        {
+          "quantity": "buffer distances in the standard evaluation protocol",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+        "path": "len:$.summary.buffers"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          73
+        ],
+        "section": "§ 3 Post-recovery pipeline"
+      },
+      "claim_text": "The pre-recovery numbers carry\n   19–34 artificial zero-detection tiles",
+      "values": [
+        {
+          "quantity": "artificial zero-detection tiles carried by the pre-recovery numbers (range minimum)",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "artificial zero-detection tiles carried by the pre-recovery numbers (range maximum)",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Looked for a per-condition artificial-zero tile count: reports/verification/recovery-rerun-worklists.json records per-pass n_dead of 16/34/34 (image) and 19/20/20 (text) for the live group, and the evaluations record $.summary.buffers[*].coverage.n_zero_count_tiles (all zero-count tiles, not just artificial ones). Neither yields a recorded 19-34 range, so the exact quantity this range names is left for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          93
+        ],
+        "section": "§ 4 predicted_outcome"
+      },
+      "claim_text": "(the E70 precedent: one such tile\nexists in the patch campaign)",
+      "values": [
+        {
+          "quantity": "permanently failed tiles in the E70 patch campaign",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Refers to the earlier E70 patch campaign, outside this document's own artefacts; no committed scalar located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          98
+        ],
+        "section": "§ 5 Cost estimate"
+      },
+      "claim_text": "288 real-time calls, all `gemini-3-flash-preview` (the earlier draft's\n136 \"Pro\" calls were the mislabelled Flash corners — see § 1).",
+      "values": [
+        {
+          "quantity": "real-time calls in the recovery rerun",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_dead_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "calls the earlier draft labelled Pro (the n1-outstanding Flash corners)",
+          "value_verbatim": "136",
+          "value_parsed": 136,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d + e + f",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run1')].n_dead"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run2')].n_dead"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-image-high-t0::run3')].n_dead"
+            },
+            {
+              "name": "d",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run1')].n_dead"
+            },
+            {
+              "name": "e",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run2')].n_dead"
+            },
+            {
+              "name": "f",
+              "file": "reports/verification/recovery-rerun-worklists.json",
+              "path": "$.passes[?(@.pass_id=='n1-outstanding-384::pro-text-high-t0::run3')].n_dead"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          101
+        ],
+        "section": "§ 5 Cost estimate"
+      },
+      "claim_text": "- Flash HIGH ≈ US$0.005–0.01/tile (token-load-audit basis) →\n  **~$1.50–3**.",
+      "values": [
+        {
+          "quantity": "per-tile cost estimate, Flash HIGH (lower bound, approximate)",
+          "value_verbatim": "≈ US$0.005",
+          "value_parsed": 0.005,
+          "unit": "US$/tile",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "per-tile cost estimate, Flash HIGH (upper bound, approximate)",
+          "value_verbatim": "0.01",
+          "value_parsed": 0.01,
+          "unit": "US$/tile",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "projected rerun cost, Flash HIGH (lower bound, approximate)",
+          "value_verbatim": "~$1.50",
+          "value_parsed": 1.5,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "projected rerun cost, Flash HIGH (upper bound, approximate)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking pre-execution estimate. The stated basis is a 'token-load audit', a prose document, which instrument rule 2 forbids as an anchor; no committed artefact records a per-tile Flash HIGH cost figure. Approximation markers kept verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "§ 5 Cost estimate"
+      },
+      "claim_text": "- Retries/safe-mode re-attempts headroom ×1.3.",
+      "values": [
+        {
+          "quantity": "retry/safe-mode headroom multiplier applied to the cost estimate",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Estimate parameter; no committed artefact records the headroom multiplier."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "§ 5 Cost estimate"
+      },
+      "claim_text": "**Estimate: ~US$2–4; worst case ~$5.**",
+      "values": [
+        {
+          "quantity": "total cost estimate for the rerun (lower bound, approximate)",
+          "value_verbatim": "~US$2",
+          "value_parsed": 2,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total cost estimate for the rerun (upper bound, approximate)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "worst-case cost estimate for the rerun (approximate)",
+          "value_verbatim": "~$5",
+          "value_parsed": 5,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Pre-execution estimate; no committed artefact records it. Approximation markers kept verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          105
+        ],
+        "section": "§ 5 Cost estimate"
+      },
+      "claim_text": "Within the run-it-now budget\nenvelope by two orders of magnitude",
+      "values": [
+        {
+          "quantity": "orders of magnitude by which the estimate sits inside the run-it-now budget envelope",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The 'run-it-now budget envelope' is a project convention, not a committed artefact value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          113
+        ],
+        "section": "§ 6 Gate checklist"
+      },
+      "claim_text": "- [x] Dry-run over the worklists (2026-07-30 — all 15 worklist-equality\n  gates green, all 288 tiles resolve)",
+      "values": [
+        {
+          "quantity": "worklist-equality gates passing at the dry run",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/recovery-rerun-results.json#len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles resolving at the dry run",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_dead_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The dry-run log itself is not a committed artefact; the gate count equals the number of dispatched worklist passes and the tile count the registered total."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          115
+        ],
+        "section": "§ 6 Gate checklist"
+      },
+      "claim_text": "- [x] `/audit-config` READY verdict (2026-07-30 — 12/12 requirements,\n  no blockers)",
+      "values": [
+        {
+          "quantity": "audit-config requirements met",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "audit-config requirements assessed",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed /audit-config artefact for this run was located (searched reports/ and outputs/**/pre_launch_audit.md); the verdict survives only in this prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED"
+      },
+      "claim_text": "Deep sweeps EXECUTED: +10 recovered; residue final at 6 unique tiles",
+      "values": [
+        {
+          "quantity": "tiles recovered by the deep sweeps",
+          "value_verbatim": "+10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.totals.recovered",
+          "method": "read"
+        },
+        {
+          "quantity": "unique tiles in the permanent residue",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results-deep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The unique-tile count is the distinct union of $.results[*].still_failed in reports/verification/recovery-rerun-results-deep-b.json — a set operation, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          124
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED"
+      },
+      "claim_text": "**Sweep A** (10 + 10 ladder, flex): **+10 tiles recovered, all at\noriginal parameters** — the deeper tier-1 roll paid off; safe mode\nadded nothing.",
+      "values": [
+        {
+          "quantity": "sweep A max_attempts at original parameters (tier 1)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep A max_attempts at safe mode (tier 2)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles recovered by sweep A",
+          "value_verbatim": "+10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.totals.recovered",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results-deep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '10 + 10 ladder' is one max_attempts override applied to both tiers; $.totals.recovered_safe_mode is the artefact counterpart of 'safe mode added nothing'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          125
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED"
+      },
+      "claim_text": "**Sweep B** (5 + 5, safe mode halved to 1024): **zero**\nfurther recoveries.",
+      "values": [
+        {
+          "quantity": "sweep B max_attempts at original parameters (tier 1)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep B max_attempts at safe mode (tier 2)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep B safe-mode max_output_tokens",
+          "value_verbatim": "1024",
+          "value_parsed": 1024,
+          "unit": "tokens",
+          "kind": "parameter",
+          "path": "$.safe_tokens_override",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles recovered by sweep B",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.totals.recovered",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results-deep-b.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          126
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED"
+      },
+      "claim_text": "Final recovery: **265/288 (92.0 %)**; spend for\nboth sweeps well under US$1.",
+      "values": [
+        {
+          "quantity": "dead tiles recovered across all campaigns (final)",
+          "value_verbatim": "265",
+          "value_parsed": 265,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered_safe_mode"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/recovery-rerun-results-deep.json",
+              "path": "$.totals.recovered"
+            }
+          ]
+        },
+        {
+          "quantity": "registered dead tiles, E71 recovery rerun",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.registered_total",
+          "method": "read"
+        },
+        {
+          "quantity": "final recovery rate",
+          "value_verbatim": "92.0",
+          "value_parsed": 92.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * (a + b + c) / d",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered_safe_mode"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/recovery-rerun-results-deep.json",
+              "path": "$.totals.recovered"
+            },
+            {
+              "name": "d",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.registered_total"
+            }
+          ]
+        },
+        {
+          "quantity": "combined spend on sweeps A and B (upper bound)",
+          "value_verbatim": "US$1",
+          "value_parsed": 1,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The spend figure is a bound, not an equality; per-pass recovery_history[].recovery_cost_usd exists in the run metas under outputs/, but no aggregate spend artefact was located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          133
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED"
+      },
+      "claim_text": "**The permanent residue collapses to 6 unique tiles** (23 pass-level\nfailures): `K-35-053-3_Elenovo_x672_y2352` fails in **9 independent\npasses** across two pools and both prompt modalities;\n`K-35-052-4_32635_x0_y2352` in 4; `K-35-078-1_Lesovo_x2016_y672` in 4;\n`K-35-052-4_32635_x3696_y336` in 3; `K-35-062-2_Rakovski_x1008_y336`\nin 2; `K-35-053-3_Elenovo_x1680_y1008` in 1.",
+      "values": [
+        {
+          "quantity": "unique tiles in the permanent residue",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "pass-level failures remaining after both sweeps",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "count",
+          "path": "$.totals.still_failed",
+          "method": "read"
+        },
+        {
+          "quantity": "passes in which K-35-053-3_Elenovo_x672_y2352 fails",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus pools spanned by the most-failing residue tile",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes in which K-35-052-4_32635_x0_y2352 fails",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes in which K-35-078-1_Lesovo_x2016_y672 fails",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes in which K-35-052-4_32635_x3696_y336 fails",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes in which K-35-062-2_Rakovski_x1008_y336 fails",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes in which K-35-053-3_Elenovo_x1680_y1008 fails",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results-deep-b.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per-tile failure multiplicities are occurrence counts of each tile id across $.results[*].still_failed in reports/verification/recovery-rerun-results-deep-b.json; the pool span additionally needs the pass-to-pool mapping in reports/verification/recovery-rerun-worklists.json. Numerals inside tile ids are names, not claims (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          135
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED"
+      },
+      "claim_text": "Each has now survived\n~33–48 cumulative attempts across four campaigns (the original run\nladder, the 3+3 first rerun, 10+10, and 5+5@1024), immune to output",
+      "values": [
+        {
+          "quantity": "cumulative attempts survived per residue tile (lower bound, approximate)",
+          "value_verbatim": "~33",
+          "value_parsed": 33,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cumulative attempts survived per residue tile (upper bound)",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "recovery campaigns the residue tiles survived",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "first-rerun ladder depth, tier 1",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/lib_batch_api.py#MAX_SYNC_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "first-rerun ladder depth, tier 2",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/lib_batch_api.py#MAX_SYNC_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep A ladder depth, tier 1",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep A ladder depth, tier 2",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep B ladder depth, tier 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "reports/verification/recovery-rerun-results-deep-b.json#$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep B ladder depth, tier 2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "reports/verification/recovery-rerun-results-deep-b.json#$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep B safe-mode max_output_tokens",
+          "value_verbatim": "1024",
+          "value_parsed": 1024,
+          "unit": "tokens",
+          "kind": "parameter",
+          "path": "reports/verification/recovery-rerun-results-deep-b.json#$.safe_tokens_override",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results-deep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ~33-48 cumulative-attempt range aggregates the original run-time retry ladder with three rerun campaigns; no committed artefact totals attempts per tile, so both bounds are anchor-unknown, as is the campaign count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          141
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED"
+      },
+      "claim_text": "**Final pipeline state** (consensus re-materialised, both live cells\nre-evaluated; manifests regenerated — exactly the 7 sweep-A-touched\npass rows updated):",
+      "values": [
+        {
+          "quantity": "manifest pass rows updated after sweep A",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results-deep.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Count of passes in reports/verification/recovery-rerun-results-deep.json whose $.results[*].recovered list is non-empty; needs a scripted count rather than a single locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED (final table)"
+      },
+      "claim_text": "| image 1of3 F1 | 0.4883 | 0.4985 | **0.4970** | **+0.0087** |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition image 1of3, pre-recovery",
+          "value_verbatim": "0.4883",
+          "value_parsed": 0.4883,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition image 1of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.4985",
+          "value_parsed": 0.4985,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, condition image 1of3, final (post sweeps A and B)",
+          "value_verbatim": "0.4970",
+          "value_parsed": 0.497,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m net change, condition image 1of3, final minus pre-recovery",
+          "value_verbatim": "+0.0087",
+          "value_parsed": 0.0087,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+            },
+            {
+              "name": "b",
+              "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery column anchors to the preserved 2026-06-05 evaluation named at line 192-193 of this document. The post-sweep-1 column is an intermediate state superseded by the 'final' column in the same table; no committed artefact retains it, so it is classed historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          146,
+          146
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED (final table)"
+      },
+      "claim_text": "| image 1of3 recall | 0.6943 | 0.7563 | **0.7563** | +0.0620 |",
+      "values": [
+        {
+          "quantity": "recall@20 m, condition image 1of3, pre-recovery",
+          "value_verbatim": "0.6943",
+          "value_parsed": 0.6943,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "recall@20 m, condition image 1of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.7563",
+          "value_parsed": 0.7563,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "recall@20 m, condition image 1of3, final (post sweeps A and B)",
+          "value_verbatim": "0.7563",
+          "value_parsed": 0.7563,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "recall@20 m net change, condition image 1of3, final minus pre-recovery",
+          "value_verbatim": "+0.0620",
+          "value_parsed": 0.062,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].recall"
+            },
+            {
+              "name": "b",
+              "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].recall"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery column anchors to the preserved 2026-06-05 evaluation named at line 192-193 of this document. The post-sweep-1 column is an intermediate state superseded by the 'final' column in the same table; no committed artefact retains it, so it is classed historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED (final table)"
+      },
+      "claim_text": "| image 1of3 MCC | 0.4848 | 0.4671 | **0.4671** | −0.0177 |",
+      "values": [
+        {
+          "quantity": "tile-level MCC, condition image 1of3, pre-recovery",
+          "value_verbatim": "0.4848",
+          "value_parsed": 0.4848,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json#$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, condition image 1of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.4671",
+          "value_parsed": 0.4671,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile-level MCC, condition image 1of3, final (post sweeps A and B)",
+          "value_verbatim": "0.4671",
+          "value_parsed": 0.4671,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC net change, condition image 1of3, final minus pre-recovery",
+          "value_verbatim": "−0.0177",
+          "value_parsed": -0.0177,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+              "path": "$.summary.tile_classification.mcc.point"
+            },
+            {
+              "name": "b",
+              "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+              "path": "$.summary.tile_classification.mcc.point"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery column anchors to the preserved 2026-06-05 evaluation named at line 192-193 of this document. The post-sweep-1 column is an intermediate state superseded by the 'final' column in the same table; no committed artefact retains it, so it is classed historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          148
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED (final table)"
+      },
+      "claim_text": "| text 3of3 F1 | 0.6051 | 0.6003 | **0.6109** | **+0.0058** |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition text 3of3, pre-recovery",
+          "value_verbatim": "0.6051",
+          "value_parsed": 0.6051,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition text 3of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.6003",
+          "value_parsed": 0.6003,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, condition text 3of3, final (post sweeps A and B)",
+          "value_verbatim": "0.6109",
+          "value_parsed": 0.6109,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m net change, condition text 3of3, final minus pre-recovery",
+          "value_verbatim": "+0.0058",
+          "value_parsed": 0.0058,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+            },
+            {
+              "name": "b",
+              "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery column anchors to the preserved 2026-06-05 evaluation named at line 192-193 of this document. The post-sweep-1 column is an intermediate state superseded by the 'final' column in the same table; no committed artefact retains it, so it is classed historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED (final table)"
+      },
+      "claim_text": "| text 3of3 recall | 0.8207 | 0.8391 | **0.8644** | +0.0437 |",
+      "values": [
+        {
+          "quantity": "recall@20 m, condition text 3of3, pre-recovery",
+          "value_verbatim": "0.8207",
+          "value_parsed": 0.8207,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "recall@20 m, condition text 3of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.8391",
+          "value_parsed": 0.8391,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "recall@20 m, condition text 3of3, final (post sweeps A and B)",
+          "value_verbatim": "0.8644",
+          "value_parsed": 0.8644,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "recall@20 m net change, condition text 3of3, final minus pre-recovery",
+          "value_verbatim": "+0.0437",
+          "value_parsed": 0.0437,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].recall"
+            },
+            {
+              "name": "b",
+              "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].recall"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery column anchors to the preserved 2026-06-05 evaluation named at line 192-193 of this document. The post-sweep-1 column is an intermediate state superseded by the 'final' column in the same table; no committed artefact retains it, so it is classed historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          150,
+          150
+        ],
+        "section": "Changelog — 2026-07-30 Deep sweeps EXECUTED (final table)"
+      },
+      "claim_text": "| text 3of3 MCC | 0.4500 | 0.4298 | **0.4318** | −0.0182 |",
+      "values": [
+        {
+          "quantity": "tile-level MCC, condition text 3of3, pre-recovery",
+          "value_verbatim": "0.4500",
+          "value_parsed": 0.45,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json#$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, condition text 3of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.4298",
+          "value_parsed": 0.4298,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile-level MCC, condition text 3of3, final (post sweeps A and B)",
+          "value_verbatim": "0.4318",
+          "value_parsed": 0.4318,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC net change, condition text 3of3, final minus pre-recovery",
+          "value_verbatim": "−0.0182",
+          "value_parsed": -0.0182,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+              "path": "$.summary.tile_classification.mcc.point"
+            },
+            {
+              "name": "b",
+              "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+              "path": "$.summary.tile_classification.mcc.point"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery column anchors to the preserved 2026-06-05 evaluation named at line 192-193 of this document. The post-sweep-1 column is an intermediate state superseded by the 'final' column in the same table; no committed artefact retains it, so it is classed historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "Changelog — 2026-07-30 Scope extension registered"
+      },
+      "claim_text": "deeper sweep of the 33-tile residue",
+      "values": [
+        {
+          "quantity": "residue tiles registered for the deeper sweep",
+          "value_verbatim": "33",
+          "value_parsed": 33,
+          "unit": null,
+          "kind": "count",
+          "path": "$.registered_total",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results-deep.json",
+        "path": "$.registered_total"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          163,
+          166
+        ],
+        "section": "Changelog — 2026-07-30 Scope extension registered"
+      },
+      "claim_text": "Context: the patcher's ladder is 3 tier-1 + 3 tier-2 attempts\n(`MAX_SYNC_RETRIES = 3`) — shallower than the 10–15-attempt run-time\nladder the residue tiles survived originally — and yesterday's 10\nsafe-mode-only recoveries show tier 2 has real yield.",
+      "values": [
+        {
+          "quantity": "patcher ladder depth, tier 1",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "MAX_SYNC_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "patcher ladder depth, tier 2",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "MAX_SYNC_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "MAX_SYNC_RETRIES constant in scripts/lib_batch_api.py",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "MAX_SYNC_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "run-time retry ladder depth (lower bound)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "run-time retry ladder depth (upper bound)",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tiles recovered in safe mode by the main recovery run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/recovery-rerun-results.json#$.totals.recovered_safe_mode",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_batch_api.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (a module constant) is legitimate per instrument v1.1; the constant sits at scripts/lib_batch_api.py line 100. The 10-15-attempt run-time ladder is a characterisation of the original detection runs' retry behaviour with no single committed parameter, so it is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          166,
+          170
+        ],
+        "section": "Changelog — 2026-07-30 Scope extension registered"
+      },
+      "claim_text": "Extension, fixed\nbefore launch: **sweep A** re-runs the 33 residue tiles at\n`max_attempts = 10` (10 × original parameters, then 10 × safe mode\n2048); any survivors get **sweep B** at `max_attempts = 5` with the\nsafe-mode budget halved to **1024 tokens**.",
+      "values": [
+        {
+          "quantity": "residue tiles re-run by sweep A",
+          "value_verbatim": "33",
+          "value_parsed": 33,
+          "unit": null,
+          "kind": "count",
+          "path": "$.registered_total",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep A max_attempts",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep A attempts at original parameters",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep A attempts at safe mode",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "safe-mode max_output_tokens, sweep A (library default)",
+          "value_verbatim": "2048",
+          "value_parsed": 2048,
+          "unit": "tokens",
+          "kind": "parameter",
+          "path": "scripts/lib_batch_api.py#SAFE_MODE_MAX_OUTPUT_TOKENS",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep B max_attempts",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "reports/verification/recovery-rerun-results-deep-b.json#$.max_attempts_override",
+          "method": "read"
+        },
+        {
+          "quantity": "sweep B safe-mode max_output_tokens",
+          "value_verbatim": "1024",
+          "value_parsed": 1024,
+          "unit": "tokens",
+          "kind": "parameter",
+          "path": "reports/verification/recovery-rerun-results-deep-b.json#$.safe_tokens_override",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results-deep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Sweep A left safe_tokens at the library default ($.safe_tokens_override is null in reports/verification/recovery-rerun-results-deep.json), so 2048 anchors to the SAFE_MODE_MAX_OUTPUT_TOKENS constant at scripts/lib_batch_api.py line 107."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          173,
+          173
+        ],
+        "section": "Changelog — 2026-07-30 Scope extension registered"
+      },
+      "claim_text": "Worst case ≈ US$2.",
+      "values": [
+        {
+          "quantity": "worst-case cost estimate for the deeper sweeps (approximate)",
+          "value_verbatim": "≈ US$2",
+          "value_parsed": 2,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Pre-execution estimate; no committed artefact records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288"
+      },
+      "claim_text": "EXECUTED: 255/288 recovered",
+      "values": [
+        {
+          "quantity": "dead tiles recovered by the main recovery run",
+          "value_verbatim": "255",
+          "value_parsed": 255,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered_safe_mode"
+            }
+          ]
+        },
+        {
+          "quantity": "registered dead tiles, E71 recovery rerun",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.registered_total",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Main-run figure for this changelog entry; the later entry at line 125 records 265/288 as the final recovery."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          180
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288"
+      },
+      "claim_text": "All § 6 gates passed in order (PI approval with the standing flex\ninstruction; dry-run 15/15 green; `/audit-config` READY 12/12).",
+      "values": [
+        {
+          "quantity": "dry-run gates passed",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "dry-run gates assessed",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "audit-config requirements met",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "audit-config requirements assessed",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Gate counts equal the number of dispatched worklist passes; no committed /audit-config artefact for this run was located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          180,
+          181
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288"
+      },
+      "claim_text": "Run:\n6-way unit parallelism, `gemini-3-flash-preview`, flex tier throughout.",
+      "values": [
+        {
+          "quantity": "unit parallelism (concurrent workers) used for the recovery run",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "reports/verification/recovery-rerun-results.json records service_tier but no worker count; no other committed artefact for this run records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          185
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288"
+      },
+      "claim_text": "**255/288 tiles recovered** (245 at original parameters + 10 safe-mode);\n**33 permanently failed** after both tiers (deterministic truncation\nresidue, recorded per § 4 — the E70 precedent generalises); 0 unit\nerrors.",
+      "values": [
+        {
+          "quantity": "dead tiles recovered by the main recovery run",
+          "value_verbatim": "255",
+          "value_parsed": 255,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/recovery-rerun-results.json",
+              "path": "$.totals.recovered_safe_mode"
+            }
+          ]
+        },
+        {
+          "quantity": "registered dead tiles, E71 recovery rerun",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.registered_total",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles recovered at original parameters, main recovery run",
+          "value_verbatim": "245",
+          "value_parsed": 245,
+          "unit": null,
+          "kind": "count",
+          "path": "$.totals.recovered",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles recovered in safe mode, main recovery run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.totals.recovered_safe_mode",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles still failing after both tiers, main recovery run",
+          "value_verbatim": "33",
+          "value_parsed": 33,
+          "unit": null,
+          "kind": "count",
+          "path": "$.totals.still_failed",
+          "method": "read"
+        },
+        {
+          "quantity": "unit errors, main recovery run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.totals.unit_errors",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          190
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288"
+      },
+      "claim_text": "consensus re-materialised\n(image 1of3: 802 → 885 clusters; text 3of3: 745 → 781);",
+      "values": [
+        {
+          "quantity": "consensus clusters, image 1of3, pre-recovery",
+          "value_verbatim": "802",
+          "value_parsed": 802,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus clusters, image 1of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "885",
+          "value_parsed": 885,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "consensus clusters, text 3of3, pre-recovery",
+          "value_verbatim": "745",
+          "value_parsed": 745,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/pre-recovery-2026-07-30/consensus__flash-high-text-n5_text-t0.0/consensus_t3.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus clusters, text 3of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "781",
+          "value_parsed": 781,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "archive/pre-recovery-2026-07-30/consensus__flash-high-image-n5_image-t0.0/consensus_t1.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery cluster counts anchor to the preserved consensus GeoJSONs under archive/pre-recovery-2026-07-30/. The post-sweep-1 counts are an intermediate state: the later changelog entry (line 139-141) records a further re-materialisation after sweep A, and no committed artefact retains the intermediate counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          195
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288"
+      },
+      "claim_text": "manifests regenerated (15 pass rows to\npost-recovery counts, three now fully `ok`; exactly the two live\ncondition rows re-scored)",
+      "values": [
+        {
+          "quantity": "manifest pass rows regenerated to post-recovery counts",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/recovery-rerun-results.json#len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "recovery passes whose manifest status is now fully ok",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "live condition rows re-scored",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'fully ok' count needs a scripted count of $.passes[*].status over the 15 recovery passes in reports/verification/recovery-rerun-results.json. The two re-scored condition rows are pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3 and pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3 in results/conditions-manifest.json, but a count of 2 has no single locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          201,
+          201
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288 (outcome table)"
+      },
+      "claim_text": "| image 1of3 | 0.4883 → **0.4985** | 0.3766 → 0.3718 | 0.6943 → **0.7563** | 0.4848 → 0.4671 |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition image 1of3, pre-recovery",
+          "value_verbatim": "0.4883",
+          "value_parsed": 0.4883,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition image 1of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.4985",
+          "value_parsed": 0.4985,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "precision@20 m, condition image 1of3, pre-recovery",
+          "value_verbatim": "0.3766",
+          "value_parsed": 0.3766,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision@20 m, condition image 1of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.3718",
+          "value_parsed": 0.3718,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "recall@20 m, condition image 1of3, pre-recovery",
+          "value_verbatim": "0.6943",
+          "value_parsed": 0.6943,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "recall@20 m, condition image 1of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.7563",
+          "value_parsed": 0.7563,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile-level MCC, condition image 1of3, pre-recovery",
+          "value_verbatim": "0.4848",
+          "value_parsed": 0.4848,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, condition image 1of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.4671",
+          "value_parsed": 0.4671,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Before-arrow values are the preserved 2026-06-05 pre-recovery evaluation. After-arrow values are the post-sweep-1 state, superseded by the final table at lines 143-150 of this document; no committed artefact retains them, so they are classed historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          202
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288 (outcome table)"
+      },
+      "claim_text": "| text 3of3 | 0.6051 → **0.6003** | 0.4792 → 0.4673 | 0.8207 → **0.8391** | 0.4500 → 0.4298 |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition text 3of3, pre-recovery",
+          "value_verbatim": "0.6051",
+          "value_parsed": 0.6051,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition text 3of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.6003",
+          "value_parsed": 0.6003,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "precision@20 m, condition text 3of3, pre-recovery",
+          "value_verbatim": "0.4792",
+          "value_parsed": 0.4792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision@20 m, condition text 3of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.4673",
+          "value_parsed": 0.4673,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "recall@20 m, condition text 3of3, pre-recovery",
+          "value_verbatim": "0.8207",
+          "value_parsed": 0.8207,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "recall@20 m, condition text 3of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.8391",
+          "value_parsed": 0.8391,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile-level MCC, condition text 3of3, pre-recovery",
+          "value_verbatim": "0.4500",
+          "value_parsed": 0.45,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, condition text 3of3, post-sweep-1 (intermediate)",
+          "value_verbatim": "0.4298",
+          "value_parsed": 0.4298,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Before-arrow values are the preserved 2026-06-05 pre-recovery evaluation. After-arrow values are the post-sweep-1 state, superseded by the final table at lines 143-150 of this document; no committed artefact retains them, so they are classed historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          205
+        ],
+        "section": "Changelog — 2026-07-30 EXECUTED 255/288"
+      },
+      "claim_text": "**The text cell's F1\ndeclined 0.005, against the \"rise or hold\" prediction**",
+      "values": [
+        {
+          "quantity": "F1@20 m decline, condition text 3of3, pre-recovery to post-sweep-1",
+          "value_verbatim": "0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Delta between the pre-recovery F1 of 0.6051 and the post-sweep-1 F1 of 0.6003; the post-sweep-1 value is superseded by the final table (0.6109) and is not retained in any committed artefact, so the delta cannot be recomputed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          219,
+          222
+        ],
+        "section": "Changelog — 2026-07-30 Model column corrected"
+      },
+      "claim_text": "Source verification of every affected pass's meta showed the six\n`n1-outstanding-384` \"pro-\\*\" passes are the **E57 mis-dispatched Flash\ncorners** — `gemini-3-flash-preview` in all four identity fields — not\nPro; the original publication mislabelled them from the directory name.",
+      "values": [
+        {
+          "quantity": "n1-outstanding-384 'pro-*' passes verified as Flash corners",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes[?(@.group=='n1-outstanding-flash-corners')]",
+          "method": "read"
+        },
+        {
+          "quantity": "meta identity fields recording gemini-3-flash-preview",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The four identity fields (config model, per-item model used, per-item model version, pricing) are a structural assertion about the run metas under archive/pre-recovery-2026-07-30/n1-outstanding-384__*/ ; no scalar records their number."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          227,
+          227
+        ],
+        "section": "Changelog — 2026-07-30 Model column corrected (before/after)"
+      },
+      "claim_text": "| cost estimate ~US$10–25 (worst ~$30) | **~US$2–4 (worst ~$5)** |",
+      "values": [
+        {
+          "quantity": "superseded cost estimate for the rerun (lower bound, approximate)",
+          "value_verbatim": "~US$10",
+          "value_parsed": 10,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "superseded cost estimate for the rerun (upper bound)",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "superseded worst-case cost estimate (approximate)",
+          "value_verbatim": "~$30",
+          "value_parsed": 30,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "corrected cost estimate for the rerun (lower bound, approximate)",
+          "value_verbatim": "~US$2",
+          "value_parsed": 2,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "corrected cost estimate for the rerun (upper bound)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "corrected worst-case cost estimate (approximate)",
+          "value_verbatim": "~$5",
+          "value_parsed": 5,
+          "unit": "US$",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Before/after correction row: the before-column figures are the superseded Pro-priced estimate; the after-column figures restate § 5 and, like it, are pre-execution estimates with no committed artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          231,
+          232
+        ],
+        "section": "Changelog — 2026-07-30 Model column corrected"
+      },
+      "claim_text": "the only Pro ever run is\n`gemini-3.1-pro-preview` (40 passes).",
+      "values": [
+        {
+          "quantity": "passes run at gemini-3.1-pro-preview, project-wide",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes[?(@.model_used=='gemini-3.1-pro-preview')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": "len:$.passes[?(@.model_used=='gemini-3.1-pro-preview')]"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          234
+        ],
+        "section": "Changelog — 2026-07-30 Model column corrected"
+      },
+      "claim_text": "What did NOT change: pass membership, dead-tile\ncounts (288/15)",
+      "values": [
+        {
+          "quantity": "dead tiles, E71 recovery rerun (total)",
+          "value_verbatim": "288",
+          "value_parsed": 288,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_dead_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "passes carrying dead tiles, E71 recovery rerun",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/recovery-rerun-results.json#len:$.results",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/recovery-rerun-worklists.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    }
+  ]
+}

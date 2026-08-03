@@ -1,0 +1,1481 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verifier-silent-drop-root-cause-2026-05-03.md",
+    "git_blob": "dbe4deeb6bc3",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          10
+        ],
+        "section": "Executive summary"
+      },
+      "claim_text": "when a worker returns an empty result\ndict (because `lib_verifier._call_verifier_api()` exhausted its three retries)",
+      "values": [
+        {
+          "quantity": "verifier per-call retry budget (_MAX_RETRIES), scripts/lib_verifier.py",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "_MAX_RETRIES",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_verifier.py",
+        "path": "_MAX_RETRIES"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b066] Scope decisions for this dated (2026-05-03) root-cause report: line-number citations, commit hashes, failure-mode row numbers, candidate ids (cand_01563), HTTP status-code names (429/503/5xx) and code-semantic tokens (exit codes 'exits 0'/'exit 1', 'gap > 0', 'failed_count += 1', format specifiers) are excluded per instrument rule 5. Prospective sizing estimates in the Recommendations section (LoC, effort in days, proposed retry budgets) ARE extracted with method anchor-unknown. The report describes pre-fix code state while anchors point at the current working tree, so triage should expect post-report code movement."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          16
+        ],
+        "section": "Executive summary"
+      },
+      "claim_text": "There is\n**no post-run cardinality check** comparing manifest size to results size, so\nthe driver exits 0 even when 460 candidates are missing.",
+      "values": [
+        {
+          "quantity": "missing candidates in the worst-affected verifier cell (flash-high-image-n5/image-t0.0/verified-v1-n10)",
+          "value_verbatim": "460",
+          "value_parsed": 460,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cleanup_history[0].initial_missing",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+        "path": "$.cleanup_history[0].initial_missing"
+      },
+      "method": "read",
+      "notes": "The cell is not named here; open question 2 (lines 281-284) of the same document identifies it as flash-high-image-n5/image-t0.0/verified-v1-n10, whose probabilities.json records the pre-cleanup missing count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          20
+        ],
+        "section": "Executive summary"
+      },
+      "claim_text": "the verifier's per-call retry policy\nis markedly weaker than the proposer's (`_MAX_RETRIES = 3` with 2/4/8 s\nbackoff and a single bare `except Exception`)",
+      "values": [
+        {
+          "quantity": "verifier per-call retry budget (_MAX_RETRIES)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "_MAX_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, first interval",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, second interval",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, third interval",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[2]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_verifier.py",
+        "path": "_RETRY_BACKOFF_SECONDS"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          22
+        ],
+        "section": "Executive summary"
+      },
+      "claim_text": "no `parse_response_with_repair()` three-tier JSON\nrecovery",
+      "values": [
+        {
+          "quantity": "repair tiers in parse_response_with_repair()",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "parse_response_with_repair",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_batch_api.py",
+        "path": "parse_response_with_repair"
+      },
+      "method": "read",
+      "notes": "Tier count asserted of lib_batch_api.parse_response_with_repair(); the three tiers are enumerated at lines 122-123 of this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          23
+        ],
+        "section": "Executive summary"
+      },
+      "claim_text": "(proposer differentiates 429\n/ 503 / DeadlineExceeded with up to 15 retries and minute-scale waits)",
+      "values": [
+        {
+          "quantity": "proposer retry budget (max_retries default), scripts/4_detect_mounds_batch.py",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "max_retries",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": "max_retries"
+      },
+      "method": "read",
+      "notes": "HTTP status-code names (429 / 503) treated as error-class identifiers, not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          30
+        ],
+        "section": "Executive summary"
+      },
+      "claim_text": "**Smallest viable fix:** add `metadata_tracker.log_failure(...)` with\n`candidate_id` in the `as_completed()` loop in `_verify_realtime()` (one call\nsite, ~5 lines)",
+      "values": [
+        {
+          "quantity": "call sites to change for the smallest viable fix",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "lines of code for the smallest viable fix",
+          "value_verbatim": "~5",
+          "value_parsed": 5,
+          "unit": "LoC",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "Failure-mode taxonomy"
+      },
+      "claim_text": "| 1 | HTTP 429 rate limit | `Exception` containing `\"429\"` / `ResourceExhausted` | Caught by bare `except Exception` (`lib_verifier.py:938`); error metadata logged via `create_error_metadata()`; retry up to 3× with 2/4/8 s backoff. After 3rd failure: `return None`. | Candidate absent from `results` | **No.** Aggregate `parse_failures` / per-attempt error metadata exists in `run.meta.json`'s `response_metadata[]` (when `_store_per_item=True`), but the candidate identity is not appended to `failed_items[]`. |",
+      "values": [
+        {
+          "quantity": "verifier per-call retry budget (_MAX_RETRIES)",
+          "value_verbatim": "3×",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "_MAX_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, first interval",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, second interval",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, third interval",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "terminal attempt index at which the verifier returns None",
+          "value_verbatim": "3rd",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "_MAX_RETRIES",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_verifier.py",
+        "path": "_RETRY_BACKOFF_SECONDS"
+      },
+      "method": "read",
+      "notes": "Taxonomy row 1. Failure-mode row number, the '429' string and the lib_verifier.py:938 line citation are out of scope (rule 5). The '3rd failure' ordinal restates the same _MAX_RETRIES constant."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "Failure-mode taxonomy"
+      },
+      "claim_text": "| 4 | JSON parse failure (truncated, malformed, prose-wrapped) | `json.JSONDecodeError` raised at `lib_verifier.py:904` | Caught at line 918; `parse_success=False`, `parse_error` populated; retry up to 3× with 2/4/8 s backoff; after 3rd failure: `return None`. | Candidate absent from `results` | **No.** `parse_failures` aggregate count is incremented, the per-attempt metadata records `parse_error`, but no `failed_items[]` entry. |",
+      "values": [
+        {
+          "quantity": "verifier per-call retry budget (_MAX_RETRIES)",
+          "value_verbatim": "3×",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "_MAX_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, first interval",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, second interval",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, third interval",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "terminal attempt index at which the verifier returns None",
+          "value_verbatim": "3rd",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "_MAX_RETRIES",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_verifier.py",
+        "path": "_RETRY_BACKOFF_SECONDS"
+      },
+      "method": "read",
+      "notes": "Taxonomy row 4. Line citations (904, 918) out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "Failure-mode taxonomy"
+      },
+      "claim_text": "| 10 | Schema-validation (missing `mound_probability`) | None — `verdict.get(\"mound_probability\", 0.0)` is permissive | Result is recorded with prob=0.0 and empty fields | Candidate present with prob=0 (NOT a silent drop) | n/a |",
+      "values": [
+        {
+          "quantity": "default mound_probability substituted when the verdict omits the key",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "verdict.get(\"mound_probability\", 0.0)",
+          "method": "read"
+        },
+        {
+          "quantity": "recorded probability for a schema-invalid verdict",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "verdict.get(\"mound_probability\", 0.0)",
+          "method": "read"
+        },
+        {
+          "quantity": "probability with which the candidate is present in results",
+          "value_verbatim": "prob=0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "verdict.get(\"mound_probability\", 0.0)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_verifier.py",
+        "path": "verdict.get(\"mound_probability\", 0.0)"
+      },
+      "method": "read",
+      "notes": "Taxonomy row 10. All three numerals restate the same permissive default in scripts/lib_verifier.py. Doubt flagged: these are code defaults rather than study metrics, included per the instrument's inclusive rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "Failure-mode taxonomy"
+      },
+      "claim_text": "| 12 | Process kill / OOM mid-run | n/a | Incremental save every 100 candidates (atomic via tmp+rename); next launch resumes via existing-results merge | Last incomplete batch (≤ 100 candidates) absent until resumed | n/a — by design, but is recoverable through resume |",
+      "values": [
+        {
+          "quantity": "incremental-save interval in candidates, scripts/run_pv.py",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "parameter",
+          "path": "completed % 100 == 0",
+          "method": "read"
+        },
+        {
+          "quantity": "maximum candidates in the last unsaved batch",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "parameter",
+          "path": "completed % 100 == 0",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_pv.py",
+        "path": "completed % 100 == 0"
+      },
+      "method": "read",
+      "notes": "Taxonomy row 12. Both numerals restate the same save interval."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          64
+        ],
+        "section": "Failure-mode taxonomy"
+      },
+      "claim_text": "Modes\n1–4 were the dominant ones in the affected cells, judging by the gap=57 cell\ninspected (`outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json`)\nwhich has `parse_failures: 1147`, `empty_responses: 1147`, `finish_reason_counts.error: 1147`,\nyet `failed_items: []`, `completed_items: []`.",
+      "values": [
+        {
+          "quantity": "completeness gap in the inspected cell (e47-propose-brief/verified/flash-high-text-1of5)",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "parse_failures, flash-high-text-1of5 verifier run",
+          "value_verbatim": "1147",
+          "value_parsed": 1147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.parse_failures",
+          "method": "read"
+        },
+        {
+          "quantity": "empty_responses, flash-high-text-1of5 verifier run",
+          "value_verbatim": "1147",
+          "value_parsed": 1147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.empty_responses",
+          "method": "read"
+        },
+        {
+          "quantity": "finish_reason_counts.error, flash-high-text-1of5 verifier run",
+          "value_verbatim": "1147",
+          "value_parsed": 1147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.finish_reason_counts.error",
+          "method": "read"
+        },
+        {
+          "quantity": "failed_items entries, flash-high-text-1of5 verifier run (asserted empty)",
+          "value_verbatim": "[]",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.execution_stats.failed_items",
+          "method": "read"
+        },
+        {
+          "quantity": "completed_items entries, flash-high-text-1of5 verifier run (asserted empty)",
+          "value_verbatim": "[]",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.execution_stats.completed_items",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json",
+        "path": "$.execution_stats.parse_failures"
+      },
+      "method": "read",
+      "notes": "Anchored to the run.meta.json the document itself names. The gap=57 figure has no artefact locator in this document. Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report). The two empty-array assertions are recorded as counts of 0; doubt flagged since '[]' is not a numeral."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Code-path map"
+      },
+      "claim_text": "`_MAX_RETRIES = 3`, `_RETRY_BACKOFF_SECONDS = [2, 4, 8]`",
+      "values": [
+        {
+          "quantity": "verifier per-call retry budget (_MAX_RETRIES)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "_MAX_RETRIES",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, first interval",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, second interval",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, third interval",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[2]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_verifier.py",
+        "path": "_RETRY_BACKOFF_SECONDS"
+      },
+      "method": "read",
+      "notes": "Silent-drop mechanism C. The 'Line 73-74' citation is out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "Code-path map"
+      },
+      "claim_text": "- `max_retries=15` default (line 673)",
+      "values": [
+        {
+          "quantity": "proposer retry budget (max_retries default), scripts/4_detect_mounds_batch.py",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "max_retries",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": "max_retries"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "Code-path map"
+      },
+      "claim_text": "503 / `InternalServerError` → 30 ± 10 s wait, separate counter",
+      "values": [
+        {
+          "quantity": "proposer server-error backoff base wait",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "backoff_seconds = 30 + random.uniform(0, 10)",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer server-error backoff jitter range",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "backoff_seconds = 30 + random.uniform(0, 10)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": "backoff_seconds = 30 + random.uniform(0, 10)"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "Code-path map"
+      },
+      "claim_text": "`DeadlineExceeded` → 30 ± 10 s wait, separate counter",
+      "values": [
+        {
+          "quantity": "proposer timeout backoff base wait",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "backoff_seconds = 30 + random.uniform(0, 10)",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer timeout backoff jitter range",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "backoff_seconds = 30 + random.uniform(0, 10)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": "backoff_seconds = 30 + random.uniform(0, 10)"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          125
+        ],
+        "section": "Code-path map"
+      },
+      "claim_text": "Final parse goes through `parse_response_with_repair()` (line 580 — three\n    tiers: trailing-comma → json5 → longest-valid-prefix), which handles\n    ~92 % of historical malformed responses per the audit on the canonical\n    runs.",
+      "values": [
+        {
+          "quantity": "repair tiers in parse_response_with_repair()",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "parse_response_with_repair",
+          "method": "read"
+        },
+        {
+          "quantity": "share of historical malformed responses recovered by the three-tier repair",
+          "value_verbatim": "~92 %",
+          "value_parsed": 92.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_batch_api.py",
+        "path": "parse_response_with_repair"
+      },
+      "method": "read",
+      "notes": "The ~92 % figure is attributed only to 'the audit on the canonical runs'; no audit artefact was identified within anchor-identification scope. The same figure appears in prose at docs/notes/working-notes.md (parser fix, commit e3aef6fa), which rule 2 forbids using as an anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "Comparison with proposer pipeline"
+      },
+      "claim_text": "| Retry budget | `max_retries=15` (line 673) | `_MAX_RETRIES = 3` (lib_verifier.py:73) |",
+      "values": [
+        {
+          "quantity": "proposer retry budget (max_retries default)",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "max_retries",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier per-call retry budget (_MAX_RETRIES)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/lib_verifier.py#_MAX_RETRIES",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": "max_retries"
+      },
+      "method": "read",
+      "notes": "Comparison-table row. Second value uses a cross-file locator (v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          151
+        ],
+        "section": "Comparison with proposer pipeline"
+      },
+      "claim_text": "| Backoff strategy | Exponential with jitter, capped at `MAX_BACKOFF_SECONDS`, minute-scale | Fixed 2 / 4 / 8 s |",
+      "values": [
+        {
+          "quantity": "verifier retry backoff, first interval",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, second interval",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier retry backoff, third interval",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "s",
+          "kind": "parameter",
+          "path": "_RETRY_BACKOFF_SECONDS[2]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_verifier.py",
+        "path": "_RETRY_BACKOFF_SECONDS"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          154
+        ],
+        "section": "Comparison with proposer pipeline"
+      },
+      "claim_text": "| JSON parse repair | `parse_response_with_repair()` 3-tier (line 580) | `json.loads(txt)` only (lib_verifier.py:904) |",
+      "values": [
+        {
+          "quantity": "repair tiers in parse_response_with_repair()",
+          "value_verbatim": "3-tier",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "parse_response_with_repair",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_batch_api.py",
+        "path": "parse_response_with_repair"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "### Layer 1 — Surfacing fix (smallest viable; ~5 LoC + tests)",
+      "values": [
+        {
+          "quantity": "lines of code for Layer 1",
+          "value_verbatim": "~5",
+          "value_parsed": 5,
+          "unit": "LoC",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          201,
+          203
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "**Estimated effort:** half a day, including test updates. Tests in\n`tests/test_run_pv.py` already exist for cleanup; only one or two new tests\nare needed",
+      "values": [
+        {
+          "quantity": "estimated effort for Layer 1",
+          "value_verbatim": "half a day",
+          "value_parsed": 0.5,
+          "unit": "day",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "new tests needed for Layer 1, lower bound",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "new tests needed for Layer 1, upper bound",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          205
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "### Layer 2 — Surfacing + retry-parity (medium; ~50–100 LoC)",
+      "values": [
+        {
+          "quantity": "lines of code for Layer 2, lower bound",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "LoC",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "lines of code for Layer 2, upper bound",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "LoC",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          213
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "Adopt `parse_response_with_repair()` from `lib_batch_api.py` in\n   `_call_verifier_api()` — recovers ~92 % of malformed-JSON responses\n   per the audit",
+      "values": [
+        {
+          "quantity": "share of malformed-JSON responses recovered by parse_response_with_repair()",
+          "value_verbatim": "~92 %",
+          "value_parsed": 92.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Second occurrence of the ~92 % figure (first at lines 122-125). Attributed to 'the audit'; no artefact identified within anchor-identification scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          217,
+          218
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "Increase `_MAX_RETRIES` to 10–15 with longer waits for rate-limit and\n   server-error classes.",
+      "values": [
+        {
+          "quantity": "proposed verifier retry budget, lower bound",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "proposed verifier retry budget, upper bound",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          219,
+          220
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "Add `MAX_TOKENS` finish-reason check; if hit, retry once with\n   `max_output_tokens` reduced",
+      "values": [
+        {
+          "quantity": "proposed retries after a MAX_TOKENS finish reason",
+          "value_verbatim": "once",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          234
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "**Estimated effort:** 2–3 days, including porting tests for the parse\nrepair path and adding new retry-class tests.",
+      "values": [
+        {
+          "quantity": "estimated effort for Layer 2, lower bound",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated effort for Layer 2, upper bound",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          236,
+          236
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "### Layer 3 — Pipeline-level assertion + audit-on-write (large; ~150 LoC)",
+      "values": [
+        {
+          "quantity": "lines of code for Layer 3",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "LoC",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          244,
+          244
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "either (a) auto-invoke cleanup with `--max-attempts 3 --safe-mode-tokens`,",
+      "values": [
+        {
+          "quantity": "cleanup --max-attempts value, scripts/run_pv.py CLI default",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "--max-attempts",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_pv.py",
+        "path": "--max-attempts"
+      },
+      "method": "read",
+      "notes": "Cited inside a recommendation, but the value coincides with the existing --max-attempts default in scripts/run_pv.py, so anchored there rather than left unanchored. Not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          261,
+          262
+        ],
+        "section": "Recommendations for fix scope"
+      },
+      "claim_text": "**Estimated effort:** 3–5 days, including the cardinality assertion in\nboth real-time and batch paths, the sidecar schema, and tests.",
+      "values": [
+        {
+          "quantity": "estimated effort for Layer 3, lower bound",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated effort for Layer 3, upper bound",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prospective sizing/effort estimate for a proposed fix — no committed artefact can resolve it; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          268,
+          268
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "1. **Empirically, what is the modal failure mode in the 30 affected cells?**",
+      "values": [
+        {
+          "quantity": "verifier cells affected by the silent-drop gap",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          269,
+          272
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "The gap=57 cell inspected has `parse_failures: 1147` and\n   `empty_responses: 1147` (suspicious that they are exactly equal — could\n   be the same 1147 individual API attempts being double-counted, or\n   coincidence).",
+      "values": [
+        {
+          "quantity": "completeness gap in the inspected cell (flash-high-text-1of5)",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "parse_failures, flash-high-text-1of5 verifier run",
+          "value_verbatim": "1147",
+          "value_parsed": 1147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.parse_failures",
+          "method": "read"
+        },
+        {
+          "quantity": "empty_responses, flash-high-text-1of5 verifier run",
+          "value_verbatim": "1147",
+          "value_parsed": 1147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.empty_responses",
+          "method": "read"
+        },
+        {
+          "quantity": "hypothesised distinct API attempts underlying both counters",
+          "value_verbatim": "1147",
+          "value_parsed": 1147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.parse_failures",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json",
+        "path": "$.execution_stats.parse_failures"
+      },
+      "method": "read",
+      "notes": "Cell identified at line 62 of this document. Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          272,
+          273
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "A scripted sweep over the 30 cells'\n   `run.meta.json:execution_stats` would let us distinguish",
+      "values": [
+        {
+          "quantity": "verifier cells affected by the silent-drop gap",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          276,
+          279
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "Recommended: a one-off diagnostic script\n   that aggregates `(parse_failures, empty_responses, safety_blocks,\n   retries_*)` across the 30 cells and correlates with their gap\n   magnitude.",
+      "values": [
+        {
+          "quantity": "verifier cells affected by the silent-drop gap",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          281,
+          284
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "2. **Why are some cells `gap=1` and others `gap=460`?** Random concurrent\n   noise should give Poisson-ish counts; gap=460 (out of 802) on\n   `flash-high-image-n5/image-t0.0/verified-v1-n10` is 57.4 %, far higher\n   than any other cell.",
+      "values": [
+        {
+          "quantity": "smallest per-cell completeness gap across the affected cells",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "missing candidates, flash-high-image-n5/image-t0.0/verified-v1-n10",
+          "value_verbatim": "460",
+          "value_parsed": 460,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cleanup_history[0].initial_missing",
+          "method": "read"
+        },
+        {
+          "quantity": "missing candidates, flash-high-image-n5/image-t0.0/verified-v1-n10 (restated)",
+          "value_verbatim": "460",
+          "value_parsed": 460,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cleanup_history[0].initial_missing",
+          "method": "read"
+        },
+        {
+          "quantity": "expected candidate results, flash-high-image-n5/image-t0.0/verified-v1-n10",
+          "value_verbatim": "802",
+          "value_parsed": 802,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_results",
+          "method": "read"
+        },
+        {
+          "quantity": "missing share of the cell, flash-high-image-n5/image-t0.0/verified-v1-n10",
+          "value_verbatim": "57.4",
+          "value_parsed": 57.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+              "path": "$.cleanup_history[0].initial_missing"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+              "path": "$.total_results"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/probabilities.json",
+        "path": "$.cleanup_history[0].initial_missing"
+      },
+      "method": "read",
+      "notes": "Operands kept as read values in their own right (v1.2 amendment 1); only the 57.4 % share is arithmetic. The gap=1 figure has no artefact locator here — Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          296,
+          297
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "(none of the 30 cells in the audit\n   are confirmed batch runs from the table;",
+      "values": [
+        {
+          "quantity": "verifier cells affected by the silent-drop gap",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          309,
+          310
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "but a runtime confirmation across the 30 affected\n   cells' meta files would be reassuring.",
+      "values": [
+        {
+          "quantity": "verifier cells affected by the silent-drop gap",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          323,
+          324
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "in case the fix can be applied retroactively to the 30\n   already-affected cells without re-running cleanup.",
+      "values": [
+        {
+          "quantity": "verifier cells affected by the silent-drop gap",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          326,
+          327
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "6. **Why are `parse_failures` and `empty_responses` identical (both 1147)\n   in the gap=57 cell?**",
+      "values": [
+        {
+          "quantity": "parse_failures and empty_responses, flash-high-text-1of5 verifier run (asserted identical)",
+          "value_verbatim": "1147",
+          "value_parsed": 1147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.parse_failures",
+          "method": "read"
+        },
+        {
+          "quantity": "completeness gap in the inspected cell (flash-high-text-1of5)",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json",
+        "path": "$.execution_stats.parse_failures"
+      },
+      "method": "read",
+      "notes": "Source of the cell/gap figures is the sibling prose report reports/phase3a-verifier-completeness-audit-2026-05-03.md; instrument rule 2 forbids anchoring prose to prose, so left anchor-unknown for triage to chase. A post-recovery JSON exists at reports/verifier-completeness-audit-2026-05-06.json (dated after this report)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          334,
+          336
+        ],
+        "section": "Open questions"
+      },
+      "claim_text": "If double-counted, the actual\n   number of distinct failed attempts in that cell is 1147, not 2294 —\n   which changes the assumed retry-exhaustion rate.",
+      "values": [
+        {
+          "quantity": "distinct failed attempts in the gap=57 cell if the counters double-count",
+          "value_verbatim": "1147",
+          "value_parsed": 1147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution_stats.parse_failures",
+          "method": "read"
+        },
+        {
+          "quantity": "distinct failed attempts in the gap=57 cell if the counters are independent",
+          "value_verbatim": "2294",
+          "value_parsed": 2294,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json",
+              "path": "$.execution_stats.parse_failures"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json",
+              "path": "$.execution_stats.empty_responses"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json",
+        "path": "$.execution_stats.parse_failures"
+      },
+      "method": "read",
+      "notes": "Two mutually exclusive readings offered by the document; both extracted. The 2294 value is the sum of the two counters (v1.2 amendment 1: the operand value keeps method read)."
+    }
+  ]
+}

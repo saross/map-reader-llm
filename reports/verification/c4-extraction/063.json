@@ -1,0 +1,2425 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "reports/verification/phase1-gate-package.md",
+    "git_blob": "b194b43203b7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          3
+        ],
+        "section": "Header revision banner"
+      },
+      "claim_text": "erratum-drafting corrections: five verifier levels",
+      "values": [
+        {
+          "quantity": "count of unlicensed verifier-parameter levels corrected at erratum drafting",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Count of unlicensed verifier-parameter levels. Looked for a scalar in reports/verification/c2-census/licence-census.json (only $.summary.pairs / .registration / .erratum / .'registration+erratum' / .UNLICENSED exist) and in reports/verification/c2-census/observed-factor-levels.json (per-level site lists, no subset tally); the five levels are the UNLICENSED pairs verifier_model=gemini-3.5-flash, verifier_temperature=0.3, verifier_temperature=0.7, verifier_thinking_level=high and verifier_thinking_level=medium, but no committed artefact stores the count of that subset."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          9
+        ],
+        "section": "Controller/Executor block"
+      },
+      "claim_text": "**Executor**:\nClaude Fable 5 session of 2026-07-29 (orchestration, adjudication,\nspot-audit) + 25 Opus 5 agents (8 extraction, 8 verification, 8\ndischarge mapping, 1 licence triage) + 2 errata/register decomposers.",
+      "values": [
+        {
+          "quantity": "count of Opus 5 subagents deployed in Phase 1",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of extraction agents",
+          "value_verbatim": "8 extraction",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of verification agents",
+          "value_verbatim": "8 verification",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of discharge-mapping agents",
+          "value_verbatim": "8\ndischarge mapping",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of licence-triage agents",
+          "value_verbatim": "1 licence triage",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of errata/register decomposer agents",
+          "value_verbatim": "2 errata/register decomposers",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Process-accounting counts. The nearest committed trace is the `checker.model` string in reports/verification/ledgers/c1-commitments.jsonl (records 'extraction x8, verification x8' as prose inside a string field), which is not a numeric locator; nothing records the 25, 1 or 2 totals. Model names ('Claude Fable 5', 'Opus 5') treated as names, not claims, per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          11
+        ],
+        "section": "Status line"
+      },
+      "claim_text": "API spend this phase: US$0.",
+      "values": [
+        {
+          "quantity": "API spend, Phase 1 (USD)",
+          "value_verbatim": "US$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed cost artefact covers Phase 1 of the verification programme; results/family-fdr/family_fdr.metadata.json carries an api_cost_usd field for a different (Phase 2-era) analysis. [BATCH NOTE b063] Zero-spend attestations recur in this document (see also the Phase 2 start line, § 6 item 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          18
+        ],
+        "section": "§ 1 What was built — item 1 (commitments.json)"
+      },
+      "claim_text": "the lodged registration\n   decomposed into **702 atomic obligations** (515 preregistration.md,\n   81 appendix-prompts, 100 coverage; 184 factor, 162 analysis, 154\n   condition, 111 disclosure, 55 trigger, 30 hypothesis)",
+      "values": [
+        {
+          "quantity": "count of atomic obligations decomposed from the lodged registration",
+          "value_verbatim": "702",
+          "value_parsed": 702,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations sourced from preregistration.md",
+          "value_verbatim": "515",
+          "value_parsed": 515,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.source.file=='docs/methodology/preregistration/osf/preregistration.md')]",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations sourced from the prompts appendix",
+          "value_verbatim": "81",
+          "value_parsed": 81,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.source.file=='docs/methodology/preregistration/osf/preregistration-appendix-prompts.md')]",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations sourced from the coverage document",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.source.file=='docs/methodology/preregistration/osf/preregistration-coverage.md')]",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations of kind factor",
+          "value_verbatim": "184",
+          "value_parsed": 184,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.kind=='factor')]",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations of kind analysis",
+          "value_verbatim": "162",
+          "value_parsed": 162,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.kind=='analysis')]",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations of kind condition",
+          "value_verbatim": "154",
+          "value_parsed": 154,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.kind=='condition')]",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations of kind disclosure",
+          "value_verbatim": "111",
+          "value_parsed": 111,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.kind=='disclosure')]",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations of kind trigger",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.kind=='trigger')]",
+          "method": null
+        },
+        {
+          "quantity": "count of obligations of kind hypothesis",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.kind=='hypothesis')]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string 'v1.2' excluded per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          21
+        ],
+        "section": "§ 1 What was built — item 1 (trigger blocks)"
+      },
+      "claim_text": "every trigger\n   carrying the five-element block (ABSENT markers where the lodged\n   text is silent).",
+      "values": [
+        {
+          "quantity": "count of elements in the trigger rule block",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$['$defs'].triggerRule.required",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/manifest-schemas/commitments.schema.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The five-element trigger rule is defined by $defs.triggerRule in the commitments schema (required: statistic, comparison_scope, uncertainty_criterion, evaluation_moment, evaluation_corpus)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          24
+        ],
+        "section": "§ 1 What was built — item 2 (adversarial verification)"
+      },
+      "claim_text": "Adversarial verification** — eight fresh-context\n   reconstruct-and-diff verifiers found 5 missed obligations and 16\n   disputes; all adjudicated",
+      "values": [
+        {
+          "quantity": "count of fresh-context reconstruct-and-diff verifiers",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of missed obligations found by the verifiers",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of disputes raised by the verifiers",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The only source the document names is reports/verification/apparatus/c1-adjudication-2026-07-29.md, a prose markdown document; instrument rule 2 forbids anchoring prose to prose, so triage must chase the chain to an artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          26
+        ],
+        "section": "§ 1 What was built — item 3 (discharge mapping)"
+      },
+      "claim_text": "Discharge mapping** — every commitment assigned a status with\n   mandatory evidence: **402 discharged / 89 waived / 211 open**.",
+      "values": [
+        {
+          "quantity": "count of commitments with status discharged",
+          "value_verbatim": "402",
+          "value_parsed": 402,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.status=='discharged')]",
+          "method": null
+        },
+        {
+          "quantity": "count of commitments with status waived",
+          "value_verbatim": "89",
+          "value_parsed": 89,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.status=='waived')]",
+          "method": null
+        },
+        {
+          "quantity": "count of commitments with status open",
+          "value_verbatim": "211",
+          "value_parsed": 211,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.status=='open')]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          31
+        ],
+        "section": "§ 1 What was built — item 4 (execution→errata inverse census)"
+      },
+      "claim_text": "all 213 observed factor=level\n   pairs triaged: 200 licensed (43 registration, 14 erratum, 143 both);\n   **13 UNLICENSED**",
+      "values": [
+        {
+          "quantity": "count of observed factor=level pairs triaged",
+          "value_verbatim": "213",
+          "value_parsed": 213,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.pairs",
+          "method": null
+        },
+        {
+          "quantity": "count of licensed factor=level pairs",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary.registration"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary.erratum"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary['registration+erratum']"
+            }
+          ]
+        },
+        {
+          "quantity": "count of pairs licensed by registration alone",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.registration",
+          "method": null
+        },
+        {
+          "quantity": "count of pairs licensed by erratum alone",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.erratum",
+          "method": null
+        },
+        {
+          "quantity": "count of pairs licensed by both registration and erratum",
+          "value_verbatim": "143",
+          "value_parsed": 143,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary['registration+erratum']",
+          "method": null
+        },
+        {
+          "quantity": "count of UNLICENSED factor=level pairs",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The three operand values (43/14/143) are given method read with their own paths so they are not compared against the 200 derivation (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          33
+        ],
+        "section": "§ 1 What was built — item 4 (unlicensed residue)"
+      },
+      "claim_text": "reducing to three study families\n   (`flash35-pv-2x2`, `pv-diag-256`, `verifier-robustness`) plus\n   **five** verifier-parameter levels",
+      "values": [
+        {
+          "quantity": "count of unlicensed study families",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of unlicensed verifier-parameter levels",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Count of unlicensed study families. The three named families appear in reports/verification/c2-census/licence-census.json as UNLICENSED pairs family=flash35-pv-2x2, family=pv-diag-256 and family=verifier-robustness, but the census stores no scalar count of the family-keyed subset. Count of unlicensed verifier-parameter levels. Looked for a scalar in reports/verification/c2-census/licence-census.json (only $.summary.pairs / .registration / .erratum / .'registration+erratum' / .UNLICENSED exist) and in reports/verification/c2-census/observed-factor-levels.json (per-level site lists, no subset tally); the five levels are the UNLICENSED pairs verifier_model=gemini-3.5-flash, verifier_temperature=0.3, verifier_temperature=0.7, verifier_thinking_level=high and verifier_thinking_level=medium, but no committed artefact stores the count of that subset."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          35
+        ],
+        "section": "§ 1 What was built — item 4 (verifier-parameter levels enumerated)"
+      },
+      "claim_text": "(model `gemini-3.5-flash`,\n   temperatures 0.3/0.7, thinking medium/high — previously miscounted\n   as \"four\" while enumerating five; caught at erratum drafting)",
+      "values": [
+        {
+          "quantity": "verifier temperature level observed and unlicensed",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.factor_levels.verifier_temperature",
+          "method": null
+        },
+        {
+          "quantity": "verifier temperature level observed and unlicensed",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.factor_levels.verifier_temperature",
+          "method": null
+        },
+        {
+          "quantity": "count of verifier-parameter levels as previously (mis)stated by this package",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "historical",
+          "method": null
+        },
+        {
+          "quantity": "count of verifier-parameter levels the superseded text enumerated",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "historical",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/observed-factor-levels.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The two temperatures are checked as membership of the observed verifier_temperature level list; 'four' and the 'enumerating five' figure are the superseded side of an in-line correction, so both are historical (instrument rule 3). verifier_thinking_level medium/high and verifier_model gemini-3.5-flash are level names, not numeric claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "§ 1 What was built — item 4 (derivative pool slugs)"
+      },
+      "claim_text": "five derivative pool slugs licensed at run level.",
+      "values": [
+        {
+          "quantity": "count of derivative proposer-pool slugs licensed at run level",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "reports/verification/c2-census/licence-census.json records five UNLICENSED proposer_pool pairs (f3-min-text-1of10, flash35-min-text-1of10, text, text-1of5, text-consensus-5of5) but stores no scalar count of that subset, and no field records the 'licensed at run level' disposition."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          39
+        ],
+        "section": "§ 1 What was built — item 5 (ledgers)"
+      },
+      "claim_text": "**Ledgers** — `ledgers/c1-commitments.jsonl` (702 rows: 680\n   VERIFIED, 22 CORRECTED) and `ledgers/c2-execution.jsonl` (915 rows:\n   691 VERIFIED, 224 FLAGGED).",
+      "values": [
+        {
+          "quantity": "row count, C1 commitments ledger",
+          "value_verbatim": "702",
+          "value_parsed": 702,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        },
+        {
+          "quantity": "count of VERIFIED rows, C1 commitments ledger",
+          "value_verbatim": "680",
+          "value_parsed": 680,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.verdict=='VERIFIED')]",
+          "method": null
+        },
+        {
+          "quantity": "count of CORRECTED rows, C1 commitments ledger",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.verdict=='CORRECTED')]",
+          "method": null
+        },
+        {
+          "quantity": "row count, C2 execution ledger",
+          "value_verbatim": "915",
+          "value_parsed": 915,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/ledgers/c2-execution.jsonl#len:$",
+          "method": null
+        },
+        {
+          "quantity": "count of VERIFIED rows, C2 execution ledger",
+          "value_verbatim": "691",
+          "value_parsed": 691,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/ledgers/c2-execution.jsonl#len:$[?(@.verdict=='VERIFIED')]",
+          "method": null
+        },
+        {
+          "quantity": "count of FLAGGED rows, C2 execution ledger",
+          "value_verbatim": "224",
+          "value_parsed": 224,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/ledgers/c2-execution.jsonl#len:$[?(@.verdict=='FLAGGED')]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/ledgers/c1-commitments.jsonl",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both ledgers are JSONL; `$` denotes the array of records, one per line. C2 values use the cross-file locator form (instrument v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          45
+        ],
+        "section": "§ 2 Headline findings — preamble"
+      },
+      "claim_text": "All twelve findings passed through a **blind adversarial defence pass**\n(twelve fresh-context Opus 5 agents",
+      "values": [
+        {
+          "quantity": "count of headline findings put through the defence pass",
+          "value_verbatim": "twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of fresh-context defence agents",
+          "value_verbatim": "twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Only source named is reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md, a prose document (instrument rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "§ 2 Headline findings — preamble"
+      },
+      "claim_text": "Verdict: 12/12 needs-qualification, none overturned",
+      "values": [
+        {
+          "quantity": "count of findings ruled needs-qualification",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of findings in the defence pass (denominator)",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same prose-only source as the preceding claim. 'none overturned' carries no numeral here; the same fact is stated as '0 overturned' in the Defence-pass-integration changelog entry."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          51
+        ],
+        "section": "§ 2 Headline findings — meta-finding"
+      },
+      "claim_text": "the same parameter specified two or three ways, execution following one\nof them",
+      "values": [
+        {
+          "quantity": "lower bound on the number of ways a parameter is specified in the registration",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound on the number of ways a parameter is specified in the registration",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of specifications execution followed",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged (instrument § Task): 'two or three ways' is a range-valued characterisation of the lodged registration rather than a determinate figure, and the finding numbers in the same sentence are identifiers (rule 5). Included under the over-inclusion rule; a reasonable triage outcome is to prune it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          56
+        ],
+        "section": "§ 2 finding 1 — Non-circularity (CMT-0697)"
+      },
+      "claim_text": "operative sentence scopes the K=10\n   unvoted design to the main factorial",
+      "values": [
+        {
+          "quantity": "registered number of passes, K, in the unvoted decision-statistic design",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claim about what the registration specifies, so it anchors to the lodged document with path null (instrument v1.1 calibration rule), not to any executed config."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          58
+        ],
+        "section": "§ 2 finding 1 — Non-circularity (CMT-0697)"
+      },
+      "claim_text": "The K=10 design was\n   waived by E36.",
+      "values": [
+        {
+          "quantity": "registered number of passes, K, in the design waived by E36",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Second appearance of the registered K in this finding; anchored to the lodged document per the v1.1 calibration rule. The waiver itself sits in docs/methodology/preregistration/protocol-errata.md (prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          63
+        ],
+        "section": "§ 2 finding 2 — § 3.1 inference plan"
+      },
+      "claim_text": "eight-hypothesis BH-FDR family was never constituted (a single\n   project-wide 26-row confirmatory family WAS corrected jointly",
+      "values": [
+        {
+          "quantity": "registered size of the confirmatory BH-FDR hypothesis family",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "row count of the project-wide confirmatory pairwise family that was corrected",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "results/pairwise/20m/fdr/pairwise_results_fdr.json#len:$.comparisons[?(@.family=='confirmatory')]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'eight-hypothesis' figure is a registration claim (v1.1 calibration rule, path null); the 26-row family is the executed pairwise FDR artefact, given a cross-file locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          67
+        ],
+        "section": "§ 2 finding 2 — § 3.1 inference plan"
+      },
+      "claim_text": "The one-tailed rule bites\n   H2/H3/H4 + one H1 contrast only",
+      "values": [
+        {
+          "quantity": "count of H1 contrasts bitten by the registered one-tailed rule",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claim about the reach of a registered rule, so it anchors to the lodged document (v1.1 calibration rule). Included under the over-inclusion rule; the count is a reading of the registration rather than a stored value, so triage may need to re-scope it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          82
+        ],
+        "section": "§ 2 finding 4 — Prompt texts"
+      },
+      "claim_text": "all divergence is post-lodgement,\n   five commits (2026-02-02–11), four erratum'd within 24 hours",
+      "values": [
+        {
+          "quantity": "count of post-lodgement commits diverging the prompt appendix",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of those commits carrying an erratum",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "elapsed time within which the four errata were filed",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed artefact enumerates the post-lodgement appendix commits; the visible sources are git history and docs/methodology/preregistration/protocol-errata.md (prose). Dates inside the span are out of C4 scope per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          87
+        ],
+        "section": "§ 2 finding 4 — Prompt texts"
+      },
+      "claim_text": "one verifier-edit commit (`5e7601d77`) has\n   no contemporaneous erratum.",
+      "values": [
+        {
+          "quantity": "count of verifier-edit commits without a contemporaneous erratum",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Commit hash out of scope per instrument rule 5; the count itself rests on git history plus protocol-errata.md, neither an anchorable artefact field."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          90
+        ],
+        "section": "§ 2 finding 5 — E36 misreports an artefact"
+      },
+      "claim_text": "E36 misreports an artefact — stands.** \"1 of 10\" vs the\n   artefact's 0; no committed version ever recorded 1; defence re-ran\n   the BH routine (reproduces 0)",
+      "values": [
+        {
+          "quantity": "count of FDR-significant comparisons as reported by E36",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of comparisons in the BH-FDR family",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": null
+        },
+        {
+          "quantity": "count of FDR-significant comparisons recorded by the artefact",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.pairwise_comparisons[?(@.fdr_significant==true)]",
+          "method": null
+        },
+        {
+          "quantity": "count of FDR-significant comparisons in any committed version",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of FDR-significant comparisons on defence re-run of the BH routine",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.pairwise_comparisons[?(@.fdr_significant==true)]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document does not name the artefact. Identified results/phase2a-analysis-report.json as the candidate because it is the BH-FDR evaluation with $.n_comparisons = 10 and $.fdr_q = 0.05 and carries a per-comparison fdr_significant flag; triage should confirm the artefact identity before diffing. The '1 of 10' figures are the quoted old side of a correction, so the 1s are historical (instrument rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          91
+        ],
+        "section": "§ 2 finding 5 — E36 misreports an artefact"
+      },
+      "claim_text": "Severity context: self-adverse\n   (0 strengthens E36's own rationale)",
+      "values": [
+        {
+          "quantity": "count of FDR-significant comparisons recorded by the artefact",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.pairwise_comparisons[?(@.fdr_significant==true)]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Third appearance of the corrected figure in this finding; artefact identity inferred as in the earlier finding-5 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "§ 2 finding 5 — E36 misreports an artefact"
+      },
+      "claim_text": "propagated to four documents",
+      "values": [
+        {
+          "quantity": "count of documents the mis-citation propagated to",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed artefact enumerates the affected documents."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          99
+        ],
+        "section": "§ 2 finding 6 — K=5 mining"
+      },
+      "claim_text": "text is internally inconsistent (line 815's K=10 vs lines\n   1443/1450–1's five-pass spec, both lodged); E15/E49/E51 license the\n   K=5 substance.",
+      "values": [
+        {
+          "quantity": "registered number of passes, K, at the first lodged specification",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered pass count in the lodged five-pass specification",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "executed/licensed mining pass count, K",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both registered figures anchor to the lodged document per the v1.1 calibration rule; line-number citations (815, 1443, 1450-1) are out of C4 scope per rule 5. The executed K=5 is licensed by errata E15/E49/E51 in docs/methodology/preregistration/protocol-errata.md (prose), so no artefact anchor was located. The same figure also appears in the finding's bold title on line 94."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          102
+        ],
+        "section": "§ 2 finding 7 — Corpus arithmetic"
+      },
+      "claim_text": "registration states the corpus three ways (361 § 2.1 / ~360 § 8.6 /\n   a 321 reserve in coverage",
+      "values": [
+        {
+          "quantity": "count of distinct corpus statements in the registration",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered evaluation tile count, preregistration § 2.1",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered evaluation tile count, preregistration § 8.6",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered reserve tile count, coverage § 9",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claims, so they anchor to the lodged documents with path null (v1.1 calibration rule). The 321 reserve lives in docs/methodology/preregistration/osf/preregistration-coverage.md § 9, not in the claim anchor; the approximation marker on ~360 is preserved verbatim (v1.2 amendment 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          103
+        ],
+        "section": "§ 2 finding 7 — Corpus arithmetic"
+      },
+      "claim_text": "the 361st\n   tile never existed (no deletion in repo history).",
+      "values": [
+        {
+          "quantity": "index of the registered tile asserted never to have existed",
+          "value_verbatim": "361st",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A negative existence claim about repo history; no artefact field records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          113
+        ],
+        "section": "§ 2 finding 8 — Voting label clause and runner substitution"
+      },
+      "claim_text": "materiality bounded: ~21 % non-mound\n   subtypes)",
+      "values": [
+        {
+          "quantity": "share of ground-truth matches that are non-mound subtypes",
+          "value_verbatim": "~21 %",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document names no source. Candidate artefact: results/gold-standard-subtype-classification/hierarchical_decomposition.json, whose level2 ground-truth confusion rows would give the non-burial-mound share as (benchmark_mound row total + triangulation_mound row total) / $.level2.n_pairs; no scalar percentage is stored, so the derivation is not a single-path read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          120
+        ],
+        "section": "§ 2 finding 9 — HIGH thinking"
+      },
+      "claim_text": "The 22 executed\n   phase3c (H9) configs are unlicensed — the queued HIGH-thinking\n   erratum's job — but 17 of the 41 flagged configs were already\n   licensed by name",
+      "values": [
+        {
+          "quantity": "count of executed phase3c (H9) configs that are unlicensed",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of flagged configs already licensed by name",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of flagged HIGH-thinking configs",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Looked for a committed census of flagged HIGH-thinking configs: reports/verification/ledgers/c2-execution.jsonl carries FLAGGED verdicts but at a different granularity, and reports/verification/c2-census/licence-census.json is keyed by factor=level pair, not by config. No artefact enumerates the 22 phase3c configs or the 41 flagged configs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          126
+        ],
+        "section": "§ 2 finding 9 — HIGH thinking (post-ruling verification)"
+      },
+      "claim_text": "all 225 phase3c metas\n   record `thinking_level: high` in configuration",
+      "values": [
+        {
+          "quantity": "count of phase3c run metas recording thinking_level high",
+          "value_verbatim": "225",
+          "value_parsed": 225,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Population is the 225 git-tracked `*.meta.json` files under outputs/retest/phase3c; each carries $.configuration.thinking_level. No single committed artefact records the tally, so the check is a scripted glob-and-count rather than a path read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          130
+        ],
+        "section": "§ 2 finding 9 — HIGH thinking (post-ruling verification)"
+      },
+      "claim_text": "known-HIGH runs\n   elsewhere show millions of thoughts tokens, known-minimal show zero,\n   and phase3c shows *nothing*, not zero-thinking.",
+      "values": [
+        {
+          "quantity": "thoughts-token total recorded for known-minimal runs",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "unverifiable-era",
+      "notes": "Token-level claim about the retest era, where usage_stats is wholesale unpopulated (the document says so in the same span); flagged per instrument rule 3 rather than fought. 'millions of thoughts tokens' carries no numeral and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          135
+        ],
+        "section": "§ 2 finding 10 — Text-condition role (CMT-0109)"
+      },
+      "claim_text": "The designation (three sites) is a role\n    disclosure",
+      "values": [
+        {
+          "quantity": "count of registration sites carrying the academic-baseline designation",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "results/commitments.json holds CMT-0109 but records no count of designation sites; the count is a reading of the lodged text."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          139
+        ],
+        "section": "§ 2 finding 10 — Text-condition role (CMT-0109)"
+      },
+      "claim_text": "the designation was falsified by the registered H1-P3\n    test (p = 0.004); the image track completed and leads on the\n    registered secondary outcome (MCC 0.710)",
+      "values": [
+        {
+          "quantity": "permutation/bootstrap p-value, registered H1-P3 planned contrast",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile-level MCC, leading image-track condition on the registered secondary outcome",
+          "value_verbatim": "0.710",
+          "value_parsed": 0.71,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='IM-k3')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/metric-leaderboards/55map-mcc-tiering.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Looked for a scalar H1-P3 p-value in results/family-fdr/h1_cmt0106_pooled_modality.json (holds a pooled-modality $.p_value for a different contrast), results/pairwise/20m/fdr/pairwise_results_fdr.json and results/phase2a-analysis-report.json (the image-only vs brief-text row reports bootstrap CIs, not a p-value); no artefact holds it, so triage must chase the H1 planned-contrast artefact. The MCC anchors to the 55-map MCC tiering leaderboard cell IM-k3. [BATCH NOTE b063] Blind-extraction deviation to declare: a repo-wide grep for 'H1-P3' returned four matched lines from another agent's extraction file under reports/verification/c4-extraction/ before the search could be narrowed. The file was not opened and its content was not used; the anchor search recorded above was carried out independently against the results/ artefacts named."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          145
+        ],
+        "section": "§ 2 finding 11 — H11 at 384 px"
+      },
+      "claim_text": "H11 at 384 px — stands, relocated.** The registered 64 px\n    overlap contradicts the registration's own ~1.8× cost arithmetic",
+      "values": [
+        {
+          "quantity": "tile edge length at which H11 was executed",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "registered tile overlap",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered cost multiplier implied by the registration's own arithmetic",
+          "value_verbatim": "~1.8",
+          "value_parsed": 1.8,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 64 px overlap and the ~1.8x cost multiplier are registration claims (v1.1 calibration rule, path null). The leading 384 is borderline under instrument rule 5 (it names the H11 tile-size arm as well as asserting the executed tile size), so it is included with the doubt flagged and left unanchored. Approximation marker preserved on ~1.8 (v1.2 amendment 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          146,
+          148
+        ],
+        "section": "§ 2 finding 11 — H11 at 384 px"
+      },
+      "claim_text": "E51/E52 (Obs 211\n    contains only a passing contemporaneous mention of the 48 px\n    overlap zone",
+      "values": [
+        {
+          "quantity": "overlap zone width mentioned in Obs 211",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Obs 211 lives in docs/notes/working-notes.md, a prose document; instrument rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          152
+        ],
+        "section": "§ 2 finding 11 — H11 at 384 px"
+      },
+      "claim_text": "a 384 px null set exists and serves\n    the v2 configs)",
+      "values": [
+        {
+          "quantity": "tile edge length of the null example-crop set",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Borderline under instrument rule 5 (384 also names the tile-size arm); included with the doubt flagged. No committed manifest of the null crop set was located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          160
+        ],
+        "section": "§ 2 finding 12 — Open obligations"
+      },
+      "claim_text": "five of seven open interaction rows instantiate\n    registered if-resources/deferred qualifiers.",
+      "values": [
+        {
+          "quantity": "count of open interaction rows instantiating registered qualifiers",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of open interaction rows",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "results/commitments.json carries per-commitment status but no 'interaction row' classification, so neither figure has a mechanical locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          169
+        ],
+        "section": "§ 3 Erratum queue — item 1"
+      },
+      "claim_text": "Three unlicensed study families (`flash35-pv-2x2`, `pv-diag-256`,\n   `verifier-robustness`) + the five verifier-parameter levels",
+      "values": [
+        {
+          "quantity": "count of unlicensed study families",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of unlicensed verifier-parameter levels",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Count of unlicensed study families. The three named families appear in reports/verification/c2-census/licence-census.json as UNLICENSED pairs family=flash35-pv-2x2, family=pv-diag-256 and family=verifier-robustness, but the census stores no scalar count of the family-keyed subset. Count of unlicensed verifier-parameter levels. Looked for a scalar in reports/verification/c2-census/licence-census.json (only $.summary.pairs / .registration / .erratum / .'registration+erratum' / .UNLICENSED exist) and in reports/verification/c2-census/observed-factor-levels.json (per-level site lists, no subset tally); the five levels are the UNLICENSED pairs verifier_model=gemini-3.5-flash, verifier_temperature=0.3, verifier_temperature=0.7, verifier_thinking_level=high and verifier_thinking_level=medium, but no committed artefact stores the count of that subset."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          172
+        ],
+        "section": "§ 3 Erratum queue — item 1 (drafting note)"
+      },
+      "claim_text": "Note from drafting: `verifier_thinking_level=medium`'s\n   13 sites all sit inside the *licensed* `pv-diag-384` family",
+      "values": [
+        {
+          "quantity": "count of condition sites with verifier_thinking_level=medium",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.observed['verifier_thinking_level=medium']",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/observed-factor-levels.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          175
+        ],
+        "section": "§ 3 Erratum queue — item 2"
+      },
+      "claim_text": "finding 9 fixes its scope:\n   the 22 phase3c configs",
+      "values": [
+        {
+          "quantity": "count of executed phase3c configs in the HIGH-thinking erratum's scope",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Looked for a committed census of flagged HIGH-thinking configs: reports/verification/ledgers/c2-execution.jsonl carries FLAGGED verdicts but at a different granularity, and reports/verification/c2-census/licence-census.json is keyed by factor=level pair, not by config. No artefact enumerates the 22 phase3c configs or the 41 flagged configs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          180,
+          181
+        ],
+        "section": "§ 3 Erratum queue — item 3"
+      },
+      "claim_text": "One reconciliation entry naming\n   each pair and the operative reading is likely cleaner than five.",
+      "values": [
+        {
+          "quantity": "count of registration-internal contradiction pairs enumerated in this item",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt flagged (instrument § Task): the figure is a drafting recommendation and a self-referential count of the pairs enumerated earlier in the same list item, not a fact about the study. Included under the over-inclusion rule; a reasonable triage outcome is to prune it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          183
+        ],
+        "section": "§ 3 Erratum queue — item 4"
+      },
+      "claim_text": "Dated correction blocks: E36 (\"1 of 10\" → 0, with the Obs-155\n   inheritance note)",
+      "values": [
+        {
+          "quantity": "count of FDR-significant comparisons as stated by E36 (superseded)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of comparisons in the BH-FDR family",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": null
+        },
+        {
+          "quantity": "corrected count of FDR-significant comparisons",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.pairwise_comparisons[?(@.fdr_significant==true)]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same correction block as finding 5; the quoted-old side ('1') is historical and the corrected value ('0') is the live claim (instrument rule 3). Artefact identity is inferred, not stated — see the finding 5 note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          195
+        ],
+        "section": "§ 4 Apparatus incidents"
+      },
+      "claim_text": "The machinery caught, in-phase: 44 whitespace-collapsed quotes in the\nE31–E61 decomposition (re-anchored mechanically; zero paraphrase)",
+      "values": [
+        {
+          "quantity": "count of whitespace-collapsed quotes caught in the errata decomposition",
+          "value_verbatim": "44",
+          "value_parsed": 44,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of paraphrases in the re-anchored decomposition",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The E31-E61 decomposition feeds reports/verification/c2-census/errata-licence-register.json, which records 61 entries but no incident counts; the erratum identifier range is out of scope per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          196
+        ],
+        "section": "§ 4 Apparatus incidents"
+      },
+      "claim_text": "two\norchestrator commit messages with unverified counts",
+      "values": [
+        {
+          "quantity": "count of orchestrator commit messages carrying unverified counts",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Commit hashes out of scope per instrument rule 5; no artefact records the incident count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          198,
+          200
+        ],
+        "section": "§ 4 Apparatus incidents"
+      },
+      "claim_text": "one instruction-vs-schema conflict (disclosure discharges without\nevidence — evidence supplied from the agents' auditable negatives); one\nwrong premise in an orchestrator brief",
+      "values": [
+        {
+          "quantity": "count of instruction-vs-schema conflicts caught in-phase",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of wrong premises in orchestrator briefs caught in-phase",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Process-incident counts with no committed artefact behind them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          217,
+          218
+        ],
+        "section": "§ 6 GATE 1 decision list — ruling summary"
+      },
+      "claim_text": "erratum queue approved, with the three\nunlicensed families",
+      "values": [
+        {
+          "quantity": "count of unlicensed study families in the approved erratum queue",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Count of unlicensed study families. The three named families appear in reports/verification/c2-census/licence-census.json as UNLICENSED pairs family=flash35-pv-2x2, family=pv-diag-256 and family=verifier-robustness, but the census stores no scalar count of the family-keyed subset."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          220,
+          221
+        ],
+        "section": "§ 6 GATE 1 decision list — ruling summary"
+      },
+      "claim_text": "the eight-hypothesis BH-FDR family\nwill simply be **run now**",
+      "values": [
+        {
+          "quantity": "registered size of the confirmatory BH-FDR hypothesis family",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim, anchored to the lodged document per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          238,
+          238
+        ],
+        "section": "§ 6 GATE 1 decision list — original item 4"
+      },
+      "claim_text": "Accept the open set (211) as the standing build warning",
+      "values": [
+        {
+          "quantity": "count of commitments with status open",
+          "value_verbatim": "211",
+          "value_parsed": 211,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": "len:$.commitments[?(@.status=='open')]"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          240,
+          242
+        ],
+        "section": "§ 6 GATE 1 decision list — original item 5"
+      },
+      "claim_text": "C3 provenance: script re-derivation of\n   1,132 passes × 20 fields + 322 conditions × 16 on sapphire; Opus\n   triage of discrepancies only; US$0).",
+      "values": [
+        {
+          "quantity": "count of passes to be re-derived in Phase 2 C3",
+          "value_verbatim": "1,132",
+          "value_parsed": 1132,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.passes",
+          "method": null
+        },
+        {
+          "quantity": "count of manifest fields re-derived per pass",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of conditions to be re-derived in Phase 2 C3",
+          "value_verbatim": "322",
+          "value_parsed": 322,
+          "unit": null,
+          "kind": "count",
+          "path": "results/conditions-manifest.json#len:$.conditions",
+          "method": null
+        },
+        {
+          "quantity": "count of manifest fields re-derived per condition",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "API spend, Phase 2 C3 (USD)",
+          "value_verbatim": "US$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pass and condition counts anchor to the manifests. The per-record field counts (20, 16) describe the re-derivation scope rather than a stored value; the candidate artefact is reports/verification/c3-rederivation/, which was not opened beyond existence checks (instrument rule 4). The US$0 figure is a spend attestation with no repo artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          246,
+          246
+        ],
+        "section": "§ 7 PI decision record — preamble"
+      },
+      "claim_text": "GATE 1 was ruled in-session on 2026-07-29 across four PI turns",
+      "values": [
+        {
+          "quantity": "count of PI turns in which GATE 1 was ruled",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of the turns quoted below in the same section; no external artefact records it. Date out of scope per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          248,
+          249
+        ],
+        "section": "§ 7 PI decision record — preamble"
+      },
+      "claim_text": "The first two turns\ntriggered the finding-3 and finding-10 revisions",
+      "values": [
+        {
+          "quantity": "count of PI turns that triggered finding revisions",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential; the implementing commits named in the same paragraph are hashes, out of scope per instrument rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          269,
+          271
+        ],
+        "section": "§ 7 PI decision record — Turn 3 (verbatim quotation)"
+      },
+      "claim_text": "I found that 2 of\n> 12 Headline finders were, if not incorrect, in need of serious\n> qualification. How do you suggest that we ensure that the other 10",
+      "values": [
+        {
+          "quantity": "count of headline findings the PI qualified from memory",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of headline findings (denominator)",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of headline findings not yet independently checked",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b063] These numerals sit inside a verbatim PI quotation reproduced as attestation material, so the document attests the wording rather than asserting the counts in its own voice; the same counts are asserted in the document's own voice in the Defence-pass-integration changelog entry (lines 351-352). Included under the over-inclusion rule; triage may prefer to check only the own-voice instance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          304,
+          304
+        ],
+        "section": "§ 7 PI decision record — Turn 4 (verbatim quotation)"
+      },
+      "claim_text": "For the registered eight-hypothesis BH-FDR family, can we just",
+      "values": [
+        {
+          "quantity": "registered size of the confirmatory BH-FDR hypothesis family",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b063] Inside a verbatim PI quotation reproduced as attestation material; the figure is a registration claim and anchors to the lodged document per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          307,
+          307
+        ],
+        "section": "§ 7 PI decision record — Turn 4 (verbatim quotation)"
+      },
+      "claim_text": "discharge as many of the 211 open set items",
+      "values": [
+        {
+          "quantity": "count of commitments with status open",
+          "value_verbatim": "211",
+          "value_parsed": 211,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": "len:$.commitments[?(@.status=='open')]"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b063] Inside a verbatim PI quotation reproduced as attestation material; the quantity is the same open-set count the document asserts in its own voice in § 1 item 3 and § 6."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          316,
+          318
+        ],
+        "section": "§ Changelog — 2026-07-29 Erratum-drafting corrections"
+      },
+      "claim_text": "drafting pass re-verified every specific and caught two\npackage errors: \"four verifier-parameter levels\" (the census records\nfive; the package enumerated five while saying four)",
+      "values": [
+        {
+          "quantity": "count of package errors caught at erratum drafting",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of verifier-parameter levels as previously stated (superseded)",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "historical",
+          "method": null
+        },
+        {
+          "quantity": "count of verifier-parameter levels recorded by the census",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "anchor-unknown",
+          "method": null
+        },
+        {
+          "quantity": "count of verifier-parameter levels the superseded text enumerated",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "historical",
+          "method": null
+        },
+        {
+          "quantity": "count of verifier-parameter levels the superseded text stated",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "historical",
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Before-and-after correction text: the 'four' figures are the superseded side and are historical (known trap: changelog before/after tables). The live 'the census records five' figure has no scalar locator. Count of unlicensed verifier-parameter levels. Looked for a scalar in reports/verification/c2-census/licence-census.json (only $.summary.pairs / .registration / .erratum / .'registration+erratum' / .UNLICENSED exist) and in reports/verification/c2-census/observed-factor-levels.json (per-level site lists, no subset tally); the five levels are the UNLICENSED pairs verifier_model=gemini-3.5-flash, verifier_temperature=0.3, verifier_temperature=0.7, verifier_thinking_level=high and verifier_thinking_level=medium, but no committed artefact stores the count of that subset."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          320,
+          320
+        ],
+        "section": "§ Changelog — 2026-07-29 Erratum-drafting corrections"
+      },
+      "claim_text": "contains a passing mention of the 48 px overlap zone",
+      "values": [
+        {
+          "quantity": "overlap zone width mentioned in Obs 211",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Obs 211 lives in docs/notes/working-notes.md (prose); instrument rule 2 forbids anchoring prose to prose. Second appearance of this figure (see finding 11)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          328,
+          329
+        ],
+        "section": "§ Changelog — 2026-07-29 PI decision record externalised"
+      },
+      "claim_text": "the four in-session GATE 1 turns (two finding\nqueries, the reliability challenge, and the ruling proper)",
+      "values": [
+        {
+          "quantity": "count of in-session GATE 1 PI turns quoted in § 7",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of those turns that were finding queries",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential counts of § 7's own quotation blocks."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          339,
+          339
+        ],
+        "section": "§ Changelog — 2026-07-29 GATE 1 passed with directives"
+      },
+      "claim_text": "eight-hypothesis BH-FDR family to be run",
+      "values": [
+        {
+          "quantity": "registered size of the confirmatory BH-FDR hypothesis family",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim, anchored to the lodged document per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          342,
+          343
+        ],
+        "section": "§ Changelog — 2026-07-29 GATE 1 passed with directives"
+      },
+      "claim_text": "phase3c configuration says\nHIGH in all 225 metas",
+      "values": [
+        {
+          "quantity": "count of phase3c run metas recording thinking_level high",
+          "value_verbatim": "225",
+          "value_parsed": 225,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Population is the 225 git-tracked `*.meta.json` files under outputs/retest/phase3c; each carries $.configuration.thinking_level. No single committed artefact records the tally, so the check is a scripted glob-and-count rather than a path read. Second appearance of this figure (see finding 9)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          351,
+          352
+        ],
+        "section": "§ Changelog — 2026-07-29 Defence-pass integration"
+      },
+      "claim_text": "the PI, working from memory, qualified 2 of 12 findings\nand asked how the other 10 could be trusted.",
+      "values": [
+        {
+          "quantity": "count of headline findings the PI qualified from memory",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of headline findings (denominator)",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of headline findings not yet independently checked",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Own-voice restatement of the Turn 3 quotation; the only visible source is reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md (prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          352,
+          354
+        ],
+        "section": "§ Changelog — 2026-07-29 Defence-pass integration"
+      },
+      "claim_text": "A blind adversarial\ndefence pass ran over all twelve original findings, with the PI's two\ncatches as calibration probes",
+      "values": [
+        {
+          "quantity": "count of original findings the defence pass covered",
+          "value_verbatim": "twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of PI catches used as calibration probes",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prose-only source (defence-pass-adjudication-2026-07-29.md)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          355,
+          356
+        ],
+        "section": "§ Changelog — 2026-07-29 Defence-pass integration"
+      },
+      "claim_text": "Result: 12/12\nneeds-qualification, 0 overturned, 3 sub-claims retracted",
+      "values": [
+        {
+          "quantity": "count of findings ruled needs-qualification",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of findings in the defence pass (denominator)",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of findings overturned",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of sub-claims retracted",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Prose-only source (defence-pass-adjudication-2026-07-29.md); instrument rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          392,
+          394
+        ],
+        "section": "§ Changelog — 2026-07-29 Original publication"
+      },
+      "claim_text": "commitment ledger v1.2 (702 obligations,\n402/89/211), C1/C2 ledgers (1,617 rows), licence census (13\nUNLICENSED)",
+      "values": [
+        {
+          "quantity": "count of atomic obligations in the commitment ledger",
+          "value_verbatim": "702",
+          "value_parsed": 702,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments",
+          "method": null
+        },
+        {
+          "quantity": "count of commitments with status discharged",
+          "value_verbatim": "402",
+          "value_parsed": 402,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.status=='discharged')]",
+          "method": null
+        },
+        {
+          "quantity": "count of commitments with status waived",
+          "value_verbatim": "89",
+          "value_parsed": 89,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.status=='waived')]",
+          "method": null
+        },
+        {
+          "quantity": "count of commitments with status open",
+          "value_verbatim": "211",
+          "value_parsed": 211,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.commitments[?(@.status=='open')]",
+          "method": null
+        },
+        {
+          "quantity": "combined row count, C1 and C2 ledgers",
+          "value_verbatim": "1,617",
+          "value_parsed": 1617,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/ledgers/c1-commitments.jsonl",
+              "path": "len:$"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/ledgers/c2-execution.jsonl",
+              "path": "len:$"
+            }
+          ]
+        },
+        {
+          "quantity": "count of UNLICENSED factor=level pairs",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/c2-census/licence-census.json#$.summary.UNLICENSED",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/commitments.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Treated as live claims, not historical: the Original-publication stub restates figures the body still asserts and marks none of them superseded. Version string 'v1.2' out of scope per instrument rule 5."
+    }
+  ]
+}

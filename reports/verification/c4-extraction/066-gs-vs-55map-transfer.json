@@ -1,0 +1,397 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55map-leaderboard/gs-vs-55map-transfer.md",
+    "git_blob": "e4837f182b94",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1,
+          1
+        ],
+        "section": "Title"
+      },
+      "claim_text": "# GS characterisation vs 55-map deployment — all deployed configurations (@ 50 m)",
+      "values": [
+        {
+          "quantity": "maps in the deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "operational scoring buffer for the 55-map board",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": "$.buffer_m"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b066] Ten-line results stub. Column labels (GS F1@50, k3, k4) and the condition names in column 1 (text HIGH T0.3) are treated as names per instrument rule 5; the 50 m buffer and the 55-map corpus size are extracted as claims per the '487-tile Era 2 corpus' precedent in the same rule. Delta values carry value-level arithmetic (k3 minus GS) with their operands kept as read, per v1.2 amendment 1. No per-map manifest carrying a 55-map count was identified within anchor-identification scope, so the corpus size is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          3
+        ],
+        "section": "Preamble note"
+      },
+      "claim_text": "GS side: the matching 5-pass + n=1-verifier cell at its best operating point, scored at the shared 50 m operational buffer vs curator GT.",
+      "values": [
+        {
+          "quantity": "proposer passes in the matched GS cell",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier iterations in the matched GS cell",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "shared operational buffer at which both sides are scored",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": "$.buffer_m"
+      },
+      "method": "read",
+      "notes": "The GS cell is described but not named, so its pass count and verifier n are left anchor-unknown; the shared buffer is anchored to the 55-map board's buffer_m field."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          7
+        ],
+        "section": "Transfer table"
+      },
+      "claim_text": "| text HIGH T0.3 | 0.9045 (0.783) | 0.8476 | 0.8359 | -0.0569 |",
+      "values": [
+        {
+          "quantity": "GS F1@50 m vs curator GT, text HIGH T0.3",
+          "value_verbatim": "0.9045",
+          "value_parsed": 0.9045,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text HIGH T0.3')].gs_50m.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS MCC@50 m vs curator GT, text HIGH T0.3",
+          "value_verbatim": "0.783",
+          "value_parsed": 0.783,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text HIGH T0.3')].gs_50m.mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map k=3 F1@50 m, text HIGH T0.3",
+          "value_verbatim": "0.8476",
+          "value_parsed": 0.8476,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text HIGH T0.3')].k3.f1_50",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map k=4 F1@50 m, text HIGH T0.3",
+          "value_verbatim": "0.8359",
+          "value_parsed": 0.8359,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text HIGH T0.3')].k4.f1_50",
+          "method": "read"
+        },
+        {
+          "quantity": "Delta F1@50 m, 55-map k=3 minus GS, text HIGH T0.3",
+          "value_verbatim": "-0.0569",
+          "value_parsed": -0.0569,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+              "path": "$[?(@.config=='text HIGH T0.3')].k3.f1_50"
+            },
+            {
+              "name": "b",
+              "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+              "path": "$[?(@.config=='text HIGH T0.3')].gs_50m.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+        "path": "$[?(@.config=='text HIGH T0.3')].gs_50m.f1"
+      },
+      "method": "read",
+      "notes": "Table row. MCC quoted at 3 dp against the artefact's fuller precision; the harness owns rounding tolerance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          8,
+          8
+        ],
+        "section": "Transfer table"
+      },
+      "claim_text": "| text HIGH T0.7 | 0.8908 (0.769) | 0.8425 | 0.8152 | -0.0483 |",
+      "values": [
+        {
+          "quantity": "GS F1@50 m vs curator GT, text HIGH T0.7",
+          "value_verbatim": "0.8908",
+          "value_parsed": 0.8908,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text HIGH T0.7')].gs_50m.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS MCC@50 m vs curator GT, text HIGH T0.7",
+          "value_verbatim": "0.769",
+          "value_parsed": 0.769,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text HIGH T0.7')].gs_50m.mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map k=3 F1@50 m, text HIGH T0.7",
+          "value_verbatim": "0.8425",
+          "value_parsed": 0.8425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text HIGH T0.7')].k3.f1_50",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map k=4 F1@50 m, text HIGH T0.7",
+          "value_verbatim": "0.8152",
+          "value_parsed": 0.8152,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text HIGH T0.7')].k4.f1_50",
+          "method": "read"
+        },
+        {
+          "quantity": "Delta F1@50 m, 55-map k=3 minus GS, text HIGH T0.7",
+          "value_verbatim": "-0.0483",
+          "value_parsed": -0.0483,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+              "path": "$[?(@.config=='text HIGH T0.7')].k3.f1_50"
+            },
+            {
+              "name": "b",
+              "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+              "path": "$[?(@.config=='text HIGH T0.7')].gs_50m.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+        "path": "$[?(@.config=='text HIGH T0.7')].gs_50m.f1"
+      },
+      "method": "read",
+      "notes": "Table row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          9
+        ],
+        "section": "Transfer table"
+      },
+      "claim_text": "| text MIN T0.7 | 0.8996 (0.790) | 0.8127 | 0.7831 | -0.0869 |",
+      "values": [
+        {
+          "quantity": "GS F1@50 m vs curator GT, text MIN T0.7",
+          "value_verbatim": "0.8996",
+          "value_parsed": 0.8996,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text MIN T0.7')].gs_50m.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS MCC@50 m vs curator GT, text MIN T0.7",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text MIN T0.7')].gs_50m.mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map k=3 F1@50 m, text MIN T0.7",
+          "value_verbatim": "0.8127",
+          "value_parsed": 0.8127,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text MIN T0.7')].k3.f1_50",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map k=4 F1@50 m, text MIN T0.7",
+          "value_verbatim": "0.7831",
+          "value_parsed": 0.7831,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='text MIN T0.7')].k4.f1_50",
+          "method": "read"
+        },
+        {
+          "quantity": "Delta F1@50 m, 55-map k=3 minus GS, text MIN T0.7",
+          "value_verbatim": "-0.0869",
+          "value_parsed": -0.0869,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+              "path": "$[?(@.config=='text MIN T0.7')].k3.f1_50"
+            },
+            {
+              "name": "b",
+              "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+              "path": "$[?(@.config=='text MIN T0.7')].gs_50m.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+        "path": "$[?(@.config=='text MIN T0.7')].gs_50m.f1"
+      },
+      "method": "read",
+      "notes": "Table row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          10,
+          10
+        ],
+        "section": "Transfer table"
+      },
+      "claim_text": "| image HIGH T0.7 | 0.8771 (0.827) | 0.7987 | — | -0.0784 |",
+      "values": [
+        {
+          "quantity": "GS F1@50 m vs curator GT, image HIGH T0.7",
+          "value_verbatim": "0.8771",
+          "value_parsed": 0.8771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='image HIGH T0.7')].gs_50m.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS MCC@50 m vs curator GT, image HIGH T0.7",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='image HIGH T0.7')].gs_50m.mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "55-map k=3 F1@50 m, image HIGH T0.7",
+          "value_verbatim": "0.7987",
+          "value_parsed": 0.7987,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.config=='image HIGH T0.7')].k3.f1_50",
+          "method": "read"
+        },
+        {
+          "quantity": "Delta F1@50 m, 55-map k=3 minus GS, image HIGH T0.7",
+          "value_verbatim": "-0.0784",
+          "value_parsed": -0.0784,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+              "path": "$[?(@.config=='image HIGH T0.7')].k3.f1_50"
+            },
+            {
+              "name": "b",
+              "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+              "path": "$[?(@.config=='image HIGH T0.7')].gs_50m.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/gs_vs_55map_transfer.json",
+        "path": "$[?(@.config=='image HIGH T0.7')].gs_50m.f1"
+      },
+      "method": "read",
+      "notes": "Table row. The 55-map k=4 cell is an em dash (no run), so no value is extracted for that column."
+    }
+  ]
+}

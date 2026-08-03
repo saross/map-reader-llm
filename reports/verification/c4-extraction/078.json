@@ -1,0 +1,2494 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-03T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md",
+    "git_blob": "4e9b7f56d715",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1,
+          1
+        ],
+        "section": "Title"
+      },
+      "claim_text": "# Corrected F1 / P / R on the 55-map image set — buffer-stratified",
+      "values": [
+        {
+          "quantity": "map count, 55-map image-generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.inputs.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b078] Scope decisions for this batch: dates/timestamps, git commit hashes (`da84a3d2`, `c816d4bd`, `508f7698…`, `2992056b..8699f456`), session numbers, Obs identifiers, candidate identifiers (cand 2397), section references (§1, §2, §9) and Theme/Approach labels are out of C4 scope per instrument rule 5. Buffer radii appearing in prose purely to identify which row a metric belongs to (\"F1 = 0.8333 at 50 m\") are treated as context, not claims; radii asserted as a result (the 125 m practitioner cap, the R grid actually run) ARE extracted. Anchor note: this document's own directory holds no map count; the sibling diagnostic summary records n_maps."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          8,
+          8
+        ],
+        "section": "Front matter"
+      },
+      "claim_text": "**Bootstrap**: 10,000 iterations, seed 42, tile-level resampling.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, corrected-F1 multi-buffer run",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_n",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, corrected-F1 multi-buffer bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          16
+        ],
+        "section": "Post-recovery banner"
+      },
+      "claim_text": "added 1 new consensus candidate plus 18 pre-existing missing-from-\n> verifier candidates (+15 net to retained verified detections;\n> 4,665 → 4,680).",
+      "values": [
+        {
+          "quantity": "count, new consensus candidates added by the image-generalisation recovery",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, pre-existing missing-from-verifier candidates restored by the recovery",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "net change in retained verified detections across the recovery",
+          "value_verbatim": "+15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+              "path": "len:$.features"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+              "path": "$.inputs.n_detections"
+            }
+          ]
+        },
+        {
+          "quantity": "retained verified detections, pre-recovery",
+          "value_verbatim": "4,665",
+          "value_parsed": 4665,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "retained verified detections, post-recovery",
+          "value_verbatim": "4,680",
+          "value_parsed": 4680,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No repo artefact was found recording the recovery's split of 1 new consensus candidate vs 18 restored missing-from-verifier candidates (searched results/ and outputs/ JSON for 'missing-from-verifier'/'missing_from_verifier'); those two values are anchor-unknown. Operand b for the +15 derivation is the pre-recovery detection count as recorded in the sibling buffer-100m diagnostic ($.inputs.n_detections = the pre-recovery input state); triage should confirm that is the intended baseline."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          19
+        ],
+        "section": "Post-recovery banner"
+      },
+      "claim_text": "The 50 m\n> headline lifted from F1 = 0.8316 (pre-recovery) to F1 = 0.8333\n> (post-recovery).",
+      "values": [
+        {
+          "quantity": "F1 at R = 50 m, pre-recovery",
+          "value_verbatim": "0.8316",
+          "value_parsed": 0.8316,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at R = 50 m, post-recovery",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The pre-recovery side is quoted as the 'was' value of a correction block (instrument rule 3 'historical'); the preserved pre-recovery artefact is results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-recovery-20260503T023134.backup if triage wants a live check. Note the document quotes the pre-recovery 50 m F1 as 0.8316 here and as 0.8317 at lines 35, 54 and 68 — recorded verbatim, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          21
+        ],
+        "section": "Post-recovery banner"
+      },
+      "claim_text": "The +0.0017 delta is small but real and\n> aggregates the recovery's verifier-cleanup uplift with the\n> +1 cand 2397 review entry (commit `c816d4bd`).",
+      "values": [
+        {
+          "quantity": "change in F1 at R = 50 m across the recovery",
+          "value_verbatim": "+0.0017",
+          "value_parsed": 0.0017,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-recovery-20260503T023134.backup",
+              "path": "$.results[0].F1"
+            }
+          ]
+        },
+        {
+          "quantity": "count, additional review entries contributed by the cand 2397 review",
+          "value_verbatim": "+1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "'2397' is a candidate identifier, out of scope per rule 5. No artefact was located that records the '+1 review entry' as a scalar; the review CSVs (results/55maps-image-generalisation/human-review.csv, human-review-multi-buffer.csv) are the plausible chase target for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "Observation anchors"
+      },
+      "claim_text": "Obs 272 (attractor-pull scale ends at ~125 m)",
+      "values": [
+        {
+          "quantity": "outer radius at which the attractor-pull effect ceases to be statistically distinguishable",
+          "value_verbatim": "~125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Approx marker retained in value_verbatim per instrument v1.2 amendment 5. The post-recovery image-run shell p-values live at $.runs[2].shell[*].p_value_bias_corrected in the anchor (runs[2] has key 'image'); Obs 272 itself is in docs/notes/reflections/working-notes.md (prose — not anchored to, per rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Front matter — sibling artefact"
+      },
+      "claim_text": "**Sibling single-buffer artefact**: `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` is the analytic-adjustment variant using yesterday-only review (472 phantoms; F1 = 0.8295 at 50 m).",
+      "values": [
+        {
+          "quantity": "count, reviewer-promoted phantoms in the yesterday-only single-buffer review at 50 m",
+          "value_verbatim": "472",
+          "value_parsed": 472,
+          "unit": null,
+          "kind": "count",
+          "path": "$.human_review.phantom_tp",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 50 m, yesterday-only analytic-adjustment variant",
+          "value_verbatim": "0.8295",
+          "value_parsed": 0.8295,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited markdown path no longer exists in the working tree; the single-buffer variant has been archived to archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/, whose sibling JSON is used as the anchor (rule 2: never anchor prose to prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Front matter — sibling artefact"
+      },
+      "claim_text": "This multi-buffer artefact re-runs Hungarian against extended GT at each R ∈ {50, 75, 100, 125, 150} m using yesterday + today review (474 phantoms at 50 m; F1 = 0.8333 at 50 m post-recovery).",
+      "values": [
+        {
+          "quantity": "buffer radius, first grid step actually run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[0].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, second grid step actually run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[1].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, third grid step actually run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[2].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fourth grid step actually run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[3].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fifth grid step actually run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[4].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "count, reviewer-promoted phantoms in the extended GT at R = 50 m",
+          "value_verbatim": "474",
+          "value_parsed": 474,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[0].n_reviewer_promoted_at_R",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 50 m, post-recovery",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Front matter — sibling artefact"
+      },
+      "claim_text": "Both round to the paper-citable ≥ 0.830 headline.",
+      "values": [
+        {
+          "quantity": "paper-citable rounded lower-bound F1 headline (asserted as a bound on the 50 m corrected F1)",
+          "value_verbatim": "≥ 0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Stated as a rounded lower bound (≥), not a point estimate; the ≥ marker is kept in value_verbatim so the harness does not promote it to an equality comparison. Triage should read this as a bound over the 50 m and yesterday-only 50 m F1 values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "The 55-map image-generalisation corrected-F1 curve (post-recovery 2026-05-03), computed via Approach B (extended-GT-at-R Hungarian re-matching with reviewer-promoted phantoms added at each buffer), traces from F1 = 0.8333 at 50 m up to F1 = 0.8565 at 150 m in five discrete buffer steps.",
+      "values": [
+        {
+          "quantity": "map count, image-generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 50 m, post-recovery",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 150 m, post-recovery",
+          "value_verbatim": "0.8565",
+          "value_parsed": 0.8565,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "count, discrete buffer steps in the F1 curve",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "**The practitioner-useful ceiling is F1 = 0.8552 at R = 125 m** — the largest buffer at which the attractor-pull contribution to recall is statistically distinguishable from within-tile random placement (Obs 272; p = 0.002 at the 100–125 m shell vs p = 0.469 at the 125–150 m shell post-recovery).",
+      "values": [
+        {
+          "quantity": "F1 at R = 125 m, post-recovery",
+          "value_verbatim": "0.8552",
+          "value_parsed": 0.8552,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "largest buffer radius at which attractor-pull is statistically distinguishable from within-tile random placement",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, (100, 125] m shell, image run, post-recovery",
+          "value_verbatim": "0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-attractor-pull-v2/attractor-pull-v2.json#$.runs[2].shell[3].p_value_bias_corrected",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, (125, 150] m shell, image run, post-recovery",
+          "value_verbatim": "0.469",
+          "value_parsed": 0.469,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-attractor-pull-v2/attractor-pull-v2.json#$.runs[2].shell[4].p_value_bias_corrected",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The post-recovery shell p-values quoted here match the image run (runs[2], key 'image') of results/55maps-attractor-pull-v2/attractor-pull-v2.json, bias-corrected column; §5 of the same document (line 74) quotes a different pair (0.381 / 0.433) matching the older buffer-band-lift artefact. Recorded, not adjudicated. Shell bounds (100, 125, 150 m) are treated as shell identifiers, not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "§1 Headline numbers"
+      },
+      "claim_text": "- **F1 curve** (50 → 75 → 100 → 125 → 150 m): **0.8333 → 0.8491 → 0.8535 → 0.8552 → 0.8565** (was 0.8317 → 0.8477 → 0.8521 → 0.8538 → 0.8551 pre-recovery).",
+      "values": [
+        {
+          "quantity": "F1 at R = 50 m, post-recovery",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 75 m, post-recovery",
+          "value_verbatim": "0.8491",
+          "value_parsed": 0.8491,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 100 m, post-recovery",
+          "value_verbatim": "0.8535",
+          "value_parsed": 0.8535,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 125 m, post-recovery",
+          "value_verbatim": "0.8552",
+          "value_parsed": 0.8552,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 150 m, post-recovery",
+          "value_verbatim": "0.8565",
+          "value_parsed": 0.8565,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 50 m, pre-recovery",
+          "value_verbatim": "0.8317",
+          "value_parsed": 0.8317,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at R = 75 m, pre-recovery",
+          "value_verbatim": "0.8477",
+          "value_parsed": 0.8477,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at R = 100 m, pre-recovery",
+          "value_verbatim": "0.8521",
+          "value_parsed": 0.8521,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at R = 125 m, pre-recovery",
+          "value_verbatim": "0.8538",
+          "value_parsed": 0.8538,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at R = 150 m, pre-recovery",
+          "value_verbatim": "0.8551",
+          "value_parsed": 0.8551,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The buffer grid in the parenthesis (50 → 75 → 100 → 125 → 150 m) labels which F1 belongs to which R; the grid itself is extracted as a claim at line 27. Pre-recovery values are the 'was' side of a correction block (rule 3); the preserved artefact is results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-recovery-20260503T023134.backup."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "§1 Headline numbers"
+      },
+      "claim_text": "- **Practitioner-useful cap**: F1 = **0.8552** at R = 125 m (CI [0.8468, 0.8634]).",
+      "values": [
+        {
+          "quantity": "F1 at R = 125 m, post-recovery",
+          "value_verbatim": "0.8552",
+          "value_parsed": 0.8552,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at R = 125 m",
+          "value_verbatim": "0.8468",
+          "value_parsed": 0.8468,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at R = 125 m",
+          "value_verbatim": "0.8634",
+          "value_parsed": 0.8634,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "§1 Headline numbers"
+      },
+      "claim_text": "- **Paper lower-bound headline** at 50 m: F1 = **0.8333** [0.8240, 0.8421]; P = 0.8812, R = 0.7902.",
+      "values": [
+        {
+          "quantity": "F1 at R = 50 m, post-recovery",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at R = 50 m",
+          "value_verbatim": "0.8240",
+          "value_parsed": 0.824,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at R = 50 m",
+          "value_verbatim": "0.8421",
+          "value_parsed": 0.8421,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at R = 50 m, post-recovery",
+          "value_verbatim": "0.8812",
+          "value_parsed": 0.8812,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at R = 50 m, post-recovery",
+          "value_verbatim": "0.7902",
+          "value_parsed": 0.7902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "§1 Headline numbers"
+      },
+      "claim_text": "- **Upper-bound-only 150 m row**: F1 = 0.8565 [0.8480, 0.8645] — **not practitioner-useful**, flagged because the 125–150 m shell admits mounds indistinguishable from random within-tile co-occurrences.",
+      "values": [
+        {
+          "quantity": "F1 at R = 150 m, post-recovery",
+          "value_verbatim": "0.8565",
+          "value_parsed": 0.8565,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at R = 150 m",
+          "value_verbatim": "0.8480",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[4].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at R = 150 m",
+          "value_verbatim": "0.8645",
+          "value_parsed": 0.8645,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[4].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "§1 Headline numbers"
+      },
+      "claim_text": "- **Sentinel exclusion**: 74 candidates at today's `> 150 m` shell (`buffer_metres = 200`) are excluded from the extended-GT build at every R; their detections contribute FP at every R ≤ 150 m (correct behaviour under the 125 m practitioner cap).",
+      "values": [
+        {
+          "quantity": "count, sentinel-shell candidates excluded from every extended-GT build",
+          "value_verbatim": "74",
+          "value_parsed": 74,
+          "unit": null,
+          "kind": "count",
+          "path": "$.exclusions.n_excluded_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "sentinel buffer_metres value marking the '> 150 m' review shell",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.exclusions.sentinel_buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'> 150 m' names the shell and 'R ≤ 150 m' / '125 m practitioner cap' are context; the cap radius itself is extracted at lines 31 and 84."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "§1 Headline numbers"
+      },
+      "claim_text": "this pipeline gives TP = 4,124 at 50 m post-recovery (was 4,110 pre-recovery)",
+      "values": [
+        {
+          "quantity": "true positives at R = 50 m, post-recovery",
+          "value_verbatim": "4,124",
+          "value_parsed": 4124,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[0].TP",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives at R = 50 m, pre-recovery",
+          "value_verbatim": "4,110",
+          "value_parsed": 4110,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery artefact preserved at results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-recovery-20260503T023134.backup."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "§1 Headline numbers"
+      },
+      "claim_text": "The 2-pair gap noted at Session 76 (4,110 vs 4,108) widens slightly post-recovery to ~14 pairs as the recovery promoted new TPs that have not propagated to the diagnostic; both are descriptively correct for their respective input states.",
+      "values": [
+        {
+          "quantity": "size of the TP gap between this pipeline and the buffer-100m diagnostic, as noted pre-recovery",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "true positives at R = 50 m, this pipeline, pre-recovery",
+          "value_verbatim": "4,110",
+          "value_parsed": 4110,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "matched pairs at 50 m, buffer-100m diagnostic",
+          "value_verbatim": "4,108",
+          "value_parsed": 4108,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.diagnostic_2_pair_drift.total_matched_at_50m",
+          "method": "read"
+        },
+        {
+          "quantity": "post-recovery TP gap between this pipeline and the buffer-100m diagnostic",
+          "value_verbatim": "~14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].TP"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+              "path": "$.diagnostic_2_pair_drift.total_matched_at_50m"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained on ~14 per v1.2 amendment 5. 'Session 76' is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "§1 One-line paper claim"
+      },
+      "claim_text": "The 55-map image-generalisation corrected F1 runs from 0.833 at 50 m to 0.857 at 150 m; the practitioner-useful ceiling, at the largest buffer where attractor-pull is statistically distinguishable from within-tile random placement (Obs 272), is **F1 = 0.855 at 125 m** [0.8468, 0.8634].",
+      "values": [
+        {
+          "quantity": "map count, image-generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 50 m, post-recovery (quoted to 3 dp)",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 150 m, post-recovery (quoted to 3 dp)",
+          "value_verbatim": "0.857",
+          "value_parsed": 0.857,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 125 m, post-recovery (quoted to 3 dp)",
+          "value_verbatim": "0.855",
+          "value_parsed": 0.855,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at R = 125 m",
+          "value_verbatim": "0.8468",
+          "value_parsed": 0.8468,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at R = 125 m",
+          "value_verbatim": "0.8634",
+          "value_parsed": 0.8634,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "F1 values in this quoted paper sentence are given to 3 decimal places while the source artefact holds 4+ — recorded at quoted precision per the instrument's known-traps note; the harness owns rounding tolerance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "§2 F1 curve"
+      },
+      "claim_text": "| 50 | 4124 | 556 | 1095 | 4745 | 474 | 5219 | 0.8812 [0.8713, 0.8905] | 0.7902 [0.7776, 0.8025] | **0.8332** [0.8240, 0.8421] |",
+      "values": [
+        {
+          "quantity": "buffer radius R, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[0].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (TP), R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "4124",
+          "value_parsed": 4124,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[0].TP",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (FP), R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "556",
+          "value_parsed": 556,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[0].FP",
+          "method": "read"
+        },
+        {
+          "quantity": "false negatives (FN), R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "1095",
+          "value_parsed": 1095,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[0].FN",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped student-GT points (n_ref_student), R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "4745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[0].n_ref_student_only",
+          "method": "read"
+        },
+        {
+          "quantity": "reviewer-promoted phantoms in the extended GT (n_promoted@R), R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "474",
+          "value_parsed": 474,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[0].n_reviewer_promoted_at_R",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped extended-GT count (n_ref_extended), R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "5219",
+          "value_parsed": 5219,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[0].n_ref_extended",
+          "method": "read"
+        },
+        {
+          "quantity": "precision, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8812",
+          "value_parsed": 0.8812,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, precision, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8713",
+          "value_parsed": 0.8713,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].precision_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, precision, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8905",
+          "value_parsed": 0.8905,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].precision_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7902",
+          "value_parsed": 0.7902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, recall, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7776",
+          "value_parsed": 0.7776,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].recall_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, recall, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8025",
+          "value_parsed": 0.8025,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].recall_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8332",
+          "value_parsed": 0.8332,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8240",
+          "value_parsed": 0.824,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1, R = 50 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8421",
+          "value_parsed": 0.8421,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 50 m F1 cell reads 0.8332 here while the prose headline at lines 18, 27, 31, 35, 37 and 84 quotes 0.8333 — both recorded verbatim from their own spans, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "§2 F1 curve"
+      },
+      "claim_text": "| 75 | 4254 | 426 | 1086 | 4745 | 595 | 5340 | 0.9090 [0.9000, 0.9173] | 0.7966 [0.7844, 0.8086] | **0.8491** [0.8403, 0.8574] |",
+      "values": [
+        {
+          "quantity": "buffer radius R, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[1].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (TP), R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "4254",
+          "value_parsed": 4254,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[1].TP",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (FP), R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "426",
+          "value_parsed": 426,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[1].FP",
+          "method": "read"
+        },
+        {
+          "quantity": "false negatives (FN), R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "1086",
+          "value_parsed": 1086,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[1].FN",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped student-GT points (n_ref_student), R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "4745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[1].n_ref_student_only",
+          "method": "read"
+        },
+        {
+          "quantity": "reviewer-promoted phantoms in the extended GT (n_promoted@R), R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "595",
+          "value_parsed": 595,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[1].n_reviewer_promoted_at_R",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped extended-GT count (n_ref_extended), R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "5340",
+          "value_parsed": 5340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[1].n_ref_extended",
+          "method": "read"
+        },
+        {
+          "quantity": "precision, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9090",
+          "value_parsed": 0.909,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, precision, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9000",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[1].precision_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, precision, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9173",
+          "value_parsed": 0.9173,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[1].precision_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7966",
+          "value_parsed": 0.7966,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, recall, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7844",
+          "value_parsed": 0.7844,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[1].recall_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, recall, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8086",
+          "value_parsed": 0.8086,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[1].recall_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8491",
+          "value_parsed": 0.8491,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8403",
+          "value_parsed": 0.8403,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[1].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1, R = 75 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8574",
+          "value_parsed": 0.8574,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[1].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "§2 F1 curve"
+      },
+      "claim_text": "| 100 | 4296 | 384 | 1091 | 4745 | 642 | 5387 | 0.9179 [0.9094, 0.9260] | 0.7975 [0.7854, 0.8093] | **0.8535** [0.8449, 0.8616] |",
+      "values": [
+        {
+          "quantity": "buffer radius R, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[2].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (TP), R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "4296",
+          "value_parsed": 4296,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[2].TP",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (FP), R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[2].FP",
+          "method": "read"
+        },
+        {
+          "quantity": "false negatives (FN), R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "1091",
+          "value_parsed": 1091,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[2].FN",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped student-GT points (n_ref_student), R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "4745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[2].n_ref_student_only",
+          "method": "read"
+        },
+        {
+          "quantity": "reviewer-promoted phantoms in the extended GT (n_promoted@R), R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "642",
+          "value_parsed": 642,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[2].n_reviewer_promoted_at_R",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped extended-GT count (n_ref_extended), R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "5387",
+          "value_parsed": 5387,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[2].n_ref_extended",
+          "method": "read"
+        },
+        {
+          "quantity": "precision, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9179",
+          "value_parsed": 0.9179,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, precision, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9094",
+          "value_parsed": 0.9094,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[2].precision_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, precision, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9260",
+          "value_parsed": 0.926,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[2].precision_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7975",
+          "value_parsed": 0.7975,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, recall, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7854",
+          "value_parsed": 0.7854,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[2].recall_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, recall, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8093",
+          "value_parsed": 0.8093,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[2].recall_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8535",
+          "value_parsed": 0.8535,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8449",
+          "value_parsed": 0.8449,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[2].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1, R = 100 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8616",
+          "value_parsed": 0.8616,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[2].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "§2 F1 curve"
+      },
+      "claim_text": "| 125 | 4313 | 367 | 1093 | 4745 | 661 | 5406 | 0.9216 [0.9131, 0.9295] | 0.7978 [0.7856, 0.8096] | **0.8552** [0.8468, 0.8634] |",
+      "values": [
+        {
+          "quantity": "buffer radius R, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[3].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (TP), R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "4313",
+          "value_parsed": 4313,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[3].TP",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (FP), R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "367",
+          "value_parsed": 367,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[3].FP",
+          "method": "read"
+        },
+        {
+          "quantity": "false negatives (FN), R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "1093",
+          "value_parsed": 1093,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[3].FN",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped student-GT points (n_ref_student), R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "4745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[3].n_ref_student_only",
+          "method": "read"
+        },
+        {
+          "quantity": "reviewer-promoted phantoms in the extended GT (n_promoted@R), R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "661",
+          "value_parsed": 661,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[3].n_reviewer_promoted_at_R",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped extended-GT count (n_ref_extended), R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "5406",
+          "value_parsed": 5406,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[3].n_ref_extended",
+          "method": "read"
+        },
+        {
+          "quantity": "precision, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9216",
+          "value_parsed": 0.9216,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, precision, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9131",
+          "value_parsed": 0.9131,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].precision_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, precision, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9295",
+          "value_parsed": 0.9295,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].precision_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7978",
+          "value_parsed": 0.7978,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, recall, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7856",
+          "value_parsed": 0.7856,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].recall_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, recall, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8096",
+          "value_parsed": 0.8096,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].recall_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8552",
+          "value_parsed": 0.8552,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8468",
+          "value_parsed": 0.8468,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1, R = 125 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8634",
+          "value_parsed": 0.8634,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "§2 F1 curve"
+      },
+      "claim_text": "| 150 | 4324 | 356 | 1093 | 4745 | 672 | 5417 | 0.9239 [0.9156, 0.9317] | 0.7982 [0.7861, 0.8101] | **0.8565** [0.8480, 0.8645] |",
+      "values": [
+        {
+          "quantity": "buffer radius R, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[4].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (TP), R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "4324",
+          "value_parsed": 4324,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[4].TP",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (FP), R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "356",
+          "value_parsed": 356,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[4].FP",
+          "method": "read"
+        },
+        {
+          "quantity": "false negatives (FN), R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "1093",
+          "value_parsed": 1093,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[4].FN",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped student-GT points (n_ref_student), R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "4745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[4].n_ref_student_only",
+          "method": "read"
+        },
+        {
+          "quantity": "reviewer-promoted phantoms in the extended GT (n_promoted@R), R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "672",
+          "value_parsed": 672,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[4].n_reviewer_promoted_at_R",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped extended-GT count (n_ref_extended), R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "5417",
+          "value_parsed": 5417,
+          "unit": null,
+          "kind": "count",
+          "path": "$.results[4].n_ref_extended",
+          "method": "read"
+        },
+        {
+          "quantity": "precision, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9239",
+          "value_parsed": 0.9239,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, precision, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9156",
+          "value_parsed": 0.9156,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[4].precision_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, precision, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.9317",
+          "value_parsed": 0.9317,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[4].precision_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7982",
+          "value_parsed": 0.7982,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, recall, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.7861",
+          "value_parsed": 0.7861,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[4].recall_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, recall, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8101",
+          "value_parsed": 0.8101,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[4].recall_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8565",
+          "value_parsed": 0.8565,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8480",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[4].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1, R = 150 m (§2 F1-curve table row)",
+          "value_verbatim": "0.8645",
+          "value_parsed": 0.8645,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[4].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          55
+        ],
+        "section": "§2 F1 curve"
+      },
+      "claim_text": "For the pre-recovery numbers (TP = 4,110 at 50 m; F1 = 0.8317 at 50 m\nto 0.8551 at 150 m)",
+      "values": [
+        {
+          "quantity": "true positives at R = 50 m, pre-recovery",
+          "value_verbatim": "4,110",
+          "value_parsed": 4110,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at R = 50 m, pre-recovery",
+          "value_verbatim": "0.8317",
+          "value_parsed": 0.8317,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at R = 150 m, pre-recovery",
+          "value_verbatim": "0.8551",
+          "value_parsed": 0.8551,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "All three are the pre-recovery ('was') side of the post-recovery correction. The preserved artefacts sit alongside the report: results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-recovery-20260503T023134.backup and the matching report.md / corrected-f1.csv / report_autogen.md pre-recovery backups in the same directory."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "§3 How to read this table"
+      },
+      "claim_text": "Yesterday's 472 mound labels appear at every R ≥ 50.",
+      "values": [
+        {
+          "quantity": "count, reviewer-promoted phantoms from the yesterday-only single-buffer review",
+          "value_verbatim": "472",
+          "value_parsed": 472,
+          "unit": null,
+          "kind": "count",
+          "path": "$.inputs.n_reviewer_phantoms",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the sibling buffer-100m diagnostic, which records the yesterday-only phantom count as a scalar; the underlying review CSV is results/55maps-image-generalisation/human-review.csv."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "§3 How to read this table"
+      },
+      "claim_text": "Today's shell-stratified mound labels accumulate as R rises: +2 @ 50 m, +121 @ 75 m, +47 @ 100 m, +19 @ 125 m, +11 @ 150 m.",
+      "values": [
+        {
+          "quantity": "increment in reviewer-promoted phantoms admitted at R = 50 m over the previous buffer step",
+          "value_verbatim": "+2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].n_reviewer_promoted_at_R"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+              "path": "$.inputs.n_reviewer_phantoms"
+            }
+          ]
+        },
+        {
+          "quantity": "increment in reviewer-promoted phantoms admitted at R = 75 m over the previous buffer step",
+          "value_verbatim": "+121",
+          "value_parsed": 121,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[1].n_reviewer_promoted_at_R"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].n_reviewer_promoted_at_R"
+            }
+          ]
+        },
+        {
+          "quantity": "increment in reviewer-promoted phantoms admitted at R = 100 m over the previous buffer step",
+          "value_verbatim": "+47",
+          "value_parsed": 47,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[2].n_reviewer_promoted_at_R"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[1].n_reviewer_promoted_at_R"
+            }
+          ]
+        },
+        {
+          "quantity": "increment in reviewer-promoted phantoms admitted at R = 125 m over the previous buffer step",
+          "value_verbatim": "+19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[3].n_reviewer_promoted_at_R"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[2].n_reviewer_promoted_at_R"
+            }
+          ]
+        },
+        {
+          "quantity": "increment in reviewer-promoted phantoms admitted at R = 150 m over the previous buffer step",
+          "value_verbatim": "+11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[4].n_reviewer_promoted_at_R"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[3].n_reviewer_promoted_at_R"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Each increment gets its own expression + operands per v1.2 amendment 1. The +2 step is measured against the yesterday-only baseline (472) recorded in the sibling buffer-100m diagnostic; the remaining steps are successive differences of n_reviewer_promoted_at_R. Buffer radii here label the shells and are extracted as a claim at line 27."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "§3 How to read this table"
+      },
+      "claim_text": "- **F1 [95 % CI]**: Corrected F1 at R with tile-level bootstrap CI.",
+      "values": [
+        {
+          "quantity": "confidence level of the reported bootstrap intervals",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed JSON artefact records the confidence level; the producing script scripts/compute_corrected_f1_multi_buffer.py takes the 2.5 and 97.5 percentiles of the bootstrap distribution (its bootstrap-CI helper), which is the non-JSON source triage would need to inspect."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "§4 Comparison to yesterday's 50 m result"
+      },
+      "claim_text": "Yesterday's single-buffer correction (`compute_corrected_f1_human_reviewed.py`) produced **F1 = 0.8295** at R = 50 m via an analytic adjustment to measured counts (moved 472 FPs into TP and added them to the GT denominator, without re-running Hungarian).",
+      "values": [
+        {
+          "quantity": "corrected F1 at R = 50 m, yesterday-only analytic-adjustment variant",
+          "value_verbatim": "0.8295",
+          "value_parsed": 0.8295,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "count, false positives promoted to true positives by the yesterday-only review",
+          "value_verbatim": "472",
+          "value_parsed": 472,
+          "unit": null,
+          "kind": "count",
+          "path": "$.human_review.phantom_tp",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "§4 Comparison to yesterday's 50 m result"
+      },
+      "claim_text": "This script's R = 50 m row (**F1 = 0.8333 post-recovery**, was 0.8317 pre-recovery) re-runs Hungarian over extended GT including the 2 today-corrections at 50 m.",
+      "values": [
+        {
+          "quantity": "F1 at R = 50 m, post-recovery",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 50 m, pre-recovery",
+          "value_verbatim": "0.8317",
+          "value_parsed": 0.8317,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, additional today-review corrections admitted at R = 50 m",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].n_reviewer_promoted_at_R"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+              "path": "$.inputs.n_reviewer_phantoms"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "§4 Comparison to yesterday's 50 m result"
+      },
+      "claim_text": "Expected ΔF1 ≈ +0.003 versus yesterday's number.",
+      "values": [
+        {
+          "quantity": "expected difference between the multi-buffer and yesterday-only corrected F1 at R = 50 m",
+          "value_verbatim": "≈ +0.003",
+          "value_parsed": 0.003,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].F1"
+            },
+            {
+              "name": "b",
+              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+              "path": "$.corrected.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Approx marker retained in value_verbatim per v1.2 amendment 5; stated as an expectation, so triage should read it as an approximate prediction rather than a hard equality."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "§4 Comparison to yesterday's 50 m result"
+      },
+      "claim_text": "Both round to the paper-citation **≥ 0.830** headline",
+      "values": [
+        {
+          "quantity": "paper-citation rounded lower-bound F1 headline (asserted as a bound on the 50 m corrected F1)",
+          "value_verbatim": "≥ 0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Bound, not a point estimate; the ≥ marker is kept verbatim so the harness does not promote it to an equality comparison."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "§5 Obs 272 caveat"
+      },
+      "claim_text": "Obs 272 in `docs/notes/reflections/working-notes.md` shows the attractor-pull effect (reviewer confirmations concentrating closer to the detection than a uniform within-tile null would predict) is statistically significant only through 125 m.",
+      "values": [
+        {
+          "quantity": "largest buffer radius at which the attractor-pull effect is statistically significant",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Anchored to the buffer-band-lift shell permutation results, whose shell p-values (0.381 at (125, 150], 0.433 at (150, 286]) are the pair quoted in the following sentence. Obs 272 lives in docs/notes/reflections/working-notes.md — prose, not anchored to per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "§5 Obs 272 caveat"
+      },
+      "claim_text": "At the (125, 150] shell the shell-specific mound-confirmation rate is indistinguishable from the within-tile random-placement null (p = 0.381), and the (150, 286] shell (the \"200 m\" sentinel in today's CSV) is completely indistinguishable (p = 0.433).",
+      "values": [
+        {
+          "quantity": "permutation p-value, (125, 150] m shell",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "outer radius of the widest review shell (corners-plus-margin review circle)",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[5].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, (150, 286] m shell",
+          "value_verbatim": "0.433",
+          "value_parsed": 0.433,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[5].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Values are listed in order of appearance in the span (0.381, then 286 inside the shell label, then 0.433). The quoted \"200 m\" is a shell name (rule 5) and the (125, 150] bounds identify the shell, so neither is extracted here; 200 is extracted as the sentinel parameter at lines 39 and 80. These p-values differ from the post-recovery pair quoted at line 31 (0.002 / 0.469) — recorded, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "§5 Implication for interpretation"
+      },
+      "claim_text": "Including the 11 mounds in the (125, 150] shell inflates recall in a way the attractor-pull null cannot distinguish from coincidental alignment.",
+      "values": [
+        {
+          "quantity": "count, reviewer-promoted mounds admitted in the (125, 150] m shell",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[4].n_reviewer_promoted_at_R"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[3].n_reviewer_promoted_at_R"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "§5 Implication for interpretation"
+      },
+      "claim_text": "the 74 candidates at the `> 150 m` sentinel (`buffer_metres = 200`) are visible mounds inside the 286 m corners-plus-5 px review circle but outside every review ring",
+      "values": [
+        {
+          "quantity": "count, sentinel-shell candidates excluded from every extended-GT build",
+          "value_verbatim": "74",
+          "value_parsed": 74,
+          "unit": null,
+          "kind": "count",
+          "path": "$.exclusions.n_excluded_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "sentinel buffer_metres value marking the '> 150 m' review shell",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.exclusions.sentinel_buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "radius of the corners-plus-margin review circle",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-image-generalisation/buffer-band-lift/summary.json#$.shell[5].R_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "pixel margin added to the tile-corner distance when building the review circle",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 5 px review-circle margin has no located artefact; the review-UI circle construction would be the chase target for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "§6 Practitioner-useful cap"
+      },
+      "claim_text": "Recommended single-number summary for downstream quotation (post-recovery 2026-05-03): **F1 = 0.8552 at R = 125 m (95 % CI [0.8468, 0.8634])** — the largest R where the attractor-pull contribution to recall is statistically distinguishable from within-tile random placement.",
+      "values": [
+        {
+          "quantity": "F1 at R = 125 m, post-recovery",
+          "value_verbatim": "0.8552",
+          "value_parsed": 0.8552,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "largest buffer radius at which attractor-pull is statistically distinguishable from within-tile random placement",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "confidence level of the reported bootstrap interval",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at R = 125 m",
+          "value_verbatim": "0.8468",
+          "value_parsed": 0.8468,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at R = 125 m",
+          "value_verbatim": "0.8634",
+          "value_parsed": 0.8634,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[3].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 95 % confidence level is not recorded in any committed JSON; the producing script takes 2.5/97.5 percentiles."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "§6 Practitioner-useful cap"
+      },
+      "claim_text": "The 150 m row (0.8565) is a strict upper bound; the 50 m row (0.8333) is the conservative lower bound and matches the paper-citable ≥ 0.830 headline.",
+      "values": [
+        {
+          "quantity": "F1 at R = 150 m, post-recovery",
+          "value_verbatim": "0.8565",
+          "value_parsed": 0.8565,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at R = 50 m, post-recovery",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "paper-citable rounded lower-bound F1 headline (asserted as a bound on the 50 m corrected F1)",
+          "value_verbatim": "≥ 0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ≥ 0.830 headline is a rounded bound rather than a point value; given this claim already carries a read comparison of the same underlying quantity ($.results[0].F1), the bound is left anchor-unknown here to avoid a duplicate equality comparison. It is extracted with an explicit anchor at lines 27 and 70."
+    }
+  ]
+}
