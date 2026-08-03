@@ -1,7 +1,7 @@
 # Phase 1 — GATE 1 package (commitments and execution)
 
-> **Last revised**: 2026-07-29 (erratum-drafting corrections: five verifier levels, Obs 211 citation). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-03 (append-only erratum note in § 8 — the § 1 item 1 kind breakdown;
+> body unchanged per ruling 1). See [§ Changelog](#changelog) for revision history.
 
 **Controller**: `planning/audit-charter.md` § 7 Phase 1. **Executor**:
 Claude Fable 5 session of 2026-07-29 (orchestration, adjudication,
@@ -309,7 +309,76 @@ and charter rule 13):
 > need a plan.
 > 5. Yes, approve phase 2 start
 
+## 8. Erratum note — appended 2026-08-03 (C4 wave-6 triage)
+
+Append-only. The § 1 item 1 body above is **unchanged**: this document
+is the GATE 1 attestation source, and correcting it in place would
+falsify the record of what the gate was shown (Phase 3 rulings 1
+and 11).
+
+**The defect.** § 1 item 1 asserts "**702 atomic obligations** (515
+preregistration.md, 81 appendix-prompts, 100 coverage; 184 factor, 162
+analysis, 154 condition, 111 disclosure, 55 trigger, 30 hypothesis)".
+The kind breakdown reproduces **commitment ledger v1** (`2f5a9ae2d`,
+2026-07-29 18:20:53) digit for digit, and v1 held 696 commitments:
+184 + 162 + 154 + 111 + 55 + 30 = **696**, not the 702 asserted in the
+same sentence. The document is internally inconsistent on its own
+face, without reference to any external artefact.
+
+**The era-correct vector.** The v1.1 adjudicated pass (`c1427f1d0`,
+18:33:53) rebalanced the kinds to **182 factor / 164 analysis / 158
+condition / 109 disclosure / 59 trigger / 30 hypothesis** (sum 702),
+and v1.2 (`7b94384e8`, 18:53:41) added statuses without touching kinds.
+This document's first commit is `4729f99dc` at 18:56:03 — three minutes
+after v1.2 landed — and the ledger did not move again before the
+document's last revision (`34cfca2fe`, 22:44:31). So 182/164/158/109/
+59/30 was the correct breakdown at the document's own era and at every
+subsequent revision of it, and it remains the breakdown in
+`results/commitments.json` at HEAD. Only the **702 total** and the
+**30 hypothesis** value in the published sentence are era-correct; the
+other five kind values are not.
+
+| Kind | Published (ledger v1) | Era-correct (v1.1 / v1.2, and HEAD) |
+|------|----------------------:|------------------------------------:|
+| factor | 184 | 182 |
+| analysis | 162 | 164 |
+| condition | 154 | 158 |
+| disclosure | 111 | 109 |
+| trigger | 55 | 59 |
+| hypothesis | 30 | 30 |
+| **Sum** | **696** | **702** |
+
+**The source-file half — pending.** The same sentence's source-file
+breakdown (515 preregistration.md / 81 appendix-prompts / 100
+coverage, sum 696) is v1 as well; era-correct is **520 / 81 / 101**
+(sum 702). Those three values reached triage UNRESOLVED — the recompute
+resolver cannot parse a JSONPath equality filter whose right-hand side
+is a quoted path containing `/` and `.`, so half the evidence for this
+defect never reached the adjudication. The fix is registered as
+escalation **W6-E5**; when it lands, those rows join the family-D
+ledger entry and this note needs no revision (the values are already
+stated here).
+
+**Adjudication**:
+`reports/verification/c4-triage/mismatch-triage-2026-08-03-wave6.json`
+(consolidated record); family D and recommendation REC-1 of the blind
+pass `reports/verification/c4-triage/blind-passes/wave6-pass-P3-2026-08-03.json`.
+Disposition: DOC-DEFECT-AT-ERA, 5 rows (`063#3[4..8]`), plus the three
+masked source-file rows (`063#3[1..3]`).
+
 ## Changelog
+
+### 2026-08-03 — Append-only erratum note (§ 8)
+
+C4 wave-6 triage found that § 1 item 1's parenthetical kind breakdown
+reproduces commitment ledger v1 (696 obligations) under the v1.2 total
+of 702, and sums to 696 rather than 702. Per rulings 1 and 11 the body
+is **not** rewritten — this document is the GATE 1 attestation source.
+The correction is recorded as an append-only note in § 8, which states
+both vectors (published 184/162/154/111/55/30 vs era-correct
+182/164/158/109/59/30) and flags the source-file half (515/81/100 vs
+era-correct 520/81/101) as pending the W6-E5 resolver fix. No finding,
+ruling, decision, or discharge count changed.
 
 ### 2026-07-29 — Erratum-drafting corrections
 

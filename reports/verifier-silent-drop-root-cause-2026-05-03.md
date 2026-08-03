@@ -1,5 +1,30 @@
 # Verifier Silent-Drop Root-Cause Analysis (2026-05-03)
 
+> **⚠ Superseded artefact (2026-08-03, Session-126 C4 wave-6 triage)**:
+> the gap=57 cell this analysis inspects —
+> `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json`
+> — was re-run by the Phase-3a recovery campaign at commit `6683952ac`
+> (2026-05-06) and now records `parse_failures: 0`, `empty_responses: 0`,
+> and 57 entries in `completed_items[]`. The `1147` / `1147` counters and
+> the empty `failed_items[]` / `completed_items[]` arrays quoted in the
+> Failure-mode taxonomy and in Open Questions 1 and 6 are the faithful
+> pre-recovery record — every one of them reproduces exactly at this
+> document's own era — but they are no longer recoverable from the live
+> file. Resolve them from the era blob instead:
+> `git show 0808cb916:outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json`.
+> One consequence: Open Question 6 ("why are `parse_failures` and
+> `empty_responses` identical?") can no longer be answered from this
+> cell's live artefact. The recovery independently **confirms** this
+> document's gap=57 analysis — the `6683952ac` commit message records
+> "Cell 1 — e47-flash-high-text-1of5 (Tier 1, gap=57) / Recovered:
+> 57/57 candidates", and the live `completed_items[]` now holds
+> precisely those 57. This document is a dated snapshot and a C6
+> attestation source; its body is unchanged (Phase 3 ruling 1).
+> Adjudication:
+> `reports/verification/c4-triage/blind-passes/wave6-pass-P4-2026-08-03.json`
+> (recommendation R1, family F1); consolidated in
+> `reports/verification/c4-triage/mismatch-triage-2026-08-03-wave6.json`.
+
 ## Executive summary
 
 This is **one bug** with several contributing failure modes that all funnel

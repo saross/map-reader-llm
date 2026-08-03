@@ -1,5 +1,9 @@
 # Dawid-Skene cross-run summary — four 55-map runs (T=0.3, T=0.7, image, text-MIN)
 
+> **Last revised**: 2026-08-03 (C4 wave-6 triage — five third-decimal
+> calibration cells re-derived from the crosstab artefacts). See
+> [§ Changelog](#changelog) for revision history.
+
 **Date**: 2026-04-28 (text-MIN added to the previous three-run summary
 of 2026-04-27).
 **Post-recovery refresh**: 2026-05-03 (cross-track-v2 commit `42ed1d32`).
@@ -168,7 +172,7 @@ slice.
 | text-MIN | 585 / 0 | 0.5538 (324/585) | 0.2947 | +0.259 | 1.88× | 0.2591 | 0.3142 | 0.500 |
 | T=0.7 | 637 / 0 | 0.5589 (356/637) | 0.2914 | +0.267 | 1.92× | 0.2675 | 0.3181 | 0.500 |
 | T=0.3 | 628 / 64 | 0.5748 (361/628) | 0.2269 | +0.348 | 2.53× | 0.3479 | 0.3655 | 0.500 |
-| Image | 1,029 / 0 | 0.7250 (746/1,029) | 0.1865 | +0.539 | 3.89× | 0.5385 | 0.4893 | 0.500 |
+| Image | 1,029 / 0 | 0.7250 (746/1,029) | 0.1865 | +0.538 | 3.89× | 0.5385 | 0.4893 | 0.500 |
 
 Sorted by calibration gap. Notes:
 
@@ -189,7 +193,10 @@ Sorted by calibration gap. Notes:
   uses the legacy student GT at 50 m).
 - **text-MIN's empirical mound rate (0.5538) is the lowest** of the
   four, just below T=0.7 (0.5589), well below T=0.3 (0.5748) and
-  image (0.7250). The four runs span 0.55–0.73 on this metric.
+  image (0.7250). The four runs span 0.55–0.72 on this metric — both
+  band edges are rounded from the artefact values (text-MIN 0.5538462,
+  image 0.7249757), not from the 4 d.p. display forms above, which is
+  where the upper edge would otherwise double-round to 0.73.
 
 ## 4. Cross-run comparison — extending Obs 293's headline
 
@@ -200,8 +207,8 @@ Sorted by calibration gap. Notes:
 | Measured F1 | T=0.7 (0.7896) | Image (0.7745) | T=0.3 (0.7743) | text-MIN (0.7591) |
 | D-S corrected F1 | T=0.7 (0.8142) | Image (0.7990) | T=0.3 (0.7988) | text-MIN (0.7834) |
 | Corrected-F1-multi-buffer F1 (R=50 m) | T=0.3 (0.8437) | Image (0.8332) | T=0.7 (0.8273) | text-MIN (0.7968) |
-| D-S calibration ECE (lower = better) | text-MIN (0.259) | T=0.7 (0.267) | T=0.3 (0.348) | Image (0.539) |
-| D-S calibration Brier (lower = better) | text-MIN (0.314) | T=0.7 (0.318) | T=0.3 (0.366) | Image (0.489) |
+| D-S calibration ECE (lower = better) | text-MIN (0.259) | T=0.7 (0.267) | T=0.3 (0.348) | Image (0.538) |
+| D-S calibration Brier (lower = better) | text-MIN (0.314) | T=0.7 (0.318) | T=0.3 (0.365) | Image (0.489) |
 
 The D-S F1 ranking and the measured F1 ranking are **identical**
 across all four runs (T=0.7 > Image > T=0.3 > text-MIN; the
@@ -324,7 +331,7 @@ an independent confirmation in the calibration domain.
 ### 5.2 Image's image-vs-text calibration penalty is large — and now further isolated
 
 The image run's D-S calibration gap (3.89×) is roughly **double**
-T=0.7's (1.90×) and T=0.3's (2.53×), and *also* more than double
+T=0.7's (1.92×) and T=0.3's (2.53×), and *also* more than double
 text-MIN's (1.88×). All three text-prompt runs (text-MIN, T=0.7,
 T=0.3) sit on the same calibration curve; image is on a clearly
 steeper section. This isolates the image-modality calibration
@@ -506,3 +513,78 @@ References:
   scales with VLM-only share — three-run finding now extended to
   four-run with text-MIN at the conservative end) — all in
   `docs/notes/reflections/working-notes.md`.
+
+## Changelog
+
+### 2026-08-03 — C4 wave-6 calibration-cell repairs
+
+**Refresh trigger**: Session-126 C4 wave-6 triage. Blind pass P4
+recommendation R4 and its five row-level exceptions
+(`reports/verification/c4-triage/blind-passes/wave6-pass-P4-2026-08-03.json`);
+consolidated adjudication in
+`reports/verification/c4-triage/mismatch-triage-2026-08-03-wave6.json`.
+Two mechanisms account for all five cells: (a) stale carry-over from
+the 2026-05-03 image-recovery propagation (`fc536a19c`), where a row
+was refreshed cell by cell and the derived cell was left untouched
+even though the recovery moved it across a rounding boundary; and
+(b) double-rounding, where a restatement was rounded from a displayed
+4 d.p. value rather than from the artefact.
+
+| § | Cell | Before | After | Artefact value |
+|---|------|-------:|------:|----------------|
+| 3 | Image calibration gap (emp − D-S) | +0.539 | +0.538 | 0.7249757046 − 0.1865 = 0.5384757 |
+| 3 | Empirical-rate span across the four runs | 0.55–0.73 | 0.55–0.72 | max 0.7249757046 (image) → 0.72; min 0.5538461538 (text-MIN) → 0.55 |
+| 4.1 | Image D-S calibration ECE | 0.539 | 0.538 | `ece` = 0.5384655048 |
+| 4.1 | T=0.3 D-S calibration Brier | 0.366 | 0.365 | `brier` = 0.3654520487 |
+| 5.2 | T=0.7 posterior:empirical ratio | 1.90× | 1.92× | 0.5588697017 / 0.2914 = 1.91788 |
+
+Artefacts re-read for every value above:
+`results/55maps-image-generalisation/ds-human-crosstab/summary.json`
+(`prevalence`, `ece`),
+`results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json`
+(`vlm_only_posterior`),
+`results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json`
+(`brier`),
+`results/55maps-text-high-generalisation/ds-human-crosstab/summary.json`
+(`prevalence`),
+`results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json`
+(`vlm_only_posterior`),
+`results/55maps-text-min-generalisation/ds-human-crosstab/summary.json`
+(`prevalence`).
+
+**What did NOT change**: every ranking and every conclusion. The § 3
+calibration-gap ordering (image ≫ T=0.3 > T=0.7 > text-MIN), the § 4.1
+ECE / Brier ordering (text-MIN < T=0.7 < T=0.3 < image), the § 4.2
+monotonic scaling of the calibration gap with the VLM-only / matched
+ratio, and the § 5.2 image-modality framing (image's gap roughly double
+T=0.7's) all hold under both the old and the new values. All five
+corrections are third-decimal.
+
+**Also resolved**: the § 5.2 sentence previously read 1.90× for T=0.7
+while §§ 3 and 4.2 read 1.92× for the same run and the same statistic —
+the document contradicted itself. The 1.92× form (refreshed by the
+2026-05-03 recovery propagation) is correct and now appears in all
+three places.
+
+### 2026-07-28 — Dawid-Skene attribution corrected (no trail left at the time)
+
+Commit `1844e5887` (wave 5 of the D17 attribution sweep, FALSE-12)
+replaced the "preregistered fixed-prior fit" framing in the preamble
+with post-hoc framing, and repointed the 5 % student-FN prior to
+Sobotkova et al. (2023); § 4.3's "preregistered fixed prior" became
+"fixed Sobotkova-derived prior". No numerical value changed. That
+revision left no banner or changelog entry; it is recorded here
+retrospectively as part of the first Revision-Policy stub for this
+document.
+
+### 2026-04-27 — Original publication
+
+First authored as a three-run D-S cross-run summary (T=0.3, T=0.7,
+image) at commit `da0552381`. Extended to four runs the following day
+with text-MIN (`750d2c51b`, 2026-04-28 — the date the document's own
+header carries), then refreshed twice on 2026-05-03 to propagate the
+post-recovery T=0.7 numbers (`ae50d94de`) and the image / text-MIN /
+GS-v2 recovery numbers (`fc536a19c`); those two refreshes are
+documented in the document's own preamble and § 6.1 rather than here.
+This banner and changelog were added on 2026-08-03, the first
+Revision-Policy stub for this document.
