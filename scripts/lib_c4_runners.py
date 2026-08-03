@@ -116,6 +116,17 @@ def glob_entries(params: dict) -> list[Path]:
     root = REPO_ROOT / params["root"]
     kind = params.get("kind", "file")
     exclude = params.get("exclude")
+    # ``count_symlink_entries`` (default false): include entries that
+    # are THEMSELVES symlinks, while still never descending through a
+    # symlinked directory. This is plain ``find``'s actual semantics —
+    # ``find`` lists symlink entries without following them — and is
+    # needed for censuses whose population legitimately includes
+    # tracked carried-forward symlinks (Session-126: the phase2d
+    # condition/run census, where 20 of 60 run directories are
+    # git-tracked symlinks into phase2b/2c). Opt-in per spec so every
+    # pre-existing census keeps the stricter exclude-symlinks
+    # behaviour.
+    count_symlink_entries = bool(params.get("count_symlink_entries"))
 
     def crosses_symlink(entry: Path) -> bool:
         cur = root
@@ -126,7 +137,8 @@ def glob_entries(params: dict) -> list[Path]:
         return False
 
     hits = [h for h in root.glob(params["glob"])
-            if not h.is_symlink() and not crosses_symlink(h)]
+            if (count_symlink_entries or not h.is_symlink())
+            and not crosses_symlink(h)]
     if kind == "file":
         entries = [h for h in hits if h.is_file()]
     elif kind == "dir":

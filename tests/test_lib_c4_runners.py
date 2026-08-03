@@ -156,3 +156,26 @@ def test_runner_errors_fail_loudly(runner_repo):
         run_json_subset_count({"file": "inventory.json", "list_path": "$",
                                "where": [{"key": "id", "op": "explode",
                                           "value": "x"}]})
+
+
+@pytest.mark.tier1
+def test_glob_count_symlink_entries_opt_in(runner_repo):
+    """count_symlink_entries includes symlink ENTRIES, never descent.
+
+    Session-126: the phase2d census counts tracked carried-forward run
+    symlinks as population members (plain find lists symlink entries
+    without following them). Default behaviour — exclude symlinks —
+    is unchanged for every pre-existing spec.
+    """
+    (runner_repo / "outputs" / "run_3").symlink_to(
+        runner_repo / "outputs" / "run_1")
+    base = {"root": "outputs", "glob": "run_*", "kind": "dir"}
+    # Default: the symlink entry stays excluded.
+    assert run_glob_count(base) == 2
+    # Opt-in: the symlink entry counts as a member...
+    assert run_glob_count({**base, "count_symlink_entries": True}) == 3
+    # ...but entries BEHIND a symlinked directory still never count.
+    (runner_repo / "outputs" / "run_1" / "leaf.md").write_text("x\n")
+    deep = {"root": "outputs", "glob": "run_*/leaf.md",
+            "count_symlink_entries": True}
+    assert run_glob_count(deep) == 1
