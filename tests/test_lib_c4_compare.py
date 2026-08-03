@@ -195,8 +195,11 @@ def test_resolve_path_filters_and_wildcard():
     assert resolve_path(doc, "$.mixed[*].v") == [1, 2]
     with pytest.raises(KeyError):  # 0 filter hits
         resolve_path(doc, "$.cells[?(@.name=='absent')].f1_50")
-    with pytest.raises(KeyError):  # ambiguous: two elements match
-        resolve_path(doc, "$.buffers[?(@.n_tiles==487)]")
+    # Since the Session-126 extension, several matches behave like [*]
+    # over the matched subset (the caller owns collapse/len rules) —
+    # formerly this raised as ambiguous.
+    assert resolve_path(doc, "$.buffers[?(@.n_tiles==487)]") == [
+        {"n_tiles": 487}, {"n_tiles": 487}]
 
 
 @pytest.mark.tier1
@@ -225,3 +228,42 @@ def test_match_half_up_survives_float_subtraction_noise():
     result2 = match_at_quoted_precision(parse_value("+0.059"), 0.6087 - 0.5502)
     assert result2["match"] is True
     assert result2["mode"] == "round-half-up"
+
+
+@pytest.mark.tier1
+def test_filter_multi_match_behaves_like_star():
+    """Session-126 locator extension: multi-match filters map like [*].
+
+    A filter matching several elements returns the matched subset (or
+    maps the remaining path over it), so len:/distinct/constant-collapse
+    rules compose with filtered subsets. Zero matches still fail; the
+    single-match contract is unchanged.
+    """
+    data = {"comparisons": [
+        {"family": "confirmatory", "p": 0.01},
+        {"family": "confirmatory", "p": 0.02},
+        {"family": "exploratory", "p": 0.5},
+    ]}
+    hits = resolve_path(data, "$.comparisons[?(@.family=='confirmatory')]")
+    assert isinstance(hits, list) and len(hits) == 2
+    # Projection over the matched subset maps element-wise.
+    ps = resolve_path(data, "$.comparisons[?(@.family=='confirmatory')].p")
+    assert ps == [0.01, 0.02]
+    # Single match still descends to the element itself.
+    one = resolve_path(data, "$.comparisons[?(@.family=='exploratory')].p")
+    assert one == 0.5
+    with pytest.raises(KeyError):
+        resolve_path(data, "$.comparisons[?(@.family=='absent')]")
+
+
+@pytest.mark.tier1
+def test_filter_inequality_operator():
+    """!= filters select the complement subset (wave-5 051 locator)."""
+    data = {"ranked": [
+        {"ref": "a", "tier": 1}, {"ref": "b", "tier": 1},
+        {"ref": "c", "tier": 1}, {"ref": "d", "tier": 1},
+        {"ref": "e", "tier": 1}, {"ref": "prior", "tier": 2},
+    ]}
+    tiers = resolve_path(data, "$.ranked[?(@.ref!='prior')].tier")
+    assert tiers == [1, 1, 1, 1, 1]
+    assert len(set(tiers)) == 1

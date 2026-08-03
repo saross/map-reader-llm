@@ -175,7 +175,7 @@ _PATH_TOKEN = re.compile(
     r"\.(?P<name>[A-Za-z_][\w-]*)"      # .name
     r"|\[(?P<index>-?\d+)\]"            # [3] / [-1]
     r"|\[(?P<q>['\"])(?P<key>.*?)(?P=q)\]"  # ['key'] / [\"key\"]
-    r"|\[\?\(@\.(?P<fkey>[\w-]+)\s*==\s*"   # [?(@.key == literal)]
+    r"|\[\?\(@\.(?P<fkey>[\w-]+)\s*(?P<fop>==|!=)\s*"  # [?(@.key == / != literal)]
     r"(?P<fq>['\"])?(?P<fval>(?(fq)[^'\"]*|[^)\]]+))(?(fq)(?P=fq))\)\]"
     r"|\[(?P<star>\*)\]"                # [*]
 )
@@ -242,10 +242,16 @@ def resolve_path(obj, path: str):
     """Resolve a minimal JSONPath-ish locator against loaded JSON.
 
     Supports ``$`` root, dotted names, integer indices, quoted string
-    keys, single-key equality filters (``$.cells[?(@.name=='TH7-k3')]``,
-    exactly one element must match), and the ``[*]`` wildcard (the rest
-    of the path maps over every element and a plain ``list`` of results
-    is returned — the caller owns any collapse rule).
+    keys, single-key equality and inequality filters
+    (``$.cells[?(@.name=='TH7-k3')]``, ``$.ranked[?(@.ref!='x')]``),
+    and the ``[*]`` wildcard (the rest of the path maps over every
+    element and a plain ``list`` of results is returned — the caller
+    owns any collapse rule). A filter matching exactly one element
+    descends into it (the original single-match contract); a filter
+    matching several behaves like ``[*]`` over the matched subset, so
+    the caller's collapse/len rules apply (Session-126 wave-5 locator
+    extension — filtered-subset counts and constant-collapse over a
+    filtered subset). Zero matches still fail loudly.
 
     Args:
         obj: Parsed JSON object.
@@ -278,16 +284,29 @@ def resolve_path(obj, path: str):
             if not isinstance(current, list):
                 raise KeyError(f"filter applied to non-list in {path!r}")
             fkey = match.group("fkey")
+            fop = match.group("fop")
             fval = _parse_filter_literal(match.group("fval"),
                                          match.group("fq") is not None)
-            hits = [element for element in current
-                    if isinstance(element, dict) and element.get(fkey) == fval]
-            if len(hits) != 1:
+            if fop == "==":
+                hits = [element for element in current
+                        if isinstance(element, dict) and element.get(fkey) == fval]
+            else:
+                hits = [element for element in current
+                        if isinstance(element, dict) and element.get(fkey) != fval]
+            if not hits:
                 raise KeyError(
-                    f"filter @.{fkey}=={fval!r} matched {len(hits)} elements "
-                    f"(need exactly 1) in {path!r}")
-            current = hits[0]
-            continue
+                    f"filter @.{fkey}{fop}{fval!r} matched 0 elements "
+                    f"in {path!r}")
+            if len(hits) == 1:
+                current = hits[0]
+                continue
+            # Several matches: behave exactly like [*] over the subset —
+            # map the remaining path over every hit; the caller owns
+            # the collapse/len rule.
+            rest = path[pos:]
+            if not rest:
+                return list(hits)
+            return [resolve_path(element, "$" + rest) for element in hits]
         if match.group("name") is not None:
             key = match.group("name")
         elif match.group("index") is not None:
