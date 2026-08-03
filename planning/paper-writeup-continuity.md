@@ -80,9 +80,15 @@ re-run vs re-word).
 
 **🚩 REMAINING PI ESCALATION QUEUE FOR S127**:
 
-1. [x] ~~W6-E1~~ and [x] ~~W6-E3~~ — RESOLVED 2026-08-03 (rulings
-   16–17; see the ✅ block above). NEW: **W6-E7** (§ 4.2 CI-overlap
-   cell) and **W6-E8** (cand-2397 re-run vs re-word) await the PI.
+1. [x] ~~W6-E1~~, [x] ~~W6-E3~~, [x] ~~W6-E7~~, [x] ~~W6-E8~~ — ALL
+   RESOLVED 2026-08-03 (rulings 16–17; § 4.2 cell fixed `a6a18b3c4`;
+   cand-2397 re-run landed `3271d6923`, max movement +0.00021, 50 m F1
+   0.8333). NEW from the re-run: **W6-E9** (cand 2397 rescued through
+   TWO channels — review-CSV row + curator GT point at 0.00 m;
+   `build_extended_gt` has no coincidence check, so HEAD-GT + CSV
+   analyses double-count it as +1 FN — sweep + durable fix needed) and
+   **W6-E10** (buffer-100m-diagnostics summary predates the ENTIRE
+   recovery — regenerate-vs-banner decision).
 2. **W5-E1 + W6-E2 (instrument)**: era-selection redesign (per-claim
    `git log -S`/blame hybrid + disagreement flags +
    anchor-absent-at-era status; void the two false era-defect fields

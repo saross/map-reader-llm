@@ -90,6 +90,16 @@
    "id": "W6-E6",
    "kind": "PROCESS — audit propagation registration",
    "detail": "P1: the token-load audit's propagation set never included the cross-track report (live carriers named in P1 R7); P4: three results/**.md docs lack revision banners/changelogs entirely; P4 compound finding 1: attractor-pull's 'no row-level shifts (re-confirmed)' line was added 23 minutes AFTER the final regeneration and is contradicted by its own autogen twin. Recommend an audit-propagation registry check at GATE 3."
+  },
+  {
+   "id": "W6-E9",
+   "kind": "DATA-INTEGRITY (research) — cand 2397 rescued through two channels; pipeline double-counts",
+   "detail": "The cand-2397 rescue exists BOTH as a review-CSV row and as a curator GT point at identical coordinates (added 2e075eb99, self-labelled 'phantom-FP rescue at image cand 2397'). build_extended_gt concatenates student GT + phantoms with no coincidence check: scoring against the HEAD student GT (4,746) places two GT points 0.00m apart, Hungarian matching credits one and books the other as +1 FN — recall FALLS from a rescue. The W6-E8 re-run deliberately scored against the 4,745 blob (60adff72) so the CSV remains the sole channel; documented as corrected-f1 report section-9 caveat 7. NEEDED: (a) sweep for other analyses consuming HEAD student GT + the multi-buffer CSV together (same +1 FN); (b) durable fix — de-duplication in build_extended_gt or withdrawal of the redundant curator point."
+  },
+  {
+   "id": "W6-E10",
+   "kind": "artefact staleness — buffer-100m-diagnostics predates the ENTIRE recovery",
+   "detail": "buffer-100m-diagnostics/summary.json (single commit da2681709, 2026-04-21) records n_detections 4,665 / n_student_gt 4,744 / phantoms 472 — pre-recovery throughout, not merely pre-cand-2397. Regenerating moves total_matched_at_50m off 4,108 and rewrites the deliberately two-state Session-76 reconciliation in the corrected-f1 report. Larger scope than W6-E8 authorised; decide regenerate-vs-banner at S127."
   }
  ],
  "carry_forward_notes": [
@@ -108,6 +118,11 @@
   "new_pi_items": [
    "W6-E7: cross-track section 4.2's 'CI overlap? yes (partial)' at R=100m is WRONG on the artefacts (image [0.845,0.862] vs text-HIGH [0.822,0.842] are DISJOINT, before and after the refresh) — fixing it strengthens a separation conclusion, so it was flagged in the changelog residues and NOT edited. PI: approve the correction to 'no overlap'.",
    "W6-E8: corrected-f1's '+274 mounds'/cand-2397 residue — summary.json was written 88 minutes BEFORE cand 2397 landed, so the banner's 'now included' claim appears false for the section-2 table; refreshing the count without re-running would create a new inconsistency. PI: re-run the analysis vs re-word the claim."
-  ]
+  ],
+  "w6e7_w6e8_resolution": {
+   "date": "2026-08-03 (same session, PI interactive)",
+   "W6-E7": "APPROVED and landed (a6a18b3c4): the section-4.2 R=100m cell now reads 'no' — CIs disjoint at both eras; 50m cell verified correct.",
+   "W6-E8": "PI chose RE-RUN; landed (3271d6923, sapphire, 35.9s, $0 API). Every R: TP+1/FP-1/FN=0; max movement +0.00021; 50m F1 0.8333 (the artefact catches up to this morning's stale-artefact correction); 3-d.p. forms 0.854@100m / 0.857@150m moved and both reports refreshed with appended changelog entries. Reproduction command in the report had invalid flags — corrected. Premise corrections from the input diff: cand 2397 is an ADDED row (not a promotion); 493 other CSV rows changed formatting-only (verified inert)."
+  }
  }
 }
