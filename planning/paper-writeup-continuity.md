@@ -116,8 +116,14 @@ covered by the E43 arc, in
 3. Prereg-integrity: broken § 8.6 pointer path; `holdout_manifest.json`
    named but renamed away; `select_tiles_phase2.py` still WRITES the
    old name (reproducibility defect on a prereg-cited script).
-4. E39 repo-side fix (regenerate step-0.05 adversarial sweep; correct
-   `pv-phase1-analysis.md:43` incommensurable-grid comparison).
+4. [x] **E39 repo-side fix — DONE 2026-08-03** (regenerated the
+   step-0.05/1000-bootstrap adversarial sweep on sapphire, $0 API; gate
+   reproduced 0.7701@0.15 exactly; corrected ALL THREE
+   `pv-phase1-analysis.md` tables — not just line 43 — plus the selected
+   optimal threshold 0.20→0.15; superseded coarse sweep archived to
+   `archive/superseded-sweeps/pv-phase1-adversarial-text-150/`. Two
+   NOMINAL ranking reversals, no decision changes: adversarial now edges
+   checklist (0.7701 vs 0.7694), 150 px now edges 75 px.)
 5. Governance: `docs/methodology/reports/**` in neither Revision-Policy
    scope nor out-of-scope list.
 Plus: **Obs 383 correction draft** (approve → land via obs-writer);
