@@ -83,16 +83,16 @@ re-run vs re-word).
 1. [x] ~~W6-E1~~ and [x] ~~W6-E3~~ — RESOLVED 2026-08-03 (rulings
    16–17; see the ✅ block above). NEW: **W6-E7** (§ 4.2 CI-overlap
    cell) and **W6-E8** (cand-2397 re-run vs re-word) await the PI.
-3. **W5-E1 + W6-E2 (instrument)**: era-selection redesign (per-claim
+2. **W5-E1 + W6-E2 (instrument)**: era-selection redesign (per-claim
    `git log -S`/blame hybrid + disagreement flags +
    anchor-absent-at-era status; void the two false era-defect fields
    P3 identified). Registered instrument work per ruling 14.
-4. **W5-E2/E3/E4, W6-E4/E5/E6**: v2-audit misattribution materiality;
+3. **W5-E2/E3/E4, W6-E4/E5/E6**: v2-audit misattribution materiality;
    session-58 572/569/435 framing (paper-corpus sweep pending);
    phase3a banner under-coverage; marker/magnitude comparer gaps
    (fold into tranche 2); quoted-path resolver bug (three masked
    rows); audit-propagation registry check at GATE 3.
-5. **Obs candidates**: era_check×banner (drafted, obs-writer +
+4. **Obs candidates**: era_check×banner (drafted, obs-writer +
    blind pass on approval); the S126 user-obs/WN material at
    handoff review.
 
