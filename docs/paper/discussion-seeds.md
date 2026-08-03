@@ -146,10 +146,10 @@ E72-remediation matched-temperature analysis,
    map set's flawed positions could be repurposed as the instrument.
 2. **Cost-equivalent configurations belong in the Pareto story**: the
    matched ladder suggests T=1.0 at N=5 meets or beats T=0.7 at N=10
-   on both F1 and tile-MCC at half the proposer passes (paired
-   cross-cell tests commissioned 2026-08-03 — cite
-   `results/e43-matched-temperature/` § Cost-equivalent
-   configurations once landed). If it holds, practitioners choosing
+   on both F1 and tile-MCC at half the proposer passes (landed:
+   `results/e43-matched-temperature/findings.md` § 13 — vs T=0.7/N=30
+   an F1 dead heat at 5.5× the spend; non-inferiority framing, ±0.038
+   null intervals). If it holds, practitioners choosing
    configurations under budget constraints need the
    temperature-vs-pool-size trade made explicit, not just the
    per-configuration Pareto frontier.
