@@ -149,8 +149,19 @@ def match_at_quoted_precision(quoted: ParsedValue, actual: float) -> dict:
     # Decimal-midpoint half-up ("0.9195" quoted as "0.920"): float
     # round() resolves the binary representation downward, but half-up
     # on the shortest decimal repr is a legitimate corpus convention.
-    half_up = decimal.Decimal(repr(actual)).quantize(
-        decimal.Decimal(1).scaleb(-dp), rounding=decimal.ROUND_HALF_UP
+    # Pre-quantise to dp+6 first: a difference of two floats that is an
+    # exact decimal midpoint can carry sub-femto binary noise (0.6027 −
+    # 0.5502 → 0.05249999999999999), which would otherwise fall below
+    # the midpoint and defeat the very branch built to accept it
+    # (Session-126 wave-5 triage, instrument-defect family). Six guard
+    # digits bridge only representation noise — a genuinely smaller
+    # decimal (0.052499) still half-ups downward and is rejected.
+    half_up = (
+        decimal.Decimal(repr(actual))
+        .quantize(decimal.Decimal(1).scaleb(-(dp + 6)),
+                  rounding=decimal.ROUND_HALF_EVEN)
+        .quantize(decimal.Decimal(1).scaleb(-dp),
+                  rounding=decimal.ROUND_HALF_UP)
     )
     if f"{half_up:.{dp}f}" == f"{quoted.value:.{dp}f}":
         return {"match": True, "mode": "round-half-up", "actual": actual,

@@ -204,3 +204,24 @@ def test_resolve_path_filter_boolean_literal():
     doc = {"pairwise": [{"significant": True, "pair": "a-b"},
                         {"significant": False, "pair": "c-d"}]}
     assert resolve_path(doc, "$.pairwise[?(@.significant == true)].pair") == "a-b"
+
+
+@pytest.mark.tier1
+def test_match_half_up_survives_float_subtraction_noise():
+    """Exact decimal midpoints reached via float arithmetic must half-up.
+
+    Session-126 wave-5 instrument-defect family: 0.6027 − 0.5502 is the
+    exact decimal midpoint 0.0525 but evaluates to 0.05249999999999999
+    in binary, which fell below the midpoint and defeated the half-up
+    branch. The dp+6 pre-quantise bridges representation noise only.
+    """
+    result = match_at_quoted_precision(parse_value("0.053"), 0.6027 - 0.5502)
+    assert result["match"] is True
+    assert result["mode"] == "round-half-up"
+    # The same guard must NOT promote a genuinely smaller decimal.
+    hard = match_at_quoted_precision(parse_value("0.053"), 0.052499)
+    assert hard["match"] is False and hard["mode"] == "mismatch"
+    # And the second wave-5 case: 0.6087 − 0.5502 = 0.0585 quoted +0.059.
+    result2 = match_at_quoted_precision(parse_value("+0.059"), 0.6087 - 0.5502)
+    assert result2["match"] is True
+    assert result2["mode"] == "round-half-up"
