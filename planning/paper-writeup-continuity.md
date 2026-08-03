@@ -11,7 +11,27 @@ project state.
 ## 🎯 NEXT SESSION (127) — PHASE 3: PI ESCALATION QUEUE (W6-E1 COST REVERSAL) + DOC-REPAIR PASS + FLEET [Session 126 CLOSED 2026-08-03; ran in Fable]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
-> **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–15.
+> **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–17.
+>
+> **⏱ 48-HOUR OPUS WINDOW (from 2026-08-04)**: Fable credit exhausted;
+> resets ~2026-08-06. PI directive: interim sessions run with the
+> SESSION MODEL SET TO OPUS and keep the programme moving on the
+> Opus-safe queue: (1) fleet waves 7+ (98 results-findings batches —
+> the two S126 cycles are the template; ruling-11 blind passes are the
+> safety net); (2) runner tranches 2–3 + the W6-E4/E5 comparer/
+> resolver fixes (test-first, blast-radius-measured); (3) the
+> era-selection redesign per the three convergent blind-pass specs
+> (supplementary field, bounded risk); (4) GATE 3 prep
+> (generate_c4_ledger.py + package skeleton); (5) D4 phase-3
+> bundle-index pilot (storage decision stays PI); (6) OPTIONALLY the
+> Sol/OpenAI lane (charter § 10 decision 4: harness + Session-119-
+> corrections pilot; $150 cap; API gate applies — present model/
+> calls/cost to the PI before any spend). INTERIM CONSERVATISM:
+> adjudications or doc edits touching research conclusions go to the
+> PI queue, never land (the wave-6 pattern); mechanical riders and
+> extraction repairs land normally. WAITS FOR FABLE/PI: GATE 3
+> adjudication, new rulings, the W6-E9/E10 regeneration bundle,
+> paper prose.
 > The blind layer corrected the triager in BOTH S126 waves (sixth and
 > seventh consecutive corrections — including a hash transposition in
 > the triager's own pass brief, caught and verified by pass P3).
