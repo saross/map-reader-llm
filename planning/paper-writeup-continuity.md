@@ -208,10 +208,35 @@ generated-stratum exact comparers + 125 SUSPECT sibling-JSON rows;
 3 package (carry the Phase-0 scope-growth flag + Obs 383 scope
 decision + snapshot-classification refinement).
 
-**Carry-forward**: unchanged from S125 close — MCC/Sens/Spec in
+**S125 CLOSED 2026-08-03** (reflection + handoff run; ~30 commits
+`74cfd5092`→session close, $0 API, tier-1 **1,352/0**). **Held-over
+review queue (silence holds, never discards)**: user-obs **S125
+candidates A–D** now pending in `user-observations.md` (the
+recommended-label scepticism; surplus-context redirection; the
+verbatim MCC-explanation reaction; the implied-comparison catch) —
+plus the standing S118–120 + S122 set; **two working-notes candidates
+WN-C/WN-D drafted at close, not yet landed**: WN-C = the temperature
+three-layer record (object-F1 lower-T-better on 55-map; consensus-F1
+null at matched scope; tile-MCC monotone higher-T-better — Obs 274
+replicated at a second era/tile-size/model; the E72 arc as
+provenance) and WN-D = family-size dependence of marginal tier
+separations (the March 20 m solitary Tier 1 rested on q=0.0488 and
+dissolved when three unrelated cells left the family) — approve →
+obs-writer lands them as the next free Obs numbers.
+
+**Carry-forward**: MCC/Sens/Spec in
 evaluation.md tables are bootstrap means (Obs 376); user-obs
 S118–120 and S122 pending (silence holds); WN-1 (provenance-by-shape)
-pending;
+pending; **sapphire carries its OWN two-entry stash**
+(`sibling-agent-files`, `stage-b-summary + run.log` — noticed
+2026-08-03, distinct from the local 6-entry session-83-era stack;
+don't pop either blind); after pulling `d5ae50818` sapphire's status
+will show six untracked pv-diag-256 `candidate_manifest.json` mirrors
+(byte-identical to tracked archive copies — benign, deliberately not
+duplicated into live paths; do NOT re-audit them);
+paired-MCC-alongside-paired-F1 is now STANDARD for condition
+comparisons (memory `2026-08-03-0698ed16d89c`;
+`scripts/paired_mcc_permutation.py`);
 Obs 382's standing check every wave (S125: CLEAN); register
 re-anchoring before any future census; reflection set append-only —
 never --fix there; old stash stack (6 entries, session-83-era tops) —
