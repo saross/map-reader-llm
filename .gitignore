@@ -39,9 +39,12 @@ outputs/retest/**/*.log
 outputs/pv/**/*.log
 outputs/verifier-robustness/**/*.log
 
-# Legacy 256px experiment (superseded by 384px; still track GeoJSON)
-outputs/h11/pv-diag-256/**/crops/
-outputs/pv/**/crops/
+# Legacy 256px experiment (superseded by 384px; still track GeoJSON).
+# PNG-only since 2026-08-03 (PI ruling): the directory form over-captured
+# metadata siblings (candidate_manifest.json — the ruling-15 audit's
+# only-on-sapphire pv-diag-256 manifests were invisible to git here).
+outputs/h11/pv-diag-256/**/crops/**/*.png
+outputs/pv/**/crops/**/*.png
 
 outputs/.active_files.*
 
@@ -126,9 +129,12 @@ outputs/h11/e47-propose-brief/crops/flash-high-text-1of5-v2-failed/crops/
 outputs/h11/e47-propose-brief/crops/flash-high-text-1of5-v2-final-retry/crops/
 outputs/h11/e47-propose-brief/verified-v2-cleanup/
 
-# WBF output crop directories — large PNG sets (regenerable from raw proposer data)
-outputs/h10/wbf/*/crops/
-outputs/wbf/*/crops/
+# WBF output crop directories — large PNG sets (regenerable from raw
+# proposer data). PNG-only since 2026-08-03 (PI ruling): the directory
+# form also swallowed candidate_manifest.json, which is how the two 044
+# anchors went uncommitted for three months (ruling-15 audit).
+outputs/h10/wbf/*/crops/**/*.png
+outputs/wbf/*/crops/**/*.png
 
 # Verifier cleanup backup files (transient, regenerable)
 outputs/**/*.pre-cleanup-*.backup

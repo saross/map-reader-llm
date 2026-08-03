@@ -1,139 +1,204 @@
 {
-  "schema": "regen-manifest/1.0",
-  "slug": "h11-pv-diag-384",
-  "tree": "outputs/h11/pv-diag-384",
-  "ruling": "phase3 ruling 15 (PI-approved 2026-08-03) — tracked proxies",
-  "assembled": "2026-08-03",
-  "assembled_at_commit": "fabd07a9d",
-  "assembled_by": "Session 125, phase 2 of ruling 15",
-  "purpose": "Machine-independent referent for census claims over a MIXED tree — part git-tracked API output, part locally regenerable crop bulk, part ignored runtime residue. Claims 006-output-dir-standard#32[1] and #34[1] anchor to this manifest, not to the directory (Obs 383: the same walk returns 48,707 on amd-tower and 127,281 on sapphire).",
-
-  "tree_kind": "mixed",
-  "composition_note": "This is NOT a wholly regenerable tree. Its 1,538 tracked files are API-derived proposer/verifier outputs that cost money to recreate and are already in git; its PNG bulk is locally regenerable from those tracked files plus untracked rasters; its logs and batch payloads are ignored runtime residue. The manifest therefore partitions the tree rather than describing a single recipe.",
-
-  "determinism": {
-    "status": "counts-deterministic; content-hashes not asserted at scale",
-    "evidence": "The crop-generation path used by this project was demonstrated byte-deterministic across hosts on 2026-08-03 (see regen-manifests/gs-125m-fp-side-6-crop-review.json § determinism). That test exercised gs-fp-classify.render_crop, NOT scripts/extract_candidates.py, which produced this tree's crops. No byte-level determinism test was run over 47,137 files, so per-file sha256 values are deliberately NOT recorded here.",
-    "recorded_instead": "Two filename-set digests (below) that ARE machine-independent: they were computed on both hosts on 2026-08-03 and matched exactly. A filename set is toolchain-independent in a way PNG bytes are not.",
-    "name_set_digests": [
-      {
-        "scope": "crops-cell-png",
-        "definition": "sha256 over the LC_ALL=C-sorted list of paths relative to outputs/h11/pv-diag-384/crops of every *.png file beneath it",
-        "count": 47137,
-        "sha256": "5a1cbd9e3f831af8c6f8d03225b5b8f1b321a716c0cd850e00b975de2b8e1e88",
-        "verified_on": ["amd-tower", "sapphire"]
-      },
-      {
-        "scope": "non-bulk-core",
-        "definition": "sha256 over the LC_ALL=C-sorted list of paths relative to outputs/h11/pv-diag-384 of every file that is not *.png, *.log, *.jsonl or *.backup",
-        "count": 1538,
-        "sha256": "82f3e602b636131d9f7c2362181ba17f03fd8599a0fe28c0e9a25e4486db244f",
-        "verified_on": ["amd-tower", "sapphire"],
-        "note": "This set is IDENTICAL to the tracked-core set below — not merely equal in cardinality; the two path sets were compared element-wise on 2026-08-03 and neither difference is non-empty. Every non-bulk, non-runtime file in this tree is git-tracked, so the only unrecoverable content is crop PNG bulk (regenerable) plus logs and batch payloads (ignored residue)."
-      },
-      {
-        "scope": "tracked-core",
-        "definition": "sha256 over the LC_ALL=C-sorted `git ls-tree -r HEAD --format='%(objectname) %(path)'` listing for the tree",
-        "count": 1538,
-        "sha256": "9dc7ed7d9e4b48f3f70f5a35112888fbd270935f4851cb879042e02c41c962ca",
-        "verified_on": ["amd-tower", "sapphire"],
-        "note": "Derived from the git index, so it is machine-independent by construction at a given commit — recorded as a cross-check on the two filesystem digests above."
-      }
+ "schema": "regen-manifest/1.0",
+ "slug": "h11-pv-diag-384",
+ "tree": "outputs/h11/pv-diag-384",
+ "ruling": "phase3 ruling 15 (PI-approved 2026-08-03) — tracked proxies",
+ "assembled": "2026-08-03",
+ "assembled_at_commit": "fabd07a9d",
+ "assembled_by": "Session 125, phase 2 of ruling 15",
+ "purpose": "Machine-independent referent for census claims over a MIXED tree — part git-tracked API output, part locally regenerable crop bulk, part ignored runtime residue. Claims 006-output-dir-standard#32[1] and #34[1] anchor to this manifest, not to the directory (Obs 383: the same walk returns 48,707 on amd-tower and 127,281 on sapphire).",
+ "tree_kind": "mixed",
+ "composition_note": "This is NOT a wholly regenerable tree. Its 1,538 tracked files are API-derived proposer/verifier outputs that cost money to recreate and are already in git; its PNG bulk is locally regenerable from those tracked files plus untracked rasters; its logs and batch payloads are ignored runtime residue. The manifest therefore partitions the tree rather than describing a single recipe.",
+ "determinism": {
+  "status": "counts-deterministic; content-hashes not asserted at scale",
+  "evidence": "The crop-generation path used by this project was demonstrated byte-deterministic across hosts on 2026-08-03 (see regen-manifests/gs-125m-fp-side-6-crop-review.json § determinism). That test exercised gs-fp-classify.render_crop, NOT scripts/extract_candidates.py, which produced this tree's crops. No byte-level determinism test was run over 47,137 files, so per-file sha256 values are deliberately NOT recorded here.",
+  "recorded_instead": "Two filename-set digests (below) that ARE machine-independent: they were computed on both hosts on 2026-08-03 and matched exactly. A filename set is toolchain-independent in a way PNG bytes are not.",
+  "name_set_digests": [
+   {
+    "scope": "crops-cell-png",
+    "definition": "sha256 over the LC_ALL=C-sorted list of paths relative to outputs/h11/pv-diag-384/crops of every *.png file beneath it",
+    "count": 47137,
+    "sha256": "5a1cbd9e3f831af8c6f8d03225b5b8f1b321a716c0cd850e00b975de2b8e1e88",
+    "verified_on": [
+     "amd-tower",
+     "sapphire"
     ]
+   },
+   {
+    "scope": "non-bulk-core",
+    "definition": "sha256 over the LC_ALL=C-sorted list of paths relative to outputs/h11/pv-diag-384 of every file that is not *.png, *.log, *.jsonl or *.backup",
+    "count": 1538,
+    "sha256": "82f3e602b636131d9f7c2362181ba17f03fd8599a0fe28c0e9a25e4486db244f",
+    "verified_on": [
+     "amd-tower",
+     "sapphire"
+    ],
+    "note": "This set is IDENTICAL to the tracked-core set below — not merely equal in cardinality; the two path sets were compared element-wise on 2026-08-03 and neither difference is non-empty. Every non-bulk, non-runtime file in this tree is git-tracked, so the only unrecoverable content is crop PNG bulk (regenerable) plus logs and batch payloads (ignored residue)."
+   },
+   {
+    "scope": "tracked-core",
+    "definition": "sha256 over the LC_ALL=C-sorted `git ls-tree -r HEAD --format='%(objectname) %(path)'` listing for the tree",
+    "count": 1538,
+    "sha256": "9dc7ed7d9e4b48f3f70f5a35112888fbd270935f4851cb879042e02c41c962ca",
+    "verified_on": [
+     "amd-tower",
+     "sapphire"
+    ],
+    "note": "Derived from the git index, so it is machine-independent by construction at a given commit — recorded as a cross-check on the two filesystem digests above."
+   }
+  ]
+ },
+ "generator": {
+  "script": "scripts/extract_candidates.py",
+  "script_version": "2.1.0",
+  "script_blob": "bc0c906179e0a973f61e715466e1691220ef44e1",
+  "script_last_commit": "8c8e101fc",
+  "scope": "crop PNGs and their candidate_manifest.json siblings only",
+  "api_calls": 0,
+  "note": "The tracked JSON/GeoJSON core of this tree is NOT produced by this script — it is proposer and verifier output from paid API runs and is recoverable from git, not by regeneration."
+ },
+ "tracked_inputs": [
+  {
+   "path": "outputs/h11/pv-diag-384/crops/*/candidate_manifest.json",
+   "count": 34,
+   "all_tracked": true,
+   "role": "per-condition extraction recipes; each records source_geojson, padding, crop_dimensions and the candidate list. These are the machine-independent statement of what the crop bulk SHOULD contain.",
+   "recorded_candidates_total": 51677,
+   "recorded_successful_extractions_total": 51677,
+   "recorded_failed_extractions_total": 0
   },
-
-  "generator": {
-    "script": "scripts/extract_candidates.py",
-    "script_version": "2.1.0",
-    "script_blob": "bc0c906179e0a973f61e715466e1691220ef44e1",
-    "script_last_commit": "8c8e101fc",
-    "scope": "crop PNGs and their candidate_manifest.json siblings only",
-    "api_calls": 0,
-    "note": "The tracked JSON/GeoJSON core of this tree is NOT produced by this script — it is proposer and verifier output from paid API runs and is recoverable from git, not by regeneration."
-  },
-
-  "tracked_inputs": [
+  {
+   "path": "outputs/h11/pv-diag-384 (tracked core)",
+   "count": 1538,
+   "by_extension": {
+    "json": 935,
+    "geojson": 551,
+    "md": 52
+   },
+   "digest": "9dc7ed7d9e4b48f3f70f5a35112888fbd270935f4851cb879042e02c41c962ca"
+  }
+ ],
+ "untracked_inputs": [
+  {
+   "path": "inputs/rasters/*.tif",
+   "count": 4,
+   "sha256": {
+    "K-35-052-4_32635.tif": "fe541d2c846d6eba20929f12741d264426809ee54f3ee30b5da0517ec9f3a92f",
+    "K-35-053-3_Elenovo.tif": "49ed5bfb93a8739c48567613de3806ae2c141d5a027f7aca8d06046607185dab",
+    "K-35-062-2_Rakovski.tif": "fc753dc694897a3c0c08b5f703d2b3e3ff669cf9508a60fde64b21631af32a6a",
+    "K-35-078-1_Lesovo.tif": "9ba0354afd606f0f5ce183723873267edc9638cb63ab90ec667d5896b98b101a"
+   },
+   "note": "Byte-identical on amd-tower and sapphire as at 2026-08-03. Not git-tracked (.gitignore:3, :5); bundle-index stratum under ruling 15."
+  }
+ ],
+ "parameters": {
+  "padding_px": 75,
+  "crop_dimensions": "150x150",
+  "source": "GeoTIFF rasters preferred, tile PNG fallback (E33 fix)",
+  "note": "Per-condition parameters are recorded in each of the 34 candidate_manifest.json files listed under tracked_inputs; they are not restated here to avoid a second, drift-prone copy."
+ },
+ "census": {
+  "scope": "common",
+  "scope_definition": "The set of files present on BOTH surveyed hosts on 2026-08-03. Measured independently on each host with `find -type f` (no symlink following, per the Obs 385 census convention) and reconciled by extension; the two filename-set digests above confirm set identity, not merely equal cardinality. amd-tower's tree is exactly this common set; sapphire's is a strict superset.",
+  "total": 48707,
+  "by_extension": [
+   {
+    "scope": "common",
+    "extension": "png",
+    "count": 47137
+   },
+   {
+    "scope": "common",
+    "extension": "json",
+    "count": 935
+   },
+   {
+    "scope": "common",
+    "extension": "geojson",
+    "count": 551
+   },
+   {
+    "scope": "common",
+    "extension": "md",
+    "count": 52
+   },
+   {
+    "scope": "common",
+    "extension": "log",
+    "count": 27
+   },
+   {
+    "scope": "common",
+    "extension": "jsonl",
+    "count": 5
+   }
+  ],
+  "per_host_observed": [
+   {
+    "host": "amd-tower",
+    "date": "2026-08-03",
+    "total": 48707,
+    "excess_over_common": 0
+   },
+   {
+    "host": "sapphire",
+    "date": "2026-08-03",
+    "total": 127281,
+    "excess_over_common": 78574
+   }
+  ],
+  "host_excess_breakdown": {
+   "host": "sapphire",
+   "total": 78574,
+   "png_in_condition_subtrees": [
     {
-      "path": "outputs/h11/pv-diag-384/crops/*/candidate_manifest.json",
-      "count": 34,
-      "all_tracked": true,
-      "role": "per-condition extraction recipes; each records source_geojson, padding, crop_dimensions and the candidate list. These are the machine-independent statement of what the crop bulk SHOULD contain.",
-      "recorded_candidates_total": 51677,
-      "recorded_successful_extractions_total": 51677,
-      "recorded_failed_extractions_total": 0
+     "subtree": "flash-high-image-n5",
+     "png": 21127
     },
     {
-      "path": "outputs/h11/pv-diag-384 (tracked core)",
-      "count": 1538,
-      "by_extension": { "json": 935, "geojson": 551, "md": 52 },
-      "digest": "9dc7ed7d9e4b48f3f70f5a35112888fbd270935f4851cb879042e02c41c962ca"
-    }
-  ],
-
-  "untracked_inputs": [
+     "subtree": "flash-high-text-n5",
+     "png": 31541
+    },
     {
-      "path": "inputs/rasters/*.tif",
-      "count": 4,
-      "sha256": {
-        "K-35-052-4_32635.tif": "fe541d2c846d6eba20929f12741d264426809ee54f3ee30b5da0517ec9f3a92f",
-        "K-35-053-3_Elenovo.tif": "49ed5bfb93a8739c48567613de3806ae2c141d5a027f7aca8d06046607185dab",
-        "K-35-062-2_Rakovski.tif": "fc753dc694897a3c0c08b5f703d2b3e3ff669cf9508a60fde64b21631af32a6a",
-        "K-35-078-1_Lesovo.tif": "9ba0354afd606f0f5ce183723873267edc9638cb63ab90ec667d5896b98b101a"
-      },
-      "note": "Byte-identical on amd-tower and sapphire as at 2026-08-03. Not git-tracked (.gitignore:3, :5); bundle-index stratum under ruling 15."
+     "subtree": "flash-minimal-text-n30-t07",
+     "png": 11994
+    },
+    {
+     "subtree": "image-n5",
+     "png": 8092
+    },
+    {
+     "subtree": "scale-4-optimal-487",
+     "png": 5799
     }
+   ],
+   "png_subtotal": 78553,
+   "backup_files": 21,
+   "note": "All five subtrees EXIST on amd-tower; only their PNG payloads were removed there (a local disk cleanup). No tracked file differs between the hosts."
+  }
+ },
+ "known_shortfall": {
+  "description": "The tracked recipes expect 51,677 crop PNGs under crops/; 47,137 are present. The 4,540-file shortfall is confined to exactly two cells and is IDENTICAL on both hosts, so it is a property of the tree, not of a machine.",
+  "cells": [
+   {
+    "cell": "flash-high-text-t03-1of5",
+    "expected": 2954,
+    "present": 0
+   },
+   {
+    "cell": "text-min-t07-true-1of5",
+    "expected": 1586,
+    "present": 0
+   }
   ],
-
-  "parameters": {
-    "padding_px": 75,
-    "crop_dimensions": "150x150",
-    "source": "GeoTIFF rasters preferred, tile PNG fallback (E33 fix)",
-    "note": "Per-condition parameters are recorded in each of the 34 candidate_manifest.json files listed under tracked_inputs; they are not restated here to avoid a second, drift-prone copy."
-  },
-
-  "census": {
-    "scope": "common",
-    "scope_definition": "The set of files present on BOTH surveyed hosts on 2026-08-03. Measured independently on each host with `find -type f` (no symlink following, per the Obs 385 census convention) and reconciled by extension; the two filename-set digests above confirm set identity, not merely equal cardinality. amd-tower's tree is exactly this common set; sapphire's is a strict superset.",
-    "total": 48707,
-    "by_extension": [
-      { "scope": "common", "extension": "png", "count": 47137 },
-      { "scope": "common", "extension": "json", "count": 935 },
-      { "scope": "common", "extension": "geojson", "count": 551 },
-      { "scope": "common", "extension": "md", "count": 52 },
-      { "scope": "common", "extension": "log", "count": 27 },
-      { "scope": "common", "extension": "jsonl", "count": 5 }
-    ],
-    "per_host_observed": [
-      { "host": "amd-tower", "date": "2026-08-03", "total": 48707, "excess_over_common": 0 },
-      { "host": "sapphire", "date": "2026-08-03", "total": 127281, "excess_over_common": 78574 }
-    ],
-    "host_excess_breakdown": {
-      "host": "sapphire",
-      "total": 78574,
-      "png_in_condition_subtrees": [
-        { "subtree": "flash-high-image-n5", "png": 21127 },
-        { "subtree": "flash-high-text-n5", "png": 31541 },
-        { "subtree": "flash-minimal-text-n30-t07", "png": 11994 },
-        { "subtree": "image-n5", "png": 8092 },
-        { "subtree": "scale-4-optimal-487", "png": 5799 }
-      ],
-      "png_subtotal": 78553,
-      "backup_files": 21,
-      "note": "All five subtrees EXIST on amd-tower; only their PNG payloads were removed there (a local disk cleanup). No tracked file differs between the hosts."
-    }
-  },
-
-  "known_shortfall": {
-    "description": "The tracked recipes expect 51,677 crop PNGs under crops/; 47,137 are present. The 4,540-file shortfall is confined to exactly two cells and is IDENTICAL on both hosts, so it is a property of the tree, not of a machine.",
-    "cells": [
-      { "cell": "flash-high-text-t03-1of5", "expected": 2954, "present": 0 },
-      { "cell": "text-min-t07-true-1of5", "expected": 1586, "present": 0 }
-    ],
-    "expected_total": 51677,
-    "present_total": 47137,
-    "shortfall": 4540,
-    "note": "Discovered while assembling this manifest (Session 125). Both cells' candidate_manifest.json records failed_extractions = 0, so the crops were generated and later removed rather than never produced. Regenerating them would restore the tree to its recipe; no claim currently depends on them."
-  },
-
-  "anchored_specs": ["006-output-dir-standard#32[1]", "006-output-dir-standard#34[1]"]
+  "expected_total": 51677,
+  "present_total": 47137,
+  "shortfall": 4540,
+  "note": "Discovered while assembling this manifest (Session 125). Both cells' candidate_manifest.json records failed_extractions = 0, so the crops were generated and later removed rather than never produced. Regenerating them would restore the tree to its recipe; no claim currently depends on them.",
+  "pi_ruling": "2026-08-03: do not regenerate unless needed — the extraction is mechanical (extract_candidates.py over tracked GeoJSONs + the source rasters), so the crops are recoverable on demand; no current claim depends on them."
+ },
+ "anchored_specs": [
+  "006-output-dir-standard#32[1]",
+  "006-output-dir-standard#34[1]"
+ ]
 }
