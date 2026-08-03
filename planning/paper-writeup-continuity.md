@@ -58,20 +58,31 @@ doc-side repairs DEFERRED to the PI queue** (exact repair text in the
 archived pass files) because they entangle with W6-E1/E3. Plan
 pending **138→98** (all results-findings genre → Opus per ruling 4).
 
-**🚩 PI ESCALATION QUEUE FOR S127 (decide before the doc-repair
-pass)**:
+**✅ W6-E1 AND W6-E3 RESOLVED IN-SESSION (S126 tail, PI interactive)**:
+Shawn ruled "approximately equal" (within ~5 %) for the cost claim and
+approved the two-layer reading of the repair policy — **rulings 16–17**
+(`4c9dd2681`). The full doc-repair pass then LANDED (`723d56a29` +
+`ce0126938`, six documents, every figure agent-re-derived from
+artefacts; triage resolution recorded `760b9920b`; archive scope
+README `36b3312a8`): cross-track refreshed to audited costs with the
+approximately-equal conclusion, corrected-f1 0.8332×11 + 4,124
+restatement, attractor-pull's false "no row-level shifts" clause
+replaced (tables now byte-identical to the autogen twin), ds-summary
+five cells, verifier-silent-drop ruling-1 banner, phase1-gate 696/702
+erratum rider. Propagation sweep: **docs/paper/ CLEAN**; generated
+post-run reports correct via regeneration lane; dated audit snapshots
+era-faithful. TWO NEW PI ITEMS from the pass: **W6-E7** (cross-track
+§ 4.2's "CI overlap? yes (partial)" at R=100 m is WRONG — the CIs are
+disjoint on the artefacts; the correction STRENGTHENS a separation
+conclusion, held for approval) and **W6-E8** (the cand-2397 "+274
+mounds" residue — summary.json predates the candidate by 88 min;
+re-run vs re-word).
 
-1. **W6-E1 (HIGH, research)**: the audited manifests REVERSE the
-   cross-track report's cost conclusion — image **$200.83 is cheaper
-   than** text-HIGH **$207.34** (0.97×, not "2.9× lower for
-   text-HIGH"; within 3 % ≈ equal under the audit's caveat; thinking
-   billing vs cache savings, mechanism verified). The doc was never
-   in the token-load audit's propagation set, has no revision banner,
-   and its § 10 decomposition doesn't sum. Affects the Seed-5 /
-   cost-equivalence paper thread. Decide the corrected claim wording.
-2. **W6-E3 (policy)**: ruling 1 vs ruling 14 on partial-refresh
-   residue in living docs (≥15 rows; one doc states different
-   precision/recall four lines apart). Needed before GATE 3.
+**🚩 REMAINING PI ESCALATION QUEUE FOR S127**:
+
+1. [x] ~~W6-E1~~ and [x] ~~W6-E3~~ — RESOLVED 2026-08-03 (rulings
+   16–17; see the ✅ block above). NEW: **W6-E7** (§ 4.2 CI-overlap
+   cell) and **W6-E8** (cand-2397 re-run vs re-word) await the PI.
 3. **W5-E1 + W6-E2 (instrument)**: era-selection redesign (per-claim
    `git log -S`/blame hybrid + disagreement flags +
    anchor-absent-at-era status; void the two false era-defect fields
