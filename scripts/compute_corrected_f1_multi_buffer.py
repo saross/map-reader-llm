@@ -163,6 +163,9 @@ class BufferResult:
     tile_fn: int | None = None
     sensitivity: float | None = None
     specificity: float | None = None
+    # Channel-duplicated rescues dropped by build_extended_gt's coincidence
+    # de-duplication (W6-E9); 0 whenever the two channels are disjoint.
+    n_phantom_duplicates_dropped: int = 0
 
 
 def compute_point_estimate(tp: int, fp: int, fn: int) -> tuple[float, float, float]:
@@ -242,25 +245,79 @@ def build_phantom_gdf(
 def build_extended_gt(
     gdf_student: gpd.GeoDataFrame,
     gdf_phantoms: gpd.GeoDataFrame,
+    dedup_tolerance_m: float = 1.0,
 ) -> gpd.GeoDataFrame:
     """Concatenate student GT and phantom GT into a single extended-GT GDF.
 
     Only the subset of columns needed downstream (``source_map``, ``geometry``)
     is preserved, so the Hungarian helpers see a clean schema.
 
+    **Coincidence de-duplication** (Session 126, escalation W6-E9): a
+    rescue can enter through TWO channels — a review-CSV ``mound`` row
+    AND a curator point later added to the student layer at the same
+    coordinates (the cand-2397 case: both channels landed on
+    2026-05-03, 88 minutes apart). Concatenating both places two GT
+    points ~0 m apart; one-to-one Hungarian matching then credits one
+    and books the other as a spurious FN, so recall FALLS from a
+    rescue. Any phantom within ``dedup_tolerance_m`` of a student-GT
+    point on the SAME map is therefore dropped — the student layer is
+    the durable channel; the phantom is redundant by construction.
+    The drop count is recorded in ``result.attrs
+    ["n_phantom_duplicates_dropped"]`` and printed when non-zero. The
+    tolerance is deliberately tight (default 1 m): channel-duplicated
+    rescues are placed AT the detection coordinates, while genuinely
+    distinct neighbouring mounds sit tens of metres apart and must
+    never be de-duplicated.
+
     Args:
         gdf_student: Student ground truth with ``source_map`` column.
         gdf_phantoms: Phantom GT built by :func:`build_phantom_gdf`.
+        dedup_tolerance_m: Drop phantoms within this distance (metres,
+            projected CRS) of a same-map student-GT point. Set to 0 to
+            disable (exact reproduction of pre-fix behaviour).
 
     Returns:
-        Combined GeoDataFrame with ``source_map`` and ``geometry`` columns.
+        Combined GeoDataFrame with ``source_map`` and ``geometry``
+        columns; ``attrs["n_phantom_duplicates_dropped"]`` carries the
+        de-duplication count.
     """
+    from scipy.spatial import cKDTree
+
+    p_full = gdf_phantoms[[REF_MAP_COL, "geometry"]].copy()
+    n_dropped = 0
+    if dedup_tolerance_m > 0 and len(p_full) and len(gdf_student):
+        keep = np.ones(len(p_full), dtype=bool)
+        for map_name, p_grp in p_full.groupby(REF_MAP_COL):
+            s_grp = gdf_student[gdf_student[REF_MAP_COL] == map_name]
+            if not len(s_grp):
+                continue
+            tree = cKDTree(
+                np.column_stack([s_grp.geometry.x, s_grp.geometry.y])
+            )
+            dists, _ = tree.query(
+                np.column_stack([p_grp.geometry.x, p_grp.geometry.y])
+            )
+            dup_positions = p_grp.index[dists <= dedup_tolerance_m]
+            keep[p_full.index.get_indexer(dup_positions)] = False
+        n_dropped = int((~keep).sum())
+        if n_dropped:
+            print(
+                f"  build_extended_gt: dropped {n_dropped} phantom(s) "
+                f"within {dedup_tolerance_m} m of a same-map student-GT "
+                f"point (channel-duplicated rescue de-duplication)"
+            )
+        p_full = p_full[keep]
+
     s = gdf_student[[REF_MAP_COL, "geometry"]].copy()
     s["_is_phantom"] = False
-    p = gdf_phantoms[[REF_MAP_COL, "geometry"]].copy()
+    p = p_full.copy()
     p["_is_phantom"] = True
     combined = pd.concat([s, p], ignore_index=True)
-    return gpd.GeoDataFrame(combined, geometry="geometry", crs=gdf_student.crs)
+    result = gpd.GeoDataFrame(
+        combined, geometry="geometry", crs=gdf_student.crs
+    )
+    result.attrs["n_phantom_duplicates_dropped"] = n_dropped
+    return result
 
 
 def compute_counts_at_r(
@@ -442,9 +499,13 @@ def compute_at_buffer(
     gdf_phantoms = build_phantom_gdf(
         review_yesterday, review_today, buffer_r, crs=gdf_det.crs,
     )
-    n_reviewer_promoted = len(gdf_phantoms)
 
     gdf_ext_gt = build_extended_gt(gdf_student, gdf_phantoms)
+    n_dup_dropped = int(gdf_ext_gt.attrs.get("n_phantom_duplicates_dropped", 0))
+    # The EFFECTIVE promoted count: phantoms that actually entered the
+    # extended GT (channel-duplicated rescues counted once, on the
+    # student side — W6-E9).
+    n_reviewer_promoted = len(gdf_phantoms) - n_dup_dropped
 
     # 2. Per-map Hungarian matching against extended GT
     tp, fp, fn, n_ref_extended_scoped = compute_counts_at_r(
@@ -518,6 +579,7 @@ def compute_at_buffer(
         n_ref_student_only=int(n_ref_student_only),
         n_reviewer_promoted=int(n_reviewer_promoted),
         n_ref_extended=int(n_ref_extended_scoped),
+        n_phantom_duplicates_dropped=n_dup_dropped,
         precision=p,
         precision_ci=cis["precision"],
         recall=r,
@@ -555,6 +617,7 @@ def write_csv(results: list[BufferResult], out_path: Path) -> None:
             "FN": r.fn,
             "n_ref_student_only": r.n_ref_student_only,
             "n_reviewer_promoted_at_R": r.n_reviewer_promoted,
+            "n_phantom_duplicates_dropped": r.n_phantom_duplicates_dropped,
             "n_ref_extended": r.n_ref_extended,
             "precision": r.precision,
             "precision_CI_lo": r.precision_ci[0],
@@ -640,6 +703,7 @@ def _result_to_dict(r: BufferResult) -> dict:
         "FN": r.fn,
         "n_ref_student_only": r.n_ref_student_only,
         "n_reviewer_promoted_at_R": r.n_reviewer_promoted,
+        "n_phantom_duplicates_dropped": r.n_phantom_duplicates_dropped,
         "n_ref_extended": r.n_ref_extended,
         "precision": r.precision,
         "precision_CI": list(r.precision_ci),
