@@ -1,0 +1,103 @@
+{
+  "schema": "regen-manifest/1.0",
+  "slug": "gs-125m-fp-side-6-crop-review",
+  "tree": "results/gs-125m-fp-side-6-crop-review/crops",
+  "ruling": "phase3 ruling 15 (PI-approved 2026-08-03) — tracked proxies",
+  "assembled": "2026-08-03",
+  "assembled_at_commit": "fabd07a9d",
+  "assembled_by": "Session 125, phase 2 of ruling 15",
+  "purpose": "Machine-independent referent for census claims over a regenerable, wholly-untracked crop tree. Claim 037#37[0] anchors to this manifest, not to the directory (Obs 383: the directory holds 6 files on amd-tower and does not exist on sapphire, which flipped the verdict MATCH -> MISMATCH by host).",
+
+  "determinism": {
+    "status": "byte-deterministic",
+    "evidence": "Re-rendered on 2026-08-03 on BOTH hosts into scratch directories via the generator's own render path (same filter, same sort, same render_crop defaults, same PNG save call), then sha256-compared. All six files matched three ways: live amd-tower tree == fresh amd-tower render == fresh sapphire render.",
+    "toolchain_at_test": {
+      "python": "3.13.3",
+      "pillow": "12.1.1",
+      "rasterio": "1.5.0",
+      "hosts": ["amd-tower", "sapphire"]
+    },
+    "caveat": "Byte-identity is demonstrated for this toolchain only. PNG encoding is a library concern; a future Pillow or zlib may re-encode identical pixels to different bytes. The file NAMES and the file COUNT are deterministic independent of toolchain, because they derive from the tracked input JSON's candidate_id and map_name fields. Treat `files[].sha256` as a strong check that MAY need refreshing on a toolchain bump; treat `census` as the durable referent."
+  },
+
+  "generator": {
+    "script": "scripts/stage_gs_125m_fp_review.py",
+    "script_blob": "151784e87fc2044238bf7e5a4dff6e90caaf0c22",
+    "script_last_commit": "586a22ed2",
+    "helper": "scripts/gs-fp-classify.py (render_crop, imported via importlib)",
+    "helper_blob": "4e378c31f8c22046c9c42958a7696c2ccc1502c2",
+    "helper_last_commit": "c5983adb6",
+    "invocation": ".venv/bin/python scripts/stage_gs_125m_fp_review.py",
+    "api_calls": 0,
+    "note": "The script skips re-rendering when a crop file already exists, so it is idempotent in place. The determinism test above bypassed that guard by rendering into a scratch directory."
+  },
+
+  "tracked_inputs": [
+    {
+      "path": "results/gs-fp-classification/fp_classifications.json",
+      "blob": "5e9ff3c43044825afaa42266b1964f299e1b7e83",
+      "last_commit": "9fa6db4e5",
+      "role": "candidate rows; the 6 are selected from it by the parameters below"
+    }
+  ],
+
+  "untracked_inputs": [
+    {
+      "path": "inputs/rasters/K-35-052-4_32635.tif",
+      "sha256": "fe541d2c846d6eba20929f12741d264426809ee54f3ee30b5da0517ec9f3a92f",
+      "used_by": ["cand_00054", "cand_00125"]
+    },
+    {
+      "path": "inputs/rasters/K-35-053-3_Elenovo.tif",
+      "sha256": "49ed5bfb93a8739c48567613de3806ae2c141d5a027f7aca8d06046607185dab",
+      "used_by": ["cand_00168", "cand_00349"]
+    },
+    {
+      "path": "inputs/rasters/K-35-078-1_Lesovo.tif",
+      "sha256": "9ba0354afd606f0f5ce183723873267edc9638cb63ab90ec667d5896b98b101a",
+      "used_by": ["cand_00531", "cand_00562"]
+    }
+  ],
+  "untracked_inputs_note": "The source GeoTIFF rasters are NOT git-tracked (.gitignore:3 `inputs/rasters/`, :5 `*.tif`) and cannot be, at their size. They are byte-identical on amd-tower and sapphire as at 2026-08-03 (sha256 above, compared over ssh). Under ruling 15 these are the bundle-index stratum: the checksums bind the referent now and the payload is Zenodo-depositable at publication.",
+
+  "parameters": {
+    "dist_threshold_m": 125.0,
+    "target_categories": ["burial-mound", "triangulation-point-on-burial-mound"],
+    "filter": "dist_to_nearest_curator_GT_m > 125.0 AND category in target_categories",
+    "sort": "(map_name, int(candidate_id))",
+    "crop_size_m": 150.0,
+    "display_px": 768,
+    "resampling": "LANCZOS",
+    "boundless_read": true,
+    "filename_template": "cand_{candidate_id:05d}_{map_name}.png"
+  },
+
+  "census": {
+    "scope": "common",
+    "scope_definition": "The complete generated tree. Observed on amd-tower 2026-08-03; the tree is absent entirely on sapphire, so `common` here means 'what the recipe produces', validated by the determinism test rather than by host agreement.",
+    "total": 6,
+    "by_extension": [
+      { "scope": "common", "extension": "png", "count": 6 }
+    ],
+    "per_host_observed": [
+      { "host": "amd-tower", "date": "2026-08-03", "total": 6 },
+      { "host": "sapphire", "date": "2026-08-03", "total": 0, "note": "directory results/gs-125m-fp-side-6-crop-review/crops does not exist; the two tracked siblings README.md and index.md are present" }
+    ]
+  },
+
+  "files": [
+    { "kind": "crop-png", "name": "cand_00054_K-35-052-4_32635.png", "bytes": 314431, "sha256": "07c414a62a6c5315d2dbc25e3c31c9651fe2bed0cb3a5d49266a642e18d82297" },
+    { "kind": "crop-png", "name": "cand_00125_K-35-052-4_32635.png", "bytes": 401767, "sha256": "5d409dfca6abc031b6a71f3bc258d6b94f7c30347538adf4f51203e147bd3699" },
+    { "kind": "crop-png", "name": "cand_00168_K-35-053-3_Elenovo.png", "bytes": 310363, "sha256": "8308480abab17d3e565c2ba93026e19ac3513a71d820a8f677f251bba9e80772" },
+    { "kind": "crop-png", "name": "cand_00349_K-35-053-3_Elenovo.png", "bytes": 241896, "sha256": "0d4595418a0f13c3e1ea7ef7b6d6f9bfb9f656118cbc524c2c6bb6d199474ac6" },
+    { "kind": "crop-png", "name": "cand_00531_K-35-078-1_Lesovo.png", "bytes": 312557, "sha256": "94e44e62c61a4dab43da1721ced2b5389b5028346dd8505509281b2029e9d349" },
+    { "kind": "crop-png", "name": "cand_00562_K-35-078-1_Lesovo.png", "bytes": 338951, "sha256": "80d7e54eeaafb93ae3b76f3aebfc5bbfd2313dd7dda34ed54c3bd361d8e81a8f" }
+  ],
+
+  "tracked_siblings": [
+    { "path": "results/gs-125m-fp-side-6-crop-review/README.md", "blob": "c2d60f88b0068e5a474616a30ef327a5d0b7ee06" },
+    { "path": "results/gs-125m-fp-side-6-crop-review/index.md", "blob": "34d08d60896644bd990823c902ccfe8981ed3e96" }
+  ],
+
+  "anchored_specs": ["037#37[0]"]
+}

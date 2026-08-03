@@ -166,7 +166,7 @@
   ],
   "gate3_accounting": "Every recompute-script row is either specced below or a member of exactly one named family above; specced + sum(row_count) == recompute_script_rows.",
   "note_on_mismatches": "Spec notes record the value each runner returned at authoring time. Specs express the quantity the value NAMES; where the executed value differs from the document's quote that divergence is the finding, not a spec defect.",
-  "revision": "2026-08-02 S125 wave-3: 4 spec fixes (005#29[0], 035#34[1], 038-h11#12[0], 038-h11#15[1]), 2 moves to named families; machine-scope specs (006#32[1], 006#34[1], 037#37[0]) deliberately unchanged pending the GATE 3 scope decision (Obs 383)"
+  "revision": "2026-08-03 S125 ruling-15 phase 2: the three machine-scope specs (006#32[1], 006#34[1], 037#37[0]) re-anchored from live glob-count to tracked regeneration manifests under reports/verification/apparatus/regen-manifests/ (Obs 383 cross-machine divergence; Obs 385 zero-census mis-stamp). glob-count spec count 29 -> 26; json-subset-count 35 -> 36; json-aggregate 21 -> 23. Census spec total unchanged at 88."
  },
  "specs": [
   {
@@ -1049,13 +1049,21 @@
    "batch": "006-output-dir-standard",
    "claim_index": 32,
    "value_index": 1,
-   "runner": "glob-count",
+   "runner": "json-aggregate",
    "params": {
-    "root": "outputs/h11/pv-diag-384",
-    "glob": "**/*",
-    "kind": "file"
+    "file": "reports/verification/apparatus/regen-manifests/h11-pv-diag-384.json",
+    "list_path": "$.census.by_extension",
+    "key": "count",
+    "agg": "sum",
+    "where": [
+     {
+      "key": "scope",
+      "op": "eq",
+      "value": "common"
+     }
+    ]
    },
-   "note": "Total-file walk of outputs/h11/pv-diag-384/ (the tracked-file side of the same span needs git ls-files and stays unspecced). Executed 48707 (document quotes '48,666')."
+   "note": "Total-file walk of outputs/h11/pv-diag-384/. RE-ANCHORED 2026-08-03 under ruling 15 (tracked proxies) from a live glob-count to the tracked regeneration manifest. The glob-count was machine-relative: 48,707 on amd-tower, 127,281 on sapphire (Obs 383), and the committed verdict silently inherited the operator's host. The manifest records the both-host common set (48,707; filename-set digests verified identical on both hosts 2026-08-03). Document quotes '48,666'; expect MISMATCH with abs_error 41 on every host — an era question about the document, not a scope question."
   },
   {
    "batch": "006-output-dir-standard",
@@ -1097,13 +1105,21 @@
    "batch": "006-output-dir-standard",
    "claim_index": 34,
    "value_index": 1,
-   "runner": "glob-count",
+   "runner": "json-aggregate",
    "params": {
-    "root": "outputs/h11/pv-diag-384",
-    "glob": "**/*",
-    "kind": "file"
+    "file": "reports/verification/apparatus/regen-manifests/h11-pv-diag-384.json",
+    "list_path": "$.census.by_extension",
+    "key": "count",
+    "agg": "sum",
+    "where": [
+     {
+      "key": "scope",
+      "op": "eq",
+      "value": "common"
+     }
+    ]
    },
-   "note": "'After'-column restatement of the same total-file walk. Executed 48707 (document quotes '48,666')."
+   "note": "'After'-column restatement of the same total-file walk. RE-ANCHORED 2026-08-03 under ruling 15 to the tracked regeneration manifest; see 006-output-dir-standard#32[1] for the rationale. Document quotes '48,666'; expect MISMATCH with abs_error 41 on every host."
   },
   {
    "batch": "006-output-dir-standard",
@@ -1281,13 +1297,19 @@
    "batch": "037",
    "claim_index": 37,
    "value_index": 0,
-   "runner": "glob-count",
+   "runner": "json-subset-count",
    "params": {
-    "root": "results/gs-125m-fp-side-6-crop-review/crops",
-    "glob": "*",
-    "kind": "file"
+    "file": "reports/verification/apparatus/regen-manifests/gs-125m-fp-side-6-crop-review.json",
+    "list_path": "$.files",
+    "where": [
+     {
+      "key": "kind",
+      "op": "eq",
+      "value": "crop-png"
+     }
+    ]
    },
-   "note": "Extraction note gives the crop files under results/gs-125m-fp-side-6-crop-review/crops/ as the parallel anchor for the >125 m false-positive cohort count. Executed 6 (document quotes 'six')."
+   "note": "Extraction note gives the crop files under results/gs-125m-fp-side-6-crop-review/crops/ as the parallel anchor for the >125 m false-positive cohort count. RE-ANCHORED 2026-08-03 under ruling 15 (tracked proxies) from a live glob-count to the tracked regeneration manifest. This is the row whose verdict flipped MATCH (amd-tower, 6 files) to MISMATCH (sapphire, directory absent) purely by machine (Obs 383), and which Obs 385 showed the census guard then mis-stamped 'repo-reproducible' via the vacuous 0 == 0 equality. Crop generation was proven byte-deterministic across both hosts on 2026-08-03, so the manifest carries per-file sha256. Document quotes 'six'; expect MATCH at 6 on every host."
   },
   {
    "batch": "038-h11",
