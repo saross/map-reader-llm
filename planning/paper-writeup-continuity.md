@@ -8,133 +8,130 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (128) — PHASE 3: W7 REPAIR QUEUE + WAVE 8 [Session 127 CLOSED 2026-08-04; ran in Opus]
+## 🎯 NEXT SESSION (129) — BUILD THE POINT-MARKING APP, THEN THE MERGE PASS [Session 128 CLOSED 2026-08-04; ran in Opus]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
-> **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–20.
-> **Rulings 18–20 are new and change how the programme runs.**
+> **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–21.
+> **Ruling 21 is new and re-orders the programme** — read it first.
 >
-> **START HERE**: `reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
-> is the single discoverable register of everything left open — 8 confirmed
-> defects (W7-D1…D8), 1 research finding (W7-R1), 3 instrument gaps
-> (W7-I1…I3), all four W7 escalations, the four ground-truth layers, the
-> phantom duplication audit, and the metric-reference asymmetry. Each item
-> carries its evidence pointer and a repair note. It exists because several
-> S127 findings otherwise lived only in commit messages.
+> **START HERE**: `reports/verification/reference-standardisation-queue.md`
+> (what is waiting on the reference, and why nothing may be re-run before it)
+> and `reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
+> (every open defect, research finding and instrument gap, each with a
+> `status` field when repaired).
 
-**The three new rulings, in one line each**: **18** — a pass that edits a
-mine document re-extracts it in the same commit (charter § 5 rule 14); the
-~40-batch backlog folds into waves 8–12; GATE 3 gains a whole-corpus drift
-check. **19** — the 55-map GT is FOUR layers (fixed 4,770 / corrected 4,746 /
-historical 4,744–4,745, record-only / 773 reviewer-promoted); nothing
-publishes on 4,770 where that is the wrong reference. **20** — F1 and MCC
-must share a reference, but do NOT recompute until the point-marking
-re-review lands.
+**Ruling 21, in one line**: the ground-truth reference is standardised FIRST,
+then every reference-tainted analysis runs ONCE against it — a generalisation
+of ruling 20(b) from one pair of metrics to the whole class. Marking scope is
+the **773 phantoms only** (≈ 1 h; the 4,746-student option was priced at ≈ 6 h
+and declined). The product is a **best-possible reference, explicitly NOT a
+gold standard** — joint student + model false negatives are not economically
+recoverable, and that limitation ships in the artefact's own header. The 4-map
+**GS corpus is out of scope and needs no review** (four passes, every point
+re-positioned to dead centre within 1–2 px, one extra FN found at the fourth).
 
-**What Session 127 did** (commits `f097c9d32`→`b370f04ed`, **US$0.00 API**;
-tier-1 **1,361→1,376/0** on sapphire): **fleet wave 7 complete, the
-era_check machinery redesigned, and three PI rulings collected.**
+**What Session 128 did** (commits `e213d009c`→`e7d03613a`, **US$0.00 API**):
+W7-D5, D9, D3, D4, D6, D1 (instance + class measurement), D2, plus ruling 21,
+the queue register, a re-runnable coverage checker, and W7-I4.
 
-1. **Wave 7** (b080–b099): 24 files, **1,079 claims / 3,095 values**, all
-   Opus, all validating. Plan pending 98 → 78. Canonical recompute on
-   sapphire: 12,988 → **16,083 rows**. **Obs 382 join CLEAN** — 3,095 rows
-   added, exactly the wave's value count, zero non-wave additions, zero
-   removals, zero reason drifts; all 87 pre-wave transitions attributed to
-   the `cf11e3baa` repairs and the W6-E9 fix chain. The brief's predictions
-   held in direction but understated scale (23 improvements against 7
-   predicted; the regression side unforecast because the regeneration moved
-   every buffer row, not only the channel-accounting fields).
-2. **A pre-flight check found the corpus had moved under the plan.** Eight
-   pending files had grown 546 lines since the 2026-07-31 build, interleaved
-   not appended, so recorded ranges pointed at shifted content AND left tails
-   unassigned (`f097c9d32`). Widening the check found 17 already-extracted
-   files grown by 1,129 lines and 4 short at their own era by 95 lines →
-   escalations W7-E1/E2/E3.
-3. **The validator assumed a stationary corpus.** 41 of 104 files failed on
-   blob drift with 1,361 verbatim failures; ALL 41 are clean at their own
-   extraction blob. Opt-in `--at-era` landed (`ac547aab7`), default unchanged.
-4. **era_check redesigned** (`b624849b6`, `ba84bdd4a`). Three blind passes
-   independently indicted it: it asked a question about the FILE when the
-   question is about the CLAIM. **False defect-stamps fell 91 → 1**; coverage
-   308 → 625 rows; zero bare ERRORs; 510 of 625 rows carry `era_disagreement`,
-   which is the measure of how wrong the file-era basis was.
-5. **Wave-7 triage**: 206 MISMATCH rows, draft stories pre-registered
-   (`888ddad83`) before four blind passes (`e86bca52d`) — **183
-   SNAPSHOT-DIVERGENCE, 9 RECLASSIFY, 7 DOC-DEFECT-AT-ERA, 5
-   EXTRACTION-DEFECT, 2 INSTRUMENT**. The blind layer corrected the triager
-   for the eighth consecutive wave.
-6. **Repairs**: the MCC v2 summary's Methods text reconciled with its
-   artefacts (`75e825d47`: 1,000 → 10,000 iterations, BCa named, a
-   reproducibility recipe that could not reproduce its own table fixed,
-   archived paths repointed), then its stale figures (`1085335dc`), then
-   ds-summary and temperature-failure (`45aa6a0d1`).
-7. **A blind pass caught a defect the repair introduced** (`18bbcaa18`) — a
-   false blanket claim about D-S reference layers, withdrawn in place rather
-   than edited away. **The census then corrected the blind pass**: the
-   asymmetry is real but inverted (t0.3, not image), and bounded — all four
-   MCC artefacts share the reviewed layer, so the MCC comparison is
-   like-for-like.
+1. **W7-D5's false green was hiding a real defect.** Re-anchoring the claim
+   from the T=0.7 corrected-F1 artefact to the T=0.7 D-S artefact turned it
+   red and exposed **W7-D9: the four Dawid–Skene fits do not share a ground
+   truth.** Image consumed the reviewed layer (4,745); T=0.7, T=0.3 and
+   text-MIN consumed the fixed 4,770 base — the script default at
+   `analyse_dawid_skene.py:57`. Two independent lines, the decisive one
+   count-free: `baf1497a7`'s single added feature is a student point ONLY in
+   the image item set, while T=0.7 carries `student_label = 0` at that exact
+   coordinate. Commit `366f9c66f`'s message claims otherwise and is
+   contradicted by its own artefact.
+2. **W7-R1(2) is CLOSED, and nobody was wrong.** Blind pass P4 read D-S fits;
+   the census read evaluation metadata. Different objects, both correct — the
+   census never inverted the blind pass. **Two asymmetries in two layers
+   single out different runs**: t0.3 on EVALUATION (W7-D8), image on
+   DAWID–SKENE (W7-D9).
+3. **ds-summary-v2 repaired** — D3, D4, D6, D9 in ONE commit with the rule-14
+   re-extraction, because a second edit costs a second re-extraction. All
+   adjudicated from artefacts. § 4.1's Image-vs-T=0.3 ordering is **withdrawn
+   in place**, nothing recomputed. Re-extraction: 144 spans re-verified
+   verbatim, 7 re-extracted, 8 new claims added — **all 8 recompute GREEN**.
+   One claim DELETED, so b073 indices after 3 have shifted.
+4. **W7-D1 is a CLASS of 24 files, not one.** Instance repaired (including a
+   runnable recipe that raised `FileNotFoundError`); no value moved, only
+   paths. **The instrument is clean**: all 5,492 anchor-file references in the
+   extraction corpus resolve. Per-file dispositions are in the register under
+   `W7-D1.class_measurement`.
+5. **A re-runnable whole-plan coverage checker** —
+   `scripts/check_c4_plan_coverage.py`, the backstop ruling 18 point 4 asks
+   GATE 3 to carry. It independently confirms S127 (17 docs / **1,142
+   unassigned lines** vs S127's separately-derived 1,129) and adds the inverse
+   signal S127 could not see: **13 claims in 4 extractions survey lines the
+   plan does not cover** (036, 046, 049, 054-c4-extraction-instructions).
+6. **W7-I4 — the result is machine-dependent.** From one commit,
+   `--at-era` validation says "128/128 valid" on amd-tower and "FAIL: 3/128"
+   on sapphire, because three anchors point at untracked paths. Ruling 15
+   already governs them; they were being treated as mechanical.
+7. **Ledger refreshed on sapphire** (`3fee6c338`): 16,083 → 16,238 rows,
+   MISMATCH 639 → **619**, MATCH 7,170 → 7,263. It takes **18 seconds** — this
+   is not a job that needs scheduling.
 
-**Session 128's queue** (nothing here needs S127's context; all specified):
+**Session 129's queue, in the order recommended and agreed:**
 
-(a) **The W7 repair queue** from the open-items register. W7-D5 first — it is
-a FALSE GREEN in `073.json`, and a false green is invisible in triage where a
-mismatch is not. Then W7-D1 (archived `mcc/evaluation.json` paths — repair the
-CLASS, not the instance; a corpus grep is the cheap first move), W7-D2, D3,
-D4, D6, D7.
-(b) **W7-I2, the CI registry** — raised to HIGH on measurement. 7 of 7
-sidecars stale, all four readable registry rows disagree with their artefacts
-on bootstrap method, ~9 rows name artefacts that have moved. Its stated
-purpose is paper CI citation, so a paper citing it today would state the wrong
-method and count.
-(c) **The documentation-audit banners** — P1/P2/P3 give per-document
-treatments in their pass files. Three are dated snapshots (banner only, do NOT
-refresh the tables); README.md is living BUT its "Why this draft exists" block
-must not be repaired in place — doing so corrupts a correction record.
-(d) **The remaining GT sweep** (~13 documents). Now mechanical: the era
-disposition rule is recorded in `coverage-drift-2026-08-04.json` under
-`gt_count_era_resolution`. 4,745 describing what a 2026-05-03 evaluation used
-is CORRECT; only a current-canonical assertion is stale. `55maps-pairwise-
-permutation-v2/summary.md` is GENERATED — fix by regeneration, never by hand.
-(e) **W7-E1's 95-line top-up**, and **W7-E3** (whether `--at-era` becomes the
-validator default — a GATE 3 completeness question, still the PI's call).
-(f) **Wave 8** (b100–b119) under the rule-18 coupling invariant, with backlog
-batches riding along.
+(a) **BUILD THE POINT-MARKING APP.** Spec is written and the data
+reconnaissance is done: `planning/point-marking-app-spec.md`. It records the
+real column schema, the imagery options, the output contract, and a **data
+hazard found during recon** — `buffer_metres` is stored in two string formats
+(`'50'` and `'50.0'`), so grouping on the raw string reports 410 at R = 50 m
+instead of the true **415**. Cast to float before any gating. No user time
+needed for the build.
+(b) **W7-I2, the CI registry** — HIGH, paper-citable, and it carries **11 of
+W7-D1's dead paths**, so the two repairs are ONE edit.
+(c) **The per-document MERGE PASS.** The scheduling principle worth keeping:
+for each document, apply EVERY known pending change at once — GT-count sweep,
+dead paths, banners, caveats — so it costs one re-extraction instead of four.
+This subsumes the documentation-audit banners, the ~13-document GT sweep, and
+the 7 remaining W7-D1 documents into a single pass.
+(d) **Then the PI's hour**: mark the 773 phantoms → sort
+`canonical-review.csv` → the reference is fixed.
+(e) **Then the five no-API queue items in one batch on sapphire.**
+(f) **Then** W7-E1's top-up and the 1,142-line tail backlog (both now
+measurable with the checker), **then wave 8**.
 
-**GATED, not deferred** — do not start these: the F1/MCC reference unification
-(ruling 20b) waits on the point-marking re-review; the 4–6 borderline phantom
-conflations need visual adjudication and fold into that same pass; W7-D8
-(t0.3 on the unreviewed base) is deferred by ruling 19c but its documentation
-obligation is load-bearing because it touches the F1 leader.
+**Why the app comes before wave 8** (agreed 2026-08-04): rule 14 makes
+deferral compound — every reference-tainted document caveated now needs a
+SECOND edit, and each edit costs a re-extraction. It is also the paper's
+critical path, since five queue items feed §Results. And the reason there is
+no overnight-sized compute job right now is precisely that ruling 21 gates
+everything expensive. The trade accepted: wave 8 slips about a session, which
+is right, because its triage would otherwise adjudicate figures about to move.
 
-**✅ S127 HANDOFF GATES RESOLVED at review (2026-08-04).** Working-notes
-candidates: all three accepted → **Obs 388** (F1 and MCC computed against
-different ground truths), **Obs 389** (the four GT layers), **Obs 390** (the
-phantom duplication audit), landed at `8204b06bc`. User-observations: A, C
-and D accepted, B dropped. Two PI verdicts worth carrying: **a
-recommendation is always wanted** — its value does not depend on being
-taken, it is the springboard to push against, so never withhold one for
-fear of steering; and the interim-conservatism escalation queue **arrived
-usefully shaped**, so escalating with evidence assembled and options priced
-is the right shape under a conservatism directive.
+**GATED, not deferred** — unchanged, and now generalised by ruling 21: no
+reference-tainted analysis is re-run before the marking pass lands. W7-D8
+remains deferred by ruling 19(c) with a load-bearing documentation obligation.
 
-**⚠ Two claims made in S127 are UNVERIFIED and are recorded as W7-U1/W7-U2**
-in `wave7-open-items-2026-08-04.json`: ruling 19's per-buffer *gating
-mechanism* sentence is a reading of the Approach B framing, not traced
-through code (the counts ARE verified), and the 474-vs-415 relationship is
-conjecture. Do not cite either in Methods without closing them first.
+**⚠ Loose ends deliberately left, with their reasons:**
 
-**Carry-forward (S127 additions)**: rule 14 means a correction-to-a-correction
-costs another extraction — this document took three in one day. `git_blob`
-pins a DOCUMENT while batches cover RANGES, so any edit invalidates the
-pointer for every batch of that document; repointing after a verbatim
-re-check is the cheap answer (W7-I1). Per-document classification earned its
-keep three times over: a bulk sweep would have rewritten historically-correct
-text, hand-edited a generated file, and replaced one inaccuracy with another
-on the `--bootstrap 1000` mirror references. And the layered verification is
-not redundant — the blind pass corrected the repair, and the census corrected
-the blind pass, because it read `ground_truth` directly instead of inferring
-a reference from implied counts.
+- **Three `TBD` commit-hash placeholders** in the changelogs of
+  `results/55maps-ds-summary-v2/report.md`,
+  `results/temperature-failure-recovery-analysis/report.md` and
+  `reports/verification/reference-standardisation-queue.md`. Filling them is
+  a document edit, which under rule 14 costs a re-extraction — so they are
+  left to be filled **inside the merge pass (c)**, where the edit is already
+  being paid for. Do not fill them in a commit of their own.
+- **W7-U2 is sharpened, not closed.** 415 at R = 50 m is now confirmed from
+  the file, and the canonical CSV's own cumulative series is
+  415 / 594 / 685 / 729 / 763 / 773 — which contains neither 474 nor 672, so
+  ruling 19's figures describe a demonstrably different object rather than an
+  off-by-one. Still must not be cited in Methods.
+- **W7-U1** unchanged and still unverified.
+
+**Carry-forward (S128 additions)**: the rule-14 checklist needs a THIRD step —
+**repair → re-extract → RE-RANGE**. Re-extracting updates the extraction's
+line anchors but leaves the batch plan's ranges, silently opening a tail gap
+on a document that was just fully re-surveyed; this session did exactly that
+to ds-summary-v2 and only the coverage checker caught it. Editing a *pending*
+document costs no re-extraction but still costs a re-range. And a defect found
+in the INSTRUMENT is worth chasing into the DOCUMENT: W7-D5 looked like an
+anchoring nit and turned out to be the thread that unpicked W7-D9.
 
 ---
 
