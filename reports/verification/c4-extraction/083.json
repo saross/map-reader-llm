@@ -3,7 +3,7 @@
   "extracted_at": "2026-08-04T00:00:00Z",
   "source_document": {
     "file": "results/55maps-mcc-v2-summary/report.md",
-    "git_blob": "9b34f488f866bca82a9ec6f0d02c28a1fd2ad5a9",
+    "git_blob": "33a5b645348802bdb3bf9ab55a2420517329af91",
     "stratum": "hand-written"
   },
   "extractor": {
@@ -37,7 +37,7 @@
         "path": null
       },
       "method": "read",
-      "notes": "[BATCH NOTE b083 RE-EXTRACT] Wholesale replacement of the previous 083 extraction: the source document was repaired on 2026-08-04 (Methods bootstrap settings corrected from 1,000 percentile to the 10,000 BCa iterations that actually produced the § 2 CIs, reproducibility command corrected, § 7 artefact paths repointed to archive/, revision banner and Changelog added) and grew from 119 to 189 lines, so line anchors and the claim set both moved. Re-extracted under charter § 5 rule 14 (ruling 18). SCOPE DECISIONS: dates, timestamps, git commit hashes (`163161a4`, `42ed1d32`, `580f498b6`, `0699769c5`, `bdd61bcc`, `98b128ae`, `7b7509d5`, `da2cf355f`, `fc536a19c`, `e86bca52d`), session numbers (Session 105), Obs identifiers (Obs 252/272/280/284), wave and pass identifiers (wave-7, P4), charter rule and ruling numbers (§ 5 rule 14, ruling 18), section cross-references (§ 1, § 2, § 3, § 7), the working-notes line citations (L13642, L11047), the candidate identifier (cand 2397), version strings (v2), Track 1 / Track 2 labels, and numbers inside file paths or condition names (`384/`, `55maps-...`, `T=0.3`, `T=0.7`, `t0.3`) are all out of C4 scope per instrument rule 5. '55-map' asserted as a corpus size IS extracted (rule 5's '487-tile Era 2 corpus' precedent). Buffer radii are extracted where the document asserts them as a grid, a cap, or a table cell (rule 6); radii appearing inline purely to label which row a quoted metric belongs to ('F1 @50m', 'at R = 50 m') are treated as context. CHANGELOG BEFORE-TO-AFTER PAIRS: every 'Before' cell of the § Changelog table (lines 153-157) and every 'was X' side of a was-to-now pair anywhere in the document (the pre-recovery detection/TP/FN/MCC values in § 2 line 40, the 1,000-iteration mirror settings, the initial three-run scope) is classed `historical` with anchor null; only the 'After' / live side is classed `read`. The mirror commit's 1,000 percentile iterations are `historical` even where the prose states them affirmatively, because the working-tree matrix-cell artefacts have since been re-run at 10,000/BCa (verified: `git show 163161a4:results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-1of10/evaluation.json` records `_metadata.bootstrap.n_iterations` = 1000 with no `method` key, while the same path at HEAD records 10000/BCa) — anchoring them live would manufacture a false mismatch. MCC TRAP (ruling 3): this document quotes STORED POINT estimates, so every MCC / sensitivity / specificity value is anchored at `.point`, never `.mean`; the two differ in these artefacts (e.g. image MCC point 0.6924 vs mean 0.6925) and must not be reconciled with a tolerance. ANCHOR PREFERENCE: § 2 and § 3 MCC figures are anchored to the LIVE `outputs/<run>/full-buffer-eval/evaluation.json` in preference to the archived per-run `mcc/evaluation.json` the document cites in § 7, per the batch instruction; the sole exception is 55maps-text-high-t0.3-generalisation, which has NO full-buffer-eval directory (only extended-buffer-eval and evaluation/), so its MCC row is anchored to the archived per-run artefact. Map-count claims anchor to `$.inputs.n_maps` in the sibling buffer-100m diagnostic, the only JSON artefact in scope recording the corpus size."
+      "notes": "[BATCH NOTE b083 RE-EXTRACT 2] Second wholesale replacement of 083 in the same day, under charter § 5 rule 14 (ruling 18): the source document received a SECOND revision on 2026-08-04 and grew from 189 to 211 lines. Three things moved — (a) the § 1 ground-truth feature count now carries two figures in one span, (b) the § 4 F1 rank figure for the image run moved from 0.8332 to 0.8333, and (c) a 'Second revision, same day' block was appended inside the 2026-08-04 Changelog entry (lines 179-199) carrying its own before/after table and an explicitly open adjudication question. Line anchors at and below line 179 shifted by +22; lines 1-178 are unchanged in numbering. LIVE-VERSUS-HISTORICAL SPLIT, CHANGELOG TABLE 1 (lines 151-157, the Methods reconciliation): each row is one claim (rule 6); the Before cell is `historical` with path null, the After cell is the live `read` claim. On the Methodology-mirror row (line 155) TWO of three values are historical — the Before cell AND the mirror's own 1,000/percentile settings that the After cell explicitly preserves as historical fact; only `--bootstrap 10000` is live. LIVE-VERSUS-HISTORICAL SPLIT, CHANGELOG TABLE 2 (lines 181-184, the second revision): same rule. Line 183 splits 4,744 (Before, `historical`, path null) from 4,746 (After, live `read` at `len:$.features` in the GT GeoJSON); line 184 splits 0.8332 (Before, `historical`) from 0.8333 (After, live `read` at $.results[0].F1 in the image corrected-F1 summary). The prose under the table (lines 186-190) restates both pairs and is split the same way. § 1 DUAL-FIGURE SPAN (line 20): the single Ground-truth bullet now asserts a live figure and a historical one side by side, so the two values take DIFFERENT methods inside one claim per v1.2 amendment 3 — 4,746 is `read` with its own explicit path `len:$.features`, 4,744 is `historical` with path null, and the count of curator additions ('two') is `anchor-unknown` because it is decidable only from the GT GeoJSON's git history. No value in that span is left pathless-and-read. THE 4,745 REFERENCES — BIGGEST JUDGEMENT CALL OF THIS PASS, FLAGGED FOR TRIAGE: the document's new text (lines 192-195) states that the '4,745-mound updated curator ground truth' references in the header, § 2, § 7 and the original-publication stub are 'deliberately left as historical narrative ... not the current artefact'. The live GT GeoJSON now holds 4,746 features, so the previous extraction's treatment of those spans as live `read` claims against `len:$.features` would now fabricate four mismatches. They are therefore RECLASSIFIED to `historical` at lines 11, 40, 104 and 211 (and in the new block's own quotation at lines 192-195). The ONE exception is § 2 line 31 ('All four are evaluated over ... the canonical 4,745-mound updated curator GT'), which the document itself escalates as an open adjudication question rather than resolving: that value is classed `anchor-unknown`, deliberately neither `historical` (which would assert it superseded) nor `read` (which would assert it current). Triage owns the era question; the chase targets are the evaluation artefacts' `_metadata.generated_at_utc` timestamps against the 2026-05-03 curator-addition commits `baf1497a7` and `2e075eb99`. SCOPE DECISIONS (unchanged from the previous pass): dates, timestamps, git commit hashes (`163161a4`, `42ed1d32`, `580f498b6`, `0699769c5`, `bdd61bcc`, `98b128ae`, `7b7509d5`, `da2cf355f`, `fc536a19c`, `e86bca52d`, `baf1497a7`, `2e075eb99`), session numbers (Session 105), Obs identifiers (Obs 252/272/280/284), wave, pass and erratum identifiers (wave-7, P4, W6-E9), charter rule and ruling numbers (§ 5 rule 14, ruling 18), section cross-references (§ 1, § 2, § 3, § 4, § 7), the working-notes line citations (L13642, L11047), candidate identifiers (cand 2397, cand 4264), version strings (v2), Track 1 / Track 2 labels, and numbers inside file paths or condition names (`384/`, `55maps-...`, `T=0.3`, `T=0.7`, `t0.3`) are all out of C4 scope per instrument rule 5. '55-map' asserted as a corpus size IS extracted (rule 5's '487-tile Era 2 corpus' precedent). Buffer radii are extracted where the document asserts them as a grid, a cap, or a table cell (rule 6); radii appearing inline purely to label which row a quoted metric belongs to ('F1 @50m', 'at R = 50 m', 'the 50 m corrected F1') are treated as context. MCC TRAP (ruling 3): this document quotes STORED POINT estimates, so every MCC / sensitivity / specificity value is anchored at `.point`, never `.mean`; the two differ in these artefacts (e.g. image MCC point 0.6924 vs mean 0.6925) and must not be reconciled with a tolerance. ANCHOR PREFERENCE: § 2 and § 3 MCC figures are anchored to the LIVE `outputs/<run>/full-buffer-eval/evaluation.json` in preference to the archived per-run `mcc/evaluation.json` the document cites in § 7; the sole exception is 55maps-text-high-t0.3-generalisation, which has NO full-buffer-eval directory, so its MCC cells are anchored to `archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json`. Bootstrap parameters (10,000 / seed 42 / BCa) anchor to the artefacts' `_metadata.bootstrap` block. Map-count claims anchor to `$.inputs.n_maps` in the sibling buffer-100m diagnostic, the only JSON artefact in scope recording the corpus size."
     },
     {
       "claim_id": null,
@@ -110,21 +110,18 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "mound count, canonical updated curator ground truth",
+          "quantity": "mound count of the updated curator ground truth the 2026-05-03 refresh was run against (superseded state)",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
           "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
+          "path": null,
+          "method": "historical"
         }
       ],
-      "anchor": {
-        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The document quotes the updated curator GT as 4,745 mounds here and as 4,744 features at line 20; both are recorded verbatim from their own spans and not adjudicated. Anchored to the GT GeoJSON itself (least writable); the sibling diagnostic records the same quantity at results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_student_gt if triage wants a second reading."
+      "anchor": null,
+      "method": "historical",
+      "notes": "The 4,745 figure is classed historical, NOT live: the document's second-revision block (lines 192-195) explicitly designates the header's '4,745-mound updated curator ground truth' reference as historical narrative describing what the dated 2026-05-03 refresh was run against, not the current artefact. The live GT GeoJSON (inputs/vectors/references/student-mounds-55maps-reviewed.geojson) now holds 4,746 features and is quoted as such at line 20, so anchoring this span live would fabricate a mismatch. 'four' is a count of corrected runs that no artefact enumerates, hence anchor-unknown."
     },
     {
       "claim_id": null,
@@ -292,16 +289,34 @@
         ],
         "section": "§ 1 Input convention"
       },
-      "claim_text": "- **Ground truth**: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4,744 features) — the canonical post-review GT used by `compute_corrected_f1_multi_buffer.py`.",
+      "claim_text": "- **Ground truth**: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4,746 features as at 2026-08-04; 4,744 when this report was first published, before the two 2026-05-03 curator additions at commits `baf1497a7` and `2e075eb99`) — the canonical post-review GT used by `compute_corrected_f1_multi_buffer.py`.",
       "values": [
         {
-          "quantity": "feature count, canonical post-review student ground-truth GeoJSON",
-          "value_verbatim": "4,744",
-          "value_parsed": 4744,
+          "quantity": "feature count, canonical post-review student ground-truth GeoJSON, current state",
+          "value_verbatim": "4,746",
+          "value_parsed": 4746,
           "unit": null,
           "kind": "count",
           "path": "len:$.features",
           "method": "read"
+        },
+        {
+          "quantity": "feature count, canonical post-review student ground-truth GeoJSON, as at this report's first publication (superseded state)",
+          "value_verbatim": "4,744",
+          "value_parsed": 4744,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, curator additions that moved the reviewed student ground truth between those two states",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
         }
       ],
       "anchor": {
@@ -309,7 +324,7 @@
         "path": null
       },
       "method": "read",
-      "notes": "'55maps' and '384' inside the quoted paths are out of scope (rule 5). Note the document quotes the same GT as 4,745 mounds at lines 11, 31, 40, 104 and 189 — recorded verbatim from each span, not adjudicated here."
+      "notes": "DUAL-FIGURE SPAN — the v1.2 amendment 3 case. One bullet now asserts a live figure and a historical one side by side, so each value takes its own method: 4,746 is the live `read` claim with its own explicit path (`len:$.features` in the anchor GeoJSON), 4,744 is the superseded-and-marked original count and is `historical` with path null, and 'two' is `anchor-unknown` because the number of curator additions is decidable only from the GT GeoJSON's git history at the two named commits, not from any committed artefact state. Nothing in the span is left pathless-and-read. '55maps' and '384' inside the quoted paths, the date, and the two commit hashes are out of scope (rule 5). Separately, the document quotes the same GT as 4,745 mounds at lines 11, 31, 40, 104, 192, 196 and 211; those spans are classed historical (or, at line 31, anchor-unknown) per the batch note, not adjudicated here."
     },
     {
       "claim_id": null,
@@ -776,13 +791,13 @@
           "method": "read"
         },
         {
-          "quantity": "mound count, canonical updated curator ground truth",
+          "quantity": "mound count of the ground truth the § 2 table's numbers were computed against — flagged by the document itself as an open adjudication question",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
           "kind": "count",
-          "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson#len:$.features",
-          "method": "read"
+          "path": null,
+          "method": "anchor-unknown"
         }
       ],
       "anchor": {
@@ -790,7 +805,7 @@
         "path": null
       },
       "method": "read",
-      "notes": null
+      "notes": "TRIAGE — OPEN QUESTION RAISED BY THE DOCUMENT ITSELF. The second-revision block (lines 195-199) singles this sentence out: it asserts what *this table's* numbers were computed against, and both 2026-05-03 curator additions (`baf1497a7`, `2e075eb99`) landed on the same day as the refresh, so which GT count the evaluations actually used is an era question rather than a reading question. The 4,745 value is therefore classed anchor-unknown — deliberately neither historical (which would assert it superseded) nor read against `len:$.features` in the GT GeoJSON (which now holds 4,746 and would fabricate a mismatch). Chase targets: `_metadata.generated_at_utc` in each run's full-buffer-eval evaluation.json versus the commit dates of the two curator additions. The 8,541 tile count is unaffected and stays live against the bounds GeoJSON."
     },
     {
       "claim_id": null,
@@ -1249,21 +1264,18 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "mound count, canonical updated curator ground truth",
+          "quantity": "mound count of the updated curator ground truth the 2026-05-03 post-recovery refresh was run against (superseded state)",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
           "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
+          "path": null,
+          "method": "historical"
         }
       ],
-      "anchor": {
-        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
+      "anchor": null,
+      "method": "historical",
+      "notes": "The 4,745 figure is classed historical: this sentence narrates the dated 2026-05-03 refresh, and the second-revision block (lines 192-195) designates § 2's 4,745 references as historical narrative rather than current-artefact claims. The live GT GeoJSON holds 4,746 features. Note the document separately escalates the OTHER § 2 4,745 reference (line 31) as an open adjudication question; this span is the narrative one, not the escalated one. 'three' is a count of table rows refreshed, which no artefact records, hence anchor-unknown."
     },
     {
       "claim_id": null,
@@ -2022,7 +2034,7 @@
         ],
         "section": "§ 4 Rank-order disagreement"
       },
-      "claim_text": "- **F1 rank** (corrected, R = 50 m): T=0.3 (0.8437) > Image (0.8332) > T=0.7 (0.8273) > text-MIN (0.7968).",
+      "claim_text": "- **F1 rank** (corrected, R = 50 m): T=0.3 (0.8437) > Image (0.8333) > T=0.7 (0.8273) > text-MIN (0.7968).",
       "values": [
         {
           "quantity": "corrected F1 at R = 50 m, T=0.3 run",
@@ -2035,8 +2047,8 @@
         },
         {
           "quantity": "corrected F1 at R = 50 m, image run",
-          "value_verbatim": "0.8332",
-          "value_parsed": 0.8332,
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
           "unit": null,
           "kind": "metric",
           "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
@@ -2066,7 +2078,7 @@
         "path": null
       },
       "method": "read",
-      "notes": "'R = 50 m' here labels which corrected-F1 row the four values come from and is treated as context, not a separate claim (see batch note)."
+      "notes": "'R = 50 m' here labels which corrected-F1 row the four values come from and is treated as context, not a separate claim (see batch note). The image figure was corrected from 0.8332 to 0.8333 in the second revision of 2026-08-04; the superseded 0.8332 is captured as the historical side of the changelog row at line 184, not here."
     },
     {
       "claim_id": null,
@@ -3239,21 +3251,18 @@
       "claim_text": "- **Commit `42ed1d32`** (cross-track-v2): post-recovery image / T=0.7 / text-MIN re-evaluations against the 4,745-mound updated curator GT — the source of the 2026-05-03 row refreshes in §2.",
       "values": [
         {
-          "quantity": "mound count, canonical updated curator ground truth",
+          "quantity": "mound count of the updated curator ground truth the cross-track-v2 re-evaluations were run against (superseded state)",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
           "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
+          "path": null,
+          "method": "historical"
         }
       ],
-      "anchor": {
-        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": null
+      "anchor": null,
+      "method": "historical",
+      "notes": "Classed historical per the second-revision block (lines 192-195), which names § 7's '4,745-mound updated curator ground truth' reference as historical narrative describing what the 2026-05-03 refresh ran against, not the current artefact (now 4,746 features in inputs/vectors/references/student-mounds-55maps-reviewed.geojson)."
     },
     {
       "claim_id": null,
@@ -3846,8 +3855,224 @@
       "claim_id": null,
       "source": {
         "lines": [
+          183,
+          183
+        ],
+        "section": "Changelog 2026-08-04 (second revision) — before/after table"
+      },
+      "claim_text": "| § 1 GT feature count | 4,744 features | **4,746** (with the original count retained as the historical figure it is) |",
+      "values": [
+        {
+          "quantity": "ground-truth feature count stated in § 1 before the second revision (Before column)",
+          "value_verbatim": "4,744",
+          "value_parsed": 4744,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "ground-truth feature count stated in § 1 after the second revision (After column)",
+          "value_verbatim": "4,746",
+          "value_parsed": 4746,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Changelog before-to-after table row (rule 6, one claim per row): the Before cell is `historical` with path null, the After cell is the live `read` claim. '§ 1' is a section cross-reference, out of scope (rule 5). The After cell restates the live figure extracted from the § 1 body span at line 20."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
           184,
-          185
+          184
+        ],
+        "section": "Changelog 2026-08-04 (second revision) — before/after table"
+      },
+      "claim_text": "| § 4 F1 rank, image | 0.8332 | **0.8333** |",
+      "values": [
+        {
+          "quantity": "corrected F1 at R = 50 m, image run, as stated in § 4 before the second revision (Before column)",
+          "value_verbatim": "0.8332",
+          "value_parsed": 0.8332,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "corrected F1 at R = 50 m, image run, as stated in § 4 after the second revision (After column)",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Changelog before-to-after table row (rule 6): the Before cell is the superseded figure and is `historical` with path null; the After cell is the live `read` claim and restates the § 4 body figure at line 55. '§ 4' is a section cross-reference, out of scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          189
+        ],
+        "section": "Changelog 2026-08-04 (second revision) — rationale"
+      },
+      "claim_text": "The § 4 image figure was superseded when the 2026-08-03 cand-2397 re-run moved\nthe 50 m corrected F1 to `0.833333…`; the sibling\n`corrected-f1-multi-buffer/report.md` already carries 0.8333, so the two now\nagree.",
+      "values": [
+        {
+          "quantity": "corrected F1 at R = 50 m, image run, after the cand-2397 re-run (quoted at full precision with a truncation ellipsis)",
+          "value_verbatim": "0.833333…",
+          "value_parsed": 0.833333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 50 m, image run, as carried by the sibling corrected-f1-multi-buffer report",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The `…` truncation marker is retained in value_verbatim per v1.2 amendment 5 so the harness does not promote a deliberately truncated quotation to a hard equality comparison. The second value asserts what a sibling MARKDOWN document carries; rule 2 forbids anchoring prose to prose, so it is anchored to the artefact that document renders (the same corrected-f1-multi-buffer summary.json). Triage wanting to check the sibling document's text directly should read results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md. '50 m' labels which row the F1 belongs to (context per the batch note); the date and the candidate identifier are out of scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          190
+        ],
+        "section": "Changelog 2026-08-04 (second revision) — rationale"
+      },
+      "claim_text": "The GT count moved twice on 2026-05-03 (`baf1497a7`, cand 4264;\n`2e075eb99`, cand 2397), taking the reviewed student GT from 4,744 to 4,746.",
+      "values": [
+        {
+          "quantity": "count, curator additions that moved the reviewed student ground truth",
+          "value_verbatim": "twice",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "feature count, reviewed student ground truth before the two curator additions (superseded state)",
+          "value_verbatim": "4,744",
+          "value_parsed": 4744,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "feature count, reviewed student ground truth after the two curator additions (current state)",
+          "value_verbatim": "4,746",
+          "value_parsed": 4746,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "A was-to-now pair in prose (rule 3): 4,744 is the 'from' side and is `historical` with path null; 4,746 is the live 'to' side and is `read` at `len:$.features` in the anchor GeoJSON. 'twice' is a count of curator additions decidable only from the anchor's git history at the two named commits, hence `anchor-unknown`; it is numerically the difference 4,746 − 4,744, but it is NOT recorded as `arithmetic` because the 4,744 operand has no live anchor and because the operands of a derivation must not inherit an arithmetic method (v1.2 amendment 1). Commit hashes, the date, and the candidate identifiers (cand 4264, cand 2397) are out of scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          192,
+          195
+        ],
+        "section": "Changelog 2026-08-04 (second revision) — deliberately left as historical"
+      },
+      "claim_text": "**Deliberately left as historical narrative**: the \"4,745-mound updated curator\nground truth\" references in the header, § 2, § 7 and the original-publication\nstub describe what the dated 2026-05-03 refresh was run against, not the\ncurrent artefact.",
+      "values": [
+        {
+          "quantity": "mound count of the updated curator ground truth as referenced in the header, § 2, § 7 and the original-publication stub (explicitly retained as historical narrative)",
+          "value_verbatim": "4,745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "The document explicitly designates this figure as historical narrative — what the dated 2026-05-03 refresh was run against, 'not the current artefact'. This is the span that governs the reclassification of the 4,745 references at lines 11, 40, 104 and 211 from live to historical in this re-extraction (see batch note). Anchoring it live against `len:$.features` in inputs/vectors/references/student-mounds-55maps-reviewed.geojson (now 4,746) would fabricate a mismatch. Section cross-references and the date are out of scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          199
+        ],
+        "section": "Changelog 2026-08-04 (second revision) — open for adjudication"
+      },
+      "claim_text": "**Open for adjudication**: § 2's \"All four are evaluated over\n… the canonical 4,745-mound updated curator GT\" asserts what *this table's*\nnumbers were computed against, and both curator additions landed on the same\nday as the refresh, so which count the evaluations actually used is an era\nquestion rather than a reading question. It is escalated rather than guessed.",
+      "values": [
+        {
+          "quantity": "count, corrected runs evaluated over the common tile grid (re-quoted from the § 2 sentence at line 31)",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "mound count of the ground truth the § 2 table's numbers were computed against — the figure the document escalates for adjudication",
+          "value_verbatim": "4,745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "TRIAGE — THE DOCUMENT ESCALATES THIS FIGURE RATHER THAN RESOLVING IT, and this extraction does not resolve it either. Both values are `anchor-unknown`: 4,745 is deliberately neither `historical` (which would assert it superseded) nor `read` against `len:$.features` in inputs/vectors/references/student-mounds-55maps-reviewed.geojson (which now holds 4,746 and would fabricate a mismatch). The open question is an era question — both 2026-05-03 curator additions (`baf1497a7`, `2e075eb99`) landed on the same day as the refresh, so the GT state the § 2 evaluations actually consumed is not decidable from the document. Chase targets: `_metadata.generated_at_utc` in each run's outputs/<run>/full-buffer-eval/evaluation.json (and the archived T=0.3 per-run evaluation) against the commit timestamps of the two additions. The same 4,745 value is carried at line 31, likewise classed anchor-unknown. 'four' re-quotes the § 2 count, which no artefact enumerates. 'both' is a determiner rather than an asserted numeral and is not extracted separately; the count of curator additions is extracted at lines 20 and 189-190."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          207
         ],
         "section": "Changelog 2026-04-27 — Original publication"
       },
@@ -3871,8 +4096,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          186,
-          187
+          208,
+          209
         ],
         "section": "Changelog 2026-04-27 — Original publication"
       },
@@ -3896,29 +4121,26 @@
       "claim_id": null,
       "source": {
         "lines": [
-          187,
-          189
+          209,
+          211
         ],
         "section": "Changelog 2026-04-27 — Original publication"
       },
       "claim_text": "refreshed 2026-05-03 (commit `42ed1d32`) to incorporate\npost-recovery numbers for T = 0.7, image, and text-MIN against the canonical\n4,745-mound updated curator ground truth.",
       "values": [
         {
-          "quantity": "mound count, canonical updated curator ground truth",
+          "quantity": "mound count of the updated curator ground truth the 2026-05-03 refresh was run against (superseded state)",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
           "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
+          "path": null,
+          "method": "historical"
         }
       ],
-      "anchor": {
-        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Live claim, not historical: the changelog entry restates the canonical GT size, which is unchanged."
+      "anchor": null,
+      "method": "historical",
+      "notes": "RECLASSIFIED from live to historical in this re-extraction: the second-revision block (lines 192-195) names the original-publication stub's '4,745-mound updated curator ground truth' as historical narrative — what the dated 2026-05-03 refresh was run against, not the current artefact, which now holds 4,746 features."
     }
   ]
 }

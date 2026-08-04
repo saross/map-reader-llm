@@ -17,7 +17,7 @@ canonical 4,745-mound updated curator ground truth; T=0.3 unchanged).
 
 All four runs are evaluated against:
 
-- **Ground truth**: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4,744 features) — the canonical post-review GT used by `compute_corrected_f1_multi_buffer.py`.
+- **Ground truth**: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4,746 features as at 2026-08-04; 4,744 when this report was first published, before the two 2026-05-03 curator additions at commits `baf1497a7` and `2e075eb99`) — the canonical post-review GT used by `compute_corrected_f1_multi_buffer.py`.
 - **Bounds**: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` (8,541 tiles).
 - **Buffers**: 50, 75, 100, 125, 150 m (canonical for the corrected-F1 pipeline).
 - **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling, Bias-Corrected and Accelerated (BCa) via `scipy.stats.bootstrap`.
@@ -52,7 +52,7 @@ Corrected-F1 numbers come from `results/<run>/corrected-f1-multi-buffer/summary.
 
 ## 4. Rank-order disagreement
 
-- **F1 rank** (corrected, R = 50 m): T=0.3 (0.8437) > Image (0.8332) > T=0.7 (0.8273) > text-MIN (0.7968).
+- **F1 rank** (corrected, R = 50 m): T=0.3 (0.8437) > Image (0.8333) > T=0.7 (0.8273) > text-MIN (0.7968).
 - **MCC rank**: Image (0.6924) > T=0.3 (0.6538) > T=0.7 (0.6476) > text-MIN (0.6260).
 
 The F1 leader (T=0.3) is **not** the MCC leader (image). The disagreement concentrates on the T=0.3-vs-image swap at the top. **Both metrics agree text-MIN is bottom and T=0.7 sits in the middle of the text-track**; the divergence is confined to the T=0.3-vs-image positions. text-MIN's joint-bottom result confirms HIGH thinking earns its tokens at 55-map scope on both metrics — the in-corpus extension of Obs 284's 4-map matrix finding. The post-recovery 2026-05-03 refresh leaves all four rank positions and both rank orderings unchanged.
@@ -175,6 +175,28 @@ paths had pointed at `results/<run>/mcc/` since 2026-04-27, but those
 directories were archived on 2026-06-07 (commit `da2cf355f`) by the Track 1 /
 Track 2 consolidation. The artefacts are preserved under `archive/`, and the
 paths are repointed there.
+
+**Second revision, same day — stale figures from the W6-E9 de-dup chain**:
+
+| Claim | Before | After |
+| :--- | :--- | :--- |
+| § 1 GT feature count | 4,744 features | **4,746** (with the original count retained as the historical figure it is) |
+| § 4 F1 rank, image | 0.8332 | **0.8333** |
+
+The § 4 image figure was superseded when the 2026-08-03 cand-2397 re-run moved
+the 50 m corrected F1 to `0.833333…`; the sibling
+`corrected-f1-multi-buffer/report.md` already carries 0.8333, so the two now
+agree. The GT count moved twice on 2026-05-03 (`baf1497a7`, cand 4264;
+`2e075eb99`, cand 2397), taking the reviewed student GT from 4,744 to 4,746.
+
+**Deliberately left as historical narrative**: the "4,745-mound updated curator
+ground truth" references in the header, § 2, § 7 and the original-publication
+stub describe what the dated 2026-05-03 refresh was run against, not the
+current artefact. **Open for adjudication**: § 2's "All four are evaluated over
+… the canonical 4,745-mound updated curator GT" asserts what *this table's*
+numbers were computed against, and both curator additions landed on the same
+day as the refresh, so which count the evaluations actually used is an era
+question rather than a reading question. It is escalated rather than guessed.
 
 **Landed**: this revision, with the document re-extracted in the same commit
 per charter § 5 rule 14 (ruling 18).
