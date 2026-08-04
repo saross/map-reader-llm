@@ -107,17 +107,16 @@ conflations need visual adjudication and fold into that same pass; W7-D8
 (t0.3 on the unreviewed base) is deferred by ruling 19c but its documentation
 obligation is load-bearing because it touches the F1 leader.
 
-**⏳ PENDING GATES from the S127 handoff — silence does not discard.**
-Two review gates were opened at session close and are unanswered:
-(1) **working-notes candidates** — three drafted for `docs/notes/working-notes.md`
-(next free number is Obs 388): the F1/MCC reference asymmetry and what it
-does to the Obs 280 divergence finding; the four-layer ground-truth
-structure and where the review effort actually lives; the phantom
-duplication audit (773 internally unique, one true twin at 0.98 m, a 4–6
-case grey zone at 7.3–15 m). (2) **user-observation candidates A–D** —
-written into `docs/notes/user-observations.md` as a "(pending review)"
-section. Re-surface both at the next `/handoff` or `/recap` rather than
-treating the absence of a verdict as a decline.
+**✅ S127 HANDOFF GATES RESOLVED at review (2026-08-04).** Working-notes
+candidates: all three accepted → **Obs 388** (F1 and MCC computed against
+different ground truths), **Obs 389** (the four GT layers), **Obs 390** (the
+phantom duplication audit), landed at `8204b06bc`. User-observations: A, C
+and D accepted, B dropped. Two PI verdicts worth carrying: **a
+recommendation is always wanted** — its value does not depend on being
+taken, it is the springboard to push against, so never withhold one for
+fear of steering; and the interim-conservatism escalation queue **arrived
+usefully shaped**, so escalating with evidence assembled and options priced
+is the right shape under a conservatism directive.
 
 **⚠ Two claims made in S127 are UNVERIFIED and are recorded as W7-U1/W7-U2**
 in `wave7-open-items-2026-08-04.json`: ruling 19's per-buffer *gating

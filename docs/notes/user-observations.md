@@ -385,37 +385,37 @@ of analysis, a replication of Obs 274 rather than an exception)
 instead of by a p-value — the explanation landed because it dissolved
 the apparent contradiction rather than adjudicating it.
 
-## Session 127 — 2026-08-04 (pending review)
+## Session 127 — 2026-08-04 (approved 2026-08-04; B dropped at review)
 
-**Candidate A — the decision-by-decision mode, and whether the option
-previews earned their length.** Once you became available to adjudicate,
-the session ran as a sequence of single questions with four options each,
-most carrying ASCII previews of the trade-off (cost, blast radius, what
-gets left behind). You engaged with every one and twice rejected the frame
-rather than the options — which suggests the previews were doing real work
-in exposing what I'd assumed. But they are expensive to read. Worth your
-verdict on whether the preview format is right at that density, or whether
-two options and a recommendation would have got you to the same place
-faster.
+**Candidate A — the decision-by-decision mode, and the granularity of the
+option previews.** Once you became available to adjudicate, the session ran
+as a sequence of single questions with four options each, most carrying
+ASCII previews of the trade-off (cost, blast radius, what gets left
+behind). You engaged with every one and twice rejected the frame rather
+than the options.
 
-**Candidate B — I reported an error I had introduced, prominently, before
-reporting anything else.** When the blind verification found that my own
-repair had written a false claim into a dated changelog, I led the next
-message with that rather than with the four things it had confirmed, and
-withdrew the claim in place rather than editing it away. I do not know
-whether that read as appropriate transparency or as burying the useful
-findings under a mea culpa. Your call on the right ratio — the failure mode
-I am guarding against is quietly correcting my own errors, but
-over-weighting them has its own cost in your reading time.
+*Your verdict*: the granularity was about right — **and a recommendation
+is always wanted.** In your words, you "always appreciate a recommendation
+(whether I choose it or use it as a springboard for discussion with you
+that leads elsewhere)". This is the operative instruction for future
+instances: a recommendation is not presumption and its value does not
+depend on being taken. Its function is to give you something to push
+against — twice today the recommendation was the thing you reframed away
+from, and that was still the fastest route to the better answer. Never
+withhold one for fear of steering; withholding removes the springboard.
 
 **Candidate C — the interim-conservatism half of the session.** For the
 first stretch I escalated rather than adjudicated (per the 48-hour window
 directive), producing W7-E1/E2/E3 and a queue rather than repairs. When you
-arrived you unblocked most of it in three decisions. Open question: did the
-escalation queue arrive in a genuinely useful shape, or did it front-load
-work onto you that I could have resolved under standing rulings and simply
-reported? The two-layer triage-vs-repair rule (ruling 17) may already have
-licensed more than I took.
+arrived you unblocked most of it in three decisions.
+
+*Your verdict*: **it arrived usefully shaped.** So the open question
+resolves in favour of the escalation discipline as practised — the queue
+was not front-loading work that standing rulings already licensed. For
+future instances: under a conservatism directive, escalating with the
+evidence assembled and the options priced is the right shape, and the cost
+of the PI unblocking three items is lower than the cost of an instance
+adjudicating research conclusions unsupervised.
 
 **Candidate D — in-the-moment reaction, recorded near-verbatim.** After the
 first tranche of flagged findings (the coverage drift, the era_check
@@ -426,3 +426,6 @@ from instrument gaps, each with its evidence pointer, and an explicit note
 of which items I had NOT repaired and why. Recording it because the
 structure that earned it is reproducible: the flags were sorted by what
 kind of thing they were, not by when I found them.
+
+*(Candidate B — on whether leading with a self-introduced error read as
+transparency or as burying the findings — dropped at review.)*

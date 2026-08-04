@@ -245,7 +245,9 @@
   "why_it_matters": "The F1-versus-MCC rank-divergence finding (Obs 280: text wins F1, image wins MCC) is measured across metrics that do not share a ground truth. An unknown share of that divergence could be reference effect rather than metric behaviour.",
   "pi_ruling": "Cannot go forward (ruling 20a). Both metrics must use the same reference.",
   "sequencing": "Do NOT recompute yet (ruling 20b) — the reference moves again at the phantom re-review, and recomputing twice is waste. Unification is gated on the point-marking work.",
-  "status": "OPEN — gated, not deferred indefinitely. Blocks publication of the F1-vs-MCC divergence as a metric-behaviour claim."
+  "status": "OPEN — gated, not deferred indefinitely. Blocks publication of the F1-vs-MCC divergence as a metric-behaviour claim.",
+  "nested_finding_2026_08_04": "Found by the obs-writer while landing Obs 388, and NOT in the original analysis: the MCC side is not on 4,746 either. results/55maps-mcc-v2-summary § 1 records the GT file as 4,746 as at 2026-08-04, but § 2 states the MCC rows were computed against the canonical 4,745-mound curator GT (the 2026-05-03 evaluations). Under the era-disposition rule that § 2 text is historically CORRECT — but it means the MCC side sits one curator addition short of today's student layer ON TOP OF being 474-672 short of the F1 side. When ruling 20's unification is executed, do NOT treat this as '4,746 versus 4,746 plus phantoms'; the student baselines differ too.",
+  "gap_size": "474/5,220 = 9.08 % of the extended set at R = 50 m, rising to 672/5,418 = 12.4 % at 150 m — i.e. the F1 reference is 9.1-12.4 % larger than the MCC reference before the 4,745-versus-4,746 baseline difference is even counted."
  },
  "unverified_claims_made_this_session": [
   {
