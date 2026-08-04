@@ -97,6 +97,29 @@ def blob_text(blob: str) -> str | None:
     return out.stdout
 
 
+def check_arithmetic(tag: str, index: int, source: dict) -> list[str]:
+    """Check one arithmetic derivation's expression and operands.
+
+    ``source`` is whichever object supplies the derivation — the value
+    itself (schema 1.1 per-value form) or the claim anchor. Returns the
+    error strings for that derivation.
+    """
+    errors: list[str] = []
+    expr = source.get("expression")
+    operands = source.get("operands") or []
+    if not expr or not operands:
+        return [f"{tag}: arithmetic requires expression + operands (values[{index}])"]
+    names = {op["name"] for op in operands}
+    used = set(_VAR_RE.findall(expr))
+    if not used <= names:
+        errors.append(f"{tag}: expression vars {sorted(used - names)} "
+                      f"missing from operands (values[{index}])")
+    for op in operands:
+        if not (REPO_ROOT / op["file"]).exists():
+            errors.append(f"{tag}: operand file missing: {op['file']}")
+    return errors
+
+
 def validate_file(path: Path, validator: jsonschema.Draft202012Validator,
                   at_era: bool = False) -> tuple[list[str], list[str]]:
     """Validate one extraction file.
@@ -167,9 +190,26 @@ def validate_file(path: Path, validator: jsonschema.Draft202012Validator,
         # with no expression — the claim-level-only check missed them).
         effective = {value.get("method") or method for value in claim["values"]}
         if anchor is None:
-            if not effective <= NULL_ANCHOR_METHODS:
+            # An arithmetic value that carries its OWN expression and
+            # operands (schema 1.1 / instrument v1.2 amendment 1) is
+            # self-describing: every operand names its own file, so the
+            # harness evaluates it without ever reading the claim anchor
+            # (recompute_c4_claims: `source = value if
+            # value.get("expression") else (anchor or {})`). Requiring a
+            # claim anchor there rejects a shape the harness handles.
+            illegal = effective - NULL_ANCHOR_METHODS - {"arithmetic"}
+            if illegal:
                 errors.append(f"{tag}: null anchor illegal for effective methods "
-                              f"{sorted(effective - NULL_ANCHOR_METHODS)}")
+                              f"{sorted(illegal)}")
+            for j, value in enumerate(claim["values"]):
+                if (value.get("method") or method) != "arithmetic":
+                    continue
+                if not (value.get("expression") and value.get("operands")):
+                    errors.append(f"{tag}: values[{j}] arithmetic under a null anchor "
+                                  "requires its own expression + operands (nothing "
+                                  "else can supply them)")
+                    continue
+                errors.extend(check_arithmetic(tag, j, value))
             continue
         if not (REPO_ROOT / anchor["file"]).exists():
             errors.append(f"{tag}: anchor file missing: {anchor['file']}")
@@ -179,21 +219,8 @@ def validate_file(path: Path, validator: jsonschema.Draft202012Validator,
         for j, value in enumerate(claim["values"]):
             if (value.get("method") or method) != "arithmetic":
                 continue
-            source = value if value.get("expression") else anchor
-            expr = source.get("expression")
-            operands = source.get("operands") or []
-            if not expr or not operands:
-                errors.append(f"{tag}: arithmetic requires expression + operands"
-                              f" (values[{j}])")
-                continue
-            names = {op["name"] for op in operands}
-            used = set(_VAR_RE.findall(expr))
-            if not used <= names:
-                errors.append(f"{tag}: expression vars {sorted(used - names)} "
-                              f"missing from operands (values[{j}])")
-            for op in operands:
-                if not (REPO_ROOT / op["file"]).exists():
-                    errors.append(f"{tag}: operand file missing: {op['file']}")
+            errors.extend(check_arithmetic(
+                tag, j, value if value.get("expression") else anchor))
         # v1.2 amendment 3: in a multi-value claim whose anchor carries
         # a path, a pathless read value would silently inherit that path
         # at recompute time and be compared against the wrong quantity
