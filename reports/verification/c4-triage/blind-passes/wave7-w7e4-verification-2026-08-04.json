@@ -1,0 +1,348 @@
+{
+  "_meta": {
+    "artefact": "reports/verification/c4-triage/blind-passes/wave7-w7e4-verification-2026-08-04.json",
+    "kind": "independent blind verification pass",
+    "programme": "C4 verification, Session 127, wave 7",
+    "subject_commit": "45aa6a0d18da15df1c29c4ce662a4c9f1326bfa5",
+    "repo_head_at_verification": "45aa6a0d18da15df1c29c4ce662a4c9f1326bfa5",
+    "date": "2026-08-04",
+    "ruling": "Ruling 11 — blind re-derivation by a fresh context",
+    "method": "Every figure, timestamp, and feature count below was re-derived in this turn from the repository (git show / json load). No claim is carried from the repairing agent's commit message, from prior triage records, or from the task brief.",
+    "documents_under_test": [
+      "results/55maps-ds-summary-v2/report.md",
+      "results/temperature-failure-recovery-analysis/report.md"
+    ],
+    "extractions_under_test": [
+      "reports/verification/c4-extraction/073.json",
+      "reports/verification/c4-extraction/074.json"
+    ],
+    "overall_verdict": "QUALIFIED — every edit the repair made is correct, and every figure it deliberately left is genuinely era-faithful; but the repair introduced one false statement into the ds-summary changelog and missed three defects in the two documents it revised."
+  },
+
+  "re_derived_ground_truth_timeline": {
+    "source": "git show -s on each commit; feature counts by loading inputs/vectors/references/student-mounds-55maps-reviewed.geojson at each revision",
+    "note_on_timezones": "baf1497a7 and 2e075eb99 are recorded in git with +10:00 offsets (2026-05-03T10:32:53+10:00 and 2026-05-03T15:28:57+10:00). Converted to UTC these are 00:32:53Z and 05:28:57Z, matching the window the repair asserted. Re-derived independently here, not accepted on the brief's word.",
+    "reviewed_gt_layer": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "timeline": [
+      {
+        "commit": "dea1155fa",
+        "subject": "data(gt-review): cleaned GT + cleaned-GT F1 re-evaluation + Obs 261",
+        "reviewed_gt_features_at_commit": 4744
+      },
+      {
+        "commit": "baf1497a7",
+        "committed_utc": "2026-05-03T00:32:53Z",
+        "subject": "data(gt): add missing curator GT mound — second of two touching mounds at K-35-064-3 cand 4264",
+        "reviewed_gt_features_at_commit": 4745,
+        "transition": "4744 -> 4745",
+        "files_touched": ["inputs/vectors/references/student-mounds-55maps-reviewed.geojson"]
+      },
+      {
+        "commit": "2e075eb99",
+        "committed_utc": "2026-05-03T05:28:57Z",
+        "subject": "data(gt): add missing curator GT mound at image cand 2397 (K-35-062-4)",
+        "reviewed_gt_features_at_commit": 4746,
+        "transition": "4745 -> 4746",
+        "files_touched": ["inputs/vectors/references/student-mounds-55maps-reviewed.geojson"],
+        "independent_corroboration": "The commit message itself states 'Pre: 4745 features. Post: 4746 features.', which agrees with the feature counts I loaded from the blobs."
+      },
+      {
+        "commit": "HEAD (45aa6a0d1)",
+        "reviewed_gt_features_at_commit": 4746
+      }
+    ],
+    "window_verdict": "CONFIRMED. The 4,745 era runs from 2026-05-03T00:32:53Z to 2026-05-03T05:28:57Z, exactly as the repair claimed.",
+    "legacy_gt_layer": {
+      "path": "inputs/vectors/references/student-mounds-55maps.geojson",
+      "features_at_head": 4770,
+      "commit_history": "single commit 301b511286 (2026-04-08T23:39:37+10:00); never modified since",
+      "implication": "The legacy layer never held 4,745 at any time. Any sentence attributing a 4,745-feature ground truth to a computation that actually consumed the legacy layer is mis-attributed, however era-faithful the number itself is."
+    },
+    "cited_commit_timestamps_re_derived": {
+      "f533fda5": "2026-05-03T00:42:38Z — INSIDE window",
+      "366f9c66": "2026-05-03T01:08:13Z — INSIDE window",
+      "e07dae37": "2026-05-03T01:08:30Z — INSIDE window",
+      "236327d8": "2026-05-03T02:10:43Z — INSIDE window",
+      "6e077005": "2026-05-03T02:12:46Z — INSIDE window",
+      "da84a3d2": "2026-05-03T02:30:42Z — INSIDE window",
+      "8699f456": "2026-05-03T02:45:24Z — INSIDE window",
+      "42ed1d32": "2026-05-03T04:34:20Z — INSIDE window"
+    }
+  },
+
+  "q1_is_0_8333_correct": {
+    "verdict": "CONFIRMED",
+    "artefact": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+    "artefact_timestamp": "2026-08-03T22:58:06.563803+00:00",
+    "artefact_git_commit_field": "1de5591196ef17f46d02f07bea06289adf9f60db",
+    "resolved_value": {
+      "path": "$.results[0]",
+      "R_m": 50,
+      "F1": 0.8333333333333333,
+      "F1_CI": [0.8241205772926877, 0.8421788161337694],
+      "TP": 4125,
+      "FP": 555,
+      "FN": 1095,
+      "n_ref_student_only": 4746,
+      "n_phantom_duplicates_dropped": 1
+    },
+    "rounding_check": "0.8333333333333333 rounds to 0.8333 at 4 d.p. under any tie-breaking rule (the 5th significant decimal is 3, not a tie). The documents quote corrected-F1 cells at 4 d.p. throughout (0.8437 / 0.8273 / 0.7968 in the same rows), so 0.8333 is the right precision as well as the right value.",
+    "cross_check_other_runs_same_tables": {
+      "T=0.3": "0.8436502872 -> 0.8437 at 4 d.p. — ds-summary cell 0.8437 CORRECT",
+      "T=0.7": "0.8273232378 -> 0.8273 — cell CORRECT",
+      "text-MIN": "0.7968397291 -> 0.7968 — cell CORRECT",
+      "conclusion": "The image cell was the only stale corrected-F1 cell in the ds-summary tables."
+    }
+  },
+
+  "q2_were_the_three_ds_summary_cells_live_claims": {
+    "verdict": "CONFIRMED",
+    "cells": [
+      {
+        "section": "4.1",
+        "line_at_head": 211,
+        "table": "Aggregate F1 ordering — Metric / Best / 2nd / 3rd / Worst",
+        "row": "Corrected-F1-multi-buffer F1 (R=50 m)",
+        "surrounding_prose_read": "Lines 205–232. The table is a present-tense cross-run ranking; the prose beneath it ('The corrected-F1-multi-buffer ranking (T=0.3 > Image > T=0.7 > text-MIN) is different from both measured and D-S') reasons from these cells as current values. No historical framing, no date qualifier, no reference to a superseded run.",
+        "classification": "LIVE"
+      },
+      {
+        "section": "4.3",
+        "line_at_head": 272,
+        "table": "D-S corrected F1 vs corrected-F1-multi-buffer F1",
+        "surrounding_prose_read": "Line 275–277 states verbatim: '(The corrected-F1-multi-buffer numbers are read from each run's corrected-f1-multi-buffer/summary.json at R=50 m for the headline 50 m buffer.)' This is an explicit live artefact citation — the strongest possible LIVE marker.",
+        "classification": "LIVE"
+      },
+      {
+        "section": "5.4",
+        "line_at_head": 373,
+        "table": "Measured / D-S / Corrected-F1-multi-buffer / Spread",
+        "surrounding_prose_read": "Lines 367–384. Present-tense comparison of the three F1 estimators; the only historical reference in the passage is parenthetical and explicitly labelled ('post-recovery; down marginally from the pre-recovery 0.061'), which shows the author distinguishes live from historical values in this very paragraph.",
+        "classification": "LIVE"
+      }
+    ],
+    "none_describe_a_different_run_or_metric": "All three name the same metric (corrected-F1-multi-buffer F1 at R = 50 m) for the same run (image). Verified by reading each table header and row label, not by pattern-matching the number.",
+    "derived_columns_re_checked_independently": {
+      "section_4_3_delta": "0.8333333333 - 0.7990 = 0.0343333 -> +0.034 at 3 d.p. Under the old 0.8332 the delta was 0.0342 -> +0.034. UNCHANGED, as claimed.",
+      "section_5_4_spread": "0.8333333333 - 0.7745 = 0.0588333 -> 0.059 at 3 d.p. Under the old 0.8332 it was 0.0587 -> 0.059. UNCHANGED, as claimed.",
+      "rankings": "All three orderings survive: 0.8437 > 0.8333 > 0.8273 > 0.7968 (§4.1); T=0.3 largest gap +0.045, text-MIN and T=0.7 joint-smallest +0.013 (§4.3); T=0.3 loosest 0.069, text-MIN and T=0.7 joint-tightest 0.038 (§5.4). No derived column should have moved and none did."
+    }
+  },
+
+  "q3_was_leaving_section_7_3_correct": {
+    "verdict": "CONFIRMED",
+    "claim_left_in_place": "§ 7.3 Stage 9 row (line 489): 'Corrected F1@50m: 0.832 -> **0.8332**'",
+    "re_derivation": {
+      "method": "git show <commit>:results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json at every commit that touched the file, then read $.results[R_m=50].F1",
+      "artefact_history": [
+        {"commit": "dee0ecf0d", "committed": "2026-04-21T23:55:46+10:00", "F1_at_50m": 0.8317312556915916, "n_ref_student_only": 4744, "four_dp": 0.8317, "three_dp": 0.832},
+        {"commit": "8699f456", "committed_utc": "2026-05-03T02:45:24Z", "F1_at_50m": 0.8332154763107384, "n_ref_student_only": 4745, "four_dp": 0.8332},
+        {"commit": "3271d6923", "committed": "2026-08-03T22:46:03+10:00", "F1_at_50m": 0.8333333333333333, "n_ref_student_only": 4745},
+        {"commit": "30a902f56", "committed_utc": "2026-08-03T23:04:38Z", "F1_at_50m": 0.8333333333333333, "n_ref_student_only": 4746}
+      ],
+      "finding": "The state of the artefact immediately BEFORE the Stage-9 propagation commit 8699f456 was 0.8317312556915916, which is 0.832 at 3 d.p.; immediately AFTER it was 0.8332154763107384, which is 0.8332 at 4 d.p. The '0.832 -> 0.8332' transition is therefore an accurate record of a dated event, and overwriting either half with 0.8333 would have falsified it.",
+      "the_repair_would_have_left_a_defect_if": "the artefact had never held 0.8332 at that point. It did. The repair's justification is independently sound."
+    },
+    "one_discrepancy_noted_not_a_defect": "The 8699f456 commit message's own Stage-9 block says 'R=50m F1=0.8332 (was 0.8331; +0.0001)'. The committed pre-state was 0.8317312 (0.832), not 0.8331 — the 0.8331 was evidently an uncommitted intra-session state after the GT swap. The document's '0.832' matches the committed artefact history, not the commit message. Since 0.8331 rounds to 0.833 and not 0.832, the document is aligned with the artefact rather than with the prose of the commit. No action needed; recorded so a future pass does not mistake it for a discrepancy.",
+    "repair_s_inserted_explanatory_text_verified": "Lines 913–916 assert (a) 0.8332 at 8699f456, (b) cand-2397 re-run 3271d6923 moved it to 0.833333…, (c) the W6-E9 regeneration 30a902f56 left the value unchanged while shifting n_ref_student_only to 4746. All three re-derived above and all three are exactly right."
+  },
+
+  "q4_are_all_six_4745_references_era_faithful": {
+    "verdict": "QUALIFIED",
+    "summary": "All six numbers are era-faithful: none should be refreshed to 4,746, and the 'do not touch' disposition is correct for all six. Four are correct as written. Two — both in the ds-summary — carry an era-faithful count but attach it to a computation that demonstrably did not consume it. The repair's blanket assertion that 'both are correct as written' overreaches on those two.",
+    "occurrences": [
+      {
+        "id": 1,
+        "file": "results/55maps-ds-summary-v2/report.md",
+        "line": 13,
+        "text": "T=0.7 row re-derived against the recovered single-round consensus + verifier and the updated 4,745-mound curator GT (commits `366f9c66`, `e07dae37`, `f533fda5`).",
+        "what_it_asserts": "that the T=0.7 row of THIS Dawid-Skene summary was re-derived against a 4,745-mound curator GT, via those three commits",
+        "commit_timestamps_checked": {"366f9c66": "01:08:13Z", "e07dae37": "01:08:30Z", "f533fda5": "00:42:38Z"},
+        "inside_window": true,
+        "count_era_faithful": true,
+        "attribution_check": "REFUTED for two of the three commits. The T=0.7 Dawid-Skene artefact at HEAD (results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json) has item_counts matched=3527 + student_only=1243 = 4770 student-GT points — i.e. the LEGACY layer (4,770 features), not the reviewed layer (4,745 at that hour). 366f9c66 (D-S re-aggregation) and e07dae37 (D-S crosstab) therefore consumed 4,770, not 4,745. Only f533fda5 (the raw re-evaluation against the reviewed GT) genuinely consumed a 4,745-feature GT.",
+        "verdict": "QUALIFIED — count era-faithful, disposition (do not touch) correct, attribution partially wrong"
+      },
+      {
+        "id": 2,
+        "file": "results/55maps-ds-summary-v2/report.md",
+        "line": 436,
+        "text": "…and the canonical updated curator GT (4,745 mounds, including the +1 added at K-35-064-3 in `baf1497a`).",
+        "what_it_asserts": "that the 2026-05-03 D-S re-aggregation at commit 366f9c66 re-ran D-S against a 4,745-mound curator GT",
+        "commit_timestamps_checked": {"366f9c66": "01:08:13Z", "baf1497a7": "00:32:53Z"},
+        "inside_window": true,
+        "count_era_faithful": true,
+        "attribution_check": "REFUTED. Same evidence as occurrence 1: the T=0.7 D-S run's implied student-GT size is 4,770. The +1 mound that baf1497a added went into the reviewed layer, which this D-S run did not read. The sentence's own §6 preamble (line 415) says the D-S aggregations use the legacy layer, so the document contradicts itself here — a pre-existing defect the repair did not surface.",
+        "verdict": "QUALIFIED — count era-faithful, disposition correct, attribution wrong"
+      },
+      {
+        "id": 3,
+        "file": "results/temperature-failure-recovery-analysis/report.md",
+        "line": 514,
+        "text": "Stage 8–9 GT-update propagation (commits `236327d8`, `6e077005`) … Re-evaluation against the reviewed GT (4,745 features) and tile-level MCC vs reviewed GT.",
+        "commit_timestamps_checked": {"236327d8": "02:10:43Z", "6e077005": "02:12:46Z"},
+        "inside_window": true,
+        "corroboration": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json still records n_ref_student_only = 4745 at HEAD, i.e. the era artefact independently attests the count.",
+        "verdict": "CONFIRMED — era-faithful and correctly attributed"
+      },
+      {
+        "id": 4,
+        "file": "results/temperature-failure-recovery-analysis/report.md",
+        "line": 610,
+        "text": "`f533fda5` — re-evaluate against updated GT (4,745 features, `baf1497a`).",
+        "commit_timestamps_checked": {"f533fda5": "00:42:38Z"},
+        "inside_window": true,
+        "corroboration": "The commit's own subject line reads 're-evaluate against updated GT (4745 features, baf1497a)'; results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json still records n_ref_student_only = 4745.",
+        "verdict": "CONFIRMED"
+      },
+      {
+        "id": 5,
+        "file": "results/temperature-failure-recovery-analysis/report.md",
+        "line": 623,
+        "text": "`da84a3d2` — re-evaluate vs reviewed GT 4,745 (Stage 8) — F1@50m raw 0.7745.",
+        "commit_timestamps_checked": {"da84a3d2": "02:30:42Z"},
+        "inside_window": true,
+        "corroboration": "Commit subject reads 're-evaluate vs reviewed GT 4745 (Stage 8)'. The quoted raw F1 0.7745 also re-derives from outputs/55maps-image-generalisation/evaluation/evaluation.json at 50 m.",
+        "verdict": "CONFIRMED"
+      },
+      {
+        "id": 6,
+        "file": "results/temperature-failure-recovery-analysis/report.md",
+        "line": 631,
+        "text": "`236327d8` — re-evaluate vs reviewed GT 4,745 (Stages 8–9).",
+        "commit_timestamps_checked": {"236327d8": "02:10:43Z"},
+        "inside_window": true,
+        "corroboration": "Commit subject reads 're-evaluate vs reviewed GT 4745 (Stages 8-9)'.",
+        "verdict": "CONFIRMED"
+      }
+    ],
+    "no_seventh_occurrence": "grep over both documents at HEAD finds 4,745 only at ds-summary 13 and 436 and temperature 514, 610, 623, 631, plus the repair's own changelog prose. The count of six is right."
+  },
+
+  "q5_did_the_repair_miss_anything": {
+    "verdict": "REFUTED (the repair's implicit claim that nothing else in these two documents is stale does not hold) — three misses found",
+    "misses": [
+      {
+        "id": "M1",
+        "severity": "moderate",
+        "file": "results/temperature-failure-recovery-analysis/report.md",
+        "lines": [885, 918, 932],
+        "type": "broken re-derivation paths in the very section the repair edited",
+        "detail": "§ 12's re-derivation register cites `results/55maps-text-high-generalisation/mcc/evaluation.json`, `results/55maps-image-generalisation/mcc/evaluation.json`, and `results/55maps-text-min-generalisation/mcc/evaluation.json`. None of these three paths exists at HEAD. All three directories were moved by commit da2cf355f (2026-06-07T17:57:57+10:00, 'archive(track2): retire superseded 55-map GT-eval variants (T1b)') to `archive/55maps-superseded-gt-evals/per-run/<run>/mcc/`.",
+        "values_are_still_correct": "I loaded the archived files: image MCC 0.6924 [0.6784, 0.7062], T=0.7 0.6476 [0.6331, 0.6620], text-MIN 0.626 [0.6114, 0.6408]. All match the document. The numbers are fine; the paths are dead.",
+        "why_this_is_a_miss": "The repair's own stated criterion for editing § 12 was that 'a reader running the stated re-derivation would have got a different number from the one printed'. A reader running these three gets no number at all — a strictly worse failure — and one of them sits three lines below the line the repair edited. The document's pre-repair banner was 2026-05-29, i.e. before the 2026-06-07 archival, so this staleness was live and unreported at the time of the sweep.",
+        "second_order_note": "The archival commit retired these as 'superseded GT-eval variants'. A future pass should decide whether § 12 should cite the archive path or drop the MCC re-derivations as superseded — that is a PI call, not a mechanical repath."
+      },
+      {
+        "id": "M2",
+        "severity": "moderate",
+        "file": "results/temperature-failure-recovery-analysis/report.md",
+        "lines": [47, 546],
+        "type": "fourth-decimal disagreement on a headline corrected-F1 cell, and a cross-document inconsistency",
+        "detail": "Both lines give T=0.3's post-recovery corrected F1@50 m as 0.8436. The artefact `results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json::results[R_m=50].F1` is 0.8436502872, which is 0.8437 at 4 d.p. The sibling ds-summary quotes 0.8437 in all three of its tables, and `results/55maps-pairwise-permutation-v2/summary.md`'s tier tables also quote 0.8437.",
+        "competing_provenance_considered": "The paired-permutation artefacts recompute F1 independently and give t0.3 f1_a = 0.843561, which does round to 0.8436. So 0.8436 may be a silent change of source rather than a mis-round. But the same § 7.6 row block quotes image at 0.8333 and text-MIN at 0.7968, which match the corrected-f1 pipeline (the permutation artefacts happen to agree for those runs), so the row is presented as coming from one source and is inconsistent under that reading.",
+        "why_this_is_a_miss": "It is the same defect class the sweep was executing (a 4th-decimal corrected-F1 cell against corrected-f1-multi-buffer/summary.json), in the same table as the image cell the sweep inspected (§ 7.6 line 548) and the same sentence as the image figure in § 1 (line 48). The repair's changelog asserts 'every other figure in the document' did not need to change; that assertion is not sustainable for lines 47 and 546.",
+        "recommended_disposition": "Escalate to the PI rather than repair blind: either refresh to 0.8437, or add a source note if 0.8436 is deliberately the paired-permutation value."
+      },
+      {
+        "id": "M3",
+        "severity": "low-moderate",
+        "file": "results/55maps-ds-summary-v2/report.md",
+        "line": 47,
+        "type": "ordering claim contradicted by the artefacts (flagged by the repair, but the repair understated it)",
+        "detail": "Line 47 states the measured-F1 ranking as 'T=0.7 > T=0.3 > image > text-MIN'; line 216 states 'T=0.7 > Image > T=0.3 > text-MIN'. The repair's commit message flagged this as an unadjudicated contradiction. It is not merely a contradiction — it is decidable. The four dawid-skene-results.json files at HEAD give measured F1 = T=0.7 0.7896, image 0.7745, T=0.3 0.7743, text-MIN 0.7591. Line 216 is right and line 47 is a surviving pre-recovery ordering. Flagging rather than fixing is a defensible posture for a sweep, but the flag should record that the artefacts resolve it.",
+        "companion_flag_verified": "The repair's other flag is also real: line 257 calls text-MIN 'the only run with zero unjoined rows', while lines 188–192 and § 5.5 (lines 388–392) both record three runs at zero (image 0/1029, T=0.7 0/637, text-MIN 0/585). Correctly flagged, correctly not unilaterally repaired."
+      }
+    ],
+    "things_i_checked_that_were_NOT_stale": [
+      "ds-summary § 4.1 measured-F1 row (0.7896 / 0.7745 / 0.7743 / 0.7591) — all four match dawid-skene-results.json::measured.f1",
+      "ds-summary § 4.1 D-S corrected-F1 row (0.8142 / 0.7990 / 0.7988 / 0.7834) — all four match dawid_skene.corrected_metrics.f1",
+      "ds-summary § 4.1 ECE row (0.259 / 0.267 / 0.348 / 0.538) and Brier row (0.314 / 0.318 / 0.365 / 0.489) — all eight match ds-human-crosstab/summary.json",
+      "ds-summary § 4.2 VLM-only/matched ratios (0.1786, 0.1806, 0.232, 0.282) and posterior:empirical ratios (1.88x, 1.92x, 2.53x, 3.89x) — all recomputed from the crosstab prevalence and D-S vlm_only_posterior; all correct",
+      "ds-summary § 3 empirical mound rates (0.5538462 text-MIN, 0.7249757 image) — match crosstab prevalence",
+      "ds-summary § 6.1 image item-set deltas (3,637/1,133/1,028 -> 3,650/1,095/1,030) — match the D-S artefact and its pre-recovery backup",
+      "temperature § 7.2 T=0.7 corrected F1 0.8273 [0.8173, 0.8370] and 125 m 0.8338 [0.8240, 0.8432] — match the T=0.7 corrected-f1 artefact including both CI bounds",
+      "temperature § 12 image raw F1 0.7745 — matches outputs/55maps-image-generalisation/evaluation/evaluation.json at 50 m",
+      "temperature § 12 all six cross-track-v2 paired-permutation deltas (+0.0162, +0.0102, -0.0060, +0.0467, +0.0305, +0.0365) — all six match results/55maps-pairwise-permutation-v2/paired-*/summary.json::per_buffer[50].delta_f1, including the ns verdict on T=0.7 vs image (p_bh 0.2153)",
+      "temperature § 12 MCC values 0.6924 / 0.6476 / 0.626 — correct against the archived artefacts (only the paths are dead; see M1)"
+    ],
+    "derived_columns_that_should_have_moved": "None. Both the § 4.3 delta (+0.034) and the § 5.4 spread (0.059) are invariant to the 0.8332 -> 0.8333 change at their quoted 3 d.p. precision; I recomputed both from the full-precision artefact rather than trusting the changelog's arithmetic. No ranking, tier, or ordering in either document depends on the fourth decimal of the image cell."
+  },
+
+  "q6_are_the_changelog_entries_and_banners_honest": {
+    "verdict": "QUALIFIED",
+    "diff_verified_against_claims": {
+      "ds_summary_body_changes": "Exactly three body lines changed (211, 272, 373), one per section as claimed (§ 4.1, § 4.3, § 5.4). No other body line moved. Claim accurate.",
+      "temperature_body_changes": "Exactly one figure changed (line 911, 0.8332 -> 0.8333) plus four lines of new explanatory text. § 7.3's 0.832 -> 0.8332 untouched. Claim accurate.",
+      "artefact_facts_quoted_in_the_changelog": "All verified true: $.results[0].F1 = 0.8333333333333333, R_m = 50, n_ref_student_only = 4746, n_phantom_duplicates_dropped = 1.",
+      "sibling_claim": "'the sibling results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md already carries 0.8333 and records the transition in its own changelog' — verified true; that report carries 0.8333 in its headline, curve, and table, and records 0.8317 -> 0.8332 -> 0.8333.",
+      "coverage_drift_citation": "reports/verification/c4-triage/coverage-drift-2026-08-04.json exists and contains a gt_count_era_resolution block with the 00:32:53Z / 05:28:57Z timeline. The citation is accurate.",
+      "temperature_claim_that_sections_1_and_7_6_already_carried_0_8333": "Verified — lines 48 and 548 both carried 0.8333 before this commit.",
+      "banners": "Both revision banners accurately describe the change made and the decisions taken. No overstatement in either banner."
+    },
+    "defect_introduced_by_the_repair": {
+      "id": "D1",
+      "severity": "moderate",
+      "file": "results/55maps-ds-summary-v2/report.md",
+      "lines": [574, 578],
+      "text": "'…and the D-S aggregations documented here consume the separate legacy layer `inputs/vectors/references/student-mounds-55maps.geojson` (see § 6), not the reviewed layer at all.'",
+      "why_it_is_false": "The image run's D-S aggregation does NOT consume the legacy layer. results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json has matched = 3650 and student_only = 1095, implying 4,745 student-GT points — the reviewed layer as it stood on 2026-05-03 — whereas T=0.3, T=0.7, and text-MIN all imply 4,770, the legacy layer. The pre-recovery image backup implies 4,770, so the image run was switched from legacy to reviewed GT during the 2026-05-03 propagation; the document itself records the tell at line 457 ('student-only: 1,133 -> 1,095 (-38, reflecting canonical-GT join cleanup)').",
+      "how_it_arose": "§ 6 line 415 lists the legacy layer under 'All four D-S aggregations use the same canonical pattern', which is a pre-existing document error. The repair restated that error in a new changelog sentence prefixed 'For the avoidance of doubt', converting an inherited inaccuracy into an asserted verification. Under the anti-confabulation rule this is the more serious form: the claim is now anchored and dated.",
+      "downstream_consequence": "The § 4.1 / § 4.3 / § 5.4 D-S corrected-F1 column silently mixes two ground truths — image on the 4,745-feature reviewed layer, the other three on the 4,770-feature legacy layer. That is a live cross-run comparability caveat for a table the paper may cite, and neither the document nor the repair discloses it."
+    },
+    "second_order_imprecisions_not_defects": [
+      "The commit message says 'ranges extended over the 508 -> 652 growth'. The document was 590 lines before this commit and 652 after; 508 was the previous b074 plan boundary, not a document length. There was therefore already an 82-line extraction coverage gap (509–590) before this repair, created by the wave-6 changelog additions. The outcome (full 1–652 coverage) is correct; the phrasing conflates a plan boundary with a document length and hides the pre-existing gap.",
+      "The commit message says 55maps-pairwise-permutation-v2/summary.md 'also carries 0.8332'. It carries BOTH — 0.8333 in six per-pair table rows (sourced from the paired JSONs, which give image f1 = 0.833333) and 0.8332 in the two tier-ranking tables (sourced from the corrected-f1 summary as it stood on 2026-05-03). The file is internally inconsistent, not uniformly stale. Deferring it to regeneration is still the right call; the characterisation is incomplete.",
+      "The commit message dates the pairwise summary.md generation to 04:27:23Z. The paired JSONs landed at a7a0caaa (04:27:58Z) and the summary.md was last written at 6e813e18e (2026-05-03T15:01:37+10:00 = 05:01:37Z). Both are inside the 4,745 window, so the substance holds, but neither matches 04:27:23Z.",
+      "ds-summary § 6.1 attributes the image D-S re-aggregation to cross-track-v2 commit 42ed1d32 (04:34:20Z). git log shows the image dawid-skene-results.json was last written at 8699f456 (02:45:24Z); 42ed1d32 is an FP-classification job whose own message says the FP sets were unchanged. Era-harmless (both inside the window) but the commit attribution is wrong. Pre-existing, not introduced."
+    ]
+  },
+
+  "re_extraction_check": {
+    "verdict": "CONFIRMED, with one caveat",
+    "scope_note": "Both b073 and b074 target the SAME document, results/55maps-ds-summary-v2/report.md — b073 lines 1–332, b074 lines 333–652. The batch-plan diff re-ranges them from 1–223 and 224–508. The document is 652 lines at HEAD, so coverage is now complete.",
+    "counts_claimed_vs_actual": {
+      "b073": "claimed 86 claims / 307 values — actual 86 claims / 307 values. MATCH.",
+      "b074": "claimed 64 claims / 174 values — actual 64 claims / 174 values. MATCH.",
+      "superseded": "b073 was 66 claims / 248 values; b074 was 56 claims / 149 values."
+    },
+    "false_mismatch_generator_claim": {
+      "verdict": "CONFIRMED",
+      "b073_superseded": "The claim at old lines 6–8 ('the updated 4,745-mound curator GT') carried value 4,745 with method 'read', path 'len:$.features', and anchor.file = inputs/vectors/references/student-mounds-55maps-reviewed.geojson. That anchor resolves to 4,746 at HEAD. It would have fired a mismatch against an era-faithful, correct sentence.",
+      "b074_superseded": "The claim at old lines 427–428 (§ 6.1's '4,745 mounds') carried value 4,745 with method 'read', path 'len:$.features', anchor.file = the same live GeoJSON. Same false-mismatch behaviour.",
+      "conclusion": "The re-extraction agents' report is accurate: both superseded files anchored era-faithful 4,745 spans to the live 4,746-feature layer."
+    },
+    "is_the_new_anchoring_better_or_merely_different": {
+      "verdict": "BETTER, not merely different",
+      "b073_new": "The preamble 4,745 is re-anchored to results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json::$.results[0].n_ref_student_only, which I loaded and which still reads 4745. It now resolves green against an artefact that genuinely records the GT size that era consumed, instead of red against today's layer.",
+      "b074_new": "The § 6.1 4,745 is marked method 'historical' with path null and anchor null, so no resolution is attempted at all. Every other 4,745 in the new b074 is likewise 'historical'. The three values in b074 that ARE live reads all carry 4,746 and all resolve correctly (image summary.json n_ref_student_only = 4746; reviewed GeoJSON len($.features) = 4746, twice). The commit message's 'only three values in b074 are genuine live GT reads' is exactly right — I counted them.",
+      "structural_improvement": "Both new files carry explicit batch notes citing the coverage-drift timeline and stating the anchoring rule ('anchored to an era artefact or marked historical — NEVER to the live GeoJSON'). That makes the decision auditable rather than implicit."
+    },
+    "caveat": {
+      "id": "C1",
+      "severity": "low",
+      "detail": "b073's new anchor for the preamble 4,745 points at the T=0.7 CORRECTED-F1 artefact, but the sentence being extracted is about the T=0.7 DAWID-SKENE row's re-derivation — and per finding D1 the T=0.7 D-S run consumed 4,770, not 4,745. The anchor was chosen for numerical agreement rather than for describing the same computation, so it will verify green while the underlying document sentence is mis-attributed. The anchoring is still strictly better than the superseded version (which was both wrong-artefact AND red), but it will conceal M-class attribution defects from any purely numeric verifier.",
+      "recommendation": "Prefer method 'historical' with a null path for era-faithful counts whose computation cannot be pinned, rather than an era artefact that merely happens to carry the same integer."
+    }
+  },
+
+  "defects_summary": {
+    "introduced_by_this_repair": [
+      "D1 — ds-summary changelog lines 574–578 assert that the D-S aggregations consume the legacy 4,770-feature layer 'not the reviewed layer at all'. False for the image run (implied GT = 4,745). Restates a pre-existing § 6 error as a newly verified fact."
+    ],
+    "missed_by_this_repair": [
+      "M1 — three dead artefact paths in temperature § 12 (the three per-run mcc/evaluation.json files, archived at da2cf355f on 2026-06-07). Values still correct; paths unresolvable.",
+      "M2 — temperature lines 47 and 546 give T=0.3 corrected F1 as 0.8436 where the corrected-f1 artefact gives 0.8437 at 4 d.p. and both sibling documents quote 0.8437.",
+      "M3 — ds-summary line 47's measured-F1 ranking is decidable against the artefacts (line 216 is right); the repair flagged it as merely 'contradictory'."
+    ],
+    "correctly_done": [
+      "The three ds-summary cells were genuinely live and are now correct at the artefact's precision.",
+      "The § 7.3 transition was correctly identified as history and correctly left alone — I re-derived both endpoints.",
+      "All six 4,745 counts are era-faithful and none should be refreshed to 4,746; the per-occurrence classification discipline was the right call and a bulk replace would have corrupted four correct sentences.",
+      "The derived columns were correctly re-checked and correctly left unchanged.",
+      "The re-extractions genuinely removed two false-mismatch generators and restored full document coverage."
+    ]
+  },
+
+  "single_most_important_thing_for_the_pi": "The image run's Dawid-Skene fit was computed against a different ground truth from the other three (4,745-feature reviewed layer vs 4,770-feature legacy layer). The ds-summary's § 6 says all four share the legacy layer, and this repair has now written that into a dated changelog as verified fact. Every cross-run D-S comparison in §§ 4.1, 4.3, 5.2, and 5.4 — including the rank-disagreement finding the document is built around — rests on that unstated asymmetry."
+}

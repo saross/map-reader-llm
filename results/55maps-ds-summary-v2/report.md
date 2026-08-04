@@ -573,10 +573,21 @@ what a past evaluation used, not what the current canonical count is;
 under the disposition rule they are "do not touch". For the avoidance
 of doubt, the live GT
 (`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`)
-holds **4,746** features at this commit, and the D-S aggregations
-documented here consume the separate legacy layer
-`inputs/vectors/references/student-mounds-55maps.geojson` (see § 6),
-not the reviewed layer at all.
+holds **4,746** features at this commit.
+
+> **Correction, 2026-08-04 (same day).** This entry originally continued:
+> "and the D-S aggregations documented here consume the separate legacy
+> layer `inputs/vectors/references/student-mounds-55maps.geojson` (see
+> § 6), not the reviewed layer at all." **That blanket statement is
+> withdrawn.** An independent blind verification pass of this repair
+> (`reports/verification/c4-triage/blind-passes/wave7-w7e4-verification-2026-08-04.json`)
+> found the four runs are **not** uniform on this point: the image run's
+> Dawid–Skene fit implies a 4,745-point student ground truth, while the
+> other three imply the 4,770-feature legacy layer. Which layer each D-S
+> fit actually consumed is **open and unadjudicated**, and it is escalated
+> rather than asserted here. It matters beyond bookkeeping: every
+> cross-run D-S comparison in this document assumes a common reference,
+> and that assumption is currently unverified.
 
 ### 2026-08-03 — C4 wave-6 calibration-cell repairs
 
