@@ -3,7 +3,7 @@
   "extracted_at": "2026-08-04T00:00:00Z",
   "source_document": {
     "file": "results/55maps-ds-summary-v2/report.md",
-    "git_blob": "c55fe259ef90613f61283752099a29ec0d7dfd19",
+    "git_blob": "cd464933438dd0d0831aa07b195b026bbfb5615e",
     "stratum": "hand-written"
   },
   "extractor": {
@@ -116,7 +116,7 @@
         "path": null
       },
       "method": "arithmetic",
-      "notes": "[BATCH NOTE b074 RE-EXTRACT] Replaces the previous 074.json, which was cut against a 508-line body; the document is now 652 lines and this file covers lines 333-652 only (a sibling batch b073 covers 1-332). LIVE-vs-HISTORICAL split in the changelog: in every before→after table and every 'was X, now Y' sentence the Before / 'was' side is method 'historical' with a null path, and the After / artefact-value side is a live 'read' (or 'arithmetic' where the cell is derived), per instrument rule 3. The three 2026-08-04 rows (§§ 4.1, 4.3, 5.4) therefore each carry 0.8332 as historical and 0.8333 as a live read of results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json; the five 2026-08-03 rows follow the same pattern against the ds-human-crosstab / dawid-skene artefacts the entry itself names. GROUND-TRUTH COUNTS: every 4,745 (and the single 4,744) in this range describes what a past evaluation consumed, not the current canonical count, and is classed 'historical' with a null path — the canonical timeline recorded at reports/verification/c4-triage/coverage-drift-2026-08-04.json #$.gt_count_era_resolution shows the 2026-05-03 evaluations ran between baf1497a7 (4,744→4,745) and 2e075eb99 (4,745→4,746), so anchoring them to the live GeoJSON would manufacture a false mismatch. Era artefacts still carrying 4,745 at $.results[0].n_ref_student_only, if triage wants a live check: results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-dedup-rerun-20260804T000000.backup, plus the un-regenerated T=0.7 and text-MIN corrected-f1-multi-buffer summaries. Only the two 4,746 assertions (lines 566-567 and 576) and the artefact restatement at line 542 are live reads. The D-S layer documented in § 6 consumes the separate legacy reference inputs/vectors/references/student-mounds-55maps.geojson, a different layer from the reviewed GT — no claim in this range asserts its feature count, so none is anchored there. SCOPE DECISIONS for this batch (instrument rule 5): dates, timestamps, git hashes, session numbers, Obs / erratum / escalation identifiers (Obs 268/269/273/293, W6-E9, D17, FALSE-12, P4, R4), version strings (v1, v2, GS-v2), § section references (§ 3, § 4.1, § 4.3, § 5.2, § 5.4, § 6.1), candidate and map-sheet identifiers (cand 2397, K-35-064-3), decimal-place descriptors ('4 d.p.', '3 d.p.', 'third-decimal', 'fourth-decimal'), and numbers inside paths or condition names (T=0.3, T=0.7, consensus-4of5, .../bounds/384/...) are all excluded. Bibliographic metadata in § 7 (Dawid & Skene 1979, 28(1), 20-28; Sobotkova et al. 2023) is citation apparatus, not a claim about the study, so the only § 7 claim extracted is the Obs 293 gloss at lines 514-516, which asserts run counts. Buffer radii written purely to identify which row a metric belongs to ('at R = 50 m', 'R = 50 m' in a changelog cell label) are treated as locators, not claims; the one place the document asserts R_m as artefact content (line 542) IS extracted. Run-count words ('the four runs', 'the other three runs') are extracted where they occur in flowing prose and left as anchor-unknown, but not where they appear inside a table cell label or a section heading. CLAIM-SPECIFIC: prose restatement of the § 4.2 ratio column. The T=0.7 figure here reads 1.92× — the 2026-08-03 wave-6 repair moved it from 1.90×, and the changelog entry at lines 625-629 records that transition; both spans are extracted separately."
+      "notes": "[BATCH NOTE b074 RE-EXTRACT 2] Second re-extraction of this range, under charter § 5 rule 14. Supersedes the previous 074.json, which was cut against a 652-line body; the document is 663 lines at HEAD and this file covers lines 333-663 only (sibling batch b073 covers 1-332, unchanged). WHAT MOVED: the 2026-08-04 changelog entry's closing clause was found FALSE by a blind verification pass and withdrawn in place — the sentence at lines 573-576 now stops at 'holds **4,746** features at this commit.' and a blockquoted correction occupies new lines 578-590, so every claim that previously sat below line 577 has shifted by +11. Every line number in this file was re-verified against HEAD rather than arithmetically shifted on trust. THE WITHDRAWN SENTENCE: 'and the D-S aggregations documented here consume the separate legacy layer `inputs/vectors/references/student-mounds-55maps.geojson` (see § 6), not the reviewed layer at all' is quoted at lines 579-581 as text the document NO LONGER ASSERTS, so it is not extracted as a live claim; it carries no numeral in any case (its only figure-like token, '§ 6', is a section reference out of scope under rule 5), so it yields no claim row at all — had it carried a number, that number would have been method 'historical' per rule 3. THE OPEN D-S FINDING: the two figures the correction reports — a 4,745-point student ground truth implied by the image run's Dawid–Skene fit, and a 4,770-feature legacy layer implied by the other three — are extracted at lines 584-586 as an OPEN, UNADJUDICATED finding, all values method 'anchor-unknown' with a null anchor, because the document explicitly escalates rather than asserts which layer each fit consumed; chase targets are named in that claim's notes. LEGACY vs REVIEWED LAYER: § 6 (line 415) names inputs/vectors/references/student-mounds-55maps.geojson as the D-S student GT, and the correction now flags that whether all four fits consumed it is unverified. That layer is NOT the reviewed layer inputs/vectors/references/student-mounds-55maps-reviewed.geojson whose live count (4,746) is read at lines 562-567 and 573-576 — the two must not be conflated, and the one claim in this range that puts a number on the legacy layer (4,770, line 586) is anchor-unknown for the reason above. LIVE-vs-HISTORICAL split in the changelog: in every before→after table and every 'was X, now Y' sentence the Before / 'was' side is method 'historical' with a null path, and the After / artefact-value side is a live 'read' (or 'arithmetic' where the cell is derived), per instrument rule 3. The three 2026-08-04 rows (§§ 4.1, 4.3, 5.4) therefore each carry 0.8332 as historical and 0.8333 as a live read of results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json; the five 2026-08-03 rows follow the same pattern against the ds-human-crosstab / dawid-skene artefacts the entry itself names. GROUND-TRUTH COUNTS: every 4,745 (and the single 4,744) in this range describes what a past evaluation consumed or what a past fit implies, not the current canonical count, and none is anchored to the live GeoJSON — the canonical timeline recorded at reports/verification/c4-triage/coverage-drift-2026-08-04.json#$.gt_count_era_resolution shows the 2026-05-03 evaluations ran between baf1497a7 (4,744→4,745) and 2e075eb99 (4,745→4,746), so anchoring them to the live reviewed GeoJSON would manufacture a false mismatch. Era artefacts still carrying 4,745 at $.results[0].n_ref_student_only, if triage wants a live check: results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-dedup-rerun-20260804T000000.backup, plus the un-regenerated T=0.7 and text-MIN corrected-f1-multi-buffer summaries. Only the two 4,746 assertions (lines 566-567 and 576) and the artefact restatement at line 542 are live reads. SCOPE DECISIONS for this batch (instrument rule 5): dates, timestamps, git hashes, session numbers, Obs / erratum / escalation identifiers (Obs 268/269/273/293, W6-E9, W7-E4, D17, FALSE-12, P4, R4), version strings (v1, v2, GS-v2), § section references (§ 3, § 4.1, § 4.3, § 5.2, § 5.4, § 6, § 6.1), candidate and map-sheet identifiers (cand 2397, K-35-064-3), decimal-place descriptors ('4 d.p.', '3 d.p.', 'third-decimal', 'fourth-decimal'), and numbers inside paths or condition names (T=0.3, T=0.7, consensus-4of5, .../bounds/384/..., the wave7-w7e4 blind-pass filename) are all excluded. Bibliographic metadata in § 7 (Dawid & Skene 1979, 28(1), 20-28; Sobotkova et al. 2023) is citation apparatus, not a claim about the study, so the only § 7 claim extracted is the Obs 293 gloss at lines 514-516, which asserts run counts. Buffer radii written purely to identify which row a metric belongs to ('at R = 50 m', 'R = 50 m' in a changelog cell label) are treated as locators, not claims; the one place the document asserts R_m as artefact content (line 542) IS extracted. Run-count words ('the four runs', 'the other three runs') are extracted where they occur in flowing prose and left as anchor-unknown, but not where they appear inside a table cell label or a section heading. CLAIM-SPECIFIC: prose restatement of the § 4.2 ratio column. The T=0.7 figure here reads 1.92× — the 2026-08-03 wave-6 repair moved it from 1.90×, and the changelog entry at lines 636-640 records that transition; both spans are extracted separately."
     },
     {
       "claim_id": null,
@@ -2567,7 +2567,7 @@
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
-      "claim_text": "For the avoidance\nof doubt, the live GT\n(`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`)\nholds **4,746** features at this commit",
+      "claim_text": "For the avoidance\nof doubt, the live GT\n(`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`)\nholds **4,746** features at this commit.",
       "values": [
         {
           "quantity": "feature count of the live reviewed curator GT — CURRENT canonical count",
@@ -2584,14 +2584,66 @@
         "path": "len:$.features"
       },
       "method": "read",
-      "notes": "The one unambiguously live GT-count claim in this range. The following clause (lines 576-579) asserts that the D-S layer consumes the separate legacy reference inputs/vectors/references/student-mounds-55maps.geojson but states no count for it, so no claim is extracted there — triage should not conflate the legacy layer with the 4,746 reviewed layer."
+      "notes": "The one unambiguously live GT-count claim in this range. At the previous extraction this sentence ran on into a clause asserting that the D-S aggregations documented here consume the separate legacy layer inputs/vectors/references/student-mounds-55maps.geojson 'not the reviewed layer at all'; that clause was found false by a blind verification pass and withdrawn at HEAD, and now survives only as a quotation inside the correction block at lines 578-590. The withdrawn text is not extracted as a live claim (see the batch note); the open finding that replaced it is extracted separately at lines 584-586. Triage must not conflate the legacy layer with the 4,746-feature reviewed layer anchored here."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          583,
-          585
+          584,
+          586
+        ],
+        "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication — Correction, 2026-08-04 (same day)"
+      },
+      "claim_text": "found the four runs are **not** uniform on this point: the image run's\n> Dawid–Skene fit implies a 4,745-point student ground truth, while the\n> other three imply the 4,770-feature legacy layer.",
+      "values": [
+        {
+          "quantity": "count, D-S runs the blind pass found not uniform in the student ground truth they imply",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "student ground-truth point count implied by the image run's Dawid–Skene fit (reported as open and unadjudicated)",
+          "value_verbatim": "4,745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, runs other than image whose D-S fits imply the legacy layer",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "feature count of the legacy student-GT layer implied by the other three runs' D-S fits (reported as open and unadjudicated)",
+          "value_verbatim": "4,770",
+          "value_parsed": 4770,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "OPEN, UNADJUDICATED FINDING — extracted as reported, NOT as verified fact. The correction block records that an independent blind verification pass (reports/verification/c4-triage/blind-passes/wave7-w7e4-verification-2026-08-04.json, present at HEAD) found the four D-S fits are not uniform in the student ground truth they imply, and states in terms that 'Which layer each D-S fit actually consumed is **open and unadjudicated**, and it is escalated rather than asserted here'. Every value in this span is therefore method 'anchor-unknown' with a null anchor: resolving either figure mechanically would convert an open escalation into a settled read, which is precisely what the document declines to do. The 4,745 is a GT size IMPLIED BY A FIT, not a count assertable against the live reviewed GT inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4,746 at this commit — see the claim at lines 573-576); the 4,770 is attributed to the separate legacy layer inputs/vectors/references/student-mounds-55maps.geojson, a DIFFERENT reference from the reviewed layer, and the two must never be conflated. Chase targets for triage, least-writable first: the blind-pass JSON the block names; len:$.features of inputs/vectors/references/student-mounds-55maps.geojson for the 4,770; and the four per-run dawid-skene/dawid-skene-results.json item_counts for what each fit actually consumed. The extractor opened none of them to adjudicate (rule 4). The withdrawn sentence quoted at lines 579-581 is not extracted as a live claim — see the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          594,
+          596
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2618,8 +2670,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          588,
-          588
+          599,
+          599
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2655,8 +2707,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          597,
-          597
+          608,
+          608
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2745,8 +2797,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          598,
-          598
+          609,
+          609
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2836,8 +2888,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          599,
-          599
+          610,
+          610
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2882,8 +2934,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          600,
-          600
+          611,
+          611
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2928,8 +2980,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          601,
-          601
+          612,
+          612
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -3018,8 +3070,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          622,
-          623
+          633,
+          634
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -3046,8 +3098,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          625,
-          629
+          636,
+          640
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -3127,8 +3179,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          635,
-          636
+          646,
+          647
         ],
         "section": "Changelog — 2026-07-28 Dawid-Skene attribution corrected"
       },
@@ -3155,8 +3207,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          644,
-          645
+          655,
+          656
         ],
         "section": "Changelog — 2026-04-27 Original publication"
       },
@@ -3180,8 +3232,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          645,
-          646
+          656,
+          657
         ],
         "section": "Changelog — 2026-04-27 Original publication"
       },
@@ -3205,8 +3257,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          647,
-          650
+          658,
+          661
         ],
         "section": "Changelog — 2026-04-27 Original publication"
       },
