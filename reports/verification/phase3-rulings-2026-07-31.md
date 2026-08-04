@@ -403,3 +403,67 @@ do it and makes it the gate for the metric unification.
 at R = 50. Most likely because per-run phantom sets differ from the
 canonical adjudicated set, but that is unverified — treat the 474/415
 relationship as an open question, not a discrepancy to explain away.
+
+## Session-128 rulings — 2026-08-04 (sixth batch)
+
+Collected interactively during the W7-D9 escalation. Same force as
+rulings 1–20.
+
+## 21. Standardise the reference first; then run every tainted re-analysis once
+
+**Ruling (PI, 2026-08-04).** Prompted by W7-D9 — a fourth reference
+defect in as many days, after W7-D8 (evaluation layer), ruling 19 (four
+GT layers) and ruling 20 (F1-versus-MCC asymmetry). Ruling 20(b) already
+said "do not recompute yet" for one pair of metrics. This generalises
+that from a pair to a **class**.
+
+**(a) The reference is nailed down before any reference-tainted
+re-analysis runs.** Not case by case as each defect surfaces — once,
+against a fixed artefact. The recurring pattern is that a correction
+lands, a metric is re-run, another correction lands, and the metric is
+re-run again; fixing the reference first is what stops it. This
+supersedes any impulse to repair a tainted number in place, however
+cheap the individual re-run looks.
+
+**(b) The deliverable is a BEST-POSSIBLE reference, explicitly NOT a
+gold standard.** The PI's stated limitation is load-bearing and must
+ship in the artefact's own header, not only in a changelog: **the joint
+student + model false negatives cannot be economically recovered** —
+mounds that both the students and every model missed are not discoverable
+without a fresh independent survey of the map sheets. A reference built
+this way is the best available, and calling it a gold standard would
+overstate it. Any downstream document that does so is defective.
+
+**(c) Marking scope: the 773 phantoms only, as already committed.**
+Click-the-centre over the promoted phantoms; mound type, map and label
+inherit. ≈ 1 hour of review plus the UI build. The wider option — also
+re-marking the 4,746 student mounds, ≈ 6 hours, ≈ 7 hours for both
+layers — was **priced and declined**. Consequence to keep visible: the
+resulting 55-map reference is **mixed-provenance** by design, with
+marked centres for the phantom layer and as-digitised positions for the
+student layer. That is a documentable property of the reference, not an
+oversight.
+
+**(d) The 4-map gold-standard corpus is OUT OF SCOPE and needs no
+review.** PI's account, recorded because it is the only reference in the
+project that genuinely earns the name: it has been carefully reviewed
+**four times** (once for a previous paper, three times for this project),
+with **each point re-positioned to dead centre within 1–2 px**. The
+fourth manual extraction pass, at the start of this project, found
+**one** additional false negative, and no errors have surfaced in months
+of use since. The GS corpus is as good as it can be made. Do not
+schedule review of it, and do not fold it into the standardisation
+exercise.
+
+**(e) Sequencing after the reference lands.** No-API re-analyses run
+automatically against the standardised reference — that is the whole
+point of building it. Re-analyses requiring API spend are **discussed
+case by case** before launch, under the standing API review gate. The
+end goal is stated plainly: accurate runs on standardised artefacts.
+
+**(f) Until then, tainted claims are CAVEATED IN PLACE, never re-run.**
+A caveat is not a recompute, so it does not violate (a), and the
+programme's documentation obligation (ruling 19c) still applies: a
+reference-tainted claim must stay legible until the re-analysis reaches
+it. The queue of what is waiting lives in
+`reports/verification/reference-standardisation-queue.md`.
