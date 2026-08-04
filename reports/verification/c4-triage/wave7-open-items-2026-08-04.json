@@ -1,0 +1,138 @@
+{
+ "_meta": {
+  "title": "Wave-7 open items — confirmed defects, research findings and instrument gaps not repaired in Session 127",
+  "date": "2026-08-04",
+  "author": "Claude Opus 5 session (Session 127)",
+  "why_this_file_exists": "Several items surfaced this session were recorded only in commit messages, which are durable but not discoverable at session start. A next session reads the continuity block and the triage JSONs, so everything still open is consolidated here with its evidence pointer.",
+  "status_convention": "OPEN unless a resolving commit is named. Nothing here has been adjudicated; the blind-pass verdicts are evidence, not decisions.",
+  "provenance": "Wave-7 blind passes P1-P4 (e86bca52d), the W7-E4 repair verification (18bbcaa18), and the extraction agents' own flags."
+ },
+
+ "confirmed_defects_unrepaired": [
+  {
+   "id": "W7-D1",
+   "severity": "MEDIUM",
+   "file": "results/temperature-failure-recovery-analysis/report.md",
+   "location": "§ 12",
+   "defect": "Cites three `results/<run>/mcc/evaluation.json` paths that commit `da2cf355f` archived on 2026-06-07 to `archive/55maps-superseded-gt-evals/per-run/`. The paths resolve to nothing.",
+   "found_by": "W7-E4 blind verification pass",
+   "note": "The SAME defect was found and repaired in results/55maps-mcc-v2-summary/report.md this session (75e825d47). The instance was fixed and the class was missed — other documents citing per-run mcc/ paths are likely affected. A corpus grep for `mcc/evaluation` is the cheap next step.",
+   "repair": "Repoint to the archive paths, as done in 75e825d47."
+  },
+  {
+   "id": "W7-D2",
+   "severity": "LOW",
+   "file": "results/temperature-failure-recovery-analysis/report.md",
+   "location": "lines 47 and 546",
+   "defect": "Gives the T=0.3 corrected F1 at R=50 m as 0.8436. The artefact `results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json` `$.results[0].F1` holds 0.843650287172942, which is 0.8437 at 4 d.p. under round-half-up. Both sibling documents (ds-summary, mcc-v2-summary) say 0.8437.",
+   "found_by": "W7-E4 blind verification pass",
+   "note": "A rounding-boundary case — the value sits almost exactly on 0.84365. Related to the S126 comparer half-up float-noise fix (1e4a13ff7). The defect is the INCONSISTENCY with siblings more than the rounding itself.",
+   "repair": "0.8436 -> 0.8437 at both sites, or a documented rounding convention if truncation is deliberate."
+  },
+  {
+   "id": "W7-D3",
+   "severity": "LOW",
+   "file": "results/55maps-ds-summary-v2/report.md",
+   "location": "line 47 versus line 216",
+   "defect": "Line 47's measured-F1 ranking (T=0.7 > T=0.3 > image) contradicts line 216's (T=0.7 > Image > T=0.3).",
+   "found_by": "b073 re-extraction agent; the W7-E4 blind pass added that the contradiction is DECIDABLE from the artefacts rather than merely noted",
+   "repair": "Decide from the artefacts and correct the wrong site; both were left unadjudicated in Session 127."
+  },
+  {
+   "id": "W7-D4",
+   "severity": "LOW",
+   "file": "results/55maps-ds-summary-v2/report.md",
+   "location": "line 257 versus lines 189-190",
+   "defect": "Line 257 calls text-MIN \"the only run with zero unjoined rows\" while lines 189-190 record three runs with zero.",
+   "found_by": "b073 re-extraction agent",
+   "repair": "Unadjudicated. Both readings recorded in 073.json."
+  },
+  {
+   "id": "W7-D5",
+   "severity": "MEDIUM",
+   "artefact": "reports/verification/c4-extraction/073.json",
+   "defect": "FALSE GREEN. The re-extraction re-anchors a claim to the T=0.7 corrected-F1 artefact, which verifies green for the wrong computation — a passing verdict on a quantity the document is not asserting.",
+   "found_by": "W7-E4 blind verification pass",
+   "note": "Worse than a mismatch: a mismatch is visible in triage, a false green is not. Fix before the ledger consumes it.",
+   "repair": "Re-anchor to the artefact the claim actually asserts."
+  },
+  {
+   "id": "W7-D6",
+   "severity": "LOW",
+   "file": "results/55maps-ds-summary-v2/report.md",
+   "location": "lines 42 and 294",
+   "defect": "Cites 586 rows against 585 data rows in the text-MIN review CSV — a header-handling question.",
+   "found_by": "b073 re-extraction agent",
+   "repair": "Left for the harness to decide on header handling; not adjudicated."
+  },
+  {
+   "id": "W7-D7",
+   "severity": "LOW",
+   "row": "090-audit-summary#9[1]",
+   "defect": "era_check reports NOT faithful because the document's $552.30 is a sum of ROUNDED components (364.70 + 60.79 + 126.81) while the era operand sum is 552.2888 — a 0.002 % difference.",
+   "found_by": "era_check redesign validation; independently noted by blind pass P3",
+   "note": "Not an era failure. The era machinery compares at quoted precision and has no APPROX verdict. Belongs with the comparer/tolerance family (W6-E4/E5), not the era family.",
+   "repair": "Give era_check an APPROX status, or teach the comparer sum-of-rounded-components."
+  }
+ ],
+
+ "open_research_findings": [
+  {
+   "id": "W7-R1",
+   "severity": "HIGH — affects a cross-run comparison, not just bookkeeping",
+   "finding": "The four 55-map runs' Dawid-Skene fits may rest on DIFFERENT ground-truth references: the image run's fit implies a 4,745-point student ground truth, while the other three imply the 4,770-feature legacy layer.",
+   "found_by": "W7-E4 blind verification pass (wave7-w7e4-verification-2026-08-04.json)",
+   "why_it_matters": "Every cross-run D-S comparison in results/55maps-ds-summary-v2/report.md assumes a common reference. If the references differ, the comparisons are not like-for-like.",
+   "state": "OPEN and UNADJUDICATED. Recorded in the document itself as a blockquoted correction (18bbcaa18) and in 074.json as a single claim whose four values all carry anchor-unknown.",
+   "history": "Session 127 briefly asserted the CONTRARY — that all D-S aggregations consume the legacy layer — in a dated changelog. The blind pass refuted it and the claim was withdrawn in place rather than edited away.",
+   "in_progress": "A reference-layer census was commissioned 2026-08-04 to establish the fixed base, the correction-layer history, and the 4,770 account: reports/verification/c4-triage/student-gt-reference-census-2026-08-04.json. The PI's framing is that the underlying student GT is FIXED and only the curator-correction layer has moved."
+  }
+ ],
+
+ "instrument_gaps": [
+  {
+   "id": "W7-I1",
+   "severity": "MEDIUM — recurs on every future repair",
+   "gap": "`git_blob` pins a whole DOCUMENT while batches cover RANGES. Any edit anywhere in a document invalidates the recorded blob for EVERY batch covering it, including batches whose own lines never moved.",
+   "evidence": "After the 2026-08-04 withdrawal at ~line 577 (inside b074's range), b073 failed validation on blob mismatch despite all 86 of its spans re-verifying verbatim, with its highest referenced line at 323.",
+   "why_it_now_matters": "Charter rule 14 (ruling 18) makes document repair routine, so this will fire constantly.",
+   "cheap_answer_used_once": "Repoint the blob after a verbatim re-check of every span (bc21ff3be). Re-extracting untouched ranges would be waste.",
+   "proper_fix_options": [
+    "Record a per-batch range hash alongside the document blob, so an untouched range validates independently.",
+    "Have the validator treat a blob mismatch as satisfied when every span in the file re-verifies against the current body.",
+    "Formalise repointing as a supported operation with a recorded reason, rather than a hand edit."
+   ]
+  },
+  {
+   "id": "W7-I2",
+   "severity": "MEDIUM — anchor-layer, so it corrupts future waves rather than sitting still",
+   "gap": "Sidecar metadata disagrees with its artefact. `results/gold-standard-extended-buffer-sweep/evaluation.json` records 10000 iterations / BCa while its co-located `evaluation.metadata.json` still records 1000 / percentile — and results/ci-metadata-registry.md designates the SIDECAR as its authority.",
+   "found_by": "blind pass P4",
+   "why_it_matters": "Any CI claim anchored to a sidecar resolves against a stale source, in this wave and every future one.",
+   "state": "UNMEASURED. The scope of the disagreement across all evaluation.json / evaluation.metadata.json pairs has not been swept.",
+   "next_step": "Read-only sweep of every sidecar pair, comparing bootstrap n_iterations and method."
+  },
+  {
+   "id": "W7-I3",
+   "severity": "LOW",
+   "gap": "The batch plan has no builder script — it was hand-built in S122 — so its `spans` figures cannot be regenerated. Units re-ranged in Session 127 carry density-scaled ESTIMATES flagged by a `spans_basis` field.",
+   "note": "Do not compare estimated spans against original survey figures."
+  }
+ ],
+
+ "w7_escalations_status": {
+  "W7-E1": "OPEN — 95 lines across 4 documents were never surveyed at their own extraction era. Top-up re-extraction not yet run. 56 of the 95 are the extraction instrument itself.",
+  "W7-E2": "RESOLVED by ruling 18 — coupling invariant adopted (charter § 5 rule 14); the ~40-batch backlog folds into waves 8-12; GATE 3 carries a whole-corpus drift check.",
+  "W7-E3": "OPEN — whether --at-era becomes the validator default is a GATE 3 completeness question. Landed opt-in at ac547aab7. Current corpus: 128 files, 5,932 claims; default mode 39 failing on blob drift, --at-era 128/128 valid.",
+  "W7-E4": "PARTIAL — repaired in results/55maps-mcc-v2-summary (1085335dc), results/55maps-ds-summary-v2 and results/temperature-failure-recovery-analysis (45aa6a0d1). Roughly 13 documents carrying stale GT counts remain unswept. 55maps-pairwise-permutation-v2/summary.md is GENERATED and must be fixed by regeneration, never by hand-editing."
+ },
+
+ "carried_from_blind_passes_p1_p3": [
+  "The documentation-audit supersession banners are themselves stale: results-audit-2026-04-21.md's banner says $126.81 against the audited $207.34 and only ever covered § A4. The same superseded figures sit in three sibling files (README.md, audit-summary.md's $552.30 vs audited $438.61, verification-2026-04-21.md). P1 rules the fix is a corrected and EXTENDED banner plus a changelog — not an in-place table refresh, because the measurements are frozen and the pointers are living.",
+  "P2: seven rows (095#21[1-4], 095#22[0],[2],[4]) are verbatim quotations of the audit draft, still exact at audit-summary.md:44 — RECLASSIFY to historical, never repairable under charter § 6.",
+  "P3: README.md is LIVING with two snapshot units, and in-place repair of its 'Why this draft exists' block would CORRUPT a correction record, making the 2026-04-19 audit look wrong by 5.4x instead of the 2.7x it actually established. Do not repair that block in place.",
+  "P3: the cache-hit row is a harness unit failure the extractor warned about in prose twice, with a REAL divergence hiding underneath the unit question.",
+  "P3: 091#5[0] carries its own commit locator (4e5c5e5a..) that the extraction discarded as rule-5 metadata; resolved there, the claim is permanently true.",
+  "P3: ruling 16's ~5 % threshold rescues almost nothing in the cost family — measured gaps run 12.9 % to 99.7 %, and it bites on exactly one row."
+ ]
+}
