@@ -1,0 +1,99 @@
+{
+ "_meta": {
+  "title": "C4 extraction coverage drift — the corpus moved under the plan and under the extractions (Session 127, wave-7 pre-flight)",
+  "date": "2026-08-04",
+  "author": "Claude Opus 5 session (Session 127, 48-hour Opus window)",
+  "trigger": "The wave-7 beacon instruction to check current line counts against the batch plan before assigning ranges. The check found drift, so it was widened from the 20 wave-7 batches to all 178 planned batches and all 104 tracked extraction files.",
+  "method": "Mechanical, whole-corpus, no sampling. Plan ranges compared against current line counts; extraction files compared against the line count of the body at the git_blob each one records; every tracked extraction file re-validated in both working-tree and era mode. Every count below is reproducible from the repository at HEAD.",
+  "scope_note": "This record covers COVERAGE (which lines were surveyed) and VALIDATION (which bodies the spans were checked against). It adjudicates no claim and moves no research conclusion.",
+  "interim_conservatism": "Session 127 runs under the 48-hour Opus window. Mechanical plan repair and an opt-in instrument mode landed; every decision that would change the GATE 3 completeness accounting is escalated below, not taken."
+ },
+
+ "landed_this_session": [
+  {
+   "commit": "f097c9d32",
+   "change": "Re-planned line ranges for the 8 pending-batch files that grew after the plan was built, so wave 7+ is assigned against current bodies.",
+   "why": "The plan (54c9aaa84, 2026-07-31 10:55) recorded ranges against bodies as they then stood. Eight pending files have since grown by 546 lines in total, from the verification programme's OWN repair commits — 166bf7704 (240-tile pool registration), 2f3ef020a (E72 remediation), a6f58d1b7 (E43 correction), 01c84b841 (E39 fix). The growth is interleaved (banners at the top, corrections mid-body, changelogs at the tail), not append-only, so the recorded ranges pointed at shifted content AND left the tails unassigned.",
+   "blast_radius": "11 batch ids re-ranged (b098-b101, b115, b131-b135, b153). Batch ids, batch count (178), statuses and wave boundaries unchanged. Rewritten units carry density-scaled span ESTIMATES flagged by a new spans_basis field — they are not survey counts.",
+   "files": [
+    "results/evaluation-scopes.md (196 -> 369)",
+    "results/factor-analysis/factor_analysis_results.md (352 -> 427)",
+    "results/h11/analysis_summary.md (306 -> 342)",
+    "results/paper-tables/leaderboard-20m-annotated.md (379 -> 489)",
+    "results/paper-tables/leaderboard_tiers.md (87 -> 99)",
+    "results/paper-tables/leaderboard_tiers_20m.md (103 -> 117)",
+    "results/paper-tables/pairwise_hypothesis_table.md (83 -> 99)",
+    "results/pv/phase1/pv-phase1-analysis.md (77 -> 187)"
+   ]
+  },
+  {
+   "commit": "ac547aab7",
+   "change": "scripts/validate_c4_extraction.py gains an OPT-IN --at-era mode resolving each file's source body from its recorded git_blob; default behaviour unchanged.",
+   "why": "See escalation W7-E3. The validator assumed a stationary corpus; 41 of 104 tracked files fail today purely because their source document was rewritten after extraction.",
+   "blast_radius": "Default mode: 63/104 pass, before and after. --at-era: 104/104 valid, 4,804 claims, 41 checked at their extraction blob. Five tier-1 tests added; tier-1 1,366 passed / 0 failed on sapphire.",
+   "not_done": "Era mode was NOT made the default — that is W7-E3, a PI call."
+  }
+ ],
+
+ "escalations_for_pi": [
+  {
+   "id": "W7-E1",
+   "kind": "COVERAGE DEFECT (MEDIUM) — four documents were assigned less than their own body at extraction time",
+   "detail": "For four already-extracted files the batch plan's assigned end line was SHORT of the document's length at the very blob the extraction recorded, so the tail was never surveyed by anyone. This is distinct from W7-E2: no corpus growth is needed to explain it, the assignment was simply short when it ran. Total 95 unsurveyed lines. reports/verification/apparatus/c4-extraction-instructions.md is 56 of the 95 and has a clean cause: the plan was built at 54c9aaa84 (2026-07-31 10:55) assigning b054 lines 1-108, then instrument v1.2 landed at a6a3e372a (2026-07-31 18:15) taking the document to 164 lines, and b054 extracted on 2026-08-03 against the stale assignment. The other three are ordinary plan-construction staleness.",
+   "rows": [
+    {"file": "reports/experimental-progression.md", "assigned_end": 402, "lines_at_extraction_blob": 419, "unsurveyed": 17, "batches": ["b035", "b036"]},
+    {"file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md", "assigned_end": 668, "lines_at_extraction_blob": 680, "unsurveyed": 12, "batches": ["b043", "b044", "b045", "b046"]},
+    {"file": "reports/results-summary-session-58.md", "assigned_end": 380, "lines_at_extraction_blob": 390, "unsurveyed": 10, "batches": ["b047", "b048", "b049"]},
+    {"file": "reports/verification/apparatus/c4-extraction-instructions.md", "assigned_end": 108, "lines_at_extraction_blob": 164, "unsurveyed": 56, "batches": ["b054"]}
+   ],
+   "recommendation": "Re-extract the 95 lines as one small top-up batch. It is cheap (a fraction of a single wave), it closes an unambiguous hole in a full-enumeration claim, and leaving it open would put an unqualified completeness statement in the GATE 3 package that the plan itself contradicts.",
+   "pi_decision_needed": "Approve the top-up re-extraction, or rule the shortfall immaterial and record it as a named GATE 3 line (ruling 7 forbids silent deferrals either way)."
+  },
+  {
+   "id": "W7-E2",
+   "kind": "SCOPE / COMPLETENESS (HIGH) — 1,129 lines were added to already-extracted documents after their extraction",
+   "detail": "Seventeen documents grew after the wave that extracted them, by 1,129 lines in total. The cause is overwhelmingly the verification programme itself: revision-policy banners, dated riders, correction blocks and changelogs added by the S126 doc-repair pass and the E72/E43/E39 remediation. The six S126-repaired documents alone account for 671 lines (corrected-f1 +283, cross-track +177, ds-summary +82, phase1-gate +69, attractor-pull +100 — note attractor-pull and corrected-f1 more than doubled). Each extraction is FAITHFUL to the body it read; nothing here says any recorded claim is wrong. The question is whether the C4 corpus can claim full enumeration over the hand-written stratum when the stratum keeps growing under it — and some of the new text carries live corrected figures (the refreshed cost conclusions, the restated F1 forms), which is exactly the material this programme exists to check.",
+   "mitigating_fact": "The refreshed figures in the S126 repair pass were agent-re-derived from artefacts and independently verified at the time (rulings 16-17 arc, commits 723d56a29 / ce0126938 / a6a18b3c4). They have had a verification pass — just not through the C4 extraction lane.",
+   "rows": [
+    {"file": "docs/methodology/n1-baseline-matrix.md", "at_extraction": 565, "now": 613, "added": 48},
+    {"file": "docs/methodology/output-directory-standard.md", "at_extraction": 456, "now": 520, "added": 64},
+    {"file": "docs/methodology/preregistration/protocol-errata.md", "at_extraction": 3213, "now": 3336, "added": 123},
+    {"file": "docs/methodology/reports/data_split_strategy.md", "at_extraction": 58, "now": 77, "added": 19},
+    {"file": "docs/methodology/reports/metrics_strategy.md", "at_extraction": 42, "now": 63, "added": 21},
+    {"file": "docs/methodology/reports/tile-selection-methodology.md", "at_extraction": 202, "now": 218, "added": 16},
+    {"file": "reports/configuration-audit-2026-03-25-v2.md", "at_extraction": 413, "now": 437, "added": 24},
+    {"file": "reports/configuration-audit-2026-03-25.md", "at_extraction": 390, "now": 412, "added": 22},
+    {"file": "reports/experimental-progression.md", "at_extraction": 419, "now": 443, "added": 24},
+    {"file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md", "at_extraction": 680, "now": 692, "added": 12},
+    {"file": "reports/results-summary-session-58.md", "at_extraction": 390, "now": 410, "added": 20},
+    {"file": "reports/verification/phase1-gate-package.md", "at_extraction": 395, "now": 464, "added": 69},
+    {"file": "reports/verifier-silent-drop-root-cause-2026-05-03.md", "at_extraction": 336, "now": 361, "added": 25},
+    {"file": "results/55maps-attractor-pull-v2/report.md", "at_extraction": 161, "now": 261, "added": 100},
+    {"file": "results/55maps-cross-track-comparison/report.md", "at_extraction": 410, "now": 587, "added": 177},
+    {"file": "results/55maps-ds-summary-v2/report.md", "at_extraction": 508, "now": 590, "added": 82},
+    {"file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md", "at_extraction": 161, "now": 444, "added": 283}
+   ],
+   "options": [
+    "(a) Growth sweep: re-extract the 1,129 added lines as a dedicated wave before GATE 3. Highest completeness; roughly one extra wave of fleet cost; and it will itself be overtaken by any later repair, so it needs a cut-off date rather than a promise of currency.",
+    "(b) Era-faithful declaration: state that C4 enumerates each document as at its extraction blob, and carry the growth as a named, quantified GATE 3 line. Cheapest and honest, but the package must then not claim currency it does not have.",
+    "(c) Targeted sweep: re-extract only where the growth carries LIVE claims rather than historical changelog material — in practice the six S126-repaired results documents (671 lines) — and declare the remainder era-faithful per (b)."
+   ],
+   "recommendation": "(c). The instrument already classes changelog before-to-after tables as `historical`, so much of the 1,129 lines would yield low-value rows, whereas the refreshed bodies of the six repaired results documents carry exactly the live corrected figures a reader will cite. (c) buys most of (a)'s completeness for a fraction of the fleet cost. Whichever is chosen, a cut-off date belongs in the GATE 3 package.",
+   "pi_decision_needed": "Choose (a), (b) or (c), and set the corpus cut-off date for the GATE 3 completeness statement."
+  },
+  {
+   "id": "W7-E3",
+   "kind": "INSTRUMENT (MEDIUM) — should era mode become the validator default?",
+   "detail": "scripts/validate_c4_extraction.py checked every claim_text against the WORKING-TREE body of its source document. Across the 104 tracked extraction files that fails 41, on git_blob mismatch, carrying 1,361 claim_text verbatim failures between them. Re-checked against the blob each file records — the body the extractor actually read — all 41 are clean: zero claim failures. The extraction data is sound; the stationary-corpus assumption was the defect. This is the same class as the W5-E1 era_check x banner-policy interaction: machinery keyed to a body that ruling 1 and ruling 17 then move underneath it. An opt-in --at-era mode landed at ac547aab7 with five tier-1 tests; the default is deliberately unchanged, because working-tree drift is the only signal that a document moved.",
+   "consideration": "Making era mode the default would report the corpus as 104/104 valid. That is the more accurate statement about the extractions, but it silences the drift signal unless the note output is read, and it changes what 'validated' means in the GATE 3 package for 41 files. The safer shape may be to keep both: era mode for the completeness claim, working-tree mode as a drift monitor whose output feeds the growth accounting in W7-E2.",
+   "pi_decision_needed": "Keep --at-era opt-in, make it the default, or adopt the two-lane shape (era mode validates, working-tree mode monitors drift)."
+  }
+ ],
+
+ "carry_forward_notes": [
+  "The batch plan has no builder script — it was hand-built in S122 — so its `spans` figures cannot be regenerated. Units re-ranged this session carry density-scaled estimates flagged by `spans_basis`; do not read them as survey counts, and do not compare them against original survey figures.",
+  "1,361 is the count of claim_text verbatim failures in working-tree mode. It is NOT the tier-1 test count, which coincidentally also sits near that figure (1,366 after this session's five additions). Do not conflate the two.",
+  "results/verifier-robustness/verifier-robustness-findings.md looks uncovered if pending batches alone are examined: calib-a covers lines 1-260 and b174 resumes at 257. Full coverage to 648. Not a gap.",
+  "Whole-corpus validation is only run when someone runs it. The per-wave cycle validates the current wave's files, so accumulated drift across earlier waves is invisible by construction — this drift had reached 41 files before anything surfaced it. A whole-corpus validation belongs in the GATE 3 checklist."
+ ]
+}
