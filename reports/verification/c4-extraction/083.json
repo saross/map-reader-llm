@@ -3,7 +3,7 @@
   "extracted_at": "2026-08-04T00:00:00Z",
   "source_document": {
     "file": "results/55maps-mcc-v2-summary/report.md",
-    "git_blob": "702940c3db09",
+    "git_blob": "9b34f488f866bca82a9ec6f0d02c28a1fd2ad5a9",
     "stratum": "hand-written"
   },
   "extractor": {
@@ -23,7 +23,7 @@
       "claim_text": "# 55-map corrected runs: tile-level MCC cross-run summary (v2)",
       "values": [
         {
-          "quantity": "map count, 55-map generalisation corpus",
+          "quantity": "map count, 55-map corrected-run generalisation corpus",
           "value_verbatim": "55",
           "value_parsed": 55,
           "unit": null,
@@ -37,21 +37,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "[BATCH NOTE b083] Scope decisions for this batch (source: results/55maps-mcc-v2-summary/report.md, whole document, lines 1-119). Out of C4 scope per instrument rule 5 and therefore NOT extracted: dates and timestamps (2026-04-27, 2026-04-28, 2026-05-03, 2026-04-26); git commit hashes (42ed1d32, 163161a4, bdd61bcc, 98b128ae, 7b7509d5); Obs identifiers (Obs 252, 272, 280, 284); the candidate identifier cand 2397; working-notes line-number citations (L13642, L11047); section numbers (## 1 - ## 7, the section-2 back-reference in the phrase 'row refreshes in §2'); the version string '(v2)' in the title; and numbers inside file paths or condition names (the 384 in the bounds path, '55maps' inside filenames, 't0.3' inside run directory names). Temperature designators 'T=0.3' and 'T=0.7' are treated as condition NAMES throughout this document (rule 5 names 't0.3' explicitly) — they never appear here as an asserted run parameter, only as row/column labels. Buffer radii appearing purely to identify which row a metric belongs to ('F1 at R = 50 m as the headline', lines 85-86; 'from R=50 m to R=150 m', line 75; 'the 150 m row' at line 94) are treated as context, not claims; radii asserted as an input convention, as a table row, or as a result (the 125 m practitioner cap, the 75 m crossover) ARE extracted. Repeated restatements of the same buffer grid (lines 18, 23, 63, 115) are each extracted as their own claim because each is a separate assertion (input convention, MCC invariance, section heading, reproducibility command). ANCHOR NOTE: the per-run MCC artefacts the document cites at results/<run>/mcc/evaluation.json are no longer at that path; they live at archive/55maps-superseded-gt-evals/per-run/<run>/mcc/evaluation.json and that archived path is used as the anchor throughout. GT NOTE: the document describes the same canonical GT file as having 4,744 features (line 16) and 4,745 mounds (lines 7, 27, 36, 99); both are recorded verbatim from their own spans against len:$.features on inputs/vectors/references/student-mounds-55maps-reviewed.geojson and are NOT reconciled here."
+      "notes": "[BATCH NOTE b083 RE-EXTRACT] Wholesale replacement of the previous 083 extraction: the source document was repaired on 2026-08-04 (Methods bootstrap settings corrected from 1,000 percentile to the 10,000 BCa iterations that actually produced the § 2 CIs, reproducibility command corrected, § 7 artefact paths repointed to archive/, revision banner and Changelog added) and grew from 119 to 189 lines, so line anchors and the claim set both moved. Re-extracted under charter § 5 rule 14 (ruling 18). SCOPE DECISIONS: dates, timestamps, git commit hashes (`163161a4`, `42ed1d32`, `580f498b6`, `0699769c5`, `bdd61bcc`, `98b128ae`, `7b7509d5`, `da2cf355f`, `fc536a19c`, `e86bca52d`), session numbers (Session 105), Obs identifiers (Obs 252/272/280/284), wave and pass identifiers (wave-7, P4), charter rule and ruling numbers (§ 5 rule 14, ruling 18), section cross-references (§ 1, § 2, § 3, § 7), the working-notes line citations (L13642, L11047), the candidate identifier (cand 2397), version strings (v2), Track 1 / Track 2 labels, and numbers inside file paths or condition names (`384/`, `55maps-...`, `T=0.3`, `T=0.7`, `t0.3`) are all out of C4 scope per instrument rule 5. '55-map' asserted as a corpus size IS extracted (rule 5's '487-tile Era 2 corpus' precedent). Buffer radii are extracted where the document asserts them as a grid, a cap, or a table cell (rule 6); radii appearing inline purely to label which row a quoted metric belongs to ('F1 @50m', 'at R = 50 m') are treated as context. CHANGELOG BEFORE-TO-AFTER PAIRS: every 'Before' cell of the § Changelog table (lines 153-157) and every 'was X' side of a was-to-now pair anywhere in the document (the pre-recovery detection/TP/FN/MCC values in § 2 line 40, the 1,000-iteration mirror settings, the initial three-run scope) is classed `historical` with anchor null; only the 'After' / live side is classed `read`. The mirror commit's 1,000 percentile iterations are `historical` even where the prose states them affirmatively, because the working-tree matrix-cell artefacts have since been re-run at 10,000/BCa (verified: `git show 163161a4:results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-1of10/evaluation.json` records `_metadata.bootstrap.n_iterations` = 1000 with no `method` key, while the same path at HEAD records 10000/BCa) — anchoring them live would manufacture a false mismatch. MCC TRAP (ruling 3): this document quotes STORED POINT estimates, so every MCC / sensitivity / specificity value is anchored at `.point`, never `.mean`; the two differ in these artefacts (e.g. image MCC point 0.6924 vs mean 0.6925) and must not be reconciled with a tolerance. ANCHOR PREFERENCE: § 2 and § 3 MCC figures are anchored to the LIVE `outputs/<run>/full-buffer-eval/evaluation.json` in preference to the archived per-run `mcc/evaluation.json` the document cites in § 7, per the batch instruction; the sole exception is 55maps-text-high-t0.3-generalisation, which has NO full-buffer-eval directory (only extended-buffer-eval and evaluation/), so its MCC row is anchored to the archived per-run artefact. Map-count claims anchor to `$.inputs.n_maps` in the sibling buffer-100m diagnostic, the only JSON artefact in scope recording the corpus size."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          3,
-          3
+          7,
+          7
         ],
         "section": "Front matter — Generated"
       },
-      "claim_text": "**Generated**: 2026-04-27 (initial 3-run); extended 2026-04-28 to add",
+      "claim_text": "**Generated**: 2026-04-27 (initial 3-run)",
       "values": [
         {
-          "quantity": "count, corrected runs covered by the initial (superseded) version of this report",
+          "quantity": "count, corrected runs covered by the original 2026-04-27 publication of this report",
           "value_verbatim": "3",
           "value_parsed": 3,
           "unit": null,
@@ -62,21 +62,21 @@
       ],
       "anchor": null,
       "method": "historical",
-      "notes": "The 'initial 3-run' composition is the superseded state of this report (now four runs) — treated as the 'was' side of a correction per instrument rule 3."
+      "notes": "The 'initial 3-run' scope is the superseded state of this document (it now covers four corrected runs); classed historical per instrument rule 3 rather than compared against the current four-run table."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          4,
-          4
+          7,
+          8
         ],
         "section": "Front matter — Generated"
       },
-      "claim_text": "text-MIN as a fourth corrected run; refreshed 2026-05-03 (cross-track-v2",
+      "claim_text": "extended 2026-04-28 to add\ntext-MIN as a fourth corrected run",
       "values": [
         {
-          "quantity": "count, corrected 55-map runs after text-MIN was added (ordinal 'fourth')",
+          "quantity": "count, corrected 55-map runs after the text-MIN extension",
           "value_verbatim": "fourth",
           "value_parsed": 4,
           "unit": null,
@@ -87,21 +87,21 @@
       ],
       "anchor": null,
       "method": "anchor-unknown",
-      "notes": "No repo artefact enumerates 'corrected 55-map runs' as a set; searched results/ for a cross-run manifest and found none. The four run directories (results/55maps-{text-high-t0.3,text-high,image,text-min}-generalisation/corrected-f1-multi-buffer/) are the plausible chase target for triage."
+      "notes": "No repo artefact enumerates 'the corrected 55-map runs' as a set; the four per-run MCC evaluation directories under archive/55maps-superseded-gt-evals/per-run/ are the plausible chase target for triage."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          5,
-          7
+          9,
+          11
         ],
         "section": "Front matter — Generated"
       },
-      "claim_text": "commit `42ed1d32`) to incorporate post-recovery numbers from all four\ncorrected runs (T=0.7 + image + text-MIN re-evaluations against the\ncanonical 4,745-mound updated curator ground truth; T=0.3 unchanged).",
+      "claim_text": "to incorporate post-recovery numbers from all four\ncorrected runs (T=0.7 + image + text-MIN re-evaluations against the\ncanonical 4,745-mound updated curator ground truth; T=0.3 unchanged).",
       "values": [
         {
-          "quantity": "count, corrected runs contributing post-recovery numbers to the 2026-05-03 refresh",
+          "quantity": "count, corrected 55-map runs contributing post-recovery numbers",
           "value_verbatim": "four",
           "value_parsed": 4,
           "unit": null,
@@ -110,7 +110,7 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "count, mounds in the canonical updated curator ground truth",
+          "quantity": "mound count, canonical updated curator ground truth",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
@@ -124,14 +124,14 @@
         "path": null
       },
       "method": "read",
-      "notes": "The span says the refresh drew post-recovery numbers from 'all four' corrected runs while naming only three re-evaluations (T=0.7 + image + text-MIN, with T=0.3 unchanged), and line 36 says 'three rows refreshed'. Recorded verbatim, not adjudicated."
+      "notes": "The document quotes the updated curator GT as 4,745 mounds here and as 4,744 features at line 20; both are recorded verbatim from their own spans and not adjudicated. Anchored to the GT GeoJSON itself (least writable); the sibling diagnostic records the same quantity at results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_student_gt if triage wants a second reading."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          8,
-          8
+          12,
+          12
         ],
         "section": "Front matter — Scope"
       },
@@ -147,7 +147,7 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "map count, 55-map generalisation corpus",
+          "quantity": "map count, 55-map corrected-run corpus",
           "value_verbatim": "55",
           "value_parsed": 55,
           "unit": null,
@@ -167,24 +167,24 @@
       "claim_id": null,
       "source": {
         "lines": [
-          9,
-          9
+          13,
+          13
         ],
         "section": "Front matter — Methodology mirror"
       },
-      "claim_text": "**Methodology mirror**: `scripts/evaluate_detections.py --mcc --bootstrap 1000 --seed 42`, mirroring commit `163161a4` (matrix sweep MCC re-eval).",
+      "claim_text": "**Methodology mirror**: `scripts/evaluate_detections.py --mcc --bootstrap 10000 --seed 42`, BCa.",
       "values": [
         {
-          "quantity": "bootstrap iterations asserted for the 55-map MCC re-evaluations",
-          "value_verbatim": "1000",
-          "value_parsed": 1000,
+          "quantity": "bootstrap iterations, as run for the 55-map tile-level MCC evaluations",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
           "unit": null,
           "kind": "parameter",
           "path": "$._metadata.bootstrap.n_iterations",
           "method": "read"
         },
         {
-          "quantity": "random seed asserted for the 55-map MCC re-evaluations",
+          "quantity": "random seed, 55-map tile-level MCC bootstrap",
           "value_verbatim": "42",
           "value_parsed": 42,
           "unit": null,
@@ -194,22 +194,68 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "Each of the four per-run MCC artefacts carries its own $._metadata.bootstrap block; the image run is used as the representative anchor. The same invocation is restated at line 96 and in the reproducibility block at line 116 (both extracted separately)."
+      "notes": "Claim about what was RUN, so it anchors to the executed artefact's `_metadata.bootstrap` block (instrument v1.1 calibration rule). All four runs' artefacts carry the same block; the image full-buffer-eval is used as the representative live anchor."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          10,
-          10
+          13,
+          13
+        ],
+        "section": "Front matter — Methodology mirror"
+      },
+      "claim_text": "The tile-level MCC convention mirrors commit `163161a4` (matrix sweep MCC re-eval), which itself ran 1,000 percentile-bootstrap iterations; the 55-map CIs reported here were subsequently upgraded to N = 10,000 (commit `580f498b6`, 2026-04-28) and migrated to BCa (commit `0699769c5`, 2026-04-30), so the invocation differs from the mirror in bootstrap count and method.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations of the matrix-sweep MCC mirror as at commit 163161a4 (superseded state)",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "map count, 55-map corrected-run corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, 55-map MCC CIs after the N = 10K upgrade",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The mirror's 1,000 percentile iterations are classed historical: the matrix-cell artefacts in the working tree have since been re-run at 10,000/BCa, so a live anchor would manufacture a mismatch. Triage can verify the historical value at `git show 163161a4:results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-1of10/evaluation.json` -> $._metadata.bootstrap.n_iterations."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
         ],
         "section": "Front matter — Policy"
       },
-      "claim_text": "this report closes the gap for the four corrected 55-map runs.",
+      "claim_text": "**Policy**: per `feedback_mcc_with_f1.md`, MCC must accompany F1 wherever inputs support it; this report closes the gap for the four corrected 55-map runs.",
       "values": [
         {
           "quantity": "count, corrected 55-map runs for which this report supplies MCC",
@@ -221,7 +267,7 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "map count, 55-map generalisation corpus",
+          "quantity": "map count, 55-map corrected-run corpus",
           "value_verbatim": "55",
           "value_parsed": 55,
           "unit": null,
@@ -241,43 +287,15 @@
       "claim_id": null,
       "source": {
         "lines": [
-          21,
-          21
+          20,
+          20
         ],
-        "section": "§1 Methodological choice"
-      },
-      "claim_text": "Rationale — comparability with the other 55-map MCC artefacts (T=0.7 and image full-buffer-eval already used this convention) and with the matrix sweep.",
-      "values": [
-        {
-          "quantity": "map count, 55-map generalisation corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": "$.inputs.n_maps",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The '55maps' inside the ground-truth filename earlier on this line is a path number, out of scope per rule 5; this span asserts the corpus size."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          16,
-          16
-        ],
-        "section": "§1 Input convention"
+        "section": "§ 1 Input convention"
       },
       "claim_text": "- **Ground truth**: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4,744 features) — the canonical post-review GT used by `compute_corrected_f1_multi_buffer.py`.",
       "values": [
         {
-          "quantity": "count, features in the canonical post-review ground-truth GeoJSON",
+          "quantity": "feature count, canonical post-review student ground-truth GeoJSON",
           "value_verbatim": "4,744",
           "value_parsed": 4744,
           "unit": null,
@@ -291,21 +309,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Counted with the len: prefix per v1.2 amendment 4. The same file is described as holding 4,745 mounds at lines 7, 27, 36 and 99 — both figures recorded verbatim from their own spans, not adjudicated."
+      "notes": "'55maps' and '384' inside the quoted paths are out of scope (rule 5). Note the document quotes the same GT as 4,745 mounds at lines 11, 31, 40, 104 and 189 — recorded verbatim from each span, not adjudicated here."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          17,
-          17
+          21,
+          21
         ],
-        "section": "§1 Input convention"
+        "section": "§ 1 Input convention"
       },
       "claim_text": "- **Bounds**: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` (8,541 tiles).",
       "values": [
         {
-          "quantity": "count, evaluation tiles in the 55-map bounds GeoJSON",
+          "quantity": "tile count, 55-map evaluation bounds grid",
           "value_verbatim": "8,541",
           "value_parsed": 8541,
           "unit": null,
@@ -319,21 +337,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "The 384 in the bounds path is a path number, out of scope per rule 5."
+      "notes": "'384' in the path is a tile-size directory name, out of scope (rule 5). The same tile count is recorded in the evaluation artefacts at outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json#$.summary.buffers[0].coverage.n_tiles."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          18,
-          18
+          22,
+          22
         ],
-        "section": "§1 Input convention"
+        "section": "§ 1 Input convention"
       },
       "claim_text": "- **Buffers**: 50, 75, 100, 125, 150 m (canonical for the corrected-F1 pipeline).",
       "values": [
         {
-          "quantity": "buffer radius, grid step 1 of the canonical corrected-F1 buffer set",
+          "quantity": "buffer radius, first canonical corrected-F1 grid step",
           "value_verbatim": "50",
           "value_parsed": 50,
           "unit": "m",
@@ -342,7 +360,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, grid step 2 of the canonical corrected-F1 buffer set",
+          "quantity": "buffer radius, second canonical corrected-F1 grid step",
           "value_verbatim": "75",
           "value_parsed": 75,
           "unit": "m",
@@ -351,7 +369,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, grid step 3 of the canonical corrected-F1 buffer set",
+          "quantity": "buffer radius, third canonical corrected-F1 grid step",
           "value_verbatim": "100",
           "value_parsed": 100,
           "unit": "m",
@@ -360,7 +378,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, grid step 4 of the canonical corrected-F1 buffer set",
+          "quantity": "buffer radius, fourth canonical corrected-F1 grid step",
           "value_verbatim": "125",
           "value_parsed": 125,
           "unit": "m",
@@ -369,7 +387,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, grid step 5 of the canonical corrected-F1 buffer set",
+          "quantity": "buffer radius, fifth canonical corrected-F1 grid step",
           "value_verbatim": "150",
           "value_parsed": 150,
           "unit": "m",
@@ -383,30 +401,30 @@
         "path": null
       },
       "method": "read",
-      "notes": "Anchored to the corrected-F1 pipeline artefact because the parenthesis attributes the grid to that pipeline; the image run is used as the representative anchor (all four run summaries carry the same grid). Only the last value carries the shared unit 'm' in the source — unit set on every value per v1.2 amendment 6."
+      "notes": "Shared unit 'm' applied to every radius per v1.2 amendment 6."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          19,
-          19
+          23,
+          23
         ],
-        "section": "§1 Input convention"
+        "section": "§ 1 Input convention"
       },
-      "claim_text": "- **Bootstrap**: 1,000 iterations, seed 42, tile-level resampling.",
+      "claim_text": "- **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling, Bias-Corrected and Accelerated (BCa) via `scipy.stats.bootstrap`.",
       "values": [
         {
-          "quantity": "bootstrap iterations, 55-map MCC evaluation",
-          "value_verbatim": "1,000",
-          "value_parsed": 1000,
+          "quantity": "bootstrap iterations, 55-map tile-level MCC evaluations",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
           "unit": null,
           "kind": "parameter",
           "path": "$._metadata.bootstrap.n_iterations",
           "method": "read"
         },
         {
-          "quantity": "random seed, 55-map MCC evaluation bootstrap",
+          "quantity": "random seed, 55-map tile-level MCC bootstrap",
           "value_verbatim": "42",
           "value_parsed": 42,
           "unit": null,
@@ -416,75 +434,39 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "Per-value paths given per v1.2 amendment 3 so the seed is not compared against the iteration count."
+      "notes": "Claim about what was RUN; anchors to the artefact's `_metadata.bootstrap` block, which also records resampling_unit 'tile_level', method 'BCa' and library 'scipy.stats.bootstrap' (non-numeric, not extracted)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          23,
-          23
+          25,
+          25
         ],
-        "section": "§1 MCC buffer-invariance"
+        "section": "§ 1 Methodological choice"
       },
-      "claim_text": "The MCC values reported are therefore single per-run figures and do not vary across the [50, 75, 100, 125, 150] m buffer set.",
+      "claim_text": "Rationale — comparability with the other 55-map MCC artefacts (T=0.7 and image full-buffer-eval already used this convention) and with the matrix sweep.",
       "values": [
         {
-          "quantity": "buffer radius, grid step 1 of the buffer set the MCC evaluation was run over",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$._metadata.cli_args.buffers[0]",
-          "method": "read"
-        },
-        {
-          "quantity": "buffer radius, grid step 2 of the buffer set the MCC evaluation was run over",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$._metadata.cli_args.buffers[1]",
-          "method": "read"
-        },
-        {
-          "quantity": "buffer radius, grid step 3 of the buffer set the MCC evaluation was run over",
-          "value_verbatim": "100",
-          "value_parsed": 100,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$._metadata.cli_args.buffers[2]",
-          "method": "read"
-        },
-        {
-          "quantity": "buffer radius, grid step 4 of the buffer set the MCC evaluation was run over",
-          "value_verbatim": "125",
-          "value_parsed": 125,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$._metadata.cli_args.buffers[3]",
-          "method": "read"
-        },
-        {
-          "quantity": "buffer radius, grid step 5 of the buffer set the MCC evaluation was run over",
-          "value_verbatim": "150",
-          "value_parsed": 150,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$._metadata.cli_args.buffers[4]",
+          "quantity": "map count, 55-map corrected-run corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.inputs.n_maps",
           "method": "read"
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
         "path": null
       },
       "method": "read",
-      "notes": "Anchored to the MCC evaluation's own recorded CLI buffer list because this sentence is about the MCC run, not the corrected-F1 pipeline. Restates the grid claimed at line 18."
+      "notes": null
     },
     {
       "claim_id": null,
@@ -493,12 +475,76 @@
           27,
           27
         ],
-        "section": "§2 Detection counts"
+        "section": "§ 1 MCC buffer-invariance"
       },
-      "claim_text": "Detection counts (verified): T=0.3 = 4,350;",
+      "claim_text": "The MCC values reported are therefore single per-run figures and do not vary across the [50, 75, 100, 125, 150] m buffer set.",
       "values": [
         {
-          "quantity": "count, verified detections, T=0.3 text-HIGH run",
+          "quantity": "buffer radius, first grid step actually evaluated in the MCC run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, second grid step actually evaluated in the MCC run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, third grid step actually evaluated in the MCC run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[2].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fourth grid step actually evaluated in the MCC run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[3].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fifth grid step actually evaluated in the MCC run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[4].buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Shared unit 'm' applied to every radius per v1.2 amendment 6."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "§ 2 Detection counts"
+      },
+      "claim_text": "Detection counts (verified): T=0.3 = 4,350",
+      "values": [
+        {
+          "quantity": "verified detection count, 55maps-text-high-t0.3-generalisation",
           "value_verbatim": "4,350",
           "value_parsed": 4350,
           "unit": null,
@@ -512,21 +558,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "The count is also independently checkable as len:$.features on outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson."
+      "notes": "The T=0.3 run has no outputs/<run>/full-buffer-eval directory (only extended-buffer-eval and evaluation/), so the archived per-run MCC evaluation is the only artefact carrying this run's tile-classification block. 'T=0.3' is a condition name, out of scope."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          27,
-          27
+          31,
+          31
         ],
-        "section": "§2 Detection counts"
+        "section": "§ 2 Detection counts"
       },
       "claim_text": "T=0.7 = 4,164 (post-recovery; +21 from pre-recovery 4,143)",
       "values": [
         {
-          "quantity": "count, verified detections, T=0.7 text-HIGH run, post-recovery",
+          "quantity": "verified detection count, 55maps-text-high-generalisation, post-recovery",
           "value_verbatim": "4,164",
           "value_parsed": 4164,
           "unit": null,
@@ -535,7 +581,7 @@
           "method": "read"
         },
         {
-          "quantity": "change in verified detection count across the T=0.7 recovery",
+          "quantity": "net change in verified detection count across the T=0.7 recovery",
           "value_verbatim": "+21",
           "value_parsed": 21,
           "unit": null,
@@ -546,7 +592,7 @@
           "operands": [
             {
               "name": "a",
-              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json",
+              "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
               "path": "$.summary.n_detections"
             },
             {
@@ -557,7 +603,7 @@
           ]
         },
         {
-          "quantity": "count, verified detections, T=0.7 text-HIGH run, pre-recovery",
+          "quantity": "verified detection count, 55maps-text-high-generalisation, pre-recovery (superseded)",
           "value_verbatim": "4,143",
           "value_parsed": 4143,
           "unit": null,
@@ -567,25 +613,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "The pre-recovery side is the 'was' value of a correction block (rule 3); the preserved pre-recovery artefact used as operand b is archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json.pre-recovery-20260502T235722.backup."
+      "notes": "Pre-recovery side is the 'was' value of a was-to-now pair (rule 3) and is classed historical; the preserved pre-recovery artefact used as operand b is archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json.pre-recovery-20260502T235722.backup."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          27,
-          27
+          31,
+          31
         ],
-        "section": "§2 Detection counts"
+        "section": "§ 2 Detection counts"
       },
       "claim_text": "image = 4,680 (post-recovery; +15 from pre-recovery 4,665, including the +1 phantom-promoted from cand 2397)",
       "values": [
         {
-          "quantity": "count, verified detections, image run, post-recovery",
+          "quantity": "verified detection count, 55maps-image-generalisation, post-recovery",
           "value_verbatim": "4,680",
           "value_parsed": 4680,
           "unit": null,
@@ -594,7 +640,7 @@
           "method": "read"
         },
         {
-          "quantity": "change in verified detection count across the image recovery",
+          "quantity": "net change in verified detection count across the image recovery",
           "value_verbatim": "+15",
           "value_parsed": 15,
           "unit": null,
@@ -605,7 +651,7 @@
           "operands": [
             {
               "name": "a",
-              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+              "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
               "path": "$.summary.n_detections"
             },
             {
@@ -616,7 +662,7 @@
           ]
         },
         {
-          "quantity": "count, verified detections, image run, pre-recovery",
+          "quantity": "verified detection count, 55maps-image-generalisation, pre-recovery (superseded)",
           "value_verbatim": "4,665",
           "value_parsed": 4665,
           "unit": null,
@@ -625,7 +671,7 @@
           "method": "historical"
         },
         {
-          "quantity": "count, phantom-promoted detections contributed by the reviewed candidate",
+          "quantity": "count, detections contributed by the phantom promotion of the reviewed candidate",
           "value_verbatim": "+1",
           "value_parsed": 1,
           "unit": null,
@@ -635,25 +681,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "'cand 2397' is a candidate identifier, out of scope per rule 5. No artefact was located recording the '+1 phantom-promoted' contribution as a scalar; the human-review CSVs under results/55maps-image-generalisation/ are the plausible chase target for triage. Operand b is the preserved pre-recovery artefact archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json.pre-recovery-20260503T023238.backup."
+      "notes": "'2397' is a candidate identifier, out of scope (rule 5). No artefact was located recording the single phantom-promotion as a scalar; the review CSVs under results/55maps-image-generalisation/ are the plausible chase target. Pre-recovery operand artefact: archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json.pre-recovery-20260503T023238.backup."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          27,
-          27
+          31,
+          31
         ],
-        "section": "§2 Detection counts"
+        "section": "§ 2 Detection counts"
       },
       "claim_text": "text-MIN = 3,865 (post-recovery; +4 from pre-recovery 3,861; recovery was effectively no-op)",
       "values": [
         {
-          "quantity": "count, verified detections, text-MIN run, post-recovery",
+          "quantity": "verified detection count, 55maps-text-min-generalisation, post-recovery",
           "value_verbatim": "3,865",
           "value_parsed": 3865,
           "unit": null,
@@ -662,7 +708,7 @@
           "method": "read"
         },
         {
-          "quantity": "change in verified detection count across the text-MIN recovery",
+          "quantity": "net change in verified detection count across the text-MIN recovery",
           "value_verbatim": "+4",
           "value_parsed": 4,
           "unit": null,
@@ -673,7 +719,7 @@
           "operands": [
             {
               "name": "a",
-              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json",
+              "file": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json",
               "path": "$.summary.n_detections"
             },
             {
@@ -684,7 +730,7 @@
           ]
         },
         {
-          "quantity": "count, verified detections, text-MIN run, pre-recovery",
+          "quantity": "verified detection count, 55maps-text-min-generalisation, pre-recovery (superseded)",
           "value_verbatim": "3,861",
           "value_parsed": 3861,
           "unit": null,
@@ -694,25 +740,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "Operand b is the preserved pre-update artefact archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json.pre-gtupdate-20260503T021128.backup (named .pre-gtupdate rather than .pre-recovery)."
+      "notes": "Pre-recovery operand artefact: archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json.pre-gtupdate-20260503T021128.backup (a pre-GT-update backup — triage should confirm it is the intended pre-recovery baseline)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          27,
-          27
+          31,
+          31
         ],
-        "section": "§2 Detection counts"
+        "section": "§ 2 Detection counts"
       },
       "claim_text": "All four are evaluated over the same 8,541 tiles and the canonical 4,745-mound updated curator GT.",
       "values": [
         {
-          "quantity": "count, corrected runs evaluated over the common tile grid and GT",
+          "quantity": "count, corrected runs evaluated over the common tile grid",
           "value_verbatim": "four",
           "value_parsed": 4,
           "unit": null,
@@ -721,7 +767,7 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "count, evaluation tiles shared by all four runs",
+          "quantity": "tile count, common evaluation bounds grid",
           "value_verbatim": "8,541",
           "value_parsed": 8541,
           "unit": null,
@@ -730,7 +776,7 @@
           "method": "read"
         },
         {
-          "quantity": "count, mounds in the canonical updated curator ground truth",
+          "quantity": "mound count, canonical updated curator ground truth",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
@@ -744,21 +790,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "The GT count uses a cross-file locator per v1.2 amendment 2; every read value carries its own path per amendment 3."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          31,
-          31
+          35,
+          35
         ],
-        "section": "§2 Per-run MCC, sensitivity, specificity"
+        "section": "§ 2 Per-run MCC, sensitivity, specificity"
       },
       "claim_text": "| 55maps-text-high-t0.3-generalisation | 4,350 | 2,216 | 4,906 | 255 | 1,164 | **0.6538** [0.6393, 0.6684] | 0.6556 | 0.9506 |",
       "values": [
         {
-          "quantity": "count, verified detections, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "verified detections (Detections column), run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "4,350",
           "value_parsed": 4350,
           "unit": null,
@@ -767,7 +813,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true positives (TP), T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "true positives (TP column), tile classification, run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "2,216",
           "value_parsed": 2216,
           "unit": null,
@@ -776,7 +822,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true negatives (TN), T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "true negatives (TN column), tile classification, run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "4,906",
           "value_parsed": 4906,
           "unit": null,
@@ -785,7 +831,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false positives (FP), T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "false positives (FP column), tile classification, run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "255",
           "value_parsed": 255,
           "unit": null,
@@ -794,7 +840,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false negatives (FN), T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "false negatives (FN column), tile classification, run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "1,164",
           "value_parsed": 1164,
           "unit": null,
@@ -803,7 +849,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "tile-level MCC point estimate (MCC column), run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "0.6538",
           "value_parsed": 0.6538,
           "unit": null,
@@ -812,7 +858,7 @@
           "method": "read"
         },
         {
-          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "0.6393",
           "value_parsed": 0.6393,
           "unit": null,
@@ -821,7 +867,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "0.6684",
           "value_parsed": 0.6684,
           "unit": null,
@@ -830,7 +876,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "tile-level sensitivity, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "tile-level sensitivity point estimate (Sensitivity column), run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "0.6556",
           "value_parsed": 0.6556,
           "unit": null,
@@ -839,7 +885,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level specificity, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§2 table row)",
+          "quantity": "tile-level specificity point estimate (Specificity column), run 55maps-text-high-t0.3-generalisation (§ 2 table row)",
           "value_verbatim": "0.9506",
           "value_parsed": 0.9506,
           "unit": null,
@@ -853,21 +899,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "MCC ruling 3: the anchor records both a point estimate ($.summary.tile_classification.mcc.point) and a bootstrap mean (...mcc.mean); the document does not state which it quotes, so the path is set to the point estimate and the distinction is left to triage. The document cites these artefacts at results/<run>/mcc/evaluation.json; that directory no longer exists in the working tree and the files are archived under archive/55maps-superseded-gt-evals/per-run/<run>/mcc/, which is used as the anchor."
+      "notes": "Anchored to the archived per-run MCC evaluation because this run has no live full-buffer-eval directory. MCC/sensitivity/specificity are taken at `.point` (the stored point estimate the document quotes), NOT `.mean` — ruling 3."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          32,
-          32
+          36,
+          36
         ],
-        "section": "§2 Per-run MCC, sensitivity, specificity"
+        "section": "§ 2 Per-run MCC, sensitivity, specificity"
       },
       "claim_text": "| 55maps-text-high-generalisation (T=0.7) | 4,164 | 2,176 | 4,918 | 243 | 1,204 | **0.6476** [0.6331, 0.6620] | 0.6438 | 0.9529 |",
       "values": [
         {
-          "quantity": "count, verified detections, T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "verified detections (Detections column), run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "4,164",
           "value_parsed": 4164,
           "unit": null,
@@ -876,7 +922,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true positives (TP), T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "true positives (TP column), tile classification, run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "2,176",
           "value_parsed": 2176,
           "unit": null,
@@ -885,7 +931,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true negatives (TN), T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "true negatives (TN column), tile classification, run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "4,918",
           "value_parsed": 4918,
           "unit": null,
@@ -894,7 +940,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false positives (FP), T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "false positives (FP column), tile classification, run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "243",
           "value_parsed": 243,
           "unit": null,
@@ -903,7 +949,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false negatives (FN), T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "false negatives (FN column), tile classification, run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "1,204",
           "value_parsed": 1204,
           "unit": null,
@@ -912,7 +958,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "tile-level MCC point estimate (MCC column), run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "0.6476",
           "value_parsed": 0.6476,
           "unit": null,
@@ -921,7 +967,7 @@
           "method": "read"
         },
         {
-          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "0.6331",
           "value_parsed": 0.6331,
           "unit": null,
@@ -930,7 +976,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "0.6620",
           "value_parsed": 0.662,
           "unit": null,
@@ -939,7 +985,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "tile-level sensitivity, T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "tile-level sensitivity point estimate (Sensitivity column), run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "0.6438",
           "value_parsed": 0.6438,
           "unit": null,
@@ -948,7 +994,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level specificity, T=0.7 text-HIGH (55maps-text-high-generalisation) (§2 table row)",
+          "quantity": "tile-level specificity point estimate (Specificity column), run 55maps-text-high-generalisation (T=0.7) (§ 2 table row)",
           "value_verbatim": "0.9529",
           "value_parsed": 0.9529,
           "unit": null,
@@ -958,25 +1004,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "MCC ruling 3: the anchor records both a point estimate ($.summary.tile_classification.mcc.point) and a bootstrap mean (...mcc.mean); the document does not state which it quotes, so the path is set to the point estimate and the distinction is left to triage. The document cites these artefacts at results/<run>/mcc/evaluation.json; that directory no longer exists in the working tree and the files are archived under archive/55maps-superseded-gt-evals/per-run/<run>/mcc/, which is used as the anchor."
+      "notes": "Anchored to the LIVE full-buffer-eval in preference to the archived per-run MCC artefact the document cites in § 7 (both carry the value). MCC/sensitivity/specificity taken at `.point`, not `.mean` — ruling 3."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          33,
-          33
+          37,
+          37
         ],
-        "section": "§2 Per-run MCC, sensitivity, specificity"
+        "section": "§ 2 Per-run MCC, sensitivity, specificity"
       },
       "claim_text": "| 55maps-image-generalisation | 4,680 | 2,394 | 4,891 | 270 | 986 | **0.6924** [0.6784, 0.7062] | 0.7083 | 0.9477 |",
       "values": [
         {
-          "quantity": "count, verified detections, image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "verified detections (Detections column), run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "4,680",
           "value_parsed": 4680,
           "unit": null,
@@ -985,7 +1031,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true positives (TP), image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "true positives (TP column), tile classification, run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "2,394",
           "value_parsed": 2394,
           "unit": null,
@@ -994,7 +1040,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true negatives (TN), image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "true negatives (TN column), tile classification, run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "4,891",
           "value_parsed": 4891,
           "unit": null,
@@ -1003,7 +1049,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false positives (FP), image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "false positives (FP column), tile classification, run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "270",
           "value_parsed": 270,
           "unit": null,
@@ -1012,7 +1058,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false negatives (FN), image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "false negatives (FN column), tile classification, run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "986",
           "value_parsed": 986,
           "unit": null,
@@ -1021,7 +1067,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "tile-level MCC point estimate (MCC column), run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "0.6924",
           "value_parsed": 0.6924,
           "unit": null,
@@ -1030,7 +1076,7 @@
           "method": "read"
         },
         {
-          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "0.6784",
           "value_parsed": 0.6784,
           "unit": null,
@@ -1039,7 +1085,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "0.7062",
           "value_parsed": 0.7062,
           "unit": null,
@@ -1048,7 +1094,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "tile-level sensitivity, image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "tile-level sensitivity point estimate (Sensitivity column), run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "0.7083",
           "value_parsed": 0.7083,
           "unit": null,
@@ -1057,7 +1103,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level specificity, image (55maps-image-generalisation) (§2 table row)",
+          "quantity": "tile-level specificity point estimate (Specificity column), run 55maps-image-generalisation (§ 2 table row)",
           "value_verbatim": "0.9477",
           "value_parsed": 0.9477,
           "unit": null,
@@ -1067,25 +1113,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "MCC ruling 3: the anchor records both a point estimate ($.summary.tile_classification.mcc.point) and a bootstrap mean (...mcc.mean); the document does not state which it quotes, so the path is set to the point estimate and the distinction is left to triage. The document cites these artefacts at results/<run>/mcc/evaluation.json; that directory no longer exists in the working tree and the files are archived under archive/55maps-superseded-gt-evals/per-run/<run>/mcc/, which is used as the anchor."
+      "notes": "Anchored to the LIVE full-buffer-eval in preference to the archived per-run MCC artefact. MCC point is 0.6924 while the stored bootstrap mean is a different quantity (0.6925) — the document asserts the point estimate, so `.point` is the anchor (ruling 3)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          34,
-          34
+          38,
+          38
         ],
-        "section": "§2 Per-run MCC, sensitivity, specificity"
+        "section": "§ 2 Per-run MCC, sensitivity, specificity"
       },
       "claim_text": "| 55maps-text-min-generalisation | 3,865 | 2,075 | 4,927 | 234 | 1,305 | **0.6260** [0.6114, 0.6408] | 0.6139 | 0.9547 |",
       "values": [
         {
-          "quantity": "count, verified detections, text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "verified detections (Detections column), run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "3,865",
           "value_parsed": 3865,
           "unit": null,
@@ -1094,7 +1140,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true positives (TP), text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "true positives (TP column), tile classification, run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "2,075",
           "value_parsed": 2075,
           "unit": null,
@@ -1103,7 +1149,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true negatives (TN), text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "true negatives (TN column), tile classification, run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "4,927",
           "value_parsed": 4927,
           "unit": null,
@@ -1112,7 +1158,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false positives (FP), text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "false positives (FP column), tile classification, run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "234",
           "value_parsed": 234,
           "unit": null,
@@ -1121,7 +1167,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false negatives (FN), text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "false negatives (FN column), tile classification, run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "1,305",
           "value_parsed": 1305,
           "unit": null,
@@ -1130,7 +1176,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "tile-level MCC point estimate (MCC column), run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "0.6260",
           "value_parsed": 0.626,
           "unit": null,
@@ -1139,7 +1185,7 @@
           "method": "read"
         },
         {
-          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "0.6114",
           "value_parsed": 0.6114,
           "unit": null,
@@ -1148,7 +1194,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "0.6408",
           "value_parsed": 0.6408,
           "unit": null,
@@ -1157,7 +1203,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "tile-level sensitivity, text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "tile-level sensitivity point estimate (Sensitivity column), run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "0.6139",
           "value_parsed": 0.6139,
           "unit": null,
@@ -1166,7 +1212,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level specificity, text-MIN (55maps-text-min-generalisation) (§2 table row)",
+          "quantity": "tile-level specificity point estimate (Specificity column), run 55maps-text-min-generalisation (§ 2 table row)",
           "value_verbatim": "0.9547",
           "value_parsed": 0.9547,
           "unit": null,
@@ -1176,539 +1222,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "MCC ruling 3: the anchor records both a point estimate ($.summary.tile_classification.mcc.point) and a bootstrap mean (...mcc.mean); the document does not state which it quotes, so the path is set to the point estimate and the distinction is left to triage. The document cites these artefacts at results/<run>/mcc/evaluation.json; that directory no longer exists in the working tree and the files are archived under archive/55maps-superseded-gt-evals/per-run/<run>/mcc/, which is used as the anchor."
+      "notes": "Anchored to the LIVE full-buffer-eval in preference to the archived per-run MCC artefact. MCC/sensitivity/specificity taken at `.point`, not `.mean` — ruling 3."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          29,
-          29
+          40,
+          40
         ],
-        "section": "§2 Per-run MCC, sensitivity, specificity"
+        "section": "§ 2 Post-recovery refresh"
       },
-      "claim_text": "| Run | Detections | TP | TN | FP | FN | MCC [95% CI] | Sensitivity | Specificity |",
+      "claim_text": "Post-recovery 2026-05-03 (cross-track-v2 commit `42ed1d32`): three rows refreshed against the canonical updated curator GT (4,745 mounds).",
       "values": [
         {
-          "quantity": "confidence level of the bootstrap intervals reported in the §2 table",
-          "value_verbatim": "95%",
-          "value_parsed": 95,
-          "unit": "%",
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Included for completeness (rule: include when in doubt). The eval artefacts record the CI method ('BCa') but no explicit confidence level scalar; the level is presumably a default inside scripts/evaluate_detections.py, which triage can confirm."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          42,
-          42
-        ],
-        "section": "§3 Cross-run comparison"
-      },
-      "claim_text": "| Run | Corrected F1 @50m [95% CI] | P @50m | R @50m | MCC [95% CI] | F1 rank | MCC rank |",
-      "values": [
-        {
-          "quantity": "confidence level of the bootstrap intervals reported in the §3 table",
-          "value_verbatim": "95%",
-          "value_parsed": 95,
-          "unit": "%",
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Duplicate of the §2 header claim at line 29; both extracted for full enumeration. The '@50m' column labels are buffer identifiers (context), not claims."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          38,
-          38
-        ],
-        "section": "§3 Cross-run comparison"
-      },
-      "claim_text": "## 3. Cross-run comparison at canonical buffer R = 50 m",
-      "values": [
-        {
-          "quantity": "canonical/headline buffer radius for the cross-run comparison",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.results[0].R_m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Extracted because the heading asserts 50 m is the canonical buffer, not merely which row a metric came from. The section number '3.' is out of scope per rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          44,
-          44
-        ],
-        "section": "§3 Cross-run comparison"
-      },
-      "claim_text": "| T=0.3 (text-HIGH) | 0.844 [0.834, 0.852] | 0.912 | 0.785 | **0.654** [0.639, 0.668] | 1 | 2 |",
-      "values": [
-        {
-          "quantity": "corrected F1 at R = 50 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "0.844",
-          "value_parsed": 0.844,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at R = 50 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "0.834",
-          "value_parsed": 0.834,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[0].F1_CI[0]",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at R = 50 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "0.852",
-          "value_parsed": 0.852,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[0].F1_CI[1]",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "corrected precision at R = 50 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "0.912",
-          "value_parsed": 0.912,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].precision",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected recall at R = 50 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "0.785",
-          "value_parsed": 0.785,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].recall",
-          "method": "read"
-        },
-        {
-          "quantity": "tile-level MCC, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "0.654",
-          "value_parsed": 0.654,
-          "unit": null,
-          "kind": "metric",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.point",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "0.639",
-          "value_parsed": 0.639,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "0.668",
-          "value_parsed": 0.668,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "rank by corrected F1 at R = 50 m among the four runs, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "rank by tile-level MCC among the four runs, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§3 table row)",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "F1 / P / R quoted to 3 dp while the corrected-F1 artefact holds 4+ — recorded at quoted precision; the harness owns rounding tolerance. MCC cells use cross-file locators into the archived per-run MCC artefact (v1.2 amendment 2). The two rank cells are orderings over all four runs, so no single path locates them — recorded as recompute-script."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          45,
-          45
-        ],
-        "section": "§3 Cross-run comparison"
-      },
-      "claim_text": "| T=0.7 (text-HIGH) | 0.827 [0.817, 0.837] | 0.912 | 0.757 | **0.648** [0.633, 0.662] | 3 | 3 |",
-      "values": [
-        {
-          "quantity": "corrected F1 at R = 50 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "0.827",
-          "value_parsed": 0.827,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at R = 50 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "0.817",
-          "value_parsed": 0.817,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[0].F1_CI[0]",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at R = 50 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "0.837",
-          "value_parsed": 0.837,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[0].F1_CI[1]",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "corrected precision at R = 50 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "0.912",
-          "value_parsed": 0.912,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].precision",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected recall at R = 50 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "0.757",
-          "value_parsed": 0.757,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].recall",
-          "method": "read"
-        },
-        {
-          "quantity": "tile-level MCC, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "0.648",
-          "value_parsed": 0.648,
-          "unit": null,
-          "kind": "metric",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.point",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "0.633",
-          "value_parsed": 0.633,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "0.662",
-          "value_parsed": 0.662,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "rank by corrected F1 at R = 50 m among the four runs, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "rank by tile-level MCC among the four runs, T=0.7 text-HIGH (55maps-text-high-generalisation) (§3 table row)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "F1 / P / R quoted to 3 dp while the corrected-F1 artefact holds 4+ — recorded at quoted precision; the harness owns rounding tolerance. MCC cells use cross-file locators into the archived per-run MCC artefact (v1.2 amendment 2). The two rank cells are orderings over all four runs, so no single path locates them — recorded as recompute-script."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          46,
-          46
-        ],
-        "section": "§3 Cross-run comparison"
-      },
-      "claim_text": "| Image | 0.833 [0.824, 0.842] | 0.881 | 0.790 | **0.692** [0.678, 0.706] | 2 | 1 |",
-      "values": [
-        {
-          "quantity": "corrected F1 at R = 50 m, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "0.833",
-          "value_parsed": 0.833,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at R = 50 m, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "0.824",
-          "value_parsed": 0.824,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[0].F1_CI[0]",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at R = 50 m, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "0.842",
-          "value_parsed": 0.842,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[0].F1_CI[1]",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "corrected precision at R = 50 m, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "0.881",
-          "value_parsed": 0.881,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].precision",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected recall at R = 50 m, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "0.790",
-          "value_parsed": 0.79,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].recall",
-          "method": "read"
-        },
-        {
-          "quantity": "tile-level MCC, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "0.692",
-          "value_parsed": 0.692,
-          "unit": null,
-          "kind": "metric",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.point",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "0.678",
-          "value_parsed": 0.678,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "0.706",
-          "value_parsed": 0.706,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "rank by corrected F1 at R = 50 m among the four runs, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "rank by tile-level MCC among the four runs, image (55maps-image-generalisation) (§3 table row)",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "F1 / P / R quoted to 3 dp while the corrected-F1 artefact holds 4+ — recorded at quoted precision; the harness owns rounding tolerance. MCC cells use cross-file locators into the archived per-run MCC artefact (v1.2 amendment 2). The two rank cells are orderings over all four runs, so no single path locates them — recorded as recompute-script."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          47,
-          47
-        ],
-        "section": "§3 Cross-run comparison"
-      },
-      "claim_text": "| text-MIN | 0.797 [0.786, 0.808] | 0.913 | 0.707 | **0.626** [0.611, 0.641] | 4 | 4 |",
-      "values": [
-        {
-          "quantity": "corrected F1 at R = 50 m, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "0.797",
-          "value_parsed": 0.797,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].F1",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at R = 50 m, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "0.786",
-          "value_parsed": 0.786,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[0].F1_CI[0]",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at R = 50 m, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "0.808",
-          "value_parsed": 0.808,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.results[0].F1_CI[1]",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "corrected precision at R = 50 m, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "0.913",
-          "value_parsed": 0.913,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].precision",
-          "method": "read"
-        },
-        {
-          "quantity": "corrected recall at R = 50 m, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "0.707",
-          "value_parsed": 0.707,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.results[0].recall",
-          "method": "read"
-        },
-        {
-          "quantity": "tile-level MCC, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "0.626",
-          "value_parsed": 0.626,
-          "unit": null,
-          "kind": "metric",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.point",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "0.611",
-          "value_parsed": 0.611,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "0.641",
-          "value_parsed": 0.641,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "rank by corrected F1 at R = 50 m among the four runs, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "rank by tile-level MCC among the four runs, text-MIN (55maps-text-min-generalisation) (§3 table row)",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "F1 / P / R quoted to 3 dp while the corrected-F1 artefact holds 4+ — recorded at quoted precision; the harness owns rounding tolerance. MCC cells use cross-file locators into the archived per-run MCC artefact (v1.2 amendment 2). The two rank cells are orderings over all four runs, so no single path locates them — recorded as recompute-script."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          36,
-          36
-        ],
-        "section": "§2 Post-recovery refresh"
-      },
-      "claim_text": "three rows refreshed against the canonical updated curator GT (4,745 mounds)",
-      "values": [
-        {
-          "quantity": "count, §2 table rows refreshed in the 2026-05-03 post-recovery pass",
+          "quantity": "count, § 2 table rows refreshed in the 2026-05-03 post-recovery pass",
           "value_verbatim": "three",
           "value_parsed": 3,
           "unit": null,
@@ -1717,7 +1249,7 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "count, mounds in the canonical updated curator ground truth",
+          "quantity": "mound count, canonical updated curator ground truth",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
@@ -1731,21 +1263,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "'three rows refreshed' here sits against 'all four corrected runs' at lines 5-7 — recorded, not adjudicated."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          36,
-          36
+          40,
+          40
         ],
-        "section": "§2 Post-recovery refresh"
+        "section": "§ 2 Post-recovery refresh"
       },
       "claim_text": "T=0.7 row refreshed against the post-recovery evaluation (n_detections 4,143 → 4,164, +21); MCC shifts from 0.6472 to 0.6476 (negligible).",
       "values": [
         {
-          "quantity": "count, verified detections, T=0.7 run, pre-recovery",
+          "quantity": "verified detection count, T=0.7 run, pre-recovery (superseded)",
           "value_verbatim": "4,143",
           "value_parsed": 4143,
           "unit": null,
@@ -1754,7 +1286,7 @@
           "method": "historical"
         },
         {
-          "quantity": "count, verified detections, T=0.7 run, post-recovery",
+          "quantity": "verified detection count, T=0.7 run, post-recovery",
           "value_verbatim": "4,164",
           "value_parsed": 4164,
           "unit": null,
@@ -1763,7 +1295,7 @@
           "method": "read"
         },
         {
-          "quantity": "change in verified detection count across the T=0.7 recovery",
+          "quantity": "net change in verified detection count across the T=0.7 recovery",
           "value_verbatim": "+21",
           "value_parsed": 21,
           "unit": null,
@@ -1774,7 +1306,7 @@
           "operands": [
             {
               "name": "a",
-              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json",
+              "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
               "path": "$.summary.n_detections"
             },
             {
@@ -1785,7 +1317,7 @@
           ]
         },
         {
-          "quantity": "tile-level MCC, T=0.7 run, pre-recovery",
+          "quantity": "tile-level MCC point estimate, T=0.7 run, pre-recovery (superseded)",
           "value_verbatim": "0.6472",
           "value_parsed": 0.6472,
           "unit": null,
@@ -1794,7 +1326,7 @@
           "method": "historical"
         },
         {
-          "quantity": "tile-level MCC, T=0.7 run, post-recovery",
+          "quantity": "tile-level MCC point estimate, T=0.7 run, post-recovery",
           "value_verbatim": "0.6476",
           "value_parsed": 0.6476,
           "unit": null,
@@ -1804,25 +1336,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "Before→after pairs: the old side is historical per rule 3, the new side is a live claim. MCC ruling 3: the anchor records both a point estimate ($.summary.tile_classification.mcc.point) and a bootstrap mean (...mcc.mean); the document does not state which it quotes, so the path is set to the point estimate and the distinction is left to triage. The document cites these artefacts at results/<run>/mcc/evaluation.json; that directory no longer exists in the working tree and the files are archived under archive/55maps-superseded-gt-evals/per-run/<run>/mcc/, which is used as the anchor."
+      "notes": "Classic was-to-now pair: the 'from' side of each arrow is historical, the 'to' side is a live claim (rule 3). Preserved pre-recovery artefact for triage: archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json.pre-recovery-20260502T235722.backup."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          36,
-          36
+          40,
+          40
         ],
-        "section": "§2 Post-recovery refresh"
+        "section": "§ 2 Post-recovery refresh"
       },
       "claim_text": "image row refreshed against the cand 2397 promotion (n_detections 4,665 → 4,680; TP 2,390 → 2,394; FN 990 → 986); MCC shifts from 0.6912 to 0.6924 (negligible).",
       "values": [
         {
-          "quantity": "count, verified detections, image run, pre-recovery",
+          "quantity": "verified detection count, image run, pre-recovery (superseded)",
           "value_verbatim": "4,665",
           "value_parsed": 4665,
           "unit": null,
@@ -1831,7 +1363,7 @@
           "method": "historical"
         },
         {
-          "quantity": "count, verified detections, image run, post-recovery",
+          "quantity": "verified detection count, image run, post-recovery",
           "value_verbatim": "4,680",
           "value_parsed": 4680,
           "unit": null,
@@ -1840,7 +1372,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true positives, image run, pre-recovery",
+          "quantity": "true positives, image run tile classification, pre-recovery (superseded)",
           "value_verbatim": "2,390",
           "value_parsed": 2390,
           "unit": null,
@@ -1849,7 +1381,7 @@
           "method": "historical"
         },
         {
-          "quantity": "tile-level true positives, image run, post-recovery",
+          "quantity": "true positives, image run tile classification, post-recovery",
           "value_verbatim": "2,394",
           "value_parsed": 2394,
           "unit": null,
@@ -1858,7 +1390,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false negatives, image run, pre-recovery",
+          "quantity": "false negatives, image run tile classification, pre-recovery (superseded)",
           "value_verbatim": "990",
           "value_parsed": 990,
           "unit": null,
@@ -1867,7 +1399,7 @@
           "method": "historical"
         },
         {
-          "quantity": "tile-level false negatives, image run, post-recovery",
+          "quantity": "false negatives, image run tile classification, post-recovery",
           "value_verbatim": "986",
           "value_parsed": 986,
           "unit": null,
@@ -1876,7 +1408,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, image run, pre-recovery",
+          "quantity": "tile-level MCC point estimate, image run, pre-recovery (superseded)",
           "value_verbatim": "0.6912",
           "value_parsed": 0.6912,
           "unit": null,
@@ -1885,7 +1417,7 @@
           "method": "historical"
         },
         {
-          "quantity": "tile-level MCC, image run, post-recovery",
+          "quantity": "tile-level MCC point estimate, image run, post-recovery",
           "value_verbatim": "0.6924",
           "value_parsed": 0.6924,
           "unit": null,
@@ -1895,25 +1427,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "'cand 2397' is a candidate identifier, out of scope per rule 5. MCC ruling 3: the anchor records both a point estimate ($.summary.tile_classification.mcc.point) and a bootstrap mean (...mcc.mean); the document does not state which it quotes, so the path is set to the point estimate and the distinction is left to triage. The document cites these artefacts at results/<run>/mcc/evaluation.json; that directory no longer exists in the working tree and the files are archived under archive/55maps-superseded-gt-evals/per-run/<run>/mcc/, which is used as the anchor."
+      "notes": "'2397' is a candidate identifier, out of scope. Historical side preserved at archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json.pre-recovery-20260503T023238.backup; note for triage that the backup records MCC point 0.6914 where the prose says 0.6912 — recorded, not adjudicated (extraction does not verify, rule 4)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          36,
-          36
+          40,
+          40
         ],
-        "section": "§2 Post-recovery refresh"
+        "section": "§ 2 Post-recovery refresh"
       },
       "claim_text": "text-MIN row refreshed (n_detections 3,861 → 3,865; TP 2,072 → 2,075; FN 1,308 → 1,305); MCC shifts from 0.6253 to 0.6260 (negligible).",
       "values": [
         {
-          "quantity": "count, verified detections, text-MIN run, pre-recovery",
+          "quantity": "verified detection count, text-MIN run, pre-recovery (superseded)",
           "value_verbatim": "3,861",
           "value_parsed": 3861,
           "unit": null,
@@ -1922,7 +1454,7 @@
           "method": "historical"
         },
         {
-          "quantity": "count, verified detections, text-MIN run, post-recovery",
+          "quantity": "verified detection count, text-MIN run, post-recovery",
           "value_verbatim": "3,865",
           "value_parsed": 3865,
           "unit": null,
@@ -1931,7 +1463,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level true positives, text-MIN run, pre-recovery",
+          "quantity": "true positives, text-MIN run tile classification, pre-recovery (superseded)",
           "value_verbatim": "2,072",
           "value_parsed": 2072,
           "unit": null,
@@ -1940,7 +1472,7 @@
           "method": "historical"
         },
         {
-          "quantity": "tile-level true positives, text-MIN run, post-recovery",
+          "quantity": "true positives, text-MIN run tile classification, post-recovery",
           "value_verbatim": "2,075",
           "value_parsed": 2075,
           "unit": null,
@@ -1949,7 +1481,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level false negatives, text-MIN run, pre-recovery",
+          "quantity": "false negatives, text-MIN run tile classification, pre-recovery (superseded)",
           "value_verbatim": "1,308",
           "value_parsed": 1308,
           "unit": null,
@@ -1958,7 +1490,7 @@
           "method": "historical"
         },
         {
-          "quantity": "tile-level false negatives, text-MIN run, post-recovery",
+          "quantity": "false negatives, text-MIN run tile classification, post-recovery",
           "value_verbatim": "1,305",
           "value_parsed": 1305,
           "unit": null,
@@ -1967,7 +1499,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, text-MIN run, pre-recovery",
+          "quantity": "tile-level MCC point estimate, text-MIN run, pre-recovery (superseded)",
           "value_verbatim": "0.6253",
           "value_parsed": 0.6253,
           "unit": null,
@@ -1976,7 +1508,7 @@
           "method": "historical"
         },
         {
-          "quantity": "tile-level MCC, text-MIN run, post-recovery",
+          "quantity": "tile-level MCC point estimate, text-MIN run, post-recovery",
           "value_verbatim": "0.6260",
           "value_parsed": 0.626,
           "unit": null,
@@ -1986,25 +1518,25 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "MCC ruling 3: the anchor records both a point estimate ($.summary.tile_classification.mcc.point) and a bootstrap mean (...mcc.mean); the document does not state which it quotes, so the path is set to the point estimate and the distinction is left to triage. The document cites these artefacts at results/<run>/mcc/evaluation.json; that directory no longer exists in the working tree and the files are archived under archive/55maps-superseded-gt-evals/per-run/<run>/mcc/, which is used as the anchor."
+      "notes": "Historical side preserved at archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json.pre-gtupdate-20260503T021128.backup."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          36,
-          36
+          40,
+          40
         ],
-        "section": "§2 Post-recovery refresh"
+        "section": "§ 2 Post-recovery refresh"
       },
       "claim_text": "Qualitative ranking is preserved on all four rows: image leads MCC; T=0.3 and T=0.7 sit closely below; text-MIN remains last.",
       "values": [
         {
-          "quantity": "count, §2 table rows on which the qualitative MCC ranking is preserved",
+          "quantity": "count, § 2 table rows on which the qualitative MCC ranking is preserved",
           "value_verbatim": "four",
           "value_parsed": 4,
           "unit": null,
@@ -2015,7 +1547,362 @@
       ],
       "anchor": null,
       "method": "anchor-unknown",
-      "notes": "A claim about the §2 table's own row count; no external artefact enumerates it."
+      "notes": "Count of table rows; no artefact enumerates the run set. Marginal claim included per the instrument's over-inclusion preference."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "§ 3 Cross-run comparison"
+      },
+      "claim_text": "## 3. Cross-run comparison at canonical buffer R = 50 m",
+      "values": [
+        {
+          "quantity": "canonical headline buffer radius for the cross-run comparison",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[0].R_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The leading '3.' is a section number, out of scope (rule 5). Included with a flagged doubt: R = 50 m is asserted here as the canonical comparison buffer rather than merely labelling a row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "§ 3 Cross-run comparison"
+      },
+      "claim_text": "| T=0.3 (text-HIGH) | 0.844 [0.834, 0.852] | 0.912 | 0.785 | **0.654** [0.639, 0.668] | 1 | 2 |",
+      "values": [
+        {
+          "quantity": "corrected F1 at R = 50 m (Corrected F1 @50m column), run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.844",
+          "value_parsed": 0.844,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at R = 50 m, run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.834",
+          "value_parsed": 0.834,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at R = 50 m, run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at R = 50 m (P @50m column), run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.912",
+          "value_parsed": 0.912,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at R = 50 m (R @50m column), run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.785",
+          "value_parsed": 0.785,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC point estimate (MCC column), run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.654",
+          "value_parsed": 0.654,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.639",
+          "value_parsed": 0.639,
+          "unit": null,
+          "kind": "statistic",
+          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.668",
+          "value_parsed": 0.668,
+          "unit": null,
+          "kind": "statistic",
+          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rank by corrected F1 at R = 50 m across the four runs (F1 rank column), run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rank by tile-level MCC across the four runs (MCC rank column), run T=0.3 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "MCC cells anchor to the archived per-run MCC evaluation because this run has no live full-buffer-eval; the corrected-F1 cells anchor to the run's own corrected-f1-multi-buffer summary. MCC taken at `.point` (ruling 3). F1/P/R/MCC are quoted to 3 dp while the artefacts hold more precision — recorded at quoted precision; the harness owns rounding tolerance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "§ 3 Cross-run comparison"
+      },
+      "claim_text": "| T=0.7 (text-HIGH) | 0.827 [0.817, 0.837] | 0.912 | 0.757 | **0.648** [0.633, 0.662] | 3 | 3 |",
+      "values": [
+        {
+          "quantity": "corrected F1 at R = 50 m (Corrected F1 @50m column), run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.827",
+          "value_parsed": 0.827,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at R = 50 m, run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.817",
+          "value_parsed": 0.817,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at R = 50 m, run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.837",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at R = 50 m (P @50m column), run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.912",
+          "value_parsed": 0.912,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at R = 50 m (R @50m column), run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.757",
+          "value_parsed": 0.757,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC point estimate (MCC column), run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.648",
+          "value_parsed": 0.648,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.633",
+          "value_parsed": 0.633,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "0.662",
+          "value_parsed": 0.662,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rank by corrected F1 at R = 50 m across the four runs (F1 rank column), run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rank by tile-level MCC across the four runs (MCC rank column), run T=0.7 (text-HIGH) (§ 3 table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "MCC cells anchor to the LIVE full-buffer-eval (preferred over the archived per-run artefact) at `.point` (ruling 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "§ 3 Cross-run comparison"
+      },
+      "claim_text": "| Image | 0.833 [0.824, 0.842] | 0.881 | 0.790 | **0.692** [0.678, 0.706] | 2 | 1 |",
+      "values": [
+        {
+          "quantity": "corrected F1 at R = 50 m (Corrected F1 @50m column), run Image (§ 3 table row)",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at R = 50 m, run Image (§ 3 table row)",
+          "value_verbatim": "0.824",
+          "value_parsed": 0.824,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at R = 50 m, run Image (§ 3 table row)",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at R = 50 m (P @50m column), run Image (§ 3 table row)",
+          "value_verbatim": "0.881",
+          "value_parsed": 0.881,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at R = 50 m (R @50m column), run Image (§ 3 table row)",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC point estimate (MCC column), run Image (§ 3 table row)",
+          "value_verbatim": "0.692",
+          "value_parsed": 0.692,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, run Image (§ 3 table row)",
+          "value_verbatim": "0.678",
+          "value_parsed": 0.678,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, run Image (§ 3 table row)",
+          "value_verbatim": "0.706",
+          "value_parsed": 0.706,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rank by corrected F1 at R = 50 m across the four runs (F1 rank column), run Image (§ 3 table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rank by tile-level MCC across the four runs (MCC rank column), run Image (§ 3 table row)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "MCC cells anchor to the LIVE full-buffer-eval at `.point` (ruling 3)."
     },
     {
       "claim_id": null,
@@ -2024,12 +1911,121 @@
           51,
           51
         ],
-        "section": "§4 Rank-order disagreement"
+        "section": "§ 3 Cross-run comparison"
+      },
+      "claim_text": "| text-MIN | 0.797 [0.786, 0.808] | 0.913 | 0.707 | **0.626** [0.611, 0.641] | 4 | 4 |",
+      "values": [
+        {
+          "quantity": "corrected F1 at R = 50 m (Corrected F1 @50m column), run text-MIN (§ 3 table row)",
+          "value_verbatim": "0.797",
+          "value_parsed": 0.797,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at R = 50 m, run text-MIN (§ 3 table row)",
+          "value_verbatim": "0.786",
+          "value_parsed": 0.786,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at R = 50 m, run text-MIN (§ 3 table row)",
+          "value_verbatim": "0.808",
+          "value_parsed": 0.808,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at R = 50 m (P @50m column), run text-MIN (§ 3 table row)",
+          "value_verbatim": "0.913",
+          "value_parsed": 0.913,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at R = 50 m (R @50m column), run text-MIN (§ 3 table row)",
+          "value_verbatim": "0.707",
+          "value_parsed": 0.707,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC point estimate (MCC column), run text-MIN (§ 3 table row)",
+          "value_verbatim": "0.626",
+          "value_parsed": 0.626,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, run text-MIN (§ 3 table row)",
+          "value_verbatim": "0.611",
+          "value_parsed": 0.611,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, run text-MIN (§ 3 table row)",
+          "value_verbatim": "0.641",
+          "value_parsed": 0.641,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rank by corrected F1 at R = 50 m across the four runs (F1 rank column), run text-MIN (§ 3 table row)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rank by tile-level MCC across the four runs (MCC rank column), run text-MIN (§ 3 table row)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "MCC cells anchor to the LIVE full-buffer-eval at `.point` (ruling 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "§ 4 Rank-order disagreement"
       },
       "claim_text": "- **F1 rank** (corrected, R = 50 m): T=0.3 (0.8437) > Image (0.8332) > T=0.7 (0.8273) > text-MIN (0.7968).",
       "values": [
         {
-          "quantity": "corrected F1 at R = 50 m, T=0.3 text-HIGH run",
+          "quantity": "corrected F1 at R = 50 m, T=0.3 run",
           "value_verbatim": "0.8437",
           "value_parsed": 0.8437,
           "unit": null,
@@ -2047,7 +2043,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 50 m, T=0.7 text-HIGH run",
+          "quantity": "corrected F1 at R = 50 m, T=0.7 run",
           "value_verbatim": "0.8273",
           "value_parsed": 0.8273,
           "unit": null,
@@ -2070,21 +2066,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "'R = 50 m' identifies which buffer row the values come from — context, not a claim. Cross-file locators per v1.2 amendment 2."
+      "notes": "'R = 50 m' here labels which corrected-F1 row the four values come from and is treated as context, not a separate claim (see batch note)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          52,
-          52
+          56,
+          56
         ],
-        "section": "§4 Rank-order disagreement"
+        "section": "§ 4 Rank-order disagreement"
       },
       "claim_text": "- **MCC rank**: Image (0.6924) > T=0.3 (0.6538) > T=0.7 (0.6476) > text-MIN (0.6260).",
       "values": [
         {
-          "quantity": "tile-level MCC, image run",
+          "quantity": "tile-level MCC point estimate, image run",
           "value_verbatim": "0.6924",
           "value_parsed": 0.6924,
           "unit": null,
@@ -2093,7 +2089,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, T=0.3 text-HIGH run",
+          "quantity": "tile-level MCC point estimate, T=0.3 run",
           "value_verbatim": "0.6538",
           "value_parsed": 0.6538,
           "unit": null,
@@ -2102,44 +2098,44 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, T=0.7 text-HIGH run",
+          "quantity": "tile-level MCC point estimate, T=0.7 run",
           "value_verbatim": "0.6476",
           "value_parsed": 0.6476,
           "unit": null,
           "kind": "metric",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.point",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.point",
           "method": "read"
         },
         {
-          "quantity": "tile-level MCC, text-MIN run",
+          "quantity": "tile-level MCC point estimate, text-MIN run",
           "value_verbatim": "0.6260",
           "value_parsed": 0.626,
           "unit": null,
           "kind": "metric",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json#$.summary.tile_classification.mcc.point",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.point",
           "method": "read"
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "MCC ruling 3: the anchor records both a point estimate ($.summary.tile_classification.mcc.point) and a bootstrap mean (...mcc.mean); the document does not state which it quotes, so the path is set to the point estimate and the distinction is left to triage. The document cites these artefacts at results/<run>/mcc/evaluation.json; that directory no longer exists in the working tree and the files are archived under archive/55maps-superseded-gt-evals/per-run/<run>/mcc/, which is used as the anchor."
+      "notes": "All four values are stored POINT estimates, not bootstrap means (ruling 3). T=0.3 resolves against the archived per-run artefact (no live full-buffer-eval for that run)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          54,
-          54
+          58,
+          58
         ],
-        "section": "§4 Rank-order disagreement"
+        "section": "§ 4 Rank-order disagreement"
       },
       "claim_text": "text-MIN's joint-bottom result confirms HIGH thinking earns its tokens at 55-map scope on both metrics — the in-corpus extension of Obs 284's 4-map matrix finding.",
       "values": [
         {
-          "quantity": "map count, 55-map generalisation corpus",
+          "quantity": "map count, 55-map corrected-run corpus",
           "value_verbatim": "55",
           "value_parsed": 55,
           "unit": null,
@@ -2148,7 +2144,7 @@
           "method": "read"
         },
         {
-          "quantity": "map count, the golden-set matrix corpus behind the referenced finding",
+          "quantity": "map count, gold-standard matrix corpus underlying Obs 284",
           "value_verbatim": "4",
           "value_parsed": 4,
           "unit": null,
@@ -2162,21 +2158,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "'Obs 284' is an observation identifier, out of scope per rule 5; the observation itself lives in docs/notes/working-notes.md (prose — rule 2 forbids anchoring prose to prose). The 4-map matrix corpus count was not chased to an artefact within this batch."
+      "notes": "The 4-map matrix corpus size is asserted about a different corpus (the gold-standard 4-map set); no in-scope artefact in this document's neighbourhood records it, so it is anchor-unknown. Obs 284 lives in the project working notes (prose — not anchored to, per rule 2)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          54,
-          54
+          58,
+          58
         ],
-        "section": "§4 Rank-order disagreement"
+        "section": "§ 4 Rank-order disagreement"
       },
       "claim_text": "The post-recovery 2026-05-03 refresh leaves all four rank positions and both rank orderings unchanged.",
       "values": [
         {
-          "quantity": "count, rank positions left unchanged by the post-recovery refresh",
+          "quantity": "count, rank positions unchanged by the post-recovery refresh",
           "value_verbatim": "four",
           "value_parsed": 4,
           "unit": null,
@@ -2187,21 +2183,21 @@
       ],
       "anchor": null,
       "method": "anchor-unknown",
-      "notes": "'both rank orderings' is a determiner rather than a numeral and is not extracted as a value; the rank orderings themselves are extracted as the rank cells of the §3 table rows."
+      "notes": "'both rank orderings' is a word, not a numeral, and is not extracted as a value. Marginal count claim included per the over-inclusion preference."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          56,
-          56
+          60,
+          60
         ],
-        "section": "§4 Rank-order disagreement"
+        "section": "§ 4 Rank-order disagreement"
       },
       "claim_text": "The corrected 55-map runs reproduce that pattern under the post-review GT and the corrected-F1 pipeline:",
       "values": [
         {
-          "quantity": "map count, 55-map generalisation corpus",
+          "quantity": "map count, 55-map corrected-run corpus",
           "value_verbatim": "55",
           "value_parsed": 55,
           "unit": null,
@@ -2215,21 +2211,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "The 'working-notes.md L13642' citation earlier on this line is a line-number citation, out of scope per rule 5."
+      "notes": "'L13642' on the same line is a working-notes line citation, out of scope (rule 5)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          58,
-          58
+          62,
+          62
         ],
-        "section": "§4 Rank-order disagreement"
+        "section": "§ 4 Rank-order disagreement"
       },
-      "claim_text": "- **Text proposers (T=0.3, T=0.7) win on F1 via higher precision-and-FN-trading**: text precision is ~0.91 vs image ~0.88, with similar recall profiles.",
+      "claim_text": "text precision is ~0.91 vs image ~0.88, with similar recall profiles.",
       "values": [
         {
-          "quantity": "corrected precision at R = 50 m, text track",
+          "quantity": "corrected precision at R = 50 m, text track (T=0.3 run)",
           "value_verbatim": "~0.91",
           "value_parsed": 0.91,
           "unit": null,
@@ -2252,21 +2248,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Approx markers retained in value_verbatim per v1.2 amendment 5. 'text precision' covers both text-HIGH runs (the §3 table quotes 0.912 for each) — anchored to the T=0.3 run as representative; triage may prefer the T=0.7 artefact at results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json."
+      "notes": "Approx markers retained inside value_verbatim per v1.2 amendment 5. 'text precision' is a track-level generalisation; the T=0.3 run is used as the representative text anchor and T=0.7 carries a near-identical value at results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].precision."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          59,
-          59
+          63,
+          63
         ],
-        "section": "§4 Rank-order disagreement"
+        "section": "§ 4 Rank-order disagreement"
       },
-      "claim_text": "- **Image proposers win on MCC via higher sensitivity**: image sensitivity is 0.71 vs text 0.64–0.66, with comparable specificity (~0.95).",
+      "claim_text": "image sensitivity is 0.71 vs text 0.64–0.66, with comparable specificity (~0.95).",
       "values": [
         {
-          "quantity": "tile-level sensitivity, image run",
+          "quantity": "tile-level sensitivity point estimate, image run",
           "value_verbatim": "0.71",
           "value_parsed": 0.71,
           "unit": null,
@@ -2275,16 +2271,16 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level sensitivity, lower end of the quoted text-track range",
+          "quantity": "tile-level sensitivity point estimate, lower end of the text-track range (T=0.7 run)",
           "value_verbatim": "0.64",
           "value_parsed": 0.64,
           "unit": null,
           "kind": "metric",
-          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json#$.summary.tile_classification.sensitivity.point",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.sensitivity.point",
           "method": "read"
         },
         {
-          "quantity": "tile-level sensitivity, upper end of the quoted text-track range",
+          "quantity": "tile-level sensitivity point estimate, upper end of the text-track range (T=0.3 run)",
           "value_verbatim": "0.66",
           "value_parsed": 0.66,
           "unit": null,
@@ -2293,7 +2289,7 @@
           "method": "read"
         },
         {
-          "quantity": "tile-level specificity, described as comparable across runs",
+          "quantity": "tile-level specificity point estimate, image run (quoted as the comparable cross-run value)",
           "value_verbatim": "~0.95",
           "value_parsed": 0.95,
           "unit": null,
@@ -2303,28 +2299,28 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "The document does not say which run sits at each end of the 0.64–0.66 range; the extractor maps 0.64 to T=0.7 (§2 quotes 0.6438) and 0.66 to T=0.3 (§2 quotes 0.6556). text-MIN's sensitivity (§2 quotes 0.6139) falls outside the quoted range — recorded, not adjudicated. The ~0.95 specificity is asserted as comparable across all runs and is anchored to the image run. Approx marker retained per v1.2 amendment 5."
+      "notes": "Range endpoints 0.64–0.66 are mapped to the two text-track runs that bound them (T=0.7 = lower, T=0.3 = upper); triage should confirm that reading. Approx marker on ~0.95 retained per v1.2 amendment 5. All values are stored point estimates, not bootstrap means (ruling 3)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          61,
-          61
+          65,
+          65
         ],
-        "section": "§4 Rank-order disagreement"
+        "section": "§ 4 Rank-order disagreement"
       },
       "claim_text": "The buffer-elasticity finding from **Obs 252** (text track ~4× lower buffer elasticity than image) is consistent with this picture",
       "values": [
         {
-          "quantity": "ratio, text-track buffer elasticity relative to the image track (text is this factor lower)",
+          "quantity": "ratio, text-track buffer elasticity relative to the image track (inverse)",
           "value_verbatim": "~4",
           "value_parsed": 4,
-          "unit": "×",
+          "unit": null,
           "kind": "ratio",
           "path": null,
           "method": "anchor-unknown"
@@ -2332,21 +2328,21 @@
       ],
       "anchor": null,
       "method": "anchor-unknown",
-      "notes": "Obs 252 lives in docs/notes/working-notes.md, which is prose — rule 2 forbids anchoring prose to prose, so triage must chase the chain to the buffer-elasticity artefact. Approx marker retained per v1.2 amendment 5; the '×' is carried in unit."
+      "notes": "Obs 252 lives in the project working notes (prose — rule 2 forbids anchoring prose to prose). The buffer elasticities could be re-derived from the per-run corrected-f1-multi-buffer summaries (F1 at R = 150 m minus F1 at R = 50 m per track), which is the suggested chase target."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          63,
-          63
+          67,
+          67
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
       "claim_text": "## 5. R-sensitivity check (corrected F1 across [50, 75, 100, 125, 150] m)",
       "values": [
         {
-          "quantity": "buffer radius, grid step 1 of the R-sensitivity sweep",
+          "quantity": "buffer radius, first R-sensitivity grid step",
           "value_verbatim": "50",
           "value_parsed": 50,
           "unit": "m",
@@ -2355,7 +2351,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, grid step 2 of the R-sensitivity sweep",
+          "quantity": "buffer radius, second R-sensitivity grid step",
           "value_verbatim": "75",
           "value_parsed": 75,
           "unit": "m",
@@ -2364,7 +2360,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, grid step 3 of the R-sensitivity sweep",
+          "quantity": "buffer radius, third R-sensitivity grid step",
           "value_verbatim": "100",
           "value_parsed": 100,
           "unit": "m",
@@ -2373,7 +2369,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, grid step 4 of the R-sensitivity sweep",
+          "quantity": "buffer radius, fourth R-sensitivity grid step",
           "value_verbatim": "125",
           "value_parsed": 125,
           "unit": "m",
@@ -2382,7 +2378,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, grid step 5 of the R-sensitivity sweep",
+          "quantity": "buffer radius, fifth R-sensitivity grid step",
           "value_verbatim": "150",
           "value_parsed": 150,
           "unit": "m",
@@ -2396,21 +2392,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "The section number '5.' is out of scope per rule 5. Restates the grid claimed at line 18; extracted separately for full enumeration."
+      "notes": "The leading '5.' is a section number, out of scope. Shared unit 'm' applied per v1.2 amendment 6."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          65,
-          65
+          69,
+          69
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
-      "claim_text": "Image catches up to (and overtakes) T=0.3 by R = 75 m, because image's recall-per-detection compounds faster with buffer relaxation than text's already-tight spatial pattern.",
+      "claim_text": "Image catches up to (and overtakes) T=0.3 by R = 75 m",
       "values": [
         {
-          "quantity": "buffer radius at which the image run's corrected F1 first overtakes the T=0.3 run's",
+          "quantity": "buffer radius at which the image track overtakes T=0.3 on corrected F1",
           "value_verbatim": "75",
           "value_parsed": 75,
           "unit": "m",
@@ -2424,21 +2420,21 @@
         "path": null
       },
       "method": "recompute-script",
-      "notes": "Asserted as a crossover result, not merely a row label, so it is extracted (cf. the batch note's buffer-radius rule). Deciding it requires comparing $.results[*].F1 across results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json and results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json."
+      "notes": "Asserted as a crossover result, not a row label: deciding it requires comparing image and T=0.3 corrected F1 across the R grid (results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json vs results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json, $.results[*].F1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          69,
-          69
+          73,
+          73
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
       "claim_text": "| 50 | **0.844** | 0.827 | 0.833 | 0.797 | T=0.3 |",
       "values": [
         {
-          "quantity": "buffer radius R, §5 R-sensitivity table row",
+          "quantity": "buffer radius R (R (m) column), § 5 table row R = 50 m",
           "value_verbatim": "50",
           "value_parsed": 50,
           "unit": "m",
@@ -2447,7 +2443,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 50 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 50 m, T=0.3 run (T=0.3 F1 column)",
           "value_verbatim": "0.844",
           "value_parsed": 0.844,
           "unit": null,
@@ -2456,7 +2452,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 50 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 50 m, T=0.7 run (T=0.7 F1 column)",
           "value_verbatim": "0.827",
           "value_parsed": 0.827,
           "unit": null,
@@ -2465,7 +2461,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 50 m, image (55maps-image-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 50 m, image run (Image F1 column)",
           "value_verbatim": "0.833",
           "value_parsed": 0.833,
           "unit": null,
@@ -2474,7 +2470,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 50 m, text-MIN (55maps-text-min-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 50 m, text-MIN run (text-MIN F1 column)",
           "value_verbatim": "0.797",
           "value_parsed": 0.797,
           "unit": null,
@@ -2488,21 +2484,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "F1 values quoted to 3 dp while the artefacts hold 4+ — recorded at quoted precision. The 'Leader' column is a label, not a numeric cell. Parenthetical row annotations ('practitioner cap', 'upper bound') are prose. Cross-file locators per v1.2 amendment 2."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          70,
-          70
+          74,
+          74
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
       "claim_text": "| 75 | 0.847 | 0.830 | **0.849** | 0.799 | image |",
       "values": [
         {
-          "quantity": "buffer radius R, §5 R-sensitivity table row",
+          "quantity": "buffer radius R (R (m) column), § 5 table row R = 75 m",
           "value_verbatim": "75",
           "value_parsed": 75,
           "unit": "m",
@@ -2511,7 +2507,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 75 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 75 m, T=0.3 run (T=0.3 F1 column)",
           "value_verbatim": "0.847",
           "value_parsed": 0.847,
           "unit": null,
@@ -2520,7 +2516,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 75 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 75 m, T=0.7 run (T=0.7 F1 column)",
           "value_verbatim": "0.830",
           "value_parsed": 0.83,
           "unit": null,
@@ -2529,7 +2525,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 75 m, image (55maps-image-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 75 m, image run (Image F1 column)",
           "value_verbatim": "0.849",
           "value_parsed": 0.849,
           "unit": null,
@@ -2538,7 +2534,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 75 m, text-MIN (55maps-text-min-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 75 m, text-MIN run (text-MIN F1 column)",
           "value_verbatim": "0.799",
           "value_parsed": 0.799,
           "unit": null,
@@ -2552,21 +2548,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "F1 values quoted to 3 dp while the artefacts hold 4+ — recorded at quoted precision. The 'Leader' column is a label, not a numeric cell. Parenthetical row annotations ('practitioner cap', 'upper bound') are prose. Cross-file locators per v1.2 amendment 2."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          71,
-          71
+          75,
+          75
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
       "claim_text": "| 100 | 0.849 | 0.832 | **0.854** | 0.801 | image |",
       "values": [
         {
-          "quantity": "buffer radius R, §5 R-sensitivity table row",
+          "quantity": "buffer radius R (R (m) column), § 5 table row R = 100 m",
           "value_verbatim": "100",
           "value_parsed": 100,
           "unit": "m",
@@ -2575,7 +2571,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 100 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 100 m, T=0.3 run (T=0.3 F1 column)",
           "value_verbatim": "0.849",
           "value_parsed": 0.849,
           "unit": null,
@@ -2584,7 +2580,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 100 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 100 m, T=0.7 run (T=0.7 F1 column)",
           "value_verbatim": "0.832",
           "value_parsed": 0.832,
           "unit": null,
@@ -2593,7 +2589,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 100 m, image (55maps-image-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 100 m, image run (Image F1 column)",
           "value_verbatim": "0.854",
           "value_parsed": 0.854,
           "unit": null,
@@ -2602,7 +2598,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 100 m, text-MIN (55maps-text-min-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 100 m, text-MIN run (text-MIN F1 column)",
           "value_verbatim": "0.801",
           "value_parsed": 0.801,
           "unit": null,
@@ -2616,21 +2612,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "F1 values quoted to 3 dp while the artefacts hold 4+ — recorded at quoted precision. The 'Leader' column is a label, not a numeric cell. Parenthetical row annotations ('practitioner cap', 'upper bound') are prose. Cross-file locators per v1.2 amendment 2."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          72,
-          72
+          76,
+          76
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
       "claim_text": "| 125 (practitioner cap) | 0.850 | 0.834 | **0.855** | 0.801 | image |",
       "values": [
         {
-          "quantity": "buffer radius R, §5 R-sensitivity table row",
+          "quantity": "buffer radius R (R (m) column), § 5 table row R = 125 m",
           "value_verbatim": "125",
           "value_parsed": 125,
           "unit": "m",
@@ -2639,7 +2635,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 125 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 125 m, T=0.3 run (T=0.3 F1 column)",
           "value_verbatim": "0.850",
           "value_parsed": 0.85,
           "unit": null,
@@ -2648,7 +2644,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 125 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 125 m, T=0.7 run (T=0.7 F1 column)",
           "value_verbatim": "0.834",
           "value_parsed": 0.834,
           "unit": null,
@@ -2657,7 +2653,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 125 m, image (55maps-image-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 125 m, image run (Image F1 column)",
           "value_verbatim": "0.855",
           "value_parsed": 0.855,
           "unit": null,
@@ -2666,7 +2662,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 125 m, text-MIN (55maps-text-min-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 125 m, text-MIN run (text-MIN F1 column)",
           "value_verbatim": "0.801",
           "value_parsed": 0.801,
           "unit": null,
@@ -2680,21 +2676,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "F1 values quoted to 3 dp while the artefacts hold 4+ — recorded at quoted precision. The 'Leader' column is a label, not a numeric cell. Parenthetical row annotations ('practitioner cap', 'upper bound') are prose. Cross-file locators per v1.2 amendment 2."
+      "notes": "The '(practitioner cap)' annotation on the R cell repeats the 125 m cap claim extracted at lines 83, 90 and 98; the cell itself is extracted here as the table's R value (rule 6)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          73,
-          73
+          77,
+          77
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
       "claim_text": "| 150 (upper bound) | 0.851 | 0.835 | **0.857** | 0.802 | image |",
       "values": [
         {
-          "quantity": "buffer radius R, §5 R-sensitivity table row",
+          "quantity": "buffer radius R (R (m) column), § 5 table row R = 150 m",
           "value_verbatim": "150",
           "value_parsed": 150,
           "unit": "m",
@@ -2703,7 +2699,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 150 m, T=0.3 text-HIGH (55maps-text-high-t0.3-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 150 m, T=0.3 run (T=0.3 F1 column)",
           "value_verbatim": "0.851",
           "value_parsed": 0.851,
           "unit": null,
@@ -2712,7 +2708,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 150 m, T=0.7 text-HIGH (55maps-text-high-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 150 m, T=0.7 run (T=0.7 F1 column)",
           "value_verbatim": "0.835",
           "value_parsed": 0.835,
           "unit": null,
@@ -2721,7 +2717,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 150 m, image (55maps-image-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 150 m, image run (Image F1 column)",
           "value_verbatim": "0.857",
           "value_parsed": 0.857,
           "unit": null,
@@ -2730,7 +2726,7 @@
           "method": "read"
         },
         {
-          "quantity": "corrected F1 at R = 150 m, text-MIN (55maps-text-min-generalisation) (§5 table row)",
+          "quantity": "corrected F1 at R = 150 m, text-MIN run (text-MIN F1 column)",
           "value_verbatim": "0.802",
           "value_parsed": 0.802,
           "unit": null,
@@ -2744,16 +2740,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "F1 values quoted to 3 dp while the artefacts hold 4+ — recorded at quoted precision. The 'Leader' column is a label, not a numeric cell. Parenthetical row annotations ('practitioner cap', 'upper bound') are prose. Cross-file locators per v1.2 amendment 2."
+      "notes": "The '(upper bound)' annotation on the R cell repeats the 150 m upper-bound claim extracted at line 98."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          75,
-          75
+          79,
+          79
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
       "claim_text": "text-MIN is bottom at every buffer; its precision-leaning profile (P=0.913, R=0.707) compounds less with buffer relaxation than the HIGH-thinking conditions (~0.005 absolute F1 gain from R=50 m to R=150 m, vs ~0.007 for HIGH text conditions whose F1 already sits near the corpus ceiling, and ~0.023 for the image track whose buffer elasticity remains the largest of the four).",
       "values": [
@@ -2798,7 +2794,7 @@
           ]
         },
         {
-          "quantity": "absolute corrected-F1 gain from R = 50 m to R = 150 m, HIGH text conditions",
+          "quantity": "absolute corrected-F1 gain from R = 50 m to R = 150 m, HIGH-thinking text conditions (T=0.3 representative)",
           "value_verbatim": "~0.007",
           "value_parsed": 0.007,
           "unit": null,
@@ -2820,7 +2816,7 @@
           ]
         },
         {
-          "quantity": "absolute corrected-F1 gain from R = 50 m to R = 150 m, image run",
+          "quantity": "absolute corrected-F1 gain from R = 50 m to R = 150 m, image track",
           "value_verbatim": "~0.023",
           "value_parsed": 0.023,
           "unit": null,
@@ -2842,7 +2838,7 @@
           ]
         },
         {
-          "quantity": "count, runs/tracks over which the image track's buffer elasticity is the largest",
+          "quantity": "count, conditions across which buffer elasticity is compared",
           "value_verbatim": "four",
           "value_parsed": 4,
           "unit": null,
@@ -2856,21 +2852,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Each derived value carries its own expression and operands per v1.2 amendment 1; the two operand F1 values are never themselves emitted as arithmetic values. 'HIGH text conditions' covers T=0.3 and T=0.7 — the ~0.007 derivation is anchored to T=0.3; by the §5 table the T=0.7 span is nearer 0.008, so triage may wish to check both. 'R=50 m'/'R=150 m' are row identifiers (context). Approx markers retained per v1.2 amendment 5."
+      "notes": "Three separate derivations, each carrying its own value-level expression and operands per v1.2 amendment 1; the operand F1 values are NOT emitted as claim values, so nothing inherits `arithmetic`. 'R=50 m' and 'R=150 m' name the endpoints of the derivations and are treated as context. Approx markers retained per v1.2 amendment 5. The '~0.007 for HIGH text conditions' is a track-level figure; T=0.3 is used as the representative operand source (results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json gives a comparable gain)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          79,
-          79
+          83,
+          83
         ],
-        "section": "§5 R-sensitivity check"
+        "section": "§ 5 R-sensitivity check"
       },
       "claim_text": "At R = 125 m (the practitioner-useful cap per Obs 272 — beyond which the attractor-pull effect is statistically indistinguishable from within-tile random placement), image leads F1 by ~0.005 over T=0.3.",
       "values": [
         {
-          "quantity": "largest buffer radius at which the attractor-pull effect is statistically distinguishable from within-tile random placement",
+          "quantity": "largest buffer radius at which attractor-pull is statistically distinguishable from within-tile random placement (practitioner cap)",
           "value_verbatim": "125",
           "value_parsed": 125,
           "unit": "m",
@@ -2879,7 +2875,7 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "corrected-F1 lead of the image run over the T=0.3 run at R = 125 m",
+          "quantity": "corrected-F1 lead of the image run over T=0.3 at R = 125 m",
           "value_verbatim": "~0.005",
           "value_parsed": 0.005,
           "unit": null,
@@ -2905,49 +2901,8 @@
         "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
         "path": null
       },
-      "method": "arithmetic",
-      "notes": "The 125 m practitioner cap is decided by the shell permutation p-values in results/55maps-attractor-pull-v2/attractor-pull-v2.json (recompute-script; Obs 272 itself is prose in docs/notes/working-notes.md and is not anchored to, per rule 2). The ~0.005 lead is a cross-file difference of the two corrected-F1 artefacts at R = 125 m. Approx marker retained per v1.2 amendment 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          79,
-          79
-        ],
-        "section": "§5 R-sensitivity check"
-      },
-      "claim_text": "MCC, being buffer-invariant, gives a single image-leads-by-0.039 verdict that holds regardless of buffer.",
-      "values": [
-        {
-          "quantity": "tile-level MCC lead of the image run over the T=0.3 run",
-          "value_verbatim": "0.039",
-          "value_parsed": 0.039,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
-              "path": "$.summary.tile_classification.mcc.point"
-            },
-            {
-              "name": "b",
-              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json",
-              "path": "$.summary.tile_classification.mcc.point"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Derived from the two runs' MCC point estimates; if the document intended bootstrap means the operands would be ...mcc.mean instead (MCC ruling 3) — not adjudicated here."
+      "method": "recompute-script",
+      "notes": "The 125 m cap is decided by the attractor-pull shell permutation p-values in results/55maps-attractor-pull-v2/attractor-pull-v2.json ($.runs[*].shell[*].p_value_bias_corrected); the ~0.005 lead is a straightforward difference of two committed corrected-F1 cells and carries its own expression/operands. Approx marker retained per v1.2 amendment 5."
     },
     {
       "claim_id": null,
@@ -2956,12 +2911,53 @@
           83,
           83
         ],
-        "section": "§6 Practical implication"
+        "section": "§ 5 R-sensitivity check"
+      },
+      "claim_text": "MCC, being buffer-invariant, gives a single image-leads-by-0.039 verdict that holds regardless of buffer.",
+      "values": [
+        {
+          "quantity": "tile-level MCC lead of the image run over T=0.3",
+          "value_verbatim": "0.039",
+          "value_parsed": 0.039,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+            "path": "$.summary.tile_classification.mcc.point"
+          },
+          {
+            "name": "b",
+            "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json",
+            "path": "$.summary.tile_classification.mcc.point"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Difference of two stored MCC POINT estimates (not bootstrap means — ruling 3). T=0.3's operand comes from the archived per-run artefact because that run has no live full-buffer-eval."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "§ 6 Practical implication"
       },
       "claim_text": "For this corpus + pipeline (55-map generalisation set, post-review GT, corrected-F1 with reviewer-promoted phantoms), the answer to \"which configuration is best?\" depends on the metric:",
       "values": [
         {
-          "quantity": "map count, 55-map generalisation corpus",
+          "quantity": "map count, 55-map generalisation set",
           "value_verbatim": "55",
           "value_parsed": 55,
           "unit": null,
@@ -2981,40 +2977,43 @@
       "claim_id": null,
       "source": {
         "lines": [
-          93,
-          93
+          89,
+          89
         ],
-        "section": "§7 Cross-references and provenance"
+        "section": "§ 6 Practical implication"
       },
-      "claim_text": "- **Obs 252** (Buffer elasticity, working-notes.md L11047): text ~4× lower elasticity than image — explains why text wins F1 at tight R but image catches up as R relaxes.",
+      "claim_text": "- **If the reader trusts F1 at R = 50 m as the headline**, T=0.3 leads.",
       "values": [
         {
-          "quantity": "ratio, text-track buffer elasticity relative to the image track (text is this factor lower)",
-          "value_verbatim": "~4",
-          "value_parsed": 4,
-          "unit": "×",
-          "kind": "ratio",
-          "path": null,
-          "method": "anchor-unknown"
+          "quantity": "headline buffer radius for the corrected-F1 comparison",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[0].R_m",
+          "method": "read"
         }
       ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Restates the line-61 claim. 'L11047' is a line-number citation, out of scope per rule 5; the cited source docs/notes/working-notes.md is prose, so rule 2 forbids anchoring to it."
+      "anchor": {
+        "file": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Marginal: R = 50 m functions here as a conditional label. Included per the over-inclusion preference; duplicates the § 3 heading claim."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          94,
-          94
+          90,
+          90
         ],
-        "section": "§7 Cross-references and provenance"
+        "section": "§ 6 Practical implication"
       },
-      "claim_text": "- **Obs 272**: attractor-pull effect significant only through 125 m; 150 m row is upper bound, not practitioner-useful.",
+      "claim_text": "- **If the reader trusts F1 at R = 125 m (practitioner cap)**, image leads.",
       "values": [
         {
-          "quantity": "largest buffer radius at which the attractor-pull effect is statistically significant",
+          "quantity": "practitioner-cap buffer radius",
           "value_verbatim": "125",
           "value_parsed": 125,
           "unit": "m",
@@ -3028,21 +3027,83 @@
         "path": null
       },
       "method": "recompute-script",
-      "notes": "The '150 m row' is a table-row identifier (context), not extracted. Obs 272 itself is prose in docs/notes/working-notes.md — anchored instead to the attractor-pull artefact holding the shell permutation p-values."
+      "notes": "Repeats the 125 m practitioner-cap assertion extracted at lines 83 and 98; decided by the attractor-pull shell permutation p-values."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          95,
-          95
+          97,
+          97
         ],
-        "section": "§7 Cross-references and provenance"
+        "section": "§ 7 Cross-references and provenance"
+      },
+      "claim_text": "- **Obs 252** (Buffer elasticity, working-notes.md L11047): text ~4× lower elasticity than image",
+      "values": [
+        {
+          "quantity": "ratio, text-track buffer elasticity relative to the image track (inverse)",
+          "value_verbatim": "~4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'L11047' is a line-number citation, out of scope (rule 5). Obs 252 is prose in the project working notes; rule 2 forbids anchoring prose to prose. Duplicates the line-65 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "§ 7 Cross-references and provenance"
+      },
+      "claim_text": "- **Obs 272**: attractor-pull effect significant only through 125 m; 150 m row is upper bound, not practitioner-useful.",
+      "values": [
+        {
+          "quantity": "largest buffer radius at which the attractor-pull effect is statistically significant",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "buffer radius of the upper-bound-only row",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[4].R_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-attractor-pull-v2/attractor-pull-v2.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The 125 m significance boundary is decided by the shell permutation p-values in results/55maps-attractor-pull-v2/attractor-pull-v2.json; the 150 m row radius is a plain read of the corrected-F1 grid."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "§ 7 Cross-references and provenance"
       },
       "claim_text": "- **Obs 280**: F1/MCC tier-leader divergence pattern (text wins F1, image wins MCC) — confirmed here for the corrected 55-map runs.",
       "values": [
         {
-          "quantity": "map count, 55-map generalisation corpus",
+          "quantity": "map count, 55-map corrected-run corpus",
           "value_verbatim": "55",
           "value_parsed": 55,
           "unit": null,
@@ -3056,58 +3117,104 @@
         "path": null
       },
       "method": "read",
-      "notes": "'Obs 280' is an observation identifier, out of scope per rule 5."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          96,
-          96
+          100,
+          100
         ],
-        "section": "§7 Cross-references and provenance"
+        "section": "§ 7 Cross-references and provenance"
       },
-      "claim_text": "- **Commit `163161a4`** (matrix sweep MCC re-eval): methodology mirror — same `evaluate_detections.py --mcc --bootstrap 1000 --seed 42` invocation pattern.",
+      "claim_text": "- **Commit `163161a4`** (matrix sweep MCC re-eval): methodology mirror for the tile-level MCC convention. Its own CIs were 1,000-iteration percentile bootstrap; the 55-map CIs in this report were upgraded to N = 10,000 and migrated to BCa after it, so the two invocations agree on convention but differ in bootstrap count and method.",
       "values": [
         {
-          "quantity": "bootstrap iterations asserted for the 55-map MCC re-evaluations",
-          "value_verbatim": "1000",
+          "quantity": "bootstrap iterations of the matrix-sweep MCC mirror as at commit 163161a4 (superseded state)",
+          "value_verbatim": "1,000",
           "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "map count, 55-map corrected-run corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, 55-map MCC CIs after the N = 10K upgrade",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same historical/live split as the line-13 Methodology-mirror claim: the mirror's 1,000 percentile iterations are the superseded state of the matrix-cell artefacts (now 10,000/BCa in the working tree), so they are classed historical rather than anchored live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "§ 7 Cross-references and provenance"
+      },
+      "claim_text": "- **Commit `580f498b6`** (2026-04-28, bootstrap CIs upgraded to N = 10K) and **commit `0699769c5`** (2026-04-30, BCa migration): the two changes that moved this report's CIs off the mirror's bootstrap settings.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations after the N = 10K upgrade",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
           "unit": null,
           "kind": "parameter",
           "path": "$._metadata.bootstrap.n_iterations",
           "method": "read"
         },
         {
-          "quantity": "random seed asserted for the 55-map MCC re-evaluations",
-          "value_verbatim": "42",
-          "value_parsed": 42,
+          "quantity": "count, commits that moved this report's CIs off the mirror's bootstrap settings",
+          "value_verbatim": "two",
+          "value_parsed": 2,
           "unit": null,
-          "kind": "parameter",
-          "path": "$._metadata.bootstrap.seed",
-          "method": "read"
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "Restates the line-9 methodology mirror; extracted separately for full enumeration."
+      "notes": "'10K' is recorded verbatim with parsed value 10000. The count of two commits is a claim about repo history; the commits themselves are out of scope (rule 5) and no artefact enumerates them."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          98,
-          98
+          103,
+          103
         ],
-        "section": "§7 Cross-references and provenance"
+        "section": "§ 7 Cross-references and provenance"
       },
       "claim_text": "- **Commit `98b128ae`** (initial 3-run re-eval data commit): the per-run MCC artefacts that grounded the 2026-04-27 baseline of this report.",
       "values": [
         {
-          "quantity": "count, runs in the initial (superseded) MCC re-evaluation batch",
+          "quantity": "count, runs re-evaluated in the initial MCC data commit (superseded scope — the report now covers four)",
           "value_verbatim": "3",
           "value_parsed": 3,
           "unit": null,
@@ -3118,21 +3225,21 @@
       ],
       "anchor": null,
       "method": "historical",
-      "notes": "Describes the superseded 3-run baseline of this report (rule 3)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          99,
-          99
+          104,
+          104
         ],
-        "section": "§7 Cross-references and provenance"
+        "section": "§ 7 Cross-references and provenance"
       },
       "claim_text": "- **Commit `42ed1d32`** (cross-track-v2): post-recovery image / T=0.7 / text-MIN re-evaluations against the 4,745-mound updated curator GT — the source of the 2026-05-03 row refreshes in §2.",
       "values": [
         {
-          "quantity": "count, mounds in the canonical updated curator ground truth",
+          "quantity": "mound count, canonical updated curator ground truth",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
@@ -3152,15 +3259,52 @@
       "claim_id": null,
       "source": {
         "lines": [
-          104,
-          104
+          108,
+          111
         ],
-        "section": "§7 Per-run MCC artefact locations"
+        "section": "§ 7 Per-run MCC artefact locations"
       },
-      "claim_text": "MCC matches `outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json` (0.6476).",
+      "claim_text": "These four per-run MCC evaluations were **archived on 2026-06-07** (Session 105,\ncommit `da2cf355f`) when the two-reference Track 1 / Track 2 consolidation\nsuperseded the ad-hoc 55-map GT-evaluation variants; they now live under\n`archive/55maps-superseded-gt-evals/per-run/`.",
       "values": [
         {
-          "quantity": "tile-level MCC, T=0.7 text-HIGH (55maps-text-high-generalisation), as recorded in the full-buffer-eval artefact",
+          "quantity": "count, per-run MCC evaluations archived by the Track 1 / Track 2 consolidation",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map count, 55-map corrected-run corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.inputs.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Session 105, the commit hash, the archive date and the Track 1 / Track 2 labels are out of scope (rule 5); 'two-reference' is read as part of the consolidation's name rather than an asserted count and is not extracted. The 'four' archived directories are physically present under archive/55maps-superseded-gt-evals/per-run/ but no JSON manifest enumerates them, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "§ 7 Per-run MCC artefact locations"
+      },
+      "claim_text": "MCC matches the live `outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json` (0.6476).",
+      "values": [
+        {
+          "quantity": "tile-level MCC point estimate, 55maps-text-high-generalisation, live full-buffer-eval",
           "value_verbatim": "0.6476",
           "value_parsed": 0.6476,
           "unit": null,
@@ -3174,21 +3318,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "The document names this outputs/ artefact as the cross-check source, so it is the anchor here (rather than the archived per-run MCC file used elsewhere in this batch). Artefact stores both ...mcc.point and ...mcc.mean; path set to the point estimate (MCC ruling 3)."
+      "notes": "The document names its own source here; anchored to exactly that artefact. Stored POINT estimate, not the bootstrap mean (ruling 3)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          105,
-          105
+          119,
+          119
         ],
-        "section": "§7 Per-run MCC artefact locations"
+        "section": "§ 7 Per-run MCC artefact locations"
       },
-      "claim_text": "MCC matches `outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json` (0.6924).",
+      "claim_text": "MCC matches the live `outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json` (0.6924).",
       "values": [
         {
-          "quantity": "tile-level MCC, image (55maps-image-generalisation), as recorded in the full-buffer-eval artefact",
+          "quantity": "tile-level MCC point estimate, 55maps-image-generalisation, live full-buffer-eval",
           "value_verbatim": "0.6924",
           "value_parsed": 0.6924,
           "unit": null,
@@ -3202,21 +3346,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "The document names this outputs/ artefact as the cross-check source, so it is the anchor here (rather than the archived per-run MCC file used elsewhere in this batch). Artefact stores both ...mcc.point and ...mcc.mean; path set to the point estimate (MCC ruling 3)."
+      "notes": "The document names its own source here; anchored to exactly that artefact. Stored POINT estimate, not the bootstrap mean (ruling 3)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          106,
-          106
+          120,
+          120
         ],
-        "section": "§7 Per-run MCC artefact locations"
+        "section": "§ 7 Per-run MCC artefact locations"
       },
-      "claim_text": "MCC matches `outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json` (0.6260).",
+      "claim_text": "MCC matches the live `outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json` (0.6260).",
       "values": [
         {
-          "quantity": "tile-level MCC, text-MIN (55maps-text-min-generalisation), as recorded in the full-buffer-eval artefact",
+          "quantity": "tile-level MCC point estimate, 55maps-text-min-generalisation, live full-buffer-eval",
           "value_verbatim": "0.6260",
           "value_parsed": 0.626,
           "unit": null,
@@ -3230,21 +3374,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "The document names this outputs/ artefact as the cross-check source, so it is the anchor here (rather than the archived per-run MCC file used elsewhere in this batch). Artefact stores both ...mcc.point and ...mcc.mean; path set to the point estimate (MCC ruling 3)."
+      "notes": "The document names its own source here; anchored to exactly that artefact. Stored POINT estimate, not the bootstrap mean (ruling 3)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          115,
-          115
+          129,
+          129
         ],
-        "section": "§7 Reproducibility command"
+        "section": "§ 7 Reproducibility command"
       },
       "claim_text": "  --buffers 50 75 100 125 150 \\",
       "values": [
         {
-          "quantity": "buffer radius, argument 1 of the reproducibility command's --buffers list",
+          "quantity": "buffer radius, first grid step in the reproducibility command",
           "value_verbatim": "50",
           "value_parsed": 50,
           "unit": "m",
@@ -3253,7 +3397,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, argument 2 of the reproducibility command's --buffers list",
+          "quantity": "buffer radius, second grid step in the reproducibility command",
           "value_verbatim": "75",
           "value_parsed": 75,
           "unit": "m",
@@ -3262,7 +3406,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, argument 3 of the reproducibility command's --buffers list",
+          "quantity": "buffer radius, third grid step in the reproducibility command",
           "value_verbatim": "100",
           "value_parsed": 100,
           "unit": "m",
@@ -3271,7 +3415,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, argument 4 of the reproducibility command's --buffers list",
+          "quantity": "buffer radius, fourth grid step in the reproducibility command",
           "value_verbatim": "125",
           "value_parsed": 125,
           "unit": "m",
@@ -3280,7 +3424,7 @@
           "method": "read"
         },
         {
-          "quantity": "buffer radius, argument 5 of the reproducibility command's --buffers list",
+          "quantity": "buffer radius, fifth grid step in the reproducibility command",
           "value_verbatim": "150",
           "value_parsed": 150,
           "unit": "m",
@@ -3290,34 +3434,34 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "The reproducibility block asserts what was run, so its parameters are anchored to the recorded cli_args of the MCC evaluation artefact."
+      "notes": "Claim about what was RUN; anchored to the recorded CLI arguments of the executed evaluation."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          116,
-          116
+          130,
+          130
         ],
-        "section": "§7 Reproducibility command"
+        "section": "§ 7 Reproducibility command"
       },
-      "claim_text": "  --bootstrap 1000 --seed 42 --mcc \\",
+      "claim_text": "  --bootstrap 10000 --seed 42 --mcc \\",
       "values": [
         {
-          "quantity": "bootstrap iterations passed on the reproducibility command line",
-          "value_verbatim": "1000",
-          "value_parsed": 1000,
+          "quantity": "bootstrap iterations in the reproducibility command",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
           "unit": null,
           "kind": "parameter",
           "path": "$._metadata.cli_args.bootstrap",
           "method": "read"
         },
         {
-          "quantity": "random seed passed on the reproducibility command line",
+          "quantity": "random seed in the reproducibility command",
           "value_verbatim": "42",
           "value_parsed": 42,
           "unit": null,
@@ -3327,11 +3471,454 @@
         }
       ],
       "anchor": {
-        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
         "path": null
       },
       "method": "read",
-      "notes": "Anchored to the recorded cli_args rather than the bootstrap block, since this span quotes the command line itself. Per-value paths per v1.2 amendment 3."
+      "notes": "This is the line the 2026-08-04 repair corrected from `--bootstrap 1000`; the pre-repair value is captured as the historical side of the Changelog table row at line 156."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          142
+        ],
+        "section": "Changelog 2026-08-04 — Refresh trigger"
+      },
+      "claim_text": "established that every confidence interval in § 2 was computed at 10,000\nBCa iterations, while the Methods text still described the 1,000-iteration\npercentile bootstrap of the mirror commit.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations at which the § 2 confidence intervals were actually computed",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations described by the pre-repair Methods text (superseded)",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Was-to-now pair: 1,000 is the superseded Methods description (historical); 10,000 is the live fact about what was run. '§ 2', 'wave-7' and 'P4' are out of scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          149
+        ],
+        "section": "Changelog 2026-08-04 — Cause"
+      },
+      "claim_text": "The CIs had moved twice — N = 1,000 →\n10,000 at `580f498b6` (2026-04-28) and percentile → BCa at `0699769c5`\n(2026-04-30) — after the 2026-04-27 mirror this report was written against.",
+      "values": [
+        {
+          "quantity": "count, changes to this report's CI settings since the mirror",
+          "value_verbatim": "twice",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations before the N = 10K upgrade (superseded)",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "bootstrap iterations after the N = 10K upgrade",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'twice' counts repo-history events; no artefact enumerates them, hence anchor-unknown. The 1,000 -> 10,000 arrow is the canonical was-to-now pair (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "Changelog 2026-08-04 — before/after table"
+      },
+      "claim_text": "| § 1 bootstrap iterations | 1,000 | **10,000** |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations stated in § 1 before the repair (Before column)",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "bootstrap iterations stated in § 1 after the repair (After column)",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Changelog before-to-after table row (rule 6, one claim per row): the Before cell is historical, the After cell is the live claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          155
+        ],
+        "section": "Changelog 2026-08-04 — before/after table"
+      },
+      "claim_text": "| Methodology-mirror invocation (head) | `--bootstrap 1000` | `--bootstrap 10000`, BCa, with the mirror's own 1,000/percentile settings recorded as the historical fact they are |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations in the Methodology-mirror invocation before the repair (Before column)",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "bootstrap iterations in the Methodology-mirror invocation after the repair (After column)",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations of the matrix-sweep mirror, retained in the repaired text as a historical fact",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Two of the three values on this row are historical: the Before cell, and the mirror's own 1,000/percentile settings which the After cell explicitly labels as historical. Only the repaired `--bootstrap 10000` is a live claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          156,
+          156
+        ],
+        "section": "Changelog 2026-08-04 — before/after table"
+      },
+      "claim_text": "| § 7 reproducibility command | `--bootstrap 1000` | `--bootstrap 10000` |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations in the § 7 reproducibility command before the repair (Before column)",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "bootstrap iterations in the § 7 reproducibility command after the repair (After column)",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Changelog before-to-after table row: Before is historical, After is the live claim (and matches the command body extracted at line 130). The '§ 1 bootstrap method' row (line 154) and the '§ 7 per-run artefact paths' row (line 157) carry no numeric values and are not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          162
+        ],
+        "section": "Changelog 2026-08-04 — What did NOT change"
+      },
+      "claim_text": "match exactly (image 0.6924 [0.6784, 0.7062]; T = 0.7 0.6476 [0.6331, 0.6620];\ntext-MIN 0.6260 [0.6114, 0.6408]), all recorded `\"method\": \"BCa\"`.",
+      "values": [
+        {
+          "quantity": "tile-level MCC point estimate, image run",
+          "value_verbatim": "0.6924",
+          "value_parsed": 0.6924,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, image run",
+          "value_verbatim": "0.6784",
+          "value_parsed": 0.6784,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, image run",
+          "value_verbatim": "0.7062",
+          "value_parsed": 0.7062,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile-level MCC point estimate, T=0.7 run",
+          "value_verbatim": "0.6476",
+          "value_parsed": 0.6476,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, T=0.7 run",
+          "value_verbatim": "0.6331",
+          "value_parsed": 0.6331,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, T=0.7 run",
+          "value_verbatim": "0.6620",
+          "value_parsed": 0.662,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile-level MCC point estimate, text-MIN run",
+          "value_verbatim": "0.6260",
+          "value_parsed": 0.626,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, text-MIN run",
+          "value_verbatim": "0.6114",
+          "value_parsed": 0.6114,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, text-MIN run",
+          "value_verbatim": "0.6408",
+          "value_parsed": 0.6408,
+          "unit": null,
+          "kind": "statistic",
+          "path": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json#$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "These are the LIVE (what-did-NOT-change) side of the changelog entry, not the historical side: the entry asserts these values were verified against the live full-buffer-eval artefacts and match. Point estimates anchor at `.point`, never `.mean` (ruling 3). T=0.3 is not quoted in this span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          169
+        ],
+        "section": "Changelog 2026-08-04 — Deliberately not blanket-replaced"
+      },
+      "claim_text": "the two references to commit\n`163161a4` describe the *mirror source*, which genuinely ran 1,000\npercentile iterations.",
+      "values": [
+        {
+          "quantity": "count, in-document references to the matrix-sweep mirror commit",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations of the matrix-sweep MCC mirror as at commit 163161a4 (superseded state)",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "The 'two references' count is a self-referential claim about this document's own prose (lines 13 and 100) — no artefact anchor, hence anchor-unknown. The mirror's 1,000 percentile iterations are historical: the matrix-cell artefacts in the working tree have since been re-run at 10,000/BCa, so a live anchor would manufacture a false mismatch."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          170
+        ],
+        "section": "Changelog 2026-08-04 — Deliberately not blanket-replaced"
+      },
+      "claim_text": "Rewriting those to 10,000 would have replaced one\ninaccuracy with another",
+      "values": [
+        {
+          "quantity": "bootstrap iterations of this report's own CIs, cited counterfactually as the value the mirror references were NOT rewritten to",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Flagged doubt: the value appears in a counterfactual clause rather than a direct assertion, but the number it names is this report's actual bootstrap count, so it is anchored live. 'one inaccuracy' is not a quantitative claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          184,
+          185
+        ],
+        "section": "Changelog 2026-04-27 — Original publication"
+      },
+      "claim_text": "Initial three-run tile-level MCC cross-run summary (T = 0.3 text-HIGH,\nT = 0.7 text-HIGH, image)",
+      "values": [
+        {
+          "quantity": "count, corrected runs in the original 2026-04-27 publication (superseded scope)",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "The original-publication changelog stub describes the document's superseded initial state; classed historical per rule 3 rather than compared against the current four-run table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          187
+        ],
+        "section": "Changelog 2026-04-27 — Original publication"
+      },
+      "claim_text": "Extended 2026-04-28 (commit `7b7509d5`) to add text-MIN as a\nfourth corrected run",
+      "values": [
+        {
+          "quantity": "count, corrected 55-map runs after the text-MIN extension",
+          "value_verbatim": "fourth",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Not historical: the four-run scope is still current, it is merely narrated inside the original-publication changelog entry. No artefact enumerates the corrected-run set."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          189
+        ],
+        "section": "Changelog 2026-04-27 — Original publication"
+      },
+      "claim_text": "refreshed 2026-05-03 (commit `42ed1d32`) to incorporate\npost-recovery numbers for T = 0.7, image, and text-MIN against the canonical\n4,745-mound updated curator ground truth.",
+      "values": [
+        {
+          "quantity": "mound count, canonical updated curator ground truth",
+          "value_verbatim": "4,745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Live claim, not historical: the changelog entry restates the canonical GT size, which is unchanged."
     }
   ]
 }

@@ -1,12 +1,16 @@
 # 55-map corrected runs: tile-level MCC cross-run summary (v2)
 
+> **Last revised**: 2026-08-04 (Methods text corrected to the bootstrap
+> settings that actually produced the § 2 CIs; archived artefact paths
+> repointed). See [§ Changelog](#changelog) for revision history.
+
 **Generated**: 2026-04-27 (initial 3-run); extended 2026-04-28 to add
 text-MIN as a fourth corrected run; refreshed 2026-05-03 (cross-track-v2
 commit `42ed1d32`) to incorporate post-recovery numbers from all four
 corrected runs (T=0.7 + image + text-MIN re-evaluations against the
 canonical 4,745-mound updated curator ground truth; T=0.3 unchanged).
 **Scope**: tile-level Matthews Correlation Coefficient (MCC), sensitivity, and specificity for the four manually-corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH, image, text-MIN), against the canonical post-review ground truth.
-**Methodology mirror**: `scripts/evaluate_detections.py --mcc --bootstrap 1000 --seed 42`, mirroring commit `163161a4` (matrix sweep MCC re-eval).
+**Methodology mirror**: `scripts/evaluate_detections.py --mcc --bootstrap 10000 --seed 42`, BCa. The tile-level MCC convention mirrors commit `163161a4` (matrix sweep MCC re-eval), which itself ran 1,000 percentile-bootstrap iterations; the 55-map CIs reported here were subsequently upgraded to N = 10,000 (commit `580f498b6`, 2026-04-28) and migrated to BCa (commit `0699769c5`, 2026-04-30), so the invocation differs from the mirror in bootstrap count and method.
 **Policy**: per `feedback_mcc_with_f1.md`, MCC must accompany F1 wherever inputs support it; this report closes the gap for the four corrected 55-map runs.
 
 ## 1. Input convention
@@ -16,7 +20,7 @@ All four runs are evaluated against:
 - **Ground truth**: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4,744 features) — the canonical post-review GT used by `compute_corrected_f1_multi_buffer.py`.
 - **Bounds**: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` (8,541 tiles).
 - **Buffers**: 50, 75, 100, 125, 150 m (canonical for the corrected-F1 pipeline).
-- **Bootstrap**: 1,000 iterations, seed 42, tile-level resampling.
+- **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling, Bias-Corrected and Accelerated (BCa) via `scipy.stats.bootstrap`.
 
 **Methodological choice — student GT vs extended GT.** The corrected-F1 pipeline (`compute_corrected_f1_multi_buffer.py`) augments the student GT with reviewer-promoted phantoms (Approach B: extended-GT-at-R Hungarian matching). For MCC, however, the matrix-sweep convention (commit `163161a4`) uses standard tile-level classification against the un-augmented reviewed GT. This report follows the matrix convention: MCC against `student-mounds-55maps-reviewed.geojson`, no phantoms. Rationale — comparability with the other 55-map MCC artefacts (T=0.7 and image full-buffer-eval already used this convention) and with the matrix sweep. An extended-GT MCC variant could be added later but is not required for the cross-run comparison this report addresses.
 
@@ -93,17 +97,27 @@ This is exactly the pattern Obs 280 anticipated: paper structure should report b
 - **Obs 252** (Buffer elasticity, working-notes.md L11047): text ~4× lower elasticity than image — explains why text wins F1 at tight R but image catches up as R relaxes.
 - **Obs 272**: attractor-pull effect significant only through 125 m; 150 m row is upper bound, not practitioner-useful.
 - **Obs 280**: F1/MCC tier-leader divergence pattern (text wins F1, image wins MCC) — confirmed here for the corrected 55-map runs.
-- **Commit `163161a4`** (matrix sweep MCC re-eval): methodology mirror — same `evaluate_detections.py --mcc --bootstrap 1000 --seed 42` invocation pattern.
+- **Commit `163161a4`** (matrix sweep MCC re-eval): methodology mirror for the tile-level MCC convention. Its own CIs were 1,000-iteration percentile bootstrap; the 55-map CIs in this report were upgraded to N = 10,000 and migrated to BCa after it, so the two invocations agree on convention but differ in bootstrap count and method.
+- **Commit `580f498b6`** (2026-04-28, bootstrap CIs upgraded to N = 10K) and **commit `0699769c5`** (2026-04-30, BCa migration): the two changes that moved this report's CIs off the mirror's bootstrap settings. Point estimates are deterministic across the BCa migration; only CI bounds shift.
 - **Commit `bdd61bcc`** (MCC rendering fix): MCC now appears in `evaluation.md` and `evaluation.csv` alongside `evaluation.json`.
 - **Commit `98b128ae`** (initial 3-run re-eval data commit): the per-run MCC artefacts that grounded the 2026-04-27 baseline of this report.
 - **Commit `42ed1d32`** (cross-track-v2): post-recovery image / T=0.7 / text-MIN re-evaluations against the 4,745-mound updated curator GT — the source of the 2026-05-03 row refreshes in §2.
 
 ### Per-run MCC artefact locations
 
-- `results/55maps-text-high-t0.3-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); unchanged in 2026-05-03 refresh.
-- `results/55maps-text-high-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches `outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json` (0.6476).
-- `results/55maps-image-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches `outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json` (0.6924).
-- `results/55maps-text-min-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `7b7509d5`, 2026-04-28); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches `outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json` (0.6260).
+These four per-run MCC evaluations were **archived on 2026-06-07** (Session 105,
+commit `da2cf355f`) when the two-reference Track 1 / Track 2 consolidation
+superseded the ad-hoc 55-map GT-evaluation variants; they now live under
+`archive/55maps-superseded-gt-evals/per-run/`. The paths below are updated
+accordingly — the artefacts are preserved, not deleted, per project policy.
+The MCC figures in § 2 remain corroborated by the **live**
+`full-buffer-eval` evaluations, which is why the table stands despite the
+per-run directories having moved.
+
+- `archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); unchanged in 2026-05-03 refresh.
+- `archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches the live `outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json` (0.6476).
+- `archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches the live `outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json` (0.6924).
+- `archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `7b7509d5`, 2026-04-28); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches the live `outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json` (0.6260).
 
 Reproducibility command (run on sapphire):
 
@@ -113,7 +127,63 @@ python3 scripts/evaluate_detections.py \
   --ground-truth inputs/vectors/references/student-mounds-55maps-reviewed.geojson \
   --bounds inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson \
   --buffers 50 75 100 125 150 \
-  --bootstrap 1000 --seed 42 --mcc \
+  --bootstrap 10000 --seed 42 --mcc \
   --output-dir results/<run>/mcc \
   --label "<run>"
 ```
+
+## Changelog
+
+### 2026-08-04 — Methods text reconciled with the artefacts (C4 wave-7 triage)
+
+**Refresh trigger**: wave-7 blind adjudication pass P4 (commit `e86bca52d`)
+established that every confidence interval in § 2 was computed at 10,000
+BCa iterations, while the Methods text still described the 1,000-iteration
+percentile bootstrap of the mirror commit. The § 2 reproducibility command
+therefore could not reproduce the table printed above it, and BCa was never
+named anywhere in the document.
+
+**Cause**: commit `fc536a19c` imported the post-migration CIs into § 2 without
+updating the surrounding Methods prose. The CIs had moved twice — N = 1,000 →
+10,000 at `580f498b6` (2026-04-28) and percentile → BCa at `0699769c5`
+(2026-04-30) — after the 2026-04-27 mirror this report was written against.
+
+| Claim | Before | After |
+| :--- | :--- | :--- |
+| § 1 bootstrap iterations | 1,000 | **10,000** |
+| § 1 bootstrap method | (unstated) | **BCa (`scipy.stats.bootstrap`)** |
+| Methodology-mirror invocation (head) | `--bootstrap 1000` | `--bootstrap 10000`, BCa, with the mirror's own 1,000/percentile settings recorded as the historical fact they are |
+| § 7 reproducibility command | `--bootstrap 1000` | `--bootstrap 10000` |
+| § 7 per-run artefact paths | `results/<run>/mcc/` | `archive/55maps-superseded-gt-evals/per-run/<run>/mcc/` |
+
+**What did NOT change**: every number in § 2 and § 3. The MCC point estimates
+and CI bounds were verified against the live `full-buffer-eval` artefacts and
+match exactly (image 0.6924 [0.6784, 0.7062]; T = 0.7 0.6476 [0.6331, 0.6620];
+text-MIN 0.6260 [0.6114, 0.6408]), all recorded `"method": "BCa"`. Point
+estimates are deterministic across the BCa migration; only CI bounds shifted,
+and those shifts are already reflected in the table. No ranking, no
+F1-versus-MCC divergence claim, and no cross-run conclusion moves.
+
+**Deliberately not blanket-replaced**: the two references to commit
+`163161a4` describe the *mirror source*, which genuinely ran 1,000
+percentile iterations. Rewriting those to 10,000 would have replaced one
+inaccuracy with another, so they now state the mirror's settings and the
+subsequent migration separately.
+
+**Secondary finding, repaired in the same pass**: the § 7 per-run artefact
+paths had pointed at `results/<run>/mcc/` since 2026-04-27, but those
+directories were archived on 2026-06-07 (commit `da2cf355f`) by the Track 1 /
+Track 2 consolidation. The artefacts are preserved under `archive/`, and the
+paths are repointed there.
+
+**Landed**: this revision, with the document re-extracted in the same commit
+per charter § 5 rule 14 (ruling 18).
+
+### 2026-04-27 — Original publication
+
+Initial three-run tile-level MCC cross-run summary (T = 0.3 text-HIGH,
+T = 0.7 text-HIGH, image), mirroring the matrix-sweep MCC convention of commit
+`163161a4`. Extended 2026-04-28 (commit `7b7509d5`) to add text-MIN as a
+fourth corrected run; refreshed 2026-05-03 (commit `42ed1d32`) to incorporate
+post-recovery numbers for T = 0.7, image, and text-MIN against the canonical
+4,745-mound updated curator ground truth.
