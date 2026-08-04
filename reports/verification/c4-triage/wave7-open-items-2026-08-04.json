@@ -246,5 +246,21 @@
   "pi_ruling": "Cannot go forward (ruling 20a). Both metrics must use the same reference.",
   "sequencing": "Do NOT recompute yet (ruling 20b) — the reference moves again at the phantom re-review, and recomputing twice is waste. Unification is gated on the point-marking work.",
   "status": "OPEN — gated, not deferred indefinitely. Blocks publication of the F1-vs-MCC divergence as a metric-behaviour claim."
- }
+ },
+ "unverified_claims_made_this_session": [
+  {
+   "id": "W7-U1",
+   "claim": "Ruling 19's description of the per-buffer GATING MECHANISM — that reviewer-promoted phantoms qualify at a buffer R and thereby enter the extended reference.",
+   "status": "UNVERIFIED. The COUNTS are verified (773 total; 474/595/642/661/672 promoted at R=50/75/100/125/150; extended 5,220/5,341/5,388/5,407/5,418, all read directly from summary.json fields and canonical-review.csv). The MECHANISM sentence is my reading of the Approach B framing, not something I traced through the code.",
+   "why_it_matters": "Ruling 19 is a PI ruling and will be cited. If the mechanism is cited in Methods it must be traced through compute_corrected_f1_multi_buffer.py first.",
+   "how_to_close": "Read the phantom-gating path in compute_corrected_f1_multi_buffer.py (build_phantom_gdf and its buffer gate) and confirm or correct the sentence in ruling 19.",
+   "recorded_because": "It was stated twice in session chat and nowhere durable — exactly the residue class the handoff step-0 sweep exists to catch."
+  },
+  {
+   "id": "W7-U2",
+   "claim": "That canonical-review.csv's 415 rows at buffer_metres=50 relate to the image run's 474 promoted-at-R=50 by per-run phantom sets differing from the canonical adjudicated set.",
+   "status": "UNVERIFIED — offered as the likely explanation, deliberately not asserted. Both numbers are read directly; only the relationship between them is conjecture.",
+   "how_to_close": "Compare a per-run phantom set against canonical-review.csv row-by-row."
+  }
+ ]
 }
