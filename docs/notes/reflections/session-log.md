@@ -7908,3 +7908,99 @@ FAIL generalises to correction-block-dense registration prose — the
 b016–b023 Opus escalation was never A/B-confirmed per batch. Sapphire
 was the canonical recompute host throughout; the amd-tower
 counterparts exist only where noted (Obs 383/385 lineage).
+
+## Session 127 — 2026-08-04 — fleet wave 7; era_check redesign; rulings 18–20; W7-E4 repairs
+
+**Model**: Opus (first session of the 48-hour Opus window; Fable credit
+exhausted). **API spend**: US$0.00 — Claude-side agents and sapphire
+recompute only. **Commits**: `f097c9d32`→`15fc00e04`, 24 commits, all
+pushed. **Tier-1**: 1,361 → **1,376/0** on sapphire.
+
+**Pre-flight, before wave 7 was assigned.** The beacon's instruction to
+check line counts against the batch plan found drift, so the check was
+widened to all 178 batches and all 104 tracked extraction files. Eight
+pending files had grown 546 lines since the 2026-07-31 plan build —
+interleaved, not appended, so recorded ranges pointed at shifted content
+*and* left tails unassigned; ranges re-planned heading-aligned
+(`f097c9d32`, 11 batch ids, no id/count/wave changes). Widening found 17
+already-extracted files grown by 1,129 lines and 4 short at their own
+extraction era by 95 lines → escalations W7-E1/E2/E3 recorded in
+`coverage-drift-2026-08-04.json`.
+
+**Validator.** 41 of 104 files failed on blob drift carrying 1,361
+verbatim failures; all 41 verified clean against their own extraction
+blob. Opt-in `--at-era` mode added (`ac547aab7`, 5 tier-1 tests), default
+deliberately unchanged. Later, `fd01aff10`: null anchor made legal for a
+self-describing arithmetic value (blast radius: exactly one claim).
+
+**Fleet wave 7** (b080–b099, all Opus per ruling 4): 24 files, **1,079
+claims / 3,095 values**, all validating; plan pending 98 → 78
+(`37c153f0b`). Two extraction defects repaired pre-landing. Canonical
+recompute on sapphire 12,988 → **16,083 rows** (`ce76fffb9`). **Obs 382
+join CLEAN**: 3,095 rows added (exactly the wave's value count), zero
+non-wave additions, zero removals, zero reason drifts; all 87 pre-wave
+transitions attributed to `cf11e3baa` and the W6-E9 fix chain. `051#0[0]`
+moved actual 4→3 as predicted.
+
+**era_check redesigned** (`b624849b6`, `ba84bdd4a`). Three blind passes
+independently indicted it. Root cause: it resolved anchors at the source
+document's *file* era when era-faithfulness is a property of the *claim's
+span*. Now blames the claim's line range; adds `era_basis`, `file_era`,
+`era_disagreement`, and ANCHOR-ABSENT-AT-ERA (file- and path-grain);
+ungated per ruling 14. Measured against the blind passes' 206 hand
+adjudications: **false defect-stamps 91 → 1**, coverage 308 → 625 rows,
+zero bare ERRORs, 510/625 carrying `era_disagreement`. Primary statuses
+byte-identical.
+
+**Wave-7 triage**: 206 MISMATCH rows; draft stories pre-registered
+(`888ddad83`) before four blind Opus passes (`e86bca52d`) — **183
+SNAPSHOT-DIVERGENCE, 9 RECLASSIFY, 7 DOC-DEFECT-AT-ERA, 5
+EXTRACTION-DEFECT, 2 INSTRUMENT**; eighth consecutive wave in which the
+blind layer corrected the triager.
+
+**Repairs**: MCC v2 summary Methods reconciled with its artefacts
+(`75e825d47` — 1,000 → 10,000 iterations, BCa named, a reproducibility
+recipe that could not reproduce its own table, archived paths repointed);
+its stale figures (`1085335dc`); ds-summary and temperature-failure
+(`45aa6a0d1`). A blind verification then caught a **false claim the repair
+introduced** about D-S reference layers, withdrawn in place (`18bbcaa18`).
+Three rule-14 re-extractions of ds-summary/MCC across the day; b073's blob
+repointed after a verbatim re-check rather than re-extracted (`bc21ff3be`).
+
+**Rulings collected** (`78fc69554`, `b370f04ed`, ruling 20 commit): **18**
+repair-and-re-extract coupling → charter § 5 rule 14, backlog folds into
+waves 8–12, GATE 3 gains a whole-corpus drift check. **19** the four GT
+layers (fixed 4,770 / corrected 4,746 / historical 4,744–4,745 record-only
+/ 773 reviewer-promoted), nothing publishes on 4,770 where wrong. **20**
+F1 and MCC must share a reference but must not be recomputed until the
+point-marking re-review lands.
+
+**Measurements produced**: sidecar sweep — 7 of 7 disagree with their
+artefacts (all 1000/percentile vs 10000/BCa), frozen at `ad023fc3b` while
+three migrations passed them by; the CI registry's own rows likewise stale
+and ~9 rows naming moved artefacts → W7-I2 raised to HIGH. Phantom
+duplication audit — 773 promoted mounds internally unique (0 pairs within
+10 m), median same-map NN to student GT 115.7 m, exactly one true twin at
+0.98 m caught by the 5 m de-dup, 4–6 cases in a 7.3–15 m grey zone.
+Ground-truth census — fixed base verified immutable (one commit,
+byte-identical md5); 4,770 − 52 + 28 = 4,746 closes exactly.
+
+**Externalised for S128**: `wave7-open-items-2026-08-04.json` (8 defects,
+1 research finding, 3 instrument gaps, escalation status, GT layers,
+duplication audit, metric asymmetry), `coverage-drift-2026-08-04.json`
+(incl. the GT era-disposition rule), `student-gt-reference-census-2026-08-04.json`,
+`wave7-draft-stories`, five blind-pass files, and the S128 continuity
+brief (`15fc00e04`).
+
+**Contextual assumptions**: the session ran under an interim-conservatism
+directive (adjudications to the PI queue, not landed) for its first half,
+which is why several findings were escalated rather than repaired; that
+constraint lifted mid-session when the PI became available and moved to
+decision-by-decision adjudication, and everything after that point was
+repaired under live rulings. Span counts for re-ranged batches are
+density-scaled *estimates* (`spans_basis`), not survey counts — the plan
+has no builder script. The 474-vs-415 relationship between the image run's
+promoted count and `canonical-review.csv`'s R=50 rows is unverified and was
+deliberately not explained away. Ruling 19's description of the per-buffer
+gating *mechanism* is a reading of the Approach B framing, not a verified
+claim; the counts are solid, the mechanism sentence is not.

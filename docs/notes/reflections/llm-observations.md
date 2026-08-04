@@ -6875,3 +6875,70 @@ fully-recovered passes. In each case the guard was well-intentioned,
 tested, and wrong in the tail where it mattered; in each case the fix
 was to measure the target directly (processed-tile counts, explicit
 zero-match handling, completed-union) rather than improve the proxy.
+
+## Session 127 — 2026-08-04 (declarations beat inferences when passes disagree; a closing identity is evidence about included terms only; asking about the file when the question is about the claim; coupling maintenance to the action that creates the debt)
+
+**When two verification passes disagree, prefer the one reading a
+declared field over the one inferring from a derived quantity.** Three
+layers examined the same question today and produced three answers. I
+asserted the four 55-map runs' Dawid–Skene fits all consumed the legacy
+reference; a blind pass refuted it, finding image at 4,745 and the other
+three at 4,770; a census then inverted that, finding t0.3 the outlier.
+The census won not by being more careful but by reading
+`cli_args.ground_truth` — a field the pipeline *declares* — where the
+blind pass had reasoned backwards from what D-S fits *imply*. Implied
+quantities inherit the noise of everything that produced them, so two
+passes reasoning from implications can disagree indefinitely without
+either being resolvable. The practical rule: when a claim concerns what
+a computation consumed, look for the field where it recorded that, and
+treat inference from outputs as a fallback rather than a peer. Adding a
+fourth blind pass at the same epistemic level would have produced a
+vote, not a resolution.
+
+**An arithmetic identity that closes is evidence about the terms you
+included, not about the terms you omitted.** The ground-truth census
+reconciled 4,770 − 52 + 28 = 4,746 exactly — twenty-six merged
+double-marks plus two curator additions, every number accounted for —
+and I read that closure as completeness. It was not: a fourth layer of
+773 reviewer-promoted mounds sat outside the identity entirely, and the
+sum balanced without it because those mounds were never in the student
+layer to begin with. Shawn caught it from domain memory ("I thought I'd
+found hundreds?"), not from anything in the reconciliation. The failure
+mode is specific and repeatable: a balanced account is *self*-consistent,
+and self-consistency is exactly the property that cannot detect an
+omitted category. Where a reconciliation closes neatly, the next question
+is not "does it balance" but "what would live outside this identity if it
+existed" — and that question usually needs someone who knows how the data
+was made.
+
+**Machinery that asks a question about the wrong object fails in both
+directions at once.** The `era_check` field re-resolved anchors at the
+source document's *file* era when era-faithfulness is a property of the
+*claim's span*. Because extraction runs at HEAD, the file era was usually
+HEAD, so anchors re-resolved to today and it stamped `faithful: false` on
+75 rows whose true defect count was zero; where a later banner had touched
+the file, the era landed inside the very campaign that moved the artefacts.
+Same root cause, opposite symptoms — and a third pass found it firing on
+*none* of its 24 rows because it was gated on a dated filename. A wrong
+granularity does not produce a consistent bias you can correct for; it
+produces false positives, false negatives, and silence, depending on the
+document. Documents are not written at a single moment, so anything keyed
+to "when was this document written" is asking an unanswerable question.
+Blaming the claim's own line range fixed all three symptoms: false stamps
+91 → 1, coverage 308 → 625 rows.
+
+**Coupling a maintenance obligation to the action that creates the debt
+beats scheduling it.** Asked how much of a stale extraction corpus to
+refresh, I offered four scope options; Shawn asked the better question —
+*when*, given that future corrections re-stale it anyway. Neither answer
+was right. Any date is wrong when the invalidation is recurrent: sweep
+early and it is invalidated four more times, sweep late and every
+intervening wave pays for it. The resolution was to make repair and
+re-extraction a single indivisible act (charter rule 14), after which the
+timing question dissolves and a backlog sweep becomes durable rather than
+provisional. Worth recording the cost honestly: exercising it three times
+in one day on one document showed that a correction-to-a-correction also
+triggers a re-extraction, and that `git_blob` pins a *document* while
+batches cover *ranges*, so an edit invalidates the pointer for batches
+whose own lines never moved. The invariant is right; its granularity is
+not yet.

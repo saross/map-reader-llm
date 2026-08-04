@@ -6295,3 +6295,107 @@ llm-observations): when a number is checked, ask what selected its
 the bounds the evaluator was handed. All three of this session's
 biggest findings were referent-selection failures, not arithmetic
 failures.
+
+## 2026-08-04 (Session 127, map-reader-llm): Two belief-revisions — the inversion redundancy could not resolve, and the identity that closed too neatly
+
+**Session:** 0ed2393d-64e2-44e6-b818-9640b61daeaa
+**Instance:** primary
+
+### Sequence 1 — "independent verification layers converge on truth"
+
+#### Surprising fact
+
+Two independent layers examined the same question and gave three different
+answers, mine included. I asserted in a document changelog that all four
+55-map runs' Dawid–Skene fits consume the legacy reference layer. A blind
+verification pass refuted it: the runs are not uniform — image implies a
+4,745-point student GT, the other three imply the 4,770-feature legacy
+layer. A ground-truth census, commissioned for an unrelated purpose, then
+found the split **inverted**: t0.3 is the outlier on 4,770, and image sits
+with the majority on the reviewed layer.
+
+The surprise is not that I was wrong — that is the expected outcome of a
+blind pass, and it was the ninth consecutive wave in which the blind layer
+corrected the author. The surprise is that the *corrector* was wrong about
+the direction, and a third look reversed it rather than splitting the
+difference.
+
+#### Probe
+
+Re-derived the question from the field the pipeline declares rather than
+from what its outputs imply: `cli_args.ground_truth` in each run's
+evaluation JSON. Unambiguous — t0.3 records `student-mounds-55maps.geojson`
+(the unreviewed 4,770 base); text-high, image and text-min all record
+`student-mounds-55maps-reviewed.geojson`. Then checked whether the
+asymmetry reaches the comparison that matters: all four archived per-run
+MCC artefacts record the reviewed layer, so the MCC cross-run table is
+like-for-like.
+
+#### Belief revision
+
+Became "**independent layers converge only if at least one reads a
+declaration; layers reasoning from derived quantities can disagree without
+being resolvable.**" The blind pass inferred a reference from what D-S fits
+*imply*; implied quantities inherit the noise of everything upstream, so a
+fourth blind pass reasoning the same way would have cast a vote rather than
+settled the question. The census won on *method*, not diligence.
+
+Secondary revision in the same chain: "a real asymmetry means the
+comparison is compromised" became "locate the asymmetry before pricing it".
+The finding was real but confined to one evaluation directory, and the MCC
+comparison it appeared to threaten was never affected — severity dropped
+HIGH → MEDIUM on evidence rather than on argument.
+
+### Sequence 2 — "the arithmetic closes, so the account is complete"
+
+#### Surprising fact
+
+Shawn asked "did I really find so few additional mounds? I thought I'd
+found hundreds?" — against a census I had just presented as settled, in
+which his entire curator contribution appeared to be **two** points.
+
+#### Probe
+
+Searched for a layer *outside* the reconciliation rather than re-checking
+the reconciliation. Found `canonical-review.csv`: 773 rows, every one
+`human_label=mound`, entering analysis per buffer — 474 qualify at
+R = 50 m, rising to 672 at 150 m.
+
+#### Belief revision
+
+Became "**an identity that closes is evidence about the terms it includes
+and silent about the terms it omits.**" The reconciliation
+4,770 − 52 + 28 = 4,746 balanced exactly *because* the 773 promoted mounds
+were never in the student layer; their absence could not perturb a sum they
+were never part of. Balanced books are self-consistent, and
+self-consistency is precisely the property that cannot detect a missing
+category.
+
+#### What would change this belief
+
+A case where a closing identity *did* surface an omitted category — where
+the omission perturbed the sum and forced the search — would narrow the
+lesson to "identities over disjoint layers", since the failure here
+depended on the missing term being structurally outside the identity rather
+than merely unaccounted within it.
+
+### Meta-pattern across the two sequences
+
+Both are *referent-selection* failures rather than arithmetic failures,
+continuing the pattern this file recorded at Session 88. Two rules follow:
+
+1. When a claim concerns what a computation consumed, find the field where
+   it recorded that. Treat inference from outputs as a fallback, never as a
+   peer to a declaration.
+2. When a reconciliation closes neatly, the next question is not "does it
+   balance" but "what would live outside this identity if it existed" — and
+   answering it usually needs someone who knows how the data was made. Here
+   that was the PI's memory of his own review effort, and no amount of
+   internal consistency checking would have substituted for it.
+
+### What this is not
+
+Not an argument against blind verification. The blind pass caught a false
+claim I had written into a dated changelog as verified fact, and without it
+that claim would have shipped. The finding is about what *kind* of
+additional layer buys resolution once two layers already disagree.

@@ -621,3 +621,104 @@ investigation regardless of how small the visible instance is.
 **How to apply.** Treat handler-disagreement as an escalation
 trigger in its own right; reserve "accept the mechanical fix" for
 anomalies whose mechanism is already named.
+
+## claude-obs 27 — 2026-08-04 (Session 127): he changed the axis of my question, and the answer was on neither end of it
+
+**Pattern.** I escalated a stale extraction corpus as a scope question and
+offered four options along one axis — how *much* to re-extract, from one
+document to all seventeen, with costs attached. Shawn did not pick. He
+asked "what about the timing? You note that future corrections will throw
+it out again — if we want complete repair, when should we do it?" That is
+a different axis, and once it was named the original axis stopped
+mattering: no date works when the invalidation recurs, so the answer was
+to couple re-extraction to repair (charter rule 14) and let the timing
+question dissolve. Related to [claude-obs 24], where he re-opened a binary
+and the third option became the ruling — but the move here is sharper. He
+did not add an option to my list; he rejected the list's dimension.
+
+**Lesson.** When I present options that all trade the same variable, that
+is a signal I have assumed the variable is the decision. A menu whose
+entries differ only in magnitude usually means the interesting question
+is somewhere else — and the person who has to live with the consequence
+often sees the other axis faster than the person enumerating the cells.
+
+**How to apply.** Before offering a scope menu, state what the options
+hold *constant* and ask whether that constant is right. If every option
+varies one quantity, name the axis explicitly — "these all trade coverage
+against cost; is cost the binding constraint?" — so the reframe is cheap
+for him rather than requiring him to reject the whole frame.
+
+## claude-obs 28 — 2026-08-04 (Session 127): self-critique — I read a balanced account as a complete one
+
+**Pattern.** I commissioned a ground-truth census, got back an identity
+that closed exactly (4,770 − 52 + 28 = 4,746: twenty-six merges plus two
+curator additions), and presented it as settled with a should-cite
+recommendation for each layer. Shawn's reply — "did I really find so few
+additional mounds? I thought I'd found hundreds?" — was right, and the
+closure is precisely why I missed it. His 773 reviewer-promoted mounds sit
+in a separate layer that could not perturb a sum they were never part of.
+I had treated "every number is accounted for" as "every category is
+present", which is a different claim.
+
+**Lesson.** Self-consistency cannot detect an omitted category. A
+reconciliation that balances is strong evidence about the terms inside it
+and carries no information at all about terms structurally outside it —
+and the neatness of the closure actively suppresses the impulse to look.
+This is the same shape as the proxy-divergence lesson from Session 125,
+one level up: there the guard's proxy diverged from its target; here the
+*completeness check* was itself the proxy.
+
+**How to apply.** When a reconciliation closes, ask "what would live
+outside this identity if it existed?" before reporting it as settled — and
+route that question to whoever made the data, because it is answered from
+provenance memory, not from the numbers. Concretely: when reporting a
+census, say which populations were *searched* and which were merely
+*balanced*.
+
+## claude-obs 29 — 2026-08-04 (Session 127): self-critique — I repaired the instance and left the class
+
+**Pattern.** Repairing the MCC summary I found its provenance section
+pointing at four artefacts archived two months earlier, and fixed them.
+Good catch, wrong scope: a blind verification pass then found the *same*
+defect in the next document I had repaired that day, and the sidecar sweep
+later found ~9 more instances in the CI registry. The archival commit
+(`da2cf355f`) moved a whole class of paths, and every document citing them
+broke at once — but I treated the finding as a property of the document I
+happened to be reading.
+
+**Lesson.** A defect caused by a single upstream event is a *class*, and
+its cardinality is knowable cheaply — one grep on the moved path pattern.
+When I find a stale pointer while doing something else, the question is
+not "is this document fixed" but "what event caused this, and what else
+did that event touch". I had the causing commit hash in hand and did not
+ask it that question.
+
+**How to apply.** On finding any defect traceable to a named commit,
+immediately run the corpus query for that commit's blast radius before
+returning to the task in hand. Record the count even when not repairing —
+"9 further instances, unrepaired" is a usable finding; "fixed one" is not.
+
+## claude-obs 30 — 2026-08-04 (Session 127): he consistently sequences to avoid doing work twice
+
+**Pattern.** Three times today he declined to authorise work that was
+individually reasonable, on sequencing grounds. He accepted the metric
+unification was necessary — "I don't think we can go forward with the MCC
+against the uncorrected dataset" — then immediately gated it: "I don't
+think we should recompute until we've sorted the borderline cases though,
+no need to recompute twice." He folded the 4–6 ambiguous phantom cases
+into the point-marking work already committed rather than opening a
+parallel exercise. And on the backlog he chose the option that made a
+sweep durable before running one.
+
+**Lesson.** He optimises for total rework rather than per-decision
+progress, and he does it by asking what the *next* change to the same
+artefact will be. My default is to clear each item as it becomes
+actionable, which maximises visible progress and quietly buys repeated
+recomputation. His question — "will this be invalidated by something
+already planned?" — is one I do not reliably ask.
+
+**How to apply.** Before proposing any recompute, regeneration, or sweep,
+check the committed-future-work list for anything that will touch the same
+artefact, and say so in the proposal: "this recomputes X; the phantom
+re-review will move X again, so it should follow it." Make the dependency
+visible rather than making him supply it.

@@ -9582,3 +9582,109 @@ misattributed the magnitude — the fix is a rider, the register is
 append-only, and the three-layer story lives in
 `results/e43-matched-temperature/findings.md` §§ 12–13, which is the
 one file to re-read before writing the temperature paragraph.
+
+## Session 127 — 2026-08-04 — three layers, three different errors, and the arithmetic that closed too neatly
+
+First Opus session of the 48-hour window. Fleet wave 7 landed (24 files,
+1,079 claims), the era_check machinery was rebuilt, and three rulings came
+out of a decision-by-decision conversation with Shawn. But the session's
+real texture was verification eating its own tail — repeatedly, and
+productively.
+
+### Prompt: What surprised you about this session?
+
+That the census corrected the blind pass, which had already corrected me.
+
+The sequence is worth stating precisely because I would not have predicted
+it. I repaired two documents and, in the changelog, asserted that the
+Dawid–Skene aggregations "consume the separate legacy layer … not the
+reviewed layer at all." A blind verification pass refuted it: the four runs
+are not uniform, image implies 4,745 and the other three imply 4,770. I
+withdrew the claim in place and recorded the asymmetry as open. Then the
+reference-layer census — commissioned for a different purpose — read
+`cli_args.ground_truth` directly and found the split **inverted**: t0.3 is
+the outlier on 4,770, not image.
+
+So: I was wrong, the layer that caught me was wrong about the direction,
+and the third layer settled it. What distinguishes the census is not that
+it was more careful but that it read the *declared* field instead of
+inferring a reference from *implied counts*. The blind pass reasoned from
+what D-S fits imply; that is a derived quantity, and derived quantities
+carry the noise of whatever produced them. Two passes reasoning from
+implications disagreed; one pass reading a declaration settled it.
+
+The surprise is not "verification works" — it is that redundancy at the
+*same* epistemic level would not have helped. A fourth blind pass inferring
+from implied counts would have voted, not resolved.
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+Not a disagreement so much as Shawn refusing to accept a tidy answer, and
+being right to.
+
+I presented the ground-truth census as settled: fixed base 4,770, corrected
+4,746, historical 4,744/4,745, with the arithmetic closing exactly —
+4,770 − 52 + 28 = 4,746, twenty-six merges plus two curator additions.
+Every number accounted for. Shawn's response was "did I really find so few
+additional mounds? I thought I'd found hundreds?"
+
+He was right and the closing arithmetic is *why* I missed it. The sum
+balanced without needing a fourth layer, so nothing in the reconciliation
+prompted me to look for one. The 773 reviewer-promoted mounds — his actual
+review effort — live in a separate extension layer entering analysis
+per-buffer, 474 of them at R = 50 m. A net decrease in the student layer is
+entirely compatible with hundreds of discoveries elsewhere, and I read the
+balanced books as completeness.
+
+The lesson generalises past this instance: **an arithmetic identity that
+closes is evidence about the terms you included, not about the terms you
+omitted.** I treated "the numbers reconcile" as "the account is complete",
+and only domain memory — someone who *did the reviewing* and knew how much
+work it was — caught the gap. That is not a check any amount of internal
+consistency would have produced.
+
+### Prompt: What decision or trade-off made today will look arbitrary without this session's context?
+
+Choosing per-document classification over a bulk find-and-replace, at
+roughly nineteen documents' cost.
+
+On its face this looks like excessive caution: the stale figures were
+mechanical (`0.8332` → `0.8333`, `4,744`/`4,745` → `4,746`), a sweep would
+have taken minutes, and the per-document route consumed most of an
+afternoon and several agents. A future reader seeing the cost without the
+reasons will think it fussy.
+
+The reasons, recorded because they will not be obvious: a bulk sweep would
+have caused three *distinct* kinds of damage in a single day. It would have
+rewritten `--bootstrap 1000` in the MCC report, where the figure was
+historically correct about the mirror commit it described — swapping one
+inaccuracy for another. It would have rewritten four of six `4,745`
+occurrences that were era-faithful descriptions of what the 2026-05-03
+evaluations actually consumed, provable by timestamp. And it would have
+hand-edited `55maps-pairwise-permutation-v2/summary.md`, a *generated* file
+whose figure was correct when generated and whose repair route is
+regeneration.
+
+Three failure modes, one per document family, none visible from the string
+being replaced. The generalisable form: **a figure that looks stale and a
+figure that is stale are distinguishable only by what the sentence
+asserts** — and that is not a property any pattern match can see.
+
+### Footer
+
+**Texture**: unusually recursive. Nearly every artefact produced today was
+subsequently corrected by something downstream of it — the plan by the
+line-count check, the extractions by the validator, the validator by the
+blind passes, the repair by verification, the verification by the census,
+and the census by Shawn. Nothing was wasted, but nothing landed first
+time either.
+
+**Relational note**: the decision-by-decision mode worked well and is worth
+repeating. Shawn's first intervention reframed a question I had posed badly
+— I asked *how much* to re-extract, he asked *when*, and the answer turned
+out to be neither, but a coupling invariant that made the timing question
+dissolve. Twice more he redirected from the item to the class: fold the
+borderline cases into work already committed rather than opening a new
+front; unify F1 and MCC references but *do not recompute twice*. All three
+are sequencing insights that I, working item-by-item, did not reach on my
+own.
