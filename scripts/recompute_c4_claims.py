@@ -463,9 +463,15 @@ def _era_check(row: dict, claim: dict, value: dict, era: dict) -> None:
         # Collapsing both into `error` (and thence into "not faithful")
         # is what let a missing artefact read as a document defect.
         message = str(exc)
+        # Absence comes in two grains and both are "this anchor could not
+        # have been quoted then", not "the document was wrong". The file may
+        # be missing from the era tree, or the file may exist while the PATH
+        # does not — a key a later migration introduced. The second grain is
+        # how the BCa migration's `_metadata` block reads at an April era.
         absent = ("era-resolution: 0 candidates" in message
                   or "No such file" in message
-                  or "does not exist" in message)
+                  or "does not exist" in message
+                  or re.search(r"step '.*' failed in", message) is not None)
         check["status"] = "ANCHOR-ABSENT-AT-ERA" if absent else "ERROR"
         check["error"] = message
         row["era_check"] = check

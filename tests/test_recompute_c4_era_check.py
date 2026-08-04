@@ -186,3 +186,40 @@ def test_anchor_absent_at_era_is_distinguished_from_disagreement(two_era_repo):
     assert row["status"] == "MISMATCH"      # 0.771 quoted vs 0.999 today
     assert row["era_check"]["status"] == "ANCHOR-ABSENT-AT-ERA"
     assert "faithful" not in row["era_check"]
+
+
+@pytest.mark.tier1
+def test_path_absent_at_era_counts_as_absent_not_error(two_era_repo):
+    """A key a later migration added is absence, not a document defect.
+
+    Wave-7 row 087#5[1] resolved `$._metadata.bootstrap.n_iterations` against
+    an April artefact that had no `_metadata` block at all — the BCa migration
+    introduced it. The file was present, so file-level absence detection
+    missed it and the row landed as a bare ERROR.
+    """
+    tmp_path, blob, era1, era3 = two_era_repo
+    art = tmp_path / "results" / "evaluation.json"
+    art.write_text(json.dumps({"f1": 0.7745,
+                               "_metadata": {"bootstrap": {"n": 10000}}}))
+    git(tmp_path, "add", "-A")
+    git(tmp_path, "commit", "-q", "-m", "era4: migration adds _metadata")
+    rc._era_commit_cache.clear()
+    rc._era_tree_cache.clear()
+    rc._claim_era_cache.clear()
+    rc._json_cache.clear()
+
+    claim = body_claim()
+    claim["claim_text"] = "Headline F1 is 0.771 at 50 m."
+    claim["values"][0].update(value_verbatim="1000", value_parsed=1000,
+                              path="$._metadata.bootstrap.n",
+                              quantity="bootstrap iterations")
+    claim["anchor"] = {"file": "results/evaluation.json",
+                       "path": "$._metadata.bootstrap.n"}
+    era = {"doc": "results/findings-2026-04-21.md", "blob": blob,
+           "snapshot": True}
+
+    (row,) = rc.process_claim("b", 0, claim, era=era)
+
+    assert row["status"] == "MISMATCH"          # 1000 quoted vs 10000 today
+    assert row["era_check"]["status"] == "ANCHOR-ABSENT-AT-ERA"
+    assert "faithful" not in row["era_check"]
