@@ -3,7 +3,7 @@
   "extracted_at": "2026-08-04T00:00:00Z",
   "source_document": {
     "file": "results/55maps-ds-summary-v2/report.md",
-    "git_blob": "cd464933438dd0d0831aa07b195b026bbfb5615e",
+    "git_blob": "ceb1666e54b40e3e08f31a17b83585c2f640b012",
     "stratum": "hand-written"
   },
   "extractor": {
@@ -15,8 +15,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          335,
-          337
+          385,
+          387
         ],
         "section": "5.2 Image's image-vs-text calibration penalty is large — and now further isolated"
       },
@@ -116,14 +116,14 @@
         "path": null
       },
       "method": "arithmetic",
-      "notes": "[BATCH NOTE b074 RE-EXTRACT 2] Second re-extraction of this range, under charter § 5 rule 14. Supersedes the previous 074.json, which was cut against a 652-line body; the document is 663 lines at HEAD and this file covers lines 333-663 only (sibling batch b073 covers 1-332, unchanged). WHAT MOVED: the 2026-08-04 changelog entry's closing clause was found FALSE by a blind verification pass and withdrawn in place — the sentence at lines 573-576 now stops at 'holds **4,746** features at this commit.' and a blockquoted correction occupies new lines 578-590, so every claim that previously sat below line 577 has shifted by +11. Every line number in this file was re-verified against HEAD rather than arithmetically shifted on trust. THE WITHDRAWN SENTENCE: 'and the D-S aggregations documented here consume the separate legacy layer `inputs/vectors/references/student-mounds-55maps.geojson` (see § 6), not the reviewed layer at all' is quoted at lines 579-581 as text the document NO LONGER ASSERTS, so it is not extracted as a live claim; it carries no numeral in any case (its only figure-like token, '§ 6', is a section reference out of scope under rule 5), so it yields no claim row at all — had it carried a number, that number would have been method 'historical' per rule 3. THE OPEN D-S FINDING: the two figures the correction reports — a 4,745-point student ground truth implied by the image run's Dawid–Skene fit, and a 4,770-feature legacy layer implied by the other three — are extracted at lines 584-586 as an OPEN, UNADJUDICATED finding, all values method 'anchor-unknown' with a null anchor, because the document explicitly escalates rather than asserts which layer each fit consumed; chase targets are named in that claim's notes. LEGACY vs REVIEWED LAYER: § 6 (line 415) names inputs/vectors/references/student-mounds-55maps.geojson as the D-S student GT, and the correction now flags that whether all four fits consumed it is unverified. That layer is NOT the reviewed layer inputs/vectors/references/student-mounds-55maps-reviewed.geojson whose live count (4,746) is read at lines 562-567 and 573-576 — the two must not be conflated, and the one claim in this range that puts a number on the legacy layer (4,770, line 586) is anchor-unknown for the reason above. LIVE-vs-HISTORICAL split in the changelog: in every before→after table and every 'was X, now Y' sentence the Before / 'was' side is method 'historical' with a null path, and the After / artefact-value side is a live 'read' (or 'arithmetic' where the cell is derived), per instrument rule 3. The three 2026-08-04 rows (§§ 4.1, 4.3, 5.4) therefore each carry 0.8332 as historical and 0.8333 as a live read of results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json; the five 2026-08-03 rows follow the same pattern against the ds-human-crosstab / dawid-skene artefacts the entry itself names. GROUND-TRUTH COUNTS: every 4,745 (and the single 4,744) in this range describes what a past evaluation consumed or what a past fit implies, not the current canonical count, and none is anchored to the live GeoJSON — the canonical timeline recorded at reports/verification/c4-triage/coverage-drift-2026-08-04.json#$.gt_count_era_resolution shows the 2026-05-03 evaluations ran between baf1497a7 (4,744→4,745) and 2e075eb99 (4,745→4,746), so anchoring them to the live reviewed GeoJSON would manufacture a false mismatch. Era artefacts still carrying 4,745 at $.results[0].n_ref_student_only, if triage wants a live check: results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-dedup-rerun-20260804T000000.backup, plus the un-regenerated T=0.7 and text-MIN corrected-f1-multi-buffer summaries. Only the two 4,746 assertions (lines 566-567 and 576) and the artefact restatement at line 542 are live reads. SCOPE DECISIONS for this batch (instrument rule 5): dates, timestamps, git hashes, session numbers, Obs / erratum / escalation identifiers (Obs 268/269/273/293, W6-E9, W7-E4, D17, FALSE-12, P4, R4), version strings (v1, v2, GS-v2), § section references (§ 3, § 4.1, § 4.3, § 5.2, § 5.4, § 6, § 6.1), candidate and map-sheet identifiers (cand 2397, K-35-064-3), decimal-place descriptors ('4 d.p.', '3 d.p.', 'third-decimal', 'fourth-decimal'), and numbers inside paths or condition names (T=0.3, T=0.7, consensus-4of5, .../bounds/384/..., the wave7-w7e4 blind-pass filename) are all excluded. Bibliographic metadata in § 7 (Dawid & Skene 1979, 28(1), 20-28; Sobotkova et al. 2023) is citation apparatus, not a claim about the study, so the only § 7 claim extracted is the Obs 293 gloss at lines 514-516, which asserts run counts. Buffer radii written purely to identify which row a metric belongs to ('at R = 50 m', 'R = 50 m' in a changelog cell label) are treated as locators, not claims; the one place the document asserts R_m as artefact content (line 542) IS extracted. Run-count words ('the four runs', 'the other three runs') are extracted where they occur in flowing prose and left as anchor-unknown, but not where they appear inside a table cell label or a section heading. CLAIM-SPECIFIC: prose restatement of the § 4.2 ratio column. The T=0.7 figure here reads 1.92× — the 2026-08-03 wave-6 repair moved it from 1.90×, and the changelog entry at lines 636-640 records that transition; both spans are extracted separately."
+      "notes": "[BATCH NOTE b074 RE-EXTRACT 2] Second re-extraction of this range, under charter § 5 rule 14. Supersedes the previous 074.json, which was cut against a 652-line body; the document is 663 lines at HEAD and this file covers lines 333-663 only (sibling batch b073 covers 1-332, unchanged). WHAT MOVED: the 2026-08-04 changelog entry's closing clause was found FALSE by a blind verification pass and withdrawn in place — the sentence at lines 573-576 now stops at 'holds **4,746** features at this commit.' and a blockquoted correction occupies new lines 578-590, so every claim that previously sat below line 577 has shifted by +11. Every line number in this file was re-verified against HEAD rather than arithmetically shifted on trust. THE WITHDRAWN SENTENCE: 'and the D-S aggregations documented here consume the separate legacy layer `inputs/vectors/references/student-mounds-55maps.geojson` (see § 6), not the reviewed layer at all' is quoted at lines 579-581 as text the document NO LONGER ASSERTS, so it is not extracted as a live claim; it carries no numeral in any case (its only figure-like token, '§ 6', is a section reference out of scope under rule 5), so it yields no claim row at all — had it carried a number, that number would have been method 'historical' per rule 3. THE OPEN D-S FINDING: the two figures the correction reports — a 4,745-point student ground truth implied by the image run's Dawid–Skene fit, and a 4,770-feature legacy layer implied by the other three — are extracted at lines 584-586 as an OPEN, UNADJUDICATED finding, all values method 'anchor-unknown' with a null anchor, because the document explicitly escalates rather than asserts which layer each fit consumed; chase targets are named in that claim's notes. LEGACY vs REVIEWED LAYER: § 6 (line 415) names inputs/vectors/references/student-mounds-55maps.geojson as the D-S student GT, and the correction now flags that whether all four fits consumed it is unverified. That layer is NOT the reviewed layer inputs/vectors/references/student-mounds-55maps-reviewed.geojson whose live count (4,746) is read at lines 562-567 and 573-576 — the two must not be conflated, and the one claim in this range that puts a number on the legacy layer (4,770, line 586) is anchor-unknown for the reason above. LIVE-vs-HISTORICAL split in the changelog: in every before→after table and every 'was X, now Y' sentence the Before / 'was' side is method 'historical' with a null path, and the After / artefact-value side is a live 'read' (or 'arithmetic' where the cell is derived), per instrument rule 3. The three 2026-08-04 rows (§§ 4.1, 4.3, 5.4) therefore each carry 0.8332 as historical and 0.8333 as a live read of results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json; the five 2026-08-03 rows follow the same pattern against the ds-human-crosstab / dawid-skene artefacts the entry itself names. GROUND-TRUTH COUNTS: every 4,745 (and the single 4,744) in this range describes what a past evaluation consumed or what a past fit implies, not the current canonical count, and none is anchored to the live GeoJSON — the canonical timeline recorded at reports/verification/c4-triage/coverage-drift-2026-08-04.json#$.gt_count_era_resolution shows the 2026-05-03 evaluations ran between baf1497a7 (4,744→4,745) and 2e075eb99 (4,745→4,746), so anchoring them to the live reviewed GeoJSON would manufacture a false mismatch. Era artefacts still carrying 4,745 at $.results[0].n_ref_student_only, if triage wants a live check: results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-dedup-rerun-20260804T000000.backup, plus the un-regenerated T=0.7 and text-MIN corrected-f1-multi-buffer summaries. Only the two 4,746 assertions (lines 566-567 and 576) and the artefact restatement at line 542 are live reads. SCOPE DECISIONS for this batch (instrument rule 5): dates, timestamps, git hashes, session numbers, Obs / erratum / escalation identifiers (Obs 268/269/273/293, W6-E9, W7-E4, D17, FALSE-12, P4, R4), version strings (v1, v2, GS-v2), § section references (§ 3, § 4.1, § 4.3, § 5.2, § 5.4, § 6, § 6.1), candidate and map-sheet identifiers (cand 2397, K-35-064-3), decimal-place descriptors ('4 d.p.', '3 d.p.', 'third-decimal', 'fourth-decimal'), and numbers inside paths or condition names (T=0.3, T=0.7, consensus-4of5, .../bounds/384/..., the wave7-w7e4 blind-pass filename) are all excluded. Bibliographic metadata in § 7 (Dawid & Skene 1979, 28(1), 20-28; Sobotkova et al. 2023) is citation apparatus, not a claim about the study, so the only § 7 claim extracted is the Obs 293 gloss at lines 514-516, which asserts run counts. Buffer radii written purely to identify which row a metric belongs to ('at R = 50 m', 'R = 50 m' in a changelog cell label) are treated as locators, not claims; the one place the document asserts R_m as artefact content (line 542) IS extracted. Run-count words ('the four runs', 'the other three runs') are extracted where they occur in flowing prose and left as anchor-unknown, but not where they appear inside a table cell label or a section heading. CLAIM-SPECIFIC: prose restatement of the § 4.2 ratio column. The T=0.7 figure here reads 1.92× — the 2026-08-03 wave-6 repair moved it from 1.90×, and the changelog entry at lines 636-640 records that transition; both spans are extracted separately. [BATCH NOTE b074 S128 RE-EXTRACT under charter § 5 rule 14 / ruling 18] Re-extracted alongside b073 because both batches cover results/55maps-ds-summary-v2/report.md, which was repaired this session. Every one of the 65 spans was re-located verbatim and its line anchors updated; 2 spans changed (the § 6.2 image and text-MIN review-file rows, W7-D6) and were re-extracted, and 2 new claims were added for the W7-D6 correction note. No claim was deleted from this batch, so b074 claim indices are unchanged for indices 0-65."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          337,
-          339
+          387,
+          389
         ],
         "section": "5.2 Image's image-vs-text calibration penalty is large — and now further isolated"
       },
@@ -147,8 +147,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          340,
-          342
+          390,
+          392
         ],
         "section": "5.2 Image's image-vs-text calibration penalty is large — and now further isolated"
       },
@@ -172,8 +172,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          363,
-          365
+          413,
+          415
         ],
         "section": "5.3 D-S F1 ranks text-MIN dead last; corrected-F1 also ranks it last — first non-disagreement of the four-way comparison"
       },
@@ -218,8 +218,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          371,
-          371
+          421,
+          421
         ],
         "section": "5.4 T=0.7 is the only run where measured F1 ≈ D-S F1 ≈ corrected-F1-multi-buffer F1 — text-MIN is the second-tightest"
       },
@@ -286,8 +286,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          372,
-          372
+          422,
+          422
         ],
         "section": "5.4 T=0.7 is the only run where measured F1 ≈ D-S F1 ≈ corrected-F1-multi-buffer F1 — text-MIN is the second-tightest"
       },
@@ -354,8 +354,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          373,
-          373
+          423,
+          423
         ],
         "section": "5.4 T=0.7 is the only run where measured F1 ≈ D-S F1 ≈ corrected-F1-multi-buffer F1 — text-MIN is the second-tightest"
       },
@@ -422,8 +422,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          374,
-          374
+          424,
+          424
         ],
         "section": "5.4 T=0.7 is the only run where measured F1 ≈ D-S F1 ≈ corrected-F1-multi-buffer F1 — text-MIN is the second-tightest"
       },
@@ -490,8 +490,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          376,
-          377
+          426,
+          427
         ],
         "section": "5.4 T=0.7 is the only run where measured F1 ≈ D-S F1 ≈ corrected-F1-multi-buffer F1 — text-MIN is the second-tightest"
       },
@@ -549,8 +549,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          377,
-          379
+          427,
+          429
         ],
         "section": "5.4 T=0.7 is the only run where measured F1 ≈ D-S F1 ≈ corrected-F1-multi-buffer F1 — text-MIN is the second-tightest"
       },
@@ -621,8 +621,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          379,
-          381
+          429,
+          431
         ],
         "section": "5.4 T=0.7 is the only run where measured F1 ≈ D-S F1 ≈ corrected-F1-multi-buffer F1 — text-MIN is the second-tightest"
       },
@@ -649,8 +649,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          386,
-          386
+          436,
+          436
         ],
         "section": "5.5 64 unjoined T=0.3 review rows — a methodology-divergence diagnostic"
       },
@@ -677,8 +677,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          388,
-          392
+          438,
+          442
         ],
         "section": "5.5 64 unjoined T=0.3 review rows — a methodology-divergence diagnostic"
       },
@@ -883,8 +883,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          401,
-          404
+          451,
+          454
         ],
         "section": "5.5 64 unjoined T=0.3 review rows — a methodology-divergence diagnostic"
       },
@@ -933,8 +933,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          408,
-          408
+          458,
+          458
         ],
         "section": "6. Provenance and inputs"
       },
@@ -958,8 +958,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          411,
-          411
+          461,
+          461
         ],
         "section": "6. Provenance and inputs"
       },
@@ -986,8 +986,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          412,
-          412
+          462,
+          462
         ],
         "section": "6. Provenance and inputs"
       },
@@ -1014,8 +1014,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          414,
-          414
+          464,
+          464
         ],
         "section": "6. Provenance and inputs"
       },
@@ -1042,8 +1042,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          436,
-          437
+          486,
+          487
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1076,8 +1076,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          438,
-          440
+          488,
+          490
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1101,8 +1101,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          448,
-          448
+          498,
+          498
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1160,8 +1160,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          449,
-          449
+          499,
+          499
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1219,8 +1219,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          450,
-          450
+          500,
+          500
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1278,8 +1278,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          451,
-          451
+          501,
+          501
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1315,8 +1315,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          452,
-          452
+          502,
+          502
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1352,8 +1352,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          456,
-          456
+          506,
+          506
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1411,8 +1411,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          457,
-          457
+          507,
+          507
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1470,8 +1470,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          458,
-          458
+          508,
+          508
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1538,8 +1538,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          459,
-          459
+          509,
+          509
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1575,8 +1575,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          460,
-          460
+          510,
+          510
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1612,8 +1612,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          462,
-          463
+          512,
+          513
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1637,8 +1637,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          469,
-          474
+          519,
+          524
         ],
         "section": "6.1 Resolved — T=0.7 + image D-S re-aggregated post-recovery 2026-05-03"
       },
@@ -1674,8 +1674,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          480,
-          480
+          530,
+          530
         ],
         "section": "6.2 Per-run human-review files"
       },
@@ -1702,8 +1702,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          481,
-          481
+          531,
+          531
         ],
         "section": "6.2 Per-run human-review files"
       },
@@ -1730,12 +1730,12 @@
       "claim_id": null,
       "source": {
         "lines": [
-          482,
-          482
+          532,
+          532
         ],
         "section": "6.2 Per-run human-review files"
       },
-      "claim_text": "| Image | `results/55maps-image-generalisation/human-review.csv` (1,028 rows) | `results/55maps-image-generalisation/human-review-multi-buffer.csv` (557 rows) |",
+      "claim_text": "| Image | `results/55maps-image-generalisation/human-review.csv` (1,028 rows) | `results/55maps-image-generalisation/human-review-multi-buffer.csv` (558 rows) |",
       "values": [
         {
           "quantity": "row count of the yesterday-strict human-review CSV, image",
@@ -1747,9 +1747,9 @@
           "method": "read"
         },
         {
-          "quantity": "row count of the multi-buffer human-review CSV, image",
-          "value_verbatim": "557",
-          "value_parsed": 557,
+          "quantity": "data-row count of the multi-buffer human-review CSV, image (header excluded)",
+          "value_verbatim": "558",
+          "value_parsed": 558,
           "unit": "rows",
           "kind": "count",
           "path": "results/55maps-image-generalisation/human-review-multi-buffer.csv#len:rows",
@@ -1761,23 +1761,23 @@
         "path": null
       },
       "method": "read",
-      "notes": "Two CSVs in one table row; the second uses a cross-file value locator. Row count of the CSV named in the same table cell (non-JSON anchor; `len:rows` = data rows excluding the header). Instrument v1.1 notes non-JSON anchors are legitimate and route to triage."
+      "notes": "Two CSVs in one table row; the second uses a cross-file value locator. Row count of the CSV named in the same table cell (non-JSON anchor; `len:rows` = data rows excluding the header). Instrument v1.1 notes non-JSON anchors are legitimate and route to triage. [W7-D6 REPAIR, S128] 557 -> 558. The file has 559 lines and 558 data rows. 557 was the cross-tabulator's accounting (556 today-rows also present in the yesterday review, plus the 1 today_only in ds-human-crosstab/summary.json $.source_counts), not the file's row count; under this table's stated semantics -- the column names the CSV and reports its rows -- it is 558."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          483,
-          483
+          533,
+          533
         ],
         "section": "6.2 Per-run human-review files"
       },
-      "claim_text": "| text-MIN | (none — empty placeholder used) | `results/55maps-text-min-generalisation/human-review-multi-buffer.csv` (586 rows) |",
+      "claim_text": "| text-MIN | (none — empty placeholder used) | `results/55maps-text-min-generalisation/human-review-multi-buffer.csv` (585 rows) |",
       "values": [
         {
-          "quantity": "row count of the multi-buffer human-review CSV, text-MIN",
-          "value_verbatim": "586",
-          "value_parsed": 586,
+          "quantity": "data-row count of the multi-buffer human-review CSV, text-MIN (header excluded)",
+          "value_verbatim": "585",
+          "value_parsed": 585,
           "unit": "rows",
           "kind": "count",
           "path": "len:rows",
@@ -1789,14 +1789,110 @@
         "path": "len:rows"
       },
       "method": "read",
-      "notes": "Row count of the CSV named in the same table cell (non-JSON anchor; `len:rows` = data rows excluding the header). Instrument v1.1 notes non-JSON anchors are legitimate and route to triage."
+      "notes": "Row count of the CSV named in the same table cell (non-JSON anchor; `len:rows` = data rows excluding the header). Instrument v1.1 notes non-JSON anchors are legitimate and route to triage. [W7-D6 REPAIR, S128] 586 -> 585, matching the other four cells in this table, which all already excluded their header."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          514,
-          516
+          536,
+          537
+        ],
+        "section": "6.2 Per-run human-review files — W7-D6 correction note"
+      },
+      "claim_text": "text-MIN previously read 586,\nwhich counted its header line — the file has 586 lines and 585 data rows —",
+      "values": [
+        {
+          "quantity": "line count of the text-MIN multi-buffer human-review CSV, including its header",
+          "value_verbatim": "586",
+          "value_parsed": 586,
+          "unit": "lines",
+          "kind": "count",
+          "path": "len:lines",
+          "method": "read"
+        },
+        {
+          "quantity": "data-row count of the text-MIN multi-buffer human-review CSV, header excluded",
+          "value_verbatim": "585",
+          "value_parsed": 585,
+          "unit": "rows",
+          "kind": "count",
+          "path": "len:rows",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[S128 NEW] The W7-D6 correction note. Both figures are asserted about the SAME file and differ only in header handling, which is the whole point of the note; extracting both is what makes the distinction verifiable rather than a bare assertion."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          539,
+          543
+        ],
+        "section": "6.2 Per-run human-review files — W7-D6 correction note"
+      },
+      "claim_text": "Image previously read 557, which is the\ncross-tabulator's accounting (556 today-rows also present in the yesterday\nreview, plus the 1 `today_only` recorded in `ds-human-crosstab/summary.json`)\nrather than the file's row count; under this table's own stated semantics —\nthe column names the CSV and reports its rows — it is 558.",
+      "values": [
+        {
+          "quantity": "image today-review rows also present in the yesterday-strict review",
+          "value_verbatim": "556",
+          "value_parsed": 556,
+          "unit": "rows",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.source_counts.today_not_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.source_counts.today_mound"
+            }
+          ]
+        },
+        {
+          "quantity": "image rows recorded as today_only by the cross-tabulator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "rows",
+          "kind": "count",
+          "path": "$.source_counts.today_only",
+          "method": "read"
+        },
+        {
+          "quantity": "data-row count of the image multi-buffer human-review CSV, header excluded",
+          "value_verbatim": "558",
+          "value_parsed": 558,
+          "unit": "rows",
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/human-review-multi-buffer.csv#len:rows",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[S128 NEW] Records WHY 557 was there, so a future reader does not read it as a typo. 556 + 1 = 557 reproduces the old figure exactly from the cross-tabulator's source_counts block; the file itself has 559 lines and 558 data rows. The two accountings differ because one row of the today CSV joined neither bucket. The '557' itself is not extracted as a live claim -- the document no longer asserts it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          574,
+          576
         ],
         "section": "7. References and sibling artefacts"
       },
@@ -1829,8 +1925,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          523,
-          526
+          631,
+          634
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -1857,8 +1953,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          526,
-          528
+          634,
+          636
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -1903,8 +1999,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          528,
-          530
+          636,
+          638
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -1937,8 +2033,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          530,
-          532
+          638,
+          640
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -1965,8 +2061,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          536,
-          536
+          644,
+          644
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2011,8 +2107,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          537,
-          537
+          645,
+          645
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2048,8 +2144,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          538,
-          538
+          646,
+          646
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2085,8 +2181,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          540,
-          543
+          648,
+          651
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2140,8 +2236,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          548,
-          550
+          656,
+          658
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2265,8 +2361,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          550,
-          553
+          658,
+          661
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2412,8 +2508,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          556,
-          561
+          664,
+          669
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2473,8 +2569,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          562,
-          567
+          670,
+          675
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2528,8 +2624,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          567,
-          571
+          675,
+          679
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2562,8 +2658,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          573,
-          576
+          681,
+          684
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication"
       },
@@ -2590,8 +2686,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          584,
-          586
+          692,
+          694
         ],
         "section": "Changelog — 2026-08-04 C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication — Correction, 2026-08-04 (same day)"
       },
@@ -2642,8 +2738,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          594,
-          596
+          702,
+          704
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2670,8 +2766,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          599,
-          599
+          707,
+          707
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2707,8 +2803,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          608,
-          608
+          716,
+          716
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2797,8 +2893,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          609,
-          609
+          717,
+          717
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2888,8 +2984,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          610,
-          610
+          718,
+          718
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2934,8 +3030,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          611,
-          611
+          719,
+          719
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -2980,8 +3076,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          612,
-          612
+          720,
+          720
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -3070,8 +3166,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          633,
-          634
+          741,
+          742
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -3098,8 +3194,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          636,
-          640
+          744,
+          748
         ],
         "section": "Changelog — 2026-08-03 C4 wave-6 calibration-cell repairs"
       },
@@ -3179,8 +3275,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          646,
-          647
+          754,
+          755
         ],
         "section": "Changelog — 2026-07-28 Dawid-Skene attribution corrected"
       },
@@ -3207,8 +3303,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          655,
-          656
+          763,
+          764
         ],
         "section": "Changelog — 2026-04-27 Original publication"
       },
@@ -3232,8 +3328,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          656,
-          657
+          764,
+          765
         ],
         "section": "Changelog — 2026-04-27 Original publication"
       },
@@ -3257,8 +3353,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          658,
-          661
+          766,
+          769
         ],
         "section": "Changelog — 2026-04-27 Original publication"
       },

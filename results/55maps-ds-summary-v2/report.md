@@ -1,17 +1,18 @@
 # Dawid-Skene cross-run summary — four 55-map runs (T=0.3, T=0.7, image, text-MIN)
 
-> **Last revised**: 2026-08-04 (C4 wave-7 repair — the image run's
-> corrected-F1-multi-buffer cell at R = 50 m refreshed to the W6-E9
-> de-duplication re-run; the two era-faithful 4,745-mound GT references
-> adjudicated and left as history). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-08-04 (W7 repair queue — the four D-S fits found
+> not to share a ground-truth reference, so the Image-versus-T=0.3 ordering
+> is withdrawn pending re-analysis; three internal contradictions resolved
+> from artefacts). Earlier the same day: the image corrected-F1-multi-buffer
+> cell at R = 50 m refreshed to the W6-E9 de-duplication re-run, and the two
+> era-faithful 4,745-mound GT references adjudicated and left as history.
+> See [§ Changelog](#changelog) for revision history.
 
 **Date**: 2026-04-28 (text-MIN added to the previous three-run summary
 of 2026-04-27).
 **Post-recovery refresh**: 2026-05-03 (cross-track-v2 commit `42ed1d32`).
 T=0.7 row re-derived against the recovered single-round consensus + verifier
-and the updated 4,745-mound curator GT (commits `366f9c66`, `e07dae37`,
-`f533fda5`). Image row re-derived against the +1 phantom-promoted cand 2397
+(commits `366f9c66`, `e07dae37`, `f533fda5`). Image row re-derived against the +1 phantom-promoted cand 2397
 review (item counts 3,637 / 1,133 / 1,028 → 3,650 / 1,095 / 1,030; D-S F1
 0.7954 → 0.7990; VLM-only posterior 0.1862 → 0.1865). text-MIN row
 re-derived against the canonical updated GT (D-S F1 0.7834 unchanged at
@@ -21,6 +22,18 @@ run's `dawid-skene/` and `ds-human-crosstab/` directories. The post-recovery
 shifts are small on every row — D-S F1 deltas ≤ +0.0036, VLM-only-posterior
 deltas ≤ +0.0033, ECE / Brier deltas ≤ +0.001 — and do not change the
 relative position of any run in any §4 ranking.
+
+> **Correction, 2026-08-04 (W7-D9).** The T=0.7 sentence above previously
+> ended "and the updated 4,745-mound curator GT". That is true of the
+> *re-evaluation* (`f533fda5`) but false of the *D-S re-aggregation*
+> (`366f9c66`), which took the script default reference — the fixed
+> 4,770-feature base, `analyse_dawid_skene.py:57` — and so never saw the
+> curator addition. Commit `366f9c66`'s own message makes the same claim
+> and is contradicted by its artefact; this document inherited the error.
+> The clause is removed rather than restated because the sentence
+> describes three commits at once and no single GT count is true of all
+> three. See § 2.1's reference caveat.
+
 **Runs analysed**: T=0.3 (`55maps-text-high-t0.3-generalisation`), T=0.7
 (`55maps-text-high-generalisation`), image (`55maps-image-generalisation`),
 text-MIN (`55maps-text-min-generalisation`).
@@ -39,12 +52,12 @@ publishable corrected-F1 metrics — are now in place. text-MIN, the
 fourth run, was re-run this session with the canonical text-MIN paths
 (consensus + verifier probabilities from
 `outputs/55maps-text-min-generalisation/`) and cross-tabulated against
-the 586-row multi-buffer human review that landed earlier today. The
+the 585-row multi-buffer human review that landed earlier today. The
 re-run reproduced the existing text-MIN D-S artefacts byte-identically;
 the new contribution is the ds-human-crosstab.
 
 **Headline pattern across the four runs.** D-S aggregate F1 follows the
-**measured** F1 ranking (T=0.7 > T=0.3 > image > text-MIN), with the
+**measured** F1 ranking (T=0.7 > image > T=0.3 > text-MIN), with the
 +0.024 D-S correction over measured F1 essentially constant across all
 four runs. The corrected-F1-multi-buffer ranking (T=0.3 > image > T=0.7
 > text-MIN) **disagrees** — see §4.3. The crosstabs against
@@ -56,6 +69,27 @@ nearly indistinguishable from T=0.7 on every calibration metric.
 ## 2. Per-run × per-class D-S agreement metrics
 
 ### 2.1 Shared item set (matched / student-only / VLM-only)
+
+> **Reference caveat — the four fits are not on a common ground truth**
+> (W7-D9, 2026-08-04). The image run's D-S fit consumed the **reviewed
+> curator layer** (4,745 student points as it then stood); T=0.7, T=0.3
+> and text-MIN all consumed the **fixed 4,770-feature base**, which is the
+> script default. Verified two ways: `student_label == 1` rows in each
+> run's `dawid-skene/item-posteriors.csv` number 4,770 / 4,770 / 4,770
+> against image's 4,745; and the single feature commit `baf1497a7` added
+> to the reviewed layer — on `K-35-064-3_Dimitrovgrad_4326` — is a student
+> point *only* in the image item set, while T=0.7 carries
+> `student_label = 0` at that exact coordinate.
+>
+> Image's student side is therefore drawn from a reference **25 points
+> smaller**, those 25 being merged-centroid replacements of student
+> double-marks. Cross-run differences in Matched and Student-only are not
+> purely detection effects, and because dropping student double-marks
+> removes false negatives it acts to **raise** image's recall. Every
+> cross-run comparison below (§ 2.1, § 2.2, § 4.1, § 4.2) inherits this.
+> No re-run happens here: under ruling 21 all four fits are re-run once,
+> together, against the standardised reference — see
+> `reports/verification/reference-standardisation-queue.md`, item 1.
 
 | Run | Matched | Student-only | VLM-only | Total | VLM-only / matched |
 |-----|--------:|-------------:|---------:|------:|-------------------:|
@@ -217,7 +251,22 @@ across all four runs (T=0.7 > Image > T=0.3 > text-MIN; the
 post-recovery image refresh moves Image fractionally above T=0.3 by
 +0.0002 F1, well inside any sampling-noise envelope — the previous
 T=0.3 > Image ordering is preserved at 4 d.p. only as
-0.7745 ≈ 0.7743 within rounding). The corrected-F1-multi-buffer
+0.7745 ≈ 0.7743 within rounding).
+
+> **The Image-versus-T=0.3 ordering is WITHDRAWN pending re-analysis**
+> (W7-D9, 2026-08-04). The two runs are not on a common reference: Image's
+> fit consumed the reviewed curator layer, T=0.3's the fixed 4,770 base
+> (§ 2.1). The gap between them is 0.0002 F1, against a reference
+> difference of 25 student points acting in Image's favour, so their rank
+> order is **not established by these artefacts** — the sentence above
+> attributes to a "post-recovery image refresh" a movement that is at
+> least partly a ground-truth change. T=0.7 first and text-MIN last are
+> unaffected, as is the ranking's disagreement with corrected-F1. The
+> ordering is left in place rather than deleted because it is what the
+> artefacts said when written; it is resolved by re-running all four fits
+> against the standardised reference (ruling 21; queue item 1).
+
+The corrected-F1-multi-buffer
 ranking (T=0.3 > Image > T=0.7 > text-MIN) is **different from both
 measured and D-S** — the rank-disagreement first noted in Obs 293
 across three runs **persists in the four-way comparison**. The two
@@ -253,8 +302,9 @@ Image — the most permissive — is still by far the worst calibrated.
 ratio and the lowest gap**, exactly as predicted; there is no rank
 inversion at any point along the scale.
 
-text-MIN is also the cleanest test of the pattern because it is the
-only run with **zero unjoined rows** in the crosstab, so the
+text-MIN is also a clean test of the pattern because it is one of the
+three runs with **zero unjoined rows** in the crosstab (with T=0.7 and
+image, post-recovery — see § 3; only T=0.3 retains any, at 64), so the
 calibration metrics are not noised by the methodology-divergence
 diagnostic that affected T=0.3.
 
@@ -291,7 +341,7 @@ text-MIN and T=0.7 share the **smallest D-S-vs-corrected-F1 gap**
 (+0.013 each); T=0.3 has the largest (+0.045). The gap reflects how
 much of the corrected-F1 pipeline's "extension" is doing work
 *beyond* the D-S fixed-prior reclassification. T=0.3 has the largest
-multi-buffer review cohort (692 rows vs 586 for text-MIN); text-MIN
+multi-buffer review cohort (692 rows vs 585 for text-MIN); text-MIN
 and T=0.7 have the fewest reviewer-promoted candidates at R=50 m
 (250 for text-MIN), so the corrected-F1 number lands much closer to
 the D-S number for those two.
@@ -479,8 +529,18 @@ their current `dawid-skene/dawid-skene-results.json` files on
 |-----|------------------|--------------|
 | T=0.3 | (none — empty placeholder used) | `results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv` (692 rows) |
 | T=0.7 | (none — empty placeholder used) | `results/55maps-text-high-generalisation/human-review-multi-buffer.csv` (637 rows) |
-| Image | `results/55maps-image-generalisation/human-review.csv` (1,028 rows) | `results/55maps-image-generalisation/human-review-multi-buffer.csv` (557 rows) |
-| text-MIN | (none — empty placeholder used) | `results/55maps-text-min-generalisation/human-review-multi-buffer.csv` (586 rows) |
+| Image | `results/55maps-image-generalisation/human-review.csv` (1,028 rows) | `results/55maps-image-generalisation/human-review-multi-buffer.csv` (558 rows) |
+| text-MIN | (none — empty placeholder used) | `results/55maps-text-min-generalisation/human-review-multi-buffer.csv` (585 rows) |
+
+*Row counts corrected 2026-08-04 (W7-D6). Every cell in this table is a
+**data-row count**, excluding the CSV header. text-MIN previously read 586,
+which counted its header line — the file has 586 lines and 585 data rows —
+and was inconsistent with the T=0.3, T=0.7 and image cells, all of which
+already excluded theirs. Image previously read 557, which is the
+cross-tabulator's accounting (556 today-rows also present in the yesterday
+review, plus the 1 `today_only` recorded in `ds-human-crosstab/summary.json`)
+rather than the file's row count; under this table's own stated semantics —
+the column names the CSV and reports its rows — it is 558.*
 
 The image run is the only one with a separate yesterday-strict review;
 T=0.3, T=0.7, and text-MIN only have the multi-buffer review. The
@@ -518,7 +578,55 @@ References:
 
 ## Changelog
 
-### 2026-08-04 — C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication
+### 2026-08-04 (later) — W7 repair queue: the reference split, and three internal contradictions
+
+**Refresh trigger**: repairing W7-D5 — a FALSE GREEN in this document's own
+extraction, `reports/verification/c4-extraction/073.json`, where the front
+matter's "4,745-mound curator GT" had been anchored to the T=0.7
+*corrected-F1* artefact. That anchor agreed numerically and verified green
+for a computation the sentence is not about. Re-anchoring it to the T=0.7
+*Dawid–Skene* artefact turned it red and exposed W7-D9.
+
+**W7-D9 — the four D-S fits do not share a ground truth.** Image's fit
+consumed the reviewed curator layer (4,745 student points); T=0.7, T=0.3 and
+text-MIN consumed the fixed 4,770-feature base, which is the default in
+`scripts/analyse_dawid_skene.py:57`. Established two ways: `student_label == 1`
+rows per run's `item-posteriors.csv` (4,770 / 4,770 / 4,770 against image's
+4,745), and — independent of counts — the single feature commit `baf1497a7`
+added to the reviewed layer, which is a student point *only* in the image
+item set while T=0.7 carries `student_label = 0` at that same coordinate.
+Commit `366f9c66`'s message asserts the D-S re-run used the updated GT and is
+contradicted by its own artefact; this document inherited the error.
+
+| § | Claim | Before | After | Basis |
+|---|-------|--------|-------|-------|
+| Front matter | What the T=0.7 re-derivation consumed | "recovered consensus + verifier **and the updated 4,745-mound curator GT**" | the 4,745 attribution corrected in place: true of the re-evaluation (`f533fda5`), false of the D-S re-aggregation (`366f9c66`) | `analyse_dawid_skene.py:57`; the `baf1497a7` point test |
+| 1 | Measured-F1 ranking (W7-D3) | T=0.7 > T=0.3 > image > text-MIN | T=0.7 > image > T=0.3 > text-MIN | measured F1 0.7896 / 0.7745 / 0.7743 / 0.7591; § 4.1's own table already had it right |
+| 2.1 | — | (no caveat) | reference caveat added | as above |
+| 4.1 | Image-versus-T=0.3 D-S F1 ordering | asserted | **withdrawn pending re-analysis**, text left in place | 0.0002 gap against a 25-point reference difference |
+| 4.2 | text-MIN unjoined rows (W7-D4) | "the **only** run with zero unjoined rows" | one of three (with T=0.7 and image) | `ds-human-crosstab/summary.json` `n_unjoined` = 0 / 0 / 0 / 64 |
+| 1, 4.3 | text-MIN review cohort (W7-D6) | 586 rows | 585 rows | 586 lines, 585 data rows; the sibling "692" for T=0.3 is a data-row count |
+| 5 | Image today-review cohort (W7-D6) | 557 rows | 558 rows | 558 data rows; 557 was the cross-tabulator's accounting, not the file's |
+
+**What did NOT change**: no metric was recomputed and no artefact was
+re-generated. Every D-S, measured and corrected-F1 value stands exactly as
+before. T=0.7 remains first and text-MIN last on both the measured and D-S
+rankings; the rank-*disagreement* between those and the corrected-F1
+ordering — this document's headline finding, and Obs 293's — is untouched,
+because it does not depend on the Image/T=0.3 ordering. § 4.2's calibration
+conclusion is unchanged: text-MIN's status as the cleanest test rested on
+its VLM-only/matched ratio, not on being uniquely unjoined.
+
+**Why nothing was re-run.** Under ruling 21 the ground-truth reference is
+standardised *first* and every reference-tainted analysis then runs once
+against it. Re-running these four fits now would waste the run, because the
+reference moves again when the 773 promoted phantoms are re-reviewed with
+point-marking. The queue is
+`reports/verification/reference-standardisation-queue.md` (item 1).
+
+Landed at commit `TBD` (recorded in the next revision).
+
+### 2026-08-04 (earlier) — C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication
 
 **Refresh trigger**: the W6-E9 de-duplication chain — `1de559119`
 (coincidence de-dup in `build_extended_gt`), `30a902f56` (corrected-F1

@@ -3,7 +3,7 @@
   "extracted_at": "2026-08-04T00:00:00Z",
   "source_document": {
     "file": "results/55maps-ds-summary-v2/report.md",
-    "git_blob": "cd464933438dd0d0831aa07b195b026bbfb5615e",
+    "git_blob": "ceb1666e54b40e3e08f31a17b83585c2f640b012",
     "stratum": "hand-written"
   },
   "extractor": {
@@ -46,18 +46,18 @@
         "path": null
       },
       "method": "read",
-      "notes": "[BATCH NOTE b073 RE-EXTRACT] Full re-extraction of lines 1-332 of the working-tree (uncommitted) body under charter § 5 rule 14 / ruling 18; replaces the earlier b073 file, whose line anchors and several figures (the § 3 image gap, the § 3 0.55-0.73 band sentence, the § 4.1 corrected-F1 row) no longer match the body. GROUND-TRUTH COUNTS: the canonical timeline in reports/verification/c4-triage/coverage-drift-2026-08-04.json (gt_count_era_resolution) establishes that the 2026-05-03 evaluations ran between curator additions baf1497a7 (4,744 to 4,745) and 2e075eb99 (4,745 to 4,746), so every 4,745 in this range is ERA-FAITHFUL. Such values are therefore anchored to an era artefact (the T=0.7 corrected-f1-multi-buffer summary, whose $.results[0].n_ref_student_only records the GT size the run consumed) or marked historical -- NEVER to the live inputs/vectors/references/student-mounds-55maps-reviewed.geojson, which holds 4,746 today; the superseded b073 anchored it to the live GeoJSON and would have manufactured a mismatch. Per claim, which treatment was used is stated in that claim's notes. The Dawid-Skene layer's own reference is the LEGACY student-mounds-55maps.geojson (4,770 features, per this document's own line 279-280) and is not conflated with the 4,746 student GT anywhere here. CHANGELOG / CORRECTION PAIRS: in every 'was X, now Y' or 'X -> Y' construction the old side carries method historical with path null (pre-recovery backups named in notes for triage) and the new side is a live read/arithmetic claim. SCOPE (rule 5): dates, timestamps, git hashes, session numbers, Obs/erratum/audit ids (Obs 293, D17 audit FALSE-12), candidate ids (cand 2397), section references (§3, §4.2), backup-filename timestamps, the year in 'Sobotkova et al. 2023', precision descriptors ('4 d.p.'), and the numbers inside condition and directory names (T=0.3, T=0.7, 55maps-text-high-t0.3-generalisation, the 384 in the bounds path) are not extracted. Compound modifiers used as names ('2-annotator fit', '2 x 2 cross-tab', 'four-way comparison') are not extracted; the cardinal 'two binary annotators' IS extracted where it asserts the design. The cardinal 'four'/'55' is extracted where it asserts study scope (lines 1 and 36) and skipped where it is a pronominal reference to the same comparison set ('the smallest of the four', 'across all four runs'). 'R = 50 m' / 'at R=50 m' used to identify which row or buffer a metric belongs to is treated as context, not a claim, except where the document asserts the D-S matching buffer itself (line 195). This document has no sibling JSON in results/55maps-ds-summary-v2/ (report.md is the only file), so all anchors are the per-run artefacts the report aggregates. [BLOB REPOINT S127] The document was edited at lines ~577 (a blind-pass withdrawal inside batch b074's range) after this extraction. None of b073's 86 spans is affected — all re-verified verbatim against the current body, max referenced line 323 — so only the document-level git_blob pointer was stale, not the content. Repointed c55fe259ef90 -> cd464933438d without re-extraction."
+      "notes": "[BATCH NOTE b073 RE-EXTRACT] Full re-extraction of lines 1-332 of the working-tree (uncommitted) body under charter § 5 rule 14 / ruling 18; replaces the earlier b073 file, whose line anchors and several figures (the § 3 image gap, the § 3 0.55-0.73 band sentence, the § 4.1 corrected-F1 row) no longer match the body. GROUND-TRUTH COUNTS: the canonical timeline in reports/verification/c4-triage/coverage-drift-2026-08-04.json (gt_count_era_resolution) establishes that the 2026-05-03 evaluations ran between curator additions baf1497a7 (4,744 to 4,745) and 2e075eb99 (4,745 to 4,746), so every 4,745 in this range is ERA-FAITHFUL. Such values are therefore anchored to an era artefact (the T=0.7 corrected-f1-multi-buffer summary, whose $.results[0].n_ref_student_only records the GT size the run consumed) or marked historical -- NEVER to the live inputs/vectors/references/student-mounds-55maps-reviewed.geojson, which holds 4,746 today; the superseded b073 anchored it to the live GeoJSON and would have manufactured a mismatch. Per claim, which treatment was used is stated in that claim's notes. The Dawid-Skene layer's own reference is the LEGACY student-mounds-55maps.geojson (4,770 features, per this document's own line 279-280) and is not conflated with the 4,746 student GT anywhere here. CHANGELOG / CORRECTION PAIRS: in every 'was X, now Y' or 'X -> Y' construction the old side carries method historical with path null (pre-recovery backups named in notes for triage) and the new side is a live read/arithmetic claim. SCOPE (rule 5): dates, timestamps, git hashes, session numbers, Obs/erratum/audit ids (Obs 293, D17 audit FALSE-12), candidate ids (cand 2397), section references (§3, §4.2), backup-filename timestamps, the year in 'Sobotkova et al. 2023', precision descriptors ('4 d.p.'), and the numbers inside condition and directory names (T=0.3, T=0.7, 55maps-text-high-t0.3-generalisation, the 384 in the bounds path) are not extracted. Compound modifiers used as names ('2-annotator fit', '2 x 2 cross-tab', 'four-way comparison') are not extracted; the cardinal 'two binary annotators' IS extracted where it asserts the design. The cardinal 'four'/'55' is extracted where it asserts study scope (lines 1 and 36) and skipped where it is a pronominal reference to the same comparison set ('the smallest of the four', 'across all four runs'). 'R = 50 m' / 'at R=50 m' used to identify which row or buffer a metric belongs to is treated as context, not a claim, except where the document asserts the D-S matching buffer itself (line 195). This document has no sibling JSON in results/55maps-ds-summary-v2/ (report.md is the only file), so all anchors are the per-run artefacts the report aggregates. [BLOB REPOINT S127] The document was edited at lines ~577 (a blind-pass withdrawal inside batch b074's range) after this extraction. None of b073's 86 spans is affected — all re-verified verbatim against the current body, max referenced line 323 — so only the document-level git_blob pointer was stale, not the content. Repointed c55fe259ef90 -> cd464933438d without re-extraction. [BATCH NOTE b073 S128 RE-EXTRACT under charter § 5 rule 14 / ruling 18] The document was repaired this session for W7-D3 (§ 1's measured-F1 ranking), W7-D4 (§ 4.2's 'only run with zero unjoined rows'), W7-D6 (the text-MIN review row count) and W7-D9 (the front matter's GT attribution, plus new caveat blocks at § 2.1 and § 4.1 and a new changelog section), so both batches covering it are re-extracted in the same commit. METHOD: every one of the 86 surviving spans was re-located verbatim in the repaired body and its line anchors updated -- 5 spans whose text the repair changed were re-extracted, the remaining 81 re-verified unchanged. Six new claims were added for the new blocks. ONE CLAIM WAS DELETED: the old claim index 3, whose sentence carried the withdrawn '4,745-mound curator GT' clause; the repaired sentence asserts no quantity, so it is no longer a claim. CLAIM INDICES HAVE THEREFORE SHIFTED -- any external reference to a b073 claim index predating this commit is stale; refer by claim_text or source line. The blob moved cd464933438d -> the value recorded in source_document.git_blob."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          5,
-          6
+          7,
+          8
         ],
         "section": "Revision banner"
       },
-      "claim_text": "the two era-faithful 4,745-mound GT references\n> adjudicated and left as history",
+      "claim_text": "the two\n> era-faithful 4,745-mound GT references adjudicated and left as history.",
       "values": [
         {
           "quantity": "count of era-faithful 4,745-mound ground-truth references carried by this document",
@@ -80,14 +80,14 @@
       ],
       "anchor": null,
       "method": "anchor-unknown",
-      "notes": "GT-count treatment: marked HISTORICAL. The banner explicitly describes the two 4,745 references as era-faithful history, so the count is not a live claim about today's ground truth (which holds 4,746 features). Deliberately NOT anchored to inputs/vectors/references/student-mounds-55maps-reviewed.geojson. The count of such references ('two') is a self-referential count over this document's own body -- the second reference sits at line 436, outside this batch's 1-332 range and inside sibling batch b074 -- so no repo artefact can decide it; flagged anchor-unknown for triage."
+      "notes": "GT-count treatment: marked HISTORICAL. The banner explicitly describes the two 4,745 references as era-faithful history, so the count is not a live claim about today's ground truth (which holds 4,746 features). Deliberately NOT anchored to inputs/vectors/references/student-mounds-55maps-reviewed.geojson. The count of such references ('two') is a self-referential count over this document's own body -- the second reference sits at line 436, outside this batch's 1-332 range and inside sibling batch b074 -- so no repo artefact can decide it; flagged anchor-unknown for triage. [S128 RE-EXTRACT] The banner was rewritten this session; the clause survives verbatim in the 'Earlier the same day' half. The self-referential count 'two' still cannot be decided from any repo artefact and remains anchor-unknown."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          9,
-          10
+          11,
+          12
         ],
         "section": "Front matter — provenance block"
       },
@@ -111,49 +111,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          12,
-          13
-        ],
-        "section": "Front matter — post-recovery refresh"
-      },
-      "claim_text": "T=0.7 row re-derived against the recovered single-round consensus + verifier\nand the updated 4,745-mound curator GT",
-      "values": [
-        {
-          "quantity": "count of student ground-truth mounds consumed by the 2026-05-03 T=0.7 Dawid-Skene re-derivation",
-          "value_verbatim": "4,745",
-          "value_parsed": 4745,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
-              "path": "$.item_counts.matched"
-            },
-            {
-              "name": "b",
-              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
-              "path": "$.item_counts.student_only"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "[W7-D5 RE-ANCHOR, Session 128] SUPERSEDES the b073 re-extraction anchor results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json::$.results[0].n_ref_student_only, which reads 4745 and therefore verified GREEN for the wrong computation. The sentence asserts what the T=0.7 DAWID-SKENE row's re-derivation consumed, not what the corrected-F1 pipeline consumed; the superseded anchor was chosen for numerical agreement rather than for describing the same computation (W7-E4 blind pass, reports/verification/c4-triage/blind-passes/wave7-w7e4-verification-2026-08-04.json, $.re_extraction_check.caveat.detail). GT-count treatment: the D-S item set's matched + student_only IS the count of reference points the fit consumed -- build_shared_item_set in scripts/analyse_dawid_skene.py assigns every in-bounds reference point to exactly one of those two categories. THIS ANCHOR IS EXPECTED TO MISMATCH: the artefact gives 3,527 + 1,243 = 4,770, not 4,745, because the T=0.7 D-S run took the script default ground truth (_STUDENT_GT_PATH = inputs/vectors/references/student-mounds-55maps.geojson, the fixed 4,770 base; scripts/analyse_dawid_skene.py:57) rather than the reviewed curator layer, notwithstanding commit 366f9c66f's message claiming the updated GT. The mismatch is the CORRECT verdict; the underlying document defect is registered as W7-D9 in reports/verification/c4-triage/wave7-open-items-2026-08-04.json. Do NOT resolve it by reverting to a numerically-agreeing anchor. The era-faithfulness reasoning in the superseded note (coverage-drift-2026-08-04.json gt_count_era_resolution; the T=0.7 full-buffer evaluation ran 2026-05-03T00:40:19Z between baf1497a7 and 2e075eb99) remains true OF THE EVALUATION PIPELINE and is why the corrected-F1 artefact reads 4745 -- it is simply not the object this sentence is about."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          14,
-          16
+          15,
+          17
         ],
         "section": "Front matter — post-recovery refresh"
       },
@@ -270,8 +229,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          16,
-          18
+          17,
+          19
         ],
         "section": "Front matter — post-recovery refresh"
       },
@@ -298,8 +257,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          20,
-          22
+          21,
+          23
         ],
         "section": "Front matter — post-recovery refresh"
       },
@@ -344,8 +303,74 @@
       "claim_id": null,
       "source": {
         "lines": [
+          26,
+          27
+        ],
+        "section": "Front matter — W7-D9 correction block"
+      },
+      "claim_text": "The T=0.7 sentence above previously\n> ended \"and the updated 4,745-mound curator GT\".",
+      "values": [
+        {
+          "quantity": "count of mounds in the curator ground truth as quoted in the withdrawn clause",
+          "value_verbatim": "4,745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "[S128 NEW] GT-count treatment: HISTORICAL. This quotes a clause the document has WITHDRAWN; it is not an assertion about any reference. 4,745 was the size of inputs/vectors/references/student-mounds-55maps-reviewed.geojson between baf1497a7 and 2e075eb99 on 2026-05-03 and remains correct OF THE RE-EVALUATION (f533fda5) — see ruling 19 layer 3 and coverage-drift-2026-08-04.json gt_count_era_resolution. Deliberately NOT anchored to the live reviewed layer (4,746 today)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
           27,
-          30
+          31
+        ],
+        "section": "Front matter — W7-D9 correction block"
+      },
+      "claim_text": "That is true of the\n> *re-evaluation* (`f533fda5`) but false of the *D-S re-aggregation*\n> (`366f9c66`), which took the script default reference — the fixed\n> 4,770-feature base, `analyse_dawid_skene.py:57` — and so never saw the\n> curator addition.",
+      "values": [
+        {
+          "quantity": "count of features in the fixed student base the T=0.7 D-S re-aggregation consumed",
+          "value_verbatim": "4,770",
+          "value_parsed": 4770,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "[S128 NEW] The dated correction block added when W7-D9 was repaired. The 4,770 is verified against the T=0.7 D-S artefact's own item set (matched + student_only), which is the count of reference points that fit consumed; it equals the feature count of inputs/vectors/references/student-mounds-55maps.geojson, the fixed base named at scripts/analyse_dawid_skene.py:57. The withdrawn '4,745-mound curator GT' clause is quoted verbatim in the preceding sentence of the same block and is extracted as historical there. Commit hashes and the script line reference are out of extraction scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          43
         ],
         "section": "Front matter — aggregator"
       },
@@ -390,8 +415,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          36,
-          37
+          49,
+          50
         ],
         "section": "§1 Summary"
       },
@@ -427,17 +452,17 @@
       "claim_id": null,
       "source": {
         "lines": [
-          41,
-          42
+          54,
+          55
         ],
         "section": "§1 Summary"
       },
-      "claim_text": "and cross-tabulated against\nthe 586-row multi-buffer human review that landed earlier today.",
+      "claim_text": "and cross-tabulated against\nthe 585-row multi-buffer human review that landed earlier today.",
       "values": [
         {
-          "quantity": "row count of the text-MIN multi-buffer human review",
-          "value_verbatim": "586",
-          "value_parsed": 586,
+          "quantity": "data-row count of the text-MIN multi-buffer human review (header excluded)",
+          "value_verbatim": "585",
+          "value_parsed": 585,
           "unit": null,
           "kind": "count",
           "path": null,
@@ -449,14 +474,14 @@
         "path": null
       },
       "method": "read",
-      "notes": "Whole-artefact row count of the CSV named as the crosstab input at results/55maps-text-min-generalisation/ds-human-crosstab/summary.json ($.inputs.review_today). Whether the quoted 586 counts the header row is for the harness to decide, not the extractor. 'the fourth run' is an ordinal and is not extracted."
+      "notes": "Whole-artefact row count of the CSV named as the crosstab input at results/55maps-text-min-generalisation/ds-human-crosstab/summary.json ($.inputs.review_today). Whether the quoted 586 counts the header row is for the harness to decide, not the extractor. 'the fourth run' is an ordinal and is not extracted. [W7-D6 REPAIR, S128] 586 -> 585. The CSV has 586 lines and 585 data rows; the document previously counted the header here while counting data rows everywhere else."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          47,
-          49
+          60,
+          62
         ],
         "section": "§1 Summary"
       },
@@ -483,8 +508,229 @@
       "claim_id": null,
       "source": {
         "lines": [
-          62,
-          62
+          74,
+          77
+        ],
+        "section": "2.1 Shared item set — W7-D9 reference caveat"
+      },
+      "claim_text": "The image run's D-S fit consumed the **reviewed\n> curator layer** (4,745 student points as it then stood); T=0.7, T=0.3\n> and text-MIN all consumed the **fixed 4,770-feature base**, which is the\n> script default.",
+      "values": [
+        {
+          "quantity": "student reference points consumed by the image run's D-S fit",
+          "value_verbatim": "4,745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        },
+        {
+          "quantity": "features in the fixed student base consumed by the T=0.7, T=0.3 and text-MIN D-S fits",
+          "value_verbatim": "4,770",
+          "value_parsed": 4770,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "[S128 NEW] The core W7-D9 finding. Each run's D-S item set assigns every in-bounds reference point to exactly one of matched / student_only (build_shared_item_set, scripts/analyse_dawid_skene.py), so their sum IS the reference size the fit consumed. Image gives 3,650 + 1,095 = 4,745; T=0.7 gives 3,527 + 1,243 = 4,770, and T=0.3 and text-MIN also give 4,770 (anchored on T=0.7 as the representative sibling; the other two are asserted by the '4,770 / 4,770 / 4,770' claim below, which anchors all three)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          79
+        ],
+        "section": "2.1 Shared item set — W7-D9 reference caveat"
+      },
+      "claim_text": "`student_label == 1` rows in each\n> run's `dawid-skene/item-posteriors.csv` number 4,770 / 4,770 / 4,770\n> against image's 4,745",
+      "values": [
+        {
+          "quantity": "student_label==1 rows, T=0.7 item-posteriors",
+          "value_verbatim": "4,770",
+          "value_parsed": 4770,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        },
+        {
+          "quantity": "student_label==1 rows, T=0.3 item-posteriors",
+          "value_verbatim": "4,770",
+          "value_parsed": 4770,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        },
+        {
+          "quantity": "student_label==1 rows, text-MIN item-posteriors",
+          "value_verbatim": "4,770",
+          "value_parsed": 4770,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        },
+        {
+          "quantity": "student_label==1 rows, image item-posteriors",
+          "value_verbatim": "4,745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "[S128 NEW] Anchored to the per-run dawid-skene-results.json item_counts rather than to item-posteriors.csv directly: the CSV has one row per item with a student_label column, and the count of student_label==1 rows is by construction matched + student_only, which the JSON records as integers a JSON-path comparer can read. Verified equal to a direct CSV count of student_label==1 in all four runs this session. Rule 5 (JSON-parse, never line-grep) is why the JSON is preferred as the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          85
+        ],
+        "section": "2.1 Shared item set — W7-D9 reference caveat"
+      },
+      "claim_text": "Image's student side is therefore drawn from a reference **25 points\n> smaller**",
+      "values": [
+        {
+          "quantity": "difference in student reference size between the image D-S fit and its three siblings",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "points",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) - (c + d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "[S128 NEW] 4,770 - 4,745 = 25. Consistent with ruling 19's reconciliation of the reviewed layer (4,770 - 52 + 28 = 4,746): the 26 merged-centroid replacements of student double-marks remove 52 and restore 26, and at the baf1497a7 era one of the two curator additions had landed, giving 4,770 - 26 + 1 = 4,745. The document's characterisation of the 25 as 'merged-centroid replacements of student double-marks' is qualitative and not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -560,8 +806,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          63,
-          63
+          97,
+          97
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -637,8 +883,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          64,
-          64
+          98,
+          98
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -714,8 +960,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          65,
-          65
+          99,
+          99
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -791,8 +1037,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          67,
-          68
+          101,
+          102
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -854,8 +1100,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          68,
-          69
+          102,
+          103
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -895,8 +1141,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          69,
-          70
+          103,
+          104
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -936,8 +1182,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          70,
-          74
+          104,
+          108
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -973,8 +1219,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          76,
-          78
+          110,
+          112
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -1085,8 +1331,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          78,
-          82
+          112,
+          116
         ],
         "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
@@ -1219,8 +1465,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          90,
-          90
+          124,
+          124
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1283,8 +1529,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          91,
-          91
+          125,
+          125
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1347,8 +1593,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          92,
-          92
+          126,
+          126
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1411,8 +1657,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          93,
-          93
+          127,
+          127
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1475,8 +1721,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          95,
-          96
+          129,
+          130
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1500,8 +1746,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          96,
-          98
+          130,
+          132
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1546,8 +1792,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          100,
-          101
+          134,
+          135
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1583,8 +1829,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          102,
-          103
+          136,
+          137
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1611,8 +1857,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          106,
-          108
+          140,
+          142
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1666,8 +1912,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          108,
-          111
+          142,
+          145
         ],
         "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
@@ -1694,8 +1940,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          117,
-          117
+          151,
+          151
         ],
         "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
@@ -1789,8 +2035,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          118,
-          118
+          152,
+          152
         ],
         "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
@@ -1884,8 +2130,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          119,
-          119
+          153,
+          153
         ],
         "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
@@ -1979,8 +2225,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          120,
-          120
+          154,
+          154
         ],
         "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
@@ -2074,8 +2320,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          122,
-          123
+          156,
+          157
         ],
         "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
@@ -2111,8 +2357,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          123,
-          126
+          157,
+          160
         ],
         "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
@@ -2157,8 +2403,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          129,
-          130
+          163,
+          164
         ],
         "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
@@ -2198,8 +2444,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          137,
-          137
+          171,
+          171
         ],
         "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
@@ -2253,8 +2499,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          138,
-          138
+          172,
+          172
         ],
         "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
@@ -2308,8 +2554,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          139,
-          139
+          173,
+          173
         ],
         "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
@@ -2363,8 +2609,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          140,
-          140
+          174,
+          174
         ],
         "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
@@ -2418,8 +2664,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          142,
-          143
+          176,
+          177
         ],
         "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
@@ -2455,8 +2701,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          146,
-          147
+          180,
+          181
         ],
         "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
@@ -2492,8 +2738,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          151,
-          152
+          185,
+          186
         ],
         "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
@@ -2520,8 +2766,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          163,
-          164
+          197,
+          198
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -2548,8 +2794,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          164,
-          167
+          198,
+          201
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -2603,8 +2849,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          174,
-          174
+          208,
+          208
         ],
         "section": "§3 D-S vs human-review crosstab table"
       },
@@ -2747,8 +2993,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          175,
-          175
+          209,
+          209
         ],
         "section": "§3 D-S vs human-review crosstab table"
       },
@@ -2891,8 +3137,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          176,
-          176
+          210,
+          210
         ],
         "section": "§3 D-S vs human-review crosstab table"
       },
@@ -3035,8 +3281,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          177,
-          177
+          211,
+          211
         ],
         "section": "§3 D-S vs human-review crosstab table"
       },
@@ -3179,8 +3425,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          181,
-          182
+          215,
+          216
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -3216,8 +3462,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          185,
-          188
+          219,
+          222
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -3262,8 +3508,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          189,
-          190
+          223,
+          224
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -3299,8 +3545,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          190,
-          190
+          224,
+          224
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -3324,8 +3570,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          191,
-          195
+          225,
+          229
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -3370,8 +3616,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          196,
-          198
+          230,
+          232
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -3425,8 +3671,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          198,
-          201
+          232,
+          235
         ],
         "section": "§3 D-S vs human-review crosstab — per run"
       },
@@ -3489,8 +3735,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          209,
-          209
+          243,
+          243
         ],
         "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
@@ -3544,8 +3790,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          210,
-          210
+          244,
+          244
         ],
         "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
@@ -3599,8 +3845,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          211,
-          211
+          245,
+          245
         ],
         "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
@@ -3654,8 +3900,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          212,
-          212
+          246,
+          246
         ],
         "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
@@ -3709,8 +3955,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          213,
-          213
+          247,
+          247
         ],
         "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
@@ -3764,8 +4010,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          216,
-          220
+          250,
+          254
         ],
         "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
@@ -3823,8 +4069,81 @@
       "claim_id": null,
       "source": {
         "lines": [
-          220,
-          223
+          259,
+          260
+        ],
+        "section": "4.1 Aggregate F1 ordering — W7-D9 withdrawal"
+      },
+      "claim_text": "The gap between them is 0.0002 F1, against a reference\n> difference of 25 student points acting in Image's favour",
+      "values": [
+        {
+          "quantity": "D-S corrected F1 gap, image minus T=0.3",
+          "value_verbatim": "0.0002",
+          "value_parsed": 0.0002,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "difference in student reference size between the image D-S fit and T=0.3's",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "points",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b) - (c + d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "[S128 NEW] The withdrawal block. 0.7990 - 0.7988 = 0.0002 at the artefacts' own 4 d.p. rounding; the underlying values are 0.799 and 0.7988. The claim being withdrawn is the RANK ORDER, not either F1 value -- both stand and are extracted unchanged at the § 4.1 table. 'acting in Image's favour' is a directional argument, not a quantity, and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          269,
+          272
         ],
         "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
@@ -3848,8 +4167,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          228,
-          231
+          277,
+          280
         ],
         "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
@@ -3964,8 +4283,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          243,
-          243
+          292,
+          292
         ],
         "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
       },
@@ -4045,8 +4364,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          244,
-          244
+          293,
+          293
         ],
         "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
       },
@@ -4126,8 +4445,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          245,
-          245
+          294,
+          294
         ],
         "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
       },
@@ -4207,8 +4526,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          246,
-          246
+          295,
+          295
         ],
         "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
       },
@@ -4288,8 +4607,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          248,
-          249
+          297,
+          298
         ],
         "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
       },
@@ -4316,13 +4635,45 @@
       "claim_id": null,
       "source": {
         "lines": [
-          256,
-          257
+          305,
+          307
         ],
         "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
       },
-      "claim_text": "text-MIN is also the cleanest test of the pattern because it is the\nonly run with **zero unjoined rows** in the crosstab",
+      "claim_text": "text-MIN is also a clean test of the pattern because it is one of the\nthree runs with **zero unjoined rows** in the crosstab (with T=0.7 and\nimage, post-recovery — see § 3; only T=0.3 retains any, at 64)",
       "values": [
+        {
+          "quantity": "count of runs with zero unjoined rows in the D-S-vs-human crosstab, post-recovery",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a==0)+(b==0)+(c==0)+(e==0)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.n_unjoined"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.n_unjoined"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.n_unjoined"
+            },
+            {
+              "name": "e",
+              "file": "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.n_unjoined"
+            }
+          ]
+        },
         {
           "quantity": "unjoined VLM-only rows, text-MIN run",
           "value_verbatim": "zero",
@@ -4331,6 +4682,15 @@
           "kind": "count",
           "path": "$.n_unjoined",
           "method": "read"
+        },
+        {
+          "quantity": "unjoined VLM-only rows, T=0.3 run",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json#$.n_unjoined",
+          "method": "read"
         }
       ],
       "anchor": {
@@ -4338,14 +4698,14 @@
         "path": null
       },
       "method": "read",
-      "notes": "Textual tension worth triage attention: this sentence calls text-MIN 'the only run with zero unjoined rows', while the § 3 bullet at lines 189-190 asserts that three runs have zero unjoined rows post-recovery. Both recorded verbatim, neither adjudicated."
+      "notes": "Textual tension worth triage attention: this sentence calls text-MIN 'the only run with zero unjoined rows', while the § 3 bullet at lines 189-190 asserts that three runs have zero unjoined rows post-recovery. Both recorded verbatim, neither adjudicated. [W7-D4 REPAIR, S128] The document said text-MIN was 'the only run with zero unjoined rows'; the artefacts give n_unjoined = 0 / 0 / 0 / 64 for text-MIN, T=0.7, image and T=0.3, so three runs qualify. Repaired to 'one of the three', which restores agreement with § 3's own 'Three runs now have zero unjoined rows' sentence (claim index 53). § 4.2's conclusion is unaffected: text-MIN's status as a clean test rests on its VLM-only/matched ratio, not on being uniquely joined."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          270,
-          270
+          320,
+          320
         ],
         "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
       },
@@ -4403,8 +4763,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          271,
-          271
+          321,
+          321
         ],
         "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
       },
@@ -4462,8 +4822,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          272,
-          272
+          322,
+          322
         ],
         "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
       },
@@ -4521,8 +4881,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          273,
-          273
+          323,
+          323
         ],
         "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
       },
@@ -4580,8 +4940,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          279,
-          280
+          329,
+          330
         ],
         "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
       },
@@ -4608,8 +4968,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          290,
-          291
+          340,
+          341
         ],
         "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
       },
@@ -4671,12 +5031,12 @@
       "claim_id": null,
       "source": {
         "lines": [
-          293,
-          296
+          343,
+          346
         ],
         "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
       },
-      "claim_text": "T=0.3 has the largest\nmulti-buffer review cohort (692 rows vs 586 for text-MIN); text-MIN\nand T=0.7 have the fewest reviewer-promoted candidates at R=50 m\n(250 for text-MIN)",
+      "claim_text": "T=0.3 has the largest\nmulti-buffer review cohort (692 rows vs 585 for text-MIN); text-MIN\nand T=0.7 have the fewest reviewer-promoted candidates at R=50 m\n(250 for text-MIN)",
       "values": [
         {
           "quantity": "row count of the T=0.3 multi-buffer human review",
@@ -4688,9 +5048,9 @@
           "method": "read"
         },
         {
-          "quantity": "row count of the text-MIN multi-buffer human review",
-          "value_verbatim": "586",
-          "value_parsed": 586,
+          "quantity": "data-row count of the text-MIN multi-buffer human review (header excluded)",
+          "value_verbatim": "585",
+          "value_parsed": 585,
           "unit": null,
           "kind": "count",
           "path": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv (row count excluding the header)",
@@ -4711,14 +5071,14 @@
         "path": null
       },
       "method": "read",
-      "notes": "Two CSV row counts plus one JSON scalar. The anchor is the T=0.3 review CSV (whole artefact); the text-MIN count is addressed cross-file. Whether either quoted figure counts the header row is for the harness to decide."
+      "notes": "Two CSV row counts plus one JSON scalar. The anchor is the T=0.3 review CSV (whole artefact); the text-MIN count is addressed cross-file. Whether either quoted figure counts the header row is for the harness to decide. [W7-D6 REPAIR, S128] 586 -> 585. Decisive within this very sentence: the sibling '692' for T=0.3 is a data-row count (that CSV has 693 lines), so the pair was internally inconsistent."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          313,
-          313
+          363,
+          363
         ],
         "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
       },
@@ -4812,8 +5172,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          314,
-          314
+          364,
+          364
         ],
         "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
       },
@@ -4871,8 +5231,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          315,
-          315
+          365,
+          365
         ],
         "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
       },
@@ -4930,8 +5290,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          316,
-          316
+          366,
+          366
         ],
         "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
       },
@@ -5025,8 +5385,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          317,
-          317
+          367,
+          367
         ],
         "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
       },
@@ -5084,8 +5444,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          318,
-          318
+          368,
+          368
         ],
         "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
       },
@@ -5143,8 +5503,8 @@
       "claim_id": null,
       "source": {
         "lines": [
-          321,
-          323
+          371,
+          373
         ],
         "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
       },

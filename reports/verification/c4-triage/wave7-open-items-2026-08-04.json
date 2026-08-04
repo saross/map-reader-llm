@@ -4,9 +4,10 @@
   "date": "2026-08-04",
   "author": "Claude Opus 5 session (Session 127)",
   "why_this_file_exists": "Several items surfaced this session were recorded only in commit messages, which are durable but not discoverable at session start. A next session reads the continuity block and the triage JSONs, so everything still open is consolidated here with its evidence pointer.",
-  "status_convention": "OPEN unless a resolving commit is named. Nothing here has been adjudicated; the blind-pass verdicts are evidence, not decisions.",
+  "status_convention": "OPEN unless a resolving commit is named. Nothing here has been adjudicated; the blind-pass verdicts are evidence, not decisions. As of Session 128 a repaired item carries a `status` field naming the session and the adjudication; items without one are still open.",
   "provenance": "Wave-7 blind passes P1-P4 (e86bca52d), the W7-E4 repair verification (18bbcaa18), and the extraction agents' own flags.",
-  "census_hazard_note": "The census flagged that `uuid` in the base layer is a SYMBOL CODE, not an identifier — 4,770 features share only 833 distinct values. Do not use it as a key."
+  "census_hazard_note": "The census flagged that `uuid` in the base layer is a SYMBOL CODE, not an identifier — 4,770 features share only 833 distinct values. Do not use it as a key.",
+  "session_128_note": "W7-D5 repaired, and repairing it exposed W7-D9. W7-D3, W7-D4 and W7-D6 adjudicated from artefacts and repaired. All four ds-summary-v2 repairs landed in ONE commit with the rule-14 re-extraction of b073 and b074, because the coupling invariant makes a second edit to the same document cost a second re-extraction. Ruling 21 was collected during this work and moves every reference-tainted RE-ANALYSIS behind the standardised reference; see reports/verification/reference-standardisation-queue.md."
  },
  "confirmed_defects_unrepaired": [
   {
@@ -36,7 +37,8 @@
    "location": "line 47 versus line 216",
    "defect": "Line 47's measured-F1 ranking (T=0.7 > T=0.3 > image) contradicts line 216's (T=0.7 > Image > T=0.3).",
    "found_by": "b073 re-extraction agent; the W7-E4 blind pass added that the contradiction is DECIDABLE from the artefacts rather than merely noted",
-   "repair": "Decide from the artefacts and correct the wrong site; both were left unadjudicated in Session 127."
+   "repair": "Decide from the artefacts and correct the wrong site; both were left unadjudicated in Session 127.",
+   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED FROM ARTEFACTS: line 216's ranking was right and line 47's wrong. The four runs' $.measured.f1 are 0.7896 (T=0.7), 0.7745 (image), 0.7743 (T=0.3), 0.7591 (text-MIN), so the order is T=0.7 > image > T=0.3 > text-MIN. § 1 corrected to match; § 4.1's table already had it. NOTE the interaction with W7-D9: the image-vs-T=0.3 pair sits at 0.0002 and the two runs are not on a common reference, so that half of the order is separately withdrawn at § 4.1."
   },
   {
    "id": "W7-D4",
@@ -45,7 +47,8 @@
    "location": "line 257 versus lines 189-190",
    "defect": "Line 257 calls text-MIN \"the only run with zero unjoined rows\" while lines 189-190 record three runs with zero.",
    "found_by": "b073 re-extraction agent",
-   "repair": "Unadjudicated. Both readings recorded in 073.json."
+   "repair": "Unadjudicated. Both readings recorded in 073.json.",
+   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED FROM ARTEFACTS: lines 189-190 were right. ds-human-crosstab/summary.json $.n_unjoined reads 0 for text-MIN, 0 for T=0.7, 0 for image and 64 for T=0.3, so three runs qualify and text-MIN is not 'the only' one. § 4.2 corrected to 'one of the three', restoring agreement with § 3. The section's conclusion is unaffected: text-MIN's standing as a clean test rests on its VLM-only/matched ratio, not on being uniquely joined."
   },
   {
    "id": "W7-D5",
@@ -55,8 +58,8 @@
    "found_by": "W7-E4 blind verification pass",
    "note": "Worse than a mismatch: a mismatch is visible in triage, a false green is not. Fix before the ledger consumes it.",
    "repair": "Re-anchor to the artefact the claim actually asserts.",
-   "status": "REPAIRED 2026-08-04 (Session 128). Claim index 3 of 073.json re-anchored from results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json::$.results[0].n_ref_student_only (read, green at 4745) to results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json (arithmetic, $.item_counts.matched + $.item_counts.student_only). It now recomputes to 4,770 against the document's 4,745 and reports MISMATCH with abs_error 25 — the correct verdict. The underlying document defect the false green was concealing is registered as W7-D9.",
-   "ledger_note": "reports/verification/c4-recompute-report.json still carries the pre-repair GREEN row for this claim. It is a whole-corpus artefact (16,083 rows, generated on sapphire) and is refreshed by a full recompute, not a single-file run — a single-file run TRUNCATES it. Regenerate on sapphire once the ds-summary-v2 document repairs land."
+   "status": "REPAIRED 2026-08-04 (Session 128), in two stages. STAGE 1 — the anchor: claim index 3 of 073.json was re-anchored from results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json::$.results[0].n_ref_student_only (method read, green at 4745) to results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json (method arithmetic, $.item_counts.matched + $.item_counts.student_only). It recomputed to 4,770 against the document's 4,745 and reported MISMATCH with abs_error 25 — the correct verdict, and the thing the false green had hidden. STAGE 2 — the document: that mismatch was a real defect (W7-D9), so the document was repaired in the same session and the withdrawn clause no longer asserts a count. The claim therefore carries no values and was DELETED in the rule-14 re-extraction; b073 claim indices after 3 have shifted, so any external reference to a pre-Session-128 b073 index is stale. The evidence that made the mismatch correct is now extracted as live green claims on the new § 2.1 caveat block.",
+   "ledger_note": "reports/verification/c4-recompute-report.json is a whole-corpus artefact (16,083 rows at Session 127, host sapphire) and is refreshed by a full recompute; a single-file run TRUNCATES it, so never point recompute_c4_claims.py at one batch without redirecting --out. It still predates the Session-128 ds-summary-v2 repairs and the b073/b074 re-extraction. REGENERATE ON SAPPHIRE — pending as of the Session-128 commit."
   },
   {
    "id": "W7-D6",
@@ -65,7 +68,8 @@
    "location": "lines 42 and 294",
    "defect": "Cites 586 rows against 585 data rows in the text-MIN review CSV — a header-handling question.",
    "found_by": "b073 re-extraction agent",
-   "repair": "Left for the harness to decide on header handling; not adjudicated."
+   "repair": "Left for the harness to decide on header handling; not adjudicated.",
+   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED: 585, the data-row count. The file has 586 lines and 585 data rows, and the decisive evidence is inside the document's own sentence -- its sibling figure '692' for T=0.3 is a data-row count (that CSV has 693 lines), so the pair was internally inconsistent. Repaired at both sites. A THIRD SITE was found during the repair and fixed with it: the § 6.2 table gave the image today-review as 557 where the file has 558 data rows. 557 was not a typo but the cross-tabulator's accounting (556 today-rows also in the yesterday review, plus 1 today_only from $.source_counts); under the table's own semantics -- the column names the CSV and reports its rows -- it is 558. Both the reasoning and the superseded figures are recorded in a dated note under the table so the old number is not re-read as an error."
   },
   {
    "id": "W7-D7",
@@ -103,7 +107,8 @@
    "the_documents_own_contradiction": "Lines 189-194 of the same document already state the correct fact — 'the corrected-f1 pipeline using the *reviewed* student GT at multi-buffer rings while D-S uses the legacy student GT at 50 m'. The front matter contradicts § 3 of its own body. What neither passage records is that IMAGE is the exception to its own rule.",
    "interpretive_consequence": "UNADJUDICATED — flagged, not decided. The image run's D-S reference is 25 student points smaller than its three siblings', so every cross-run D-S comparison in this document (§ 2.1 item counts, § 2.2 worker accuracy and prevalence, § 4.1 F1 ranking, § 4.2 calibration ranking) compares image against the other three on a different reference. § 4.1's D-S F1 gap between image (0.7990) and T=0.3 (0.7988) is 0.0002 — far smaller than the plausible effect of removing 25 student double-marks, which mechanically reduces student_only (false negatives) and so raises recall. The document already calls that ordering noise-level ('preserved at 4 d.p. only as 0.7745 ≈ 0.7743 within rounding'); this finding adds that the two runs are not on a common reference at all, so the image-vs-T=0.3 rank order is not established by these artefacts.",
    "relationship_to_W7_D8": "The MIRROR IMAGE of W7-D8 and easy to conflate. W7-D8 is about the EVALUATION layer, where t0.3 is the odd one out (unreviewed 4,770, siblings reviewed). W7-D9 is about the DAWID-SKENE layer, where IMAGE is the odd one out (reviewed 4,745, siblings the fixed 4,770 base). Different objects, different runs, opposite direction. W7-R1's history shows this pair has already caused one withdrawn claim.",
-   "repair": "Disambiguate the front-matter sentence so the evaluation re-run (4,745, f533fda5f) and the D-S re-aggregation (4,770 base, 366f9c66f) are separated; state at § 2.1 that image's D-S reference differs from the other three; and decide whether § 4.1's image-vs-T=0.3 ordering may still be asserted. The first two are bookkeeping; the third is a PI call."
+   "repair": "Disambiguate the front-matter sentence so the evaluation re-run (4,745, f533fda5f) and the D-S re-aggregation (4,770 base, 366f9c66f) are separated; state at § 2.1 that image's D-S reference differs from the other three; and decide whether § 4.1's image-vs-T=0.3 ordering may still be asserted. The first two are bookkeeping; the third is a PI call.",
+   "status": "REPAIRED (bookkeeping) 2026-08-04 (Session 128); INTERPRETIVE HALF RESOLVED BY DEFERRAL under ruling 21. The front-matter clause is withdrawn in a dated correction block rather than restated, because the sentence describes three commits at once and no single GT count is true of all three. A reference caveat was added at § 2.1 stating the split and its direction, and § 4.1's image-vs-T=0.3 ordering is WITHDRAWN pending re-analysis with the text left in place. NOTHING WAS RECOMPUTED: ruling 21 fixes the reference first, so all four D-S fits re-run once, together, as item 1 of reports/verification/reference-standardisation-queue.md."
   }
  ],
  "open_research_findings": [
