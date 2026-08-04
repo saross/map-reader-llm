@@ -1,7 +1,10 @@
 # Temperature, transient errors, and failure-recovery on the 55-map proposer cross-run — synthesis report
 
-> **Last revised**: 2026-08-04 (§ 12 image corrected-F1 refreshed to the current artefact value;
-> all historical GT-count and transition figures deliberately preserved). See
+> **Last revised**: 2026-08-04 (W7-D1 — five dead artefact paths repointed to the
+> archive that holds them, including one runnable re-derivation command; W7-D2 — a
+> rounding-boundary figure aligned with its siblings). Earlier the same day: § 12's
+> image corrected-F1 refreshed to the current artefact value, with all historical
+> GT-count and transition figures deliberately preserved. See
 > [§ Changelog](#changelog) for revision history.
 
 **Date**: 2026-04-30 (initial); major refresh **2026-05-03** (Session 84 — 3 follow-up recoveries propagated)
@@ -44,7 +47,7 @@ and the GS-v2 harness race condition requiring two resume invocations per pass).
 campaign also discovered **28 silently-dropped verifier candidates** (image: 18 + GS-v2: 10)
 that had never been written to `probabilities.json` from the original verifier runs — entirely
 independent of the proposer recovery and a previously unchecked completeness gap. Headline
-post-recovery F1@50m metrics across the four runs: **T=0.3 raw 0.8024 / corrected 0.8436;
+post-recovery F1@50m metrics across the four runs: **T=0.3 raw 0.8024 / corrected 0.8437;
 T=0.7 raw 0.7920 / corrected 0.8273; image raw 0.7745 / corrected 0.8333; text-MIN raw 0.7619
 / corrected 0.7968; GS-v2 raw 0.8859 [Era 2 487-tile, +0.0126 vs pre-recovery]**. All
 paper-load-bearing claims are preserved across all four runs (see § 7 for the per-run table).
@@ -543,7 +546,7 @@ Discussion citation.
 
 | Run     | Total recovery cost | Net retained candidates | F1@50m (post-recovery) | Δ vs pre-recovery | Verifier-completeness gap |
 |:--------|:-------------------:|:-----------------------:|:----------------------:|:-----------------:|:-------------------------:|
-| T=0.3   | $0.034              | +1                      | 0.8024 (raw) / 0.8436 (corr.) | +0.0001 (raw) | none                  |
+| T=0.3   | $0.034              | +1                      | 0.8024 (raw) / 0.8437 (corr.) | +0.0001 (raw) | none                  |
 | T=0.7   | $57.10              | +21                     | 0.7920 (raw) / 0.8273 (corr.) | +0.0024 (raw) | none documented       |
 | image   | ~$0.029             | +15                     | 0.7745 (raw) / 0.8333 (corr.) | +0.0035 (raw) | **18 silently-dropped** |
 | text-MIN | ~$0.144            | +4                      | 0.7595 (raw) / 0.7968 (corr.) | +0.0004 (raw) | none                  |
@@ -820,7 +823,7 @@ own commit histories.** All numerical claims trace back to existing artefacts:
   - Multi-buffer corrected F1 + 6 new reviews + 1 new GT mound: `f6eaeca9`,
     `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json`.
   - MCC mirror: `d9bc3edc` (partial),
-    `results/55maps-text-high-generalisation/mcc/evaluation.json`.
+    `archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json`.
   - Pairwise permutation v2: `aeb9fb7f`,
     `results/55maps-text-high-generalisation/paired-vs-{min,high}-*/`.
   - D-S re-aggregation + crosstab (using fixed plumbing): `366f9c66`, `e07dae37`,
@@ -850,7 +853,7 @@ python3 -c "import json; d = json.load(open('outputs/55maps-text-high-generalisa
 python3 -c "import json; d = json.load(open('results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json')); print([(r['R_m'], r['F1']) for r in d['results']])"
 
 # T=0.7 tile-level MCC at R = 50 m (post-recovery)
-python3 -c "import json; d = json.load(open('results/55maps-text-high-generalisation/mcc/evaluation.json')); print(d['summary']['tile_classification']['mcc'])"
+python3 -c "import json; m = json.load(open('archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json'))['summary']['tile_classification']['mcc']; print(f\"{m['point']} [{m['ci_lower']}, {m['ci_upper']}] ({m['method']})\")"
 
 # T=0.3 unrecovered failure count (post-recovery)
 python3 -c "import json; d = json.load(open('outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json')); print(d['by_stage']['proposer']['tiles_failed'])"
@@ -882,7 +885,7 @@ re-verification.
 - T=0.7 raw F1 at R = 50 m: 0.7920 [0.7820, 0.8017] — re-derived from
   `outputs/55maps-text-high-generalisation/evaluation/evaluation.json`.
 - T=0.7 tile-level MCC at R = 50 m: 0.6476 [0.6331, 0.6620] — re-derived from
-  `results/55maps-text-high-generalisation/mcc/evaluation.json`.
+  `archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json`.
 - T=0.7 corrected-F1 multi-buffer at R = 50 m / 125 m: 0.8273 / 0.8338 — re-derived from
   `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json`.
 - T=0.7 recovery cost $57.10 and 160 / 160 stuck tiles closed — derived from
@@ -915,7 +918,7 @@ re-verification.
   de-duplication regeneration (commit `30a902f56`, against the current 4,746-feature reviewed
   GT) left the value unchanged.
 - Image post-recovery tile-level MCC at R = 50 m: **0.6924 [0.6784, 0.7062]** — re-derived
-  from `results/55maps-image-generalisation/mcc/evaluation.json::summary.tile_classification.mcc`.
+  from `archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json::summary.tile_classification.mcc`.
 - Image post-recovery 18 silently-dropped verifier candidates — re-derived via commit message
   of `8082896b` (recovered single-pass via `run_pv.py cleanup`).
 - Image follow-up recovery cost ~$0.029 (net new candidate impact) — derived from commit
@@ -929,7 +932,7 @@ re-verification.
 - Text-MIN post-recovery corrected F1 at R = 50 m: **0.7968** — re-derived from
   `results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json`.
 - Text-MIN post-recovery tile-level MCC at R = 50 m: **0.626 [0.611, 0.641]** — re-derived
-  from `results/55maps-text-min-generalisation/mcc/evaluation.json`.
+  from `archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json`.
 - Text-MIN follow-up recovery cost $0.144 — derived from commit message of `c1ea6df3` and
   the cosmetic-2× cost_manifest acknowledgement in `b4a928d2` (manifest's $93.50 total
   reflects the double-counting bug; the true total is ~$60.79).
@@ -1002,7 +1005,47 @@ synthesis. All compute artefacts referenced live in
 
 ## Changelog
 
-### 2026-08-04 — § 12 image corrected-F1 refreshed (C4 wave-7 repair)
+### 2026-08-04 (later) — W7-D1 dead artefact paths, and W7-D2's rounding boundary
+
+**Refresh trigger**: W7-D1, raised by the wave-7 blind verification pass. Commit
+`da2cf355f` (2026-06-07) archived the per-run `mcc/` evaluations to
+`archive/55maps-superseded-gt-evals/per-run/`, and this document's § 11 and § 12
+still cited their old `results/` paths. **One of the five was a runnable command**
+in § 11's re-derivation block, so a reader following the document's own
+reproducibility recipe got a `FileNotFoundError` — the same defect class repaired
+in `results/55maps-mcc-v2-summary/report.md` at `75e825d47`, which is why W7-D1
+was flagged as a CLASS rather than an instance.
+
+| § | Path cited | Repointed to |
+| :--- | :--- | :--- |
+| 11 (source list) | `results/55maps-text-high-generalisation/mcc/evaluation.json` | `archive/55maps-superseded-gt-evals/per-run/…` (same file) |
+| 11 (runnable recipe) | as above, inside a `python3 -c` command | as above |
+| 12 | `results/55maps-text-high-generalisation/mcc/evaluation.json` | as above |
+| 12 | `results/55maps-image-generalisation/mcc/evaluation.json` | `archive/…/per-run/55maps-image-generalisation/mcc/evaluation.json` |
+| 12 | `results/55maps-text-min-generalisation/mcc/evaluation.json` | `archive/…/per-run/55maps-text-min-generalisation/mcc/evaluation.json` |
+
+The § 11 recipe was additionally tightened to print the point estimate and both CI
+bounds rather than the raw `mcc` object, so it now reproduces § 12's
+`0.6476 [0.6331, 0.6620]` exactly instead of dumping a dict the reader must
+interpret. Verified by running it.
+
+**No value moved.** Every MCC figure was re-read from the archived artefacts and
+matches what the document already printed: T=0.7 `0.6476 [0.6331, 0.6620]`, image
+`0.6924 [0.6784, 0.7062]`, text-MIN `0.626 [0.611, 0.641]`. The defect was purely
+locational — the numbers were right and unreachable.
+
+**W7-D2 — the rounding boundary.** § 3 and § 9 gave the T=0.3 corrected F1 at
+R = 50 m as 0.8436.
+`results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json`
+`$.results[0].F1` holds 0.843650287172942, which is **0.8437** at 4 d.p. under both
+round-half-up and round-half-even — the value sits just above the 0.84365 boundary,
+not on it. Both sibling documents (`55maps-ds-summary-v2`,
+`55maps-mcc-v2-summary`) already said 0.8437, so the defect was the inconsistency
+as much as the rounding. Corrected at both sites.
+
+Landed at commit `TBD` (recorded in the next revision).
+
+### 2026-08-04 (earlier) — § 12 image corrected-F1 refreshed (C4 wave-7 repair)
 
 **Refresh trigger**: the W6-E9 de-duplication chain regenerated the image run's
 multi-buffer corrected-F1 artefact. § 12's re-derivation entry named that artefact

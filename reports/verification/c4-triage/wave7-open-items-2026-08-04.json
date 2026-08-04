@@ -18,7 +18,38 @@
    "defect": "Cites three `results/<run>/mcc/evaluation.json` paths that commit `da2cf355f` archived on 2026-06-07 to `archive/55maps-superseded-gt-evals/per-run/`. The paths resolve to nothing.",
    "found_by": "W7-E4 blind verification pass",
    "note": "The SAME defect was found and repaired in results/55maps-mcc-v2-summary/report.md this session (75e825d47). The instance was fixed and the class was missed — other documents citing per-run mcc/ paths are likely affected. A corpus grep for `mcc/evaluation` is the cheap next step.",
-   "repair": "Repoint to the archive paths, as done in 75e825d47."
+   "repair": "Repoint to the archive paths, as done in 75e825d47.",
+   "status": "PARTIALLY REPAIRED 2026-08-04 (Session 128). The registered INSTANCE is fixed: all five dead paths in results/temperature-failure-recovery-analysis/report.md repointed to archive/55maps-superseded-gt-evals/per-run/, one of which was a RUNNABLE re-derivation command that raised FileNotFoundError. No value moved -- every MCC figure was re-read from the archived artefacts and matches what the document printed (T=0.7 0.6476 [0.6331, 0.6620], image 0.6924 [0.6784, 0.7062], text-MIN 0.626 [0.611, 0.641]); the defect was purely locational. The recipe was also tightened to print point and both CI bounds so it reproduces the document's own table, and was verified by running it. The document is PENDING extraction (b166-b170), so rule 14 did not apply, but the plan was re-ranged -- see class_measurement.remaining.",
+   "class_measurement": {
+    "measured": "2026-08-04 (Session 128), by reconstructing da2cf355f's 42 renames and scanning every tracked non-archive text file.",
+    "headline": "The class is 24 FILES, not one. W7-D1 was registered as a single document.",
+    "the_good_news": "The EXTRACTION LAYER IS CLEAN. All 5,492 anchor-file references across the c4-extraction corpus resolve -- zero dead anchors. Where an extraction file contains an archived path it is inside claim_text or notes, i.e. a faithful quotation of the document's own dead path, which is correct behaviour and not a defect. The one exception is 072.json, where two value.path locators name the dead corrected-f1-human-reviewed.json while their anchors are live.",
+    "dispositions": {
+     "REPAIR — live mine documents": [
+      "results/temperature-failure-recovery-analysis/report.md (5 occ) — DONE this session",
+      "results/ci-metadata-registry.md (11 occ) — belongs to W7-I2, repair there",
+      "results/meta-findings-summary.md (6 occ) — pending b124-b127",
+      "results/55maps-cross-track-comparison/report.md (1 occ) — EXTRACTED b069-b072, so rule 14 applies",
+      "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md (1 occ) — EXTRACTED b078/b079, rule 14 applies",
+      "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.md (1 occ)",
+      "results/limitations-consolidation/report.md (1 occ) — pending b121-b123",
+      "reports/verification/c4-extraction/072.json — two value.path locators to repoint"
+     ],
+     "LEAVE — dated history, repairing would falsify the record": [
+      "docs/notes/working-notes.md (3 occ) and docs/notes/reflections/session-reflection.md (1 occ) — append-only journals",
+      "reports/verification/c4-triage/blind-passes/* and wave7-open-items — dated evidence records",
+      "results/documentation-audit/*.md (4 occ) — dated snapshots; banner-only treatment per the P1/P2/P3 pass files"
+     ],
+     "REGENERATE": [
+      "reports/verification/c4-recompute-report.json — generated, fixed by a whole-corpus recompute on sapphire"
+     ],
+     "DECIDE": [
+      "planning/interim-docs-review.md (2 occ), planning/paper-writeup-continuity.md (2 occ) — living planning documents"
+     ]
+    },
+    "remaining": "7 live documents plus 072.json's two locators. Two of them (cross-track-comparison, corrected-f1-multi-buffer) are extracted and so cost a rule-14 re-extraction; three are pending and cost a plan re-range instead, as temperature-failure-recovery-analysis did this session (b166-b170 re-mapped and b170's tail extended 1016 -> 1102, which also closed a PRE-EXISTING 43-line coverage gap the S122 plan had left).",
+    "method_note": "The generalisable check is worth keeping: reconstruct a known archival commit's rename map with `git show --name-status --find-renames`, then grep the tracked tree for the OLD paths. That finds the whole class in one pass. Scanning for dead anchors separately is what established the instrument itself was clean -- a much stronger negative than 'we did not notice any'."
+   }
   },
   {
    "id": "W7-D2",
@@ -28,7 +59,8 @@
    "defect": "Gives the T=0.3 corrected F1 at R=50 m as 0.8436. The artefact `results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json` `$.results[0].F1` holds 0.843650287172942, which is 0.8437 at 4 d.p. under round-half-up. Both sibling documents (ds-summary, mcc-v2-summary) say 0.8437.",
    "found_by": "W7-E4 blind verification pass",
    "note": "A rounding-boundary case — the value sits almost exactly on 0.84365. Related to the S126 comparer half-up float-noise fix (1e4a13ff7). The defect is the INCONSISTENCY with siblings more than the rounding itself.",
-   "repair": "0.8436 -> 0.8437 at both sites, or a documented rounding convention if truncation is deliberate."
+   "repair": "0.8436 -> 0.8437 at both sites, or a documented rounding convention if truncation is deliberate.",
+   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED: 0.8437. The artefact holds 0.843650287172942, which sits just ABOVE the 0.84365 boundary, so round-half-up and round-half-even agree -- this was not a genuine tie. Both sibling documents already said 0.8437, so the defect was the inconsistency as much as the rounding. Corrected at both sites (§ 3 line 47 and § 9 line 546 at the pre-repair numbering)."
   },
   {
    "id": "W7-D3",

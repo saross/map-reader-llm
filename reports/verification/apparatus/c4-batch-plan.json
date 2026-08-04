@@ -22,6 +22,22 @@
     ],
     "not_addressed": "Already-extracted files that grew after extraction (+1,129 lines across 18 files) and 4 files short at their own extraction era (+95 lines) are ESCALATED to the PI queue, not fixed here."
    }
+  ],
+  "re_ranging_log": [
+   {
+    "date": "2026-08-04",
+    "session": 128,
+    "document": "results/temperature-failure-recovery-analysis/report.md",
+    "trigger": "W7-D1 dead-path repair and W7-D2 rounding fix",
+    "batches": [
+     "b166",
+     "b167",
+     "b168",
+     "b169",
+     "b170"
+    ],
+    "note": "Document was PENDING extraction, so charter rule 14 did not apply — there was no extraction to strand. What DID apply is the W7-E2 lesson: an edit to a pending document moves the plan's ranges under it. Ranges re-mapped and the b170 tail extended to the document's new end."
+   }
   ]
  },
  "batches": [
@@ -2728,8 +2744,9 @@
     {
      "file": "results/temperature-failure-recovery-analysis/report.md",
      "start": 1,
-     "end": 223,
-     "spans": 303
+     "end": 226,
+     "spans": 303,
+     "_range_basis": "re-ranged 2026-08-04 (S128) from 1-223 after the W7-D1/D2 repair (+3 lines at the banner, +40 at the changelog head)"
     }
    ],
    "output": "reports/verification/c4-extraction/166.json",
@@ -2741,9 +2758,10 @@
    "units": [
     {
      "file": "results/temperature-failure-recovery-analysis/report.md",
-     "start": 224,
-     "end": 451,
-     "spans": 300
+     "start": 227,
+     "end": 454,
+     "spans": 300,
+     "_range_basis": "re-ranged 2026-08-04 (S128) from 224-451 after the W7-D1/D2 repair (+3 lines at the banner, +40 at the changelog head)"
     }
    ],
    "output": "reports/verification/c4-extraction/167.json",
@@ -2755,9 +2773,10 @@
    "units": [
     {
      "file": "results/temperature-failure-recovery-analysis/report.md",
-     "start": 452,
-     "end": 561,
-     "spans": 340
+     "start": 455,
+     "end": 564,
+     "spans": 340,
+     "_range_basis": "re-ranged 2026-08-04 (S128) from 452-561 after the W7-D1/D2 repair (+3 lines at the banner, +40 at the changelog head)"
     }
    ],
    "output": "reports/verification/c4-extraction/168.json",
@@ -2769,9 +2788,10 @@
    "units": [
     {
      "file": "results/temperature-failure-recovery-analysis/report.md",
-     "start": 562,
-     "end": 785,
-     "spans": 346
+     "start": 565,
+     "end": 788,
+     "spans": 346,
+     "_range_basis": "re-ranged 2026-08-04 (S128) from 562-785 after the W7-D1/D2 repair (+3 lines at the banner, +40 at the changelog head)"
     }
    ],
    "output": "reports/verification/c4-extraction/169.json",
@@ -2779,19 +2799,22 @@
   },
   {
    "batch_id": "b170",
-   "spans": 320,
+   "spans": 329,
    "units": [
     {
      "file": "results/temperature-failure-recovery-analysis/report.md",
-     "start": 786,
-     "end": 979,
-     "spans": 303
+     "start": 789,
+     "end": 982,
+     "spans": 303,
+     "_range_basis": "re-ranged 2026-08-04 (S128) from 786-979 after the W7-D1/D2 repair (+3 lines at the banner, +40 at the changelog head)"
     },
     {
      "file": "results/temperature-failure-recovery-analysis/report.md",
-     "start": 980,
-     "end": 1016,
-     "spans": 17
+     "start": 983,
+     "end": 1102,
+     "spans": 26,
+     "_range_basis": "re-ranged 2026-08-04 (S128) from 980-1016 after the W7-D1/D2 repair (+3 lines at the banner, +40 at the changelog head); then EXTENDED 1059 -> 1102 to close a pre-existing tail gap: the S122 plan stopped at old line 1016 while the document had already grown to 1059 by 2026-08-04, so 43 lines were unassigned before this session's edit and 86 after it.",
+     "spans_basis": "ESTIMATE, density-scaled (W7-I3): the plan has no builder script, so spans cannot be regenerated. Original 17 spans over 77 lines (983-1059) scaled to 120 lines. The added content is a changelog with tables and is likely DENSER than the scaled figure, so treat this as a lower bound. Do not compare against original survey figures."
     }
    ],
    "output": "reports/verification/c4-extraction/170.json",
