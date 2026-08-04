@@ -25270,3 +25270,641 @@ family); `results/era1-leaderboard/tiering_20m.md`,
 `docs/methodology/preregistration/protocol-errata.md` (E72 remediation item
 3); `reports/e43-coverage-confound-remediation-2026-08-02.md` (the 148-artefact
 inventory); commits `2f3ef020a` and `bc45133b4`.
+
+## Observation 388: F1 and MCC are computed against different ground truths — corrected F1 scores against an extended reference that grows from 5,220 to 5,418 with the buffer, tile-level MCC against the student layer alone (Session 127, 2026-08-04)
+
+*Source anchors: every figure below was re-read on 2026-08-04.
+`n_ref_extended`, `n_ref_student_only`, and `n_reviewer_promoted_at_R` were
+read field-by-field from
+`results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json`
+(`metadata.git_commit` = `1de5591196ef17f46d02f07bea06289adf9f60db`, seed 42,
+10,000 bootstrap iterations). The MCC convention, the tile count, the
+buffer-invariance statement, and the rank tables were read from
+`results/55maps-mcc-v2-summary/report.md` §§ 1–4. The governing disposition
+was read at `reports/verification/phase3-rulings-2026-07-31.md` § 20
+(`:353–405`), and the open-items record at
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
+(`metric_reference_asymmetry`, `unverified_claims_made_this_session`). Obs 280
+was located at `docs/notes/working-notes.md:13666`.*
+
+### The finding
+
+The two headline metrics for the 55-map corpus **do not share a ground
+truth**, and the mismatch is neither small nor constant.
+
+**The corrected-F1 pipeline scores against the EXTENDED reference** — the
+corrected student layer plus the reviewer-promoted phantoms that qualify at
+each buffer R (Approach B, extended-GT-at-R Hungarian matching):
+
+| R (m) | student layer | reviewer-promoted at R | `n_ref_extended` |
+| ---: | ---: | ---: | ---: |
+| 50 | 4,746 | 474 | **5,220** |
+| 75 | 4,746 | 595 | **5,341** |
+| 100 | 4,746 | 642 | **5,388** |
+| 125 | 4,746 | 661 | **5,407** |
+| 150 | 4,746 | 672 | **5,418** |
+
+**Tile-level MCC scores against the student layer ALONE** — 4,746, no
+phantoms. This is deliberate and documented: `55maps-mcc-v2-summary/report.md`
+§ 1 states that "the matrix-sweep convention (commit `163161a4`) uses standard
+tile-level classification against the un-augmented reviewed GT. This report
+follows the matrix convention: MCC against `student-mounds-55maps-reviewed.geojson`,
+no phantoms." The stated rationale is comparability with the other 55-map MCC
+artefacts and with the matrix sweep.
+
+**So the reference differs by 474 to 672 mounds — 9.1 % to 12.4 % of the
+extended reference — depending on which buffer the F1 side is read at.** The
+asymmetry also has a second, structural dimension that a single count hides:
+the F1 reference is a **function of R**, while MCC is **buffer-invariant**
+under this implementation (tile classification is binary — does the tile
+contain any reference mound, does it contain any detection — with no
+buffer-dependent matching, so MCC is a single per-run figure across the whole
+{50, 75, 100, 125, 150} m set). The two metrics therefore disagree not only
+about *which* points are in the reference, but about *whether the reference
+depends on R at all*.
+
+**The finding that this endangers is the rank divergence.** Over the four
+corrected 55-map runs (all evaluated on the same 8,541 tiles):
+
+| Run | corrected F1 @ 50 m | F1 rank | MCC [95 % CI] | MCC rank |
+| :--- | :---: | :---: | :---: | :---: |
+| T=0.3 text-HIGH | 0.8437 [0.834, 0.852] | **1** | 0.6538 [0.6393, 0.6684] | 2 |
+| Image | 0.8333 [0.824, 0.842] | 2 | **0.6924** [0.6784, 0.7062] | **1** |
+| T=0.7 text-HIGH | 0.8273 [0.817, 0.837] | 3 | 0.6476 [0.6331, 0.6620] | 3 |
+| text-MIN | 0.7968 [0.786, 0.808] | 4 | 0.6260 [0.6114, 0.6408] | 4 |
+
+The F1 leader is not the MCC leader, and the swap is confined to the top two.
+That is exactly the pattern **Obs 280** generalises across populated strata —
+text wins F1 on a saturating, high-recall profile; image wins MCC on a
+selective profile with high true-negative counts. **But the swap is measured
+across two different references**, so an unknown share of it could be a
+reference effect rather than metric behaviour. The direction is even
+mechanically plausible: adding 474 reviewer-promoted mounds to the F1
+reference converts existing false positives into true positives, and the
+corrected-F1 report records that Approach B's promotion "mostly converts
+existing FPs to TPs rather than adding new TPs via re-matching" (precision
+rises 0.8814 → 0.9241 across the buffer sweep while recall stays nearly flat,
+0.7902 → 0.7983). A run whose false positives happen to fall on
+reviewer-promoted mounds is rewarded on the F1 side and not on the MCC side.
+Nobody has measured how much of the T=0.3-versus-image swap that accounts for.
+
+### Why this matters
+
+1. **It blocks publication of the F1-versus-MCC divergence as a
+   metric-behaviour claim.** The wave-7 open-items record marks the item
+   `OPEN — gated, not deferred indefinitely` and states plainly that it
+   "blocks publication of the F1-vs-MCC divergence as a metric-behaviour
+   claim". Obs 280 is not withdrawn — the pattern is real and reproduced —
+   but its *interpretation* is now conditional on a confound that has never
+   been quantified.
+2. **The PI has ruled the asymmetry cannot go forward (ruling 20a).** MCC
+   computed against the uncorrected dataset is misleading, and both metrics
+   must use the same reference. This is a correctness ruling, not a
+   preference.
+3. **But the fix is explicitly sequenced, not immediate (ruling 20b).** Do
+   NOT recompute yet: the reference moves again when the 773-mound phantom
+   set is re-reviewed under point-marking, and recomputing twice is waste.
+   The unification waits behind the point-marking work. The full gated
+   sequence in ruling 20d is: build the click-the-centre point-marking
+   interface → re-review the 773 phantoms (which resolves the Obs 371
+   ring-anchoring defect and the Obs 390 borderline conflations in the same
+   pass) → sort `canonical-review.csv` on the exact-position result → THEN
+   recompute F1 and MCC against a single shared reference, re-tier both
+   boards, and re-verify every 55-map figure.
+4. **Any cross-metric claim anywhere in the corpus inherits this.** The
+   defect is a property of the *conventions*, not of one report. Wherever a
+   document places an F1 and an MCC side by side for the 55-map runs — the
+   cross-run summary, the deployment-summary tables, any leaderboard that
+   carries both columns — the two columns are answering questions posed
+   against different references. Rank agreement (text-MIN bottom on both,
+   T=0.7 mid-track on both) is *also* affected; it is not a safe harbour
+   just because it happens to agree.
+5. **Divergence findings are the ones that most need a shared denominator.**
+   When two metrics agree, a reference mismatch is a nuisance. When the whole
+   finding *is* the disagreement, the mismatch is a rival explanation sitting
+   in the same position as the hypothesis, and the paper cannot adjudicate
+   between them from the artefacts as they stand.
+
+### Caveats / methodological notes
+
+- **A second, smaller reference mismatch is nested inside this one.** The MCC
+  rows in `55maps-mcc-v2-summary/report.md` § 2 were produced by 2026-05-03
+  evaluations and that section describes them as computed against "the
+  canonical 4,745-mound updated curator GT", while § 1 records the GT file as
+  4,746 features as at 2026-08-04. Under the era-disposition rule this § 2
+  text is historically CORRECT — it describes what a 2026-05-03 evaluation
+  consumed, which ruling 19a preserves as record — but it means the MCC side
+  is one curator addition short of today's student layer, on top of being
+  474–672 short of the F1 side. Both gaps close at the same unification; do
+  not treat "4,746 versus 4,746" as already-matched.
+- **The MCC convention is not a bug, and the choice is not obviously wrong.**
+  It was made for comparability with the matrix sweep, and the report already
+  flags that "an extended-GT MCC variant could be added later but is not
+  required for the cross-run comparison this report addresses". The defect is
+  that the two conventions were then read against each other. Which way the
+  unification should resolve — extend both references or restrict both — is a
+  live question the ruling does not settle.
+- **The direction and magnitude of the confound are unmeasured.** Nothing here
+  shows the rank swap *is* a reference artefact; it shows that the study
+  cannot currently tell. A cheap partial probe exists — recompute MCC against
+  the extended GT at R = 50 m and see whether the image lead survives — but
+  ruling 20b withholds even that until the reference stabilises, on
+  do-it-once grounds.
+- **W7-U1 applies to the gating mechanism, not the counts.** The description
+  of *how* phantoms qualify per buffer (that a phantom qualifies at a buffer R
+  and thereby enters the extended reference) is a reading of the Approach B
+  framing and has NOT been traced through `compute_corrected_f1_multi_buffer.py`.
+  The COUNTS in the table above are verified — read directly from
+  `summary.json` fields and `canonical-review.csv`. Do not cite the mechanism
+  in Methods without first reading the phantom-gating path (`build_phantom_gdf`
+  and its buffer gate) and confirming or correcting the sentence in ruling 19.
+- **One promoted-count relationship is open and must not be explained away.**
+  `canonical-review.csv` holds 415 rows at `buffer_metres = 50`, while the
+  image run's summary records 474 promoted at R = 50. Per-run phantom sets
+  probably differ from the canonical adjudicated set, but that is conjecture
+  (recorded as W7-U2). Treat 474/415 as an open question.
+- Paper-relevant sections: Methods (state the reference each metric is
+  computed against, per metric, and note the buffer dependence of one and not
+  the other); Results (any F1-and-MCC table for the 55-map runs); Limitations
+  (the Obs 280 divergence, reported with this confound named until the
+  unification lands).
+
+### Findable later
+
+F1 and MCC different ground truths; metric reference asymmetry; corrected F1
+extended reference; MCC no phantoms student layer alone; n_ref_extended 5220
+5341 5388 5407 5418; promoted at R 474 595 642 661 672; student 4746; reference
+differs by 474 to 672 mounds; MCC buffer-invariant single per-run figure;
+matrix-sweep convention commit 163161a4; 55maps-mcc-v2-summary report.md § 1;
+Obs 280 rank divergence confound; text wins F1 image wins MCC; T=0.3 0.8437 F1
+rank 1 MCC 0.6538 rank 2; image 0.8333 rank 2 MCC 0.6924 rank 1; ruling 20a
+cannot go forward; ruling 20b do not recompute yet; gated on point-marking
+re-review; recomputing twice is waste; 8541 tiles; nested 4745 versus 4746 MCC
+wrinkle; W7-U1 gating mechanism unverified; W7-U2 474 versus 415 open;
+precision 0.8814 to 0.9241 recall flat 0.7902 to 0.7983; FPs converted to TPs;
+blocks publication of divergence as metric-behaviour claim; phase3-rulings §
+20; wave7-open-items-2026-08-04.json; Session 127 2026-08-04.
+
+### Related observations and artefacts
+
+- **[[Obs 280]]** (`working-notes.md:13666`, 2026-04-26 — pervasive F1 / MCC
+  tier-leader divergence across populated strata; text track wins F1, image
+  track wins MCC; "both metrics are valid; the paper needs to treat them as
+  parallel narratives, not conflicting results") — **the finding this entry
+  qualifies.** Obs 280's empirical pattern is reproduced by the corrected
+  55-map runs and is not in question. What is in question is whether the
+  divergence is *metric behaviour*, as Obs 280 reads it, or partly a
+  reference effect. Cite Obs 280 for the pattern and this entry for the
+  caveat that must travel with it.
+- **[[Obs 389]]** (the 55-map ground truth is four layers, and the review
+  effort lives in the fourth) — **the structural cause.** The reviewer-promoted
+  extension is held as a separate layer rather than merged into the student
+  GT, which is precisely what makes it possible for one pipeline to consume it
+  and another not to. Read Obs 389 first for what the four layers are; this
+  entry is what happens when two metrics pick different subsets of them.
+- **[[Obs 390]]** (phantom duplication audit — the 773 are clean, with a
+  7.3–15 m grey zone) — **the sibling gate.** Obs 390's 4–6 borderline cases
+  fold into the same point-marking re-review that ruling 20b makes the
+  precondition for this unification (ruling 20c). The two items are not
+  independent work: they are resolved by one pass.
+- **[[Obs 371]]** (rider to Obs 360 — "phantom" is mis-glossed, and the 50 m
+  buffer's bias runs the opposite way to what Obs 360 implies) — the
+  ring-anchoring defect (25 m rings anchored at 50 m rather than at marked
+  centres) that the same re-review resolves. Three separate defects converge
+  on one interface build.
+- **[[Obs 272]]** (the attractor-pull effect ends at ~125 m) — the reason the
+  extended reference is *gated* per buffer at all, and the reason the 150 m
+  row (extended reference 5,418) is an upper bound rather than a practitioner
+  operating point. Any unification must preserve that cap.
+
+**Artefacts**:
+`results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json`
+(the per-buffer reference counts) and its sibling `report.md` (§§ 2, 9, and the
+2026-08-04 changelog entry);
+`results/55maps-mcc-v2-summary/report.md` (§ 1 the input convention and the
+student-GT-versus-extended-GT choice, § 2 the per-run MCC table, §§ 3–4 the
+cross-run comparison and the rank disagreement);
+`scripts/compute_corrected_f1_multi_buffer.py` (`build_extended_gt`,
+`build_phantom_gdf` — the untraced gating path of W7-U1);
+`scripts/evaluate_detections.py --mcc` (the MCC side);
+`inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4,746);
+`results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv` (773);
+`inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` (8,541 tiles);
+`reports/verification/phase3-rulings-2026-07-31.md` § 20 (rulings 20a–20d);
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
+(`metric_reference_asymmetry`, W7-U1, W7-U2); commit
+`1de5591196ef17f46d02f07bea06289adf9f60db` (the run that produced
+`summary.json`) and `809e9e331` (ruling 20).
+
+## Observation 389: The 55-map ground truth is four layers, not three — the student layer's 4,770 → 4,746 is a net DECREASE from duplicate-cleaning, and the PI's several hundred discovered mounds live in a fourth layer the census never reached (Session 127, 2026-08-04)
+
+*Source anchors: every figure below was re-verified on 2026-08-04.
+Layer 1 count and immutability: `inputs/vectors/references/student-mounds-55maps.geojson`
+parsed to 4,770 features; `git log --follow` returns exactly one commit
+(`301b51128`, 2026-04-08); working-tree md5 `2fa374bcdc3c2d30d36d2becdc170538`
+is byte-identical to `git show 301b51128:` of the same path. Layer 2:
+`student-mounds-55maps-reviewed.geojson` parsed to 4,746; the merge tally was
+recomputed from `results/gt-duplicate-review/gt-duplicate-decisions.csv` (96
+rows). Layer 3: feature counts parsed from `git show <commit>:` at each of
+`dea1155fa`, `baf1497a7`, and `2e075eb99`, with commit times read in UTC.
+Layer 4: `results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`
+parsed to 773 rows; per-buffer figures from
+`results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json`.
+Governing disposition: `reports/verification/phase3-rulings-2026-07-31.md`
+§ 19 (`:299–352`).*
+
+### The finding
+
+The 55-map ground truth is **four artefacts, not three**, and they are not
+interchangeable.
+
+**Layer 1 — the fixed original student digitisation.**
+`inputs/vectors/references/student-mounds-55maps.geojson`, **4,770** features.
+Verified genuinely immutable: **one commit ever** (`301b51128`, 2026-04-08),
+and the working-tree file is md5 byte-identical to that commit today. This is
+the uncorrected base.
+
+**Layer 2 — the current corrected student GT.**
+`student-mounds-55maps-reviewed.geojson`, **4,746**. Reached by
+**4,770 − 52 + 28**: twenty-six merged-centroid replacements of student
+double-marks under 50 m, plus two curator additions. The merge count is
+corroborated independently by
+`results/gt-duplicate-review/gt-duplicate-decisions.csv` — 96 adjudicated
+clusters, **26 `merge` and 70 `keep_all`** — and all 26 merged clusters are
+two-point clusters, so exactly 52 points were consumed and 26 centroids
+returned. **This is a NET DECREASE of 24.** It is duplicate-cleaning, not
+discovery.
+
+**Layer 3 — historical corrected states.** **4,744** (`dea1155fa`,
+2026-04-19) and **4,745** (`baf1497a7`, 2026-05-03 00:32:53 UTC), before the
+second curator addition took the layer to 4,746 (`2e075eb99`, 2026-05-03
+05:28:57 UTC — 4 h 56 min later the same day). **Historical record only.**
+Ruling 19a: these must not be used in any analysis postdating the correction
+to 4,746. Where a dated document describes what a 2026-05-03 evaluation
+consumed, that is history and stays; where anything *computes* on 4,744 or
+4,745 today, it is wrong.
+
+**Layer 4 — the reviewer-promoted extension.**
+`results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`,
+**773 mounds, every single row `human_label=mound`** (verified: the column has
+exactly one distinct value across all 773 rows). **These are the PI's
+"hundreds"** — real mounds the students missed — held as a separate layer
+rather than merged into the student GT. They enter analysis through the
+extended GT, gated per buffer: **474 qualify at R = 50 m, rising to 672 at
+150 m**, giving extended references of 5,220 to 5,418.
+
+| layer | artefact | count | character |
+| ---: | :--- | ---: | :--- |
+| 1 | `student-mounds-55maps.geojson` | 4,770 | immutable base, one commit ever |
+| 2 | `student-mounds-55maps-reviewed.geojson` | 4,746 | net −24; duplicate-cleaning |
+| 3 | historical states at `dea1155fa` / `baf1497a7` | 4,744 / 4,745 | record only (ruling 19a) |
+| 4 | `canonical-review.csv` | 773 | the review effort; enters per buffer |
+
+**How this was missed is the interesting part.** A census this session
+established layers 1–3 and stopped — **because the arithmetic closes exactly
+without the fourth**. 4,770 − 52 + 28 = 4,746 leaves no residual to explain,
+no gap to prompt a further question, and therefore no visible seam where a
+whole additional layer might attach. The layer was surfaced not by an
+automated check but by the PI's own question: *"did I really find so few
+additional mounds? I thought I'd found hundreds?"* A net decrease in the
+student layer is entirely compatible with hundreds of discoveries living
+elsewhere, and the arithmetic closing exactly is precisely what made the gap
+invisible.
+
+### Why this matters
+
+1. **Standing caution — say WHICH layer.** Any document citing a student-GT
+   count near a claim about review effort must name the layer it means. Read
+   cold, "4,746" reads as "all the ground truth", and the PI's review then
+   looks vanishingly small — indeed it looks like *negative* work, since the
+   student layer went down by 24. The review effort is the 773, and it is in a
+   different file.
+2. **The domain expert's disbelief was the detection instrument.** Every
+   number in the census was correct; the arithmetic validated; no consistency
+   check could have fired, because nothing was inconsistent. What failed was
+   the framing — "the ground truth" was assumed to be one file — and the only
+   thing that could catch it was someone who knew from lived experience that
+   they had found hundreds of mounds. This is the calibration pattern the
+   project's `CLAUDE.md` describes, operating on a *census* rather than on a
+   result.
+3. **A closed arithmetic is not a complete account.** The general lesson is
+   sharper than the specific one: an identity that balances is evidence about
+   the terms *inside* it, and no evidence at all about terms outside it. A
+   reconciliation that comes out exactly right should raise the question
+   "complete with respect to what?" rather than settle it.
+4. **It explains the metric asymmetry.** Because layer 4 is held separately,
+   a pipeline can consume it or not, and two pipelines in this project make
+   opposite choices — the corrected-F1 pipeline extends by layer 4, tile-level
+   MCC does not (Obs 388). The separate-layer design is defensible; the
+   undocumented divergence in who consumes it is not.
+5. **Layer discipline is now a documentation obligation, not a preference.**
+   Ruling 19b: nothing goes to publication on 4,770 where 4,770 is the wrong
+   reference, and the cost of a re-run is not a reason to publish a figure
+   computed against the uncorrected base.
+
+### Caveats / methodological notes
+
+- **The per-buffer GATING MECHANISM is UNVERIFIED (W7-U1).** Ruling 19's
+  sentence describing *how* the 773 enter — that a reviewer-promoted phantom
+  qualifies at a buffer R and thereby joins the extended reference — is a
+  reading of the Approach B framing and was NOT traced through
+  `compute_corrected_f1_multi_buffer.py`. **The COUNTS above ARE verified**
+  (773 total; 474/595/642/661/672 promoted at R = 50/75/100/125/150; extended
+  5,220/5,341/5,388/5,407/5,418, all read directly from `summary.json` fields
+  and `canonical-review.csv`). Close W7-U1 by reading `build_phantom_gdf` and
+  its buffer gate before any Methods sentence describes the mechanism.
+- **474 versus 415 is open, not resolved (W7-U2).** `canonical-review.csv`
+  holds 415 rows at `buffer_metres = 50` while the image run's summary records
+  474 promoted at R = 50. Per-run phantom sets probably differ from the
+  canonical adjudicated set — but that is offered as likely, deliberately not
+  asserted. Both numbers are read directly; only the relationship is
+  conjecture.
+- **Do not use `uuid` as a key on the base layer.** The census flagged that
+  `uuid` in layer 1 is a SYMBOL CODE, not an identifier: 4,770 features share
+  only 833 distinct values. Any join or de-duplication keyed on it will
+  silently collapse rows.
+- **The 4,746 layer is not final either.** The point-marking re-review will
+  move the reference again (ruling 20b), and Obs 390's borderline cases may
+  shift a handful of points between layers 2 and 4. Treat 4,746 as current
+  canonical, not as terminal.
+- **Layer 3 has a legitimate use.** "Historical record only" bars *computing*
+  on 4,744 or 4,745; it does not bar *describing* them. Documents that record
+  what a 2026-05-03 evaluation consumed are correct as written and must not be
+  swept — a point that matters because several 55-map artefacts carry 4,745 in
+  exactly that historical sense.
+- Paper-relevant sections: Methods (the ground-truth description must
+  enumerate the layers and state which the reported metrics consume);
+  Results (any count near a review-effort claim); Limitations and Data
+  Availability (four artefacts, not one).
+
+### Findable later
+
+four ground truth layers 55-map; 4770 4746 4744 4745 773; net decrease
+duplicate cleaning not discovery; 4770 minus 52 plus 28 equals 4746; 26 merged
+centroid replacements; 26 merge 70 keep_all gt-duplicate-decisions.csv; student
+double-marks under 50 m; immutable one commit ever 301b51128; md5 byte-identical
+2fa374bcdc3c2d30d36d2becdc170538; historical corrected states dea1155fa
+baf1497a7 2e075eb99; ruling 19a record not input; did I really find so few
+additional mounds I thought I'd found hundreds; reviewer-promoted extension
+canonical-review.csv 773 human_label mound; the PI's hundreds; 474 at 50 m 672
+at 150 m; extended 5220 to 5418; census established three layers and stopped;
+arithmetic closes exactly without the fourth; say which layer; review effort
+looks vanishingly small; W7-U1 gating mechanism unverified counts verified;
+W7-U2 474 versus 415; uuid is a symbol code 833 distinct values do not use as
+key; phase3-rulings § 19; Session 127 2026-08-04.
+
+### Related observations and artefacts
+
+- **[[Obs 261]]** (`working-notes.md:11702`, 2026-04-19 — student GT
+  duplicates cluster bimodally at ~50 m; below that, double-marks, above, real
+  neighbours) — **the empirical basis of layer 2.** Obs 261 is why the merge
+  threshold sits at 50 m and why 26 of 96 adjudicated clusters were merged
+  while 70 were kept: the bimodality is what makes "double-mark" separable
+  from "real neighbour" at all. Obs 261 explains the cleaning; this entry
+  records what the cleaning did to the count and what it does *not* account
+  for.
+- **[[Obs 388]]** (F1 and MCC are computed against different ground truths) —
+  **the direct consequence.** Layer 4's separate-layer status is what allows
+  two pipelines to disagree about the reference. Read this entry for what the
+  layers are, Obs 388 for the damage the divergence does to the Obs 280
+  divergence finding.
+- **[[Obs 390]]** (phantom duplication audit — the 773 are clean, with a
+  7.3–15 m grey zone) — **the integrity check on layer 4.** It answers the
+  question this entry raises but does not settle: are the 773 genuinely
+  additional, or partly re-marks of student points already in layer 2? The
+  answer is that they are genuinely additional, with one true twin and a small
+  grey zone.
+- **[[Obs 371]]** (rider to Obs 360 — "phantom" is mis-glossed) — the
+  terminology hazard around layer 4. "Phantom" names a promotion channel, not
+  a spurious object; every one of the 773 is a confirmed mound. The gloss
+  matters most in exactly the sentences this entry warns about, where a reader
+  is already at risk of undercounting the review.
+- **[[Obs 272]]** (the attractor-pull effect ends at ~125 m) — why layer 4
+  enters *per buffer* rather than wholesale, and why the 672-at-150 m figure
+  is an upper bound rather than a practitioner-useful count.
+
+**Artefacts**:
+`inputs/vectors/references/student-mounds-55maps.geojson` (layer 1, 4,770, sole
+commit `301b51128`);
+`inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (layer 2,
+4,746);
+`results/gt-duplicate-review/gt-duplicate-decisions.csv` (96 clusters, 26 merge
+/ 70 keep_all — note the distinct 4-map sibling at
+`results/gt-duplicate-review-gs4/`, 23 clusters, which is NOT this corpus);
+commits `dea1155fa`, `baf1497a7`, and `2e075eb99` (layer 3 and its closure);
+`results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`
+(layer 4, 773);
+`results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json`
+(the per-buffer promoted and extended counts);
+`scripts/compute_corrected_f1_multi_buffer.py` (`build_phantom_gdf` — the
+untraced gate of W7-U1);
+`reports/verification/phase3-rulings-2026-07-31.md` § 19 (rulings 19a–19c);
+`reports/verification/c4-triage/student-gt-reference-census-2026-08-04.json`
+(the census that found three layers);
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
+(`ground_truth_layers`, W7-U1, W7-U2, and the `uuid` symbol-code hazard).
+
+## Observation 390: Phantom duplication audit — the 773 reviewer-promoted mounds are internally unique and well separated from the student layer (median nearest neighbour 115.7 m), with exactly one true twin at 0.98 m and a 4–6 case grey zone between 7.3 m and 15 m (Session 127, 2026-08-04)
+
+*Source anchors: every figure below was read on 2026-08-04 from
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
+(`phantom_duplication_audit` — `promoted_vs_promoted`,
+`promoted_vs_student_same_map`, `verdict`, `residual_grey_zone`), and
+cross-checked against `reports/verification/phase3-rulings-2026-07-31.md`
+§ 20(c). Input counts re-verified this session: `canonical-review.csv` parses
+to 773 rows, `student-mounds-55maps-reviewed.geojson` to 4,746 features. The
+de-duplication tolerance, the ≳15–20 m floor, the 7.3 m first-ambiguous-case
+figure, and the 1/2/2/0 drop counts were re-read verbatim from the
+`build_extended_gt` docstring at
+`scripts/compute_corrected_f1_multi_buffer.py:245–289` (`dedup_tolerance_m:
+float = 5.0` at `:248`). The W6-E9 sweep is archived at
+`reports/verification/c4-triage/blind-passes/w6e9-exposure-sweep-2026-08-04.json`.*
+
+### The test
+
+Same-map nearest-neighbour distance from each of the 773 reviewer-promoted
+mounds (`canonical-review.csv`, EPSG:32635) to the corrected student GT
+(4,746, reprojected 4326 → 32635), plus the same measure within the promoted
+set itself. Cross-map proximity is excluded for the promoted-versus-student
+comparison because the pipeline's de-duplication is same-map constrained; the
+promoted-versus-promoted figures are **not** so constrained, which matters for
+reading them.
+
+### The finding
+
+**Promoted versus student GT (same map):**
+
+| threshold | cases |
+| ---: | ---: |
+| ≤ 1 m | **1** |
+| ≤ 5 m | 1 |
+| ≤ 7.3 m | 2 |
+| ≤ 10 m | 2 |
+| ≤ 15 m | 6 |
+| ≤ 20 m | 9 |
+| ≤ 25 m | 22 |
+| ≤ 50 m | 84 |
+
+Minimum nearest neighbour **0.98 m**; **median 115.7 m**.
+
+**Promoted versus promoted:** **zero pairs within 10 m** (and zero within 1 m
+and within 5 m); 12 within 25 m; 47 within 50 m. The promoted set is
+**internally unique**. The 25 m and 50 m pairs are cross-map-unconstrained and
+are consistent with genuinely adjacent mounds rather than duplication.
+
+**This independently corroborates W6-E9.** Exactly **one** true twin exists —
+at 0.98 m — and the **5 m** de-duplication tolerance in `build_extended_gt`
+catches it, consistent with that fix's documented per-pipeline drop counts of
+**1/2/2/0** at R = 50 m across the four config pipelines. The audit approached
+the question from the opposite direction to the fix (a distance census over
+the whole promoted set, rather than the adjudication of a single known
+channel-duplication case), and arrived at the same conclusion: the promoted
+set is otherwise well separated from the student layer, and a median nearest
+neighbour of 115.7 m puts the typical promoted mound more than twenty times
+further from its nearest student point than the tolerance.
+
+**The residual: 4–6 cases between 7.3 m and 15 m.** These sit **closer than
+the pipeline's own reasoning allows for distinct objects** — the
+`build_extended_gt` docstring states that "genuinely distinct mounds — even
+touching ones — sit ≳15–20 m apart, and the first ambiguous
+ordinary-student-point case appears at 7.3 m" — and **further than the 5 m
+de-duplication catches**. They cannot be settled from coordinates. Either
+reading is defensible from the numbers alone: a conflation (the same mound
+marked twice, through two channels, with sloppier agreement than the 0.98 m
+twin) or two genuinely close mounds. Only eyes on a map can tell.
+
+**Ruling 20c folds them into the committed point-marking re-review** rather
+than making them a separate exercise. The same pass that re-reviews the 773
+phantoms with a click-the-centre interface will resolve these, alongside the
+Obs 371 ring-anchoring defect.
+
+### Why this matters
+
+1. **It clears layer 4 for use.** The obvious worry about a separately-held
+   773-mound extension is that some of it is re-marking of points already in
+   the student layer, which would inflate the extended reference and flatter
+   every corrected-F1 figure computed against it. The audit says that worry is
+   unfounded at the scale that would matter: one twin, already handled, out of
+   773.
+2. **It converts a single-case fix into a bounded claim.** W6-E9 was
+   adjudicated from one case (cand 2397, where a review-CSV `mound` row and a
+   curator point landed 88 minutes apart on 2026-05-03 at the same
+   coordinates). A fix derived from one instance invites the question "how
+   many others?" — and until this audit the honest answer was "unknown". Now
+   the answer is one, with a named grey zone. That is the difference between a
+   patch and a characterised behaviour.
+3. **It validates the tolerance choice empirically, from new evidence.** The
+   5 m default was set by the W6-E9 exposure sweep on the reasoning that a
+   rescue's curator point sits AT one run's detection coordinates while other
+   runs detect the same mound up to ~3.8 m away, and that 5 m "catches the
+   whole observed duplicate class and nothing else". This audit tests that
+   claim against a population the sweep did not enumerate and finds no
+   duplicate class between 5 m and 7.3 m at all — the next case up from the
+   0.98 m twin is at 7.3 m. The tolerance has real headroom on both sides.
+4. **The grey zone is small, bounded, and cheap to close.** Four to six cases
+   out of 773 is 0.5–0.8 % of layer 4, and they are individually identifiable.
+   Folding them into an already-committed review pass costs essentially
+   nothing; carrying them as an unresolved caveat through the paper would cost
+   a sentence in Limitations forever.
+
+### Caveats / methodological notes
+
+- **"4–6" is a stated range, not a computed cut.** The cumulative counts
+  locate one case at ≈7.3 m and four in the (10, 15] m band, so five sit above
+  the de-duplication tolerance and at or below 15 m, of which the 0.98 m twin
+  is not one. The residual is quoted as a range because the *boundary* is a
+  judgement call — whether to count the 7.3 m case, and whether the upper edge
+  is 15 m or the docstring's 20 m — and that ambiguity is exactly why the
+  cases need visual adjudication rather than another distance query.
+- **Nearest-neighbour distance is not evidence of identity.** Two marks 12 m
+  apart may be one mound recorded twice or two mounds. The audit bounds the
+  *population* of ambiguous cases; it does not adjudicate any of them. No
+  claim in this entry should be read as saying the grey-zone cases ARE
+  duplicates.
+- **The promoted-versus-promoted figures are cross-map-unconstrained.** The
+  12-within-25 m and 47-within-50 m counts may include pairs on different maps
+  that are nowhere near each other in reality but close in projected
+  coordinates within overlapping sheets. Only the "zero within 10 m" result is
+  load-bearing, and it is load-bearing in the safe direction.
+- **The 1/2/2/0 drop counts are per-pipeline at R = 50 m**, not a total. They
+  are the counts the four config pipelines each recorded under the 5 m
+  tolerance; the image pipeline's `summary.json` carries
+  `n_phantom_duplicates_dropped = 1` at every buffer. Do not add them.
+- **Reprojection was applied to the student layer** (4326 → 32635) to match
+  the review CSV's projected coordinates. Sub-metre claims — specifically the
+  0.98 m minimum — inherit whatever reprojection error that carries. At the
+  scale of the 5 m tolerance this is immaterial; at the scale of "is 0.98 m
+  really the same point" it is worth stating, though the case is independently
+  adjudicated as a channel duplication on provenance grounds, not on distance.
+- Paper-relevant sections: Methods (the de-duplication step and its 5 m
+  tolerance, with this audit as the justification that the tolerance is
+  neither too tight nor too loose); Limitations (the 4–6 unadjudicated cases,
+  until the re-review closes them).
+
+### Findable later
+
+phantom duplication audit 773; reviewer-promoted mounds nearest neighbour;
+same-map nearest neighbour EPSG:32635 reprojected 4326; within 1 m 1, 5 m 1,
+7.3 m 2, 10 m 2, 15 m 6, 20 m 9, 25 m 22, 50 m 84; min 0.98 m median 115.7 m;
+promoted vs promoted zero within 10 m 12 within 25 m 47 within 50 m;
+internally unique; corroborates W6-E9 independently; exactly one true twin;
+5 m de-duplication tolerance build_extended_gt dedup_tolerance_m 5.0; raised
+from 1 m by the W6-E9 exposure sweep; drop counts 1/2/2/0 at R=50; genuinely
+distinct mounds even touching ones sit 15 to 20 m apart; first ambiguous
+ordinary-student-point case at 7.3 m; 4-6 case grey zone 7.3 to 15 m; needs
+visual adjudication on a map; ruling 20c folds into point-marking re-review;
+cand 2397 channel duplication 88 minutes apart; w6e9-exposure-sweep-2026-08-04.json;
+n_phantom_duplicates_dropped; Session 127 2026-08-04.
+
+### Related observations and artefacts
+
+- **[[Obs 389]]** (the 55-map ground truth is four layers, and the review
+  effort lives in the fourth) — **the parent entry.** Obs 389 establishes that
+  the 773 are held as a separate layer and are the PI's own finds; this entry
+  is the integrity check on that layer. Obs 389 raises the question "are they
+  genuinely additional?" and this entry answers it: yes, with one exception
+  already handled and a small grey zone deferred.
+- **[[Obs 388]]** (F1 and MCC are computed against different ground truths) —
+  **the co-gated item.** The 4–6 borderline cases and the F1/MCC reference
+  unification are resolved by the *same* point-marking pass (rulings 20b and
+  20c). Neither should be scheduled independently of the other.
+- **[[Obs 371]]** (rider to Obs 360 — "phantom" is mis-glossed, and the 50 m
+  buffer's bias runs the opposite way to what Obs 360 implies) — the third
+  item riding the same re-review: 25 m rings anchored at 50 m rather than at
+  marked centres. Obs 371 is also the terminology anchor for this entry —
+  none of the 773 "phantoms" is spurious; every row is `human_label=mound`.
+- **W6-E9** (`reports/verification/c4-triage/blind-passes/w6e9-exposure-sweep-2026-08-04.json`;
+  fix chain `fcfc90bff` → `30a902f56` → `70b48dbb0` → `f9be80861`) — the
+  escalation this audit corroborates. W6-E9 raised `dedup_tolerance_m` from
+  1 m to 5 m and added the canonical-source guard, on evidence from the cand
+  2397 case and a sweep over the four config pipelines. This entry is
+  independent evidence for the same conclusion from a different direction, and
+  its grey zone is the residual W6-E9 could not have seen.
+- **[[Obs 261]]** (student GT duplicates cluster bimodally at ~50 m) — the
+  methodological precedent. Obs 261 separated double-marks from real
+  neighbours *within* the student layer using a distance-distribution argument
+  at the 50 m scale; this entry runs the analogous test *between* layers at a
+  much finer scale, and finds a far cleaner separation (median 115.7 m, one
+  twin) than the within-layer case, where 96 clusters needed adjudication and
+  26 were merged.
+
+**Artefacts**:
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
+(`phantom_duplication_audit` — the distance tables, the verdict, and the
+residual grey zone);
+`reports/verification/c4-triage/blind-passes/w6e9-exposure-sweep-2026-08-04.json`
+(the exposure sweep that set the 5 m tolerance);
+`scripts/compute_corrected_f1_multi_buffer.py:245–289` (`build_extended_gt`,
+`dedup_tolerance_m: float = 5.0`, and the docstring stating the ≳15–20 m floor
+and the 7.3 m first-ambiguous-case figure);
+`results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv` (the
+773 promoted mounds);
+`inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (the 4,746
+student layer);
+`results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json`
+(`n_phantom_duplicates_dropped` = 1 at every buffer) and its `report.md`
+§ 9 caveat 7 plus the 2026-08-04 changelog entry;
+`reports/verification/phase3-rulings-2026-07-31.md` § 20(c);
+commits `fcfc90bff` (the 5 m tolerance and canonical guard), `30a902f56` (the
+regenerated corrected-F1 data), `70b48dbb0` (the refreshed report), and
+`f9be80861` (W6-E9 resolved — sweep archived, fix chain recorded).
