@@ -54,7 +54,9 @@
    "defect": "FALSE GREEN. The re-extraction re-anchors a claim to the T=0.7 corrected-F1 artefact, which verifies green for the wrong computation — a passing verdict on a quantity the document is not asserting.",
    "found_by": "W7-E4 blind verification pass",
    "note": "Worse than a mismatch: a mismatch is visible in triage, a false green is not. Fix before the ledger consumes it.",
-   "repair": "Re-anchor to the artefact the claim actually asserts."
+   "repair": "Re-anchor to the artefact the claim actually asserts.",
+   "status": "REPAIRED 2026-08-04 (Session 128). Claim index 3 of 073.json re-anchored from results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json::$.results[0].n_ref_student_only (read, green at 4745) to results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json (arithmetic, $.item_counts.matched + $.item_counts.student_only). It now recomputes to 4,770 against the document's 4,745 and reports MISMATCH with abs_error 25 — the correct verdict. The underlying document defect the false green was concealing is registered as W7-D9.",
+   "ledger_note": "reports/verification/c4-recompute-report.json still carries the pre-repair GREEN row for this claim. It is a whole-corpus artefact (16,083 rows, generated on sapphire) and is refreshed by a full recompute, not a single-file run — a single-file run TRUNCATES it. Regenerate on sapphire once the ds-summary-v2 document repairs land."
   },
   {
    "id": "W7-D6",
@@ -83,6 +85,25 @@
    "note": "Does NOT affect the MCC comparison — all four MCC artefacts used the reviewed layer. It affects claims anchored to this evaluation directory, and t0.3 is the F1 leader in several documents.",
    "repair": "Establish which claims anchor there, decide whether t0.3's evaluation should be re-run against the reviewed layer for comparability, and flag any cross-run claim that mixes the two.",
    "pi_disposition": "DEFERRED, NOT DISMISSED (ruling 19c). Touches a run that leads on F1, so it is handled deliberately rather than opportunistically. The documentation obligation is load-bearing: this finding must stay legible until someone acts on it."
+  },
+  {
+   "id": "W7-D9",
+   "severity": "MEDIUM — a document defect with an interpretive consequence in the same document",
+   "file": "results/55maps-ds-summary-v2/report.md",
+   "location": "lines 12-13 (front matter, post-recovery refresh); consequence at lines 47, 62-70, 78-85, 209-216",
+   "opened": "2026-08-04 (Session 128)",
+   "defect": "The front matter states the T=0.7 row was 're-derived against the recovered single-round consensus + verifier and the updated 4,745-mound curator GT'. The T=0.7 Dawid-Skene fit did NOT consume the 4,745 layer: it consumed the fixed 4,770 base. The sentence bundles three commits (366f9c66f D-S re-aggregate, e07dae373 cross-tab, f533fda5f re-evaluate) and the '4,745' is true of f533fda5f (the evaluation) but false of 366f9c66f (the D-S re-aggregation), so the compression misattributes the reference.",
+   "found_by": "Session 128, following the W7-D5 re-anchor. The W7-E4 blind pass predicted exactly this: a numerically-agreeing anchor 'will conceal M-class attribution defects from any purely numeric verifier'.",
+   "evidence": [
+    "scripts/analyse_dawid_skene.py:57 — _STUDENT_GT_PATH defaults to inputs/vectors/references/student-mounds-55maps.geojson, the fixed 4,770 base (ruling 19 layer 1).",
+    "Count test: item-posteriors.csv student_label==1 rows give 4,770 for T=0.7, T=0.3 and text-MIN, and 4,745 for image — exactly the base and the reviewed layer's size between baf1497a7 and 2e075eb99.",
+    "Point test (decisive, independent of counts): the single feature baf1497a7 added to the reviewed layer sits at (396492.2142937911, 4662802.316746469) on K-35-064-3_Dimitrovgrad_4326. It appears as a STUDENT point (student_label=1) in the image item set only. In T=0.7 the same coordinate carries student_label=0 (category vlm_only), i.e. the curator addition was absent from the T=0.7 reference set.",
+    "Commit 366f9c66f's own message asserts the D-S re-run used 'the canonical student GT (now including the +1 curator-added mound at K-35-064-3, baf1497a7)'. The artefact contradicts the commit message; the document inherited the commit message's error."
+   ],
+   "the_documents_own_contradiction": "Lines 189-194 of the same document already state the correct fact — 'the corrected-f1 pipeline using the *reviewed* student GT at multi-buffer rings while D-S uses the legacy student GT at 50 m'. The front matter contradicts § 3 of its own body. What neither passage records is that IMAGE is the exception to its own rule.",
+   "interpretive_consequence": "UNADJUDICATED — flagged, not decided. The image run's D-S reference is 25 student points smaller than its three siblings', so every cross-run D-S comparison in this document (§ 2.1 item counts, § 2.2 worker accuracy and prevalence, § 4.1 F1 ranking, § 4.2 calibration ranking) compares image against the other three on a different reference. § 4.1's D-S F1 gap between image (0.7990) and T=0.3 (0.7988) is 0.0002 — far smaller than the plausible effect of removing 25 student double-marks, which mechanically reduces student_only (false negatives) and so raises recall. The document already calls that ordering noise-level ('preserved at 4 d.p. only as 0.7745 ≈ 0.7743 within rounding'); this finding adds that the two runs are not on a common reference at all, so the image-vs-T=0.3 rank order is not established by these artefacts.",
+   "relationship_to_W7_D8": "The MIRROR IMAGE of W7-D8 and easy to conflate. W7-D8 is about the EVALUATION layer, where t0.3 is the odd one out (unreviewed 4,770, siblings reviewed). W7-D9 is about the DAWID-SKENE layer, where IMAGE is the odd one out (reviewed 4,745, siblings the fixed 4,770 base). Different objects, different runs, opposite direction. W7-R1's history shows this pair has already caused one withdrawn claim.",
+   "repair": "Disambiguate the front-matter sentence so the evaluation re-run (4,745, f533fda5f) and the D-S re-aggregation (4,770 base, 366f9c66f) are separated; state at § 2.1 that image's D-S reference differs from the other three; and decide whether § 4.1's image-vs-T=0.3 ordering may still be asserted. The first two are bookkeeping; the third is a PI call."
   }
  ],
  "open_research_findings": [
@@ -102,8 +123,20 @@
     "the_inversion": "The blind pass put IMAGE at 4,745 and the other three at 4,770. The census, reading cli_args.ground_truth directly, found the opposite locus: t0.3's outputs/.../evaluation/ consumed the UNREVIEWED 4,770 base while text-high, image and text-min all consumed the reviewed layer. Independently re-verified this session.",
     "damage_bounded": "All FOUR archived per-run MCC artefacts record ground_truth = student-mounds-55maps-reviewed.geojson. The MCC cross-run table in 55maps-mcc-v2-summary §§ 2-4 is therefore like-for-like, and the F1-versus-MCC rank-divergence finding does not rest on a reference mismatch."
    },
-   "what_remains_open": "Two things. (1) The t0.3 evaluation-layer difference is a NEW finding in its own right: any claim anchored to outputs/55maps-text-high-t0.3-generalisation/evaluation/ is on a different reference from its siblings, and t0.3 is the F1 leader in several places. (2) The blind pass reasoned from what the DAWID-SKENE FITS imply, not from evaluation metadata; those are different objects, so its claim is not strictly refuted by the census. Whether the D-S fits themselves share a reference is still unverified.",
-   "method_note": "Worth keeping: the blind pass corrected the repair, and the census corrected the blind pass. Neither layer was redundant, and the census only settled it because it read cli_args.ground_truth directly instead of inferring a reference from implied counts."
+   "what_remains_open": "ONE thing. (1) The t0.3 evaluation-layer difference is a NEW finding in its own right: any claim anchored to outputs/55maps-text-high-t0.3-generalisation/evaluation/ is on a different reference from its siblings, and t0.3 is the F1 leader in several places. Tracked as W7-D8. (2) IS NOW CLOSED — see resolution_of_open_question_2.",
+   "resolution_of_open_question_2": {
+    "closed": "2026-08-04, Session 128",
+    "question": "Whether the four Dawid-Skene fits themselves share a ground-truth reference — a different object from the evaluation metadata the census read.",
+    "answer": "They do NOT. Image alone consumed the reviewed curator layer (4,745 as it stood between baf1497a7 and 2e075eb99); T=0.7, T=0.3 and text-MIN all consumed the FIXED 4,770 base (ruling 19 layer 1), which is the script default.",
+    "the_blind_pass_was_right_about_the_split_and_wrong_about_its_direction": "Blind pass P4 put image at 4,745 and the other three at 4,770 — which is EXACTLY what the D-S fits show. The census then found the opposite locus (t0.3 odd-one-out at 4,770) and was read as inverting the blind pass. It did not: the census was reading EVALUATION metadata and the blind pass was reading D-S fits. Both were correct about their own object. Two different asymmetries exist, in different layers, singling out different runs.",
+    "evidence": [
+     "scripts/analyse_dawid_skene.py:57 — the --ground-truth default is the fixed 4,770 base, so a run inherits 4,770 unless the operator overrode it.",
+     "item-posteriors.csv student_label==1 counts: 4,770 / 4,770 / 4,770 for T=0.7, T=0.3, text-MIN; 4,745 for image.",
+     "Decisive point test not relying on counts: baf1497a7's single added feature at (396492.2142937911, 4662802.316746469), K-35-064-3_Dimitrovgrad_4326, is a student point ONLY in the image item set; in T=0.7 that coordinate carries student_label=0."
+    ],
+    "consequence": "Registered as document defect W7-D9, whose interpretive half (does § 4.1's image-vs-T=0.3 D-S F1 ordering survive?) is a PI call, not a bookkeeping repair."
+   },
+   "method_note": "Worth keeping: the blind pass corrected the repair, the census corrected the blind pass, and Session 128 found the census and the blind pass were answering DIFFERENT questions and were each right. The lesson is not that one layer beat another but that 'which ground truth did this run use?' has to name the object — evaluation, D-S fit, or MCC — before it has an answer. Note also which evidence settled it: reading cli_args.ground_truth (census) and testing for one known-added POINT (Session 128) both beat inferring a reference from implied counts, which is what left the question open for a day."
   }
  ],
  "instrument_gaps": [

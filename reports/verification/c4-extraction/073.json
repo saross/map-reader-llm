@@ -119,21 +119,34 @@
       "claim_text": "T=0.7 row re-derived against the recovered single-round consensus + verifier\nand the updated 4,745-mound curator GT",
       "values": [
         {
-          "quantity": "count of mound features in the updated curator ground truth consumed by the 2026-05-03 T=0.7 re-derivation",
+          "quantity": "count of student ground-truth mounds consumed by the 2026-05-03 T=0.7 Dawid-Skene re-derivation",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
           "unit": null,
           "kind": "count",
-          "path": "$.results[0].n_ref_student_only",
-          "method": "read"
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.student_only"
+            }
+          ]
         }
       ],
       "anchor": {
-        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
         "path": null
       },
-      "method": "read",
-      "notes": "GT-count treatment: anchored to the ERA ARTEFACT, not to today's live ground truth. Per reports/verification/c4-triage/coverage-drift-2026-08-04.json (gt_count_era_resolution), the T=0.7 full-buffer evaluation ran at 2026-05-03T00:40:19Z, between curator additions baf1497a7 (00:32:53Z, 4,744 -> 4,745) and 2e075eb99 (05:28:57Z, 4,745 -> 4,746), so 4,745 is era-faithful and correct. The T=0.7 corrected-f1-multi-buffer summary records the GT size that run consumed. Anchoring to inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4,746 today) would fabricate a mismatch and is deliberately avoided."
+      "method": "arithmetic",
+      "notes": "[W7-D5 RE-ANCHOR, Session 128] SUPERSEDES the b073 re-extraction anchor results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json::$.results[0].n_ref_student_only, which reads 4745 and therefore verified GREEN for the wrong computation. The sentence asserts what the T=0.7 DAWID-SKENE row's re-derivation consumed, not what the corrected-F1 pipeline consumed; the superseded anchor was chosen for numerical agreement rather than for describing the same computation (W7-E4 blind pass, reports/verification/c4-triage/blind-passes/wave7-w7e4-verification-2026-08-04.json, $.re_extraction_check.caveat.detail). GT-count treatment: the D-S item set's matched + student_only IS the count of reference points the fit consumed -- build_shared_item_set in scripts/analyse_dawid_skene.py assigns every in-bounds reference point to exactly one of those two categories. THIS ANCHOR IS EXPECTED TO MISMATCH: the artefact gives 3,527 + 1,243 = 4,770, not 4,745, because the T=0.7 D-S run took the script default ground truth (_STUDENT_GT_PATH = inputs/vectors/references/student-mounds-55maps.geojson, the fixed 4,770 base; scripts/analyse_dawid_skene.py:57) rather than the reviewed curator layer, notwithstanding commit 366f9c66f's message claiming the updated GT. The mismatch is the CORRECT verdict; the underlying document defect is registered as W7-D9 in reports/verification/c4-triage/wave7-open-items-2026-08-04.json. Do NOT resolve it by reverting to a numerically-agreeing anchor. The era-faithfulness reasoning in the superseded note (coverage-drift-2026-08-04.json gt_count_era_resolution; the T=0.7 full-buffer evaluation ran 2026-05-03T00:40:19Z between baf1497a7 and 2e075eb99) remains true OF THE EVALUATION PIPELINE and is why the corrected-F1 artefact reads 4745 -- it is simply not the object this sentence is about."
     },
     {
       "claim_id": null,
