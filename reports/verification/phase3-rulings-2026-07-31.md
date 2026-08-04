@@ -349,3 +349,57 @@ recurring confusion. A reader meeting "4,746" naturally reads it as
 vanishingly small. The 773-mound extension is where that effort lives,
 and any document citing a student-GT count near a claim about review
 effort should say which layer it means.
+
+## 20. F1 and MCC must share a reference; sequence the fix behind the point-marking work
+
+**Ruling (PI, 2026-08-04).** Established this session: the corrected-F1
+pipeline scores against the EXTENDED reference (student 4,746 + the
+reviewer-promoted phantoms gated per buffer — 5,220 at R = 50 m, 5,418
+at 150 m), while tile-level MCC scores against the student layer ALONE
+(4,746, "no phantoms", the matrix-sweep convention documented in
+`results/55maps-mcc-v2-summary/report.md` § 1).
+
+**(a) That asymmetry cannot go forward.** MCC computed against the
+uncorrected dataset is misleading, and the two metrics must use the
+same reference. This matters beyond bookkeeping: the F1-versus-MCC
+rank-divergence finding (Obs 280 — text wins F1, image wins MCC) is
+currently measured across metrics that do not share a ground truth, so
+an unknown share of that divergence could be reference effect rather
+than metric behaviour.
+
+**(b) Do NOT recompute yet.** The reference will move again when the
+phantom set is re-reviewed, and recomputing twice is waste. The
+unification waits behind the point-marking work.
+
+**(c) The borderline conflation cases fold into the committed
+point-marking re-review.** A duplication audit this session found the
+773 promoted mounds internally unique (zero pairs within 10 m) and well
+separated from the student layer (median same-map nearest neighbour
+115.7 m). Exactly one true twin exists at 0.98 m, caught by the 5 m
+de-duplication tolerance and consistent with its documented 1/2/2/0
+drop counts. But **4–6 cases sit between 7.3 m and 15 m** — closer than
+the pipeline's own ≳15–20 m "genuinely distinct mounds" floor, further
+than the de-dup catches. These cannot be settled from coordinates; they
+need to be seen on a map. They therefore attach to the COMMITTED FUTURE
+WORK item "phantom re-review with point-marking" rather than becoming a
+separate exercise.
+
+**(d) Resulting sequence** (each step gated on the previous):
+
+1. Build the click-the-centre point-marking interface.
+2. Re-review the 773 phantoms — which resolves BOTH the Obs 371
+   ring-anchoring defect (25 m rings anchored at 50 m rather than marked
+   centres) AND the 4–6 borderline conflation cases, in one pass.
+3. Sort the `canonical-review.csv` rows on the exact-position result.
+4. THEN recompute F1 and MCC against a single shared reference, re-tier
+   both boards, and re-verify every 55-map figure.
+
+The point-marking work was already committed and costed at roughly one
+hour of review plus the UI build. This ruling adds two more reasons to
+do it and makes it the gate for the metric unification.
+
+**Open and not guessed at**: `canonical-review.csv` holds 415 rows at
+`buffer_metres = 50` while the image run's summary records 474 promoted
+at R = 50. Most likely because per-run phantom sets differ from the
+canonical adjudicated set, but that is unverified — treat the 474/415
+relationship as an open question, not a discrepancy to explain away.

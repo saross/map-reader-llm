@@ -212,5 +212,39 @@
   },
   "why_this_was_missed": "The session's census established three layers and stopped, because 4,770 -> 4,746 accounts arithmetically without the fourth. The PI's question — 'did I really find so few additional mounds? I thought I'd found hundreds' — is what surfaced it. A net decrease in the student layer is compatible with hundreds of discoveries living elsewhere, and the arithmetic closing exactly made the gap invisible.",
   "standing_caution": "Any document citing a student-GT count near a claim about review effort must say WHICH layer it means. '4,746' read as 'all the ground truth' makes the review look vanishingly small."
+ },
+ "phantom_duplication_audit": {
+  "ruling": "phase3-rulings-2026-07-31.md § 20 (PI, 2026-08-04)",
+  "method": "Same-map nearest-neighbour from each of the 773 reviewer-promoted mounds (canonical-review.csv, EPSG:32635) to the corrected student GT (4,746, reprojected 4326->32635). Cross-map proximity excluded because the de-dup is same-map constrained.",
+  "promoted_vs_promoted": {
+   "within_1m": 0,
+   "within_5m": 0,
+   "within_10m": 0,
+   "within_25m": 12,
+   "within_50m": 47,
+   "verdict": "Internally unique. The 25 m and 50 m pairs are cross-map-unconstrained and consistent with genuinely adjacent mounds."
+  },
+  "promoted_vs_student_same_map": {
+   "within_1m": 1,
+   "within_5m": 1,
+   "within_7_3m": 2,
+   "within_10m": 2,
+   "within_15m": 6,
+   "within_20m": 9,
+   "within_25m": 22,
+   "within_50m": 84,
+   "min_nn_m": 0.98,
+   "median_nn_m": 115.7
+  },
+  "verdict": "Corroborates W6-E9 independently: exactly ONE true twin at 0.98 m, caught by the 5 m de-dup tolerance, consistent with the documented 1/2/2/0 per-pipeline drop counts. The promoted set is overwhelmingly well separated from the student layer — median nearest neighbour 115.7 m.",
+  "residual_grey_zone": "4-6 cases sit between 7.3 m and 15 m — closer than the pipeline's own 'genuinely distinct mounds sit >=15-20 m apart' floor, further than the 5 m de-dup catches. Not resolvable from coordinates; they need visual adjudication on a map. FOLDED INTO the committed point-marking re-review (ruling 20c).",
+  "open_question": "canonical-review.csv holds 415 rows at buffer_metres=50 while the image run's summary records 474 promoted at R=50. Likely per-run phantom sets differing from the canonical adjudicated set, but UNVERIFIED."
+ },
+ "metric_reference_asymmetry": {
+  "finding": "Corrected-F1 scores against the EXTENDED reference (4,746 student + per-buffer promoted phantoms: 5,220 at R=50 m, 5,418 at 150 m). Tile-level MCC scores against the student layer ALONE (4,746, 'no phantoms'), per the matrix-sweep convention documented in 55maps-mcc-v2-summary § 1.",
+  "why_it_matters": "The F1-versus-MCC rank-divergence finding (Obs 280: text wins F1, image wins MCC) is measured across metrics that do not share a ground truth. An unknown share of that divergence could be reference effect rather than metric behaviour.",
+  "pi_ruling": "Cannot go forward (ruling 20a). Both metrics must use the same reference.",
+  "sequencing": "Do NOT recompute yet (ruling 20b) — the reference moves again at the phantom re-review, and recomputing twice is waste. Unification is gated on the point-marking work.",
+  "status": "OPEN — gated, not deferred indefinitely. Blocks publication of the F1-vs-MCC divergence as a metric-behaviour claim."
  }
 }
