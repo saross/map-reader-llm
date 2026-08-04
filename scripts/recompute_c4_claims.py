@@ -42,6 +42,15 @@ disambiguation for era-relative locators. Era-resolved rows are
 marked ``resolution: "git-era"`` — they attest the document against
 its era, not the current artefact.
 
+Era check for moved anchors (rulings 12/14, redesigned 2026-08-04 after
+three wave-7 blind passes independently indicted it): every mechanical
+MISMATCH gains a supplementary ``era_check`` resolved at the CLAIM's
+era — the commit that last wrote that span — not the file's blob era.
+The field records ``era_basis``, the ``file_era`` it disagrees with
+where it does, an advisory ``presentation_class``, and distinguishes
+ANCHOR-ABSENT-AT-ERA from a genuine era disagreement. It never changes
+a primary status. Superseded description follows for context:
+
 Era check for moved anchors (ruling 12): on dated-snapshot documents
 (dated filename/title — detected from the filename stem for now,
 provisional per the ruling), a MISMATCH on a mechanical
@@ -255,6 +264,60 @@ def find_era_commit(doc_path: str, doc_blob: str) -> str | None:
     return _era_commit_cache[key]
 
 
+_claim_era_cache: dict[tuple[str, str, int, int], str | None] = {}
+
+
+def find_claim_era_commit(doc_path: str, file_era: str,
+                          lo: int, hi: int) -> str | None:
+    """Commit that last wrote the claim's own span — the CLAIM's era.
+
+    ``find_era_commit`` answers a question about the FILE: which commit
+    holds this blob. That is the wrong question for era-faithfulness,
+    and it failed in both directions in the wave-7 blind passes. Because
+    extraction always runs at HEAD, the recorded blob is usually the
+    current blob, so the newest commit holding it is effectively HEAD
+    and every anchor re-resolves to today (P1: ``faithful: false`` on
+    all 75 rows of a partition where the true count was zero). Where the
+    file was last touched by a later edit — a banner, a rider — the file
+    era lands on that edit, which may sit inside a campaign that moved
+    the very artefacts being checked (P2: an era manifest holding a
+    doubled intermediate state, 16 false stamps).
+
+    A document is not written all at once. Its body, its banner and its
+    riders are separate spans with separate eras, which is precisely
+    ruling 14's "the deciding axis is per-claim era-faithfulness" and,
+    for entry-dated registers, "the snapshot unit is the ENTRY, not the
+    file". So blame the claim's own lines at the file era and take the
+    newest commit among them: the moment this span reached the form the
+    extractor quoted.
+
+    Returns None if blame cannot resolve, leaving the caller to fall
+    back to the file era rather than fail.
+    """
+    key = (doc_path, file_era, lo, hi)
+    if key in _claim_era_cache:
+        return _claim_era_cache[key]
+    _claim_era_cache[key] = None
+    try:
+        out = _git("blame", "-L", f"{lo},{hi}", "--porcelain",
+                   file_era, "--", doc_path)
+    except KeyError:
+        return None
+    commits = {line.split()[0] for line in out.splitlines()
+               if re.fullmatch(r"[0-9a-f]{40} \d+ \d+( \d+)?", line)}
+    if not commits:
+        return None
+    # Newest by commit date: the span reached its quoted form then.
+    try:
+        ordered = _git("rev-list", "--no-walk", "--date-order",
+                       *sorted(commits)).split()
+    except KeyError:
+        return None
+    if ordered:
+        _claim_era_cache[key] = ordered[0]
+    return _claim_era_cache[key]
+
+
 def era_resolve(era_commit: str, file: str, path: str):
     """Resolve a locator against the repository tree at the document's
     era commit (ruling 9: anchors deleted after extraction).
@@ -363,10 +426,26 @@ def _era_check(row: dict, claim: dict, value: dict, era: dict) -> None:
     was faithful to its era. Failures land as ``era_check.error`` —
     never an exception, never a status change.
     """
-    commit = find_era_commit(era["doc"], era["blob"])
-    if commit is None:
+    file_era = find_era_commit(era["doc"], era["blob"])
+    if file_era is None:
         row["era_check"] = {"error": "no era commit found for source blob"}
         return
+    lo, hi = claim["source"]["lines"]
+    claim_era = find_claim_era_commit(era["doc"], file_era, lo, hi)
+    commit = claim_era or file_era
+    check: dict = {
+        "commit": commit[:12],
+        "era_basis": "claim-span" if claim_era else "file-blob",
+        "file_era": file_era[:12],
+        "presentation_class": ("dated-snapshot" if is_snapshot_doc(era["doc"])
+                               else "undated"),
+    }
+    # Ruling 14: presentation class is ADVISORY; the deciding axis is
+    # per-claim era-faithfulness. A span written months before the file
+    # was last touched is the case this field exists to catch, so the
+    # disagreement is reported rather than silently resolved away.
+    if claim_era and not file_era.startswith(claim_era[:12]):
+        check["era_disagreement"] = True
     try:
         anchor = claim.get("anchor") or {}
         if row["method"] == "read":
@@ -378,14 +457,24 @@ def _era_check(row: dict, claim: dict, value: dict, era: dict) -> None:
                                                    op["path"])[0])
                      for op in source.get("operands") or []}
             actual = safe_eval(source.get("expression") or "", names)
-        verdict = compare(value["value_verbatim"], actual,
-                          unit=value.get("unit"))
-        row["era_check"] = {"faithful": verdict["status"] == "MATCH",
-                            "status": verdict["status"],
-                            "actual_era": verdict.get("actual", actual),
-                            "commit": commit[:12]}
     except (KeyError, ValueError, OSError, json.JSONDecodeError) as exc:
-        row["era_check"] = {"error": str(exc)}
+        # An anchor that did not yet exist at the claim's era is a
+        # different fact from an anchor that existed and disagreed.
+        # Collapsing both into `error` (and thence into "not faithful")
+        # is what let a missing artefact read as a document defect.
+        message = str(exc)
+        absent = ("era-resolution: 0 candidates" in message
+                  or "No such file" in message
+                  or "does not exist" in message)
+        check["status"] = "ANCHOR-ABSENT-AT-ERA" if absent else "ERROR"
+        check["error"] = message
+        row["era_check"] = check
+        return
+    verdict = compare(value["value_verbatim"], actual, unit=value.get("unit"))
+    check.update(faithful=verdict["status"] == "MATCH",
+                 status=verdict["status"],
+                 actual_era=verdict.get("actual", actual))
+    row["era_check"] = check
 
 
 def process_claim(batch: str, index: int, claim: dict,
@@ -512,7 +601,12 @@ def process_claim(batch: str, index: int, claim: dict,
                                    unit=value.get("unit")))
         except (KeyError, ValueError, OSError, json.JSONDecodeError) as exc:
             row.update(status="UNRESOLVED", reason=str(exc))
-        if (row.get("status") == "MISMATCH" and era and era.get("snapshot")
+        # Ruling 14 made the presentation class advisory and per-claim
+        # era-faithfulness the deciding axis, so the check runs on every
+        # mechanical MISMATCH. Gating it on a dated FILENAME meant it
+        # fired on none of wave-7 pass P4's 24 rows while 22 of those
+        # verdicts turned on era-faithfulness established by hand.
+        if (row.get("status") == "MISMATCH" and era
                 and method in MECHANICAL):
             _era_check(row, claim, value, era)
         rows.append(row)

@@ -335,11 +335,17 @@ def test_era_check_on_overwritten_anchor(tmp_path, monkeypatch):
     assert row["era_check"]["faithful"] is True
     assert row["era_check"]["actual_era"] == pytest.approx(127.55)
 
-    # A living doc (undated stem) gets no era_check.
+    # Ruling 14 (2026-08-04 redesign) made the presentation class ADVISORY
+    # and per-claim era-faithfulness the deciding axis, so an undated stem no
+    # longer suppresses the check. This assertion previously required the
+    # opposite; wave-7 blind pass P4 showed that gating fired the check on
+    # none of its 24 rows while 22 verdicts turned on era-faithfulness.
     rc._json_cache.clear()
     living = {"doc": "report-2026-04-25.md", "blob": blob, "snapshot": False}
     (row,) = process_claim("b", 0, claim, None, living)
-    assert row["status"] == "MISMATCH" and "era_check" not in row
+    assert row["status"] == "MISMATCH"
+    assert row["era_check"]["faithful"] is True
+    assert row["era_check"]["presentation_class"] == "dated-snapshot"
 
 
 @pytest.mark.tier1
