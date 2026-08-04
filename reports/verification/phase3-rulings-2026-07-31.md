@@ -295,3 +295,57 @@ Rejected: a single pre-GATE-3 sweep with no invariant (cheapest to
 schedule, but every intervening wave's triage pays for it), and
 limiting the backlog to paper-citable documents (paper exposure is not
 currently recorded anywhere, so it would need establishing first).
+
+## 19. The four ground-truth layers, and what each may be used for
+
+**Ruling (PI, 2026-08-04).** Prompted by the PI's question "did I really
+find so few additional mounds? I thought I'd found hundreds" — which
+was the right instinct and surfaced a layer the session had missed. The
+55-map ground truth is FOUR things, not three, and they are not
+interchangeable:
+
+1. **The fixed original student digitisation** —
+   `inputs/vectors/references/student-mounds-55maps.geojson`, **4,770**
+   features. Verified genuinely immutable: one commit ever
+   (`301b51128`, 2026-04-08), working-tree md5 byte-identical to it.
+2. **The current corrected student GT** —
+   `student-mounds-55maps-reviewed.geojson`, **4,746**. Reached by
+   4,770 − 52 + 28: twenty-six merged-centroid replacements of student
+   double-marks under 50 m, plus two curator additions. A NET DECREASE,
+   because it is duplicate-cleaning, not discovery.
+3. **Historical corrected states** — 4,744 (`dea1155fa`) and 4,745
+   (`baf1497a7`). **Historical record only.**
+4. **The reviewer-promoted extension** —
+   `results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`,
+   **773 mounds**, every row `human_label=mound`. These are the PI's
+   "hundreds": real mounds the students missed, held as a separate
+   layer rather than merged into the student GT. They enter analysis
+   through the extended GT, gated per buffer — 474 qualify at R = 50 m,
+   rising to 672 at 150 m, giving extended references of 5,220 to 5,418.
+
+**Rulings on use**:
+
+(a) **The historical corrected GT is a record, not an input.** It must
+not be used in any analysis postdating the correction to 4,746. Where a
+dated document describes what a 2026-05-03 evaluation consumed, that is
+history and stays; where anything *computes* on 4,744 or 4,745 today,
+it is wrong.
+
+(b) **Nothing goes to publication on 4,770 where 4,770 is the wrong
+reference.** Re-running metrics is authorised where needed; the cost of
+a re-run is not a reason to publish a figure computed against the
+uncorrected base.
+
+(c) **W7-D8 is deferred, not dismissed.** The t0.3 evaluation-layer
+difference touches a run that leads on F1, so it is handled
+deliberately rather than opportunistically: keep it well documented and
+investigate when the time comes. Its documentation obligation is
+therefore load-bearing — the finding must stay legible until someone
+acts on it.
+
+**Note for future sessions**: the four-layer structure explains a
+recurring confusion. A reader meeting "4,746" naturally reads it as
+"all the ground truth", and then the PI's review effort looks
+vanishingly small. The 773-mound extension is where that effort lives,
+and any document citing a student-GT count near a claim about review
+effort should say which layer it means.

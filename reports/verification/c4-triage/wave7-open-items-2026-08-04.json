@@ -76,12 +76,13 @@
   },
   {
    "id": "W7-D8",
-   "severity": "MEDIUM",
+   "severity": "MEDIUM — deferred by PI ruling; documentation obligation is load-bearing",
    "artefact": "outputs/55maps-text-high-t0.3-generalisation/evaluation/evaluation.json",
    "defect": "Evaluated against the UNREVIEWED base student-mounds-55maps.geojson (4,770) while the sibling runs' evaluations used student-mounds-55maps-reviewed.geojson. t0.3 also has no full-buffer-eval, unlike the other three.",
    "found_by": "student-GT reference census (student-gt-reference-census-2026-08-04.json), independently re-verified from cli_args.ground_truth",
    "note": "Does NOT affect the MCC comparison — all four MCC artefacts used the reviewed layer. It affects claims anchored to this evaluation directory, and t0.3 is the F1 leader in several documents.",
-   "repair": "Establish which claims anchor there, decide whether t0.3's evaluation should be re-run against the reviewed layer for comparability, and flag any cross-run claim that mixes the two."
+   "repair": "Establish which claims anchor there, decide whether t0.3's evaluation should be re-run against the reviewed layer for comparability, and flag any cross-run claim that mixes the two.",
+   "pi_disposition": "DEFERRED, NOT DISMISSED (ruling 19c). Touches a run that leads on F1, so it is handled deliberately rather than opportunistically. The documentation obligation is load-bearing: this finding must stay legible until someone acts on it."
   }
  ],
  "open_research_findings": [
@@ -156,5 +157,60 @@
   "P3: the cache-hit row is a harness unit failure the extractor warned about in prose twice, with a REAL divergence hiding underneath the unit question.",
   "P3: 091#5[0] carries its own commit locator (4e5c5e5a..) that the extraction discarded as rule-5 metadata; resolved there, the claim is permanently true.",
   "P3: ruling 16's ~5 % threshold rescues almost nothing in the cost family — measured gaps run 12.9 % to 99.7 %, and it bites on exactly one row."
- ]
+ ],
+ "ground_truth_layers": {
+  "ruling": "phase3-rulings-2026-07-31.md § 19 (PI, 2026-08-04)",
+  "layers": {
+   "1_fixed_original_student_digitisation": {
+    "path": "inputs/vectors/references/student-mounds-55maps.geojson",
+    "count": 4770,
+    "status": "immutable — one commit ever (301b51128, 2026-04-08), md5 byte-identical today"
+   },
+   "2_current_corrected_student_gt": {
+    "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "count": 4746,
+    "derivation": "4770 - 52 + 28 = 26 merged-centroid replacements of sub-50 m student double-marks, plus 2 curator additions. A NET DECREASE: duplicate-cleaning, not discovery."
+   },
+   "3_historical_corrected_states": {
+    "counts": [
+     4744,
+     4745
+    ],
+    "commits": [
+     "dea1155fa",
+     "baf1497a7"
+    ],
+    "status": "HISTORICAL RECORD ONLY — must not be used in any analysis postdating the correction to 4,746 (ruling 19a)"
+   },
+   "4_reviewer_promoted_extension": {
+    "path": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "count": 773,
+    "note": "All 773 rows human_label=mound. THIS is where the PI's review effort lives — real mounds the students missed, held separately rather than merged into the student GT.",
+    "per_buffer_gating": {
+     "50": {
+      "promoted": 474,
+      "extended": 5220
+     },
+     "75": {
+      "promoted": 595,
+      "extended": 5341
+     },
+     "100": {
+      "promoted": 642,
+      "extended": 5388
+     },
+     "125": {
+      "promoted": 661,
+      "extended": 5407
+     },
+     "150": {
+      "promoted": 672,
+      "extended": 5418
+     }
+    }
+   }
+  },
+  "why_this_was_missed": "The session's census established three layers and stopped, because 4,770 -> 4,746 accounts arithmetically without the fourth. The PI's question — 'did I really find so few additional mounds? I thought I'd found hundreds' — is what surfaced it. A net decrease in the student layer is compatible with hundreds of discoveries living elsewhere, and the arithmetic closing exactly made the gap invisible.",
+  "standing_caution": "Any document citing a student-GT count near a claim about review effort must say WHICH layer it means. '4,746' read as 'all the ground truth' makes the review look vanishingly small."
+ }
 }
