@@ -8,7 +8,6 @@
   "scope_note": "This record covers COVERAGE (which lines were surveyed) and VALIDATION (which bodies the spans were checked against). It adjudicates no claim and moves no research conclusion.",
   "interim_conservatism": "Session 127 runs under the 48-hour Opus window. Mechanical plan repair and an opt-in instrument mode landed; every decision that would change the GATE 3 completeness accounting is escalated below, not taken."
  },
-
  "landed_this_session": [
   {
    "commit": "f097c9d32",
@@ -34,17 +33,54 @@
    "not_done": "Era mode was NOT made the default — that is W7-E3, a PI call."
   }
  ],
-
  "escalations_for_pi": [
   {
    "id": "W7-E1",
    "kind": "COVERAGE DEFECT (MEDIUM) — four documents were assigned less than their own body at extraction time",
    "detail": "For four already-extracted files the batch plan's assigned end line was SHORT of the document's length at the very blob the extraction recorded, so the tail was never surveyed by anyone. This is distinct from W7-E2: no corpus growth is needed to explain it, the assignment was simply short when it ran. Total 95 unsurveyed lines. reports/verification/apparatus/c4-extraction-instructions.md is 56 of the 95 and has a clean cause: the plan was built at 54c9aaa84 (2026-07-31 10:55) assigning b054 lines 1-108, then instrument v1.2 landed at a6a3e372a (2026-07-31 18:15) taking the document to 164 lines, and b054 extracted on 2026-08-03 against the stale assignment. The other three are ordinary plan-construction staleness.",
    "rows": [
-    {"file": "reports/experimental-progression.md", "assigned_end": 402, "lines_at_extraction_blob": 419, "unsurveyed": 17, "batches": ["b035", "b036"]},
-    {"file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md", "assigned_end": 668, "lines_at_extraction_blob": 680, "unsurveyed": 12, "batches": ["b043", "b044", "b045", "b046"]},
-    {"file": "reports/results-summary-session-58.md", "assigned_end": 380, "lines_at_extraction_blob": 390, "unsurveyed": 10, "batches": ["b047", "b048", "b049"]},
-    {"file": "reports/verification/apparatus/c4-extraction-instructions.md", "assigned_end": 108, "lines_at_extraction_blob": 164, "unsurveyed": 56, "batches": ["b054"]}
+    {
+     "file": "reports/experimental-progression.md",
+     "assigned_end": 402,
+     "lines_at_extraction_blob": 419,
+     "unsurveyed": 17,
+     "batches": [
+      "b035",
+      "b036"
+     ]
+    },
+    {
+     "file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+     "assigned_end": 668,
+     "lines_at_extraction_blob": 680,
+     "unsurveyed": 12,
+     "batches": [
+      "b043",
+      "b044",
+      "b045",
+      "b046"
+     ]
+    },
+    {
+     "file": "reports/results-summary-session-58.md",
+     "assigned_end": 380,
+     "lines_at_extraction_blob": 390,
+     "unsurveyed": 10,
+     "batches": [
+      "b047",
+      "b048",
+      "b049"
+     ]
+    },
+    {
+     "file": "reports/verification/apparatus/c4-extraction-instructions.md",
+     "assigned_end": 108,
+     "lines_at_extraction_blob": 164,
+     "unsurveyed": 56,
+     "batches": [
+      "b054"
+     ]
+    }
    ],
    "recommendation": "Re-extract the 95 lines as one small top-up batch. It is cheap (a fraction of a single wave), it closes an unambiguous hole in a full-enumeration claim, and leaving it open would put an unqualified completeness statement in the GATE 3 package that the plan itself contradicts.",
    "pi_decision_needed": "Approve the top-up re-extraction, or rule the shortfall immaterial and record it as a named GATE 3 line (ruling 7 forbids silent deferrals either way)."
@@ -55,23 +91,108 @@
    "detail": "Seventeen documents grew after the wave that extracted them, by 1,129 lines in total. The cause is overwhelmingly the verification programme itself: revision-policy banners, dated riders, correction blocks and changelogs added by the S126 doc-repair pass and the E72/E43/E39 remediation. The six S126-repaired documents alone account for 671 lines (corrected-f1 +283, cross-track +177, ds-summary +82, phase1-gate +69, attractor-pull +100 — note attractor-pull and corrected-f1 more than doubled). Each extraction is FAITHFUL to the body it read; nothing here says any recorded claim is wrong. The question is whether the C4 corpus can claim full enumeration over the hand-written stratum when the stratum keeps growing under it — and some of the new text carries live corrected figures (the refreshed cost conclusions, the restated F1 forms), which is exactly the material this programme exists to check.",
    "mitigating_fact": "The refreshed figures in the S126 repair pass were agent-re-derived from artefacts and independently verified at the time (rulings 16-17 arc, commits 723d56a29 / ce0126938 / a6a18b3c4). They have had a verification pass — just not through the C4 extraction lane.",
    "rows": [
-    {"file": "docs/methodology/n1-baseline-matrix.md", "at_extraction": 565, "now": 613, "added": 48},
-    {"file": "docs/methodology/output-directory-standard.md", "at_extraction": 456, "now": 520, "added": 64},
-    {"file": "docs/methodology/preregistration/protocol-errata.md", "at_extraction": 3213, "now": 3336, "added": 123},
-    {"file": "docs/methodology/reports/data_split_strategy.md", "at_extraction": 58, "now": 77, "added": 19},
-    {"file": "docs/methodology/reports/metrics_strategy.md", "at_extraction": 42, "now": 63, "added": 21},
-    {"file": "docs/methodology/reports/tile-selection-methodology.md", "at_extraction": 202, "now": 218, "added": 16},
-    {"file": "reports/configuration-audit-2026-03-25-v2.md", "at_extraction": 413, "now": 437, "added": 24},
-    {"file": "reports/configuration-audit-2026-03-25.md", "at_extraction": 390, "now": 412, "added": 22},
-    {"file": "reports/experimental-progression.md", "at_extraction": 419, "now": 443, "added": 24},
-    {"file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md", "at_extraction": 680, "now": 692, "added": 12},
-    {"file": "reports/results-summary-session-58.md", "at_extraction": 390, "now": 410, "added": 20},
-    {"file": "reports/verification/phase1-gate-package.md", "at_extraction": 395, "now": 464, "added": 69},
-    {"file": "reports/verifier-silent-drop-root-cause-2026-05-03.md", "at_extraction": 336, "now": 361, "added": 25},
-    {"file": "results/55maps-attractor-pull-v2/report.md", "at_extraction": 161, "now": 261, "added": 100},
-    {"file": "results/55maps-cross-track-comparison/report.md", "at_extraction": 410, "now": 587, "added": 177},
-    {"file": "results/55maps-ds-summary-v2/report.md", "at_extraction": 508, "now": 590, "added": 82},
-    {"file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md", "at_extraction": 161, "now": 444, "added": 283}
+    {
+     "file": "docs/methodology/n1-baseline-matrix.md",
+     "at_extraction": 565,
+     "now": 613,
+     "added": 48
+    },
+    {
+     "file": "docs/methodology/output-directory-standard.md",
+     "at_extraction": 456,
+     "now": 520,
+     "added": 64
+    },
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "at_extraction": 3213,
+     "now": 3336,
+     "added": 123
+    },
+    {
+     "file": "docs/methodology/reports/data_split_strategy.md",
+     "at_extraction": 58,
+     "now": 77,
+     "added": 19
+    },
+    {
+     "file": "docs/methodology/reports/metrics_strategy.md",
+     "at_extraction": 42,
+     "now": 63,
+     "added": 21
+    },
+    {
+     "file": "docs/methodology/reports/tile-selection-methodology.md",
+     "at_extraction": 202,
+     "now": 218,
+     "added": 16
+    },
+    {
+     "file": "reports/configuration-audit-2026-03-25-v2.md",
+     "at_extraction": 413,
+     "now": 437,
+     "added": 24
+    },
+    {
+     "file": "reports/configuration-audit-2026-03-25.md",
+     "at_extraction": 390,
+     "now": 412,
+     "added": 22
+    },
+    {
+     "file": "reports/experimental-progression.md",
+     "at_extraction": 419,
+     "now": 443,
+     "added": 24
+    },
+    {
+     "file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+     "at_extraction": 680,
+     "now": 692,
+     "added": 12
+    },
+    {
+     "file": "reports/results-summary-session-58.md",
+     "at_extraction": 390,
+     "now": 410,
+     "added": 20
+    },
+    {
+     "file": "reports/verification/phase1-gate-package.md",
+     "at_extraction": 395,
+     "now": 464,
+     "added": 69
+    },
+    {
+     "file": "reports/verifier-silent-drop-root-cause-2026-05-03.md",
+     "at_extraction": 336,
+     "now": 361,
+     "added": 25
+    },
+    {
+     "file": "results/55maps-attractor-pull-v2/report.md",
+     "at_extraction": 161,
+     "now": 261,
+     "added": 100
+    },
+    {
+     "file": "results/55maps-cross-track-comparison/report.md",
+     "at_extraction": 410,
+     "now": 587,
+     "added": 177
+    },
+    {
+     "file": "results/55maps-ds-summary-v2/report.md",
+     "at_extraction": 508,
+     "now": 590,
+     "added": 82
+    },
+    {
+     "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md",
+     "at_extraction": 161,
+     "now": 444,
+     "added": 283
+    }
    ],
    "options": [
     "(a) Growth sweep: re-extract the 1,129 added lines as a dedicated wave before GATE 3. Highest completeness; roughly one extra wave of fleet cost; and it will itself be overtaken by any later repair, so it needs a cut-off date rather than a promise of currency.",
@@ -89,11 +210,30 @@
    "pi_decision_needed": "Keep --at-era opt-in, make it the default, or adopt the two-lane shape (era mode validates, working-tree mode monitors drift)."
   }
  ],
-
  "carry_forward_notes": [
   "The batch plan has no builder script — it was hand-built in S122 — so its `spans` figures cannot be regenerated. Units re-ranged this session carry density-scaled estimates flagged by `spans_basis`; do not read them as survey counts, and do not compare them against original survey figures.",
   "1,361 is the count of claim_text verbatim failures in working-tree mode. It is NOT the tier-1 test count, which coincidentally also sits near that figure (1,366 after this session's five additions). Do not conflate the two.",
   "results/verifier-robustness/verifier-robustness-findings.md looks uncovered if pending batches alone are examined: calib-a covers lines 1-260 and b174 resumes at 257. Full coverage to 648. Not a gap.",
   "Whole-corpus validation is only run when someone runs it. The per-wave cycle validates the current wave's files, so accumulated drift across earlier waves is invisible by construction — this drift had reached 41 files before anything surfaced it. A whole-corpus validation belongs in the GATE 3 checklist."
- ]
+ ],
+ "gt_count_era_resolution": {
+  "question": "Documents cite the canonical 55-map GT as 4,744, 4,745 or 4,746. Which is correct where?",
+  "raised_by": "the W7-E4 repair of results/55maps-mcc-v2-summary/report.md, whose section 2 asserts what its own table was computed against",
+  "resolved": "2026-08-04, Session 127, by timestamp comparison — decisive, not inferred",
+  "timeline_utc": {
+   "baf1497a7 (curator addition, cand 4264, K-35-064-3)": "2026-05-03T00:32:53Z",
+   "55maps-text-high full-buffer-eval generated": "2026-05-03T00:40:19Z",
+   "55maps-text-min full-buffer-eval generated": "2026-05-03T02:05:25Z",
+   "55maps-image full-buffer-eval generated": "2026-05-03T02:43:01Z",
+   "2e075eb99 (curator addition, cand 2397, K-35-062-4)": "2026-05-03T05:28:57Z"
+  },
+  "finding": "All three 2026-05-03 evaluations ran in the window BETWEEN the two curator additions, so the ground truth held exactly 4,745 features when they were computed. The 00:32:53Z cutoff matches the one the W6-E9 sweep independently identified.",
+  "disposition_rule_for_the_sweep": {
+   "4,745 describing what the 2026-05-03 evaluations used": "CORRECT — era-faithful and accurate. Do not touch.",
+   "4,745 or 4,744 asserted as the CURRENT canonical GT count": "STALE — refresh to 4,746 in living documents; banner in dated snapshots.",
+   "4,744 describing the GT before 2026-05-03": "CORRECT as history. Do not touch."
+  },
+  "why_this_matters": "A bulk find-and-replace of 4,745 to 4,746 across the 16 carrying documents would have corrupted every era-faithful reference — the same trap as the --bootstrap 1000 mirror references in the MCC report, where the stale-looking figure was historically correct. The sweep must classify per occurrence.",
+  "note_on_cand_2397": "The image evaluation at 02:43Z predates cand 2397's GT mound (05:28Z), yet the MCC report records image detections rising by +1 'phantom-promoted from cand 2397'. These are different channels — a detection promotion versus a GT addition — and the pairing is consistent with the W6-E9 two-channel finding."
+ }
 }
