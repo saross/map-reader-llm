@@ -1,0 +1,2153 @@
+{
+ "pass_id": "P1",
+ "wave": 7,
+ "date": "2026-08-04",
+ "adjudicator": {
+  "model": "claude-opus-5",
+  "harness": "claude-code subagent",
+  "role": "independent blind adjudication (charter §5 rule 2; phase3 ruling 11)"
+ },
+ "blinding": {
+  "honoured": true,
+  "not_read": [
+   "reports/verification/c4-triage/wave7-draft-stories-2026-08-04.md",
+   "reports/verification/c4-triage/blind-passes/wave7-*"
+  ],
+  "statement": "Neither the draft-stories file nor any wave7-* blind-pass file was opened at any point. Every conclusion below is derived from the extraction files, the recompute report, the source document, the anchor artefacts, and git history."
+ },
+ "scope": {
+  "source_document": "results/documentation-audit/results-audit-2026-04-21.md",
+  "rows_adjudicated": 75,
+  "partition_completeness": "These 75 are the COMPLETE MISMATCH set for this document in reports/verification/c4-recompute-report.json (document totals: 122 MATCH, 91 SKIPPED, 75 MISMATCH, 18 UNRESOLVED). This is not a sample.",
+  "extraction_batches": [
+   "reports/verification/c4-extraction/092.json",
+   "reports/verification/c4-extraction/093.json"
+  ]
+ },
+ "method": {
+  "era_determination": "Per-CLAIM era via `git blame --line-porcelain HEAD` on the source document, mapping every row's source_lines to the commit that last wrote those lines. Result: 622 of 637 lines blame to c48f639e3 (2026-04-22 08:03 +1000, the audit body); 14 lines to 6b64ad0f6 (2026-05-03 11:24 +1000, the post-recovery banner); 1 line (430) to 044cbcd82 (2026-07-28, the E58 path fix). Of the 75 rows, 74 blame to c48f639e3 and 1 (092#1[0]) to 6b64ad0f6.",
+  "era_resolution": "Each row's anchor+path was resolved from `git show <claim-era-commit>:<anchor>` and compared to the verbatim quote using the harness's OWN comparator, scripts/recompute_c4_claims.py::compare(), imported directly - so the era verdict is produced by the same instrument as the primary verdict, differing only in which commit the anchor is read from.",
+  "era_result": "75/75 MATCH at the claim's own era (60 mode=exact, 15 mode=round). Zero non-matches. Verified directly by machine for every row - none inferred by pattern.",
+  "trajectory_reconstruction": "Every distinct (anchor, path) pair was additionally resolved at four checkpoints - c48f639e3 (doc era), 6b64ad0f6 (banner era), 8e142df9c^ (immediately before the June re-pricing), and HEAD - to attribute each divergence to a named mover event rather than to 'the artefact moved'.",
+  "corroborating_checks": [
+   "Anchor-path sanity: corrected-f1-multi-buffer/summary.json results[0].R_m == 50 and results[4].R_m == 150 confirmed in both eras - the harness's array indices are correct, not a mis-index.",
+   "The cross-file override locator on 093#33[2] was confirmed to have been honoured by the harness (0.799 comes from dawid-skene-results.json, not evaluation.json).",
+   "Working-notes re-read at HEAD to test the five cross-reference rows: Obs 256 heading at docs/notes/working-notes.md:11257 and the Obs 273 sentence at :12905 both still carry the quoted figures.",
+   "Current cost_manifest.json values re-read from the working tree (200.833 / 30.44 / 207.3382, tiles_failed 0, generated_at 2026-06-12T01:46Z) - the harness's 'actual' column is correct."
+  ]
+ },
+ "instrument_finding": {
+  "severity": "HIGH - affects the era_check field on all 75 rows and, by construction, every multi-edit document in the corpus",
+  "title": "era_check resolves at FILE era, not CLAIM era, and therefore collapses to HEAD-era for any document edited after its claims were written",
+  "mechanism": "scripts/recompute_c4_claims.py::find_era_commit(doc_path, doc_blob) walks `git log --format=%H -- <doc>` newest-first and returns the first commit whose blob at that path matches the extraction's recorded git_blob. The extraction records the HEAD blob (f76d12a2cd38305eca17d234a8c8d8772737d984), so the 'era commit' resolves to the NEWEST commit that produced the current content - here 044cbcd82 (2026-07-28), a one-line E58 cross-reference fix at line 430 that touched no numeric claim. Every anchor is then read at 2026-07-28, which for artefacts that stopped moving before that date is indistinguishable from HEAD.",
+  "observed_effect": "All 75 MISMATCH rows carry era_check {faithful: false, commit: '044cbcd821a8'} and an actual_era essentially equal to the current value. Taken at face value the field says the document was WRONG AT ITS OWN ERA on every one of 75 rows. The truth is the exact opposite: 75/75 were faithful.",
+  "why_it_is_a_trap": "This is a single field that, if trusted, converts the entire partition from SNAPSHOT-DIVERGENCE (ledger-only) to DOC-DEFECT-AT-ERA (75 real errors in a results/** document) - the largest possible error in this wave, and one that would land as an unwarranted correction campaign against a historical audit record.",
+  "why_it_was_not_caught_by_the_harness": "is_snapshot_doc() fired correctly (dated filename stem), so era_check ran; the defect is downstream of classification, in commit selection. A uniform faithful=false across an entire document is itself the diagnostic signature - a genuinely defective document does not fail era-check on 100 % of its mechanical rows while passing 122 MATCH rows against current artefacts.",
+  "recommended_fix": "Resolve era per CLAIM from `git blame` over the claim's source_lines (the blame commit for the line range), not per FILE from the blob. Ruling 14 already licenses this - 'For entry-dated registers ... the snapshot unit is the ENTRY, not the file' - the same principle generalises to any document with a multi-commit authoring history. Where a row's line range spans more than one blame commit, take the newest and record the ambiguity.",
+  "falsifier": "Re-run era_check with commit=c48f639e3 (or per-line blame) and every one of the 75 rows flips to faithful=true. I did exactly this using the harness's own compare() function."
+ },
+ "verdict_counts": {
+  "SNAPSHOT-DIVERGENCE": 70,
+  "EXTRACTION-DEFECT": 5,
+  "DOC-DEFECT-AT-ERA": 0,
+  "INSTRUMENT": 0,
+  "RECLASSIFY": 0
+ },
+ "verdict_counts_note": "INSTRUMENT is recorded as 0 at ROW level deliberately: the harness's primary resolution (anchor, path, current value) is correct on all 75, so no row's MISMATCH status is an artefact of the instrument. The instrument defect is in the supplementary era_check field and is reported above at programme level rather than smeared across 75 row verdicts. Every row also carries harness_era_check_wrong:true so the finding is not lost per-row.",
+ "causal_account": {
+  "one_line": "Nothing is wrong with this document's numbers: all 75 figures were exact-or-correctly-rounded transcriptions of their cited artefacts on 2026-04-22 (and 2026-05-03 for the banner), and the artefacts were subsequently rewritten out from under them by three dated, named, deliberate campaigns - so the partition is 70 SNAPSHOT-DIVERGENCE plus 5 rows the extractor mis-anchored, and zero defects.",
+  "long_form": "This document is a dated audit report whose §A tables transcribe seven artefacts field-by-field with explicit JSON key paths. Between its authoring era and today those artefacts moved three times: (E1) the 2026-05-02/03 recovery campaign, which recovered 160 failed text-high tile-passes, re-evaluated all three runs against the reviewed ground truth of 4,745 features, and re-aggregated Dawid-Skene - this moved every F1/precision/recall/D-S row and the multi-buffer, cross-tab and gold-standard-subtype rows; (E2) commit 8e142df9c on 2026-06-12, which regenerated all four 55-map cost manifests at audited flex pricing, removing a 2-3x recovery-merge inflation and reconstructing stub verifier legs - this moved every cost, token, wall-clock and tile-count row, and moved them further than E1 had; and (E3) commits 3271d6923 / 30a902f56 on 2026-08-03, the W6-E8/W6-E9 corrected-F1 regeneration, which moved the two multi-buffer rows a third time DURING this verification programme. The document itself already tracks E1 in part: its 2026-05-03 banner correctly declared §A4 superseded and correctly recorded the then-current post-recovery figures. What it cannot track is E2 and E3, which post-date every edit to it. The apparent mass failure is therefore an artefact of comparing an as-of-2026-04-22 record against a 2026-08-04 tree - amplified by an era_check that was itself reading the 2026-08-04 tree.",
+  "falsifiable_predictions": [
+   "P1. Resolving any of the 74 body rows at c48f639e3, or 092#1[0] at 6b64ad0f6, yields MATCH under the harness's own compare(). FALSIFIED IF any row fails. (Tested: 75/75 MATCH.)",
+   "P2. Every cost-family row's final move is attributable to 8e142df9c and its value at 8e142df9c^ differs from both the era value and the current value. FALSIFIED IF any cost row's current value already held before 8e142df9c. (Tested: holds for all 22 cost-manifest rows except the four tiles_failed/failure_rate values, which reached 0 at E1 for text-high and at E2 for text-min - recorded per row.)",
+   "P3. No row in this partition is a fabrication or a transcription slip: every quoted digit string is reproducible from a git blob. FALSIFIED IF any row's era value differs from the quote at the quoted precision. (Tested: none does.)",
+   "P4. The five EXTRACTION-DEFECT rows will still verify against docs/notes/working-notes.md at any future date, because working notes are append-only under charter §2 / §10 item 2. FALSIFIED IF an Obs is ever edited in place.",
+   "P5. If the era_check bug is fixed (per-claim blame) and the recompute re-run, the number of DOC-DEFECT-AT-ERA rows for this document is 0. FALSIFIED IF any row is wrong at its own era."
+  ],
+  "mover_events": {
+   "E1": {
+    "label": "2026-05-02/03 recovery campaign + reviewed-GT (4,745 features) re-evaluation",
+    "commits": [
+     "e20f3e182",
+     "f533fda5f",
+     "366f9c66f",
+     "c1ea6df3c",
+     "236327d80",
+     "da84a3d23",
+     "8699f456b",
+     "a78cd7c55",
+     "c60230347"
+    ],
+    "rows": 50,
+    "character": "substantive re-measurement; the document's own banner covers the text-high slice of it and explicitly lists image / text-MIN / GS-v2 as still outstanding at the time it was written"
+   },
+   "E2": {
+    "label": "2026-06-12 cost-manifest regeneration at audited flex pricing",
+    "commits": [
+     "8e142df9c"
+    ],
+    "rows": 23,
+    "character": "re-pricing plus removal of a 2-3x recovery-merge double count; superseded originals archived to archive/superseded-cost-manifests-2026-06-12/. Post-dates every edit to the document, so the document could not have tracked it."
+   },
+   "E3": {
+    "label": "2026-08-03 W6-E8 / W6-E9 corrected-F1 regeneration",
+    "commits": [
+     "3271d6923",
+     "30a902f56"
+    ],
+    "rows": 2,
+    "character": "moved inside the verification programme itself, two days before this pass; affects 092#34[0] and 092#34[1] only"
+   }
+  },
+  "row_counts_by_mover": {
+   "E1 only": 50,
+   "E1 then E2": 21,
+   "E2 only": 2,
+   "E1 then E3": 2
+  }
+ },
+ "outliers": [
+  {
+   "row_ids": [
+    "092#24[0]",
+    "092#29[0]",
+    "092#29[1]",
+    "093#33[1]",
+    "093#33[2]"
+   ],
+   "why_it_does_not_fit": "These five are NOT snapshot divergence at all. They are not the document's own measurements: they are (a) a verbatim quotation of working-notes Obs 273 and (b) four one-line glosses of Obs 256's title inside two explicit cross-reference indexes ('**Working-notes observation cites**' at line 118 and the §F 'Line numbers for the 18 observations cited by this audit' code block at line 581). What they assert is what an Obs RECORDS, and both Obs still record exactly those figures today (docs/notes/working-notes.md:11257 and :12905, re-read at HEAD). The extraction anchored them to the live evaluation/D-S JSONs. The document is correct now and will stay correct, because working notes are append-only.",
+   "verdict": "EXTRACTION-DEFECT",
+   "consequence_if_missed": "If these are folded into the snapshot family and a repair sweep later touches them, someone rewrites 0.771/0.795 inside a quotation of an append-only observation - a fabrication class, not a correction. They must also be excluded from any banner's coverage, because there is nothing to supersede."
+  },
+  {
+   "row_ids": [
+    "092#1[0]"
+   ],
+   "why_it_does_not_fit": "Unique era (6b64ad0f6, 2026-05-03) and unique role: this is the document's own ruling-1 supersession banner, i.e. the apparatus that keeps the rest of the document honest, and it has itself gone stale. It is also the only row whose repair is mandatory under BOTH the snapshot and the living reading.",
+   "verdict": "SNAPSHOT-DIVERGENCE (but the highest-priority repair in the partition)",
+   "consequence_if_missed": "A stale supersession banner is worse than no banner: it presents itself as the current-state pointer and now points at a cost ($126.81) that has been superseded for eight weeks. Note also that the banner covers only §A4; §A1 (image) and §A3 (text-MIN) moved at E1 and E2 and have never been annotated."
+  },
+  {
+   "row_ids": [
+    "092#64[0]",
+    "092#64[1]",
+    "092#88[0]",
+    "092#88[1]"
+   ],
+   "why_it_does_not_fit": "'The artefact moved' is the wrong story. The artefact field was REPUDIATED. Commit c1ea6df3c (2026-05-03) records that the text-MIN recovery was a proposer-level no-op with bit-identical md5sums and states outright: 'The execution_stats.failed_items list is a historical record, not a current-failure signal. The 124-tile audit count was therefore misleading.' The document faithfully transcribed a field whose semantics were wrong. Same for the text-HIGH 160.",
+   "verdict": "SNAPSHOT-DIVERGENCE (with repudiated-field wording)",
+   "consequence_if_missed": "A banner saying '124 is now 0' implies a re-measurement. The truth is that the tiles were never outstanding failures at the time of the audit; the field was a historical log being read as a live signal. Getting this wrong misdescribes the run's actual failure history in a document the paper may cite."
+  },
+  {
+   "row_ids": [
+    "092#38[0]"
+   ],
+   "why_it_does_not_fit": "A 3.5e-5 movement (0.0065 % relative) that happens to straddle a 3-d.p. rounding boundary: era 0.5385006866301707 rounds to 0.539, current 0.5384655047983467 rounds to 0.538. It is a MISMATCH only because the comparator works at quoted precision. Under ruling 16 this is approximate equality by three orders of magnitude.",
+   "verdict": "SNAPSHOT-DIVERGENCE (immaterial)",
+   "consequence_if_missed": "Spending banner text or a correction on it manufactures the impression of an error where none exists; it also sets a precedent that rounding-boundary jitter is reportable, which would flood later waves."
+  },
+  {
+   "row_ids": [
+    "092#34[0]",
+    "092#34[1]"
+   ],
+   "why_it_does_not_fit": "These are the only rows whose anchor moved THREE times, and the third move (W6-E8/W6-E9, 2026-08-03) happened two days ago, inside this verification programme. Any repair wording pinned to 'the current value' has a live upstream that is still being adjusted.",
+   "verdict": "SNAPSHOT-DIVERGENCE (unstable anchor)",
+   "consequence_if_missed": "A banner quoting 0.8333 could be stale again before GATE 3. If a figure is quoted for these, it should carry the commit that produced it."
+  },
+  {
+   "row_ids": [
+    "092#84[0]",
+    "092#87[0]",
+    "092#9[0]",
+    "092#10[0]",
+    "092#11[0]"
+   ],
+   "why_it_does_not_fit": "Cost-manifest rows that are nevertheless WITHIN the ruling-16 5 % band (0.01 %-2.1 %). 092#84[0] is the sharpest case: the June re-pricing returned thinking tokens to within 0.01 % of the era value after the intermediate manifest had held exactly 2x. Grouping all 23 cost rows as 'materially wrong' would be false.",
+   "verdict": "SNAPSHOT-DIVERGENCE (immaterial under ruling 16)",
+   "consequence_if_missed": "Overstates the size of the cost-family problem. 20 of 75 rows exceed 5 %; 55 do not."
+  }
+ ],
+ "materiality": {
+  "rows_exceeding_ruling_16_5pc_band": 20,
+  "rows_within_band": 55,
+  "the_document_level_finding": "The 20 material rows are not scattered - they are the cost/token/wall-clock/tile-failure block, and together they invert an ordering. At its era this document supports 'text HIGH costs ~1/5 of image' ($69.60 vs $364.70). The audited flex-priced manifests give $207.34 vs $200.83 - a 0.97x ratio, i.e. approximately equal API cost, which is precisely the correction ruling 16 / escalation W6-E1 already made against the cross-track report's '2.9x lower API cost' claim. This document is another upstream carrier of that superseded ordering and should be named in the same family.",
+  "coupled_prose_not_in_the_row_set": [
+   "Lines 304-306: 'the cost is nonetheless comparable to text-min because no thinking-token cost applies under the gemini-3-flash pricing as of the run date' - under the audited manifests text-HIGH ($207.34) is 6.8x text-MIN ($30.44), so this interpretive sentence is false today. It carries no extractable number and will be missed by a numeric sweep.",
+   "Line 616-618 §G item 1 and line 621-624 §G item 3 carry the $60.79 and $69.60 figures inside a 'what changed relative to the 2026-04-18 audit' narrative - these are 093#41[1] and 093#43[3] and are era-faithful, but the surrounding narrative reads as a correction record and will mislead a reader who does not reach the banner."
+  ],
+  "sibling_document_coupling": "Ruling 17's closing sentence (P2 R9 coupling discipline) applies across the directory, not just within this file. The same superseded figures live in three siblings, all outside this pass's row set: results/documentation-audit/README.md:17 ('cost $126.81'); results/documentation-audit/audit-summary.md:17,20-21 ('$69.60 -> $126.81' and 'should be read as $552.30 post-recovery ($364.70 image + $60.79 text-MIN + $126.81 text-HIGH)' - the audited three-run total is $438.61 = 200.833 + 30.44 + 207.3382); results/documentation-audit/verification-2026-04-21.md:19 ('totals.cost_usd: 126.8051'), whose C09/C45/C74/U06 rows also record PASS verdicts against the superseded manifest. Repairing this file alone leaves three documents asserting the old numbers."
+ },
+ "document_classification": {
+  "ruling": "DATED SNAPSHOT for its measurement content; IN Document-Revision-Policy scope for its apparatus and its pointers.",
+  "repair_implication": "Banner/rider, not an in-place refresh of the §A1/§A3/§A4 tables. Concretely: (1) extend and correct the existing 2026-05-03 banner with a dated 2026-08-04 rider that covers §A1 and §A3 as well as §A4, corrects its own $126.81 to the audited $207.34, and names the two campaigns (E2 re-pricing, E3 corrected-F1); (2) attach the Document Revision Policy apparatus - 'Last revised' line plus a `## Changelog` section - because the document IS an anchor doc in scope and back-fill-on-touch now applies; (3) leave every §A table cell as written; (4) fix broken POINTERS in place, following the 044cbcd82 precedent.",
+  "evidence_for_snapshot": [
+   "Line 3 scopes the document's own truth-claim to a repository state: '**Audit period**: repository state through commit `2165013c`'. A self-declared as-of commit bound is the strongest possible snapshot signal and outranks directory location.",
+   "Dated title ('Full Run-by-Run Table (2026-04-22)') and dated filename - the ruling-12/14 presentation class, advisory but concordant.",
+   "Genre: it is the RECORD OF AN AUDIT. It exists because the prior 2026-04-19 audit carried hallucinated cost figures (README.md 'Supersedes'). Rewriting its numbers destroys the only evidence of what the corrected audit actually verified - ruling 1's stated rationale ('in-place correction would falsify the record of what the session actually found') applies with full force, and it is a C6 attestation source.",
+   "Revealed practice: on 2026-05-03 the maintainer had the chance to edit and deliberately did not. Commit 6b64ad0f6 describes the change as 'light annotation noting §A4 cells cite pre-recovery state' and applied the same annotation-not-edit treatment to all four documents in the directory.",
+   "The banner's own wording is snapshot semantics: 'Those values remain accurate for the original launch snapshot but have been superseded by...'",
+   "§G is a diff against the 2026-04-18 audit - a section that is only coherent in its own era.",
+   "In-repo precedent for exactly this call: docs/methodology/output-directory-standard.md's 2026-08-02 changelog records that era-exact dated censuses were 'verified era-exact and are deliberately unchanged (snapshot statements ...)' even inside a living document."
+  ],
+  "evidence_for_living": [
+   "planning/documentation-audit-plan.md § 5.2 lists 'results/documentation-audit/*.md (4 docs)' as an anchor-doc class - so it is inside the `results/**.md` Revision-Policy row of docs/methodology/output-directory-standard.md's scope table (which reads 'anchor docs only - see audit plan § 5.2'). Its assessed compliance there is 'Compliant - Self-aware; banner present', i.e. the banner IS how this document is expected to comply.",
+   "It has been edited in place once: 044cbcd82 (2026-07-28) fixed the §B3 working-notes path. But even that edit preserved the record rather than overwriting it - it kept the old citation visible ('the path cited here previously, ... does not exist') instead of silently substituting the new one."
+  ],
+  "the_operative_rule": "The repo has, in practice, been running a coherent split that ruling 17 does not yet spell out: in a dated snapshot that is also an anchor doc, POINTERS ARE LIVING AND MEASUREMENTS ARE SNAPSHOT. Paths, cross-references, Obs line numbers, supersession banners and changelogs are apparatus - they are maintained in place because their whole job is to be current. Measured values are findings - they are frozen and superseded by rider. Both the 2026-05-03 and the 2026-07-28 edits obey this rule; so does the ruling-14 precedent in output-directory-standard.md. I recommend the PI ratify it explicitly, because 'results/**.md is in Revision-Policy scope' and 'dated snapshots keep ruling-1 treatment' otherwise read as a direct contradiction on this exact file.",
+  "how_to_falsify_this_ruling": "If the PI rules that anchor-doc status alone forces in-place refresh, then §A1/§A3/§A4 must be rewritten to 200.833 / 30.44 / 207.3382 and the F1 tables to the post-recovery values. The test of whether that is right: after such a rewrite, can anyone still answer 'what did the 2026-04-21 re-audit actually find, and was it correct?' The answer is no - and that question is the document's entire reason for existing, since it was itself commissioned to replace an audit that had invented figures.",
+  "note_on_ruling_14": "Ruling 14's 'presentation class is ADVISORY ONLY' governs the per-claim TRIAGE disposition, and I have honoured it: the dated filename played no part in any row verdict - all 75 were decided by machine era-resolution. The snapshot-vs-living question answered here is the ruling-17 REPAIR-layer question, which is a document-class question and is decided on the evidence above, not on the filename."
+ },
+ "likely_triager_errors": [
+  {
+   "risk": "CRITICAL",
+   "claim": "Reading era_check.faithful=false and concluding DOC-DEFECT-AT-ERA on some or all 75 rows.",
+   "why": "The field says false on 100 % of the rows and carries a real commit hash (044cbcd821a8), so it looks authoritative. It is wrong on 100 % of the rows because it read the anchors at 2026-07-28. This is the single highest-value catch in this partition and the one the pass exists for."
+  },
+  {
+   "risk": "HIGH",
+   "claim": "Getting the right answer (SNAPSHOT-DIVERGENCE) for the wrong reason - from the dated filename rather than from era resolution.",
+   "why": "Ruling 14 explicitly demoted the presentation class to advisory and made per-claim era-faithfulness the deciding axis. A story that reasons 'dated filename, therefore snapshot divergence' is unfalsifiable and would have produced the same answer had the document been genuinely defective. The verdict must come from the blob, and it must be stated which rows were machine-checked."
+  },
+  {
+   "risk": "HIGH",
+   "claim": "Folding the five working-notes cross-reference rows into the snapshot family.",
+   "why": "They look identical in the row table (0.771 / 0.795, same anchors, same deltas). Only reading lines 86, 118 and 581 in the source shows they are quotations and index glosses of append-only observations. Their disposition is different in kind: nothing to supersede, and a repair that touched them would edit a quotation."
+  },
+  {
+   "risk": "MEDIUM",
+   "claim": "Telling one mover story ('the artefacts moved after the audit') instead of three.",
+   "why": "E1, E2 and E3 have different dates, different characters and different repair implications. E2 (2026-06-12 re-pricing) post-dates EVERY edit to the document and is the source of all 20 material divergences; E1 is already half-covered by the document's own banner; E3 happened two days ago and is still moving. A single story cannot generate the right banner text."
+  },
+  {
+   "risk": "MEDIUM",
+   "claim": "Missing that the document's own 2026-05-03 banner is now itself wrong, and that it only ever covered §A4.",
+   "why": "The banner is the mechanism that made the document acceptable in 2026-05-03. It is easy to read it as evidence that the document is already handled. It is stale on cost and silent on §A1 and §A3."
+  },
+  {
+   "risk": "MEDIUM",
+   "claim": "Treating the partition as materially harmless because 55 of 75 rows move by under 5 %.",
+   "why": "The 20 material rows invert the image-vs-text cost ordering - the same ordering ruling 16 / W6-E1 already corrected elsewhere. This document is an upstream carrier of a conclusion the programme has already refuted."
+  },
+  {
+   "risk": "MEDIUM",
+   "claim": "Repairing this file alone.",
+   "why": "README.md, audit-summary.md ($552.30 three-run total; audited $438.61) and verification-2026-04-21.md all carry the same superseded figures, and verification-2026-04-21.md additionally records PASS verdicts (C09/C45/C74/U06) against the superseded manifest. Ruling 17's coupling discipline makes the sweep directory-wide."
+  },
+  {
+   "risk": "LOW",
+   "claim": "Describing tiles_failed 124->0 and 160->0 as a re-measurement.",
+   "why": "Commit c1ea6df3c repudiates the field's semantics outright. The count was misleading when the audit read it; the document is faithful to a bad field."
+  },
+  {
+   "risk": "LOW",
+   "claim": "Reporting 75 document errors.",
+   "why": "75 rows are not 75 assertions. Five rows are second copies of the same table cell at a different precision (092#8[1], 092#58[1], 092#80[1], 092#96[1], 092#21[1]), and five more (092#24[0], 092#29[0..1], 093#33[1..2]) are cross-references to a single Obs pair. The distinct affected document assertions are substantially fewer."
+  }
+ ],
+ "residual_uncertainty": [
+  "The EXTRACTION-DEFECT call on the five working-notes rows is a scoping judgement about what lines 86/118/581 assert, not a machine result. My grounds: the §A1 'Dawid-Skene' bullets that I did NOT reclassify carry explicit JSON key paths ('`measured.f1` = 0.771'), while these five carry Obs identifiers and working-notes line numbers instead - the document itself marks the distinction. If the adjudicator disagrees, they become SNAPSHOT-DIVERGENCE and the counts are 75/0/0/0/0; the repair consequence (do not edit quoted matter) stands either way.",
+  "Row 092#1[0]'s claim 1 was extracted with method 'read' while claim 0 (the launch-state figures in the same banner) was extracted as 'historical'. A case exists that the whole dated annotation should be 'historical', which would make this a RECLASSIFY. I did not so rule because the banner's figures were presented as CURRENT when written, which is what 'read' encodes; and the disposition is identical either way.",
+  "I did not audit the document's 122 MATCH rows or its 18 UNRESOLVED rows. One near-miss is visible from the MATCH side and is worth an instrument look independently of this pass: 092#17[5] (line 69, recall at 40 m) is recorded MATCH with quoted '0.74' against actual 0.7467, which is a 0.9 % error passing at 2-d.p. quoted precision. That is the comparator behaving as designed on a low-precision quote, not a bug, but it means low-precision quotes carry a wide silent tolerance."
+ ],
+ "rows": {
+  "092#1[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "total cost USD, 55maps-text-high-generalisation, post-recovery",
+   "source_lines": [
+    15,
+    19
+   ],
+   "quoted": "126.8051",
+   "current_artefact_value": 207.3382,
+   "claim_era_commit": "6b64ad0f6",
+   "claim_era_date": "2026-05-03",
+   "era_value": 126.8051,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 126.8051,
+   "mover_events": [
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.635094,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": "THE ONE ROW THAT MUST BE REPAIRED. This is the document's own 2026-05-03 supersession banner - its ruling-1 forward pointer - and the pointer is now stale. Faithful at its own era (6b64ad0f6, 2026-05-03 11:24 +1000): the text-high cost manifest held 126.8051 then, and the June re-pricing moved it to 207.3382. A supersession banner that is itself wrong is worse than no banner, because it presents as the current-state pointer. Also note the banner's OTHER figures (42,705 / F1 0.7920 / D-S 0.8142) are still correct today - only the cost went stale, which is why only this value of claim 1 mismatched."
+  },
+  "092#8[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "total cost USD, image run (§A1 cost table row 'Total cost (USD)')",
+   "source_lines": [
+    55,
+    55
+   ],
+   "quoted": "364.6971",
+   "current_artefact_value": 200.833,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 364.6971,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 1061.0781,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.449316,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": "See 092#80[0]. Image era $364.6971 -> intermediate $1,061.08 (recovery-merge inflation) -> audited $200.833."
+  },
+  "092#8[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "total cost USD, image run, rounded (§A1 cost table row 'Total cost (USD)')",
+   "source_lines": [
+    55,
+    55
+   ],
+   "quoted": "364.70",
+   "current_artefact_value": 200.833,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 364.6971,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 1061.0781,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.44932,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#9[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "input tokens, image run (§A1 cost table row 'Input tokens')",
+   "source_lines": [
+    56,
+    56
+   ],
+   "quoted": "682,800,923",
+   "current_artefact_value": 668719361.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 682800923,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+   "path": "$.totals.input_tokens",
+   "value_at_pre_reprice_checkpoint": 2006561685,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.020623,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#10[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "cached tokens, image run (§A1 cost table row 'Cached tokens')",
+   "source_lines": [
+    57,
+    57
+   ],
+   "quoted": "621,315,045",
+   "current_artefact_value": 621058706.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 621315045,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+   "path": "$.totals.cached_tokens",
+   "value_at_pre_reprice_checkpoint": 1864067070,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.000413,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#11[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "cache-hit rate, image run (§A1 cost table row 'Cache-hit rate')",
+   "source_lines": [
+    58,
+    58
+   ],
+   "quoted": "0.91",
+   "current_artefact_value": 0.9287,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.91,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+   "path": "$.totals.cache_hit_rate",
+   "value_at_pre_reprice_checkpoint": 0.929,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.020549,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#12[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "wall-clock seconds, image run (§A1 cost table row 'Wall-clock (s)')",
+   "source_lines": [
+    59,
+    59
+   ],
+   "quoted": "14,947.18",
+   "current_artefact_value": 25248.376,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 14947.18,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+   "path": "$.totals.wall_clock_seconds",
+   "value_at_pre_reprice_checkpoint": 37765.688,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.689173,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#13[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "proposer-stage cost USD, image run (§A1 cost table row 'Proposer cost (USD)')",
+   "source_lines": [
+    60,
+    60
+   ],
+   "quoted": "353.6201",
+   "current_artefact_value": 195.3499,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 353.6201,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+   "path": "$.by_stage.proposer.cost_usd",
+   "value_at_pre_reprice_checkpoint": 1061.0767,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.447571,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#15[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 20 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    67,
+    67
+   ],
+   "quoted": "0.506",
+   "current_artefact_value": 0.508,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.506,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[0].f1",
+   "value_at_pre_reprice_checkpoint": 0.508,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.003953,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#15[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 20 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    67,
+    67
+   ],
+   "quoted": "0.5117",
+   "current_artefact_value": 0.5115,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.5117,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[0].precision",
+   "value_at_pre_reprice_checkpoint": 0.5115,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000391,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#15[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 20 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    67,
+    67
+   ],
+   "quoted": "0.5004",
+   "current_artefact_value": 0.5045,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.5004,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[0].recall",
+   "value_at_pre_reprice_checkpoint": 0.5045,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.008193,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#16[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 30 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    68,
+    68
+   ],
+   "quoted": "0.6855",
+   "current_artefact_value": 0.6886,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.6855,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[1].f1",
+   "value_at_pre_reprice_checkpoint": 0.6886,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.004522,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#16[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 30 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    68,
+    68
+   ],
+   "quoted": "0.6932",
+   "current_artefact_value": 0.6934,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.6932,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[1].precision",
+   "value_at_pre_reprice_checkpoint": 0.6934,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000289,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#16[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 30 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    68,
+    68
+   ],
+   "quoted": "0.678",
+   "current_artefact_value": 0.6839,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.678,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[1].recall",
+   "value_at_pre_reprice_checkpoint": 0.6839,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.008702,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#17[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 40 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    69,
+    69
+   ],
+   "quoted": "0.7483",
+   "current_artefact_value": 0.7518,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7483,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[2].f1",
+   "value_at_pre_reprice_checkpoint": 0.7518,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.004677,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#17[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 40 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    69,
+    69
+   ],
+   "quoted": "0.7567",
+   "current_artefact_value": 0.7571,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7567,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[2].precision",
+   "value_at_pre_reprice_checkpoint": 0.7571,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000529,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#18[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 50 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    70,
+    70
+   ],
+   "quoted": "0.771",
+   "current_artefact_value": 0.7745,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.771,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].f1",
+   "value_at_pre_reprice_checkpoint": 0.7745,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.00454,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#18[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 50 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    70,
+    70
+   ],
+   "quoted": "0.7796",
+   "current_artefact_value": 0.7799,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7796,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].precision",
+   "value_at_pre_reprice_checkpoint": 0.7799,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000385,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#18[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 50 m (§A1 image-run evaluation table row)",
+   "source_lines": [
+    70,
+    70
+   ],
+   "quoted": "0.7625",
+   "current_artefact_value": 0.7692,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7625,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].recall",
+   "value_at_pre_reprice_checkpoint": 0.7692,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.008787,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#20[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "measured F1 at 50 m, image run (Dawid-Skene input)",
+   "source_lines": [
+    80,
+    80
+   ],
+   "quoted": "0.771",
+   "current_artefact_value": 0.7745,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.771,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.measured.f1",
+   "value_at_pre_reprice_checkpoint": 0.7745,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.00454,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#21[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "Dawid-Skene corrected F1, image run",
+   "source_lines": [
+    81,
+    81
+   ],
+   "quoted": "0.7954",
+   "current_artefact_value": 0.799,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7954,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.dawid_skene.corrected_metrics.f1",
+   "value_at_pre_reprice_checkpoint": 0.799,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.004526,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#21[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "Dawid-Skene corrected F1, image run, rounded",
+   "source_lines": [
+    81,
+    81
+   ],
+   "quoted": "0.795",
+   "current_artefact_value": 0.799,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7954,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.dawid_skene.corrected_metrics.f1",
+   "value_at_pre_reprice_checkpoint": 0.799,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.005031,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#22[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "Dawid-Skene VLM-only posterior, image run",
+   "source_lines": [
+    82,
+    82
+   ],
+   "quoted": "0.1862",
+   "current_artefact_value": 0.1865,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.1862,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+   "value_at_pre_reprice_checkpoint": 0.1865,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.001611,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#24[0]": {
+   "verdict": "EXTRACTION-DEFECT",
+   "quantity": "Dawid-Skene aggregate corrected F1, image run (as quoted in the Obs 273 caveat)",
+   "source_lines": [
+    86,
+    86
+   ],
+   "quoted": "0.795",
+   "current_artefact_value": 0.799,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7954,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.dawid_skene.corrected_metrics.f1",
+   "value_at_pre_reprice_checkpoint": 0.799,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.005031,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Line 86 is a VERBATIM QUOTATION of docs/notes/working-notes.md (Obs 273) — re-verified today: the string \"the 'D-S aggregate corrected F1 = 0.795' recorded in ... is an artefact of this under-estimate\" is present at docs/notes/working-notes.md:12905. Working notes are append-only (charter §2, §10 item 2), so this quotation cannot decay. The extraction anchored the quoted 0.795 to the LIVE dawid-skene-results.json; the correct anchor is the working-notes line and the correct method is 'historical'. Editing this 0.795 during any repair would falsify a quotation."
+  },
+  "092#29[0]": {
+   "verdict": "EXTRACTION-DEFECT",
+   "quantity": "measured F1 at 50 m, image run (as cited by Obs 256)",
+   "source_lines": [
+    118,
+    118
+   ],
+   "quoted": "0.771",
+   "current_artefact_value": 0.7745,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.771,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.measured.f1",
+   "value_at_pre_reprice_checkpoint": 0.7745,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.00454,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Line 118 sits under the heading '**Working-notes observation cites**:' and reads '- Obs 256 (line 11206) - F1 = 0.771 measured, 0.795 D-S corrected.' The assertion is about WHAT OBS 256 RECORDS, not an independent measurement. Obs 256's own heading still reads 'F1 = 0.771 Measured (0.795 Dawid-Skene Corrected)' at docs/notes/working-notes.md:11257 today. The claim is true now and permanently (append-only notes); the anchor should be the working-notes line, not the evaluation/D-S JSON."
+  },
+  "092#29[1]": {
+   "verdict": "EXTRACTION-DEFECT",
+   "quantity": "Dawid-Skene corrected F1, image run (as cited by Obs 256)",
+   "source_lines": [
+    118,
+    118
+   ],
+   "quoted": "0.795",
+   "current_artefact_value": 0.799,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7954,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.dawid_skene.corrected_metrics.f1",
+   "value_at_pre_reprice_checkpoint": 0.799,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.005031,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Same clause and same reasoning as 092#29[0]; this is the 0.795 half of the Obs 256 gloss."
+  },
+  "092#34[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "multi-buffer corrected F1 at R = 50 m, image run (§A1 post-matrix table row 'Multi-buffer corrected F1')",
+   "source_lines": [
+    139,
+    139
+   ],
+   "quoted": "0.832",
+   "current_artefact_value": 0.8333333333333333,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8317312556915916,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+   "path": "$.results[0].F1",
+   "value_at_pre_reprice_checkpoint": 0.8332154763107384,
+   "mover_events": [
+    "E1",
+    "E3"
+   ],
+   "rel_delta_vs_quoted": 0.001603,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Moved TWICE and the second move happened during this verification programme: 0.8317312556915916 (era) -> 0.8332154763107384 (2026-05-03 recovery) -> 0.8333333333333333 (2026-08-03, W6-E8 cand 2397 then W6-E9 de-dup, commits 3271d6923 / 30a902f56). Quoted 0.832 was a correct 3 d.p. rounding at era; the current value rounds to 0.833."
+  },
+  "092#34[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "multi-buffer corrected F1 at R = 150 m, image run (§A1 post-matrix table row)",
+   "source_lines": [
+    139,
+    139
+   ],
+   "quoted": "0.855",
+   "current_artefact_value": 0.8566052683699743,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8550739013986708,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+   "path": "$.results[4].F1",
+   "value_at_pre_reprice_checkpoint": 0.8564920273348519,
+   "mover_events": [
+    "E1",
+    "E3"
+   ],
+   "rel_delta_vs_quoted": 0.001878,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Same three-state trajectory as 092#34[0] at R=150 m: 0.8550739013986708 -> 0.8564920273348519 -> 0.8566052683699743. Quoted 0.855 rounds correctly at era; current rounds to 0.857."
+  },
+  "092#38[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "expected calibration error (ECE), D-S v1 human cross-tab (§A1 post-matrix table row 'D-S v1 cross-tab')",
+   "source_lines": [
+    144,
+    144
+   ],
+   "quoted": "0.539",
+   "current_artefact_value": 0.5384655047983467,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.5385006866301707,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+   "path": "$.ece",
+   "value_at_pre_reprice_checkpoint": 0.5384655047983467,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000992,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Knife-edge rounding flip, not a substantive move. Era 0.5385006866301707 rounds to 0.539; current 0.5384655047983467 rounds to 0.538. The artefact moved by 3.5e-5 (0.0065 % relative). Under ruling 16 this is emphatically 'approximately equal'. Flag as immaterial; do not spend a banner line on it."
+  },
+  "092#58[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "total cost USD, text MINIMAL run (§A3 cost table row 'Total cost (USD)')",
+   "source_lines": [
+    227,
+    227
+   ],
+   "quoted": "60.7866",
+   "current_artefact_value": 30.44,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 60.7866,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 93.4995,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.499232,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#58[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "total cost USD, text MINIMAL run, rounded (§A3 cost table row)",
+   "source_lines": [
+    227,
+    227
+   ],
+   "quoted": "60.79",
+   "current_artefact_value": 30.44,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 60.7866,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 93.4995,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.49926,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#59[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "input tokens, text MINIMAL run (§A3 cost table row 'Input tokens')",
+   "source_lines": [
+    228,
+    228
+   ],
+   "quoted": "82,297,662",
+   "current_artefact_value": 64212798.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 82297662,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+   "path": "$.totals.input_tokens",
+   "value_at_pre_reprice_checkpoint": 128355708,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.219749,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#62[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "wall-clock seconds, text MINIMAL run (§A3 cost table row 'Wall-clock (s)')",
+   "source_lines": [
+    231,
+    231
+   ],
+   "quoted": "6,953.106",
+   "current_artefact_value": 5318.304,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 6953.106,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+   "path": "$.totals.wall_clock_seconds",
+   "value_at_pre_reprice_checkpoint": 10629.459,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.235118,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#64[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "proposer tiles failed, text MINIMAL run (§A3 cost table row 'Tiles failed')",
+   "source_lines": [
+    233,
+    233
+   ],
+   "quoted": "124",
+   "current_artefact_value": 0.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 124,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+   "path": "$.by_stage.proposer.tiles_failed",
+   "value_at_pre_reprice_checkpoint": 248,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 1.0,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": "Faithful transcription of a field the repo later REPUDIATED, not merely re-measured. Commit c1ea6df3c (2026-05-03) states the recovery 'turned out to be a no-op at the proposer level - per-pass geojson md5sums are bit-identical ... The execution_stats.failed_items list is a historical record, not a current-failure signal. The 124-tile audit count was therefore misleading.' The document is faithful to the artefact; the artefact's SEMANTICS were wrong. Any banner must say the field was repudiated, not that the count changed."
+  },
+  "092#64[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "proposer tile failure rate, text MINIMAL run (§A3 cost table row)",
+   "source_lines": [
+    233,
+    233
+   ],
+   "quoted": "0.0029",
+   "current_artefact_value": 0.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.0029,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+   "path": "$.by_stage.proposer.failure_rate",
+   "value_at_pre_reprice_checkpoint": 0.0029,
+   "mover_events": [
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 1.0,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": "See 092#64[0] - the failure-rate half of the same repudiated field."
+  },
+  "092#66[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 20 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    243,
+    243
+   ],
+   "quoted": "0.618",
+   "current_artefact_value": 0.6202,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.618,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[0].f1",
+   "value_at_pre_reprice_checkpoint": 0.6202,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.00356,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#66[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 20 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    243,
+    243
+   ],
+   "quoted": "0.5591",
+   "current_artefact_value": 0.5627,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.5591,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[0].recall",
+   "value_at_pre_reprice_checkpoint": 0.5627,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.006439,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#67[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 30 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    244,
+    244
+   ],
+   "quoted": "0.7274",
+   "current_artefact_value": 0.7298,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7274,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[1].f1",
+   "value_at_pre_reprice_checkpoint": 0.7298,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.003299,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#67[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 30 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    244,
+    244
+   ],
+   "quoted": "0.6581",
+   "current_artefact_value": 0.6622,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.6581,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[1].recall",
+   "value_at_pre_reprice_checkpoint": 0.6622,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.00623,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#68[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 40 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    245,
+    245
+   ],
+   "quoted": "0.7538",
+   "current_artefact_value": 0.7563,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7538,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[2].f1",
+   "value_at_pre_reprice_checkpoint": 0.7563,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.003317,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#68[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 40 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    245,
+    245
+   ],
+   "quoted": "0.8425",
+   "current_artefact_value": 0.8424,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8425,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[2].precision",
+   "value_at_pre_reprice_checkpoint": 0.8424,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000119,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#68[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 40 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    245,
+    245
+   ],
+   "quoted": "0.682",
+   "current_artefact_value": 0.6862,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.682,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[2].recall",
+   "value_at_pre_reprice_checkpoint": 0.6862,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.006158,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#69[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 50 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    246,
+    246
+   ],
+   "quoted": "0.7591",
+   "current_artefact_value": 0.7619,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7591,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].f1",
+   "value_at_pre_reprice_checkpoint": 0.7619,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.003689,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#69[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 50 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    246,
+    246
+   ],
+   "quoted": "0.8485",
+   "current_artefact_value": 0.8486,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8485,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].precision",
+   "value_at_pre_reprice_checkpoint": 0.8486,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000118,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#69[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 50 m (§A3 text-MINIMAL evaluation table row)",
+   "source_lines": [
+    246,
+    246
+   ],
+   "quoted": "0.6868",
+   "current_artefact_value": 0.6913,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.6868,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].recall",
+   "value_at_pre_reprice_checkpoint": 0.6913,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.006552,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#80[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "total cost USD, text HIGH re-run (§A4 cost table row 'Total cost (USD)')",
+   "source_lines": [
+    294,
+    294
+   ],
+   "quoted": "69.6017",
+   "current_artefact_value": 207.3382,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 69.6017,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 126.8051,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 1.978924,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": "The largest single divergence in the partition (+197.9 %). Together with 092#8[0] (image, -44.9 %) this pair is the DOCUMENT-LEVEL finding: at its era this document supported 'text HIGH is ~5x cheaper than image' ($69.60 vs $364.70); the audited flex-priced manifests invert the comparison to approximately equal ($207.34 vs $200.83, 0.97x) - which is exactly the ordering ruling 16 / escalation W6-E1 already settled elsewhere. This document is an upstream carrier of the superseded cost ordering."
+  },
+  "092#80[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "total cost USD, text HIGH re-run, rounded (§A4 cost table row)",
+   "source_lines": [
+    294,
+    294
+   ],
+   "quoted": "69.60",
+   "current_artefact_value": 207.3382,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 69.6017,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 126.8051,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 1.978997,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#81[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "input tokens, text HIGH re-run (§A4 cost table row 'Input tokens')",
+   "source_lines": [
+    295,
+    295
+   ],
+   "quoted": "80,505,662",
+   "current_artefact_value": 64275518.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 80505662,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.totals.input_tokens",
+   "value_at_pre_reprice_checkpoint": 145021500,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.201603,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#82[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "output tokens, text HIGH re-run (§A4 cost table row 'Output tokens')",
+   "source_lines": [
+    296,
+    296
+   ],
+   "quoted": "9,782,952",
+   "current_artefact_value": 8250512.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 9782952,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.totals.output_tokens",
+   "value_at_pre_reprice_checkpoint": 18098108,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.156644,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#84[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "thinking tokens, text HIGH re-run (§A4 cost table row 'Thinking tokens')",
+   "source_lines": [
+    298,
+    298
+   ],
+   "quoted": "115,013,258",
+   "current_artefact_value": 115025126.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 115013258,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.totals.thinking_tokens",
+   "value_at_pre_reprice_checkpoint": 230497393,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.000103,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "The only cost-manifest row where the June re-priced value returns to within 0.01 % of the era value (115,013,258 -> 115,025,126). The intermediate post-recovery manifest held 230,497,393 - exactly 2x, the recovery-merge double count that 8e142df9c removed. Immaterial under ruling 16."
+  },
+  "092#86[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "wall-clock seconds, text HIGH re-run (§A4 cost table row 'Wall-clock (s)')",
+   "source_lines": [
+    300,
+    300
+   ],
+   "quoted": "10,754.918",
+   "current_artefact_value": 19310.199,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 10754.918,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.totals.wall_clock_seconds",
+   "value_at_pre_reprice_checkpoint": 20693.078,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.795476,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#87[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "proposer tiles processed, text HIGH re-run (§A4 cost table row 'Tiles processed')",
+   "source_lines": [
+    301,
+    301
+   ],
+   "quoted": "42,545",
+   "current_artefact_value": 42705.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 42545,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.by_stage.proposer.tiles_processed",
+   "value_at_pre_reprice_checkpoint": 85250,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.003761,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Tiles processed 42,545 -> 42,705 (+0.4 %). Immaterial under ruling 16, but note the direction: the document's era value was the ANOMALY (a 160-tile shortfall from the 5 x 8,541 = 42,705 design), and the current value is the corrected one. The intermediate manifest held 85,250 (2x)."
+  },
+  "092#88[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "proposer tiles failed, text HIGH re-run (§A4 cost table row 'Tiles failed')",
+   "source_lines": [
+    302,
+    302
+   ],
+   "quoted": "160",
+   "current_artefact_value": 0.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 160,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.by_stage.proposer.tiles_failed",
+   "value_at_pre_reprice_checkpoint": 0,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 1.0,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": "Same repudiated-field class as 092#64[0], text-HIGH side (160 -> 0). Note this one moved at the 2026-05-02/03 recovery itself, not at the June re-pricing."
+  },
+  "092#88[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "proposer tile failure rate, text HIGH re-run (§A4 cost table row)",
+   "source_lines": [
+    302,
+    302
+   ],
+   "quoted": "0.0037",
+   "current_artefact_value": 0.0,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.0037,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.by_stage.proposer.failure_rate",
+   "value_at_pre_reprice_checkpoint": 0.0,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 1.0,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": "See 092#88[0] - the failure-rate half."
+  },
+  "092#90[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 20 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    312,
+    312
+   ],
+   "quoted": "0.6227",
+   "current_artefact_value": 0.6259,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.6227,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[0].f1",
+   "value_at_pre_reprice_checkpoint": 0.6259,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.005139,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#90[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 20 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    312,
+    312
+   ],
+   "quoted": "0.6698",
+   "current_artefact_value": 0.6695,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.6698,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[0].precision",
+   "value_at_pre_reprice_checkpoint": 0.6695,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000448,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#90[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 20 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    312,
+    312
+   ],
+   "quoted": "0.5818",
+   "current_artefact_value": 0.5876,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.5818,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[0].recall",
+   "value_at_pre_reprice_checkpoint": 0.5876,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.009969,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#91[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 30 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    313,
+    313
+   ],
+   "quoted": "0.7533",
+   "current_artefact_value": 0.7568,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7533,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[1].f1",
+   "value_at_pre_reprice_checkpoint": 0.7568,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.004646,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#91[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 30 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    313,
+    313
+   ],
+   "quoted": "0.8103",
+   "current_artefact_value": 0.8096,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8103,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[1].precision",
+   "value_at_pre_reprice_checkpoint": 0.8096,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000864,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#91[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 30 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    313,
+    313
+   ],
+   "quoted": "0.7038",
+   "current_artefact_value": 0.7104,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7038,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[1].recall",
+   "value_at_pre_reprice_checkpoint": 0.7104,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.009378,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#92[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 40 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    314,
+    314
+   ],
+   "quoted": "0.7829",
+   "current_artefact_value": 0.7866,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7829,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[2].f1",
+   "value_at_pre_reprice_checkpoint": 0.7866,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.004726,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#92[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 40 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    314,
+    314
+   ],
+   "quoted": "0.8421",
+   "current_artefact_value": 0.8415,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8421,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[2].precision",
+   "value_at_pre_reprice_checkpoint": 0.8415,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000713,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#92[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 40 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    314,
+    314
+   ],
+   "quoted": "0.7314",
+   "current_artefact_value": 0.7385,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7314,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[2].recall",
+   "value_at_pre_reprice_checkpoint": 0.7385,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.009707,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#93[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "F1 at 50 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    315,
+    315
+   ],
+   "quoted": "0.7883",
+   "current_artefact_value": 0.792,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7883,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].f1",
+   "value_at_pre_reprice_checkpoint": 0.792,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.004694,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#93[4]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "precision at 50 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    315,
+    315
+   ],
+   "quoted": "0.8479",
+   "current_artefact_value": 0.8473,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8479,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].precision",
+   "value_at_pre_reprice_checkpoint": 0.8473,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000708,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#93[5]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "recall at 50 m (§A4 text-HIGH re-run evaluation table row)",
+   "source_lines": [
+    315,
+    315
+   ],
+   "quoted": "0.7365",
+   "current_artefact_value": 0.7435,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7365,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].recall",
+   "value_at_pre_reprice_checkpoint": 0.7435,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.009504,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#95[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "measured F1 at 50 m, text HIGH re-run (Dawid-Skene input)",
+   "source_lines": [
+    324,
+    324
+   ],
+   "quoted": "0.7883",
+   "current_artefact_value": 0.7896,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7883,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.measured.f1",
+   "value_at_pre_reprice_checkpoint": 0.7896,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.001649,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#96[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "Dawid-Skene corrected F1, text HIGH re-run",
+   "source_lines": [
+    325,
+    325
+   ],
+   "quoted": "0.8129",
+   "current_artefact_value": 0.8142,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8129,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.dawid_skene.corrected_metrics.f1",
+   "value_at_pre_reprice_checkpoint": 0.8142,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.001599,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#96[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "Dawid-Skene corrected F1, text HIGH re-run, rounded",
+   "source_lines": [
+    325,
+    325
+   ],
+   "quoted": "0.813",
+   "current_artefact_value": 0.8142,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8129,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.dawid_skene.corrected_metrics.f1",
+   "value_at_pre_reprice_checkpoint": 0.8142,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.001476,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "092#97[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "Dawid-Skene VLM-only posterior, text HIGH re-run",
+   "source_lines": [
+    326,
+    326
+   ],
+   "quoted": "0.2935",
+   "current_artefact_value": 0.2914,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.2935,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+   "value_at_pre_reprice_checkpoint": 0.2914,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.007155,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "093#22[0]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "weighted F1, gold-standard subtype classification at the headline buffer",
+   "source_lines": [
+    494,
+    494
+   ],
+   "quoted": "0.8873",
+   "current_artefact_value": 0.8876466273070027,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.8873484175609226,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/gold-standard-subtype-classification/macro_weighted_summary.json",
+   "path": "$.summary_f1.weighted_f1",
+   "value_at_pre_reprice_checkpoint": 0.8876466273070027,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.000391,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "093#33[1]": {
+   "verdict": "EXTRACTION-DEFECT",
+   "quantity": "measured F1 at 50 m, 55-map image generalisation run",
+   "source_lines": [
+    581,
+    581
+   ],
+   "quoted": "0.771",
+   "current_artefact_value": 0.7745,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.771,
+   "era_faithful": true,
+   "era_match_mode": "exact",
+   "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+   "path": "$.summary.buffers[3].f1",
+   "value_at_pre_reprice_checkpoint": 0.7745,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.00454,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Line 581 is a row of the §F code block introduced by 'Line numbers for the 18 observations cited by this audit:' - an INDEX of the observation log, each row a line number, an Obs id and a compression of that Obs's title. '11206  Obs 256  55-map image F1 = 0.771 measured, 0.795 D-S' is a title gloss, verified still accurate against docs/notes/working-notes.md:11257. Mis-anchored to outputs/55maps-image-generalisation/evaluation/evaluation.json."
+  },
+  "093#33[2]": {
+   "verdict": "EXTRACTION-DEFECT",
+   "quantity": "Dawid-Skene corrected F1, 55-map image generalisation run",
+   "source_lines": [
+    581,
+    581
+   ],
+   "quoted": "0.795",
+   "current_artefact_value": 0.799,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 0.7954,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+   "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+   "value_at_pre_reprice_checkpoint": 0.799,
+   "mover_events": [
+    "E1"
+   ],
+   "rel_delta_vs_quoted": 0.005031,
+   "material_under_ruling_16": false,
+   "harness_era_check_wrong": true,
+   "note": "Same §F index row as 093#33[1]; the 0.795 half. The extraction even reached for a cross-file override locator (results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$....f1), confirming the extractor was treating an index gloss as a live artefact read."
+  },
+  "093#41[1]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "cost USD, 55-map text-min generalisation run, corrected figure (audited manifest total)",
+   "source_lines": [
+    616,
+    618
+   ],
+   "quoted": "60.79",
+   "current_artefact_value": 30.44,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 60.7866,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 93.4995,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 0.49926,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  },
+  "093#43[3]": {
+   "verdict": "SNAPSHOT-DIVERGENCE",
+   "quantity": "cost USD, 2026-04-19 text-high re-run (measured manifest total, audit-date snapshot)",
+   "source_lines": [
+    621,
+    624
+   ],
+   "quoted": "69.60",
+   "current_artefact_value": 207.3382,
+   "claim_era_commit": "c48f639e3",
+   "claim_era_date": "2026-04-22",
+   "era_value": 69.6017,
+   "era_faithful": true,
+   "era_match_mode": "round",
+   "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+   "path": "$.totals.cost_usd",
+   "value_at_pre_reprice_checkpoint": 126.8051,
+   "mover_events": [
+    "E1",
+    "E2"
+   ],
+   "rel_delta_vs_quoted": 1.978997,
+   "material_under_ruling_16": true,
+   "harness_era_check_wrong": true,
+   "note": null
+  }
+ }
+}

@@ -1,0 +1,473 @@
+{
+  "pass": "wave7-P4",
+  "date": "2026-08-04",
+  "repo_head_at_adjudication": "888ddad83",
+  "adjudicator": {
+    "model": "claude-opus-5",
+    "harness": "claude-code-subagent",
+    "mode": "independent blind adjudication (Phase 3 ruling 11)"
+  },
+  "blinding": {
+    "honoured": true,
+    "statement": "reports/verification/c4-triage/wave7-draft-stories-2026-08-04.md was NOT opened. No file matching reports/verification/c4-triage/blind-passes/wave7-* was opened. The blind-passes directory was listed (filenames only) to confirm the write target did not already exist; no wave7 sibling pass was read. All verdicts below were derived from the source documents, the anchor artefacts, and git history.",
+    "accidental_reads": []
+  },
+  "partition": {
+    "n_rows": 24,
+    "source_files": [
+      "results/55maps-mcc-v2-summary/report.md",
+      "results/ci-metadata-registry.md",
+      "results/evaluation-scopes.md",
+      "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md",
+      "results/55maps-image-generalisation/k35-075-3-diagnostic.md"
+    ]
+  },
+  "verdict_counts": {
+    "SNAPSHOT-DIVERGENCE": 17,
+    "DOC-DEFECT-AT-ERA": 7,
+    "EXTRACTION-DEFECT": 0,
+    "INSTRUMENT": 0,
+    "RECLASSIFY": 0
+  },
+  "single_cause": false,
+  "causal_accounts": [
+    {
+      "id": "A",
+      "label": "May-2026 recovery campaign + the two curator-GT additions",
+      "n_rows": 13,
+      "rows": ["080#42[0]", "083#3[1]", "083#8[0]", "083#17[2]", "083#29[1]", "083#34[1]", "083#58[0]", "084#29[0]", "085-high-pull#9[13]", "085-high-pull#9[14]", "098#49[1]", "099#10[0]", "099#16[0]"],
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Between 2026-05-02 and 2026-05-03 the T=0.7, image and text-MIN 55-map runs were recovered and re-evaluated, and two curator mounds were added to inputs/vectors/references/student-mounds-55maps-reviewed.geojson (baf1497a7 2026-05-03 10:32:53 +1000, 4744->4745; 2e075eb99 2026-05-03 15:28:57 +1000, 4745->4746). Every row in this family quotes the pre-move value and is exactly reproducible from the artefact blob at the source line's own era commit. A second, later move (3271d6923, 2026-08-03, the PI-approved cand-2397 corrected-F1 re-run) accounts for the two corrected-F1 rows.",
+      "evidence_anchors": {
+        "gt_counts_by_commit": {"dea1155fa": 4744, "baf1497a7": 4745, "2e075eb99": 4746},
+        "image_corrected_f1_at_50m_by_commit": {"dee0ecf0d": 0.8317312556915916, "8699f456b": 0.8332154763107384, "3271d6923": 0.8333333333333333, "30a902f56": 0.8333333333333333},
+        "image_headline_f1_at_50m": {"4c147af65 (2026-04-18, commit subject states F1=0.771 @ 50 m)": 0.771, "post-recovery da84a3d23/8699f456b": 0.7745},
+        "text_high_f1_at_50m": {"4e5c5e5a3 (2026-04-19)": 0.7883, "post-recovery f533fda5f": 0.792}
+      }
+    },
+    {
+      "id": "B",
+      "label": "Repo-wide N=10K bootstrap upgrade (2026-04-28/29) and BCa migration (2026-04-30)",
+      "n_rows": 8,
+      "rows": ["083#5[0]", "083#11[0]", "083#56[0]", "083#63[0]", "087#2[2]", "087#3[2]", "087#4[2]", "087#5[1]"],
+      "verdict": "SPLIT — 4 SNAPSHOT-DIVERGENCE, 4 DOC-DEFECT-AT-ERA",
+      "mechanism": "A deliberate campaign (git tags pre-bootstrap-10k-2026-04-28 and pre-bootstrap-10k-followup-2026-04-29; verifier scripts/verify_bootstrap_10k_followup.py) re-ran every evaluate_detections.py CI cell with an explicit --bootstrap 10000, then migrated the CI method from percentile to BCa (commits 580f498b6, fe21fe6c2, 6b611174c on 2026-04-28/29; 0699769c5, bae12aa96, 85f115015 on 2026-04-30). The script default was NOT changed (scripts/evaluate_detections.py:118 still DEFAULT_BOOTSTRAP = 1000), so the upgrade is invisible to any document that reasoned from script defaults. THE SPLIT: where the host document was never re-edited after the migration (ci-metadata-registry.md L175-178, untouched since ad023fc3b 2026-04-21), the clause stayed faithful-when-written and the artefact moved under it -> SNAPSHOT-DIVERGENCE per ruling 17. Where the host document WAS re-edited after the migration and imported the migrated numbers while leaving the parameter label untouched (55maps-mcc-v2-summary/report.md at fc536a19c, 2026-05-03 14:53), the document made its own Methods statement false in that edit -> DOC-DEFECT-AT-ERA. Same upstream event, two verdicts; forcing them together would be wrong.",
+      "decisive_evidence": "results/55maps-mcc-v2-summary/report.md L33 (image row) changed at fc536a19c from '**0.6912** [0.6753, 0.7055]' (the 2026-04-27 1,000-iteration artefact at 98b128aec) to '**0.6924** [0.6784, 0.7062]' (the 10,000-iteration BCa artefact, archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json, _metadata.bootstrap = {n_iterations: 10000, method: BCa}). All four archived 55-map MCC evaluations record cli_args.bootstrap = 10000 and method BCa. Lines 9/19/96/116 were left at 1,000 by that same commit."
+    },
+    {
+      "id": "C",
+      "label": "Adjacent-row value carry-over inside results/ci-metadata-registry.md",
+      "n_rows": 2,
+      "rows": ["086#22[0]", "086#37[0]"],
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "mechanism": "Two registry rows carry the NEXT/SIBLING artefact's numbers rather than their own. Neither anchor artefact has ever moved (single commit each), so neither figure was ever correct at any era. This is not scope filtering and not drift; it is transcription conflation during the 2026-04-21 registry authoring pass.",
+      "proofs": {
+        "086#22[0]": "results/pv/pairwise-effects/pairwise-effect-sizes.json has exactly ONE commit ever (3fec9a485, 2026-03-21, subject '...effect size comparisons (54 tests)'); metadata.n_comparisons = 54 and len(comparisons) = 54. The sibling file pairwise-effect-sizes-v2.json has n_comparisons = 52. The v1 registry row (L99) and the v2 registry row (L100) both read '52 comparisons' — the v2 count was written into both.",
+        "086#37[0]": "results/leaderboard/era1/leaderboard_tiers_20m.json has ONE commit (4c3b70d7c, 2026-04-17); n_conditions = 36, metadata.n_conditions_input = 72, n_tiers = 4, timestamp 2026-04-17T04:27:13Z. results/leaderboard/era2/leaderboard_tiers_20m.json has n_conditions = 19 and timestamp 2026-04-17T03:51:29Z. The era1 registry row (L114) reads '19 conditions' AND date_generated '2026-04-17T03:51Z' — both of which are era2's values. The timestamp match is decisive (a coincidence trap exists: era1's tier 3 happens to hold 19 members, but era1's own stamp is 04:27)."
+      }
+    },
+    {
+      "id": "D",
+      "label": "Double rounding through the 4-d.p. autogen intermediary",
+      "n_rows": 1,
+      "rows": ["083#46[4]"],
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "mechanism": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json holds F1@100m = 0.800495105209857 (3 d.p. -> 0.800). The sibling report_autogen.md prints it at 4 d.p. as '**0.8005**'. The 2026-05-03 refresh of the §5 table rounded the 4-d.p. intermediary a second time, yielding 0.801. Four of the five text-MIN cells in that column are correct (0.797/0.799/0.801@125/0.802); only the 100 m cell is off, and only by 0.001. The artefact has not moved since 236327d80 (2026-05-03 02:10 UTC), which predates the document edit — so the cell never matched at its own era."
+    }
+  ],
+  "answers_to_the_three_questions": {
+    "1_bootstrap_iterations": {
+      "what_the_CIs_were_actually_computed_from": "10,000 iterations, BCa, seed 42, scipy.stats.bootstrap — for every CI in results/55maps-mcc-v2-summary/report.md §2 and for all four artefacts behind ci-metadata-registry.md L175-178. Verified directly at _metadata.bootstrap.{n_iterations,method} and _metadata.cli_args.bootstrap in each file. The 1,000-iteration percentile era ended on 2026-04-28/30.",
+      "is_it_a_live_Methods_inaccuracy": "YES, for results/55maps-mcc-v2-summary/report.md. That document currently prints 10,000-iteration BCa confidence intervals under a Methods block that says '**Bootstrap**: 1,000 iterations, seed 42, tile-level resampling' (L19), a '**Methodology mirror**' line asserting '--bootstrap 1000' (L9), a cross-reference restating it (L96), and a reproducibility command block that passes '--bootstrap 1000' (L116) and therefore does not reproduce the table above it. The document never mentions BCa at all. This is a live Methods inaccuracy, not a stale snapshot, and I have booked all four rows DOC-DEFECT-AT-ERA.",
+      "the_four_ci_registry_rows_are_different": "results/ci-metadata-registry.md L175-178 have not been edited since 2026-04-21 (git log -L confirms), i.e. they predate the migration and were correct when written. Note that at 2026-04-21 the target evaluation.json files carried no _metadata block at all — the registry's '1000' was an explicit YES_SIDECAR inference from the co-located evaluation.metadata.json, which recorded n_iterations 1000 / percentile. That inference was sound at era. SNAPSHOT-DIVERGENCE.",
+      "which_host_documents_are_paper_citable": {
+        "results/55maps-mcc-v2-summary/report.md": "YES — registered in reports/verification/apparatus/generator-map.json rule 'hw-report-md' as 'hand-authored paper-citation report.md' (Session 75/76 guardrail-6 convention), and cited from results/55maps-cross-track-comparison/report.md as 'the canonical reference for the temperature axis' inside a paragraph headed 'Paper-framing implication'. This is the highest-stakes document in the partition.",
+        "results/ci-metadata-registry.md": "YES — its own stated Purpose is 'the goal is that the paper can cite each reported CI with a full bootstrap specification'. It IS the Methods provenance source for every CI in the paper.",
+        "results/evaluation-scopes.md": "YES — hand-authored living document with §8 'Paper implications' and §8.2 'Suggested paper text (Methods)'; added to the tree by commit 267134b2d, subject 'add 59-sheet disjointness note across 5 paper-citable docs'.",
+        "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md": "Indirect — supplementary/diagnostic; feeds Obs 301/302/304 rather than paper prose directly.",
+        "results/55maps-image-generalisation/k35-075-3-diagnostic.md": "Indirect — supplementary; its own §Recommendation proposes the distribution be reported 'in supplementary material'."
+      }
+    },
+    "2_unit_bridging_rows": {
+      "the_33_percent_row_085-high-pull#9[14]": "There IS a genuine value difference underneath the unit question, and the harness did NOT compare different quantities. scripts/recompute_c4_claims.py:333-337 implements a percentage bridge and it fired: 0.25 x 100 = 25, which still fails against the quoted 33, so the row correctly fell through to MISMATCH. The real difference is in the denominator, not the scale: per_map_shell_rates.json runs['t0.7'] K-35-051-3 held n_detections 3 / n_in_shell 1 / shell_rate 0.333333 at commit 0cbae1f64 (2026-04-28), which is exactly the document's '1 of 3 (33 %)' at its era (6d798e83f, 2026-04-29). The T=0.7 recovery re-run (33435aab2, 2026-05-03) moved it to 4 / 1 / 0.25, i.e. '1 of 4 (25 %)'. Verdict SNAPSHOT-DIVERGENCE, not INSTRUMENT. The only instrument defect here is cosmetic: the MISMATCH branch reports the un-rescaled actual (0.25) and abs_error (32.75), which invites triage to misread a real 8-percentage-point movement as a unit bug.",
+      "the_cache_hit_rate_row": "NOT IN THIS PARTITION. The brief cites 'a cache-hit rate of 91.0 against 0.9287' as one of my rows; no row in P4-rows.json concerns a cache-hit rate (grep for 'cache' over the partition returns zero hits). If that row exists it belongs to another pass; I cannot adjudicate it and have not guessed at it."
+    },
+    "3_largest_gaps": {
+      "52_vs_54": "NOT a scope mismatch and NOT a filtered subset — a real error. results/pv/pairwise-effects/pairwise-effect-sizes.json has held 54 comparisons since its only commit (2026-03-21, subject '(54 tests)'). '52' is the count of the v2 file, written into the v1 registry row as well as the v2 row. DOC-DEFECT-AT-ERA.",
+      "19_vs_36": "NOT a scope mismatch — a real error, and specifically a wrong-era row. results/leaderboard/era1/leaderboard_tiers_20m.json holds n_conditions = 36 from n_conditions_input = 72; the '19' and the row's date_generated '2026-04-17T03:51Z' are both era2's values (era2 n_conditions = 19, timestamp 2026-04-17T03:51:29Z). DOC-DEFECT-AT-ERA. Caution for whoever repairs it: era1's tier-3 cluster coincidentally contains 19 conditions, so '19' can be rationalised as a tier count; the timestamp is what proves it is era2's row bleeding across."
+    }
+  },
+  "research_conclusions_moved": {
+    "any": false,
+    "detail": [
+      "MCC report §4 rank orders survive every correction: F1 rank at R=50 m stays T=0.3 (0.8437) > image (0.8332->0.8333) > T=0.7 (0.8273) > text-MIN (0.7968); MCC rank stays image > T=0.3 > T=0.7 > text-MIN. The 'F1 leader is not the MCC leader' finding (Obs 280 confirmation) is untouched.",
+      "text-MIN R=100 m 0.801 -> 0.800 leaves text-MIN bottom at every buffer; §5's claim 'text-MIN is bottom at every buffer' holds.",
+      "The bootstrap rows do NOT move any number — the published CIs are correct as computed (10,000 BCa). What moves is the Methods description of how they were computed, and the reproducibility recipe. Any paper Methods sentence drafted from this document would state the wrong iteration count and the wrong CI method.",
+      "086#22 and 086#37 are provenance-register facts, not results. Nothing downstream of them is a conclusion. But if any Methods text cites '52 pairwise comparisons' for the v1 effect-size family, the multiple-comparison denominator is wrong (54), and if any text cites the Era-1 board as 19 conditions, it is wrong (36 of 72 input)."
+    ]
+  },
+  "de_dup_chain_bearing": {
+    "commits": ["1de559119", "30a902f56", "fcfc90bff"],
+    "finding": "NONE of the 24 rows is anchored to a field the de-dup chain moved. 30a902f56 changed only channel accounting in results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json (n_ref_student_only 4745->4746, n_reviewer_promoted_at_R -1 per R, n_phantom_duplicates_dropped = 1) and left every metric and CI byte-identical — verified by diffing summary.json against summary.json.pre-dedup-rerun-20260804T000000.backup (F1@50m = 0.8333333333333333 in both). The two corrected-F1 rows (083#34[1], 098#49[1]) transitioned at 3271d6923 (2026-08-03 cand-2397 re-run), which PRE-dates the de-dup commit. Attribute those transitions to 3271d6923, not to the de-dup chain. The tracked GT geojson itself has not changed since 2e075eb99 (2026-05-03).",
+    "note_on_the_4746_count": "The canonical GT feature count did not move on 2026-08-04; what moved was which channel the cand-2397 twin is counted in. Rows quoting 4,744 / 4,745 diverge from 4,746 because of the two May-2026 curator additions, not because of the de-dup fix."
+  },
+  "rows": [
+    {
+      "row_id": "080#42[0]",
+      "source": "results/55maps-image-generalisation/k35-075-3-diagnostic.md:118-121",
+      "quantity": "aggregate headline F1 at 50 m, 55-map image-generalisation run",
+      "quoted": "0.771",
+      "actual": 0.7745,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Document has a single commit, a10caa8d5, 2026-04-18 16:54:52 +1000. The anchor outputs/55maps-image-generalisation/evaluation/evaluation.json was committed 39 minutes earlier at 4c147af65 (2026-04-18 16:15:39), whose subject literally reads 'final image-track generalisation run — F1=0.771 @ 50 m'. Era-faithful. The image recovery (da84a3d23 / 8699f456b, 2026-05-03) moved it to 0.7745; results/ci-metadata-registry.md independently records 'F1@50m = 0.7745 (was 0.771)'. The extractor's own anchor caveat anticipated this correctly.",
+      "repair_lane": "living-doc refresh under the Document Revision Policy (results/**.md); a dated note that the run was re-evaluated post-recovery would preserve the diagnostic's argument, which does not depend on the third decimal."
+    },
+    {
+      "row_id": "083#3[1]",
+      "source": "results/55maps-mcc-v2-summary/report.md:5-7",
+      "quantity": "count, mounds in the canonical updated curator ground truth",
+      "quoted": "4,745",
+      "actual": 4746,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Clause written at fc536a19c (2026-05-03 14:53:04 +1000). inputs/vectors/references/student-mounds-55maps-reviewed.geojson held exactly 4,745 features at that moment (baf1497a7, 10:32:53 the same morning). It went to 4,746 thirty-five minutes after the document was committed (2e075eb99, 15:28:57). Era-faithful by a 35-minute margin.",
+      "repair_lane": "living-doc refresh to 4,746 across L7/27/36/99 in one pass (P2 R9 coupling discipline)."
+    },
+    {
+      "row_id": "083#5[0]",
+      "source": "results/55maps-mcc-v2-summary/report.md:9",
+      "quantity": "bootstrap iterations asserted for the 55-map MCC re-evaluations",
+      "quoted": "1000",
+      "actual": 10000,
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "confidence": "medium",
+      "causal_account": "B",
+      "reasoning": "'**Methodology mirror**: scripts/evaluate_detections.py --mcc --bootstrap 1000 --seed 42, mirroring commit 163161a4'. I verified independently that commit 163161a4b DID use --bootstrap 1000 (results/phase3a-image-matrix/**/evaluation.json at that commit records cli_args.bootstrap = 1000), so the sentence is TRUE as a statement about the mirrored matrix sweep. It is FALSE as the stated methodology of this report: every MCC figure in §2 comes from a 10,000-iteration BCa run. Read in position — a front-matter '**Methodology mirror**' field on a report whose §2 tables it introduces — the false reading is the operative one. Booked as a defect at the fc536a19c era, when the 10k-derived CIs were imported into §2 and this line was left standing.",
+      "alternative_verdict_considered": "SNAPSHOT-DIVERGENCE under a strict ruling-17 reading (the clause was written 2026-04-27, when the artefacts genuinely were 1,000, and the artefact later moved). I reject it because the clause's referent is the CIs printed in the same document, and those were replaced by the document's own later edit — this is not an artefact drifting beneath a static clause. See partition_note_on_ruling_17.",
+      "repair_lane": "living-doc fix: state 10,000 iterations, BCa, seed 42, and disambiguate the mirror sentence (163161a4 used 1,000; this report's runs did not)."
+    },
+    {
+      "row_id": "083#8[0]",
+      "source": "results/55maps-mcc-v2-summary/report.md:16",
+      "quantity": "count, features in the canonical post-review ground-truth GeoJSON",
+      "quoted": "4,744",
+      "actual": 4746,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "git log -L 16,16 shows the line has ONE author commit, f96f7ec63 (2026-04-27 21:53), when the GT file held exactly 4,744 features (dea1155fa). Faithful when written; the artefact moved twice on 2026-05-03. Ruling 17 governs: the historical verdict stands as divergence, and the Document Revision Policy is the repair lane. Distinguished from the bootstrap rows in the same document because this clause annotates an external input file — the 2026-05-03 edit did not change its truth-conditions, the GT file's own drift did.",
+      "additional_flag": "INTERNAL CONTRADICTION, live at HEAD and material to a reader: the same document describes the same file as holding 4,744 features (L16) and 4,745 mounds (L7, L27, L36, L99). This is partial-refresh residue from fc536a19c and must be fixed in the repair pass regardless of the triage verdict. The extractor flagged it and declined to adjudicate; I confirm it.",
+      "repair_lane": "living-doc refresh to 4,746, same pass as 083#3/17/29/58."
+    },
+    {
+      "row_id": "083#11[0]",
+      "source": "results/55maps-mcc-v2-summary/report.md:19",
+      "quantity": "bootstrap iterations, 55-map MCC evaluation",
+      "quoted": "1,000",
+      "actual": 10000,
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "confidence": "high",
+      "causal_account": "B",
+      "reasoning": "'- **Bootstrap**: 1,000 iterations, seed 42, tile-level resampling.' sits in §1 'Input convention' and describes, without ambiguity, the evaluations this report tabulates. At fc536a19c the §2 image row changed from '0.6912 [0.6753, 0.7055]' (the 1,000-iteration artefact at 98b128aec) to '0.6924 [0.6784, 0.7062]' (the 10,000-iteration BCa artefact), and the T=0.3 CI silently changed from [0.6386, 0.6704] to [0.6393, 0.6684] in the same commit. From that moment no reader could obtain the printed CIs from a 1,000-iteration run. The line also omits BCa entirely, so the CI method is undocumented as well as the iteration count. This is the single most paper-consequential row in the partition.",
+      "repair_lane": "living-doc fix + changelog: 'Bootstrap: 10,000 iterations, BCa, seed 42, tile-level resampling'."
+    },
+    {
+      "row_id": "083#17[2]",
+      "source": "results/55maps-mcc-v2-summary/report.md:27",
+      "quantity": "count, mounds in the canonical updated curator ground truth",
+      "quoted": "4,745",
+      "actual": 4746,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Same era and same mechanism as 083#3[1]: written at fc536a19c when the GT held 4,745; the file moved to 4,746 at 2e075eb99, 35 minutes later. The extractor's cross-file locator (student-mounds-55maps-reviewed.geojson#len:$.features) resolved the correct referent — the claim.anchor field naming the bounds file is a per-claim default, not the locator the harness used, so this is not a mis-anchor.",
+      "repair_lane": "same coupled refresh."
+    },
+    {
+      "row_id": "083#29[1]",
+      "source": "results/55maps-mcc-v2-summary/report.md:36",
+      "quantity": "count, mounds in the canonical updated curator ground truth",
+      "quoted": "4,745",
+      "actual": 4746,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Same as 083#3[1]. Written fc536a19c; GT = 4,745 at that instant.",
+      "additional_flag": "The surrounding sentence carries two further problems that are NOT this row's value but sit in its span and should be escalated: (i) 'MCC shifts from 0.6912 to 0.6924' compares a pre-BCa bootstrap MEAN (the 98b128aec schema serialised only mcc.mean = 0.6912; there is no point estimate in that file) against a post-BCa POINT estimate (0.6924; the post-BCa mean is 0.6925) — a textbook ruling-3 mean-vs-point comparison sitting in a paper-citation document; (ii) 'T=0.3 row carries forward unchanged from the 2026-04-27 baseline' is false for the CI, which moved [0.6386, 0.6704] -> [0.6393, 0.6684] when T=0.3's MCC artefact was migrated at 580f498b6/0699769c5.",
+      "repair_lane": "same coupled refresh; the ruling-3 sentence needs a separate, explicit fix."
+    },
+    {
+      "row_id": "083#34[1]",
+      "source": "results/55maps-mcc-v2-summary/report.md:51",
+      "quantity": "corrected F1 at R = 50 m, image run",
+      "quoted": "0.8332",
+      "actual": 0.8333333333333333,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Exact era match. At fc536a19c the anchor results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json was at commit 8699f456b (2026-05-03 02:45 UTC = 12:45 +1000, i.e. two hours before the document edit) and held $.results[0].F1 = 0.8332154763107384, which is 0.8332 at the quoted 4 d.p. — digit for digit. The value moved to 0.8333333333333333 at 3271d6923 (2026-08-03, cand-2397 re-run). The de-dup regeneration 30a902f56 did NOT move it (identical in summary.json and its .pre-dedup-rerun backup).",
+      "repair_lane": "living-doc refresh to 0.8333; note the §4 rank order is unaffected (T=0.3 0.8437 still leads)."
+    },
+    {
+      "row_id": "083#46[4]",
+      "source": "results/55maps-mcc-v2-summary/report.md:71",
+      "quantity": "corrected F1 at R = 100 m, text-MIN (§5 table row)",
+      "quoted": "0.801",
+      "actual": 0.800495105209857,
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "confidence": "high",
+      "causal_account": "D",
+      "reasoning": "The anchor results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json has held F1@100m = 0.800495105209857 since 236327d80 (2026-05-03 02:10 UTC), which PRE-dates the document edit at fc536a19c (2026-05-03 04:53 UTC), and has not moved since. 0.800495 is 0.800 at 3 d.p., not 0.801. Cause identified: the sibling report_autogen.md prints the value at 4 d.p. as '**0.8005**', and the refresh rounded that intermediary a second time. The pre-refresh table (b0bf88b2a/01b5441fb) correctly read 0.800 against the pre-recovery artefact 0.8002702 — so the refresh introduced the error, it did not inherit it. The other four text-MIN cells in the column (0.797 / 0.799 / 0.801@125 / 0.802) are all correct, which rules out a whole-column row-shift.",
+      "materiality": "0.001 at the third decimal; text-MIN remains bottom at every buffer and §5's stated conclusion is untouched.",
+      "repair_lane": "living-doc fix to 0.800 + changelog; and a standing note that 4-d.p. autogen tables must not be re-rounded to 3 d.p. — round once, from summary.json."
+    },
+    {
+      "row_id": "083#56[0]",
+      "source": "results/55maps-mcc-v2-summary/report.md:96",
+      "quantity": "bootstrap iterations asserted for the 55-map MCC re-evaluations",
+      "quoted": "1000",
+      "actual": 10000,
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "confidence": "medium",
+      "causal_account": "B",
+      "reasoning": "'- **Commit 163161a4** (matrix sweep MCC re-eval): methodology mirror — same evaluate_detections.py --mcc --bootstrap 1000 --seed 42 invocation pattern.' The load-bearing word is 'same': it asserts that this report's runs used the same invocation as 163161a4. They did not — 163161a4 used 1,000 (verified) and the 55-map MCC runs used 10,000 BCa. Weakest of the four bootstrap rows because the sentence's grammatical subject is the mirrored commit; if the PI prefers to read it as a pure statement about 163161a4, it becomes an EXTRACTION-DEFECT (mis-scoped: the number describes phase3a matrix artefacts, and the harness resolved the 55-map MCC artefact). I record that alternative explicitly and do not adopt it, because 'same … invocation pattern' makes the 55-map artefact the correct referent for the comparison being asserted.",
+      "alternative_verdict_considered": "EXTRACTION-DEFECT (mis-scoped anchor) — plausible, not adopted.",
+      "repair_lane": "same fix as 083#5[0]: disambiguate the mirror."
+    },
+    {
+      "row_id": "083#58[0]",
+      "source": "results/55maps-mcc-v2-summary/report.md:99",
+      "quantity": "count, mounds in the canonical updated curator ground truth",
+      "quoted": "4,745",
+      "actual": 4746,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Same as 083#3[1]; written fc536a19c, GT = 4,745 at that instant. Note this line describes what commit 42ed1d328 re-evaluated against, which was in fact the 4,745-feature GT — so on a historical-description reading it is permanently correct and only the present-tense phrasing drifts. Either way, divergence, not defect.",
+      "repair_lane": "same coupled refresh; consider rewording to 'the then-canonical 4,745-mound GT' so the historical statement stays true after the refresh."
+    },
+    {
+      "row_id": "083#63[0]",
+      "source": "results/55maps-mcc-v2-summary/report.md:116",
+      "quantity": "bootstrap iterations passed on the reproducibility command line",
+      "quoted": "1000",
+      "actual": 10000,
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "confidence": "high",
+      "causal_account": "B",
+      "reasoning": "This is the '# Reproducibility command (run on sapphire)' block. A recipe's truth-condition is that running it reproduces the tables above it. From fc536a19c onward it does not: --bootstrap 1000 with no --ci-method BCa cannot produce [0.6784, 0.7062]. Unlike L9 and L96 there is no dual reading available — the block is presented as this report's own reproduction instructions. Highest-confidence defect in the bootstrap family alongside 083#11[0].",
+      "repair_lane": "living-doc fix to --bootstrap 10000 (plus whatever flag selects BCa in the current evaluate_detections.py), verified by actually running it once on sapphire."
+    },
+    {
+      "row_id": "084#29[0]",
+      "source": "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md:107",
+      "quantity": "total false positives, K-35-051-3, all four runs combined",
+      "quoted": "17",
+      "actual": 18,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Document has one commit, 6d798e83f (2026-04-29 15:11:46 +1000). results/55maps-fp-classification/fp_classifications.json at that moment was e552ad464 (2026-04-28 23:34), which holds exactly 17 entries with map_name == 'K-35-051-3' out of 1,119. The later same-day re-run ec21c8ef5 (22:53) also holds 17. The count moved to 18 (of 1,122) at 33435aab2 (2026-05-03), the T=0.7 recovery re-classification, and stayed 18 at 42ed1d328. Era-faithful.",
+      "coupling_note": "Same upstream commit (33435aab2) moved 085-high-pull#9[13] and [14] — the +21 T=0.7 recovery detections added one detection and one FP on this map. All three rows in this document family are one event.",
+      "repair_lane": "living-doc refresh of the FP-distribution table against the post-recovery classification, or a dated note that the table is the pre-recovery four-run state."
+    },
+    {
+      "row_id": "085-high-pull#9[13]",
+      "source": "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md:173-175",
+      "quantity": "total detections, K-35-051-3, T=0.7 run",
+      "quoted": "3",
+      "actual": 4,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "results/55maps-per-map-shell-variance/per_map_shell_rates.json at commit 0cbae1f64 (2026-04-28), the version live when the document was committed on 2026-04-29, holds runs['t0.7'] K-35-051-3 = {n_detections: 3, n_in_shell: 1, shell_rate: 0.333333}. The document's '1 of 3 (33 %)' is that record verbatim. 33435aab2 (2026-05-03) moved it to {4, 1, 0.25}.",
+      "repair_lane": "living-doc refresh; note the document's own argument ('removing or adding a single detection flips the rate by 20–25 points') is if anything strengthened by the move, since the added detection did exactly that."
+    },
+    {
+      "row_id": "085-high-pull#9[14]",
+      "source": "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md:173-175",
+      "quantity": "(50, 75] m shell rate, K-35-051-3, T=0.7 run",
+      "quoted": "33 %",
+      "actual": 0.25,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Paired with 085-high-pull#9[13]; the rate is the denominator's shadow. At era shell_rate = 0.333333, which bridges exactly to the quoted 33 %. The harness's percentage bridge (recompute_c4_claims.py:333-337) did fire and correctly failed (0.25 -> 25 != 33), so this is NOT an instrument mis-comparison and NOT a unit bug in the verdict sense: there is a genuine 8-percentage-point movement underneath, caused by the T=0.7 recovery.",
+      "instrument_observation": "COSMETIC ONLY, but it misleads triage: when the percent bridge fails, the MISMATCH branch returns result['actual'] (0.25) and abs_error 32.75 rather than the rescaled pair (25 vs 33, abs_error 8). Any triager reading abs_error 32.75 will reach for 'unit not bridged' and be wrong about the cause. Recommend the MISMATCH branch report both scales when percentish is true.",
+      "repair_lane": "living-doc refresh to '1 of 4 (25 %)'."
+    },
+    {
+      "row_id": "086#22[0]",
+      "source": "results/ci-metadata-registry.md:99",
+      "quantity": "count, comparisons in results/pv/pairwise-effects/pairwise-effect-sizes.json",
+      "quoted": "52",
+      "actual": 54,
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "confidence": "high",
+      "causal_account": "C",
+      "reasoning": "The anchor has ONE commit in its entire history — 3fec9a485, 2026-03-21, whose subject is 'feat(pv): pairwise bootstrap effect size comparisons (54 tests)'. metadata.n_comparisons = 54 and the comparisons object has 54 keys. The registry row was written 2026-04-21, a month later, against an artefact that already said 54. It was never right. The '52' is the v2 file's count (pairwise-effect-sizes-v2.json: n_comparisons = 52, 52 entries), and the adjacent registry row for v2 also reads '52 comparisons' — the author wrote v2's number into both rows.",
+      "defence_search": "Searched for a licensing scope reading: no filter over the 54 comparison keys yields 52 (they are 54 distinct A:<cond>_vs_<cond> pairs with no self-comparisons or duplicates to exclude); the file has never been regenerated, so no era exists at which it held 52; the registry's own date_generated cell for the row says 'per-entry', offering no alternative era. No exculpatory reading found.",
+      "repair_lane": "living-doc fix to 54 for the v1 row; verify the v2 row's 52 is genuinely v2's (it is)."
+    },
+    {
+      "row_id": "086#37[0]",
+      "source": "results/ci-metadata-registry.md:114",
+      "quantity": "count, conditions in results/leaderboard/era1/leaderboard_tiers_20m.json",
+      "quoted": "19",
+      "actual": 36,
+      "verdict": "DOC-DEFECT-AT-ERA",
+      "confidence": "high",
+      "causal_account": "C",
+      "reasoning": "The anchor has ONE commit (4c3b70d7c, 2026-04-17) and holds n_conditions = 36, metadata.n_conditions_input = 72, n_tiers = 4, timestamp 2026-04-17T04:27:13.886512Z. The registry row claims '19 conditions × 3 × 4' with date_generated '2026-04-17T03:51Z'. results/leaderboard/era2/leaderboard_tiers_20m.json holds n_conditions = 19 with timestamp 2026-04-17T03:51:29.400496Z — the row is carrying era2's condition count AND era2's generation stamp. The following registry row (era2) is written as 'similar' with no count, consistent with the author having already consumed era2's figures one row up.",
+      "defence_search": "Considered and rejected two exculpatory readings. (i) '19' as a tier count: era1's tier 3 does contain exactly 19 conditions — a genuine coincidence trap — but the registry column is 'ci_count' expressed as conditions × metrics × buffers, and a single tier is not the CI denominator; the timestamp evidence overrides. (ii) '19' as a filtered/bounds-scoped subset: rejected because n_conditions_input = 72 and n_conditions = 36 are both recorded in-file and neither is 19, and because the era2 timestamp coincidence cannot be explained by any filter. No era exists at which era1 held 19.",
+      "repair_lane": "living-doc fix to '36 conditions (of 72 input) × 3 × 4' and date_generated 2026-04-17T04:27Z."
+    },
+    {
+      "row_id": "087#2[2]",
+      "source": "results/ci-metadata-registry.md:175",
+      "quantity": "bootstrap iterations, cleaned-GT image evaluation",
+      "quoted": "1000",
+      "actual": 10000,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "B",
+      "reasoning": "git log -L 175,175 returns exactly one commit, ad023fc3b (2026-04-21 23:56), the registry's authoring pass; the row has never been edited since. At that era the target file carried NO _metadata block at all (verified by reading the blob at ad023fc3b), so the registry's status YES_SIDECAR and its '1000' rested on the co-located evaluation.metadata.json, which records bootstrap.n_iterations = 1000, methodology 'percentile bootstrap, 95% CI (2.5/97.5 quantiles)', generation_timestamp_iso 2026-04-19T06:06:50Z — matching the registry's date_generated cell exactly. Sound inference at era. The artefact was re-run at 10,000 iterations at fe21fe6c2 (2026-04-29 22:57 UTC) and migrated to BCa at bae12aa96 (2026-04-30 07:06 UTC), then archived at da2cf355f (2026-06-07). Faithful when written, artefact moved: ruling 17 SNAPSHOT-DIVERGENCE.",
+      "repair_lane": "living-doc refresh: 10000 / BCa, plus the archive path. The registry ALREADY carries correctly-updated post-recovery rows further down the table (e.g. 'outputs/55maps-image-generalisation/evaluation/evaluation.json (post-recovery, BCa N = 10K)' … 'Replaces 2026-04-18 N=1000 percentile entry'), so this is partial-refresh residue inside a document that demonstrably knows how to record the migration."
+    },
+    {
+      "row_id": "087#3[2]",
+      "source": "results/ci-metadata-registry.md:176",
+      "quantity": "bootstrap iterations, cleaned-GT text-high evaluation",
+      "quoted": "1000",
+      "actual": 10000,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "B",
+      "reasoning": "Identical to 087#2[2]. Sidecar records 1000/percentile at generation_timestamp_iso 2026-04-19T05:44:52Z; target re-run at 10K (fe21fe6c2) and migrated to BCa (bae12aa96). Row untouched since ad023fc3b.",
+      "repair_lane": "same refresh."
+    },
+    {
+      "row_id": "087#4[2]",
+      "source": "results/ci-metadata-registry.md:177",
+      "quantity": "bootstrap iterations, cleaned-GT text-min evaluation",
+      "quoted": "1000",
+      "actual": 10000,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "B",
+      "reasoning": "Identical to 087#2[2]. Sidecar records 1000/percentile at generation_timestamp_iso 2026-04-19T05:55:57Z; target re-run at 10K (fe21fe6c2) and migrated to BCa (bae12aa96). Row untouched since ad023fc3b.",
+      "repair_lane": "same refresh."
+    },
+    {
+      "row_id": "087#5[1]",
+      "source": "results/ci-metadata-registry.md:178",
+      "quantity": "bootstrap iterations, gold-standard extended buffer sweep",
+      "quoted": "1000",
+      "actual": 10000,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "B",
+      "reasoning": "Same pattern, different commit pair: results/gold-standard-extended-buffer-sweep/evaluation.json was re-run at 10,000 at 6b611174c (2026-04-29 22:58 UTC) and migrated to BCa at 85f115015 (2026-04-30 07:06 UTC). Its sidecar still records 1000/percentile at generation_timestamp_iso 2026-04-18T23:37:10Z, matching the registry's date_generated cell. Row untouched since ad023fc3b. Unlike the other three, this file is still at its results/ path (not archived), so the sidecar/target contradiction is live in the working tree today.",
+      "repair_lane": "same refresh — and this one is the cleanest demonstration case for the sidecar escalation below."
+    },
+    {
+      "row_id": "098#49[1]",
+      "source": "results/evaluation-scopes.md:147",
+      "quantity": "corrected F1 at the lowest buffer (50 m) of the multi-buffer curve",
+      "quoted": "0.832",
+      "actual": 0.8333333333333333,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "git log -L 147,147 dates the line to 01db8fe59 (2026-04-23 21:20). The anchor summary.json was then at dee0ecf0d (2026-04-21), holding $.results[0].F1 = 0.8317312556915916 -> 0.832 at 3 d.p. Era-faithful. It has since moved twice: 8699f456b (2026-05-03, 0.8332) and 3271d6923 (2026-08-03, 0.83333).",
+      "extractor_ambiguity_resolved": "The extractor flagged that '0.832 -> 0.855' does not name its endpoints and guessed 125 m for the upper end. At the line's era the artefact read 0.8317 / 0.8477 / 0.8521 / 0.8538 / 0.8551 for 50/75/100/125/150 m, so 0.855 is the 150 m row, not the 125 m practitioner cap. The upper endpoint is a different value_index and not adjudicated here, but the resolution is recorded so the repair pass does not re-anchor it to 125 m.",
+      "repair_lane": "living-doc refresh; the surrounding claim is 'Corrected F1 >= 0.830 @ 50 m', which the movement strengthens rather than threatens."
+    },
+    {
+      "row_id": "099#10[0]",
+      "source": "results/evaluation-scopes.md:207",
+      "quantity": "count, student-digitised ground-truth mounds on the 55-map corpus (§11 property table)",
+      "quoted": "4,744",
+      "actual": 4746,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "git log -L 207,207 returns exactly one commit, 267134b2d (2026-04-24 10:27), when the GT held 4,744 (dea1155fa era). The 2026-08-02 revision (166bf7704, which added §12 and the revision banner) did not touch §11 — so this section is in a document that HAS been revised since, and was not swept. That is a coupling failure of the earlier refresh, not a defect at this line's era.",
+      "extractor_hypothesis_tested_and_rejected": "The extractor suggested triage should test whether the figure is a bounds-scoped subset rather than the raw feature count. Rejected: the quoted value equals the raw file count exactly at the line's era (4,744 = len($.features) at dea1155fa), so no scoping hypothesis is needed and none is supported.",
+      "repair_lane": "living-doc refresh to 4,746 with a changelog entry; §11 is a paper-citable property table and this is the corpus-defining N."
+    },
+    {
+      "row_id": "099#16[0]",
+      "source": "results/evaluation-scopes.md:216",
+      "quantity": "F1 @ 50 m, 55-map text-HIGH generalisation track",
+      "quoted": "0.788",
+      "actual": 0.7921,
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "confidence": "high",
+      "causal_account": "A",
+      "reasoning": "Same commit as 099#10[0] (267134b2d, 2026-04-24). At that era outputs/55maps-text-high-generalisation/evaluation/evaluation.json was at 4e5c5e5a3 (2026-04-19) with F1@50m = 0.7883 -> 0.788 at 3 d.p., n_detections 4,143. Era-faithful. The T=0.7 recovery (+21 detections) moved it to 0.7920 at e20f3e182/f533fda5f (2026-05-02/03).",
+      "anchor_observation": "The extraction anchored to results/rescore-2026-05-31/55maps-text-high-generalisation/verified/evaluation.json (F1@50m = 0.7921) rather than the run's own outputs/.../evaluation/evaluation.json (0.7920). Both are post-recovery 10K BCa artefacts and both diverge from the quoted 0.788, so the verdict is unaffected; but the repair should refresh from the run's own evaluation, not the rescore tree, or the two will drift apart in the fourth decimal.",
+      "repair_lane": "living-doc refresh to 0.792; the paragraph's point (a cross-corpus generalisation gap vs the 4-map 0.826) narrows from 0.038 to 0.034 and survives."
+    }
+  ],
+  "partition_note_on_ruling_17": {
+    "issue": "Six rows in this partition are partial-refresh residue in living documents, and I have split them 2 ways. The split is deliberate and is the main judgement call in this pass.",
+    "rule_applied": "Ruling 17 books as SNAPSHOT-DIVERGENCE 'a clause faithful when written whose artefact later moved'. I read that as requiring the clause's truth-conditions to have been falsified by the ARTEFACT moving. Where a later edit to the DOCUMENT imported the moved values and left the label describing them, the clause was falsified by the document's own act, and ruling 14's 'wrong at its own era' applies with the document's era = its last revision.",
+    "consequence": "083#8[0] (4,744 GT features) books as SNAPSHOT-DIVERGENCE — the clause annotates an external input file whose drift the 2026-05-03 edit did not cause. 083#5[0]/#11[0]/#56[0]/#63[0] (bootstrap 1,000) book as DOC-DEFECT-AT-ERA — those clauses label the CIs printed in §2, and fc536a19c replaced those CIs with 10,000-iteration BCa values in the same commit that left the labels alone.",
+    "if_the_PI_reads_ruling_17_more_broadly": "All four bootstrap rows in 083 flip to SNAPSHOT-DIVERGENCE and the counts become SNAPSHOT-DIVERGENCE 21 / DOC-DEFECT-AT-ERA 3 (the survivors being 086#22[0], 086#37[0] and 083#46[4], none of which involve drift of any kind). The repair is identical either way (living-doc fix to 10,000 / BCa). What changes is whether the record states that a paper-citation document misdescribed its own Methods for fifteen months. I recommend it should.",
+    "not_affected": "The four 087 rows in ci-metadata-registry.md are unambiguous under either reading — those lines were never re-edited after the migration."
+  },
+  "named_residuals_and_escalations": [
+    {
+      "id": "P4-R1",
+      "severity": "high",
+      "title": "CI metadata sidecars were never migrated and now contradict their own targets",
+      "detail": "The N=10K commits (fe21fe6c2, 6b611174c) and the BCa commits (bae12aa96, 85f115015) touched only evaluation.{json,csv,md} — verified by git show --stat. The co-located evaluation.metadata.json sidecars were not touched. Today results/gold-standard-extended-buffer-sweep/evaluation.json records _metadata.bootstrap = {n_iterations: 10000, method: BCa} while its sibling evaluation.metadata.json records {n_iterations: 1000, methodology: 'percentile bootstrap'}. Same for all three archived cleaned-GT sidecars. results/ci-metadata-registry.md designates these sidecars as the AUTHORITY for its YES_SIDECAR rows — so the registry's stated authority is itself corrupt for every cell touched by the migration.",
+      "scope_estimate": "ad023fc3b wrote 48 sidecars; the migration touched an unknown subset. Needs a mechanical sweep comparing each *.metadata.json bootstrap block against its sibling evaluation.json _metadata.bootstrap block. This is cheap and fully deterministic.",
+      "why_it_matters": "This is not a documentation problem — it is a provenance artefact asserting a false parameter about the file next to it, in the exact layer the charter §4 hierarchy treats as more authoritative than prose."
+    },
+    {
+      "id": "P4-R2",
+      "severity": "high",
+      "title": "Instrument: era_check is still gated on ruling 12's superseded dated-filename rule",
+      "detail": "scripts/recompute_c4_claims.py defines SNAPSHOT_STEM_RE = /\\d{4}-\\d{2}-\\d{2}|session-\\d+/ over the filename stem and attaches era_check only when it matches. Across the whole 16,083-row recompute report, era_check fired on 308 rows in 11 documents, all with dated stems. It fired on ZERO of my 24 rows. Yet 22 of my 24 verdicts turned entirely on per-claim era-faithfulness, which I had to establish by hand with git log -L and git show on every anchor. Ruling 14 demoted the presentation class to ADVISORY ONLY and made per-claim era-faithfulness THE deciding axis; the harness still implements the provisional rule ruling 14 superseded.",
+      "recommendation": "Attach era_check to every MISMATCH row on a read/arithmetic method, gated on nothing. Resolve the anchor at the source LINE's last-touch commit (git log -L <line>,<line>:<file>) as well as the document's last commit — the two differ for exactly the partial-refresh-residue class, and the difference is what distinguishes ruling 17 divergence from a ruling 14 defect. This is the highest-leverage instrument change available for the remaining waves; it would have mechanically produced 20 of my 24 verdicts."
+    },
+    {
+      "id": "P4-R3",
+      "severity": "medium",
+      "title": "Ruling-3 violation live in a paper-citation document",
+      "detail": "results/55maps-mcc-v2-summary/report.md L36: 'MCC shifts from 0.6912 to 0.6924 (negligible)'. 0.6912 is the pre-BCa bootstrap MEAN (the 98b128aec schema serialises only mcc.mean; there is no point estimate in that file). 0.6924 is the post-BCa POINT (its mean is 0.6925). Per ruling 3 these are different quantities and must not be presented as a shift in one. The same sentence makes three such mean-to-point comparisons (image, T=0.7 0.6472->0.6476, text-MIN 0.6253->0.6260) and additionally asserts 'T=0.3 row carries forward unchanged from the 2026-04-27 baseline', which is false for that row's CI ([0.6386, 0.6704] -> [0.6393, 0.6684]).",
+      "why_flagged": "Not one of my 24 rows, but it sits inside the span of 083#29[1] and in the document the repo designates a paper-citation source."
+    },
+    {
+      "id": "P4-R4",
+      "severity": "low",
+      "title": "Instrument cosmetic: failed percent bridge reports the un-rescaled error",
+      "detail": "recompute_c4_claims.py:333-337 rescales and re-tests when percentish, but on failure returns the ORIGINAL result's actual and abs_error. Row 085-high-pull#9[14] therefore reports actual 0.25 / abs_error 32.75 for what is a 33 % vs 25 % comparison (true gap 8 points). This actively misdirects triage toward a unit-bug story. Report both scales, or the rescaled pair, when percentish is true."
+    },
+    {
+      "id": "P4-R5",
+      "severity": "low",
+      "title": "Path staleness distinct from value staleness",
+      "detail": "results/55maps-mcc-v2-summary/report.md §7 and ci-metadata-registry.md L175-177 point at results/<run>/mcc/ and results/55maps-cleaned-gt-evaluation/ paths that no longer exist in the working tree (archived at da2cf355f 2026-06-07 and da2cf355f respectively). The extractor correctly re-pointed to archive/55maps-superseded-gt-evals/**, so no row is affected, but the documents' own locators are dead and should be repaired in the same pass."
+    },
+    {
+      "id": "P4-R6",
+      "severity": "informational",
+      "title": "The brief's cache-hit-rate row is not in this partition",
+      "detail": "The task brief cites 'a cache-hit rate of 91.0 against 0.9287' as one of my rows. P4-rows.json contains no such row (zero matches for 'cache'). Not adjudicated; flagged so it is not assumed covered."
+    }
+  ],
+  "rows_not_fitting_any_account": {
+    "count": 0,
+    "note": "All 24 rows fit one of the four causal accounts A–D. The partition does NOT share a single cause: A (recovery/GT drift, 13 rows) and B (bootstrap migration, 8 rows) are independent upstream events three days apart; C (registry row conflation, 2 rows) involves no drift whatsoever and predates both; D (double rounding, 1 row) is an authoring slip in a single table cell. Two of the four accounts produce DOC-DEFECT-AT-ERA verdicts and two produce SNAPSHOT-DIVERGENCE — except account B, which produces BOTH depending on whether the host document was re-edited after the migration. That split is the finding I would most want a second reader to check."
+  },
+  "research_conclusion_moves": {
+    "any_row_requires_a_research_conclusion_to_move": false,
+    "statement": "No row in this partition requires a research conclusion to move. The MCC report's rank orderings, its F1/MCC divergence finding (Obs 280 confirmation), text-MIN's bottom placement at every buffer, the corrected-F1 >= 0.830 claim, and the 55-map-vs-4-map generalisation gap all survive every correction. What does move is Methods text: the paper must state 10,000 bootstrap iterations with BCa intervals (not 1,000 percentile) for the 55-map MCC family and for the cleaned-GT and gold-standard extended-buffer evaluations; the pairwise effect-size family is 54 comparisons, not 52; and the Era-1 tiered leaderboard covers 36 conditions of 72 input, not 19."
+  }
+}

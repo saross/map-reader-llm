@@ -1,0 +1,925 @@
+{
+  "pass_id": "wave7-P2",
+  "role": "independent blind adjudication (Phase 3 C4 triage, ruling 11)",
+  "date": "2026-08-04",
+  "adjudicator": {
+    "model": "claude-opus-5",
+    "harness": "claude-code subagent",
+    "head": "888ddad83"
+  },
+  "blinding": {
+    "declared_off_limits": [
+      "reports/verification/c4-triage/wave7-draft-stories-2026-08-04.md",
+      "reports/verification/c4-triage/blind-passes/wave7-*"
+    ],
+    "compliance": "OBSERVED. Neither the wave-7 draft stories nor any wave7-* blind pass was opened. The directory listing of reports/verification/c4-triage/ was seen (filenames only) while locating the recompute report; no wave-7 file was read.",
+    "accidental_reads": []
+  },
+  "source_document": "results/documentation-audit/verification-2026-04-21.md",
+  "n_rows": 65,
+  "method": {
+    "era_resolution": "Ruling 9 git-era mode, applied per DATED ENTRY (ruling 14) rather than per file.",
+    "body_era_commit": "c48f639e3 (2026-04-22 08:03:01 +1000) — the commit that landed the 2026-04-21 verification body. No anchor in this partition was touched between 2026-04-18/19 (run landing) and this commit, so the blob state at c48f639e3 IS the state the verifier read on 2026-04-21.",
+    "annotation_era_commit": "6b64ad0f6 (2026-05-03 11:24:43 +1000) — the commit that appended the post-recovery rider (source lines 18–20). Governs row 094#0[0] only.",
+    "coverage": "65 of 65 rows verified DIRECTLY by loading the anchor blob at the era commit with `git show <commit>:<path>` and reading the exact JSON field. ZERO rows inferred by pattern. The two arithmetic rows were recomputed from directly-read era operands.",
+    "arithmetic_check": {
+      "era_operands_full_precision": [
+        364.6971,
+        60.7866,
+        69.6017
+      ],
+      "era_sum_full_precision": 495.0854,
+      "era_sum_rounded_2dp": 495.09,
+      "document_own_working": "364.70 + 60.79 + 69.60 = 495.09 (rounded operands; exact)"
+    }
+  },
+  "counts": {
+    "by_verdict": {
+      "SNAPSHOT-DIVERGENCE": 57,
+      "INSTRUMENT": 1,
+      "RECLASSIFY": 7
+    },
+    "SNAPSHOT-DIVERGENCE": 57,
+    "RECLASSIFY": 7,
+    "INSTRUMENT": 1,
+    "DOC-DEFECT-AT-ERA": 0,
+    "EXTRACTION-DEFECT": 0,
+    "era_faithful_this_pass": "65 / 65",
+    "harness_era_check_false_negatives": 16
+  },
+  "causal_account": {
+    "statement": "Every one of the 65 MISMATCHes is post-dating artefact movement, not documentary error. This is a fresh-context verification report whose entire numeric content — the figures it quotes from the audit draft AND the figures it independently derived as ground truth — was exactly true of its anchor artefacts on 2026-04-21. The anchors then moved in TWO independent, fully documented events: (1) the 2026-05-02/03 GT-4745 recovery campaign, which re-ran or re-aggregated all three 55-map tracks and re-evaluated them against a revised 4,745-feature ground truth, propagating to the evaluation JSONs, the Dawid-Skene results, the D-S-v1/human crosstab and the gold-standard subtype summary; and (2) commit 8e142df9c (2026-06-12) `fix(cost): regenerate 55-map cost manifests at audited flex pricing`, which rewrote all three cost manifests' totals, per-stage costs, token counts and wall-clock. Not one figure in this document was ever wrong at its own era.",
+    "two_events_matter": "The cost rows and the metric rows have DIFFERENT causes. All image and text-min cost/token/wall-clock divergences are caused solely by 8e142df9c (2026-06-12) — the 2026-05-03 recovery did not change them materially. A story that attributes the cost moves to the recovery campaign is wrong.",
+    "falsifier": "The account is refuted if ANY of the 65 quoted figures fails to reproduce from `git show c48f639e3:<anchor>` (or `git show 6b64ad0f6:<anchor>` for row 094#0[0]) at the document's own stated precision. All 65 were checked individually and all 65 reproduce. It is further refuted if any anchor has a commit touching it between 2026-04-19 and c48f639e3 — none does (checked: all ten anchor files).",
+    "movers": {
+      "outputs/55maps-{image,text-min,text-high}-generalisation/cost_manifest.json": "8e142df9c (2026-06-12) audited flex-pricing regeneration",
+      "outputs/55maps-image-generalisation/evaluation/evaluation.json": "8699f456b (2026-05-03)",
+      "outputs/55maps-text-min-generalisation/evaluation/evaluation.json": "236327d80 (2026-05-03)",
+      "outputs/55maps-text-high-generalisation/evaluation/evaluation.json": "f533fda5f (2026-05-03)",
+      "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json": "8699f456b (2026-05-03)",
+      "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json": "366f9c66f (2026-05-03)",
+      "results/55maps-image-generalisation/ds-human-crosstab/summary.json": "8699f456b (2026-05-03)",
+      "results/gold-standard-subtype-classification/macro_weighted_summary.json": "c60230347 (2026-05-03)"
+    },
+    "not_moved": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json is unchanged in all three eras (0.7591 / 0.7834 / 0.2947) — consistent with the text-min recovery being a documented proposer-level no-op — which is why the document's C07/C73 text-min D-S claims are MATCH and absent from this partition. That negative is corroborating evidence for the account."
+  },
+  "quoted_vs_derived": {
+    "why_it_matters": "This document is itself a verification report. Its table columns are `cited_value` (what the audited draft claimed) and `actual_value` (what this verifier independently derived from the artefact). Those two kinds of figure have different truth-makers and the row data does not distinguish them.",
+    "split": {
+      "independently-derived": 11,
+      "both (cited==derived at era)": 45,
+      "quoted-from-draft": 9
+    },
+    "counts": {
+      "both (cited==derived at era)": 45,
+      "independently-derived": 11,
+      "quoted-from-draft": 9
+    },
+    "quoted_from_draft_rows": [
+      "094#64[1]",
+      "094#9[0]",
+      "095#21[1]",
+      "095#21[2]",
+      "095#21[3]",
+      "095#21[4]",
+      "095#22[0]",
+      "095#22[2]",
+      "095#22[4]"
+    ],
+    "independently_derived_rows": [
+      "094#0[0]",
+      "094#10[1]",
+      "094#11[1]",
+      "094#33[2]",
+      "094#41[2]",
+      "094#6[1]",
+      "094#8[1]",
+      "095#17[1]",
+      "095#22[1]",
+      "095#22[3]",
+      "095#22[5]"
+    ],
+    "does_it_change_verdicts": "YES, for 7 of the 9 quoted-only rows. Where the document frames a figure explicitly as another document's words — inside quotation marks (U06, line 182) or as 'draft `0.771`' (the rounding-discipline note, lines 189–193) — the truth-maker is the draft text, not the manifest. The draft was promoted to `results/documentation-audit/audit-summary.md` at c48f639e3 and STILL reads 364.70 / 0.771 / 0.795 / 91.0 % at line 44. Under correct anchoring those rows are MATCH today, not divergences, and they can never be repaired in place because charter §6 makes quoted spans verbatim. Verdict RECLASSIFY (to `historical` / quotation-of-source) for 095#21[1..4] and 095#22[0],[2],[4]. It does NOT change the 45 'both' rows: for those, cited and derived coincide (that is what PASS means), so the artefact reading dominates and SNAPSHOT-DIVERGENCE stands. Precedent inside the instrument itself: the same extractor already assigned method:`historical` to the prior-audit figures $165.74 and 90.2 % in claims 094#41 and 095#17 — it had the vocabulary and simply did not extend it to the draft's own cited_value column.",
+    "residual_2_quoted_rows": "094#9[0] is quoted-only but its dominant defect is the harness's unit handling (INSTRUMENT). 094#64[1] is quoted-only but the extractor deliberately and defensibly bound it to the sibling failure_rate field, and it is era-true of that field; left as SNAPSHOT-DIVERGENCE with a rider."
+  },
+  "snapshot_vs_living": {
+    "ruling": "DATED SNAPSHOT (ruling 1 treatment; ruling 14 two-axis test passed on the deciding axis).",
+    "reasoning": [
+      "Deciding axis (ruling 14): per-claim era-faithfulness is 65/65. The document has never been wrong at its own era, so the living-document repair lane has nothing to fix. Ruling 17 is explicit that 'divergence ⇒ ledger-only' is a triage verdict, but here there is no defect for the repair layer to act on either.",
+      "Advisory axis (ruling 14): dated filename AND dated title ('Verification Report — Documentation Audit Draft (2026-04-21)') — concordant, not decisive.",
+      "The document is a record of an EVENT under a stated protocol: 'Verifier agent: fresh context, anti-collusion rules observed', with an enumerated list of files deliberately NOT read. Editing its body would assert that a fresh-context agent on 2026-04-21 found values that did not exist until 2026-05-03 and 2026-06-12 — precisely ruling 1's rationale that in-place correction falsifies the record of what the pass actually found.",
+      "It carries an event tally (Claims checked 85 / PASS 82 / FAIL 2) that is only meaningful as of the run; refreshing figures without re-running the verification would silently break it.",
+      "The repo ALREADY treated it as a snapshot: commit 6b64ad0f6 (2026-05-03) appended a forward-pointing dated rider above the body and left the body untouched — ruling 1's 'snapshot + banner' pattern, applied three months before ruling 1 existed. That is the strongest single piece of evidence.",
+      "Counter-consideration acknowledged: the path `results/**.md` puts it nominally in Document Revision Policy scope, and it has been edited once. But that edit was an append, not a body refresh — consistent with snapshot treatment."
+    ],
+    "disposition": "Ledger rows only; body never edited.",
+    "recommended_action_beyond_ledger": {
+      "action": "EXTEND the existing 2026-05-03 rider with a second dated banner entry. This is a ruling-1 banner update, not a body correction.",
+      "why_the_existing_banner_is_insufficient": [
+        "UNDER-SCOPED: it names only the text-high claims (C09–C12, C44, C74–C81). The same 2026-05-03 recovery also moved the image anchors (C01–C04, C15, C16, C48–C51, C53–C56, C58), the text-min anchors (C05, C06, C67–C71), the D-S-v1 human crosstab (C32) and the gold-standard subtype summary (C35). 50 of the 65 divergent rows are outside the banner's stated scope.",
+        "STALE: the banner states text-high now reads totals.cost_usd 126.8051. Since 8e142df9c (2026-06-12) it reads 207.3382. The banner could not know about the flex-pricing regeneration.",
+        "MATERIALITY (ruling 1's trigger): the cost figures are load-bearing and the divergence inverts a headline comparison. As the document stands, image $364.70 vs text-high $69.60 reads as image ≈5.2× dearer; the audited current figures are image $200.833 vs text-high $207.3382, i.e. approximately equal (ratio 0.97×) — the exact correction ruling 16 already made for escalation W6-E1. A reader taking $364.70/$69.60 forward would carry a reversed cost ordering into paper prose."
+      ]
+    }
+  },
+  "outliers": [
+    {
+      "id": "O1",
+      "rows": [
+        "094#9[0]"
+      ],
+      "kind": "INSTRUMENT — unit not bridged, asymmetrically",
+      "detail": "Quoted 91.0 (unit '%' in the extraction, kind 'percentage') compared against $.totals.cache_hit_rate, a fraction. The harness reports actual 0.9287 — not commensurable with 91.0; it could not have matched even at era (91.0 vs 0.91). Critically, the harness's OWN era_check limb DOES scale: it reports actual_era 91.0, not 0.91. So the current-value path and the era path of the same check use different unit conventions. Once bridged, era 91.0 % MATCH and current 92.87 % → a genuine but small residual SNAPSHOT-DIVERGENCE."
+    },
+    {
+      "id": "O2",
+      "rows": [
+        "094#39[0]",
+        "095#1[0]",
+        "095#1[1]",
+        "095#1[2]",
+        "095#1[3]",
+        "095#2[0]",
+        "095#3[0]",
+        "095#4[0]",
+        "095#4[1]",
+        "095#4[2]",
+        "095#4[3]",
+        "095#5[0]",
+        "095#5[1]",
+        "095#5[2]",
+        "095#21[1]",
+        "095#21[4]"
+      ],
+      "kind": "INSTRUMENT DEFECT IN THE era_check FIELD — 16 false negatives (the single biggest trap in this partition)",
+      "detail": "The recompute harness resolved era_check at commit 6b64ad0f6300 for ALL 65 rows. That is the document's LAST-TOUCHED commit (2026-05-03 11:24 +1000), not the era of the claims. It sits INSIDE the recovery campaign: the text-high recovery chain (d7f85978d, f533fda5f, 366f9c66f, 7f05f5298) is an ancestor of it, while the text-min (c1ea6df3c, b4a928d25, 236327d80), image (a78cd7c55, da84a3d23, 8699f456b) and gold-standard (c60230347) recoveries are NOT. Consequence: exactly the 16 text-high-derived rows are stamped era_check.faithful=false, and the other 49 are stamped faithful=true only by the luck of same-day commit ordering. All 16 are era-faithful at the true body era c48f639e3 — verified field by field. Anyone reading era_check.faithful at face value will write DOC-DEFECT-AT-ERA on 16 rows that are clean. Aggravating detail: the 6b64ad0f6 text-high manifest is an intermediate merged state recording tiles_processed 85,250 (≈2× the 42,705 tile-pass corpus) and thinking_tokens 230,497,393 (≈2× the current 115,025,126) — so the harness's 'era' values for those rows are not even a state anyone published a claim about. Registered fix: era_check must resolve at the era of the CLAIM's dated entry, not the file's last commit."
+    },
+    {
+      "id": "O3",
+      "rows": [
+        "094#0[0]"
+      ],
+      "kind": "Second era inside one document",
+      "detail": "This row lives in the appended 2026-05-03 post-recovery rider, not the 2026-04-21 body. Its correct era is 6b64ad0f6, where text-high totals.cost_usd is 126.8051 exactly. Ruling 14's entry-level snapshot unit (written for entry-dated registers) applies here to a two-layer report. The harness got this one right by accident — 6b64ad0f6 is the right era for this row and the wrong era for the other 64."
+    },
+    {
+      "id": "O4",
+      "rows": [
+        "094#31[0]"
+      ],
+      "kind": "Knife-edge divergence — smaller than the quoted precision, yet it flips the quote",
+      "detail": "ds-human-crosstab ECE moved 0.5385006866301707 → 0.5384655047983467, a change of 3.5e-05 (0.0065 % relative), caused by the +1 candidate in 8699f456b. Under the document's own stated half-away-from-zero discipline the era value rounds to 0.539 at 3 dp and the current value rounds to 0.538. Era-faithful; materially trivial; the ONLY row here where the artefact's movement is below the quoted precision and still changes the rendering."
+    },
+    {
+      "id": "O5",
+      "rows": [
+        "094#33[0]",
+        "094#33[2]"
+      ],
+      "kind": "Anchor outside the three 55-map runs",
+      "detail": "results/gold-standard-subtype-classification/macro_weighted_summary.json (weighted_f1 0.8873484175609226 → 0.8876466273070027) moved with c60230347 `analysis(gs-v2-recovery): downstream propagation — subtype + leaderboard cells`, a different track from the three generalisation-run recoveries. A causal story framed purely as 'the three 55-map runs were recovered' does not cover these two rows. Same caution for 094#31[0] (the D-S-v1/human crosstab, a post-matrix analysis on the image run)."
+    },
+    {
+      "id": "O6",
+      "rows": [
+        "095#21[1]",
+        "095#21[2]",
+        "095#21[3]",
+        "095#21[4]",
+        "095#22[0]",
+        "095#22[2]",
+        "095#22[4]"
+      ],
+      "kind": "RECLASSIFY — figures whose truth-maker is the draft, not the artefact",
+      "detail": "095#21[1..4] sit inside a verbatim quotation of audit-summary.md:203 (reproduced in quote marks); the document's own assertion is only 'PASS: arithmetic is exact'. 095#22[0],[2],[4] are explicitly framed as 'draft `0.771`' / 'Draft `0.795`' / 'Draft `60.79`' in the rounding-discipline note, contrasted against the 'source' values in the same sentence — the extraction even labelled them 'as quoted by the draft to 3 dp'. The draft is now `results/documentation-audit/audit-summary.md` (promoted at c48f639e3) and still carries 364.70 / 0.771 / 0.795 / 91.0 % at line 44. Re-anchored, these are MATCH today. Charter §6 forbids editing them regardless."
+    },
+    {
+      "id": "O7",
+      "rows": [
+        "095#1[2]"
+      ],
+      "kind": "Lookalike that will read as a cross-run mis-anchor and is not",
+      "detail": "Text-high proposer tiles_processed now resolves to 42,705 — the identical number the document reports for the IMAGE run at C52 (line 97). It is NOT a wrong-run binding: both runs cover the same 42,705 tile-passes (8,541 tiles × 5 passes, visible in the era manifest's per_pass array), and post-recovery text-high processed all of them with 0 failures. Era value 42,545 (+160 failed = 42,705) is correct for 2026-04-21."
+    },
+    {
+      "id": "O8",
+      "rows": [
+        "094#64[0]",
+        "094#64[1]"
+      ],
+      "kind": "Divergence to zero with a documented no-op cause",
+      "detail": "text-min tiles_failed 124 → 0 and failure_rate 0.0029 → 0.0. Commit c1ea6df3c's message records that the recovery was a proposer-level no-op (per-pass GeoJSON md5sums bit-identical) and that the 124 count was a historical execution_stats artefact, not a live failure signal. The document's 124 was faithful to the field as it then read; the field's MEANING was later corrected. Worth a ledger note — it is a divergence in bookkeeping, not in measurement."
+    }
+  ],
+  "likely_triager_errors": [
+    "TRUSTING era_check.faithful. It is wrong on 16 of 65 rows (outlier O2) because the harness resolved every row at the document's last-touched commit, mid-recovery-campaign. A triager who reads the field rather than re-resolving will report DOC-DEFECT-AT-ERA (or 'the doc was already stale when written') for the whole text-high family. My independent count is 0 doc-defects-at-era.",
+    "COLLAPSING TWO CAUSES INTO ONE. The 2026-05-02/03 GT-4745 recovery and the 2026-06-12 audited-flex-pricing regeneration (8e142df9c) are independent events with disjoint effects. Every image and text-min COST/token/wall-clock divergence is 8e142df9c alone; every metric divergence is the recovery alone; text-high cost is both, sequentially (69.6017 → 126.8051 → 207.3382). A single-event story is falsified by 094#6, 094#10, 094#42–45, 094#62–63.",
+    "MISSING THE ANNOTATION AS A SECOND ERA. 094#0[0] is not a 2026-04-21 claim; its era is 2026-05-03 (ruling 14's entry-level unit). Adjudicating it against the body era would wrongly make it a defect.",
+    "READING 094#9[0] AS A DATA DIVERGENCE. It is a unit-bridging bug, and the harness's own era limb bridges the unit while its current limb does not — an internal inconsistency the triager is unlikely to have spotted.",
+    "MISAPPLYING RULING 16. Roughly thirty rows here differ by well under 5 % (F1 deltas ~0.003, ECE 0.0065 %, subtype 0.034 %). Ruling 16 is a REPAIR-WORDING rule for cost/ratio claims, not a MATCH tolerance. These are real recomputations against a revised 4,745-feature ground truth and must stay divergences. Conversely, ruling 16 IS directly relevant to the banner text: image $200.833 vs text-high $207.3382 is approximate equality, and the document's uncorrected $364.70 vs $69.60 implies a reversed ordering.",
+    "FRAMING THE STORY AS 'THE THREE 55-MAP RUNS'. Two anchors sit outside them (O5): the gold-standard subtype summary and the D-S-v1/human crosstab.",
+    "REPAIRING THE BODY. The path is results/**.md, so the Document Revision Policy is tempting, and ruling 17 explicitly invites in-place refresh for living documents. It must not be applied here: the document is a fresh-context anti-collusion verification record with an 85/82/2 event tally, and 7 of the rows are verbatim quotations of another document (charter §6). The correct action is to EXTEND the existing 2026-05-03 banner.",
+    "TREATING 095#22 AS A DEFECT. 'draft `0.771` matches source `0.7710`' now reads false against today's 0.7745, but it is an illustration of the rounding protocol in force on 2026-04-21 and was exactly true then.",
+    "MISSING THAT THE EXISTING BANNER IS ITSELF STALE AND UNDER-SCOPED (snapshot_vs_living.recommended_action_beyond_ledger). It names 126.8051 for text-high, superseded on 2026-06-12, and covers only 15 of the 65 divergent rows."
+  ],
+  "rows": {
+    "094#0[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+      "value_at_document_era": 126.8051,
+      "era_commit": "6b64ad0f6 (annotation entry)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Sits in the appended 2026-05-03 post-recovery rider, a SECOND dated entry with its own era (ruling 14: entry, not file). Exact at 6b64ad0f6; moved again on 2026-06-12 at audited flex pricing."
+    },
+    "094#6[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 364.6971,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "364.6971 -> 2 dp = 364.70 at era."
+    },
+    "094#6[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 364.6971,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Verifier's own full-precision read; byte-exact at era."
+    },
+    "094#7[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.771,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#8[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.7954,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "0.7954 -> 3 dp = 0.795 at era."
+    },
+    "094#8[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.7954,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#9[0]": {
+      "verdict": "INSTRUMENT",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 0.91,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "PRIMARY DEFECT IS THE HARNESS, NOT THE DOCUMENT. The value is a percentage (unit '%' in the extraction); the anchor totals.cache_hit_rate is a fraction. The harness compared 91.0 against 0.9287 without bridging the unit - it could not have matched even at era (91.0 vs 0.91). Note the harness's own era_check DID scale (it reports actual_era 91.0, not 0.91), so the two limbs of the same check use different unit conventions. Once bridged: era 0.91 = 91.0 % MATCH, current 0.9287 = 92.87 % -> residual SNAPSHOT-DIVERGENCE.",
+      "secondary_verdict": "SNAPSHOT-DIVERGENCE"
+    },
+    "094#9[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 0.91,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#10[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "60.7866 -> 2 dp = 60.79 at era."
+    },
+    "094#10[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#11[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7591,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "236327d80 (2026-05-03) analysis(text-min-recovery): re-evaluate vs reviewed GT 4745",
+      "note": "0.7591 -> 3 dp = 0.759 at era."
+    },
+    "094#11[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7591,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "236327d80 (2026-05-03) analysis(text-min-recovery): re-evaluate vs reviewed GT 4745",
+      "note": "Exact at era."
+    },
+    "094#20[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.7954,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#21[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.1862,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#31[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+      "value_at_document_era": 0.5385006866301707,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "KNIFE-EDGE. Era ECE 0.5385006866301707 rounds (half-away-from-zero, the doc's stated discipline) to 0.539 at 3 dp; the current 0.5384655047983467 rounds to 0.538. The artefact moved by 3.5e-05 (0.0065 % relative) and that alone flipped the quoted 3-dp form. Era-faithful; materially trivial."
+    },
+    "094#33[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/gold-standard-subtype-classification/macro_weighted_summary.json",
+      "value_at_document_era": 0.8873484175609226,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "c60230347 (2026-05-03) analysis(gs-v2-recovery): downstream propagation — subtype + leaderboard cells",
+      "note": "Era 0.8873484175609226 -> 4 dp = 0.8873. Anchor is OUTSIDE the three 55-map generalisation runs: it moved with the gold-standard subtype propagation, not the run recoveries."
+    },
+    "094#33[2]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/gold-standard-subtype-classification/macro_weighted_summary.json",
+      "value_at_document_era": 0.8873484175609226,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "c60230347 (2026-05-03) analysis(gs-v2-recovery): downstream propagation — subtype + leaderboard cells",
+      "note": "Era 0.8873484175609226 -> 5 dp = 0.88735. Same off-run anchor as 094#33[0]."
+    },
+    "094#39[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "ARITH",
+      "value_at_document_era": 495.0854,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "operands moved at 8e142df9c (2026-06-12) and the 2026-05-02/03 recovery chain",
+      "note": "ARITHMETIC. Era operands 364.6971 + 60.7866 + 69.6017 = 495.0854 -> 2 dp = 495.09; the document's own working sums the ROUNDED operands (364.70+60.79+69.60) and is exact. The harness's era_check reports 552.2888 and faithful:false - that is the wrong-era bug (see instrument_defect), not a document error.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 552.2888
+    },
+    "094#39[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 364.6971,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Operand, exact at era to 2 dp."
+    },
+    "094#39[2]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Operand, exact at era to 2 dp."
+    },
+    "094#41[2]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "The verifier's own statement about the artefact ('current source manifest states $60.79'), contrasted with the prior audit's $165.74 which the same extraction correctly classed method:historical. Era-faithful."
+    },
+    "094#42[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 682800923,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#43[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 621315045,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#44[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 14947.18,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#45[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 353.6201,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#47[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.506,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#48[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.6855,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#49[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7483,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#50[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.771,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#52[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.771,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#52[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.7954,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#52[2]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.1862,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "Exact at era."
+    },
+    "094#61[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#62[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 82297662,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#63[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 6953.106,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era."
+    },
+    "094#64[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 124,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era. The 2026-05-03 text-min recovery commit records that the 124 failures were a historical execution_stats artefact and the re-run was a proposer-level no-op; the field now reads 0."
+    },
+    "094#64[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 0.0029,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "The draft's parenthetical rate; the extractor deliberately bound it to the sibling failure_rate field (documented in its notes). Era value 0.0029 exact. Referent is arguably the draft rather than the manifest (see reclassify_rider), but the number is era-true of the manifest either way.",
+      "reclassify_rider": "quoted-from-draft; under draft-anchoring this row is MATCH today"
+    },
+    "094#65[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.618,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "236327d80 (2026-05-03) analysis(text-min-recovery): re-evaluate vs reviewed GT 4745",
+      "note": "Exact at era."
+    },
+    "094#65[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7274,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "236327d80 (2026-05-03) analysis(text-min-recovery): re-evaluate vs reviewed GT 4745",
+      "note": "Exact at era."
+    },
+    "094#65[2]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7538,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "236327d80 (2026-05-03) analysis(text-min-recovery): re-evaluate vs reviewed GT 4745",
+      "note": "Exact at era."
+    },
+    "094#65[3]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7591,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "236327d80 (2026-05-03) analysis(text-min-recovery): re-evaluate vs reviewed GT 4745",
+      "note": "Exact at era."
+    },
+    "095#1[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+      "value_at_document_era": 69.6017,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era (69.6017). The harness's era_check reports 126.8051 / faithful:false because it resolved at 6b64ad0f6, which is AFTER the 2026-05-02/03 text-high recovery. Wrong-era artefact, not a doc defect.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 126.8051
+    },
+    "095#1[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+      "value_at_document_era": 10754.918,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era (10754.918); harness era_check false-negative.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 20693.078
+    },
+    "095#1[2]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+      "value_at_document_era": 42545,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era (42545). BEWARE a lookalike: the current text-high value 42,705 is the same number the document reports for the IMAGE run at C52 - both runs cover the same 42,705 tile-passes (8,541 tiles x 5), so this is NOT a cross-run mis-anchor. Harness era_check reports 85250 (the intermediate 2026-05-03 merged state, ~2x the corpus) and faithful:false.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 85250.0
+    },
+    "095#1[3]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+      "value_at_document_era": 160,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era (160); recovery drove it to 0. Harness era_check false-negative.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 0.0
+    },
+    "095#2[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+      "value_at_document_era": 115013258,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era (115,013,258); harness era_check false-negative (230,497,393, the doubled intermediate state).",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 230497393.0
+    },
+    "095#3[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+      "value_at_document_era": 9782952,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Exact at era (9,782,952); harness era_check false-negative.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 18098108.0
+    },
+    "095#4[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.6227,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "f533fda5f (2026-05-03) analysis(t0.7-recovery): re-evaluate against updated GT (4745 features)",
+      "note": "Exact at era; harness era_check false-negative (era resolved after the text-high re-evaluation).",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 0.6259
+    },
+    "095#4[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7533,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "f533fda5f (2026-05-03) analysis(t0.7-recovery): re-evaluate against updated GT (4745 features)",
+      "note": "Exact at era; harness era_check false-negative (era resolved after the text-high re-evaluation).",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 0.7568
+    },
+    "095#4[2]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7829,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "f533fda5f (2026-05-03) analysis(t0.7-recovery): re-evaluate against updated GT (4745 features)",
+      "note": "Exact at era; harness era_check false-negative (era resolved after the text-high re-evaluation).",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 0.7866
+    },
+    "095#4[3]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.7883,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "f533fda5f (2026-05-03) analysis(t0.7-recovery): re-evaluate against updated GT (4745 features)",
+      "note": "Exact at era; harness era_check false-negative (era resolved after the text-high re-evaluation).",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 0.792
+    },
+    "095#5[0]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.7883,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "366f9c66f (2026-05-03) analysis(t0.7-recovery): re-aggregate D-S on text-high",
+      "note": "Exact at era (0.7883); harness era_check false-negative.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 0.7896
+    },
+    "095#5[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.8129,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "366f9c66f (2026-05-03) analysis(t0.7-recovery): re-aggregate D-S on text-high",
+      "note": "Exact at era (0.8129); harness era_check false-negative.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 0.8142
+    },
+    "095#5[2]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.2935,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "both (cited==derived at era)",
+      "moved_by": "366f9c66f (2026-05-03) analysis(t0.7-recovery): re-aggregate D-S on text-high",
+      "note": "Exact at era (0.2935); harness era_check false-negative.",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 0.2914
+    },
+    "095#17[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "The verifier's own U02 assertion 'the current source says $60.79'. Era-faithful; anchored correctly."
+    },
+    "095#21[1]": {
+      "verdict": "RECLASSIFY",
+      "anchor": "ARITH",
+      "value_at_document_era": 495.0854,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "operands moved at 8e142df9c (2026-06-12) and the 2026-05-02/03 recovery chain",
+      "note": "Inside a VERBATIM QUOTATION of the draft (audit-summary.md:203, reproduced in quote marks). The document's own assertion is only the verdict 'PASS: arithmetic is exact'. Truth-maker is the draft text, not the manifests; the same extraction already used method:historical for the neighbouring prior-audit figures. Charter s6 makes quoted spans verbatim, so this can never be repaired in place. Era-faithful anyway (495.0854 -> 495.09); harness era_check false-negative (552.2888).",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 552.2888,
+      "reclassify_to": "historical / quotation-of-source; anchor results/documentation-audit/audit-summary.md",
+      "secondary_verdict": "SNAPSHOT-DIVERGENCE"
+    },
+    "095#21[2]": {
+      "verdict": "RECLASSIFY",
+      "anchor": "outputs/55maps-image-generalisation/cost_manifest.json",
+      "value_at_document_era": 364.6971,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Operand inside the same verbatim quotation of audit-summary.md:203. Truth-maker is the quoted draft sentence; era-faithful against the manifest as well.",
+      "reclassify_to": "historical / quotation-of-source; anchor results/documentation-audit/audit-summary.md",
+      "secondary_verdict": "SNAPSHOT-DIVERGENCE"
+    },
+    "095#21[3]": {
+      "verdict": "RECLASSIFY",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Operand inside the same verbatim quotation of audit-summary.md:203. Truth-maker is the quoted draft sentence; era-faithful against the manifest as well.",
+      "reclassify_to": "historical / quotation-of-source; anchor results/documentation-audit/audit-summary.md",
+      "secondary_verdict": "SNAPSHOT-DIVERGENCE"
+    },
+    "095#21[4]": {
+      "verdict": "RECLASSIFY",
+      "anchor": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+      "value_at_document_era": 69.6017,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "Operand inside the same verbatim quotation of audit-summary.md:203. Truth-maker is the quoted draft sentence; era-faithful against the manifest as well.",
+      "reclassify_to": "historical / quotation-of-source; anchor results/documentation-audit/audit-summary.md",
+      "secondary_verdict": "SNAPSHOT-DIVERGENCE",
+      "harness_era_check_wrong": true,
+      "harness_era_value": 126.8051
+    },
+    "095#22[0]": {
+      "verdict": "RECLASSIFY",
+      "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.771,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "'draft `0.771`' - explicitly framed as the DRAFT's rendering in the rounding-discipline note. Truth-maker is the draft; the draft still reads 0.771 at results/documentation-audit/audit-summary.md:44, so under correct anchoring this is MATCH today, not a divergence.",
+      "reclassify_to": "historical / quotation-of-source",
+      "secondary_verdict": "SNAPSHOT-DIVERGENCE"
+    },
+    "095#22[1]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+      "value_at_document_era": 0.771,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "'source `0.7710`' - the verifier's own read of the artefact. Exact at era."
+    },
+    "095#22[2]": {
+      "verdict": "RECLASSIFY",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.7954,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "'Draft `0.795`' - the draft's rendering. Same reclassify logic as 095#22[0].",
+      "reclassify_to": "historical / quotation-of-source",
+      "secondary_verdict": "SNAPSHOT-DIVERGENCE"
+    },
+    "095#22[3]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+      "value_at_document_era": 0.7954,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8699f456b (2026-05-03) data(image-recovery): correct Stage-3 race + propagate +1 candidate",
+      "note": "'source `0.7954`' - the verifier's own read. Exact at era."
+    },
+    "095#22[4]": {
+      "verdict": "RECLASSIFY",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "quoted-from-draft",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "'Draft `60.79`' - the draft's rendering. Same reclassify logic as 095#22[0].",
+      "reclassify_to": "historical / quotation-of-source",
+      "secondary_verdict": "SNAPSHOT-DIVERGENCE"
+    },
+    "095#22[5]": {
+      "verdict": "SNAPSHOT-DIVERGENCE",
+      "anchor": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+      "value_at_document_era": 60.7866,
+      "era_commit": "c48f639e3 (2026-04-21 body)",
+      "era_faithful_this_pass": true,
+      "doc_role": "independently-derived",
+      "moved_by": "8e142df9c (2026-06-12) fix(cost): regenerate 55-map cost manifests at audited flex pricing",
+      "note": "'source `60.7866`' - the verifier's own read. Exact at era."
+    }
+  }
+}

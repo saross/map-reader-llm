@@ -1,0 +1,249 @@
+{
+  "pass": "P3",
+  "role": "independent blind adjudication (ruling 11)",
+  "date": "2026-08-04",
+  "repo_head": "888ddad83",
+  "rows_adjudicated": 42,
+  "blinding": {
+    "draft_stories_read": false,
+    "other_blind_passes_read": false,
+    "disclosure": "reports/verification/c4-triage/wave7-draft-stories-2026-08-04.md appeared as a PATH ONLY in the output of a `grep -ril token-load` file listing over reports/. Its contents were never opened. No file matching reports/verification/c4-triage/blind-passes/wave7-* was read or listed."
+  },
+  "verdict_counts": {
+    "SNAPSHOT-DIVERGENCE": 39,
+    "DOC-DEFECT-AT-ERA": 0,
+    "EXTRACTION-DEFECT": 0,
+    "INSTRUMENT": 1,
+    "RECLASSIFY": 2
+  },
+
+  "eras": {
+    "note": "All three documents share the same two commits. Bodies date to c48f639e3; the three post-recovery banners were added at 6b64ad0f6. Ruling 14 makes era-faithfulness the deciding axis, so banner rows are checked at the banner commit and body rows at the body commit. Only ONE anchor differs between the two eras (the text-high cost manifest: 69.6017 -> 126.8051), so era choice is decisive for exactly six rows.",
+    "body_era_commit": "c48f639e3",
+    "body_era_date": "2026-04-22",
+    "banner_era_commit": "6b64ad0f6",
+    "banner_era_date_utc": "2026-05-03T01:24:43Z",
+    "banner_rows": [
+      "090-audit-summary#7[1]",
+      "090-audit-summary#9[1]",
+      "090-audit-summary#9[2]",
+      "090-audit-summary#9[3]",
+      "090-audit-summary#9[4]",
+      "090-docaudit-readme#3[0]"
+    ]
+  },
+
+  "era_resolution_table": {
+    "method": "git show <era>:<path> for every anchor artefact, JSON-parsed (charter rule 5), at BOTH era commits. Nine distinct anchor artefacts cover all 42 rows; every row maps onto a directly resolved value, so 42/42 are direct era checks, none inferred by pattern. Arithmetic rows were recomputed from era-resolved operands.",
+    "outputs/55maps-image-generalisation/cost_manifest.json": {
+      "totals.cost_usd": {"c48f639e3": 364.6971, "6b64ad0f6": 364.6971, "HEAD": 200.833},
+      "totals.cache_hit_rate": {"c48f639e3": 0.91, "6b64ad0f6": 0.91, "HEAD": 0.9287},
+      "movement_history": "4c147af65 2026-04-18 -> 364.6971/0.91; a78cd7c55 2026-05-03T02:28Z -> 1061.1024/0.929; 8699f456b 2026-05-03T02:45Z -> 1061.0781/0.929; 8e142df9c 2026-06-12 -> 200.833/0.9287"
+    },
+    "outputs/55maps-text-min-generalisation/cost_manifest.json": {
+      "totals.cost_usd": {"c48f639e3": 60.7866, "6b64ad0f6": 60.7866, "HEAD": 30.44},
+      "movement_history": "f0f7158e7 2026-04-18 -> 60.7866; b4a928d25 2026-05-03 -> 93.4995; 8e142df9c 2026-06-12 -> 30.44"
+    },
+    "outputs/55maps-text-high-generalisation/cost_manifest.json": {
+      "totals.cost_usd": {"c48f639e3": 69.6017, "6b64ad0f6": 126.8051, "HEAD": 207.3382},
+      "movement_history": "4e5c5e5a3 2026-04-19 -> 69.6017; d7f85978d 2026-05-02 -> 114.0665; 7f05f5298 2026-05-03 -> 126.8051; 8e142df9c 2026-06-12 -> 207.3382"
+    },
+    "outputs/55maps-image-generalisation/evaluation/evaluation.json": {
+      "summary.buffers[3].f1": {"c48f639e3": 0.771, "6b64ad0f6": 0.771, "HEAD": 0.7745},
+      "buffers_index_check": "buffers = [20, 30, 40, 50] m; index 3 is the 50 m entry (verified at HEAD)",
+      "movement_history": "4c147af65 2026-04-18 -> 0.771; da84a3d23 2026-05-03T02:30Z -> 0.7744; 8699f456b 2026-05-03T02:45Z -> 0.7745"
+    },
+    "outputs/55maps-text-min-generalisation/evaluation/evaluation.json": {
+      "summary.buffers[3].f1": {"c48f639e3": 0.7591, "6b64ad0f6": 0.7591, "HEAD": 0.7619},
+      "movement_history": "f0f7158e7 2026-04-18 -> 0.7591; c1ea6df3c 2026-05-03T02:01Z -> 0.7595; 236327d80 2026-05-03T02:10Z -> 0.7619"
+    },
+    "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json": {
+      "dawid_skene.corrected_metrics.f1": {"c48f639e3": 0.7954, "6b64ad0f6": 0.7954, "HEAD": 0.799},
+      "measured.f1": {"c48f639e3": 0.771, "HEAD": 0.7745},
+      "parameters.buffer_metres": 50,
+      "movement_history": "a5f28fe9a 2026-04-18 -> 0.7954; 8699f456b 2026-05-03 -> 0.799"
+    },
+    "results/55maps-image-generalisation/ds-human-crosstab/summary.json": {
+      "unique_ds_posteriors[0]": {"c48f639e3": 0.186207, "6b64ad0f6": 0.186207, "HEAD": 0.18651},
+      "ece": {"c48f639e3": 0.5385006866301707, "6b64ad0f6": 0.5385006866301707, "HEAD": 0.5384655047983467},
+      "auc": {"all_eras": 0.5},
+      "movement_history": "dee0ecf0d 2026-04-21 -> 0.186207/0.5385007; 8699f456b 2026-05-03 -> 0.18651/0.5384655"
+    },
+    "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json": {
+      "results[0..4].F1": {
+        "c48f639e3": [0.8317312556915916, 0.8476609356257496, 0.8520545219381157, 0.8538232373386296, 0.8550739013986708],
+        "6b64ad0f6": [0.8317312556915916, 0.8476609356257496, 0.8520545219381157, 0.8538232373386296, 0.8550739013986708],
+        "HEAD": [0.8333333333333333, 0.8492166450454046, 0.8535955502582437, 0.8553583820759392, 0.8566052683699743]
+      },
+      "R_m_grid": [50, 75, 100, 125, 150],
+      "movement_history": "dee0ecf0d 2026-04-21 -> 0.83173...; 8699f456b 2026-05-03 -> 0.83322...; 3271d6923 2026-08-03 -> 0.83333...; 30a902f56 2026-08-03 -> 0.83333...",
+      "note": "Pre-recovery state also preserved on disk and git-tracked at summary.json.pre-recovery-20260503T023134.backup, whose F1 values are byte-identical to the c48f639e3 blob (verified)."
+    },
+    "results/gold-standard-subtype-classification/macro_weighted_summary.json": {
+      "summary_f1.weighted_f1": {"c48f639e3": 0.8873484175609226, "6b64ad0f6": 0.8873484175609226, "HEAD": 0.8876466273070027},
+      "movement_history": "762b23429 2026-04-21 -> 0.8873484; c60230347 2026-05-03 (gs-v2-recovery downstream propagation) -> 0.8876466"
+    }
+  },
+
+  "causal_account": {
+    "statement": "This partition is a single, pure snapshot-divergence block. Not one of the 42 rows is wrong at its own era: every quoted value resolves exactly, at the quoted precision, against its anchor as it stood at the document's own commit. The divergence is entirely artefact-side and was produced by three successive movements, ALL of which postdate the documents' last commit (6b64ad0f6, 2026-05-03T01:24:43Z): (1) the 2026-05-03T02:01-02:45Z recovery propagation for the image, text-MIN and GS-v2 runs, which the documents' own post-recovery banners could not cover because those banners were written 37-81 minutes EARLIER and are scoped exclusively to the text-HIGH recovery; (2) the 2026-06-12 audited-flex cost-manifest regeneration (8e142df9c), which overwrote every launcher-recorded totals.cost_usd in place at the same locator; (3) the 2026-08-03 corrected-F1 de-dup regeneration (3271d6923 / 30a902f56), which is this verification programme's own W6-E9 fix chain. The documents have not been touched since 2026-05-03; the artefacts have moved three times.",
+    "the_partial_refresh_mechanism": "The banners are ruling-17 partial-refresh residue in its purest form. On 2026-05-03 the maintainer propagated the text-HIGH recovery into all three documents (6b64ad0f6) and then, within the next 80 minutes, ran the image / text-MIN / GS-v2 recoveries (c1ea6df3c 02:01Z, 236327d80 02:10Z, a78cd7c55 02:28Z, da84a3d23 02:30Z, 8699f456b 02:45Z, c60230347) without a second documentation pass. That timing gap - not any authorial error - is why the anchor table's text-HIGH row carries a banner and its image and text-MIN rows do not, and why the image F1 (0.771 -> 0.7745), image D-S (0.7954 -> 0.799), text-MIN F1 (0.7591 -> 0.7619), ds-human-crosstab (0.186207 -> 0.18651; ECE 0.5385007 -> 0.5384655), multi-buffer corrected F1 and subtype weighted F1 all sit un-annotated in these documents to this day.",
+    "falsification_test": "Produce ANY row in this partition whose quoted value fails to equal, at the quoted number of decimal places, the anchor resolved by `git show c48f639e3:<path>` (body rows) or `git show 6b64ad0f6:<path>` (banner rows). I resolved all nine anchor artefacts at both commits and found zero such rows. A single counterexample refutes the account. Secondary falsifier: show an artefact commit that moved one of these nine anchors BETWEEN c48f639e3 and 6b64ad0f6 in a way that makes a body row unfaithful at the banner era - I found only one anchor that moved in that window (the text-high manifest, 69.6017 -> 126.8051), and the extraction already routes the two figures to separate values.",
+    "what_this_account_does_NOT_explain": "Three rows: the cache-hit row (a harness unit failure, not an artefact movement) and two cost rows whose extraction method is wrong (see outliers)."
+  },
+
+  "cost_kind_findings": {
+    "kinds_present": {
+      "as_recorded_manifest_pre_audit": "16 of 16 cost rows. Every dollar figure quoted in this partition is a launcher/aggregator-generated cost_manifest `totals.cost_usd` as it stood in 2026-04/05: priced at STANDARD rates although all four runs executed at --service-tier flex, with thinking tokens omitted from cost_usd although Gemini bills thinking at the output rate, and with 2-3x recovery-merge double counting on three of the four runs (reports/token-load-audit-2026-06-12.md SS 1, 3, 6).",
+      "audited_flex": "0 rows quoted; this is what the harness resolves. The current values at the same locators (200.833 / 30.44 / 207.3382) were written by 8e142df9c on 2026-06-12 from per-item metadata at flex rates with thinking billed and stub verifier legs reconstructed (token-load audit changelog, '2026-06-12 (later) - SS 9 recommendation EXECUTED').",
+      "billed": "0 rows, and none is reachable. The only billed figures in the project are Google-dashboard day/window totals (token-load audit SS 10: $402.08 on 18 Apr; $528.01 on 26 Apr; $1,122.90 over 18 Apr-7 May; $62.21/$33.75/$41.21 on 9-11 Jun). Billing is per-day and multi-campaign; NO per-run billed figure exists, so no row here can be repaired by re-anchoring to a billed figure."
+    },
+    "ruling_16_applicability": {
+      "verdict": "Ruling 16's ~5 % approximate-equality threshold RESCUES NOTHING in this partition. The kind gap is far outside any tolerance.",
+      "gaps_quoted_vs_head_percent": {
+        "$364.70 image vs $200.833 audited": 81.6,
+        "$60.79 text-min vs $30.44 audited": 99.7,
+        "$69.60 text-high pre-recovery vs $207.3382 audited": 66.4,
+        "$126.81 text-high post-recovery vs $207.3382 audited": 38.8,
+        "$495.09 total vs $438.6112 audited sum": 12.9,
+        "$552.30 total vs $438.6112 audited sum": 25.9
+      },
+      "the_one_place_ruling_16_does_bite": "090-audit-summary#9[1]. The banner's $552.30 is a sum-of-rounded-components (364.70 + 60.79 + 126.81 = 552.30 exactly, as the document itself writes it), whereas summing the era-resolved full-precision operands gives 552.2888 -> $552.29. The 1.12-cent, 0.002 % residual is a round-then-sum vs sum-then-round artefact and is approximately equal under ruling 16 by four orders of magnitude. The parallel body figure $495.09 needs no tolerance at all: the era operands sum to 495.0854, which rounds to 495.09 exactly."
+    },
+    "per_row_kind": "All 16 cost rows: kind = as-recorded manifest (pre-audit). Sub-state: $364.70 and $60.79 are the ORIGINAL 2026-04-18 launcher manifests; $69.60 is the ORIGINAL 2026-04-19 launcher manifest; $126.81 is the post-recovery (2026-05-03) aggregator rebuild, still pre-audit. $495.09 and $552.30 are sums of these."
+  },
+
+  "document_classification_ruling_17": {
+    "results/documentation-audit/audit-summary.md": {
+      "class": "DATED SNAPSHOT",
+      "presentation_axis_ruling_14": "advisory and silent - no dated filename, no dated title",
+      "substance_axis": "It carries '**Audit Date**: 2026-04-22' in its front matter, a 'Supersedes:' pointer to its own dated 2026-04-18 predecessor, and its body IS the record of what the 2026-04-22 audit found (including what the predecessor got wrong). It is a C6 attestation source for the doc-audit episode. Decisive maintainer evidence: on 2026-05-03 the maintainer added a dated banner and did NOT edit the body - the ruling-1 treatment, applied by the authors themselves.",
+      "repair_lane": "Extend the existing 2026-05-03 banner with a second dated rider covering the image / text-MIN / GS-v2 recoveries and the 2026-06-12 cost re-pricing. Do NOT rewrite the anchor table in place."
+    },
+    "results/documentation-audit/priority-backfill.md": {
+      "class": "DATED SNAPSHOT",
+      "presentation_axis_ruling_14": "advisory marker FIRES - the H1 is 'Priority Backfill Plan - 2026-04-22 Revision', a dated title",
+      "substance_axis": "Explicitly supersedes a dated 2026-04-18 predecessor; already banner-annotated 2026-05-03 rather than body-edited; its Tier tables are a point-in-time status record.",
+      "repair_lane": "Banner/rider only."
+    },
+    "results/documentation-audit/README.md": {
+      "class": "LIVING at file level, with SNAPSHOT UNITS",
+      "reasoning": "Its function is folder navigation - scope notes, 'Files in this draft', 'How a reviewer should read this draft', a verifier checklist - which is living content. But two of its sections are snapshot units in ruling 14's entry-level sense (the register precedent: 'the snapshot unit is the ENTRY, not the file'): (a) the 2026-05-03 post-recovery banner, and (b) the 'Why this draft exists' correction block, which is a historical record of the 2026-04-19 audit's specific errors. ALL THREE of my README rows sit inside those snapshot units.",
+      "repair_lane_warning": "In-place numeric repair of the 'Why this draft exists' block would CORRUPT a correction record. Rewriting '$60.79' to '$30.44' turns the sentence into 'was stated to cost $165.74 ... actually records $30.44', which misreports the 2026-04-22 audit as having found a 5.4x error where it found a 2.7x one, and destroys the evidence for its own finding. Banner/rider only for that block; the living remainder of the README (status line, folder inventory) may be refreshed in place.",
+      "separate_defect_noted": "The README's status line still reads 'DRAFT - awaiting verifier pass before committing' and says the canonical files are 'NOT modified until verification passes', while the draft has in fact been committed in place in the canonical directory since c48f639e3. audit-summary.md line 5 likewise points at 'results/documentation-audit/draft/README.md'. Not a C4 quantitative row and outside my partition, but a living-layer staleness the repair pass should pick up."
+    }
+  },
+
+  "rows": {
+    "090-audit-summary#7[1]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "6b64ad0f6", "era_value": 126.8051, "quoted": "$126.81", "head_value": 207.3382, "cost_kind": "as-recorded manifest (post-recovery, pre-audit)", "checked": "direct", "why": "Banner row. At the banner's own commit the text-high manifest read 126.8051, which is $126.81 to the cent. The 2026-06-12 audited-flex regeneration (8e142df9c) overwrote the same locator with 207.3382. Ruling 16 does not apply: 38.8 % apart."},
+    "090-audit-summary#9[1]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "6b64ad0f6", "era_operand_sum": 552.2888, "quoted": "$552.30", "head_value": 438.6112, "cost_kind": "as-recorded manifest sum (pre-audit)", "checked": "direct (operands re-resolved and re-summed at era)", "why": "364.6971 + 60.7866 + 126.8051 = 552.2888 at the banner era. The document's own decomposition ($364.70 + $60.79 + $126.81) sums to exactly 552.30, so the 1.12-cent residual is round-then-sum vs sum-then-round - approximately equal under ruling 16 at 0.002 %. The HEAD gap (25.9 %) is the cost-kind change, not a document error."},
+    "090-audit-summary#9[2]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "6b64ad0f6", "era_value": 364.6971, "quoted": "$364.70", "head_value": 200.833, "cost_kind": "as-recorded manifest (2026-04-18 original, pre-audit)", "checked": "direct", "why": "Faithful at both eras. Note this figure survives nowhere on disk today: the archived superseded manifest holds 1061.0781, not 364.6971. Only git-era resolution can support it."},
+    "090-audit-summary#9[3]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "6b64ad0f6", "era_value": 60.7866, "quoted": "$60.79", "head_value": 30.44, "cost_kind": "as-recorded manifest (2026-04-18 original, pre-audit)", "checked": "direct", "why": "Faithful at both eras. The archived superseded manifest holds 93.4995, so it cannot serve as the anchor either. 99.7 % from HEAD - ruling 16 inapplicable."},
+    "090-audit-summary#9[4]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "6b64ad0f6", "era_value": 126.8051, "quoted": "$126.81", "head_value": 207.3382, "cost_kind": "as-recorded manifest (post-recovery, pre-audit)", "checked": "direct", "why": "Same locator and same era as #7[1]; the banner restates the figure inside the sum decomposition."},
+    "090-audit-summary#15[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 364.6971, "quoted": "364.70", "head_value": 200.833, "cost_kind": "as-recorded manifest (2026-04-18 original, pre-audit)", "checked": "direct", "why": "Anchor-table cost cell, faithful at era. NOT covered by the 2026-05-03 banner, which is scoped to the text-high row only."},
+    "090-audit-summary#15[1]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.771, "quoted": "0.771", "head_value": 0.7745, "checked": "direct", "why": "Exact at era. Moved by the image recovery re-evaluation da84a3d23 (0.7744) then 8699f456b (0.7745), both 2026-05-03 and both AFTER the document's last commit at 01:24Z."},
+    "090-audit-summary#15[2]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.7954, "quoted": "0.795", "head_value": 0.799, "checked": "direct", "why": "0.7954 rounds to 0.795. Moved to 0.799 by the same image-recovery commit 8699f456b."},
+    "090-audit-summary#15[3]": {"verdict": "INSTRUMENT", "era_commit": "c48f639e3", "era_value": 0.91, "quoted": "91.0 (%)", "head_value": 0.9287, "checked": "direct", "why": "The harness compared a percentage (91.0) against a fraction (0.9287) with no unit bridge. Bridged, the document is EXACT at its era: totals.cache_hit_rate = 0.91 = 91.0 %. This is a harness failure, not a document or extraction failure - the extractor explicitly warned about it in the claim notes ('Scale note for the harness: the cache-hit cell is a percentage while $.totals.cache_hit_rate is a fraction (0-1)') and repeated the warning in 090-docaudit-readme claim 6. A written instrument warning was ignored.", "residual_after_bridging": "A genuine SNAPSHOT-DIVERGENCE remains underneath: 0.91 at era vs 0.9287 at HEAD (the 2026-06-12 regeneration recomputed the cache split from per-item metadata). Fixing the unit bridge alone will NOT clear this row; both must be recorded."},
+    "090-audit-summary#17[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 60.7866, "quoted": "60.79", "head_value": 30.44, "cost_kind": "as-recorded manifest (2026-04-18 original, pre-audit)", "checked": "direct", "why": "Anchor-table cost cell, faithful at era; not banner-covered."},
+    "090-audit-summary#17[1]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.7591, "quoted": "0.759", "head_value": 0.7619, "checked": "direct", "why": "0.7591 rounds to 0.759. Moved by the text-min recovery chain c1ea6df3c (0.7595) -> 236327d80 (0.7619) on 2026-05-03, 37-46 minutes after the document's last commit."},
+    "090-audit-summary#19[1]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.7954, "quoted": "0.7954", "head_value": 0.799, "checked": "direct", "why": "Exact at era, and this is the rare directly-anchored claim (the document names both file and key path). Moved by 8699f456b."},
+    "090-audit-summary#19[2]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.7954, "quoted": "0.795", "head_value": 0.799, "checked": "direct", "why": "Same value at 3 dp; the document states the rounding relationship explicitly and it held at era."},
+    "090-audit-summary#21[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.186207, "quoted": "0.1862", "head_value": 0.18651, "checked": "direct", "why": "0.186207 -> 0.1862 at 4 dp, exact. At HEAD the value is 0.18651, which rounds to 0.1865 - so this row LOOKS like a third-decimal typo if checked only against HEAD. It is not: the ds-human-crosstab was rebuilt by 8699f456b on 2026-05-03."},
+    "090-audit-summary#22[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.7954, "quoted": "0.795", "head_value": 0.799, "checked": "direct", "why": "Third restatement of the same era-faithful D-S posterior in the same document."},
+    "090-audit-summary#23[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.771, "quoted": "0.771", "head_value": 0.7745, "checked": "direct", "why": "Exact at era. Cross-checked against the D-S file's own measured.f1, which read 0.771 at era and 0.7745 at HEAD - the two anchors agree in both eras, so there is no anchor-choice ambiguity here."},
+    "090-audit-summary#30[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 364.6971, "quoted": "$364.70", "head_value": 200.833, "cost_kind": "as-recorded manifest (2026-04-18 original, pre-audit)", "checked": "direct", "why": "Deliverable-table restatement of #15[0]; same anchor, same era verdict."},
+    "090-audit-summary#30[2]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 60.7866, "quoted": "$60.79", "head_value": 30.44, "cost_kind": "as-recorded manifest (2026-04-18 original, pre-audit)", "checked": "direct", "why": "Deliverable-table restatement of #17[0]."},
+    "090-audit-summary#37[5]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8317312556915916, "quoted": "0.832", "head_value": 0.8333333333333333, "checked": "direct", "why": "Rounds to 0.832 at era. File moved twice after the document: 8699f456b (2026-05-03 recovery) and 3271d6923/30a902f56 (2026-08-03 W6-E9 de-dup regeneration)."},
+    "090-audit-summary#37[6]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8476609356257496, "quoted": "0.848", "head_value": 0.8492166450454046, "checked": "direct", "why": "Rounds to 0.848 at era."},
+    "090-audit-summary#37[7]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8520545219381157, "quoted": "0.852", "head_value": 0.8535955502582437, "checked": "direct", "why": "Rounds to 0.852 at era."},
+    "090-audit-summary#37[8]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8538232373386296, "quoted": "0.854", "head_value": 0.8553583820759392, "checked": "direct", "why": "Rounds to 0.854 at era."},
+    "090-audit-summary#37[9]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8550739013986708, "quoted": "0.855", "head_value": 0.8566052683699743, "checked": "direct", "why": "Rounds to 0.855 at era."},
+    "090-audit-summary#37[10]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8317312556915916, "quoted": "0.8317", "head_value": 0.8333333333333333, "checked": "direct", "why": "The document asserts these 4 dp figures as the literal contents of the named JSON ('rounded from the source JSON's ...'). That assertion was exactly true at era and is now false - a provenance claim about file contents, so it is the cleanest possible snapshot divergence."},
+    "090-audit-summary#37[11]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8476609356257496, "quoted": "0.8477", "head_value": 0.8492166450454046, "checked": "direct", "why": "Exact at 4 dp at era."},
+    "090-audit-summary#37[12]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8520545219381157, "quoted": "0.8521", "head_value": 0.8535955502582437, "checked": "direct", "why": "Exact at 4 dp at era."},
+    "090-audit-summary#37[13]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8538232373386296, "quoted": "0.8538", "head_value": 0.8553583820759392, "checked": "direct", "why": "Exact at 4 dp at era."},
+    "090-audit-summary#37[14]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8550739013986708, "quoted": "0.8551", "head_value": 0.8566052683699743, "checked": "direct", "why": "Exact at 4 dp at era. These ten rows (#37[5]-[14]) are ONE artefact movement of ONE file, not ten findings."},
+    "090-audit-summary#39[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.186207, "quoted": "0.1862", "head_value": 0.18651, "checked": "direct", "why": "Restatement of #21[0] at line 167; same anchor, same era verdict."},
+    "090-audit-summary#39[1]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.5385006866301707, "quoted": "0.539", "head_value": 0.5384655047983467, "checked": "direct", "why": "The trap row of this partition. At era ECE = 0.5385006866, which rounds UP to 0.539 - correct. At HEAD it is 0.5384655, which rounds DOWN to 0.538, so against HEAD the document appears off by one in the third decimal. The artefact moved by 0.000035 in the 2026-05-03 rebuild and crossed the rounding boundary. Anyone checking only HEAD calls this a document defect; it is not."},
+    "090-audit-summary#41[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8873484175609226, "quoted": "0.8873", "head_value": 0.8876466273070027, "checked": "direct", "why": "Exact at 4 dp at era. Moved by c60230347 (2026-05-03 GS-v2 recovery downstream propagation) - the third of the three recoveries the priority-backfill banner itself queues as outstanding. The document predicted its own divergence."},
+    "090-audit-summary#48[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.7954, "quoted": "0.795", "head_value": 0.799, "checked": "direct", "why": "Fourth restatement of the era-faithful D-S posterior, in the paper-facing section."},
+    "090-audit-summary#51[2]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_operand_sum": 495.0854, "quoted": "$495.09", "head_value": 438.6112, "cost_kind": "as-recorded manifest sum (pre-audit)", "checked": "direct (operands re-resolved and re-summed at era)", "why": "364.6971 + 60.7866 + 69.6017 = 495.0854 -> $495.09 exactly at the body era. No tolerance needed. The figure is separately retired by the document's own 2026-05-03 banner, which is a ruling-17 repair-layer matter, not a triage verdict."},
+    "090-audit-summary#51[3]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 364.6971, "quoted": "$364.70", "head_value": 200.833, "cost_kind": "as-recorded manifest (pre-audit)", "checked": "direct", "why": "Summand restated in the body total; era-faithful. Note the banner re-asserts this same $364.70 as still current post-recovery, so it is correctly extracted as `read` rather than `historical`."},
+    "090-audit-summary#51[4]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 60.7866, "quoted": "$60.79", "head_value": 30.44, "cost_kind": "as-recorded manifest (pre-audit)", "checked": "direct", "why": "As #51[3]; the banner likewise re-asserts $60.79."},
+    "090-docaudit-readme#3[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "6b64ad0f6", "era_value": 126.8051, "quoted": "$126.81", "head_value": 207.3382, "cost_kind": "as-recorded manifest (post-recovery, pre-audit)", "checked": "direct", "why": "The 'now' side of the README's 2026-05-03 correction block; faithful at the banner commit. This is the ONE row in the partition whose era value is preserved on disk today, in archive/superseded-cost-manifests-2026-06-12/55maps-text-high-generalisation__cost_manifest.json (126.8051)."},
+    "090-docaudit-readme#6[2]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 60.7866, "quoted": "$60.79", "head_value": 30.44, "cost_kind": "as-recorded manifest (pre-audit)", "checked": "direct", "why": "'the cost_manifest.json actually records $60.79' is a present-tense live read at the time of writing and was exact then, so `read` is the right method - unlike #7[3] below, no banner retires it. Repair caution: this clause is the evidentiary core of a correction record (it is what refutes the prior audit's $165.74); an in-place numeric rewrite would falsify that record."},
+    "090-docaudit-readme#7[3]": {"verdict": "RECLASSIFY", "reclassify_to": "historical", "era_commit": "c48f639e3", "era_value": 69.6017, "quoted": "$69.60", "head_value": 207.3382, "cost_kind": "as-recorded manifest (2026-04-19 original, pre-audit)", "checked": "direct", "why": "The document's own banner, twelve lines above, states: 'The audit figures below for 55maps-text-high-generalisation (cost $69.60, F1 @50m 0.788, D-S 0.813) are the pre-recovery 2026-04-19 launch state and remain accurate for that snapshot.' A value the document explicitly brands a superseded snapshot is `historical` under the instrument, and must not be compared against the live artefact at all - comparing it is a category error. The same extractor model applied `historical` to the identical $69.60 figure in the sibling batch (090-audit-summary claims 30 and 51) for exactly this reason; the README row is an intra-wave inconsistency. The extraction's own notes flag the tension ('NOTE for triage: the $69.60 here is asserted as a live cost-manifest read, but the document's own post-recovery annotation declares that figure superseded ... recorded as read, not adjudicated') - I am adjudicating it.", "fallback": "If the method is left as `read`, the row is SNAPSHOT-DIVERGENCE (era-faithful at 69.6017); the ledger disposition is unchanged either way."},
+    "091#5[0]": {"verdict": "RECLASSIFY", "reclassify_to": "historical / git-era read at the commit the document itself names", "era_commit": "c48f639e3", "era_value": 69.6017, "quoted": "69.60", "head_value": 207.3382, "cost_kind": "as-recorded manifest (2026-04-19 original, pre-audit)", "checked": "direct", "why": "The claim reads: 'the 2026-04-19 re-run ... produced cost_manifest.json with totals.cost_usd = 69.60 (commit range 4e5c5e5a..)'. It is a past-tense assertion about what a named commit produced, and it carries its own era locator. I resolved it: `git show 4e5c5e5a3:outputs/55maps-text-high-generalisation/cost_manifest.json` gives totals.cost_usd = 69.6017. The claim is TRUE at the commit it names and can never become false. The extraction discarded the commit range as 'out of scope per rule 5' (dates/commits), but here the commit is not decoration - it is the scope of the value, so dropping it mis-scoped the quantity and left a permanently-true historical claim in the live-read lane.", "fallback": "If kept as `read`, SNAPSHOT-DIVERGENCE."},
+    "091#8[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.7954, "quoted": "0.795", "head_value": 0.799, "checked": "direct", "why": "Era-faithful at 3 dp. Pre-recovery state also preserved on disk and git-tracked at dawid-skene-results.json.pre-recovery-20260503T023258.backup (0.7954, verified)."},
+    "091#9[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.7954, "quoted": "0.7954", "head_value": 0.799, "checked": "direct", "why": "The claim is explicitly about the file's contents ('The dawid-skene-results.json file still records 0.7954'), which was exactly true on 2026-04-22 and was changed by 8699f456b on 2026-05-03. Note the irony worth recording in the ledger: the action this item proposed (add a caveat pointer) was overtaken by a recovery that changed the number it was written about."},
+    "091#21[0]": {"verdict": "SNAPSHOT-DIVERGENCE", "era_commit": "c48f639e3", "era_value": 0.8873484175609226, "quoted": "0.8873", "head_value": 0.8876466273070027, "checked": "direct", "why": "Exact at 4 dp at era; moved by the GS-v2 recovery propagation c60230347 on 2026-05-03. Same anchor and same movement as 090-audit-summary#41[0]."}
+  },
+
+  "outliers": [
+    {
+      "row_id": "090-audit-summary#15[3]",
+      "verdict": "INSTRUMENT",
+      "why_it_does_not_fit_the_account": "It is not an artefact-movement row at all. The MISMATCH was manufactured by the harness comparing 91.0 (per cent) against 0.9287 (fraction). Even with a frozen artefact the harness would have reported 91.0 vs 0.91. Two independent things are stacked here and both must be recorded: a harness unit-bridge failure, and - once bridged - a real snapshot divergence (0.91 -> 0.9287) that no banner covers.",
+      "aggravating": "The extraction warned the harness about this scale mismatch in plain English, twice (090-audit-summary claim 15 notes; 090-docaudit-readme claim 6 notes). The instrument is emitting a machine-readable unit field AND a prose warning, and the harness is honouring neither. That is a fleet-level bug, not a one-row curiosity: any other percentage-vs-fraction cell in wave 7 will have failed the same way."
+    },
+    {
+      "row_id": "090-docaudit-readme#7[3]",
+      "verdict": "RECLASSIFY",
+      "why_it_does_not_fit_the_account": "Era-faithfulness is not the operative question: the document itself declares the figure a superseded pre-recovery snapshot, so it should never have entered the live-read comparison lane. Its sibling occurrences in 090-audit-summary were classified `historical` by the same extractor; this is a within-wave inconsistency."
+    },
+    {
+      "row_id": "091#5[0]",
+      "verdict": "RECLASSIFY",
+      "why_it_does_not_fit_the_account": "The claim carries its own git-era locator ('commit range 4e5c5e5a..') which the extraction dropped under rule 5 as a mere date/commit reference. Resolved at the named commit the value is exactly right (69.6017), and it is a permanently-true historical statement about what a run produced, not an assertion about current file state."
+    },
+    {
+      "row_id": "090-audit-summary#9[1]",
+      "verdict": "SNAPSHOT-DIVERGENCE (recorded as a near-outlier, not a separate class)",
+      "note": "The only row whose era check is not exact: era operands sum to 552.2888 vs the quoted $552.30. This is sum-of-rounded arithmetic, matching the document's own printed decomposition, and it is 0.002 % - inside ruling 16 by four orders of magnitude. Recorded so nobody later 'discovers' it as a defect."
+    }
+  ],
+
+  "likely_triager_errors": [
+    {
+      "error": "Invoking ruling 16 on the cost rows.",
+      "detail": "The task framing invites it, but no cost row is anywhere near 5 %: the smallest gap is 12.9 % ($495.09 vs $438.61) and the largest 99.7 % ($60.79 vs $30.44). Ruling 16 was decided on a DIFFERENT comparison (the audited image-vs-textHIGH ratio, 0.97x). Applying it to an estimate-vs-audited kind gap would launder a 3-5x pricing correction as a rounding tolerance."
+    },
+    {
+      "error": "Re-anchoring the cost rows to archive/superseded-cost-manifests-2026-06-12/.",
+      "detail": "That archive preserves the 2026-06 state (image 1061.0781, text-min 93.4995, text-high 126.8051, t0.3 67.8205), NOT the 2026-04 state the documents cite. Re-anchoring there rescues exactly ONE of the sixteen cost rows ($126.81) and would newly break $364.70 and $60.79, which never equalled 1061.08 / 93.50. Only ruling-9 git-era resolution works for the other fifteen."
+    },
+    {
+      "error": "Calling $364.70 (or $60.79, or $69.60) unsupported or fabricated.",
+      "detail": "None of these values exists anywhere in the working tree today. An auditor who greps the checkout finds no support and could easily write DOC-DEFECT or even a confabulation story. They are in the 2026-04-18/19 blobs (4c147af65, f0f7158e7, 4e5c5e5a3) and nowhere else. This is precisely the failure mode ruling 9 exists to prevent."
+    },
+    {
+      "error": "Using one era for the whole document.",
+      "detail": "audit-summary.md and README.md each contain claims from two eras: bodies at c48f639e3 (2026-04-22, text-high manifest = 69.6017) and banners at 6b64ad0f6 (2026-05-03T01:24Z, text-high manifest = 126.8051). A single-era check marks either the $69.60 rows or the $126.81 rows as defects. Six rows turn on this."
+    },
+    {
+      "error": "Trusting HEAD rounding on the three near-miss rows.",
+      "detail": "ECE (era 0.5385007 -> 0.539 correct; HEAD 0.5384655 -> 0.538), the degenerate posterior (era 0.186207 -> 0.1862 correct; HEAD 0.18651 -> 0.1865), and subtype weighted F1 (era 0.8873484 -> 0.8873 correct; HEAD 0.8876466 -> 0.8876). All three are sub-0.0004 artefact movements that cross a rounding boundary, so against HEAD they read as third/fourth-decimal typos rather than drift. These are the likeliest DOC-DEFECT false positives in the partition."
+    },
+    {
+      "error": "Treating #37[5]-[14] as ten findings.",
+      "detail": "One file, regenerated twice (2026-05-03 recovery; 2026-08-03 W6-E9 de-dup). Worth naming: the 2026-08-03 movement is this verification programme's own fix chain, so wave 7 is partly measuring divergence it created three days ago against documents it extracted yesterday."
+    },
+    {
+      "error": "Mis-reading the banners as authorial carelessness.",
+      "detail": "The maintainer was not selective. Commit 6b64ad0f6 landed at 2026-05-03T01:24:43Z; the image, text-MIN and GS-v2 recovery commits landed between 02:01:21Z and 02:45:24Z the same morning. The banner covers only text-HIGH because at the moment it was written that was the only recovery that had happened. A causal story that blames the author rather than the 37-81 minute ordering gap is wrong and is checkable in one `git log --date=iso-strict`."
+    },
+    {
+      "error": "Classifying all three documents the same way under ruling 17.",
+      "detail": "They differ. audit-summary.md and priority-backfill.md are dated snapshots (the latter with a dated title) whose maintainers already chose ruling-1 banner treatment; README.md is a living folder document containing two snapshot units. Blanket in-place repair of the README's 'Why this draft exists' block would corrupt a correction record by making the 2026-04-19 audit look wrong by 5.4x rather than the 2.7x that audit actually established."
+    },
+    {
+      "error": "Reading any of these dollar figures as billed.",
+      "detail": "No per-run billed figure exists in this project. Google billing is per-day and multi-campaign (token-load audit SS 10). Any repair proposal that promises to 'use the billed figure' for these runs cannot be executed."
+    }
+  ],
+
+  "ledger_recommendation": {
+    "disposition": "39 rows ledger-only under ruling 14 (era-faithful + artefact moved). Ruling 17's repair layer applies in parallel: audit-summary.md and priority-backfill.md take a second dated banner/rider covering the 2026-05-03 image/text-MIN/GS-v2 recoveries and the 2026-06-12 audited-flex re-pricing (bodies untouched); README.md's living sections may be refreshed in place but its two snapshot units take a rider only.",
+    "instrument_work_registered": "(1) Bridge percentage-vs-fraction in the recompute harness using the extraction's `unit` field - the data is already there and was already flagged in prose. (2) Extend era_check to arithmetic rows (both totals in this partition needed operand-level era resolution to adjudicate). (3) Teach the extractor to treat an in-text commit reference as an era locator rather than rule-5 out-of-scope metadata (091#5[0])."
+  }
+}
