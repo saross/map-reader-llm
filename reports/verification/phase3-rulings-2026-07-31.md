@@ -255,3 +255,43 @@ ledger-only" was a triage-lane verdict, never a repair rule. Dated
 snapshot records keep ruling-1 banner/rider treatment. Where a
 refresh changes a cited 3-d.p. form, downstream citations are swept
 in the same pass (P2 R9's coupling discipline).
+
+---
+
+## Session-127 rulings — 2026-08-04 (fifth batch)
+
+Collected interactively during the wave-7 escalation review, in the
+48-hour Opus window. Same force as rulings 1–17.
+
+## 18. Repair-and-re-extract coupling; the backlog rides the waves
+
+**Ruling: complete repair, sequenced by coupling rather than by date.**
+The PI asked the right question of the W7-E2 escalation — if future
+corrections re-stale the corpus, *when* does a complete repair happen?
+The answer is that no date works on its own: 78 batches remain (~4
+waves), every wave produces triage repairs, and every repair re-stales
+the documents it touches. A sweep run early is invalidated ~4 more
+times; a sweep run late leaves every intervening wave carrying
+spurious mismatch rows.
+
+Adopted instead, in this order:
+
+1. **The coupling invariant, effective immediately** — a pass that
+   edits a mine document re-extracts it in the same commit. Landed as
+   charter § 5 rule 14. This stops accumulation at source and is what
+   makes any subsequent sweep durable.
+2. **Clear the pending document-repair queue first** — the deferred
+   wave-6 doc repairs, W6-E10, and W7-E4 are known future edits;
+   sweeping before them would re-stale exactly those documents.
+3. **Fold the backlog into waves 8–12** — 18 documents, 10,092 lines,
+   roughly 40 batches, distributed across the remaining schedule rather
+   than run as a separate exercise. Total fleet ~118 batches instead of
+   78, with no second pass over the corpus.
+4. **GATE 3 carries a whole-corpus validation and drift check** as
+   proof the invariant held. Per-wave validation sees only its own
+   wave, which is precisely why the drift went unnoticed for six waves.
+
+Rejected: a single pre-GATE-3 sweep with no invariant (cheapest to
+schedule, but every intervening wave's triage pays for it), and
+limiting the backlog to paper-citable documents (paper exposure is not
+currently recorded anywhere, so it would need establishing first).

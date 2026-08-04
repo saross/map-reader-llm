@@ -190,6 +190,24 @@ DEFERRED (blocked, reason stated)**.
     without a recorded defence search is an incomplete verdict. Where
     stakes warrant, run the defence as a separate fresh-context pass
     (rule 2 applied to the finding itself).
+14. **A document repair re-extracts that document, in the same commit**
+    (PI ruling, 2026-08-04, Session 127). C4 extraction pins each mine
+    document by `git_blob`; a later edit to that document silently
+    strands its claims at a body that no longer exists. Left uncoupled
+    this compounds — by wave 7 it had reached 17 documents and 1,129
+    unsurveyed lines, and it manufactured 54 MISMATCH rows in the
+    post-wave-7 recompute that were not research defects at all, merely
+    an extraction quoting a document mid-repair. The marginal cost of
+    re-extracting while the document is already open is a single agent;
+    the cost of not doing so is an ever-growing backlog and a
+    completeness claim that decays. This binds every pass that edits a
+    document in the hand-written stratum: triage repairs, propagation
+    sweeps, dated riders that alter figures, and refreshes under the
+    Document Revision Policy. Banner-only additions that touch no
+    quantitative span are exempt. GATE 3 carries a whole-corpus
+    validation and drift check as the backstop that proves the
+    invariant held (a per-wave validation sees only its own wave, which
+    is why this went unnoticed for six waves).
 
 ## 6. Ledgers
 
