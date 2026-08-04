@@ -8004,3 +8004,106 @@ promoted count and `canonical-review.csv`'s R=50 rows is unverified and was
 deliberately not explained away. Ruling 19's description of the per-buffer
 gating *mechanism* is a reading of the Approach B framing, not a verified
 claim; the counts are solid, the mechanism sentence is not.
+
+## Session 128 — 2026-08-04 — W7 repair queue; W7-D9 opened and W7-R1 closed; ruling 21; the coverage checker
+
+**Model**: Opus 5. **API spend**: US$0.00. **Commits**: `e213d009c` →
+`39735c304` (plus `3fee6c338` authored on sapphire). All pushed; both
+machines clean and synced at close.
+
+**Defects repaired**: W7-D5 (the false-green anchor in `073.json`), W7-D3,
+W7-D4, W7-D6 (all three adjudicated from artefacts, all in
+`55maps-ds-summary-v2/report.md`), W7-D9 (opened and repaired the same
+session), W7-D1's registered instance, W7-D2.
+
+**W7-D5 → W7-D9.** Re-anchoring the false green from the T=0.7 corrected-F1
+artefact (`$.results[0].n_ref_student_only` = 4745) to the T=0.7 D-S artefact
+(`$.item_counts.matched` + `$.item_counts.student_only` = 3527 + 1243 = 4770)
+turned the claim red with `abs_error` 25. The mismatch was a real document
+defect: the four Dawid–Skene fits do **not** share a ground truth. Image
+consumed the reviewed curator layer (4,745); T=0.7, T=0.3 and text-MIN
+consumed the fixed 4,770 base, the script default at
+`scripts/analyse_dawid_skene.py:57`. Established two ways — per-run
+`student_label == 1` counts, and a decisive witness test on the single
+feature `baf1497a7` added at (396492.2142937911, 4662802.316746469) on
+`K-35-064-3_Dimitrovgrad_4326`, which is a student point only in the image
+item set while T=0.7 carries `student_label = 0` at that exact coordinate.
+Commit `366f9c66f`'s message claims the D-S re-run used the updated GT and is
+contradicted by its own artefact.
+
+**W7-R1 open question (2) CLOSED.** Blind pass P4 read D-S fits; the census
+read evaluation metadata. Both were right about their own object, so the
+census never inverted the blind pass. Two asymmetries in two stages: t0.3 on
+evaluation (W7-D8), image on Dawid–Skene (W7-D9).
+
+**Ruling 21 collected** (PI, interactive). The reference is standardised
+first; every reference-tainted analysis then runs once against it. Marking
+scope is the 773 phantoms only (≈ 1 h; the 4,746-student option priced at
+≈ 6 h and declined). The product is a best-possible reference, explicitly not
+a gold standard — joint student + model false negatives are not economically
+recoverable, and that limitation ships in the artefact's own header. The
+4-map GS corpus is out of scope: four review passes, every point re-positioned
+to dead centre within 1–2 px, one additional FN at the fourth pass, nothing
+since. New register:
+`reports/verification/reference-standardisation-queue.md` (5 no-API items,
+3 resolved by the marking pass itself).
+
+**Rule-14 re-extraction**: `b073`/`b074` re-extracted in the repair commit.
+151 spans re-located verbatim, 7 re-extracted, 8 new claims added — all 8
+recompute GREEN. One claim deleted (its repaired sentence asserts no
+quantity), so b073 indices after 3 have shifted. b073 86 → 91 claims, b074
+65 → 67. Blob repointed `cd464933438d` → `ceb1666e54b4`.
+
+**W7-D1 measured as a class**: 24 files, not one, found by reconstructing
+`da2cf355f`'s 42 renames and scanning the tracked tree. Per-file dispositions
+recorded (repair / leave-as-dated-history / regenerate / decide). The
+instrument itself is clean — **all 5,492 anchor-file references across the
+extraction corpus resolve**. The instance repaired included a *runnable*
+re-derivation command that raised `FileNotFoundError`; no value moved, and
+the recipe was tightened to reproduce its own table.
+
+**New tooling**: `scripts/check_c4_plan_coverage.py` — the whole-corpus
+coverage and drift check ruling 18 point 4 asks GATE 3 to carry. Three
+checks: line coverage, claim containment, missing files. Exits 1 on failure.
+
+**Measurements produced**: coverage — 17 documents carry **1,142 unassigned
+lines**, independently corroborating S127's separately-derived 1,129; plus
+the inverse signal S127 could not see, **13 claims in 4 extractions surveying
+lines the plan does not cover** (036, 046, 049,
+054-c4-extraction-instructions). Ledger refreshed on sapphire: 16,083 →
+16,238 rows, MATCH 7,170 → 7,263, MISMATCH 639 → **619**, runtime **18 s**.
+W7-I4 — the same `--at-era` validation returns "128/128 valid" on amd-tower
+and "FAIL: 3/128" on sapphire, from one commit, because three anchors point
+at untracked paths. Point-marking recon —
+`canonical-review.csv` holds 773 rows with `buffer_metres` in **two string
+formats**, so grouping on the raw string reports 410 at R = 50 m instead of
+**415**; the cumulative series is 415/594/685/729/763/773.
+
+**Plan re-ranging**: `b166`–`b170` re-mapped after the
+temperature-failure-recovery repair and `b170`'s tail extended 1016 → 1102,
+closing a **pre-existing** 43-line gap; `b073`/`b074` re-ranged to 1–384 and
+385–771 after the rule-14 re-extraction.
+
+**Notes written**: Obs 391 (a false green is a thread), Obs 392 (name the
+object), Obs 393 (witnesses beat aggregates), Obs 394 (machine-dependent
+verification); four user-observation candidates, all kept at review.
+
+**Externalised for S129**: `planning/point-marking-app-spec.md` (spec plus
+data reconnaissance and the output contract),
+`reports/verification/reference-standardisation-queue.md`, the S129
+continuity block, and the updated open-items register (now 9 defects,
+4 instrument gaps, statuses on every repaired item).
+
+**Contextual assumptions**: no compaction or continuation — one instance
+throughout. The session ran with agent delegation disabled by session
+directive, so the rule-14 re-extraction that would normally be delegated to
+an extraction agent was performed in-context by verbatim span re-location
+plus manual extraction of changed and new content; this is why its method is
+documented in the batch notes rather than assumed. W7-U2 is **sharpened, not
+closed** — 415 at R = 50 m is now confirmed from the file, and the CSV's
+cumulative series contains neither 474 nor 672, so ruling 19's figures
+describe a demonstrably different object; still not citable. W7-U1 unchanged
+and still unverified. Three `TBD` commit-hash placeholders were left
+deliberately in two report changelogs and the queue register: filling them is
+a document edit, which under rule 14 costs a re-extraction, so they are
+queued into the S129 merge pass where that cost is already being paid.

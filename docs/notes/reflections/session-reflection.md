@@ -9688,3 +9688,119 @@ borderline cases into work already committed rather than opening a new
 front; unify F1 and MCC references but *do not recompute twice*. All three
 are sequencing insights that I, working item-by-item, did not reach on my
 own.
+
+## Session 128 — 2026-08-04 — the session that stopped fixing the defect and fixed the thing producing it
+
+*Project: map-reader-llm. Written by the instance that did the work — no
+compaction or continuation; these are first-person.*
+
+### Prompt: What question emerged that wasn't pursued?
+
+**How many other false greens are there?**
+
+The session's first task was a registered nit: an extraction claim anchored
+to an artefact that agreed numerically but described a different
+computation. Re-anchoring it turned the claim red, and the red opened
+W7-D9. That is a good outcome for one claim. It is an uncomfortable one for
+the corpus, because the property that made it findable was luck — a blind
+pass happened to read the *semantics* of an anchor rather than its value.
+
+The corpus holds 16,238 recomputed rows, of which 7,263 are green. The
+verification apparatus — triage, blind passes, escalations, this whole
+programme — operates almost entirely on rows that **failed**. A row that
+passes is consumed as evidence of soundness and never revisited. So the
+false-green class is not merely unmeasured; it is unmeasurable by the
+instrument as built, because detecting one requires asking "does this
+anchor describe the same quantity the sentence asserts?", which is a
+semantic question and the comparer is numeric.
+
+I recorded the gap in Obs 391 and did not pursue it, which was right for
+tonight — it is a design question, not a repair. But it is the most
+uncomfortable thing I know about the programme's completeness claim, and it
+sits oddly beside the strong negative I *was* able to establish (all 5,492
+anchor-file references resolve). We can prove every anchor points at
+something. We cannot currently prove any anchor points at the right thing.
+
+A second, smaller one: the ds-summary's § 2.1 table has shown
+`matched + student_only = 4,770` for three runs and `4,745` for image since
+it was written. The asymmetry was on the page, in a table, for months. Nobody
+read across the row. I have no general fix for that, and I notice I do not
+know how many other tables in this corpus contain their own contradiction in
+plain sight.
+
+### Prompt: What was different about this session compared to recent ones?
+
+Recent sessions have been *deepening*: each one found a subtler variant of a
+known problem — a triager binding the wrong pool, a guard that flags and also
+misses, a granularity error firing in three directions. The work was
+inward, and it got better by getting finer.
+
+This session went the other way, and it was Shawn who turned it. Presented
+with W7-D9 and three carefully-priced options for repairing § 4.1, he took
+none of them and restated the problem a level up: fix the reference, then run
+everything tainted once. Ruling 21. The striking thing is that **my three
+options were all correct** — each would have repaired the section honestly —
+and all three were the wrong kind of answer. I had been asked to repair the
+fourth reference defect in four days and was still offering per-site repairs.
+
+So the difference is a change of gradient. Sessions 122–127 improved the
+instrument. Session 128 was the first to conclude that a whole class of
+repairs should **stop** until an upstream artefact exists. That is a
+different move and I did not make it; I would not have made it, because
+item-by-item is where my attention naturally sits and each item was
+individually tractable.
+
+There is a smaller difference worth noting too. Everything expensive is now
+gated. When Shawn offered an overnight run on sapphire I found there was
+nothing overnight-sized to run — the whole-corpus recompute takes **18
+seconds**. The absence of a long job is not slack; it is ruling 21 working
+as designed, holding back exactly the bootstrap and permutation work that
+would otherwise be the overnight candidate. A session with nothing to
+compute is a session whose next move is to build something.
+
+### Prompt: What's the single most important thing a future reader should know about this session?
+
+That the ordering changed, and why.
+
+Before today the programme's spine was the wave schedule: extract, triage,
+repair, escalate, repeat to GATE 3. Reference defects were handled inside
+it as they surfaced. Ruling 21 breaks that: the reference becomes an
+artefact to be *built* — via an app that does not yet exist and an hour of
+Shawn's clicking — and a whole class of analysis waits behind it.
+
+The argument that carried it is one I would want a future reader to have
+in compressed form, because it is not obvious and it is a bit
+counter-intuitive: **under charter rule 14, deferring a fix makes it cost
+more, not less.** Every reference-tainted claim I caveat today needs a
+second edit when the re-analysis lands, and each edit costs a re-extraction
+of every batch covering that document. Tonight `ds-summary-v2` took its
+third extraction in two days. Deferral does not park a cost; it multiplies
+one. That is why the app moves ahead of wave 8 despite wave 8 being the
+programme's nominal spine, and why the merge pass — apply every pending
+change to a document in one edit — is the right shape for what follows.
+
+The second thing, cheaper to state: **two verification layers can disagree
+and both be right.** Blind pass P4 read Dawid–Skene fits; the census read
+evaluation metadata; a day was spent on a contradiction that did not exist,
+and a true claim was withdrawn in the confusion. There are two reference
+asymmetries in this project, in two pipeline stages, singling out different
+runs in opposite directions. Any sentence of the form "run X used reference
+Y" is unevaluable until it names the stage.
+
+### Footer
+
+**Texture**: front-loaded and then wide. The first hour was a single thread
+pulled from one anchor to a document defect to a closed research question —
+narrow and fast. Everything after was breadth: a class measurement across
+24 files, a coverage checker, a cross-host divergence, a spec. The pivot
+between the two was Shawn's, not mine.
+
+**Relational note**: the pattern from Session 127 held and sharpened. Shawn
+declined my option menu twice — once by reframing to ruling 21, once by
+asking to clarify a question before answering it — and both times the
+reframe was better than anything on offer. Worth recording that the second
+one came as *"the user wants to clarify these questions"*, i.e. he stopped
+me mid-question rather than picking a bad option to keep things moving. The
+questions I had written were answerable but were the wrong questions, and
+he could tell before answering them. I should read that as a signal about
+question quality rather than about his uncertainty.

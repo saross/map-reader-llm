@@ -6942,3 +6942,93 @@ triggers a re-extraction, and that `git_blob` pins a *document* while
 batches cover *ranges*, so an edit invalidates the pointer for batches
 whose own lines never moved. The invariant is right; its granularity is
 not yet.
+
+## Session 128 — 2026-08-04 (a passing verdict on the wrong quantity; the reference question that needs a stage before it has an answer; witnesses beat aggregates; and a check whose answer depended on the machine)
+
+**A numeric verifier cannot see the difference between agreeing and being
+about the same thing.** An extraction claim was anchored to an artefact
+holding `4745` when the sentence concerned a computation whose artefact held
+`4770`. The comparer read the anchor, read the document, saw agreement, and
+returned green. Every layer downstream then consumed that green as evidence
+of soundness. The failure is not that the check was weak; it is that the
+check answers "do these numbers match?" while the claim being made is "does
+this artefact record the thing this sentence asserts?" — and the second
+question is semantic. What makes this worse than an ordinary miss is the
+asymmetry in what the apparatus attends to: triage, blind passes and
+escalations all operate on rows that *failed*. Nothing in the programme ever
+re-reads a row that passed. So a false green is not just an error, it is an
+error in the one category the machinery is built never to revisit — and its
+prevalence is therefore unknown and, with the current instrument,
+unknowable. The one heuristic that survives: **prefer the anchor that
+describes the same computation over the anchor that agrees numerically**,
+because agreement can be coincidental and identity of computation cannot.
+
+**"Which input did this run consume?" is not a well-formed question until it
+names the pipeline stage.** Two verification layers reached opposite
+conclusions about the same four runs and both were correct: one reasoned from
+Dawid–Skene fits, the other read evaluation metadata. Those are different
+objects and there was never a contradiction — but the record briefly held one
+layer as having "inverted" the other, and a true claim was withdrawn in the
+confusion. The underlying condition is architectural: the D-S aggregator
+takes the fixed base by *default* and only sees a corrected layer if an
+operator passes `--ground-truth`, while the evaluation and MCC stages are
+configured independently. Nothing forces them to agree and nothing warns when
+they diverge, so a project can carry **two reference asymmetries in two
+stages, singling out different runs in opposite directions**, for months.
+Generalisable form: for any multi-stage pipeline, "the ground truth" is a
+property of the stage, not of the run, and a claim that omits the stage is
+not weak — it is unevaluable.
+
+**A witness beats an aggregate, and a corrections history is a factory for
+witnesses.** The reference question sat open for a day on count evidence
+(4,770 / 4,770 / 4,770 against 4,745), which was correct but circumstantial —
+the register itself recorded that inferring a reference from implied counts
+was not conclusive. It closed in minutes once the question was reformulated
+from "do the totals imply the layer?" to "is *this one point* present as a
+student reference?". The commit that added a single feature to the corrected
+layer defines exactly such a test, and its answer cannot be produced by
+coincidence the way an aggregate can. The sharpest detail: in the run that
+had *not* consumed the corrected layer, an item existed at that precise
+coordinate but carried `student_label = 0` — the curator had marked a mound
+where a detector had already flagged one, so the *position* was occupied in
+both worlds and only the *label* discriminated. A test on coordinates alone
+would have said "present" in all four runs. The preference order this yields:
+a recorded argument (`cli_args`, run meta) first, a witness element's
+membership second, aggregate agreement last — and note this is the second
+time in two sessions that a direct declaration beat an inference from
+outputs.
+
+**A verification result that depends on the host is not a property of the
+repository.** The same command, the same commit, returned "128/128 valid" on
+one machine and "FAIL: 3/128" on another, because three anchors point at
+untracked paths that exist where they were authored. The governing ruling
+already anticipated the class in the abstract — scope is tracked artefacts
+plus tracked proxies, anything else is a named triage family — but the
+instance had gone unnoticed because **every run so far had been single-host,
+and a single-host run is structurally incapable of detecting this**. It is
+not a matter of looking harder; the information is absent from one machine's
+output. Two things follow. First, the cheapest possible check (run the same
+command twice, on two hosts) covers a class that no amount of within-host
+rigour reaches, and it had never been in the protocol because nothing
+suggested the answer *could* be host-dependent. Second, the reflex on seeing
+"works here, fails there" is to fix the environment — here the environment
+*is* the finding, and treating it as an ops annoyance would have discarded
+it. Worth pairing with the observation that the ledger's canonical host and
+the interactive validator's host differ, so the two had been measuring
+different corpora, each internally consistent.
+
+**Coupling maintenance to the action that creates the debt (Session 127) has
+a third step nobody had written down.** Rule 14 says a document repair
+re-extracts that document in the same commit. Exercising it tonight showed
+the invariant is incomplete: re-extracting updates the *extraction's* line
+anchors but leaves the *batch plan's* ranges untouched, so a rule-14 repair
+silently opened a 108-line tail gap on a document that had just been fully
+re-surveyed. The full obligation is **repair → re-extract → re-range**. This
+is the same shape as the granularity error recorded last session — an
+invariant that is right about *what* must happen and wrong about the *scope*
+it must happen over. It also generalises past rule 14: any invariant that
+couples two artefacts should be checked against every artefact that indexes
+either of them, because the coupling is only as good as its transitive
+closure. The check that caught it was a whole-corpus one written the same
+day; the per-wave validation that has run for eight waves could not have,
+since it sees only its own wave.

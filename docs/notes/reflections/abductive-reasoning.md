@@ -6399,3 +6399,156 @@ Not an argument against blind verification. The blind pass caught a false
 claim I had written into a dated changelog as verified fact, and without it
 that claim would have shipped. The finding is about what *kind* of
 additional layer buys resolution once two layers already disagree.
+
+## 2026-08-04 (Session 128, map-reader-llm): The contradiction that was never a contradiction, and the pass that succeeded for the wrong reason
+
+**Session:** 97e60f1d-06cb-4e92-9bdb-9df4ad29fb6e
+**Instance:** primary
+
+*Direct continuation of the Session 127 entry above, which is the necessary
+context: that entry recorded a belief revision built on a refutation. This
+entry revises the revision.*
+
+### Sequence 1 — "the census inverted the blind pass"
+
+#### Surprising fact
+
+Session 127 closed holding that a blind pass and a census had reached
+**opposite** conclusions about which ground-truth layer the four 55-map runs
+consumed — the blind pass placing image at 4,745 and the rest at 4,770, the
+census finding t0.3 the odd one out instead. The register recorded this as
+"the_inversion" and treated the census as having corrected the blind pass,
+while honestly flagging a residue: the blind pass "reasoned from what the
+DAWID-SKENE FITS imply, not from evaluation metadata; those are different
+objects, so its claim is not strictly refuted".
+
+The surprise came when I tested the blind pass's claim directly, expecting
+to confirm the census had superseded it. Every count the blind pass gave was
+**exactly right**: `matched + student_only` reads 4,770 for T=0.7, T=0.3 and
+text-MIN, and 4,745 for image. So was every count the census gave. Two
+mutually exclusive findings, both fully verified.
+
+#### Probe
+
+The residue flagged in the register turned out to be the whole answer rather
+than a caveat on it. I read `scripts/analyse_dawid_skene.py` to find what the
+D-S stage actually consumes — `_STUDENT_GT_PATH` at line 57, the fixed
+4,770-feature base, taken by default unless an operator passes
+`--ground-truth`. The evaluation stage is configured separately; the MCC
+artefacts separately again.
+
+That reframed the question from "which layer did run X use?" to "which layer
+did stage S of run X use?". Under the second question both findings are true
+simultaneously and describe **different asymmetries in different stages**:
+t0.3 is the outlier on evaluation, image is the outlier on Dawid–Skene.
+
+#### Belief revision
+
+**From**: "a later, more direct measurement supersedes an earlier inferential
+one" — the natural reading of the census correcting the blind pass, and the
+one Session 127's entry drew a practice rule from.
+
+**To**: **two findings can only contradict each other if they are about the
+same object, and "the ground truth this run used" does not denote one
+object.** There was never a contradiction to resolve. The apparent inversion
+was an artefact of a question phrased at the wrong granularity — the same
+failure mode this file recorded at Session 126 for `era_check` (asking about
+the *file* when the question was about the *claim*), now recurring at the
+level of a research question rather than a code field.
+
+The cost of the mis-framing is worth recording: a *true* claim was withdrawn.
+Session 127's changelog assertion about D-S reference layers was over-broad
+and rightly withdrawn — but the blind pass that triggered the withdrawal was
+itself then treated as refuted, and its correct finding sat in the register
+labelled "inverted" for a day.
+
+#### What would change this belief
+
+A case where two verification layers genuinely contradicted each other *about
+the same named object* would restore the supersession rule in its proper
+scope. I have not stopped believing direct declarations beat inferences — the
+Session 127 rule stands and was reinforced here. What I have stopped
+believing is that a later measurement's disagreement with an earlier one is
+*evidence* the earlier one was wrong, absent a check that they share a
+referent.
+
+### Sequence 2 — "a green verification means the claim was checked"
+
+#### Surprising fact
+
+The session's opening task was repairing a "false green": a claim anchored to
+an artefact that agreed numerically with the document but described a
+different computation. I expected re-anchoring to be bookkeeping — swap the
+pointer, watch the row stay green against the correct artefact, move on.
+
+It went **red**, with `abs_error` 25. The document was wrong, not just the
+anchor.
+
+#### Probe
+
+Two tests, and the difference between them is the transferable part.
+
+The **count test** compared implied reference sizes across runs (4,770 versus
+4,745). Strong, and it is what the blind pass had used — but circumstantial,
+because aggregates can agree coincidentally, which is precisely why the
+question had stayed open.
+
+The **witness test** was decisive. Commit `baf1497a7` added exactly one
+feature to the corrected layer, so that feature's membership discriminates
+the layers by a single lookup. It appears with `student_label = 1` only in
+the image item set. In T=0.7, an item exists at that exact coordinate but
+carries `student_label = 0` — the curator had marked a mound where a detector
+had already flagged one, so the *position* is occupied in both worlds and
+only the *label* separates them. A coordinate-only test would have reported
+"present" in all four runs and confirmed the wrong conclusion.
+
+#### Belief revision
+
+**From**: a passing verification means the claim was checked.
+
+**To**: **a passing verification means a comparison succeeded; whether it was
+the right comparison is a separate question the instrument does not ask.**
+The comparer answers "do these numbers match?" while the claim asserts "this
+artefact records the thing this sentence is about". Green is evidence for the
+first and silent on the second.
+
+The structural aggravation is what makes this more than pedantry. This
+programme's entire attentional apparatus — triage, blind passes, escalations,
+the open-items register — operates on rows that **failed**. A row that passed
+is consumed as evidence of soundness and never re-read. So a false green
+lands in the one category the machinery is built never to revisit, and its
+prevalence cannot be estimated by any process currently running.
+
+#### What would change this belief
+
+A semantic check — anchor-describes-the-asserted-quantity, rather than
+anchor-value-equals-document-value — run across the green rows, returning a
+low rate, would bound the class and downgrade this from a structural blind
+spot to a known small error rate. Nothing of the kind exists yet, and a
+purely numeric comparer cannot be it.
+
+### Implications for practice
+
+1. **Before treating two findings as contradictory, check they share a
+   referent.** Both sequences here and both sequences in the Session 127
+   entry are referent-selection problems; that makes four in two sessions,
+   and the pattern is now stable enough to be a standing first question
+   rather than an occasional insight.
+2. **When a repair makes a claim go red, that is the result.** The pull
+   toward restoring green is strong and was worth writing an explicit
+   instruction against, in the repaired artefact itself.
+3. **Prefer, in order: a recorded argument, a witness element's membership,
+   aggregate agreement.** A corrections history generates witnesses for free —
+   every commit that added or removed a single feature defines a test that
+   separates two layers by one lookup.
+
+### What this is not
+
+Not a claim that the census was wasted or the blind pass vindicated over it.
+Both were necessary and both were right; what was wrong was the framing that
+made them rivals. And not an argument that green verifications are generally
+untrustworthy — 7,263 of them stand, and the same session established a
+genuinely strong negative alongside this weak one (all 5,492 anchor-file
+references resolve). The precise position is narrower and worse: we can prove
+every anchor points at *something*, and cannot currently prove any anchor
+points at the *right* thing.

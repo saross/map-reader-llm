@@ -750,3 +750,114 @@ Specifically: before closing, grep the session's own findings for anything
 that exists only in chat or only in a commit message, and move it into the
 register the next session reads. Both times I did that today it found
 something.
+
+## claude-obs 32 — 2026-08-04 (Session 128): self-critique — my option menu omitted the option he took, and it was the same omission as yesterday one level up
+
+**Pattern.** Presented with W7-D9 — the fourth reference defect in four days —
+I built a careful decision: three ways to repair § 4.1 of one document, each
+priced, each with a preview of the resulting text. All three were correct.
+Shawn declined all three and restated the problem a level up: standardise the
+reference first, then run every tainted analysis once against it. That became
+ruling 21. The option "stop repairing instances of this class and fix the
+thing that keeps producing them" was not on my menu, and I had written
+claude-obs 29 *yesterday* about exactly this failure — repairing the instance
+and leaving the class. Yesterday it was one document's dead paths; today it
+was a whole category of analysis. Same shape, one level up, twenty-four hours
+apart.
+
+**Lesson.** Recognising a failure mode does not immunise against it at the
+next scale. Claude-obs 29 taught me to ask "is this defect an instance of a
+class?" and I did ask it — that is why I measured W7-D1 across 24 files
+rather than fixing one. But I asked it about *defects* and not about
+*repairs*. The recurring thing was not the defect class; it was that my
+repairs kept being per-site while the generator kept producing new sites. A
+lesson learnt at one altitude does not transfer downward or upward on its
+own.
+
+**How to apply.** When constructing options for the *n*th instance of
+anything, make "change what produces these" an explicit priced option, not
+an implicit background possibility — especially when *n* ≥ 3. And treat a
+recent self-critique as a live checklist item rather than a settled insight:
+before presenting a repair menu, re-read the last self-critique and ask
+whether it applies at this scale. Cross-references [[claude-obs 29]].
+
+## claude-obs 33 — 2026-08-04 (Session 128): he answers a scoping question with provenance, and the provenance is worth more than the answer
+
+**Pattern.** I asked whether the 4-map gold-standard corpus should be folded
+into the reference standardisation, offering three scope options. He did not
+pick one. He answered with the corpus's history: reviewed four times, once
+for a previous paper and three times for this project; every point
+re-positioned to dead centre within 1–2 px; the fourth manual extraction pass
+found *one* additional false negative and nothing has surfaced in months of
+use. Then the decision, almost as an afterthought — it does not need review.
+
+None of that was in the repository. The project has spent four sessions
+establishing that the 55-map student layer is four layers with three sizes
+and two stage-specific asymmetries, and the entire time the other corpus was
+quietly the one reference that genuinely earns the name, on evidence held
+only in his head.
+
+**Lesson.** When a scoping question gets answered with provenance instead of
+a yes or no, the provenance is usually the more valuable half — and it is
+the half that will evaporate if not captured verbatim. It also reveals
+something structural: a project can carry a large **unrecorded quality
+asymmetry** between two datasets, and any reasoning that treats them as
+comparable is quietly wrong until someone asks.
+
+**How to apply.** Capture the provenance before acting on the decision, in
+the artefact that will be read later (here, ruling 21(d)) rather than in a
+commit message. And ask about the *other* artefacts early rather than when
+they happen to come into scope — "what do you know about this dataset's
+history that isn't written down?" is cheap and, on this evidence, sometimes
+returns the load-bearing fact.
+
+## claude-obs 34 — 2026-08-04 (Session 128): self-critique — he stopped my questions before answering them, and the questions were the problem
+
+**Pattern.** I put two structured questions to him about how to handle § 4.1
+and how wide the caveat pass should go. He rejected the interaction outright
+rather than picking an option — the harness relayed that he wanted to clarify
+first. When I asked what needed clarifying, he did not clarify anything about
+my questions; he replaced the frame they sat in. The questions were
+answerable, well-formed and had sensible defaults. They were also asking him
+to make a decision about one document when the decision worth making was
+about the whole class.
+
+**Lesson.** A rejected question is information about the *question*, not about
+the human's uncertainty. My reflex reading was "the options were unclear" —
+the right reading was "you are asking at the wrong altitude, and I can see
+that without answering". Notably he could tell from the question alone,
+before engaging with any option, which means the mis-framing was visible on
+the surface of what I wrote and I could in principle have seen it too.
+
+**How to apply.** When a structured question is declined, do not immediately
+re-ask a clearer version of the same question. First check whether the
+question presupposes a scope the human has not agreed to — here, "how should
+we repair this section?" presupposed that per-section repair was the move.
+Asking "what would you like to clarify?" was the right next step and I would
+repeat it; what I should add is a self-check on the presupposition before
+re-asking.
+
+## claude-obs 35 — 2026-08-04 (Session 128): he offers a resource, and the useful answer was that the resource had nothing to do
+
+**Pattern.** Winding down, he offered an overnight run on sapphire. There was
+a real temptation to fill it — a corpus recompute, a validation sweep, a test
+suite, all legitimately "compute work" and all runnable unattended. I ran
+them and they took **18 seconds**, seconds, and minutes respectively. So I
+reported that there was no overnight-sized job, and explained why: ruling 21
+gates every expensive thing in the queue — bootstrap CIs, permutations, board
+re-tiering are all downstream of the reference. The absence of a long job was
+not slack, it was the new ruling working as designed.
+
+**Lesson.** An offered resource creates a pull toward justifying its use, and
+the justification is easy to construct because there is always *something* to
+run. Reporting the empty result was more useful than filling the slot: it
+became an argument for the session's main recommendation (build the app
+sooner), because a programme with nothing to compute is a programme whose
+next move is to build something. He also, separately, noted I had used only
+29% of context — another offered resource, and the same discipline applied.
+
+**How to apply.** When offered capacity — compute, context, time — measure
+what the available work actually costs before accepting, and report the
+measurement even when it declines the offer. "This takes 18 seconds" is a
+finding about the programme's state; "I ran the overnight queue" would have
+concealed it.
