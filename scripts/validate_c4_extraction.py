@@ -22,11 +22,29 @@ Checks, in order (mirroring ``validate_commitments.py``):
 4. **Source blob pinning**: the recorded ``git_blob`` matches the
    working tree (detects drift between extraction and validation).
 
+**Era mode** (``--at-era``): checks 2 and 4 above assume a stationary
+corpus — that a source document has not moved since it was extracted.
+That assumption fails by design in this programme: ruling 1 (dated-
+snapshot corrections), ruling 17 (living documents refreshed in place)
+and every repair wave rewrite mine documents *after* their claims were
+extracted, at which point the working-tree body no longer carries the
+spans the extraction faithfully quoted. Under ``--at-era`` the source
+body is resolved from the recorded ``git_blob`` instead of the working
+tree, so verbatim spans are checked against the text the extractor
+actually read; blob drift is then reported as an informational note
+rather than an error. This is the same era logic ruling 9 gave the
+recompute harness for anchor resolution, applied to document bodies.
+Anchor and operand file existence is still checked against the working
+tree in both modes — anchors are artefacts the harness resolves today,
+not text the extractor quoted.
+
 Exit status 0 = all checks pass; 1 = any failure (fail loudly).
 
 Usage::
 
     python3 scripts/validate_c4_extraction.py [paths...]   # default: whole directory
+    python3 scripts/validate_c4_extraction.py --at-era     # verbatim checks at each
+                                                           # file's extraction blob
 """
 
 from __future__ import annotations
@@ -69,29 +87,63 @@ def git_blob(path: str) -> str | None:
     return out.stdout.strip()
 
 
-def validate_file(path: Path, validator: jsonschema.Draft202012Validator) -> list[str]:
-    """Validate one extraction file; return a list of error strings."""
+def blob_text(blob: str) -> str | None:
+    """Return the contents of a git blob, or None if it is unresolvable."""
+    try:
+        out = subprocess.run(["git", "cat-file", "-p", blob], cwd=REPO_ROOT,
+                             capture_output=True, text=True, check=True)
+    except subprocess.CalledProcessError:
+        return None
+    return out.stdout
+
+
+def validate_file(path: Path, validator: jsonschema.Draft202012Validator,
+                  at_era: bool = False) -> tuple[list[str], list[str]]:
+    """Validate one extraction file.
+
+    Returns ``(errors, notes)``. Notes are informational only and never
+    affect exit status; under ``at_era`` they carry the blob-drift
+    report that is an error in working-tree mode.
+    """
     errors: list[str] = []
+    notes: list[str] = []
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
-        return [f"{path.name}: unreadable ({exc})"]
+        return [f"{path.name}: unreadable ({exc})"], notes
 
     for err in validator.iter_errors(data):
         errors.append(f"{path.name}: schema: {err.message} at {list(err.absolute_path)}")
     if errors:
-        return errors  # structural failures make the rest unreliable
+        return errors, notes  # structural failures make the rest unreliable
 
     src = data["source_document"]["file"]
     src_path = REPO_ROOT / src
-    if not src_path.exists():
-        return [f"{path.name}: source document missing: {src}"]
-    src_lines = src_path.read_text(encoding="utf-8", errors="replace").splitlines()
+    if not src_path.exists() and not at_era:
+        return [f"{path.name}: source document missing: {src}"], notes
 
-    blob = git_blob(src)
+    blob = git_blob(src) if src_path.exists() else None
     recorded = data["source_document"]["git_blob"]
-    if blob is None or not blob.startswith(recorded):
-        errors.append(f"{path.name}: git_blob {recorded} does not match working tree {blob}")
+    drifted = blob is None or not blob.startswith(recorded)
+
+    if at_era:
+        # Check the spans against the body the extractor actually read.
+        # A document deleted or rewritten since extraction is fine here —
+        # the blob is the authority — but an unresolvable blob is not.
+        text = blob_text(recorded)
+        if text is None:
+            return [f"{path.name}: recorded git_blob {recorded} is unresolvable "
+                    "(object missing from the repository)"], notes
+        src_lines = text.splitlines()
+        if drifted:
+            notes.append(f"{path.name}: source moved since extraction "
+                         f"(extracted at {recorded}, working tree {blob}); "
+                         "spans checked at the extraction blob")
+    else:
+        src_lines = src_path.read_text(encoding="utf-8", errors="replace").splitlines()
+        if drifted:
+            errors.append(
+                f"{path.name}: git_blob {recorded} does not match working tree {blob}")
 
     for i, claim in enumerate(data["claims"]):
         tag = f"{path.name}#{i}"
@@ -154,7 +206,7 @@ def validate_file(path: Path, validator: jsonschema.Draft202012Validator) -> lis
                         f"{tag}: values[{j}] pathless read in a multi-value claim "
                         "with an anchored path (v1.2 amendment 3 — the recompute "
                         "harness refuses the anchor-path fallback)")
-    return errors
+    return errors, notes
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -162,6 +214,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("paths", nargs="*", type=Path,
                         help="extraction files (default: all in the c4-extraction directory)")
+    parser.add_argument("--at-era", action="store_true",
+                        help="check verbatim spans against each file's recorded "
+                             "extraction blob rather than the working tree; blob "
+                             "drift becomes an informational note")
     args = parser.parse_args(argv)
 
     paths = args.paths or sorted(DEFAULT_DIR.glob("*.json"))
@@ -171,8 +227,12 @@ def main(argv: list[str] | None = None) -> int:
     validator = build_validator()
     failures = 0
     total_claims = 0
+    drifted = 0
     for path in paths:
-        errs = validate_file(Path(path), validator)
+        errs, notes = validate_file(Path(path), validator, at_era=args.at_era)
+        for note in notes:
+            drifted += 1
+            print(f"note {note}")
         if errs:
             failures += 1
             for e in errs:
@@ -184,7 +244,8 @@ def main(argv: list[str] | None = None) -> int:
     if failures:
         print(f"FAIL: {failures}/{len(paths)} files with errors", file=sys.stderr)
         return 1
-    print(f"all {len(paths)} files valid; {total_claims} claims")
+    suffix = f"; {drifted} checked at their extraction blob" if drifted else ""
+    print(f"all {len(paths)} files valid; {total_claims} claims{suffix}")
     return 0
 
 
