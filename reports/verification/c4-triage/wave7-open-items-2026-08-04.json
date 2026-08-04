@@ -212,6 +212,21 @@
    "severity": "LOW",
    "gap": "The batch plan has no builder script — it was hand-built in S122 — so its `spans` figures cannot be regenerated. Units re-ranged in Session 127 carry density-scaled ESTIMATES flagged by a `spans_basis` field.",
    "note": "Do not compare estimated spans against original survey figures."
+  },
+  {
+   "id": "W7-I4",
+   "severity": "MEDIUM — the verification result is machine-dependent, which undermines reproducibility claims",
+   "opened": "2026-08-04 (Session 128)",
+   "gap": "Three extraction anchors point at UNTRACKED paths. They resolve on amd-tower and are MISSING on sapphire, so `validate_c4_extraction.py --at-era` returns '128/128 valid' on one machine and 'FAIL: 3/128 files with errors' on the other, from the same commit.",
+   "found_by": "Session 128, by running the same validation on both machines during the sapphire refresh. A single-machine run cannot see this.",
+   "the_three": [
+    "086.json#41 and 088-ci-registry.json#0 -> results/leaderboard/era2/.cache/.metadata.json (a .cache directory, gitignored)",
+    "034-configuration-audit-h8-v2.json#42 and #43 -> archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops (untracked crop tree)"
+   ],
+   "why_it_matters": "Ruling 15 already governs this: mechanical verification scope is git-tracked artefacts PLUS tracked proxies, and 'claims anchored to neither are a NAMED triage family, never silently mechanical'. These three are anchored to neither and are currently being treated as mechanical. The cross-machine split is the concrete demonstration of why that ruling exists — an external reader cannot check these at all, and even we get different answers depending on where we run.",
+   "why_it_was_invisible_until_now": "Every prior validation ran on one machine at a time. The three anchors happen to resolve on amd-tower, which is where they were authored, so the local run says clean. Sapphire is the canonical host for the recompute report, so the ledger and the validator have been disagreeing about scope without anyone noticing.",
+   "next_step": "Give each a ruling-15 referent — a regeneration manifest for the crop tree, and for the leaderboard .cache either a tracked proxy or a re-anchor to the tracked artefact the cache derives from — or move all three into the named triage family. Then make the cross-machine check routine: running the validator on both hosts is cheap and is the only thing that surfaces this class.",
+   "note_for_ci": "scripts/check_c4_plan_coverage.py does not test anchor existence; the validator does. Both want running on both hosts at GATE 3."
   }
  ],
  "w7_escalations_status": {
