@@ -722,3 +722,31 @@ check the committed-future-work list for anything that will touch the same
 artefact, and say so in the proposal: "this recomputes X; the phantom
 re-review will move X again, so it should follow it." Make the dependency
 visible rather than making him supply it.
+
+## claude-obs 31 — 2026-08-04 (Session 127): he closes a session on two explicit conditions, not on feeling finished
+
+**Pattern.** Winding down, he did not ask "are we done?" — he stated a test:
+"I'm happy to wind this session down so long as we've (a) finished
+everything that is best done with the context in this window, and (b)
+externalised all info and decisions needed for future sessions." That
+converted session-close from a judgement call into a checkable condition,
+and it changed what I did next: instead of continuing to clear the repair
+queue, I audited which remaining items actually needed *this* context
+(one — the continuity brief) and verified that every finding existed
+somewhere a next session would look. The audit found real gaps: several
+findings lived only in commit messages, and two caveats existed only in
+chat.
+
+**Lesson.** "Are we done?" invites a status report; "have we met these two
+conditions?" invites an audit, and the audit finds things the status report
+would not. Condition (a) is the sharper of the two — it asks what is
+*perishable* about the current context, which is a different question from
+what is unfinished. Most unfinished work is not perishable; the continuity
+brief was, because only this session knew why the rulings existed.
+
+**How to apply.** Apply the two-condition test unprompted at any session
+close, and report against it explicitly rather than listing what is left.
+Specifically: before closing, grep the session's own findings for anything
+that exists only in chat or only in a commit message, and move it into the
+register the next session reads. Both times I did that today it found
+something.
