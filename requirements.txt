@@ -45,6 +45,14 @@ pytest
 jupyter
 
 # Manual-review UI apps (scripts/review_candidates.py,
-# scripts/review_gt_duplicates.py). Optional for headless pipelines —
-# the detection/verification/evaluation scripts never import streamlit.
+# scripts/review_gt_duplicates.py, scripts/mark_mound_centres.py).
+# Optional for headless pipelines — the detection/verification/evaluation
+# scripts never import streamlit.
 streamlit
+
+# Click-coordinate capture for the point-marking app
+# (scripts/mark_mound_centres.py). Streamlit has no native click-to-
+# coordinate widget for images, and the alternatives already installed
+# (altair selections) cannot return an arbitrary continuous position —
+# only a selected datum or an interval. MIT-licensed, pure front-end.
+streamlit-image-coordinates
