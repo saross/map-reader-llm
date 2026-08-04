@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1",
-  "extracted_at": "2026-08-03T00:00:00Z",
+  "extracted_at": "2026-08-04T00:00:00Z",
   "source_document": {
     "file": "results/55maps-ds-summary-v2/report.md",
-    "git_blob": "7624872be096",
+    "git_blob": "c55fe259ef90613f61283752099a29ec0d7dfd19",
     "stratum": "hand-written"
   },
   "extractor": {
@@ -18,7 +18,7 @@
           1,
           1
         ],
-        "section": "Front matter (title and provenance block)"
+        "section": "Title"
       },
       "claim_text": "# Dawid-Skene cross-run summary — four 55-map runs (T=0.3, T=0.7, image, text-MIN)",
       "values": [
@@ -35,7 +35,7 @@
           "quantity": "count of maps in the generalisation corpus",
           "value_verbatim": "55",
           "value_parsed": 55,
-          "unit": "maps",
+          "unit": null,
           "kind": "count",
           "path": "$.features[*].properties.map_name (distinct count)",
           "method": "read"
@@ -46,21 +46,55 @@
         "path": null
       },
       "method": "read",
-      "notes": "[BATCH NOTE b073] Scope decisions for lines 1-223 of this document, logged per instrument rule 5. (a) Condition labels T=0.3 / T=0.7 and run directory names (55maps-text-high-t0.3-generalisation etc.) are treated as names, not claims; the temperatures they encode are asserted as run parameters nowhere in this range. (b) Dates, git hashes, Obs/erratum ids, section references (§3, §4.2), backup-filename timestamps, and precision descriptors ('4 d.p.') are out of scope. (c) '2-annotator'/'2 x 2' used as compound modifiers are names; the cardinal 'two binary annotators' at lines 89-90 is extracted once as a structural count. (d) Cardinal words denoting the four analysed runs are extracted where they assert study scope (lines 1, 30) and skipped where used pronominally as a comparison-set reference ('the smallest of the four'). (e) 'R=50 m' in the 4.1 table row label is folded into the value quantity rather than extracted separately. (f) This document has no sibling JSON in results/55maps-ds-summary-v2/ (report.md is the only file); anchors are the per-run dawid-skene/dawid-skene-results.json, ds-human-crosstab/summary.json and corrected-f1-multi-buffer/summary.json artefacts the report aggregates. Run count has no single manifest artefact enumerating exactly these four D-S fits (results/dawid-skene/ holds a single unrelated fit); flagged anchor-unknown for triage."
+      "notes": "[BATCH NOTE b073 RE-EXTRACT] Full re-extraction of lines 1-332 of the working-tree (uncommitted) body under charter § 5 rule 14 / ruling 18; replaces the earlier b073 file, whose line anchors and several figures (the § 3 image gap, the § 3 0.55-0.73 band sentence, the § 4.1 corrected-F1 row) no longer match the body. GROUND-TRUTH COUNTS: the canonical timeline in reports/verification/c4-triage/coverage-drift-2026-08-04.json (gt_count_era_resolution) establishes that the 2026-05-03 evaluations ran between curator additions baf1497a7 (4,744 to 4,745) and 2e075eb99 (4,745 to 4,746), so every 4,745 in this range is ERA-FAITHFUL. Such values are therefore anchored to an era artefact (the T=0.7 corrected-f1-multi-buffer summary, whose $.results[0].n_ref_student_only records the GT size the run consumed) or marked historical -- NEVER to the live inputs/vectors/references/student-mounds-55maps-reviewed.geojson, which holds 4,746 today; the superseded b073 anchored it to the live GeoJSON and would have manufactured a mismatch. Per claim, which treatment was used is stated in that claim's notes. The Dawid-Skene layer's own reference is the LEGACY student-mounds-55maps.geojson (4,770 features, per this document's own line 279-280) and is not conflated with the 4,746 student GT anywhere here. CHANGELOG / CORRECTION PAIRS: in every 'was X, now Y' or 'X -> Y' construction the old side carries method historical with path null (pre-recovery backups named in notes for triage) and the new side is a live read/arithmetic claim. SCOPE (rule 5): dates, timestamps, git hashes, session numbers, Obs/erratum/audit ids (Obs 293, D17 audit FALSE-12), candidate ids (cand 2397), section references (§3, §4.2), backup-filename timestamps, the year in 'Sobotkova et al. 2023', precision descriptors ('4 d.p.'), and the numbers inside condition and directory names (T=0.3, T=0.7, 55maps-text-high-t0.3-generalisation, the 384 in the bounds path) are not extracted. Compound modifiers used as names ('2-annotator fit', '2 x 2 cross-tab', 'four-way comparison') are not extracted; the cardinal 'two binary annotators' IS extracted where it asserts the design. The cardinal 'four'/'55' is extracted where it asserts study scope (lines 1 and 36) and skipped where it is a pronominal reference to the same comparison set ('the smallest of the four', 'across all four runs'). 'R = 50 m' / 'at R=50 m' used to identify which row or buffer a metric belongs to is treated as context, not a claim, except where the document asserts the D-S matching buffer itself (line 195). This document has no sibling JSON in results/55maps-ds-summary-v2/ (report.md is the only file), so all anchors are the per-run artefacts the report aggregates."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          3,
-          4
+          5,
+          6
         ],
-        "section": "Front matter (title and provenance block)"
+        "section": "Revision banner"
+      },
+      "claim_text": "the two era-faithful 4,745-mound GT references\n> adjudicated and left as history",
+      "values": [
+        {
+          "quantity": "count of era-faithful 4,745-mound ground-truth references carried by this document",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of mound features in the curator ground truth as of the 2026-05-03 evaluations",
+          "value_verbatim": "4,745",
+          "value_parsed": 4745,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "GT-count treatment: marked HISTORICAL. The banner explicitly describes the two 4,745 references as era-faithful history, so the count is not a live claim about today's ground truth (which holds 4,746 features). Deliberately NOT anchored to inputs/vectors/references/student-mounds-55maps-reviewed.geojson. The count of such references ('two') is a self-referential count over this document's own body -- the second reference sits at line 436, outside this batch's 1-332 range and inside sibling batch b074 -- so no repo artefact can decide it; flagged anchor-unknown for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          10
+        ],
+        "section": "Front matter — provenance block"
       },
       "claim_text": "(text-MIN added to the previous three-run summary\nof 2026-04-27).",
       "values": [
         {
-          "quantity": "count of runs covered by the predecessor D-S cross-run summary",
+          "quantity": "count of runs covered by the predecessor Dawid-Skene cross-run summary",
           "value_verbatim": "three",
           "value_parsed": 3,
           "unit": null,
@@ -71,49 +105,49 @@
       ],
       "anchor": null,
       "method": "anchor-unknown",
-      "notes": "Refers to a predecessor prose summary; no results/55maps-ds-summary (v1) directory exists in the working tree, only results/55maps-ds-summary-v2. Instrument rule 2 forbids anchoring prose to prose — triage to chase."
+      "notes": "Refers to a predecessor prose summary; no results/55maps-ds-summary (v1) directory exists in the working tree, only results/55maps-ds-summary-v2. Rule 2 forbids anchoring prose to prose, so triage must chase the chain."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          6,
-          8
+          12,
+          13
         ],
-        "section": "Front matter (title and provenance block)"
+        "section": "Front matter — post-recovery refresh"
       },
-      "claim_text": "T=0.7 row re-derived against the recovered single-round consensus + verifier\nand the updated 4,745-mound curator GT (commits `366f9c66`, `e07dae37`,\n`f533fda5`).",
+      "claim_text": "T=0.7 row re-derived against the recovered single-round consensus + verifier\nand the updated 4,745-mound curator GT",
       "values": [
         {
-          "quantity": "count of mound features in the updated curator ground truth",
+          "quantity": "count of mound features in the updated curator ground truth consumed by the 2026-05-03 T=0.7 re-derivation",
           "value_verbatim": "4,745",
           "value_parsed": 4745,
-          "unit": "features",
+          "unit": null,
           "kind": "count",
-          "path": "len:$.features",
+          "path": "$.results[0].n_ref_student_only",
           "method": "read"
         }
       ],
       "anchor": {
-        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-        "path": "len:$.features"
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
       },
       "method": "read",
-      "notes": "results/methods-curator-gt-incompleteness-limitation.md names student-mounds-55maps-reviewed.geojson as the curator GT that reached 4,745 features; that file is the proposed anchor. Do not adjudicate — a later single-mound addition may have moved the count."
+      "notes": "GT-count treatment: anchored to the ERA ARTEFACT, not to today's live ground truth. Per reports/verification/c4-triage/coverage-drift-2026-08-04.json (gt_count_era_resolution), the T=0.7 full-buffer evaluation ran at 2026-05-03T00:40:19Z, between curator additions baf1497a7 (00:32:53Z, 4,744 -> 4,745) and 2e075eb99 (05:28:57Z, 4,745 -> 4,746), so 4,745 is era-faithful and correct. The T=0.7 corrected-f1-multi-buffer summary records the GT size that run consumed. Anchoring to inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4,746 today) would fabricate a mismatch and is deliberately avoided."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          8,
-          10
+          14,
+          16
         ],
-        "section": "Front matter (title and provenance block)"
+        "section": "Front matter — post-recovery refresh"
       },
       "claim_text": "Image row re-derived against the +1 phantom-promoted cand 2397\nreview (item counts 3,637 / 1,133 / 1,028 → 3,650 / 1,095 / 1,030; D-S F1\n0.7954 → 0.7990; VLM-only posterior 0.1862 → 0.1865).",
       "values": [
         {
-          "quantity": "count of phantom-promoted candidates added by the cand 2397 review",
+          "quantity": "count of phantom-promoted review entries added to the image run by the cand 2397 review",
           "value_verbatim": "+1",
           "value_parsed": 1,
           "unit": null,
@@ -176,7 +210,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected F1, image run, pre-recovery",
+          "quantity": "Dawid-Skene corrected F1, image run, pre-recovery",
           "value_verbatim": "0.7954",
           "value_parsed": 0.7954,
           "unit": null,
@@ -185,7 +219,7 @@
           "method": "historical"
         },
         {
-          "quantity": "D-S corrected F1, image run, post-recovery",
+          "quantity": "Dawid-Skene corrected F1, image run, post-recovery",
           "value_verbatim": "0.7990",
           "value_parsed": 0.799,
           "unit": null,
@@ -194,7 +228,7 @@
           "method": "read"
         },
         {
-          "quantity": "VLM-only posterior, image run, pre-recovery",
+          "quantity": "VLM-only posterior P(true=1), image run, pre-recovery",
           "value_verbatim": "0.1862",
           "value_parsed": 0.1862,
           "unit": null,
@@ -203,7 +237,7 @@
           "method": "historical"
         },
         {
-          "quantity": "VLM-only posterior, image run, post-recovery",
+          "quantity": "VLM-only posterior P(true=1), image run, post-recovery",
           "value_verbatim": "0.1865",
           "value_parsed": 0.1865,
           "unit": null,
@@ -217,21 +251,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Before/after correction block: left-hand values are historical, right-hand values live. Pre-recovery figures are also preserved at results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup if triage wants to resolve them mechanically. The '+1' promotion count has no obvious artefact locator."
+      "notes": "Correction pair: every left-hand ('->' source) figure is the pre-recovery side and is marked historical; every right-hand figure is a live read. The preserved pre-recovery artefact for triage is results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup. 'cand 2397' is an identifier, out of scope (rule 5); the '+1' review entry it contributed has no located scalar artefact -- the plausible chase targets are results/55maps-image-generalisation/human-review.csv and human-review-multi-buffer.csv."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          10,
-          12
+          16,
+          18
         ],
-        "section": "Front matter (title and provenance block)"
+        "section": "Front matter — post-recovery refresh"
       },
       "claim_text": "text-MIN row\nre-derived against the canonical updated GT (D-S F1 0.7834 unchanged at\n4 d.p.).",
       "values": [
         {
-          "quantity": "D-S corrected F1, text-MIN run, after the canonical GT update",
+          "quantity": "Dawid-Skene corrected F1, text-MIN run, post-recovery",
           "value_verbatim": "0.7834",
           "value_parsed": 0.7834,
           "unit": null,
@@ -242,25 +276,25 @@
       ],
       "anchor": {
         "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
-        "path": "$.dawid_skene.corrected_metrics.f1"
+        "path": null
       },
       "method": "read",
-      "notes": "'4 d.p.' is a precision descriptor, not a claim (instrument rule 5)."
+      "notes": "'4 d.p.' is a display-precision descriptor, not a claim about the study (rule 5)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          14,
-          17
+          20,
+          22
         ],
-        "section": "Front matter (title and provenance block)"
+        "section": "Front matter — post-recovery refresh"
       },
-      "claim_text": "The post-recovery\nshifts are small on every row — D-S F1 deltas ≤ +0.0036, VLM-only-posterior\ndeltas ≤ +0.0033, ECE / Brier deltas ≤ +0.001 — and do not change the\nrelative position of any run in any §4 ranking.",
+      "claim_text": "The post-recovery\nshifts are small on every row — D-S F1 deltas ≤ +0.0036, VLM-only-posterior\ndeltas ≤ +0.0033, ECE / Brier deltas ≤ +0.001",
       "values": [
         {
-          "quantity": "upper bound on post-recovery D-S F1 delta across the four rows",
-          "value_verbatim": "+0.0036",
+          "quantity": "maximum absolute post-recovery shift in Dawid-Skene corrected F1 across the four runs",
+          "value_verbatim": "≤ +0.0036",
           "value_parsed": 0.0036,
           "unit": null,
           "kind": "metric",
@@ -268,8 +302,8 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "upper bound on post-recovery VLM-only-posterior delta across the four rows",
-          "value_verbatim": "+0.0033",
+          "quantity": "maximum absolute post-recovery shift in VLM-only posterior across the four runs",
+          "value_verbatim": "≤ +0.0033",
           "value_parsed": 0.0033,
           "unit": null,
           "kind": "statistic",
@@ -277,8 +311,8 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "upper bound on post-recovery ECE / Brier delta across the four rows",
-          "value_verbatim": "+0.001",
+          "quantity": "maximum absolute post-recovery shift in ECE / Brier across the four runs",
+          "value_verbatim": "≤ +0.001",
           "value_parsed": 0.001,
           "unit": null,
           "kind": "statistic",
@@ -291,21 +325,21 @@
         "path": null
       },
       "method": "recompute-script",
-      "notes": "Max-over-rows bounds: require diffing each run's current D-S / crosstab summary against its .pre-recovery-*.backup sibling (results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260502T235912.backup, results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup, results/55maps-image-generalisation/ds-human-crosstab/summary.json.pre-recovery-20260503T023258.backup). Recorded, not computed, per instrument rule 3. §4 is a section reference, not a claim."
+      "notes": "Three stated upper bounds over per-run live-minus-backup differences; they need a scripted max over four runs, so they are recorded, not computed here. The comparison artefacts are results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup and results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260502T235912.backup (T=0.3 and text-MIN are asserted unchanged, so they have no backup siblings). The '<=' marker is kept in value_verbatim so the harness does not promote a bound to an equality."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          21,
-          24
+          27,
+          30
         ],
-        "section": "Front matter (title and provenance block)"
+        "section": "Front matter — aggregator"
       },
-      "claim_text": "**Aggregator**: `scripts/analyse_dawid_skene.py` (canonical), post-hoc\nfixed-prior fit (student sensitivity 0.95, specificity 1.0, fixed in EM;\nD-S is not preregistered — D17 audit FALSE-12; the 5 % student-FN prior\nderives from Sobotkova et al. 2023).",
+      "claim_text": "post-hoc\nfixed-prior fit (student sensitivity 0.95, specificity 1.0, fixed in EM;\nD-S is not preregistered — D17 audit FALSE-12; the 5 % student-FN prior\nderives from Sobotkova et al. 2023).",
       "values": [
         {
-          "quantity": "student sensitivity held fixed in the D-S EM fit",
+          "quantity": "student sensitivity held fixed in the Dawid-Skene EM",
           "value_verbatim": "0.95",
           "value_parsed": 0.95,
           "unit": null,
@@ -314,7 +348,7 @@
           "method": "read"
         },
         {
-          "quantity": "student specificity held fixed in the D-S EM fit",
+          "quantity": "student specificity held fixed in the Dawid-Skene EM",
           "value_verbatim": "1.0",
           "value_parsed": 1.0,
           "unit": null,
@@ -323,8 +357,8 @@
           "method": "read"
         },
         {
-          "quantity": "student false-negative rate prior fixed in the D-S EM fit",
-          "value_verbatim": "5",
+          "quantity": "fixed student false-negative rate prior",
+          "value_verbatim": "5 %",
           "value_parsed": 5.0,
           "unit": "%",
           "kind": "parameter",
@@ -337,21 +371,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Prior is stored as a fraction (student_fn_rate_prior) but quoted as a percentage; unit field set per v1.2 amendment 6 so the harness can bridge scales. Values are constant across all four runs' D-S result files. 'D17', 'FALSE-12' are identifiers and '2023' a citation year — out of scope."
+      "notes": "The prior is stored as the fraction 0.05 in the artefact and quoted as a percentage here; unit '%' is set so the harness can bridge the scale (v1.2 amendment 6). 'D17 audit FALSE-12' is an identifier and 'Sobotkova et al. 2023' a citation year, both out of scope (rule 5). The same three parameters carry identical values in all four runs' dawid-skene-results.json."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          30,
-          32
+          36,
+          37
         ],
-        "section": "1. Summary"
+        "section": "§1 Summary"
       },
-      "claim_text": "Four sibling Dawid-Skene (D-S) latent-truth fits on the 55-map\ngeneralisation set — one for each of the production runs that produced\npublishable corrected-F1 metrics — are now in place.",
+      "claim_text": "Four sibling Dawid-Skene (D-S) latent-truth fits on the 55-map\ngeneralisation set",
       "values": [
         {
-          "quantity": "count of sibling Dawid-Skene latent-truth fits in place",
+          "quantity": "count of Dawid-Skene latent-truth fits placed on the 55-map generalisation set",
           "value_verbatim": "Four",
           "value_parsed": 4,
           "unit": null,
@@ -360,10 +394,10 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "count of maps in the generalisation set",
+          "quantity": "count of maps in the generalisation corpus",
           "value_verbatim": "55",
           "value_parsed": 55,
-          "unit": "maps",
+          "unit": null,
           "kind": "count",
           "path": "$.features[*].properties.map_name (distinct count)",
           "method": "read"
@@ -374,24 +408,24 @@
         "path": null
       },
       "method": "read",
-      "notes": "No manifest enumerates the four D-S fits; run count flagged anchor-unknown."
+      "notes": "No manifest artefact enumerates exactly these four D-S fits (results/dawid-skene/ holds a single unrelated fit), so the run count is flagged anchor-unknown for triage."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          32,
-          36
+          41,
+          42
         ],
-        "section": "1. Summary"
+        "section": "§1 Summary"
       },
-      "claim_text": "text-MIN, the\nfourth run, was re-run this session with the canonical text-MIN paths\n(consensus + verifier probabilities from\n`outputs/55maps-text-min-generalisation/`) and cross-tabulated against\nthe 586-row multi-buffer human review that landed earlier today.",
+      "claim_text": "and cross-tabulated against\nthe 586-row multi-buffer human review that landed earlier today.",
       "values": [
         {
           "quantity": "row count of the text-MIN multi-buffer human review",
           "value_verbatim": "586",
           "value_parsed": 586,
-          "unit": "rows",
+          "unit": null,
           "kind": "count",
           "path": null,
           "method": "read"
@@ -402,21 +436,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Whole-artefact row count of the CSV named as the crosstab input in results/55maps-text-min-generalisation/ds-human-crosstab/summary.json ($.inputs.review_today). Whether the quoted 586 counts the header row is for the harness to decide, not the extractor. 'the fourth run' is an ordinal, not extracted."
+      "notes": "Whole-artefact row count of the CSV named as the crosstab input at results/55maps-text-min-generalisation/ds-human-crosstab/summary.json ($.inputs.review_today). Whether the quoted 586 counts the header row is for the harness to decide, not the extractor. 'the fourth run' is an ordinal and is not extracted."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          40,
-          43
+          47,
+          49
         ],
-        "section": "1. Summary"
+        "section": "§1 Summary"
       },
-      "claim_text": "D-S aggregate F1 follows the\n**measured** F1 ranking (T=0.7 > T=0.3 > image > text-MIN), with the\n+0.024 D-S correction over measured F1 essentially constant across all\nfour runs.",
+      "claim_text": "with the\n+0.024 D-S correction over measured F1 essentially constant across all\nfour runs.",
       "values": [
         {
-          "quantity": "D-S correction over measured F1, asserted as constant across the four runs",
+          "quantity": "Dawid-Skene correction over measured F1, asserted as near-constant across the four runs",
           "value_verbatim": "+0.024",
           "value_parsed": 0.024,
           "unit": null,
@@ -430,16 +464,16 @@
         "path": null
       },
       "method": "recompute-script",
-      "notes": "A cross-run generalisation (each run's D-S F1 minus its measured F1, quoted to 3 d.p.); the four per-run deltas are given individually in the §2.3 table. Recorded for scripted recomputation rather than pinned to one run's arithmetic. Rankings carry no numeric values."
+      "notes": "A cross-run constancy claim: the per-run delta is (D-S F1 - measured F1) in each run's dawid-skene-results.json, and the assertion is that all four round to +0.024. Needs a scripted sweep over the four artefacts, so recorded, not computed. The measured-F1 ranking quoted in this sentence (T=0.7 > T=0.3 > image > text-MIN) differs from the ranking asserted at line 216 (T=0.7 > Image > T=0.3 > text-MIN); recorded, not adjudicated."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          56,
-          56
+          62,
+          62
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "| text-MIN | 3,276 | 1,494 | 585 | 5,355 | 0.179 |",
       "values": [
@@ -471,7 +505,7 @@
           "method": "read"
         },
         {
-          "quantity": "total D-S item count, text-MIN run",
+          "quantity": "total item count, text-MIN run",
           "value_verbatim": "5,355",
           "value_parsed": 5355,
           "unit": null,
@@ -507,16 +541,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). The ratio column is derived; the four count cells stay method 'read' so they are never compared against the derivation (v1.2 amendment 1)."
+      "notes": "Table row; the ratio column is derived, so it carries its own expression while its operands stay method 'read' with their own paths (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          57,
-          57
+          63,
+          63
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "| T=0.7 | 3,527 | 1,243 | 637 | 5,407 | 0.181 |",
       "values": [
@@ -548,7 +582,7 @@
           "method": "read"
         },
         {
-          "quantity": "total D-S item count, T=0.7 run",
+          "quantity": "total item count, T=0.7 run",
           "value_verbatim": "5,407",
           "value_parsed": 5407,
           "unit": null,
@@ -584,16 +618,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). The ratio column is derived; the four count cells stay method 'read' so they are never compared against the derivation (v1.2 amendment 1)."
+      "notes": "Table row; the ratio column is derived, so it carries its own expression while its operands stay method 'read' with their own paths (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          58,
-          58
+          64,
+          64
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "| T=0.3 | 3,531 | 1,239 | 819 | 5,589 | 0.232 |",
       "values": [
@@ -625,7 +659,7 @@
           "method": "read"
         },
         {
-          "quantity": "total D-S item count, T=0.3 run",
+          "quantity": "total item count, T=0.3 run",
           "value_verbatim": "5,589",
           "value_parsed": 5589,
           "unit": null,
@@ -661,21 +695,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). The ratio column is derived; the four count cells stay method 'read' so they are never compared against the derivation (v1.2 amendment 1)."
+      "notes": "Table row; the ratio column is derived, so it carries its own expression while its operands stay method 'read' with their own paths (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          59,
-          59
+          65,
+          65
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "| Image | 3,650 | 1,095 | 1,030 | 5,775 | 0.282 |",
       "values": [
         {
-          "quantity": "matched item count, Image run",
+          "quantity": "matched item count, image run",
           "value_verbatim": "3,650",
           "value_parsed": 3650,
           "unit": null,
@@ -684,7 +718,7 @@
           "method": "read"
         },
         {
-          "quantity": "student-only item count, Image run",
+          "quantity": "student-only item count, image run",
           "value_verbatim": "1,095",
           "value_parsed": 1095,
           "unit": null,
@@ -693,7 +727,7 @@
           "method": "read"
         },
         {
-          "quantity": "VLM-only item count, Image run",
+          "quantity": "VLM-only item count, image run",
           "value_verbatim": "1,030",
           "value_parsed": 1030,
           "unit": null,
@@ -702,7 +736,7 @@
           "method": "read"
         },
         {
-          "quantity": "total D-S item count, Image run",
+          "quantity": "total item count, image run",
           "value_verbatim": "5,775",
           "value_parsed": 5775,
           "unit": null,
@@ -711,7 +745,7 @@
           "method": "read"
         },
         {
-          "quantity": "VLM-only / matched ratio, Image run",
+          "quantity": "VLM-only / matched ratio, image run",
           "value_verbatim": "0.282",
           "value_parsed": 0.282,
           "unit": null,
@@ -738,16 +772,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). The ratio column is derived; the four count cells stay method 'read' so they are never compared against the derivation (v1.2 amendment 1)."
+      "notes": "Table row; the ratio column is derived, so it carries its own expression while its operands stay method 'read' with their own paths (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          61,
-          62
+          67,
+          68
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "text-MIN and T=0.7 produce nearly\nidentical ratios (0.179 vs 0.181) — the conservative end.",
       "values": [
@@ -801,16 +835,16 @@
         "path": null
       },
       "method": "arithmetic",
-      "notes": "Restates the §2.1 table ratio column."
+      "notes": "Two derived values in one span, so each carries its own expression and operands (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          62,
-          63
+          68,
+          69
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "T=0.3 sits\nin the middle (0.232).",
       "values": [
@@ -848,10 +882,10 @@
       "claim_id": null,
       "source": {
         "lines": [
-          63,
-          64
+          69,
+          70
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "Image is the most permissive on the VLM side\n(0.282).",
       "values": [
@@ -889,10 +923,10 @@
       "claim_id": null,
       "source": {
         "lines": [
-          64,
-          68
+          70,
+          74
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "text-MIN has the smallest absolute matched count (3,276 — the\nsmallest of the four) and the largest student-only count (1,494 —\ni.e. the largest count of references the VLM missed), reflecting that\ntext-MIN is the lowest-recall of the four runs at the measured-F1\nstage.",
       "values": [
@@ -920,21 +954,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "'the smallest of the four' / 'the four runs' are pronominal comparison-set references — not extracted (see batch note)."
+      "notes": "'the smallest of the four' / 'the four runs' are pronominal references to the same comparison set and are not extracted again."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          70,
-          72
+          76,
+          78
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "T=0.7 counts shifted by +14 matched, −14\nstudent-only, +7 VLM-only against the pre-recovery row\n(3,513 / 1,257 / 630);",
       "values": [
         {
-          "quantity": "post-recovery change in matched count, T=0.7 run",
+          "quantity": "post-recovery change in matched item count, T=0.7 run",
           "value_verbatim": "+14",
           "value_parsed": 14,
           "unit": null,
@@ -956,7 +990,7 @@
           ]
         },
         {
-          "quantity": "post-recovery change in student-only count, T=0.7 run",
+          "quantity": "post-recovery change in student-only item count, T=0.7 run",
           "value_verbatim": "−14",
           "value_parsed": -14,
           "unit": null,
@@ -978,7 +1012,7 @@
           ]
         },
         {
-          "quantity": "post-recovery change in VLM-only count, T=0.7 run",
+          "quantity": "post-recovery change in VLM-only item count, T=0.7 run",
           "value_verbatim": "+7",
           "value_parsed": 7,
           "unit": null,
@@ -1032,21 +1066,21 @@
         "path": null
       },
       "method": "arithmetic",
-      "notes": "Correction block: the quoted pre-recovery triple is historical (also resolvable at results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260502T235912.backup); the three shifts are derivations over current-vs-backup item counts."
+      "notes": "Correction pair: the parenthesised triple is the pre-recovery ('was') side and is marked historical; the three signed deltas are derived against the preserved backup results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260502T235912.backup. The minus sign in '−14' is U+2212 as it appears in the source."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          72,
-          76
+          78,
+          82
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
+        "section": "§2.1 Shared item set (matched / student-only / VLM-only)"
       },
       "claim_text": "image counts shifted by +13 matched,\n−38 student-only, +2 VLM-only against the pre-recovery row\n(3,637 / 1,133 / 1,028) reflecting cand 2397's promotion plus the\ncanonical-GT join cleaning out 38 student-only items previously\ndouble-counted;",
       "values": [
         {
-          "quantity": "post-recovery change in matched count, image run",
+          "quantity": "post-recovery change in matched item count, image run",
           "value_verbatim": "+13",
           "value_parsed": 13,
           "unit": null,
@@ -1068,7 +1102,7 @@
           ]
         },
         {
-          "quantity": "post-recovery change in student-only count, image run",
+          "quantity": "post-recovery change in student-only item count, image run",
           "value_verbatim": "−38",
           "value_parsed": -38,
           "unit": null,
@@ -1090,7 +1124,7 @@
           ]
         },
         {
-          "quantity": "post-recovery change in VLM-only count, image run",
+          "quantity": "post-recovery change in VLM-only item count, image run",
           "value_verbatim": "+2",
           "value_parsed": 2,
           "unit": null,
@@ -1139,7 +1173,7 @@
           "method": "historical"
         },
         {
-          "quantity": "student-only items removed by the canonical-GT join, image run",
+          "quantity": "count of student-only items removed by the canonical-GT join as previously double-counted",
           "value_verbatim": "38",
           "value_parsed": 38,
           "unit": null,
@@ -1166,41 +1200,16 @@
         "path": null
       },
       "method": "arithmetic",
-      "notes": "Correction block; pre-recovery triple historical (also at results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup). The trailing '38 student-only items previously double-counted' is the same magnitude as the -38 shift, given its own derivation per v1.2 amendment 1."
+      "notes": "Correction pair: the parenthesised triple is the pre-recovery side (historical); the deltas are derived against results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup. The trailing '38 student-only items previously double-counted' restates the magnitude of the −38 delta and is given its own (sign-reversed) expression rather than inheriting one."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          76,
-          78
+          90,
+          90
         ],
-        "section": "2.1 Shared item set (matched / student-only / VLM-only)"
-      },
-      "claim_text": "The two\nrecovered runs' relative positions are preserved (T=0.7 second-most\nconservative; image still most permissive).*",
-      "values": [
-        {
-          "quantity": "count of runs re-derived in the post-recovery refresh",
-          "value_verbatim": "two",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "The two recovered runs are T=0.7 and image (each carries .pre-recovery-*.backup siblings); no manifest asserts the count."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          84,
-          84
-        ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
       "claim_text": "| T=0.3 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7500 | 0.0000 | 0.8867 |",
       "values": [
@@ -1223,7 +1232,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM sensitivity, T=0.3 run",
+          "quantity": "estimated VLM sensitivity, T=0.3 run",
           "value_verbatim": "0.7500",
           "value_parsed": 0.75,
           "unit": null,
@@ -1232,7 +1241,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM specificity, T=0.3 run",
+          "quantity": "estimated VLM specificity, T=0.3 run",
           "value_verbatim": "0.0000",
           "value_parsed": 0.0,
           "unit": null,
@@ -1241,7 +1250,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated prevalence of true mounds, T=0.3 run",
+          "quantity": "estimated prevalence of true mounds, T=0.3 run",
           "value_verbatim": "0.8867",
           "value_parsed": 0.8867,
           "unit": null,
@@ -1255,16 +1264,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          85,
-          85
+          91,
+          91
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
       "claim_text": "| T=0.7 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7492 | 0.0000 | 0.9165 |",
       "values": [
@@ -1287,7 +1296,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM sensitivity, T=0.7 run",
+          "quantity": "estimated VLM sensitivity, T=0.7 run",
           "value_verbatim": "0.7492",
           "value_parsed": 0.7492,
           "unit": null,
@@ -1296,7 +1305,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM specificity, T=0.7 run",
+          "quantity": "estimated VLM specificity, T=0.7 run",
           "value_verbatim": "0.0000",
           "value_parsed": 0.0,
           "unit": null,
@@ -1305,7 +1314,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated prevalence of true mounds, T=0.7 run",
+          "quantity": "estimated prevalence of true mounds, T=0.7 run",
           "value_verbatim": "0.9165",
           "value_parsed": 0.9165,
           "unit": null,
@@ -1319,21 +1328,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          86,
-          86
+          92,
+          92
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
       "claim_text": "| Image | 0.9500 (fixed) | 1.0000 (fixed) | 0.7782 | 0.0000 | 0.8549 |",
       "values": [
         {
-          "quantity": "student sensitivity (fixed), Image run",
+          "quantity": "student sensitivity (fixed), image run",
           "value_verbatim": "0.9500",
           "value_parsed": 0.95,
           "unit": null,
@@ -1342,7 +1351,7 @@
           "method": "read"
         },
         {
-          "quantity": "student specificity (fixed), Image run",
+          "quantity": "student specificity (fixed), image run",
           "value_verbatim": "1.0000",
           "value_parsed": 1.0,
           "unit": null,
@@ -1351,7 +1360,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM sensitivity, Image run",
+          "quantity": "estimated VLM sensitivity, image run",
           "value_verbatim": "0.7782",
           "value_parsed": 0.7782,
           "unit": null,
@@ -1360,7 +1369,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM specificity, Image run",
+          "quantity": "estimated VLM specificity, image run",
           "value_verbatim": "0.0000",
           "value_parsed": 0.0,
           "unit": null,
@@ -1369,7 +1378,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated prevalence of true mounds, Image run",
+          "quantity": "estimated prevalence of true mounds, image run",
           "value_verbatim": "0.8549",
           "value_parsed": 0.8549,
           "unit": null,
@@ -1383,16 +1392,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          87,
-          87
+          93,
+          93
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
       "claim_text": "| text-MIN | 0.9500 (fixed) | 1.0000 (fixed) | 0.6977 | 0.0000 | 0.9230 |",
       "values": [
@@ -1415,7 +1424,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM sensitivity, text-MIN run",
+          "quantity": "estimated VLM sensitivity, text-MIN run",
           "value_verbatim": "0.6977",
           "value_parsed": 0.6977,
           "unit": null,
@@ -1424,7 +1433,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM specificity, text-MIN run",
+          "quantity": "estimated VLM specificity, text-MIN run",
           "value_verbatim": "0.0000",
           "value_parsed": 0.0,
           "unit": null,
@@ -1433,7 +1442,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated prevalence of true mounds, text-MIN run",
+          "quantity": "estimated prevalence of true mounds, text-MIN run",
           "value_verbatim": "0.9230",
           "value_parsed": 0.923,
           "unit": null,
@@ -1447,21 +1456,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          89,
-          90
+          95,
+          96
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
       "claim_text": "Student sensitivity / specificity are held fixed by the EM as required\nfor identifiability with two binary annotators.",
       "values": [
         {
-          "quantity": "count of annotators in the D-S fit",
+          "quantity": "count of binary annotators in the Dawid-Skene fit",
           "value_verbatim": "two",
           "value_parsed": 2,
           "unit": null,
@@ -1472,21 +1481,21 @@
       ],
       "anchor": null,
       "method": "anchor-unknown",
-      "notes": "Structural count (student + VLM); no artefact records an annotator count. Restated at lines 158-159 as '2-annotator' compound modifiers, which the batch note treats as names."
+      "notes": "The two-annotator design (student reference plus VLM) is asserted structurally; no artefact records an annotator count as a scalar. The chase target for triage is scripts/analyse_dawid_skene.py."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          90,
-          94
+          96,
+          98
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
-      "claim_text": "The VLM-sensitivity\nestimates now sit in a 0.6977–0.7782 band — text-MIN returns the\n**lowest** VLM sensitivity (0.6977), consistent with text-MIN's\nlowest matched count: fewer student-known mounds were flagged by the\nVLM.",
+      "claim_text": "The VLM-sensitivity\nestimates now sit in a 0.6977–0.7782 band — text-MIN returns the\n**lowest** VLM sensitivity (0.6977)",
       "values": [
         {
-          "quantity": "lower bound of the cross-run VLM-sensitivity band (text-MIN)",
+          "quantity": "lower edge of the cross-run VLM-sensitivity band (text-MIN run)",
           "value_verbatim": "0.6977",
           "value_parsed": 0.6977,
           "unit": null,
@@ -1495,7 +1504,7 @@
           "method": "read"
         },
         {
-          "quantity": "upper bound of the cross-run VLM-sensitivity band (image)",
+          "quantity": "upper edge of the cross-run VLM-sensitivity band (image run)",
           "value_verbatim": "0.7782",
           "value_parsed": 0.7782,
           "unit": null,
@@ -1504,7 +1513,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM sensitivity, text-MIN run (lowest of the four)",
+          "quantity": "estimated VLM sensitivity, text-MIN run (lowest of the four)",
           "value_verbatim": "0.6977",
           "value_parsed": 0.6977,
           "unit": null,
@@ -1518,21 +1527,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Band endpoints live in two different runs' files; cross-file locator used for the upper bound (v1.2 amendment 2)."
+      "notes": "Band edges are cross-file: the minimum lives in the text-MIN artefact (the anchor) and the maximum in the image artefact, addressed via the cross-file locator form (v1.2 amendment 2)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          94,
-          96
+          100,
+          101
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
-      "claim_text": "Image's 0.7782 (post-recovery; up from the pre-recovery 0.7716)\nremains the highest, reflecting image's higher VLM-only count\nflagging more true positives the students missed.",
+      "claim_text": "Image's 0.7782 (post-recovery; up from the pre-recovery 0.7716)\nremains the highest",
       "values": [
         {
-          "quantity": "D-S estimated VLM sensitivity, image run, post-recovery",
+          "quantity": "estimated VLM sensitivity, image run, post-recovery",
           "value_verbatim": "0.7782",
           "value_parsed": 0.7782,
           "unit": null,
@@ -1541,7 +1550,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated VLM sensitivity, image run, pre-recovery",
+          "quantity": "estimated VLM sensitivity, image run, pre-recovery",
           "value_verbatim": "0.7716",
           "value_parsed": 0.7716,
           "unit": null,
@@ -1555,21 +1564,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Pre-recovery value is the quoted-old side of a correction block; also resolvable at results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup."
+      "notes": "Correction pair: 'up from the pre-recovery 0.7716' is the was-side and is marked historical; the preserved artefact is results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          96,
-          98
+          102,
+          103
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
-      "claim_text": "VLM specificity\nconverges to 0 in every run; this is a known property of the\n2-annotator response pattern, not a meaningful per-class statistic.",
+      "claim_text": "VLM specificity\nconverges to 0 in every run",
       "values": [
         {
-          "quantity": "D-S estimated VLM specificity, asserted for every run",
+          "quantity": "estimated VLM specificity, asserted as 0 in every run",
           "value_verbatim": "0",
           "value_parsed": 0.0,
           "unit": null,
@@ -1580,24 +1589,24 @@
       ],
       "anchor": {
         "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
-        "path": "$.dawid_skene.model_estimates.vlm_specificity"
+        "path": null
       },
       "method": "read",
-      "notes": "Claim is 'in every run' — the same locator holds in results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json, results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json and results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json. '2-annotator response pattern' is a name."
+      "notes": "A constant-collapse claim across the four runs; anchored to the text-MIN artefact with the other three carrying the same locator ('2-annotator response pattern' is a compound modifier, not extracted)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          100,
-          102
+          106,
+          108
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
       "claim_text": "The estimated prevalence of true mounds in the D-S item set is\nhighest for text-MIN (0.92), narrowly above T=0.7 (0.92), well above\nT=0.3 (0.89) and image (0.85).",
       "values": [
         {
-          "quantity": "D-S estimated prevalence, text-MIN run (2 d.p.)",
+          "quantity": "estimated prevalence of true mounds, text-MIN run (quoted to 2 dp)",
           "value_verbatim": "0.92",
           "value_parsed": 0.92,
           "unit": null,
@@ -1606,7 +1615,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated prevalence, T=0.7 run (2 d.p.)",
+          "quantity": "estimated prevalence of true mounds, T=0.7 run (quoted to 2 dp)",
           "value_verbatim": "0.92",
           "value_parsed": 0.92,
           "unit": null,
@@ -1615,7 +1624,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated prevalence, T=0.3 run (2 d.p.)",
+          "quantity": "estimated prevalence of true mounds, T=0.3 run (quoted to 2 dp)",
           "value_verbatim": "0.89",
           "value_parsed": 0.89,
           "unit": null,
@@ -1624,7 +1633,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S estimated prevalence, image run (2 d.p.)",
+          "quantity": "estimated prevalence of true mounds, image run (quoted to 2 dp)",
           "value_verbatim": "0.85",
           "value_parsed": 0.85,
           "unit": null,
@@ -1638,21 +1647,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Quoted at 2 d.p.; the §2.2 table gives the same quantities at 4 d.p."
+      "notes": "Quoted to 2 decimal places while the artefacts hold full precision; recorded at quoted precision, with rounding tolerance left to the harness."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          102,
-          105
+          108,
+          111
         ],
-        "section": "2.2 Worker accuracy (D-S confusion matrix estimates)"
+        "section": "§2.2 Worker accuracy (D-S confusion matrix estimates)"
       },
       "claim_text": "Higher prevalence in text-MIN reflects\nthat the threshold-0.15 detection set is the smallest of the four\nand proportionally the most concentrated on student-confirmed\nlocations.",
       "values": [
         {
-          "quantity": "detection probability threshold used to build the text-MIN D-S item set",
+          "quantity": "detection probability threshold used to build the Dawid-Skene item set",
           "value_verbatim": "0.15",
           "value_parsed": 0.15,
           "unit": null,
@@ -1663,19 +1672,19 @@
       ],
       "anchor": {
         "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
-        "path": "$.parameters.threshold"
+        "path": null
       },
       "method": "read",
-      "notes": null
+      "notes": "'threshold-0.15 detection set' names the set but also asserts the threshold that was run, so it is extracted (rule 5, the '487-tile Era 2 corpus' case)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          111,
-          111
+          117,
+          117
         ],
-        "section": "2.3 D-S corrected metrics vs measured baseline"
+        "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
       "claim_text": "| T=0.3 | 0.7743 | 0.8117 | 0.7403 | 0.7988 | 0.8544 | 0.7500 | **+0.0245** |",
       "values": [
@@ -1707,7 +1716,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected F1, T=0.3 run",
+          "quantity": "Dawid-Skene corrected F1, T=0.3 run",
           "value_verbatim": "0.7988",
           "value_parsed": 0.7988,
           "unit": null,
@@ -1716,7 +1725,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected precision, T=0.3 run",
+          "quantity": "Dawid-Skene corrected precision, T=0.3 run",
           "value_verbatim": "0.8544",
           "value_parsed": 0.8544,
           "unit": null,
@@ -1725,7 +1734,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected recall, T=0.3 run",
+          "quantity": "Dawid-Skene corrected recall, T=0.3 run",
           "value_verbatim": "0.7500",
           "value_parsed": 0.75,
           "unit": null,
@@ -1734,7 +1743,7 @@
           "method": "read"
         },
         {
-          "quantity": "delta F1 (D-S minus measured), T=0.3 run",
+          "quantity": "delta F1 (D-S corrected minus measured), T=0.3 run",
           "value_verbatim": "+0.0245",
           "value_parsed": 0.0245,
           "unit": null,
@@ -1761,16 +1770,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). Only the delta column is derived; the six metric cells stay 'read' so the two operands are never compared against their own difference (v1.2 amendment 1)."
+      "notes": "Table row; the delta column is derived and carries its own expression, while the F1 operands stay method 'read' with their own paths (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          112,
-          112
+          118,
+          118
         ],
-        "section": "2.3 D-S corrected metrics vs measured baseline"
+        "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
       "claim_text": "| T=0.7 | 0.7896 | 0.8470 | 0.7394 | 0.8142 | 0.8916 | 0.7492 | **+0.0246** |",
       "values": [
@@ -1802,7 +1811,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected F1, T=0.7 run",
+          "quantity": "Dawid-Skene corrected F1, T=0.7 run",
           "value_verbatim": "0.8142",
           "value_parsed": 0.8142,
           "unit": null,
@@ -1811,7 +1820,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected precision, T=0.7 run",
+          "quantity": "Dawid-Skene corrected precision, T=0.7 run",
           "value_verbatim": "0.8916",
           "value_parsed": 0.8916,
           "unit": null,
@@ -1820,7 +1829,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected recall, T=0.7 run",
+          "quantity": "Dawid-Skene corrected recall, T=0.7 run",
           "value_verbatim": "0.7492",
           "value_parsed": 0.7492,
           "unit": null,
@@ -1829,7 +1838,7 @@
           "method": "read"
         },
         {
-          "quantity": "delta F1 (D-S minus measured), T=0.7 run",
+          "quantity": "delta F1 (D-S corrected minus measured), T=0.7 run",
           "value_verbatim": "+0.0246",
           "value_parsed": 0.0246,
           "unit": null,
@@ -1856,21 +1865,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). Only the delta column is derived; the six metric cells stay 'read' so the two operands are never compared against their own difference (v1.2 amendment 1)."
+      "notes": "Table row; the delta column is derived and carries its own expression, while the F1 operands stay method 'read' with their own paths (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          113,
-          113
+          119,
+          119
         ],
-        "section": "2.3 D-S corrected metrics vs measured baseline"
+        "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
       "claim_text": "| Image | 0.7745 | 0.7799 | 0.7692 | 0.7990 | 0.8210 | 0.7782 | **+0.0245** |",
       "values": [
         {
-          "quantity": "measured F1, Image run",
+          "quantity": "measured F1, image run",
           "value_verbatim": "0.7745",
           "value_parsed": 0.7745,
           "unit": null,
@@ -1879,7 +1888,7 @@
           "method": "read"
         },
         {
-          "quantity": "measured precision, Image run",
+          "quantity": "measured precision, image run",
           "value_verbatim": "0.7799",
           "value_parsed": 0.7799,
           "unit": null,
@@ -1888,7 +1897,7 @@
           "method": "read"
         },
         {
-          "quantity": "measured recall, Image run",
+          "quantity": "measured recall, image run",
           "value_verbatim": "0.7692",
           "value_parsed": 0.7692,
           "unit": null,
@@ -1897,7 +1906,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected F1, Image run",
+          "quantity": "Dawid-Skene corrected F1, image run",
           "value_verbatim": "0.7990",
           "value_parsed": 0.799,
           "unit": null,
@@ -1906,7 +1915,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected precision, Image run",
+          "quantity": "Dawid-Skene corrected precision, image run",
           "value_verbatim": "0.8210",
           "value_parsed": 0.821,
           "unit": null,
@@ -1915,7 +1924,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected recall, Image run",
+          "quantity": "Dawid-Skene corrected recall, image run",
           "value_verbatim": "0.7782",
           "value_parsed": 0.7782,
           "unit": null,
@@ -1924,7 +1933,7 @@
           "method": "read"
         },
         {
-          "quantity": "delta F1 (D-S minus measured), Image run",
+          "quantity": "delta F1 (D-S corrected minus measured), image run",
           "value_verbatim": "+0.0245",
           "value_parsed": 0.0245,
           "unit": null,
@@ -1951,16 +1960,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). Only the delta column is derived; the six metric cells stay 'read' so the two operands are never compared against their own difference (v1.2 amendment 1)."
+      "notes": "Table row; the delta column is derived and carries its own expression, while the F1 operands stay method 'read' with their own paths (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          114,
-          114
+          120,
+          120
         ],
-        "section": "2.3 D-S corrected metrics vs measured baseline"
+        "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
       "claim_text": "| text-MIN | 0.7591 | 0.8485 | 0.6868 | 0.7834 | 0.8931 | 0.6977 | **+0.0243** |",
       "values": [
@@ -1992,7 +2001,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected F1, text-MIN run",
+          "quantity": "Dawid-Skene corrected F1, text-MIN run",
           "value_verbatim": "0.7834",
           "value_parsed": 0.7834,
           "unit": null,
@@ -2001,7 +2010,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected precision, text-MIN run",
+          "quantity": "Dawid-Skene corrected precision, text-MIN run",
           "value_verbatim": "0.8931",
           "value_parsed": 0.8931,
           "unit": null,
@@ -2010,7 +2019,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected recall, text-MIN run",
+          "quantity": "Dawid-Skene corrected recall, text-MIN run",
           "value_verbatim": "0.6977",
           "value_parsed": 0.6977,
           "unit": null,
@@ -2019,7 +2028,7 @@
           "method": "read"
         },
         {
-          "quantity": "delta F1 (D-S minus measured), text-MIN run",
+          "quantity": "delta F1 (D-S corrected minus measured), text-MIN run",
           "value_verbatim": "+0.0243",
           "value_parsed": 0.0243,
           "unit": null,
@@ -2046,21 +2055,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). Only the delta column is derived; the six metric cells stay 'read' so the two operands are never compared against their own difference (v1.2 amendment 1)."
+      "notes": "Table row; the delta column is derived and carries its own expression, while the F1 operands stay method 'read' with their own paths (v1.2 amendment 1)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          116,
-          117
+          122,
+          123
         ],
-        "section": "2.3 D-S corrected metrics vs measured baseline"
+        "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
       "claim_text": "The +0.024 ± 0.0001 D-S correction is essentially identical across all\nfour runs.",
       "values": [
         {
-          "quantity": "D-S correction over measured F1, cross-run central value",
+          "quantity": "Dawid-Skene correction over measured F1, cross-run central value",
           "value_verbatim": "+0.024",
           "value_parsed": 0.024,
           "unit": null,
@@ -2069,8 +2078,8 @@
           "method": "recompute-script"
         },
         {
-          "quantity": "half-spread of the D-S correction across the four runs",
-          "value_verbatim": "0.0001",
+          "quantity": "cross-run spread of the Dawid-Skene correction",
+          "value_verbatim": "± 0.0001",
           "value_parsed": 0.0001,
           "unit": null,
           "kind": "metric",
@@ -2083,22 +2092,22 @@
         "path": null
       },
       "method": "recompute-script",
-      "notes": "Requires the four per-run (D-S F1 - measured F1) deltas and their spread; recorded, not computed, per instrument rule 3."
+      "notes": "Needs a scripted sweep of (D-S F1 - measured F1) across all four dawid-skene-results.json artefacts; recorded, not computed at extraction."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          117,
-          123
+          123,
+          126
         ],
-        "section": "2.3 D-S corrected metrics vs measured baseline"
+        "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
-      "claim_text": "This is consistent with the structural identifiability\nconstraint of the 2-annotator fit: the correction magnitude is driven\nalmost entirely by the fixed 5 % student-FN prior reclassifying\n~172–192 VLM-only items as soft true positives, and that\nreclassification scales with the absolute count of VLM-only items\nproportionally to (matched + student_only) (not their per-run\ndistribution).",
+      "claim_text": "This is consistent with the structural identifiability\nconstraint of the 2-annotator fit: the correction magnitude is driven\nalmost entirely by the fixed 5 % student-FN prior reclassifying\n~172–192 VLM-only items as soft true positives",
       "values": [
         {
-          "quantity": "student false-negative rate prior fixed in the D-S EM fit",
-          "value_verbatim": "5",
+          "quantity": "fixed student false-negative rate prior",
+          "value_verbatim": "5 %",
           "value_parsed": 5.0,
           "unit": "%",
           "kind": "parameter",
@@ -2106,7 +2115,7 @@
           "method": "read"
         },
         {
-          "quantity": "lower end of the expected soft-reclassification range (text-MIN)",
+          "quantity": "lower edge of the cross-run expected soft reclassification count (text-MIN run)",
           "value_verbatim": "~172",
           "value_parsed": 172,
           "unit": null,
@@ -2115,7 +2124,7 @@
           "method": "read"
         },
         {
-          "quantity": "upper end of the expected soft-reclassification range (image)",
+          "quantity": "upper edge of the cross-run expected soft reclassification count (image run)",
           "value_verbatim": "192",
           "value_parsed": 192,
           "unit": null,
@@ -2129,21 +2138,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Approx marker retained in value_verbatim per v1.2 amendment 5 — the range is quoted to whole items against expected_reclassified values of 172.4 and 192.1. '2-annotator fit' is a compound-modifier name (see batch note); the annotator cardinal is extracted once at lines 89-90."
+      "notes": "Approx marker retained in value_verbatim (v1.2 amendment 5); the band edges are the text-MIN minimum (172.4) and image maximum (192.1) rounded to whole items. '2-annotator fit' is a compound modifier and is not extracted. The prior is stored as the fraction 0.05, hence unit '%'."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          123,
-          125
+          129,
+          130
         ],
-        "section": "2.3 D-S corrected metrics vs measured baseline"
+        "section": "§2.3 D-S corrected metrics vs measured baseline"
       },
-      "claim_text": "Post-recovery image's δ-F1 sits at +0.0245, identical\nto T=0.3's; the cross-run constancy of the correction magnitude is\npreserved.",
+      "claim_text": "Post-recovery image's δ-F1 sits at +0.0245, identical\nto T=0.3's",
       "values": [
         {
-          "quantity": "delta F1 (D-S minus measured), image run, post-recovery",
+          "quantity": "delta F1 (D-S corrected minus measured), image run, post-recovery",
           "value_verbatim": "+0.0245",
           "value_parsed": 0.0245,
           "unit": null,
@@ -2167,20 +2176,7 @@
       ],
       "anchor": {
         "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
-        "path": null,
-        "expression": "a - b",
-        "operands": [
-          {
-            "name": "a",
-            "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
-            "path": "$.dawid_skene.corrected_metrics.f1"
-          },
-          {
-            "name": "b",
-            "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
-            "path": "$.measured.f1"
-          }
-        ]
+        "path": null
       },
       "method": "arithmetic",
       "notes": null
@@ -2189,10 +2185,10 @@
       "claim_id": null,
       "source": {
         "lines": [
-          131,
-          131
+          137,
+          137
         ],
-        "section": "2.4 VLM-only posterior — the headline aggregate"
+        "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
       "claim_text": "| T=0.3 | 819 | 0.2269 | 185.8 | 0 |",
       "values": [
@@ -2215,7 +2211,7 @@
           "method": "read"
         },
         {
-          "quantity": "expected soft-reclassified VLM-only items, T=0.3 run",
+          "quantity": "expected soft reclassified items, T=0.3 run",
           "value_verbatim": "185.8",
           "value_parsed": 185.8,
           "unit": null,
@@ -2224,7 +2220,7 @@
           "method": "read"
         },
         {
-          "quantity": "hard-threshold reclassified VLM-only items, T=0.3 run",
+          "quantity": "hard-threshold reclassified items, T=0.3 run",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -2238,16 +2234,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          132,
-          132
+          138,
+          138
         ],
-        "section": "2.4 VLM-only posterior — the headline aggregate"
+        "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
       "claim_text": "| T=0.7 | 637 | 0.2914 | 185.6 | 0 |",
       "values": [
@@ -2270,7 +2266,7 @@
           "method": "read"
         },
         {
-          "quantity": "expected soft-reclassified VLM-only items, T=0.7 run",
+          "quantity": "expected soft reclassified items, T=0.7 run",
           "value_verbatim": "185.6",
           "value_parsed": 185.6,
           "unit": null,
@@ -2279,7 +2275,7 @@
           "method": "read"
         },
         {
-          "quantity": "hard-threshold reclassified VLM-only items, T=0.7 run",
+          "quantity": "hard-threshold reclassified items, T=0.7 run",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -2293,21 +2289,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          133,
-          133
+          139,
+          139
         ],
-        "section": "2.4 VLM-only posterior — the headline aggregate"
+        "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
       "claim_text": "| Image | 1,030 | 0.1865 | 192.1 | 0 |",
       "values": [
         {
-          "quantity": "VLM-only item count, Image run",
+          "quantity": "VLM-only item count, image run",
           "value_verbatim": "1,030",
           "value_parsed": 1030,
           "unit": null,
@@ -2316,7 +2312,7 @@
           "method": "read"
         },
         {
-          "quantity": "VLM-only posterior P(true=1), Image run",
+          "quantity": "VLM-only posterior P(true=1), image run",
           "value_verbatim": "0.1865",
           "value_parsed": 0.1865,
           "unit": null,
@@ -2325,7 +2321,7 @@
           "method": "read"
         },
         {
-          "quantity": "expected soft-reclassified VLM-only items, Image run",
+          "quantity": "expected soft reclassified items, image run",
           "value_verbatim": "192.1",
           "value_parsed": 192.1,
           "unit": null,
@@ -2334,7 +2330,7 @@
           "method": "read"
         },
         {
-          "quantity": "hard-threshold reclassified VLM-only items, Image run",
+          "quantity": "hard-threshold reclassified items, image run",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -2348,16 +2344,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          134,
-          134
+          140,
+          140
         ],
-        "section": "2.4 VLM-only posterior — the headline aggregate"
+        "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
       "claim_text": "| text-MIN | 585 | 0.2947 | 172.4 | 0 |",
       "values": [
@@ -2380,7 +2376,7 @@
           "method": "read"
         },
         {
-          "quantity": "expected soft-reclassified VLM-only items, text-MIN run",
+          "quantity": "expected soft reclassified items, text-MIN run",
           "value_verbatim": "172.4",
           "value_parsed": 172.4,
           "unit": null,
@@ -2389,7 +2385,7 @@
           "method": "read"
         },
         {
-          "quantity": "hard-threshold reclassified VLM-only items, text-MIN run",
+          "quantity": "hard-threshold reclassified items, text-MIN run",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -2403,18 +2399,18 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          136,
-          140
+          142,
+          143
         ],
-        "section": "2.4 VLM-only posterior — the headline aggregate"
+        "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
-      "claim_text": "text-MIN produces the **highest** VLM-only posterior of the four\n(0.2947), narrowly above T=0.7 (0.2914) — both reflect that their\nVLM-only sets are smallest in proportion to the matched set, so D-S\nattributes a larger fraction of those items to true student false\nnegatives.",
+      "claim_text": "text-MIN produces the **highest** VLM-only posterior of the four\n(0.2947), narrowly above T=0.7 (0.2914)",
       "values": [
         {
           "quantity": "VLM-only posterior P(true=1), text-MIN run",
@@ -2446,12 +2442,12 @@
       "claim_id": null,
       "source": {
         "lines": [
-          140,
-          143
+          146,
+          147
         ],
-        "section": "2.4 VLM-only posterior — the headline aggregate"
+        "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
-      "claim_text": "Image produces the **lowest** posterior (0.1865;\npost-recovery, up from the pre-recovery 0.1862) because its\nVLM-only set is largest in proportion to matched, so the fixed\nprior spreads thinner per item.",
+      "claim_text": "Image produces the **lowest** posterior (0.1865;\npost-recovery, up from the pre-recovery 0.1862)",
       "values": [
         {
           "quantity": "VLM-only posterior P(true=1), image run, post-recovery",
@@ -2477,21 +2473,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Pre-recovery figure is the quoted-old side of a correction block (also at results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup)."
+      "notes": "Correction pair: 'up from the pre-recovery 0.1862' is the was-side (historical); the preserved artefact is results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          145,
-          147
+          151,
+          152
         ],
-        "section": "2.4 VLM-only posterior — the headline aggregate"
+        "section": "§2.4 VLM-only posterior — the headline aggregate"
       },
-      "claim_text": "text-MIN is the run where the **fewest absolute soft reclassifications\noccur** (172.4 — the smallest of the four), reflecting its smallest\nabsolute VLM-only count.",
+      "claim_text": "text-MIN is the run where the **fewest absolute soft reclassifications\noccur** (172.4",
       "values": [
         {
-          "quantity": "expected soft-reclassified VLM-only items, text-MIN run",
+          "quantity": "expected soft reclassified items, text-MIN run",
           "value_verbatim": "172.4",
           "value_parsed": 172.4,
           "unit": null,
@@ -2502,7 +2498,7 @@
       ],
       "anchor": {
         "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
-        "path": "$.dawid_skene.corrected_metrics.expected_reclassified"
+        "path": null
       },
       "method": "read",
       "notes": null
@@ -2511,15 +2507,15 @@
       "claim_id": null,
       "source": {
         "lines": [
-          155,
-          158
+          163,
+          164
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
-      "claim_text": "The script `analyse_ds_vs_human_review.py` cross-tabulates the\nper-candidate D-S posterior against the combined human-review label\n(yesterday's 50 m-strict review, where present, unioned with today's\nmulti-buffer re-review) on the VLM-only slice.",
+      "claim_text": "(yesterday's 50 m-strict review, where present, unioned with today's\nmulti-buffer re-review)",
       "values": [
         {
-          "quantity": "matching buffer radius of the strict human review / D-S item build",
+          "quantity": "matching buffer radius of the strict human review joined into the crosstab",
           "value_verbatim": "50",
           "value_parsed": 50,
           "unit": "m",
@@ -2530,25 +2526,34 @@
       ],
       "anchor": {
         "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
-        "path": "$.parameters.buffer_metres"
+        "path": null
       },
       "method": "read",
-      "notes": "The 50 m radius is recorded as buffer_metres in every run's D-S result file."
+      "notes": "The 50 m strict-review radius is the same buffer the D-S item set is built at ($.parameters.buffer_metres = 50 in every run's dawid-skene-results.json)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          158,
-          161
+          164,
+          167
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
-      "claim_text": "the D-S posterior **collapses to a single value per response\npattern**, so the 2×2 cross-tab at threshold 0.5 is degenerate and the\nAUC is 0.5 by construction in every run.",
+      "claim_text": "With two binary\nannotators the D-S posterior **collapses to a single value per response\npattern**, so the 2×2 cross-tab at threshold 0.5 is degenerate and the\nAUC is 0.5 by construction in every run.",
       "values": [
         {
-          "quantity": "count of distinct D-S posterior values on the joined VLM-only slice",
-          "value_verbatim": "single",
+          "quantity": "count of binary annotators in the Dawid-Skene fit",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of distinct Dawid-Skene posterior values on the VLM-only slice",
+          "value_verbatim": "a single value",
           "value_parsed": 1,
           "unit": null,
           "kind": "count",
@@ -2556,7 +2561,7 @@
           "method": "read"
         },
         {
-          "quantity": "probability threshold of the coarse 2x2 cross-tab",
+          "quantity": "cross-tab decision threshold on the D-S posterior",
           "value_verbatim": "0.5",
           "value_parsed": 0.5,
           "unit": null,
@@ -2565,7 +2570,7 @@
           "method": "read"
         },
         {
-          "quantity": "AUC of the D-S posterior on the VLM-only slice, asserted for every run",
+          "quantity": "AUC on the VLM-only slice, asserted for every run",
           "value_verbatim": "0.5",
           "value_parsed": 0.5,
           "unit": null,
@@ -2579,21 +2584,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Span trimmed to start after 'With two binary annotators' so the sentence's annotator cardinal is not double-counted against lines 89-90. 'a single unique posterior value' is checkable as the length of unique_ds_posteriors. '2x2' is a shape name, not a claim."
+      "notes": "'2×2' is a table dimension used as a name and is not extracted; the cardinal 'two binary annotators' is (no artefact records an annotator count, hence anchor-unknown for that value only). The three remaining values are anchored to the text-MIN crosstab summary, which the document asserts holds for every run."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          168,
-          168
+          174,
+          174
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab table"
       },
       "claim_text": "| text-MIN | 585 / 0 | 0.5538 (324/585) | 0.2947 | +0.259 | 1.88× | 0.2591 | 0.3142 | 0.500 |",
       "values": [
         {
-          "quantity": "joined VLM-only review rows, text-MIN run",
+          "quantity": "joined VLM-only rows, text-MIN run",
           "value_verbatim": "585",
           "value_parsed": 585,
           "unit": null,
@@ -2602,7 +2607,7 @@
           "method": "read"
         },
         {
-          "quantity": "unjoined VLM-only review rows, text-MIN run",
+          "quantity": "unjoined VLM-only rows, text-MIN run",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -2615,7 +2620,7 @@
           "value_verbatim": "0.5538",
           "value_parsed": 0.5538,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "$.prevalence",
           "method": "read"
         },
@@ -2629,7 +2634,7 @@
           "method": "read"
         },
         {
-          "quantity": "joined VLM-only rows (rate denominator), text-MIN run",
+          "quantity": "denominator of the empirical mound rate (joined rows), text-MIN run",
           "value_verbatim": "585",
           "value_parsed": 585,
           "unit": null,
@@ -2638,7 +2643,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S VLM-only posterior, text-MIN run",
+          "quantity": "Dawid-Skene VLM-only posterior, text-MIN run",
           "value_verbatim": "0.2947",
           "value_parsed": 0.2947,
           "unit": null,
@@ -2669,10 +2674,10 @@
           ]
         },
         {
-          "quantity": "empirical / D-S posterior ratio, text-MIN run",
-          "value_verbatim": "1.88",
+          "quantity": "calibration ratio (empirical / D-S posterior), text-MIN run",
+          "value_verbatim": "1.88×",
           "value_parsed": 1.88,
-          "unit": "×",
+          "unit": null,
           "kind": "ratio",
           "path": null,
           "method": "arithmetic",
@@ -2691,7 +2696,7 @@
           ]
         },
         {
-          "quantity": "expected calibration error on the VLM-only slice, text-MIN run",
+          "quantity": "expected calibration error (ECE), text-MIN run",
           "value_verbatim": "0.2591",
           "value_parsed": 0.2591,
           "unit": null,
@@ -2700,7 +2705,7 @@
           "method": "read"
         },
         {
-          "quantity": "Brier score on the VLM-only slice, text-MIN run",
+          "quantity": "Brier score, text-MIN run",
           "value_verbatim": "0.3142",
           "value_parsed": 0.3142,
           "unit": null,
@@ -2723,21 +2728,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). Gap and ratio columns are derived from the empirical rate and the D-S posterior, which stay 'read' with their own locators (v1.2 amendment 1); the posterior lives in the sibling D-S result file, addressed cross-file (v1.2 amendment 2)."
+      "notes": "Table row. The 'Joined / unjoined' cell carries two counts and the empirical-rate cell repeats the joined count as its denominator; the gap and ratio columns are derived, each with its own expression, while their operands stay 'read' (v1.2 amendment 1). The D-S posterior column lives in the sibling dawid-skene-results.json, addressed cross-file (amendment 2)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          169,
-          169
+          175,
+          175
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab table"
       },
       "claim_text": "| T=0.7 | 637 / 0 | 0.5589 (356/637) | 0.2914 | +0.267 | 1.92× | 0.2675 | 0.3181 | 0.500 |",
       "values": [
         {
-          "quantity": "joined VLM-only review rows, T=0.7 run",
+          "quantity": "joined VLM-only rows, T=0.7 run",
           "value_verbatim": "637",
           "value_parsed": 637,
           "unit": null,
@@ -2746,7 +2751,7 @@
           "method": "read"
         },
         {
-          "quantity": "unjoined VLM-only review rows, T=0.7 run",
+          "quantity": "unjoined VLM-only rows, T=0.7 run",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -2759,7 +2764,7 @@
           "value_verbatim": "0.5589",
           "value_parsed": 0.5589,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "$.prevalence",
           "method": "read"
         },
@@ -2773,7 +2778,7 @@
           "method": "read"
         },
         {
-          "quantity": "joined VLM-only rows (rate denominator), T=0.7 run",
+          "quantity": "denominator of the empirical mound rate (joined rows), T=0.7 run",
           "value_verbatim": "637",
           "value_parsed": 637,
           "unit": null,
@@ -2782,7 +2787,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S VLM-only posterior, T=0.7 run",
+          "quantity": "Dawid-Skene VLM-only posterior, T=0.7 run",
           "value_verbatim": "0.2914",
           "value_parsed": 0.2914,
           "unit": null,
@@ -2813,10 +2818,10 @@
           ]
         },
         {
-          "quantity": "empirical / D-S posterior ratio, T=0.7 run",
-          "value_verbatim": "1.92",
+          "quantity": "calibration ratio (empirical / D-S posterior), T=0.7 run",
+          "value_verbatim": "1.92×",
           "value_parsed": 1.92,
-          "unit": "×",
+          "unit": null,
           "kind": "ratio",
           "path": null,
           "method": "arithmetic",
@@ -2835,7 +2840,7 @@
           ]
         },
         {
-          "quantity": "expected calibration error on the VLM-only slice, T=0.7 run",
+          "quantity": "expected calibration error (ECE), T=0.7 run",
           "value_verbatim": "0.2675",
           "value_parsed": 0.2675,
           "unit": null,
@@ -2844,7 +2849,7 @@
           "method": "read"
         },
         {
-          "quantity": "Brier score on the VLM-only slice, T=0.7 run",
+          "quantity": "Brier score, T=0.7 run",
           "value_verbatim": "0.3181",
           "value_parsed": 0.3181,
           "unit": null,
@@ -2867,21 +2872,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). Gap and ratio columns are derived from the empirical rate and the D-S posterior, which stay 'read' with their own locators (v1.2 amendment 1); the posterior lives in the sibling D-S result file, addressed cross-file (v1.2 amendment 2)."
+      "notes": "Table row. The 'Joined / unjoined' cell carries two counts and the empirical-rate cell repeats the joined count as its denominator; the gap and ratio columns are derived, each with its own expression, while their operands stay 'read' (v1.2 amendment 1). The D-S posterior column lives in the sibling dawid-skene-results.json, addressed cross-file (amendment 2)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          170,
-          170
+          176,
+          176
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab table"
       },
       "claim_text": "| T=0.3 | 628 / 64 | 0.5748 (361/628) | 0.2269 | +0.348 | 2.53× | 0.3479 | 0.3655 | 0.500 |",
       "values": [
         {
-          "quantity": "joined VLM-only review rows, T=0.3 run",
+          "quantity": "joined VLM-only rows, T=0.3 run",
           "value_verbatim": "628",
           "value_parsed": 628,
           "unit": null,
@@ -2890,7 +2895,7 @@
           "method": "read"
         },
         {
-          "quantity": "unjoined VLM-only review rows, T=0.3 run",
+          "quantity": "unjoined VLM-only rows, T=0.3 run",
           "value_verbatim": "64",
           "value_parsed": 64,
           "unit": null,
@@ -2903,7 +2908,7 @@
           "value_verbatim": "0.5748",
           "value_parsed": 0.5748,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "$.prevalence",
           "method": "read"
         },
@@ -2917,7 +2922,7 @@
           "method": "read"
         },
         {
-          "quantity": "joined VLM-only rows (rate denominator), T=0.3 run",
+          "quantity": "denominator of the empirical mound rate (joined rows), T=0.3 run",
           "value_verbatim": "628",
           "value_parsed": 628,
           "unit": null,
@@ -2926,7 +2931,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S VLM-only posterior, T=0.3 run",
+          "quantity": "Dawid-Skene VLM-only posterior, T=0.3 run",
           "value_verbatim": "0.2269",
           "value_parsed": 0.2269,
           "unit": null,
@@ -2957,10 +2962,10 @@
           ]
         },
         {
-          "quantity": "empirical / D-S posterior ratio, T=0.3 run",
-          "value_verbatim": "2.53",
+          "quantity": "calibration ratio (empirical / D-S posterior), T=0.3 run",
+          "value_verbatim": "2.53×",
           "value_parsed": 2.53,
-          "unit": "×",
+          "unit": null,
           "kind": "ratio",
           "path": null,
           "method": "arithmetic",
@@ -2979,7 +2984,7 @@
           ]
         },
         {
-          "quantity": "expected calibration error on the VLM-only slice, T=0.3 run",
+          "quantity": "expected calibration error (ECE), T=0.3 run",
           "value_verbatim": "0.3479",
           "value_parsed": 0.3479,
           "unit": null,
@@ -2988,7 +2993,7 @@
           "method": "read"
         },
         {
-          "quantity": "Brier score on the VLM-only slice, T=0.3 run",
+          "quantity": "Brier score, T=0.3 run",
           "value_verbatim": "0.3655",
           "value_parsed": 0.3655,
           "unit": null,
@@ -3011,21 +3016,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). Gap and ratio columns are derived from the empirical rate and the D-S posterior, which stay 'read' with their own locators (v1.2 amendment 1); the posterior lives in the sibling D-S result file, addressed cross-file (v1.2 amendment 2)."
+      "notes": "Table row. The 'Joined / unjoined' cell carries two counts and the empirical-rate cell repeats the joined count as its denominator; the gap and ratio columns are derived, each with its own expression, while their operands stay 'read' (v1.2 amendment 1). The D-S posterior column lives in the sibling dawid-skene-results.json, addressed cross-file (amendment 2)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          171,
-          171
+          177,
+          177
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab table"
       },
-      "claim_text": "| Image | 1,029 / 0 | 0.7250 (746/1,029) | 0.1865 | +0.539 | 3.89× | 0.5385 | 0.4893 | 0.500 |",
+      "claim_text": "| Image | 1,029 / 0 | 0.7250 (746/1,029) | 0.1865 | +0.538 | 3.89× | 0.5385 | 0.4893 | 0.500 |",
       "values": [
         {
-          "quantity": "joined VLM-only review rows, Image run",
+          "quantity": "joined VLM-only rows, image run",
           "value_verbatim": "1,029",
           "value_parsed": 1029,
           "unit": null,
@@ -3034,7 +3039,7 @@
           "method": "read"
         },
         {
-          "quantity": "unjoined VLM-only review rows, Image run",
+          "quantity": "unjoined VLM-only rows, image run",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -3043,16 +3048,16 @@
           "method": "read"
         },
         {
-          "quantity": "empirical human-review mound rate on the VLM-only slice, Image run",
+          "quantity": "empirical human-review mound rate on the VLM-only slice, image run",
           "value_verbatim": "0.7250",
           "value_parsed": 0.725,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "$.prevalence",
           "method": "read"
         },
         {
-          "quantity": "human-reviewed mounds on the VLM-only slice, Image run",
+          "quantity": "human-reviewed mounds on the VLM-only slice, image run",
           "value_verbatim": "746",
           "value_parsed": 746,
           "unit": null,
@@ -3061,7 +3066,7 @@
           "method": "read"
         },
         {
-          "quantity": "joined VLM-only rows (rate denominator), Image run",
+          "quantity": "denominator of the empirical mound rate (joined rows), image run",
           "value_verbatim": "1,029",
           "value_parsed": 1029,
           "unit": null,
@@ -3070,7 +3075,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S VLM-only posterior, Image run",
+          "quantity": "Dawid-Skene VLM-only posterior, image run",
           "value_verbatim": "0.1865",
           "value_parsed": 0.1865,
           "unit": null,
@@ -3079,9 +3084,9 @@
           "method": "read"
         },
         {
-          "quantity": "calibration gap (empirical minus D-S posterior), Image run",
-          "value_verbatim": "+0.539",
-          "value_parsed": 0.539,
+          "quantity": "calibration gap (empirical minus D-S posterior), image run",
+          "value_verbatim": "+0.538",
+          "value_parsed": 0.538,
           "unit": null,
           "kind": "statistic",
           "path": null,
@@ -3101,10 +3106,10 @@
           ]
         },
         {
-          "quantity": "empirical / D-S posterior ratio, Image run",
-          "value_verbatim": "3.89",
+          "quantity": "calibration ratio (empirical / D-S posterior), image run",
+          "value_verbatim": "3.89×",
           "value_parsed": 3.89,
-          "unit": "×",
+          "unit": null,
           "kind": "ratio",
           "path": null,
           "method": "arithmetic",
@@ -3123,7 +3128,7 @@
           ]
         },
         {
-          "quantity": "expected calibration error on the VLM-only slice, Image run",
+          "quantity": "expected calibration error (ECE), image run",
           "value_verbatim": "0.5385",
           "value_parsed": 0.5385,
           "unit": null,
@@ -3132,7 +3137,7 @@
           "method": "read"
         },
         {
-          "quantity": "Brier score on the VLM-only slice, Image run",
+          "quantity": "Brier score, image run",
           "value_verbatim": "0.4893",
           "value_parsed": 0.4893,
           "unit": null,
@@ -3141,7 +3146,7 @@
           "method": "read"
         },
         {
-          "quantity": "AUC on the VLM-only slice, Image run",
+          "quantity": "AUC on the VLM-only slice, image run",
           "value_verbatim": "0.500",
           "value_parsed": 0.5,
           "unit": null,
@@ -3155,18 +3160,18 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). Gap and ratio columns are derived from the empirical rate and the D-S posterior, which stay 'read' with their own locators (v1.2 amendment 1); the posterior lives in the sibling D-S result file, addressed cross-file (v1.2 amendment 2)."
+      "notes": "Table row. The 'Joined / unjoined' cell carries two counts and the empirical-rate cell repeats the joined count as its denominator; the gap and ratio columns are derived, each with its own expression, while their operands stay 'read' (v1.2 amendment 1). The D-S posterior column lives in the sibling dawid-skene-results.json, addressed cross-file (amendment 2)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          175,
-          178
+          181,
+          182
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
-      "claim_text": "- **AUC = 0.500 in every run** — degenerate by construction (a single\n  unique posterior value per joined VLM-only item). The D-S posterior\n  on the VLM-only slice cannot rank individuals; this is a property\n  of the 2-annotator identifiability class, not a calibration failure.",
+      "claim_text": "- **AUC = 0.500 in every run** — degenerate by construction (a single\n  unique posterior value per joined VLM-only item)",
       "values": [
         {
           "quantity": "AUC on the VLM-only slice, asserted for every run",
@@ -3178,8 +3183,8 @@
           "method": "read"
         },
         {
-          "quantity": "count of distinct D-S posterior values on the joined VLM-only slice",
-          "value_verbatim": "single",
+          "quantity": "count of distinct Dawid-Skene posterior values per joined VLM-only item",
+          "value_verbatim": "a single",
           "value_parsed": 1,
           "unit": null,
           "kind": "count",
@@ -3192,21 +3197,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Same locators hold in results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json, results/55maps-text-high-generalisation/ds-human-crosstab/summary.json and results/55maps-image-generalisation/ds-human-crosstab/summary.json."
+      "notes": "A constant-collapse claim across all four crosstab summaries; anchored to the text-MIN artefact, with the other three carrying identical locators."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          179,
-          182
+          185,
+          188
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
-      "claim_text": "- **2 × 2 cross-tab at threshold 0.5 collapses in every run** — every\n  run's VLM-only posterior is below 0.5, so D-S `>` 0.5 is always 0\n  and D-S `≤` 0.5 captures the entire joined set (TP=0, FP=0,\n  FN=n_mound, TN=n_not_mound).",
+      "claim_text": "- **2 × 2 cross-tab at threshold 0.5 collapses in every run** — every\n  run's VLM-only posterior is below 0.5, so D-S `>` 0.5 is always 0\n  and D-S `≤` 0.5 captures the entire joined set (TP=0, FP=0,\n  FN=n_mound, TN=n_not_mound)",
       "values": [
         {
-          "quantity": "probability threshold of the coarse cross-tab",
+          "quantity": "cross-tab decision threshold on the D-S posterior",
           "value_verbatim": "0.5",
           "value_parsed": 0.5,
           "unit": null,
@@ -3215,7 +3220,7 @@
           "method": "read"
         },
         {
-          "quantity": "true positives in the coarse cross-tab at threshold 0.5, every run",
+          "quantity": "true positives in the coarse 2 × 2 cross-tab at threshold 0.5",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -3224,7 +3229,7 @@
           "method": "read"
         },
         {
-          "quantity": "false positives in the coarse cross-tab at threshold 0.5, every run",
+          "quantity": "false positives in the coarse 2 × 2 cross-tab at threshold 0.5",
           "value_verbatim": "0",
           "value_parsed": 0,
           "unit": null,
@@ -3238,16 +3243,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "The repeated '0.5' comparison bounds later in the sentence restate the same threshold and are not extracted separately; TP and FP are the two numeric cross-tab cells given as literals (FN and TN are given symbolically)."
+      "notes": "The repeated inline '0.5' comparators restate the same decision threshold and are extracted once; '2 × 2' is a table dimension used as a name (rule 5). FN and TN are given symbolically (n_mound / n_not_mound), not numerically, so they are not values."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          183,
-          184
+          189,
+          190
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
       "claim_text": "- **Three runs now have zero unjoined rows** post-recovery\n  (text-MIN, T=0.7, image).",
       "values": [
@@ -3258,10 +3263,10 @@
           "unit": null,
           "kind": "count",
           "path": null,
-          "method": "anchor-unknown"
+          "method": "recompute-script"
         },
         {
-          "quantity": "unjoined VLM-only review rows, text-MIN / T=0.7 / image runs",
+          "quantity": "unjoined VLM-only rows, text-MIN run",
           "value_verbatim": "zero",
           "value_parsed": 0,
           "unit": null,
@@ -3275,21 +3280,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Same locator holds in results/55maps-text-high-generalisation/ds-human-crosstab/summary.json and results/55maps-image-generalisation/ds-human-crosstab/summary.json; no artefact asserts the run count itself."
+      "notes": "The 'three runs' count is a sweep over the four ds-human-crosstab/summary.json artefacts counting $.n_unjoined == 0, so it is recorded as recompute-script; the 'zero' itself is read against the text-MIN artefact (T=0.7 and image carry the same locator). Note the tension with line 257, which calls text-MIN 'the only run with zero unjoined rows' — recorded, not adjudicated."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          184,
-          185
+          190,
+          190
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
-      "claim_text": "Pre-recovery image had 1 unjoined row;\n  the cand 2397 promotion in cross-track-v2 closed that gap.",
+      "claim_text": "Pre-recovery image had 1 unjoined row;",
       "values": [
         {
-          "quantity": "unjoined VLM-only review rows, image run, pre-recovery",
+          "quantity": "unjoined VLM-only rows, image run, pre-recovery",
           "value_verbatim": "1",
           "value_parsed": 1,
           "unit": null,
@@ -3300,21 +3305,21 @@
       ],
       "anchor": null,
       "method": "historical",
-      "notes": "Quoted-old side of a correction block; also resolvable at results/55maps-image-generalisation/ds-human-crosstab/summary.json.pre-recovery-20260503T023258.backup ($.n_unjoined)."
+      "notes": "Was-side of a correction pair; the preserved artefact is results/55maps-image-generalisation/ds-human-crosstab/summary.json.pre-recovery-20260503T023258.backup if triage wants a live check."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          185,
-          189
+          191,
+          195
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
       "claim_text": "T=0.3\n  retains 64 unjoined (a quantitative outlier explained in the\n  previous three-run summary §3, related to the corrected-f1 pipeline\n  using the *reviewed* student GT at multi-buffer rings while D-S\n  uses the legacy student GT at 50 m).",
       "values": [
         {
-          "quantity": "unjoined VLM-only review rows, T=0.3 run",
+          "quantity": "unjoined VLM-only rows, T=0.3 run",
           "value_verbatim": "64",
           "value_parsed": 64,
           "unit": null,
@@ -3323,7 +3328,7 @@
           "method": "read"
         },
         {
-          "quantity": "count of runs covered by the predecessor D-S cross-run summary",
+          "quantity": "count of runs covered by the predecessor Dawid-Skene cross-run summary",
           "value_verbatim": "three",
           "value_parsed": 3,
           "unit": null,
@@ -3332,7 +3337,7 @@
           "method": "anchor-unknown"
         },
         {
-          "quantity": "matching buffer radius used by the D-S item build",
+          "quantity": "matching buffer radius of the legacy student ground truth used by Dawid-Skene",
           "value_verbatim": "50",
           "value_parsed": 50,
           "unit": "m",
@@ -3346,52 +3351,52 @@
         "path": null
       },
       "method": "read",
-      "notes": "'§3' is a section reference. The predecessor summary is prose and not present in the working tree — flagged anchor-unknown per instrument rule 2."
+      "notes": "'previous three-run summary' repeats the predecessor-document count already flagged at lines 9-10; still anchor-unknown (rule 2 forbids anchoring prose to prose). The 50 m is asserted as the buffer the D-S layer matches at, so it is extracted rather than treated as a row label."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          190,
-          192
+          196,
+          198
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
       "claim_text": "- **text-MIN's empirical mound rate (0.5538) is the lowest** of the\n  four, just below T=0.7 (0.5589), well below T=0.3 (0.5748) and\n  image (0.7250).",
       "values": [
         {
-          "quantity": "empirical human-review mound rate, VLM-only slice, text-MIN run",
+          "quantity": "empirical human-review mound rate on the VLM-only slice, text-MIN run",
           "value_verbatim": "0.5538",
           "value_parsed": 0.5538,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "$.prevalence",
           "method": "read"
         },
         {
-          "quantity": "empirical human-review mound rate, VLM-only slice, T=0.7 run",
+          "quantity": "empirical human-review mound rate on the VLM-only slice, T=0.7 run",
           "value_verbatim": "0.5589",
           "value_parsed": 0.5589,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json#$.prevalence",
           "method": "read"
         },
         {
-          "quantity": "empirical human-review mound rate, VLM-only slice, T=0.3 run",
+          "quantity": "empirical human-review mound rate on the VLM-only slice, T=0.3 run",
           "value_verbatim": "0.5748",
           "value_parsed": 0.5748,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json#$.prevalence",
           "method": "read"
         },
         {
-          "quantity": "empirical human-review mound rate, VLM-only slice, image run",
+          "quantity": "empirical human-review mound rate on the VLM-only slice, image run",
           "value_verbatim": "0.7250",
           "value_parsed": 0.725,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "results/55maps-image-generalisation/ds-human-crosstab/summary.json#$.prevalence",
           "method": "read"
         }
@@ -3407,30 +3412,57 @@
       "claim_id": null,
       "source": {
         "lines": [
-          192,
-          192
+          198,
+          201
         ],
-        "section": "3. D-S vs human-review crosstab — per run"
+        "section": "§3 D-S vs human-review crosstab — per run"
       },
-      "claim_text": "The four runs span 0.55–0.73 on this metric.",
+      "claim_text": "The four runs span 0.55–0.72 on this metric — both\n  band edges are rounded from the artefact values (text-MIN 0.5538462,\n  image 0.7249757), not from the 4 d.p. display forms above, which is\n  where the upper edge would otherwise double-round to 0.73.",
       "values": [
         {
-          "quantity": "minimum empirical human-review mound rate across the four runs (2 d.p.)",
+          "quantity": "lower edge of the cross-run empirical mound-rate band (text-MIN run)",
           "value_verbatim": "0.55",
           "value_parsed": 0.55,
           "unit": null,
-          "kind": "statistic",
+          "kind": "ratio",
           "path": "$.prevalence",
           "method": "read"
         },
         {
-          "quantity": "maximum empirical human-review mound rate across the four runs (2 d.p.)",
+          "quantity": "upper edge of the cross-run empirical mound-rate band (image run)",
+          "value_verbatim": "0.72",
+          "value_parsed": 0.72,
+          "unit": null,
+          "kind": "ratio",
+          "path": "results/55maps-image-generalisation/ds-human-crosstab/summary.json#$.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical human-review mound rate, text-MIN run, at artefact precision",
+          "value_verbatim": "0.5538462",
+          "value_parsed": 0.5538462,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical human-review mound rate, image run, at artefact precision",
+          "value_verbatim": "0.7249757",
+          "value_parsed": 0.7249757,
+          "unit": null,
+          "kind": "ratio",
+          "path": "results/55maps-image-generalisation/ds-human-crosstab/summary.json#$.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "counterfactual double-rounded upper band edge (not asserted as a result)",
           "value_verbatim": "0.73",
           "value_parsed": 0.73,
           "unit": null,
-          "kind": "statistic",
-          "path": "results/55maps-image-generalisation/ds-human-crosstab/summary.json#$.prevalence",
-          "method": "read"
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
         }
       ],
       "anchor": {
@@ -3438,16 +3470,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "Range endpoints quoted at 2 d.p.; minimum is the text-MIN prevalence, maximum the image prevalence."
+      "notes": "The band edges are truncations of the artefact values, quoted alongside those artefact values in the same sentence. The trailing 0.73 is explicitly counterfactual ('would otherwise double-round to'), i.e. NOT an asserted study figure; it is included under rule-of-doubt with method anchor-unknown so triage can prune it rather than score it as a mismatch. The superseded b073 recorded this sentence as 'The four runs span 0.55–0.73 on this metric.' — the body has since changed."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          200,
-          200
+          209,
+          209
         ],
-        "section": "4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
+        "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
       "claim_text": "| Measured F1 | T=0.7 (0.7896) | Image (0.7745) | T=0.3 (0.7743) | text-MIN (0.7591) |",
       "values": [
@@ -3457,7 +3489,7 @@
           "value_parsed": 0.7896,
           "unit": null,
           "kind": "metric",
-          "path": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json#$.measured.f1",
+          "path": "$.measured.f1",
           "method": "read"
         },
         {
@@ -3493,30 +3525,30 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6); cells live in four sibling files, addressed cross-file (v1.2 amendment 2)."
+      "notes": "Ranking table row; each cell lives in a different run artefact, addressed cross-file (v1.2 amendment 2)."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          201,
-          201
+          210,
+          210
         ],
-        "section": "4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
+        "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
       "claim_text": "| D-S corrected F1 | T=0.7 (0.8142) | Image (0.7990) | T=0.3 (0.7988) | text-MIN (0.7834) |",
       "values": [
         {
-          "quantity": "D-S corrected F1, T=0.7 run (best)",
+          "quantity": "Dawid-Skene corrected F1, T=0.7 run (best)",
           "value_verbatim": "0.8142",
           "value_parsed": 0.8142,
           "unit": null,
           "kind": "metric",
-          "path": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "path": "$.dawid_skene.corrected_metrics.f1",
           "method": "read"
         },
         {
-          "quantity": "D-S corrected F1, image run (2nd)",
+          "quantity": "Dawid-Skene corrected F1, image run (2nd)",
           "value_verbatim": "0.7990",
           "value_parsed": 0.799,
           "unit": null,
@@ -3525,7 +3557,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected F1, T=0.3 run (3rd)",
+          "quantity": "Dawid-Skene corrected F1, T=0.3 run (3rd)",
           "value_verbatim": "0.7988",
           "value_parsed": 0.7988,
           "unit": null,
@@ -3534,7 +3566,7 @@
           "method": "read"
         },
         {
-          "quantity": "D-S corrected F1, text-MIN run (worst)",
+          "quantity": "Dawid-Skene corrected F1, text-MIN run (worst)",
           "value_verbatim": "0.7834",
           "value_parsed": 0.7834,
           "unit": null,
@@ -3548,53 +3580,53 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": null
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          202,
-          202
+          211,
+          211
         ],
-        "section": "4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
+        "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
-      "claim_text": "| Corrected-F1-multi-buffer F1 (R=50 m) | T=0.3 (0.8437) | Image (0.8332) | T=0.7 (0.8273) | text-MIN (0.7968) |",
+      "claim_text": "| Corrected-F1-multi-buffer F1 (R=50 m) | T=0.3 (0.8437) | Image (0.8333) | T=0.7 (0.8273) | text-MIN (0.7968) |",
       "values": [
         {
-          "quantity": "corrected-F1-multi-buffer F1 at R=50 m, T=0.3 run (best)",
+          "quantity": "corrected-F1-multi-buffer F1 at R = 50 m, T=0.3 run (best)",
           "value_verbatim": "0.8437",
           "value_parsed": 0.8437,
           "unit": null,
           "kind": "metric",
-          "path": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "path": "$.results[0].F1",
           "method": "read"
         },
         {
-          "quantity": "corrected-F1-multi-buffer F1 at R=50 m, image run (2nd)",
-          "value_verbatim": "0.8332",
-          "value_parsed": 0.8332,
+          "quantity": "corrected-F1-multi-buffer F1 at R = 50 m, image run (2nd)",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
           "unit": null,
           "kind": "metric",
-          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
           "method": "read"
         },
         {
-          "quantity": "corrected-F1-multi-buffer F1 at R=50 m, T=0.7 run (3rd)",
+          "quantity": "corrected-F1-multi-buffer F1 at R = 50 m, T=0.7 run (3rd)",
           "value_verbatim": "0.8273",
           "value_parsed": 0.8273,
           "unit": null,
           "kind": "metric",
-          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
           "method": "read"
         },
         {
-          "quantity": "corrected-F1-multi-buffer F1 at R=50 m, text-MIN run (worst)",
+          "quantity": "corrected-F1-multi-buffer F1 at R = 50 m, text-MIN run (worst)",
           "value_verbatim": "0.7968",
           "value_parsed": 0.7968,
           "unit": null,
           "kind": "metric",
-          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[?(@.R_m==50)].F1",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
           "method": "read"
         }
       ],
@@ -3603,30 +3635,30 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6). 'R=50 m' in the row label is folded into each value's quantity rather than extracted as a separate claim."
+      "notes": "This is one of the three live cells repaired in the 2026-08-04 wave-7 pass: the image cell moved from 0.8332 to 0.8333, tracking the W6-E9 de-duplication re-run of results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json. 'R=50 m' in the row label identifies which buffer the metric belongs to and is folded into each value's quantity rather than extracted separately."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          203,
-          203
+          212,
+          212
         ],
-        "section": "4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
+        "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
-      "claim_text": "| D-S calibration ECE (lower = better) | text-MIN (0.259) | T=0.7 (0.267) | T=0.3 (0.348) | Image (0.539) |",
+      "claim_text": "| D-S calibration ECE (lower = better) | text-MIN (0.259) | T=0.7 (0.267) | T=0.3 (0.348) | Image (0.538) |",
       "values": [
         {
-          "quantity": "expected calibration error, text-MIN run (best)",
+          "quantity": "expected calibration error (ECE), text-MIN run (best)",
           "value_verbatim": "0.259",
           "value_parsed": 0.259,
           "unit": null,
           "kind": "statistic",
-          "path": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json#$.ece",
+          "path": "$.ece",
           "method": "read"
         },
         {
-          "quantity": "expected calibration error, T=0.7 run (2nd)",
+          "quantity": "expected calibration error (ECE), T=0.7 run (2nd)",
           "value_verbatim": "0.267",
           "value_parsed": 0.267,
           "unit": null,
@@ -3635,7 +3667,7 @@
           "method": "read"
         },
         {
-          "quantity": "expected calibration error, T=0.3 run (3rd)",
+          "quantity": "expected calibration error (ECE), T=0.3 run (3rd)",
           "value_verbatim": "0.348",
           "value_parsed": 0.348,
           "unit": null,
@@ -3644,9 +3676,9 @@
           "method": "read"
         },
         {
-          "quantity": "expected calibration error, image run (worst)",
-          "value_verbatim": "0.539",
-          "value_parsed": 0.539,
+          "quantity": "expected calibration error (ECE), image run (worst)",
+          "value_verbatim": "0.538",
+          "value_parsed": 0.538,
           "unit": null,
           "kind": "statistic",
           "path": "results/55maps-image-generalisation/ds-human-crosstab/summary.json#$.ece",
@@ -3658,18 +3690,18 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6); quoted at 3 d.p. against the §3 table's 4 d.p."
+      "notes": "Quoted to 3 decimal places while the artefacts hold full precision."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          204,
-          204
+          213,
+          213
         ],
-        "section": "4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
+        "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
-      "claim_text": "| D-S calibration Brier (lower = better) | text-MIN (0.314) | T=0.7 (0.318) | T=0.3 (0.366) | Image (0.489) |",
+      "claim_text": "| D-S calibration Brier (lower = better) | text-MIN (0.314) | T=0.7 (0.318) | T=0.3 (0.365) | Image (0.489) |",
       "values": [
         {
           "quantity": "Brier score, text-MIN run (best)",
@@ -3677,7 +3709,7 @@
           "value_parsed": 0.314,
           "unit": null,
           "kind": "statistic",
-          "path": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json#$.brier",
+          "path": "$.brier",
           "method": "read"
         },
         {
@@ -3691,8 +3723,8 @@
         },
         {
           "quantity": "Brier score, T=0.3 run (3rd)",
-          "value_verbatim": "0.366",
-          "value_parsed": 0.366,
+          "value_verbatim": "0.365",
+          "value_parsed": 0.365,
           "unit": null,
           "kind": "statistic",
           "path": "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json#$.brier",
@@ -3713,21 +3745,21 @@
         "path": null
       },
       "method": "read",
-      "notes": "Table row (instrument rule 6)."
+      "notes": "Quoted to 3 decimal places while the artefacts hold full precision."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          206,
-          211
+          216,
+          220
         ],
-        "section": "4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
+        "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
-      "claim_text": "The D-S F1 ranking and the measured F1 ranking are **identical**\nacross all four runs (T=0.7 > Image > T=0.3 > text-MIN; the\npost-recovery image refresh moves Image fractionally above T=0.3 by\n+0.0002 F1, well inside any sampling-noise envelope — the previous\nT=0.3 > Image ordering is preserved at 4 d.p. only as\n0.7745 ≈ 0.7743 within rounding).",
+      "claim_text": "the\npost-recovery image refresh moves Image fractionally above T=0.3 by\n+0.0002 F1, well inside any sampling-noise envelope — the previous\nT=0.3 > Image ordering is preserved at 4 d.p. only as\n0.7745 ≈ 0.7743 within rounding)",
       "values": [
         {
-          "quantity": "measured-F1 margin of the image run over the T=0.3 run",
+          "quantity": "margin by which the image run's D-S corrected F1 exceeds T=0.3's post-recovery",
           "value_verbatim": "+0.0002",
           "value_parsed": 0.0002,
           "unit": null,
@@ -3739,12 +3771,12 @@
             {
               "name": "a",
               "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
-              "path": "$.measured.f1"
+              "path": "$.dawid_skene.corrected_metrics.f1"
             },
             {
               "name": "b",
               "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
-              "path": "$.measured.f1"
+              "path": "$.dawid_skene.corrected_metrics.f1"
             }
           ]
         },
@@ -3754,7 +3786,7 @@
           "value_parsed": 0.7745,
           "unit": null,
           "kind": "metric",
-          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.measured.f1",
+          "path": "$.measured.f1",
           "method": "read"
         },
         {
@@ -3772,16 +3804,16 @@
         "path": null
       },
       "method": "read",
-      "notes": "The +0.0002 margin holds identically on the D-S corrected F1 pair (0.7990 vs 0.7988); the derivation is pinned to the measured F1 pair because those are the values quoted alongside it. '4 d.p.' is a precision descriptor."
+      "notes": "The +0.0002 margin is derived from the D-S corrected F1 pair (0.7990 vs 0.7988); note the same margin holds for the measured pair (0.7745 vs 0.7743) quoted at the end of the sentence, so triage should confirm which pair the sentence intends. '4 d.p.' is a precision descriptor, out of scope."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          211,
-          214
+          220,
+          223
         ],
-        "section": "4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
+        "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
       "claim_text": "The corrected-F1-multi-buffer\nranking (T=0.3 > Image > T=0.7 > text-MIN) is **different from both\nmeasured and D-S** — the rank-disagreement first noted in Obs 293\nacross three runs **persists in the four-way comparison**.",
       "values": [
@@ -3793,34 +3825,25 @@
           "kind": "count",
           "path": null,
           "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of runs in the present rank-disagreement comparison",
-          "value_verbatim": "four",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
         }
       ],
       "anchor": null,
       "method": "anchor-unknown",
-      "notes": "Both counts describe comparison scope rather than an artefact quantity; included per instrument's include-when-in-doubt rule, flagged for pruning. 'Obs 293' is an identifier, out of scope."
+      "notes": "Obs 293 lives in prose (docs/notes/reflections/working-notes.md); rule 2 forbids anchoring prose to prose, so triage must chase the chain. 'four-way comparison' is a compound modifier naming the present comparison and is not extracted."
     },
     {
       "claim_id": null,
       "source": {
         "lines": [
-          218,
-          222
+          228,
+          231
         ],
-        "section": "4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
+        "section": "§4.1 Aggregate F1 ordering — D-S matches measured, not corrected-F1"
       },
-      "claim_text": "This is consistent with §4.2 —\ncalibration ranks by VLM-only / matched ratio, and text-MIN's ratio\n(0.179) remains marginally lower than T=0.7's (0.181) after the\nT=0.7 post-recovery refresh: text-MIN 0.1786 vs T=0.7 0.1806 (was\nT=0.7 0.1793 pre-recovery).",
+      "claim_text": "calibration ranks by VLM-only / matched ratio, and text-MIN's ratio\n(0.179) remains marginally lower than T=0.7's (0.181) after the\nT=0.7 post-recovery refresh: text-MIN 0.1786 vs T=0.7 0.1806 (was\nT=0.7 0.1793 pre-recovery)",
       "values": [
         {
-          "quantity": "VLM-only / matched ratio, text-MIN run (3 d.p.)",
+          "quantity": "VLM-only / matched ratio, text-MIN run (quoted to 3 dp)",
           "value_verbatim": "0.179",
           "value_parsed": 0.179,
           "unit": null,
@@ -3842,7 +3865,7 @@
           ]
         },
         {
-          "quantity": "VLM-only / matched ratio, T=0.7 run (3 d.p.)",
+          "quantity": "VLM-only / matched ratio, T=0.7 run (quoted to 3 dp)",
           "value_verbatim": "0.181",
           "value_parsed": 0.181,
           "unit": null,
@@ -3864,7 +3887,7 @@
           ]
         },
         {
-          "quantity": "VLM-only / matched ratio, text-MIN run (4 d.p.)",
+          "quantity": "VLM-only / matched ratio, text-MIN run (quoted to 4 dp)",
           "value_verbatim": "0.1786",
           "value_parsed": 0.1786,
           "unit": null,
@@ -3886,7 +3909,7 @@
           ]
         },
         {
-          "quantity": "VLM-only / matched ratio, T=0.7 run (4 d.p.), post-recovery",
+          "quantity": "VLM-only / matched ratio, T=0.7 run, post-recovery",
           "value_verbatim": "0.1806",
           "value_parsed": 0.1806,
           "unit": null,
@@ -3922,7 +3945,1214 @@
         "path": null
       },
       "method": "arithmetic",
-      "notes": "Each derived value carries its own expression and operands (v1.2 amendment 1); the pre-recovery ratio is the quoted-old side of a correction block (operands would be results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260502T235912.backup item counts). '§4.2' is a section reference."
+      "notes": "Four derived ratios in one span, each with its own expression and operands (v1.2 amendment 1); the '(was T=0.7 0.1793 pre-recovery)' side is the was-value of a correction pair and is marked historical, with results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260502T235912.backup preserved for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          243,
+          243
+        ],
+        "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
+      },
+      "claim_text": "| text-MIN | 0.1786 (585 / 3,276) | 1.88× |",
+      "values": [
+        {
+          "quantity": "VLM-only / matched ratio, text-MIN run",
+          "value_verbatim": "0.1786",
+          "value_parsed": 0.1786,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.vlm_only"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            }
+          ]
+        },
+        {
+          "quantity": "VLM-only item count, text-MIN run",
+          "value_verbatim": "585",
+          "value_parsed": 585,
+          "unit": null,
+          "kind": "count",
+          "path": "$.item_counts.vlm_only",
+          "method": "read"
+        },
+        {
+          "quantity": "matched item count, text-MIN run",
+          "value_verbatim": "3,276",
+          "value_parsed": 3276,
+          "unit": null,
+          "kind": "count",
+          "path": "$.item_counts.matched",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical / posterior calibration ratio, text-MIN run",
+          "value_verbatim": "1.88×",
+          "value_parsed": 1.88,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row: the two derived ratios each carry their own expression; the parenthesised operands (VLM-only and matched counts) stay method 'read' with their own paths so the harness does not compare them against the ratio (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          244,
+          244
+        ],
+        "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
+      },
+      "claim_text": "| T=0.7 | 0.1806 (637 / 3,527) | 1.92× |",
+      "values": [
+        {
+          "quantity": "VLM-only / matched ratio, T=0.7 run",
+          "value_verbatim": "0.1806",
+          "value_parsed": 0.1806,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.vlm_only"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            }
+          ]
+        },
+        {
+          "quantity": "VLM-only item count, T=0.7 run",
+          "value_verbatim": "637",
+          "value_parsed": 637,
+          "unit": null,
+          "kind": "count",
+          "path": "$.item_counts.vlm_only",
+          "method": "read"
+        },
+        {
+          "quantity": "matched item count, T=0.7 run",
+          "value_verbatim": "3,527",
+          "value_parsed": 3527,
+          "unit": null,
+          "kind": "count",
+          "path": "$.item_counts.matched",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical / posterior calibration ratio, T=0.7 run",
+          "value_verbatim": "1.92×",
+          "value_parsed": 1.92,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row: the two derived ratios each carry their own expression; the parenthesised operands (VLM-only and matched counts) stay method 'read' with their own paths so the harness does not compare them against the ratio (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          245,
+          245
+        ],
+        "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
+      },
+      "claim_text": "| T=0.3 | 0.232 (819 / 3,531) | 2.53× |",
+      "values": [
+        {
+          "quantity": "VLM-only / matched ratio, T=0.3 run",
+          "value_verbatim": "0.232",
+          "value_parsed": 0.232,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.vlm_only"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            }
+          ]
+        },
+        {
+          "quantity": "VLM-only item count, T=0.3 run",
+          "value_verbatim": "819",
+          "value_parsed": 819,
+          "unit": null,
+          "kind": "count",
+          "path": "$.item_counts.vlm_only",
+          "method": "read"
+        },
+        {
+          "quantity": "matched item count, T=0.3 run",
+          "value_verbatim": "3,531",
+          "value_parsed": 3531,
+          "unit": null,
+          "kind": "count",
+          "path": "$.item_counts.matched",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical / posterior calibration ratio, T=0.3 run",
+          "value_verbatim": "2.53×",
+          "value_parsed": 2.53,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row: the two derived ratios each carry their own expression; the parenthesised operands (VLM-only and matched counts) stay method 'read' with their own paths so the harness does not compare them against the ratio (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          246,
+          246
+        ],
+        "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
+      },
+      "claim_text": "| Image | 0.282 (1,030 / 3,650) | 3.89× |",
+      "values": [
+        {
+          "quantity": "VLM-only / matched ratio, image run",
+          "value_verbatim": "0.282",
+          "value_parsed": 0.282,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.vlm_only"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            }
+          ]
+        },
+        {
+          "quantity": "VLM-only item count, image run",
+          "value_verbatim": "1,030",
+          "value_parsed": 1030,
+          "unit": null,
+          "kind": "count",
+          "path": "$.item_counts.vlm_only",
+          "method": "read"
+        },
+        {
+          "quantity": "matched item count, image run",
+          "value_verbatim": "3,650",
+          "value_parsed": 3650,
+          "unit": null,
+          "kind": "count",
+          "path": "$.item_counts.matched",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical / posterior calibration ratio, image run",
+          "value_verbatim": "3.89×",
+          "value_parsed": 3.89,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row: the two derived ratios each carry their own expression; the parenthesised operands (VLM-only and matched counts) stay method 'read' with their own paths so the harness does not compare them against the ratio (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          248,
+          249
+        ],
+        "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
+      },
+      "claim_text": "as the VLM-only share grows, the fixed 5 % student-FN\nprior under-counts true positives more severely.",
+      "values": [
+        {
+          "quantity": "fixed student false-negative rate prior",
+          "value_verbatim": "5 %",
+          "value_parsed": 5.0,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Stored as the fraction 0.05 in the artefact; unit '%' set so the harness can bridge the scale."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          256,
+          257
+        ],
+        "section": "§4.2 Calibration gap scales monotonically with VLM-only / matched ratio"
+      },
+      "claim_text": "text-MIN is also the cleanest test of the pattern because it is the\nonly run with **zero unjoined rows** in the crosstab",
+      "values": [
+        {
+          "quantity": "unjoined VLM-only rows, text-MIN run",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_unjoined",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Textual tension worth triage attention: this sentence calls text-MIN 'the only run with zero unjoined rows', while the § 3 bullet at lines 189-190 asserts that three runs have zero unjoined rows post-recovery. Both recorded verbatim, neither adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          270,
+          270
+        ],
+        "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
+      },
+      "claim_text": "| T=0.3 | 0.7988 | 0.8437 | +0.045 |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, T=0.3 run",
+          "value_verbatim": "0.7988",
+          "value_parsed": 0.7988,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-F1-multi-buffer F1 at R = 50 m, T=0.3 run",
+          "value_verbatim": "0.8437",
+          "value_parsed": 0.8437,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "gap between corrected-F1-multi-buffer F1 and D-S corrected F1, T=0.3 run",
+          "value_verbatim": "+0.045",
+          "value_parsed": 0.045,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; the delta column is derived and its two operands stay 'read' with their own paths (v1.2 amendment 1). The corrected-F1 column is cross-file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          271,
+          271
+        ],
+        "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
+      },
+      "claim_text": "| T=0.7 | 0.8142 | 0.8273 | +0.013 |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, T=0.7 run",
+          "value_verbatim": "0.8142",
+          "value_parsed": 0.8142,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-F1-multi-buffer F1 at R = 50 m, T=0.7 run",
+          "value_verbatim": "0.8273",
+          "value_parsed": 0.8273,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "gap between corrected-F1-multi-buffer F1 and D-S corrected F1, T=0.7 run",
+          "value_verbatim": "+0.013",
+          "value_parsed": 0.013,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; the delta column is derived and its two operands stay 'read' with their own paths (v1.2 amendment 1). The corrected-F1 column is cross-file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          272,
+          272
+        ],
+        "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
+      },
+      "claim_text": "| Image | 0.7990 | 0.8333 | +0.034 |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, image run",
+          "value_verbatim": "0.7990",
+          "value_parsed": 0.799,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-F1-multi-buffer F1 at R = 50 m, image run",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "gap between corrected-F1-multi-buffer F1 and D-S corrected F1, image run",
+          "value_verbatim": "+0.034",
+          "value_parsed": 0.034,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; the delta column is derived and its two operands stay 'read' with their own paths (v1.2 amendment 1). The corrected-F1 column is cross-file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          273,
+          273
+        ],
+        "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
+      },
+      "claim_text": "| text-MIN | 0.7834 | 0.7968 | +0.013 |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, text-MIN run",
+          "value_verbatim": "0.7834",
+          "value_parsed": 0.7834,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-F1-multi-buffer F1 at R = 50 m, text-MIN run",
+          "value_verbatim": "0.7968",
+          "value_parsed": 0.7968,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "gap between corrected-F1-multi-buffer F1 and D-S corrected F1, text-MIN run",
+          "value_verbatim": "+0.013",
+          "value_parsed": 0.013,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; the delta column is derived and its two operands stay 'read' with their own paths (v1.2 amendment 1). The corrected-F1 column is cross-file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          279,
+          280
+        ],
+        "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
+      },
+      "claim_text": "The D-S correction uses the legacy `student-mounds-55maps.geojson`\nGT and applies a fixed 5 % student-FN prior to the 2-annotator EM.",
+      "values": [
+        {
+          "quantity": "fixed student false-negative rate prior",
+          "value_verbatim": "5 %",
+          "value_parsed": 5.0,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This sentence identifies the D-S layer's reference as the LEGACY inputs/vectors/references/student-mounds-55maps.geojson, which is a different artefact from the reviewed curator GT the corrected-F1 pipeline uses (named in the next sentence); the two must not be conflated when resolving GT counts. '2-annotator EM' is a compound modifier, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          290,
+          291
+        ],
+        "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
+      },
+      "claim_text": "text-MIN and T=0.7 share the **smallest D-S-vs-corrected-F1 gap**\n(+0.013 each); T=0.3 has the largest (+0.045).",
+      "values": [
+        {
+          "quantity": "gap between corrected-F1-multi-buffer F1 and D-S corrected F1, text-MIN and T=0.7 runs",
+          "value_verbatim": "+0.013",
+          "value_parsed": 0.013,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "gap between corrected-F1-multi-buffer F1 and D-S corrected F1, T=0.3 run",
+          "value_verbatim": "+0.045",
+          "value_parsed": 0.045,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json",
+              "path": "$.results[0].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-t0.3-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The '+0.013 each' figure is asserted for both text-MIN and T=0.7; the expression given resolves it against text-MIN, and the T=0.7 pair results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json / results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json should reproduce the same value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          293,
+          296
+        ],
+        "section": "§4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1"
+      },
+      "claim_text": "T=0.3 has the largest\nmulti-buffer review cohort (692 rows vs 586 for text-MIN); text-MIN\nand T=0.7 have the fewest reviewer-promoted candidates at R=50 m\n(250 for text-MIN)",
+      "values": [
+        {
+          "quantity": "row count of the T=0.3 multi-buffer human review",
+          "value_verbatim": "692",
+          "value_parsed": 692,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "row count of the text-MIN multi-buffer human review",
+          "value_verbatim": "586",
+          "value_parsed": 586,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv (row count excluding the header)",
+          "method": "read"
+        },
+        {
+          "quantity": "reviewer-promoted candidates at R = 50 m, text-MIN run",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].n_reviewer_promoted_at_R",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Two CSV row counts plus one JSON scalar. The anchor is the T=0.3 review CSV (whole artefact); the text-MIN count is addressed cross-file. Whether either quoted figure counts the header row is for the harness to decide."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          313,
+          313
+        ],
+        "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
+      },
+      "claim_text": "| VLM-only / matched | 0.1786 | 0.1806 | −0.0020 |",
+      "values": [
+        {
+          "quantity": "VLM-only / matched ratio, text-MIN run",
+          "value_verbatim": "0.1786",
+          "value_parsed": 0.1786,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.vlm_only"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            }
+          ]
+        },
+        {
+          "quantity": "VLM-only / matched ratio, T=0.7 run",
+          "value_verbatim": "0.1806",
+          "value_parsed": 0.1806,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.vlm_only"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            }
+          ]
+        },
+        {
+          "quantity": "difference in VLM-only / matched ratio (text-MIN minus T=0.7)",
+          "value_verbatim": "−0.0020",
+          "value_parsed": -0.002,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a / b) - (c / d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.vlm_only"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.vlm_only"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.item_counts.matched"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Table row; all three cells are derived, so each carries its own expression (v1.2 amendment 1). Minus signs are U+2212 as in the source."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          314,
+          314
+        ],
+        "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
+      },
+      "claim_text": "| VLM-only posterior | 0.2947 | 0.2914 | +0.0033 |",
+      "values": [
+        {
+          "quantity": "VLM-only posterior P(true=1), text-MIN run",
+          "value_verbatim": "0.2947",
+          "value_parsed": 0.2947,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        },
+        {
+          "quantity": "VLM-only posterior P(true=1), T=0.7 run",
+          "value_verbatim": "0.2914",
+          "value_parsed": 0.2914,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        },
+        {
+          "quantity": "difference in VLM-only posterior (text-MIN minus T=0.7)",
+          "value_verbatim": "+0.0033",
+          "value_parsed": 0.0033,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          315,
+          315
+        ],
+        "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
+      },
+      "claim_text": "| Empirical rate | 0.5538 | 0.5589 | −0.0051 |",
+      "values": [
+        {
+          "quantity": "empirical human-review mound rate, text-MIN run",
+          "value_verbatim": "0.5538",
+          "value_parsed": 0.5538,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical human-review mound rate, T=0.7 run",
+          "value_verbatim": "0.5589",
+          "value_parsed": 0.5589,
+          "unit": null,
+          "kind": "ratio",
+          "path": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json#$.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "difference in empirical mound rate (text-MIN minus T=0.7)",
+          "value_verbatim": "−0.0051",
+          "value_parsed": -0.0051,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          316,
+          316
+        ],
+        "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
+      },
+      "claim_text": "| Calibration gap (emp − D-S) | 0.259 | 0.267 | −0.008 |",
+      "values": [
+        {
+          "quantity": "calibration gap (empirical minus D-S posterior), text-MIN run",
+          "value_verbatim": "0.259",
+          "value_parsed": 0.259,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        },
+        {
+          "quantity": "calibration gap (empirical minus D-S posterior), T=0.7 run",
+          "value_verbatim": "0.267",
+          "value_parsed": 0.267,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        },
+        {
+          "quantity": "difference in calibration gap (text-MIN minus T=0.7)",
+          "value_verbatim": "−0.008",
+          "value_parsed": -0.008,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a - b) - (c - d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.prevalence"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Table row; all three cells are derived, each with its own expression."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          317,
+          317
+        ],
+        "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
+      },
+      "claim_text": "| ECE | 0.2591 | 0.2675 | −0.0084 |",
+      "values": [
+        {
+          "quantity": "expected calibration error (ECE), text-MIN run",
+          "value_verbatim": "0.2591",
+          "value_parsed": 0.2591,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "expected calibration error (ECE), T=0.7 run",
+          "value_verbatim": "0.2675",
+          "value_parsed": 0.2675,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json#$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "difference in ECE (text-MIN minus T=0.7)",
+          "value_verbatim": "−0.0084",
+          "value_parsed": -0.0084,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.ece"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.ece"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          318,
+          318
+        ],
+        "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
+      },
+      "claim_text": "| Brier | 0.3142 | 0.3181 | −0.0039 |",
+      "values": [
+        {
+          "quantity": "Brier score, text-MIN run",
+          "value_verbatim": "0.3142",
+          "value_parsed": 0.3142,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, T=0.7 run",
+          "value_verbatim": "0.3181",
+          "value_parsed": 0.3181,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json#$.brier",
+          "method": "read"
+        },
+        {
+          "quantity": "difference in Brier score (text-MIN minus T=0.7)",
+          "value_verbatim": "−0.0039",
+          "value_parsed": -0.0039,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.brier"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json",
+              "path": "$.brier"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          321,
+          323
+        ],
+        "section": "§5.1 text-MIN's calibration metrics nearly clone T=0.7's"
+      },
+      "claim_text": "(text-MIN minimises\nprompt content; T=0.7 keeps the full text-HIGH prompt at temperature\n0.7)",
+      "values": [
+        {
+          "quantity": "detection temperature, T=0.7 run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.proposer.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/resolved_config.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'T=0.7' is a condition name (rule 5) but this clause asserts the temperature that was actually run, so it is extracted and anchored to the run's resolved config. Non-JSON anchor (YAML) — expected and routed to triage per the v1.1 calibration note."
     }
   ]
 }

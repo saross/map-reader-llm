@@ -1,6 +1,8 @@
 # Temperature, transient errors, and failure-recovery on the 55-map proposer cross-run — synthesis report
 
-> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-04 (§ 12 image corrected-F1 refreshed to the current artefact value;
+> all historical GT-count and transition figures deliberately preserved). See
+> [§ Changelog](#changelog) for revision history.
 
 **Date**: 2026-04-30 (initial); major refresh **2026-05-03** (Session 84 — 3 follow-up recoveries propagated)
 **Sessions**: 79–80 (working-notes Obs 281); **83** (T=0.7 recovery); **84** (image, text-MIN, GS-v2 follow-up recoveries)
@@ -906,8 +908,12 @@ re-verification.
 
 - Image post-recovery raw F1 at R = 50 m: **0.7745** — re-derived from
   `outputs/55maps-image-generalisation/evaluation/evaluation.json::summary.buffers[buffer_metres=50].f1`.
-- Image post-recovery corrected F1 at R = 50 m: **0.8332** — re-derived from
+- Image post-recovery corrected F1 at R = 50 m: **0.8333** — re-derived from
   `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json::results[R_m=50].F1`.
+  The 2026-05-03 re-verification of this artefact returned 0.8332 (state at commit `8699f456`);
+  the 2026-08-03 cand-2397 re-run (commit `3271d6923`) moved it to 0.833333…, and the W6-E9
+  de-duplication regeneration (commit `30a902f56`, against the current 4,746-feature reviewed
+  GT) left the value unchanged.
 - Image post-recovery tile-level MCC at R = 50 m: **0.6924 [0.6784, 0.7062]** — re-derived
   from `results/55maps-image-generalisation/mcc/evaluation.json::summary.tile_classification.mcc`.
 - Image post-recovery 18 silently-dropped verifier candidates — re-derived via commit message
@@ -995,6 +1001,43 @@ synthesis. All compute artefacts referenced live in
 **End of report.**
 
 ## Changelog
+
+### 2026-08-04 — § 12 image corrected-F1 refreshed (C4 wave-7 repair)
+
+**Refresh trigger**: the W6-E9 de-duplication chain regenerated the image run's
+multi-buffer corrected-F1 artefact. § 12's re-derivation entry named that artefact
+by path and asserted a value it no longer returns, so a reader running the stated
+re-derivation would have got a different number from the one printed.
+
+| Claim | Before | After |
+| :--- | :--- | :--- |
+| § 12 image post-recovery corrected F1 at R = 50 m | 0.8332 | **0.8333** (with the 2026-05-03 value retained as the historical figure it is) |
+
+The artefact moved twice after the 2026-05-03 re-verification: the cand-2397 re-run
+(commit `3271d6923`) took the 50 m corrected F1 from 0.8332154… to 0.8333333…, and the
+W6-E9 de-duplication regeneration (commit `30a902f56`) held that value while shifting
+`n_ref_student_only` from 4,745 to the current 4,746.
+
+**What did NOT change**: every other figure in the document. § 1 and § 7.6 already
+carried 0.8333 for the image corrected F1 and now agree with the artefact rather than
+merely appearing to. No cost figure, failure-rate figure, recovery-count, MCC, raw F1,
+cross-run ranking, or conclusion moves — the F1 shift is +0.0001 and lands well inside
+the reported bootstrap interval.
+
+**Deliberately left as history**: § 7.3's Stage 9 row records the transition
+"Corrected F1@50m: 0.832 → **0.8332**". That is a faithful record of what the 2026-05-03
+Stage 9 propagation did — the artefact held 0.8317312… before it and 0.8332154… after it
+(commit `8699f456`) — so overwriting it with the current value would have falsified a
+dated event.
+
+**Deliberately left as history (ground-truth counts)**: the four "4,745 features"
+references (§ 7.4's Stage 8–9 row and the `f533fda5`, `da84a3d2`, `236327d8` commit
+lines in § 8) each describe what a specific 2026-05-03 evaluation was computed against.
+Timestamp comparison recorded in `reports/verification/c4-triage/coverage-drift-2026-08-04.json`
+places all three evaluations between the two curator GT additions of that day
+(`baf1497a7` at 00:32:53Z, 4,744 → 4,745; `2e075eb99` at 05:28:57Z, 4,745 → 4,746), so
+the reviewed GT genuinely held 4,745 features when they ran. The document nowhere asserts
+a *current* canonical GT count, so no count was refreshed to 4,746.
 
 ### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
 

@@ -1,8 +1,10 @@
 # Dawid-Skene cross-run summary — four 55-map runs (T=0.3, T=0.7, image, text-MIN)
 
-> **Last revised**: 2026-08-03 (C4 wave-6 triage — five third-decimal
-> calibration cells re-derived from the crosstab artefacts). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-04 (C4 wave-7 repair — the image run's
+> corrected-F1-multi-buffer cell at R = 50 m refreshed to the W6-E9
+> de-duplication re-run; the two era-faithful 4,745-mound GT references
+> adjudicated and left as history). See [§ Changelog](#changelog) for
+> revision history.
 
 **Date**: 2026-04-28 (text-MIN added to the previous three-run summary
 of 2026-04-27).
@@ -206,7 +208,7 @@ Sorted by calibration gap. Notes:
 |--------|------|-----|-----|-------|
 | Measured F1 | T=0.7 (0.7896) | Image (0.7745) | T=0.3 (0.7743) | text-MIN (0.7591) |
 | D-S corrected F1 | T=0.7 (0.8142) | Image (0.7990) | T=0.3 (0.7988) | text-MIN (0.7834) |
-| Corrected-F1-multi-buffer F1 (R=50 m) | T=0.3 (0.8437) | Image (0.8332) | T=0.7 (0.8273) | text-MIN (0.7968) |
+| Corrected-F1-multi-buffer F1 (R=50 m) | T=0.3 (0.8437) | Image (0.8333) | T=0.7 (0.8273) | text-MIN (0.7968) |
 | D-S calibration ECE (lower = better) | text-MIN (0.259) | T=0.7 (0.267) | T=0.3 (0.348) | Image (0.538) |
 | D-S calibration Brier (lower = better) | text-MIN (0.314) | T=0.7 (0.318) | T=0.3 (0.365) | Image (0.489) |
 
@@ -267,7 +269,7 @@ ground truth:
 |-----|-----------------:|--------------------------------------:|---:|
 | T=0.3 | 0.7988 | 0.8437 | +0.045 |
 | T=0.7 | 0.8142 | 0.8273 | +0.013 |
-| Image | 0.7990 | 0.8332 | +0.034 |
+| Image | 0.7990 | 0.8333 | +0.034 |
 | text-MIN | 0.7834 | 0.7968 | +0.013 |
 
 (The corrected-F1-multi-buffer numbers are read from each run's
@@ -368,7 +370,7 @@ the four to do so on the headline corrected metric.
 |-----|---------:|----:|--------------------------:|-------:|
 | T=0.3 | 0.7743 | 0.7988 | 0.8437 | 0.069 |
 | T=0.7 | 0.7896 | 0.8142 | 0.8273 | 0.038 |
-| Image | 0.7745 | 0.7990 | 0.8332 | 0.059 |
+| Image | 0.7745 | 0.7990 | 0.8333 | 0.059 |
 | text-MIN | 0.7591 | 0.7834 | 0.7968 | 0.038 |
 
 text-MIN's three F1 estimates sit within a 0.038 envelope, joint
@@ -515,6 +517,66 @@ References:
   `docs/notes/reflections/working-notes.md`.
 
 ## Changelog
+
+### 2026-08-04 — C4 wave-7 repair: image corrected-F1 @ 50 m, plus GT-count adjudication
+
+**Refresh trigger**: the W6-E9 de-duplication chain — `1de559119`
+(coincidence de-dup in `build_extended_gt`), `30a902f56` (corrected-F1
+regenerated from the tracked HEAD ground truth (GT)), and `fcfc90bff`
+(5 m tolerance plus canonical guard). The chain's 2026-08-03 cand-2397
+re-run moved the image run's corrected-F1-multi-buffer value at
+R = 50 m from 0.8332 to 0.833333…, i.e. **0.8333** at 4 d.p. This
+document carried the pre-re-run 0.8332 in three live table cells, all
+restating the same artefact figure. The sibling
+`results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md`
+already carries 0.8333 and records the transition in its own changelog.
+
+| § | Cell | Before | After | Artefact value |
+|---|------|-------:|------:|----------------|
+| 4.1 | Image corrected-F1-multi-buffer F1 (R = 50 m) | 0.8332 | 0.8333 | `$.results[0].F1` = 0.8333333333333333 |
+| 4.3 | Image corrected-F1-multi-buffer F1 (R = 50 m) | 0.8332 | 0.8333 | as above |
+| 5.4 | Image corrected-F1-multi-buffer F1 (R = 50 m) | 0.8332 | 0.8333 | as above |
+
+Artefact re-read for every value above:
+`results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json`,
+whose `results[0]` carries `R_m` = 50, `n_ref_student_only` = 4746,
+`n_phantom_duplicates_dropped` = 1, and `F1` = 0.8333333333333333.
+
+**What did NOT change**: every ranking, every derived cell, and every
+conclusion. The § 4.1 corrected-F1 ordering (T=0.3 > Image > T=0.7 >
+text-MIN) and the rank-disagreement framing against the D-S and measured
+orderings are untouched. The § 4.3 Δ column stays at +0.034 for image
+(0.8333 − 0.7990 = 0.0343, still +0.034 at 3 d.p.) and text-MIN plus
+T=0.7 still share the smallest gap at +0.013. The § 5.4 spread column
+stays at 0.059 for image (0.8333 − 0.7745 = 0.0588, still 0.059 at
+3 d.p.), so T=0.3 remains the loosest at 0.069 and text-MIN remains
+joint-tightest with T=0.7 at 0.038. The correction is fourth-decimal
+throughout.
+
+**GT-count occurrences deliberately left unchanged**: this document
+contains two references to a 4,745-mound curator GT — in the
+post-recovery preamble ("the updated 4,745-mound curator GT (commits
+`366f9c66`, `e07dae37`, `f533fda5`)") and in § 6.1 ("the canonical
+updated curator GT (4,745 mounds, including the +1 added at K-35-064-3
+in `baf1497a`)"). Both are **era-faithful history, not stale**, and
+both are correct as written. The canonical GT timeline, established by
+timestamp comparison and recorded in
+`reports/verification/c4-triage/coverage-drift-2026-08-04.json` under
+`gt_count_era_resolution`, is: `baf1497a7` took the GT from 4,744 to
+4,745 at 2026-05-03T00:32:53Z, and `2e075eb99` took it from 4,745 to
+4,746 at 2026-05-03T05:28:57Z. Every commit cited in the two clauses
+above landed inside that window — `f533fda5` at 00:42:38Z, `366f9c66`
+at 01:08:13Z, `e07dae37` at 01:08:30Z, and the cross-track-v2 commit
+`42ed1d32` at 04:34:20Z — so the re-derivations those sentences
+describe genuinely consumed a 4,745-feature GT. Both sentences assert
+what a past evaluation used, not what the current canonical count is;
+under the disposition rule they are "do not touch". For the avoidance
+of doubt, the live GT
+(`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`)
+holds **4,746** features at this commit, and the D-S aggregations
+documented here consume the separate legacy layer
+`inputs/vectors/references/student-mounds-55maps.geojson` (see § 6),
+not the reviewed layer at all.
 
 ### 2026-08-03 — C4 wave-6 calibration-cell repairs
 
