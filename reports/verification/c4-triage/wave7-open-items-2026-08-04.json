@@ -7,7 +7,6 @@
   "status_convention": "OPEN unless a resolving commit is named. Nothing here has been adjudicated; the blind-pass verdicts are evidence, not decisions.",
   "provenance": "Wave-7 blind passes P1-P4 (e86bca52d), the W7-E4 repair verification (18bbcaa18), and the extraction agents' own flags."
  },
-
  "confirmed_defects_unrepaired": [
   {
    "id": "W7-D1",
@@ -75,7 +74,6 @@
    "repair": "Give era_check an APPROX status, or teach the comparer sum-of-rounded-components."
   }
  ],
-
  "open_research_findings": [
   {
    "id": "W7-R1",
@@ -88,7 +86,6 @@
    "in_progress": "A reference-layer census was commissioned 2026-08-04 to establish the fixed base, the correction-layer history, and the 4,770 account: reports/verification/c4-triage/student-gt-reference-census-2026-08-04.json. The PI's framing is that the underlying student GT is FIXED and only the curator-correction layer has moved."
   }
  ],
-
  "instrument_gaps": [
   {
    "id": "W7-I1",
@@ -105,12 +102,20 @@
   },
   {
    "id": "W7-I2",
-   "severity": "MEDIUM — anchor-layer, so it corrupts future waves rather than sitting still",
+   "severity": "HIGH (raised from MEDIUM on measurement) — the CI registry's stated purpose is paper CI citation",
    "gap": "Sidecar metadata disagrees with its artefact. `results/gold-standard-extended-buffer-sweep/evaluation.json` records 10000 iterations / BCa while its co-located `evaluation.metadata.json` still records 1000 / percentile — and results/ci-metadata-registry.md designates the SIDECAR as its authority.",
    "found_by": "blind pass P4",
-   "why_it_matters": "Any CI claim anchored to a sidecar resolves against a stale source, in this wave and every future one.",
-   "state": "UNMEASURED. The scope of the disagreement across all evaluation.json / evaluation.metadata.json pairs has not been swept.",
-   "next_step": "Read-only sweep of every sidecar pair, comparing bootstrap n_iterations and method."
+   "why_it_matters": "results/ci-metadata-registry.md exists to be the citable source for confidence-interval provenance in the paper. As it stands, a paper citing it would state the wrong bootstrap method (percentile rather than BCa) and the wrong iteration count (1000 rather than 10000) for these runs, and would point readers at several artefacts that are no longer where it says they are. This is the same defect P4 found in 55maps-mcc-v2-summary, one layer down: there the Methods prose was stale, here the registry that Methods prose is supposed to defer to is stale too.",
+   "state": "MEASURED 2026-08-04. Worse than the sidecars alone.",
+   "next_step": "Refresh the registry rows to the artefacts, repoint the archived paths, and either regenerate the surviving sidecars or retire them — a sidecar that no migration updates is a trap, not a record. Decide whether sidecars remain the registry's nominated authority at all.",
+   "measurement": {
+    "sidecars": "7 of 7 evaluation.metadata.json sidecars disagree with their co-located evaluation.json — 100%. Every sidecar records 1000 iterations and no method; every artefact records 10000 and BCa.",
+    "mechanism": "The sidecars were created at ad023fc3b (2026-04-21, '48 .metadata.json sidecars') and frozen there. The N=10K upgrade (580f498b6), the 55-map BCa migration (0699769c5) and the gold-standard BCa migration (85f115015) all rewrote evaluation.json and none touched a sidecar.",
+    "attrition": "Of that commit's 48 sidecars only 7 evaluation.metadata.json files survive today; the rest were moved or removed without the registry following.",
+    "registry_rows_bootstrap": "All 4 registry rows naming a readable artefact disagree with it on bootstrap method — the registry says 'bootstrap percentile', the artefacts say BCa; where N is legible the registry says 1000 against 10000.",
+    "registry_rows_paths": "Of 70 single-path registry rows, 59 resolve and about 9 name artefacts that no longer exist (excluding two brace-glob notation cells). Several — results/55maps-cleaned-gt-evaluation/{image,text-high,text-min}/evaluation.json and results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json — were archived by da2cf355f, the SAME archival that produced W7-D1."
+   },
+   "note_on_wave7_rows": "Blind pass P4 already classed the four registry bootstrap rows (087#2[2], 087#3[2], 087#4[2], 087#5[1]) as 'genuinely stale-not-wrong' snapshot divergence. That verdict is right about the rows in isolation; this measurement is about the registry's fitness for the purpose it declares."
   },
   {
    "id": "W7-I3",
@@ -119,14 +124,12 @@
    "note": "Do not compare estimated spans against original survey figures."
   }
  ],
-
  "w7_escalations_status": {
   "W7-E1": "OPEN — 95 lines across 4 documents were never surveyed at their own extraction era. Top-up re-extraction not yet run. 56 of the 95 are the extraction instrument itself.",
   "W7-E2": "RESOLVED by ruling 18 — coupling invariant adopted (charter § 5 rule 14); the ~40-batch backlog folds into waves 8-12; GATE 3 carries a whole-corpus drift check.",
   "W7-E3": "OPEN — whether --at-era becomes the validator default is a GATE 3 completeness question. Landed opt-in at ac547aab7. Current corpus: 128 files, 5,932 claims; default mode 39 failing on blob drift, --at-era 128/128 valid.",
   "W7-E4": "PARTIAL — repaired in results/55maps-mcc-v2-summary (1085335dc), results/55maps-ds-summary-v2 and results/temperature-failure-recovery-analysis (45aa6a0d1). Roughly 13 documents carrying stale GT counts remain unswept. 55maps-pairwise-permutation-v2/summary.md is GENERATED and must be fixed by regeneration, never by hand-editing."
  },
-
  "carried_from_blind_passes_p1_p3": [
   "The documentation-audit supersession banners are themselves stale: results-audit-2026-04-21.md's banner says $126.81 against the audited $207.34 and only ever covered § A4. The same superseded figures sit in three sibling files (README.md, audit-summary.md's $552.30 vs audited $438.61, verification-2026-04-21.md). P1 rules the fix is a corrected and EXTENDED banner plus a changelog — not an in-place table refresh, because the measurements are frozen and the pointers are living.",
   "P2: seven rows (095#21[1-4], 095#22[0],[2],[4]) are verbatim quotations of the audit draft, still exact at audit-summary.md:44 — RECLASSIFY to historical, never repairable under charter § 6.",
