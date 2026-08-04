@@ -37,6 +37,17 @@
      "b170"
     ],
     "note": "Document was PENDING extraction, so charter rule 14 did not apply — there was no extraction to strand. What DID apply is the W7-E2 lesson: an edit to a pending document moves the plan's ranges under it. Ranges re-mapped and the b170 tail extended to the document's new end."
+   },
+   {
+    "date": "2026-08-04",
+    "session": 128,
+    "document": "results/55maps-ds-summary-v2/report.md",
+    "batches": [
+     "b073",
+     "b074"
+    ],
+    "trigger": "W7-D3/D4/D6/D9 repair and its rule-14 re-extraction",
+    "note": "Caught by the whole-plan tail check, not by the repair itself. Re-extracting a document updates the EXTRACTION's line anchors but leaves the BATCH PLAN's ranges untouched, so a rule-14 re-extraction silently opens a tail gap unless the plan is re-ranged in the same pass. Worth folding into the rule-14 checklist: repair -> re-extract -> RE-RANGE."
    }
   ]
  },
@@ -1242,13 +1253,14 @@
     {
      "file": "results/55maps-ds-summary-v2/report.md",
      "start": 1,
-     "end": 332,
+     "end": 384,
      "spans": 348,
-     "spans_basis": "carried from the wave-6 survey; re-ranged S127 after the W7-E4 repair"
+     "spans_basis": "carried from the wave-6 survey; re-ranged S127 after the W7-E4 repair",
+     "_range_basis": "re-ranged 2026-08-04 (S128) from 1-332 after the W7-D3/D4/D6/D9 repair and its rule-14 re-extraction. Boundary set at 384 so it meets b074 with no gap; the batch's own claims span lines 1-373."
     }
    ],
    "output": "reports/verification/c4-extraction/073.json",
-   "status": "extracted-S127 (Opus; re-extracted after the 2026-08-04 W7-E4 figure refresh, per charter rule 14; range extended over the 508->652 growth)"
+   "status": "extracted-S128 (Opus; re-extracted a third time on 2026-08-04 — W7-D3/D4/D6/D9 repair — per charter rule 14; ranges re-planned S128 over the 663->771 growth)"
   },
   {
    "batch_id": "b074",
@@ -1256,14 +1268,15 @@
    "units": [
     {
      "file": "results/55maps-ds-summary-v2/report.md",
-     "start": 333,
-     "end": 663,
+     "start": 385,
+     "end": 771,
      "spans": 271,
-     "spans_basis": "carried from the wave-6 survey; re-ranged S127 after the W7-E4 repair"
+     "spans_basis": "carried from the wave-6 survey; re-ranged S127 after the W7-E4 repair",
+     "_range_basis": "re-ranged 2026-08-04 (S128) from 333-663; extended to the document's new end (771) so the tail is assigned. The batch's own claims span lines 385-769."
     }
    ],
    "output": "reports/verification/c4-extraction/074.json",
-   "status": "extracted-S127 (Opus; re-extracted twice on 2026-08-04 — W7-E4 figure refresh, then the blind-pass withdrawal — per charter rule 14)"
+   "status": "extracted-S128 (Opus; re-extracted a third time on 2026-08-04 — W7-D6 row-count repair plus the rule-14 coupling to b073 — ranges re-planned S128 over the 663->771 growth)"
   },
   {
    "batch_id": "b075",
