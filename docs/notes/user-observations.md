@@ -429,3 +429,75 @@ kind of thing they were, not by when I found them.
 
 *(Candidate B — on whether leading with a self-introduced error read as
 transparency or as burying the findings — dropped at review.)*
+
+## Session 128 — 2026-08-04 (approved 2026-08-04, all candidates kept)
+
+**Candidate A — the provenance that only existed in your head.** Asked
+whether the 4-map gold-standard corpus should be folded into the reference
+standardisation, you answered with its history rather than a yes or no:
+you have reviewed it **four times** — once for a previous paper, three
+times for this project — **re-positioned each point to dead centre within
+1–2 px**, and your fourth manual extraction pass at the start of this
+project found **one** additional false negative, with nothing surfacing in
+months of use since. Conclusion: "The GS corpus is as good as I can make
+it, it doesn't need review."
+
+*Why this is worth recording.* None of that was in the repository. The
+project has spent four sessions establishing that the 55-map student layer
+is four layers with three different sizes and two stage-specific
+asymmetries — and the whole time, the other corpus was quietly the one
+reference that genuinely earns the name "gold standard", on evidence no
+document held. It is now ruling 21(d). For future instances: **when the PI
+answers a scoping question with provenance instead of a decision, the
+provenance is usually the more valuable half** — capture it verbatim
+before acting on the decision. And more specifically, ask about the *other*
+artefacts early: a project can carry an unrecorded quality asymmetry
+between two datasets for months, and reasoning that treats them as
+comparable will be quietly wrong.
+
+**Candidate B — you generalised the fix before I proposed it.** Presented
+with one reference defect (W7-D9) and a menu of three ways to repair § 4.1,
+you declined all three and restated the problem a level up: nail down the
+reference dataset first, build the precise-location app, then run *every*
+tainted no-API re-analysis against the standardised artefact, with
+API-spend cases discussed separately. "End goal are accurate runs on
+standardised artefacts."
+
+*Why this is worth recording.* My three options were all local repairs to
+one section; the fourth option — stop repairing instances and fix the
+generator — was the right one and was not on my menu. This is now ruling
+21, and it converted a per-defect cost into a one-off. For future
+instances: when presenting repair options for the *n*th instance of a
+recurring defect class, **include "fix the thing that keeps producing
+these" as an explicit option**, and price it. Four reference defects had
+surfaced in four days (rulings 19 and 20, W7-D8, W7-D9) and I was still
+offering per-site repairs on the fourth.
+
+**Candidate C — the limitation stated as plainly as the goal.** In the
+same breath as commissioning the best-possible reference you named what it
+cannot be: "not really 'gold standard', as we've no way to economically
+recover the joint student + model FNs."
+
+*Why this is worth recording.* The instinct being modelled is worth
+copying: define the artefact's ceiling at the moment of commissioning it,
+not at write-up when a reviewer asks. That sentence is now in ruling 21(b)
+with an instruction that it ship in the artefact's own header rather than
+only in a changelog — because a reference that is *almost* a gold standard
+will be called one by a downstream document within a wave or two unless
+the qualifier travels with it.
+
+**Candidate D — scope, priced and then declined.** Your first phrasing was
+"the mounds in my 'corrected' dataset", which reads as the 4,746 student
+layer. Presented with the arithmetic — 773 phantoms ≈ 1 h, 4,746 students
+≈ 6 h, both ≈ 7 h — and the fact that re-marking student centres moves the
+reference geometry at *every* buffer rather than only sub-50 m, you chose
+the committed 773-only scope.
+
+*Why this is worth recording.* The decision took one exchange because the
+aggregate was stated rather than the per-unit rate. This is the global
+CLAUDE.md "compute aggregate implications" rule paying off on the PI's own
+time rather than on API spend, and the second half mattered as much as the
+first: the *blast radius* differed between the options, not just the hours.
+For future instances: when a scope reading is ambiguous, **price both
+readings and state what each one invalidates downstream**, then ask — do
+not silently take the narrower one because it matches a prior commitment.

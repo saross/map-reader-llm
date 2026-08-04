@@ -25908,3 +25908,429 @@ student layer);
 commits `fcfc90bff` (the 5 m tolerance and canonical guard), `30a902f56` (the
 regenerated corrected-F1 data), `70b48dbb0` (the refreshed report), and
 `f9be80861` (W6-E9 resolved — sweep archived, fix chain recorded).
+
+## Observation 391: A false green is a thread, not a nit — re-anchoring one extraction claim to the artefact it actually asserts turned it red, and the red was a document defect nobody had found (Session 128, 2026-08-04)
+
+*Source anchors: the superseded anchor and its replacement are both recorded
+in `reports/verification/c4-extraction/073.json`, claim covering
+`results/55maps-ds-summary-v2/report.md` lines 14–15, in the note beginning
+`[W7-D5 / W7-D9 RESOLUTION, Session 128]`. The blind pass that predicted the
+concealment is
+`reports/verification/c4-triage/blind-passes/wave7-w7e4-verification-2026-08-04.json`
+at `$.re_extraction_check.caveat.detail`. The item counts were read on
+2026-08-04 from
+`results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json`
+(`$.item_counts.matched` = 3527, `$.item_counts.student_only` = 1243) and the
+superseded anchor's value from
+`results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json`
+(`$.results[0].n_ref_student_only` = 4745). Registered as W7-D5 and W7-D9 in
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json`; repaired at
+commits `e213d009c` and `880d242c7`.*
+
+### The finding
+
+A Session-127 re-extraction anchored the ds-summary front matter's phrase
+"the updated 4,745-mound curator GT" to the T=0.7 **corrected-F1** artefact,
+whose `n_ref_student_only` reads 4745. The claim verified **green**. The
+sentence, however, is about what the T=0.7 **Dawid–Skene** row consumed — a
+different computation with a different reference. The anchor had been chosen
+for numerical agreement rather than for describing the same quantity.
+
+Re-anchoring it to the D-S artefact, where `matched + student_only` =
+3,527 + 1,243 = **4,770**, produced a MISMATCH with `abs_error` 25. That
+mismatch was correct, and it was the entry point to **W7-D9** — the discovery
+that the four D-S fits do not share a ground truth at all.
+
+### Why this matters
+
+**A false green is strictly worse than a mismatch, and the asymmetry is
+structural.** A mismatch appears in triage, gets a row, gets adjudicated. A
+green claim is consumed by the ledger as evidence that the document is sound.
+The recompute report counts it among 7,263 matches, and nothing downstream
+ever looks at it again. The programme's whole apparatus — triage, blind
+passes, escalations — operates on things that failed. Nothing operates on
+things that passed for the wrong reason.
+
+The W7-E4 blind pass had **predicted this exact failure mode** a session
+earlier, in terms worth quoting: the anchor "will verify green while the
+underlying document sentence is mis-attributed … it will conceal M-class
+attribution defects from any purely numeric verifier". That prediction was
+recorded, classified as a caveat, and not acted on for a day. The lesson is
+not that the blind pass was ignored — it was registered as W7-D5 and queued —
+but that a *predicted* false green reads as bookkeeping when it is in fact a
+load-bearing lead.
+
+### The rule this yields
+
+**Prefer the anchor that describes the same computation over the anchor that
+agrees numerically.** Where the two conflict, numerical agreement is the
+weaker signal, because agreement can be coincidental while identity of
+computation cannot. In this case both artefacts held 4745-or-4770-shaped
+counts of student mounds; only one of them was the count the sentence was
+about.
+
+Corollary for repair passes: **when a repair makes a claim go red, that is a
+result, not a regression.** The instinct to restore green is exactly wrong.
+The repaired 073.json carries an explicit instruction against it — "Do NOT
+resolve it by reverting to a numerically-agreeing anchor" — because the next
+agent to meet a red row with an obvious green alternative will otherwise take
+it.
+
+### Caveats / methodological notes
+
+- The false green was introduced by a **repair**, not by the original
+  extraction. Session 127's re-extraction improved the anchoring overall (the
+  superseded version was both wrong-artefact *and* red); it traded a visible
+  error for an invisible one while making things better on every other axis.
+  That is the hard case — the defect rode in on a genuine improvement.
+- This is the **ninth consecutive wave** in which a blind layer corrected a
+  repairing agent. The pattern is stable enough to be treated as a
+  design assumption rather than a run of bad luck.
+- No systematic search for other false greens has been run. This one was found
+  because a blind pass happened to read the anchor semantically. **The class
+  is unmeasured**, and a purely numeric verifier cannot measure it — detecting
+  it requires asking whether the anchor describes the same computation, which
+  is a semantic question.
+
+### Findable later
+
+false green; passing verdict on the wrong computation; W7-D5; 073.json claim
+index 3; n_ref_student_only 4745; matched 3527 student_only 1243 sum 4770;
+abs_error 25; anchor chosen for numerical agreement not identity of
+computation; a mismatch is visible in triage a false green is not; blind pass
+predicted the concealment; M-class attribution defect; do not resolve by
+reverting to a numerically-agreeing anchor; a red row after a repair is a
+result not a regression; ninth consecutive wave blind layer corrected the
+repairing agent; class is unmeasured; Session 128 2026-08-04.
+
+### Related observations and artefacts
+
+- **[[Obs 392]]** (the reference question has no answer until you name the
+  object) — **the finding this thread led to.** W7-D9 is what the false green
+  was concealing.
+- **[[Obs 393]]** (a one-point test settled what count-inference could not) —
+  the method that closed it.
+- `reports/verification/c4-triage/blind-passes/wave7-w7e4-verification-2026-08-04.json`
+  — the blind pass that predicted the failure mode.
+- `reports/verification/phase3-rulings-2026-07-31.md` § 11 (blind verification
+  of a repair) — the rule under which the prediction was generated.
+
+## Observation 392: "Which ground truth did this run use?" has no answer until you name the object — two verification layers reached opposite conclusions and both were right (Session 128, 2026-08-04)
+
+*Source anchors: per-run student counts read on 2026-08-04 from each run's
+`dawid-skene/dawid-skene-results.json` `$.item_counts` (`matched` +
+`student_only`): text-high 3527 + 1243 = 4770, text-high-t0.3 3531 + 1239 =
+4770, text-min 3276 + 1494 = 4770, image 3650 + 1095 = 4745. The script
+default is `_STUDENT_GT_PATH` at `scripts/analyse_dawid_skene.py:57`, which
+resolves to `inputs/vectors/references/student-mounds-55maps.geojson`. The
+census that read evaluation metadata is
+`reports/verification/c4-triage/student-gt-reference-census-2026-08-04.json`;
+the blind pass that read D-S fits is
+`reports/verification/c4-triage/blind-passes/wave7-pass-P4-2026-08-04.json`.
+Both findings and their reconciliation are recorded in
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json` under
+`open_research_findings[0].resolution_of_open_question_2`. Ruling context:
+`reports/verification/phase3-rulings-2026-07-31.md` § 19 (the four layers).*
+
+### The finding
+
+Wave-7 blind pass P4 concluded that the image run sat on a 4,745-point student
+reference while the other three sat on 4,770. A census commissioned the same
+day, reading `cli_args.ground_truth` directly, concluded the opposite locus:
+t0.3 had consumed the unreviewed 4,770 base while text-high, image and text-min
+had all consumed the reviewed layer. The census was recorded as having
+**inverted** the blind pass, and a claim written in reliance on the blind pass
+was withdrawn.
+
+It had not inverted it. **The two were reading different objects.** The blind
+pass reasoned from what the **Dawid–Skene fits** imply; the census read the
+**evaluation** metadata. Session 128 confirmed both:
+
+| Layer | Odd one out | The other three | Register |
+| :--- | :--- | :--- | :--- |
+| Evaluation | **t0.3** on the unreviewed 4,770 base | reviewed layer | W7-D8 |
+| Dawid–Skene | **image** on the reviewed layer (4,745) | fixed 4,770 base | W7-D9 |
+
+Two asymmetries, in two layers, singling out **different runs, in opposite
+directions**. A single sentence of the form "run X used reference Y" is not
+even wrong — it is unevaluable.
+
+### Why this matters
+
+**The pipeline has several scoring stages and they do not inherit a common
+reference.** The D-S aggregator takes the fixed base by *default*
+(`analyse_dawid_skene.py:57`) and only sees a corrected layer if an operator
+passes `--ground-truth`; the evaluation stage is configured separately; the
+MCC artefacts are configured separately again (and, as it happens, all four
+agree there — which is why the MCC cross-run comparison survives). Nothing in
+the architecture forces them to agree, and nothing warns when they diverge.
+
+This also explains a near-miss in the record. A Session-127 changelog asserted
+that the D-S aggregations "consume the separate legacy layer … not the reviewed
+layer at all". The blind pass refuted it; the claim was withdrawn in place.
+The blanket claim was wrong — but so was the refutation's framing, and so was
+"the census inverted the blind pass". **Three successive statements about "the
+reference" were each partly right and each unfalsifiable as phrased**, because
+none of them named the stage.
+
+### The rule this yields
+
+Any claim about "the ground truth" for a multi-stage pipeline **must name the
+stage** — evaluation, D-S fit, MCC, corrected-F1 — before it is checkable. A
+claim that does not is not a weak claim; it is not a claim.
+
+Practically: when two verification layers disagree about a reference, the first
+question is not "which is right?" but **"are they talking about the same
+object?"** Here the answer was no, and a day was spent on a contradiction that
+did not exist.
+
+### Caveats / methodological notes
+
+- **The damage was bounded and that is worth stating plainly**: all four
+  archived per-run MCC artefacts record the reviewed layer, so the MCC
+  cross-run table is like-for-like and the F1-versus-MCC rank divergence
+  (Obs 280) does not rest on a reference mismatch.
+- What *is* affected is every cross-run D-S comparison in
+  `results/55maps-ds-summary-v2/report.md` — § 2.1 item counts, § 2.2 worker
+  accuracy and prevalence, § 4.1 F1 ranking, § 4.2 calibration. § 4.1's
+  Image-versus-T=0.3 ordering (0.7990 against 0.7988, a 0.0002 gap between
+  runs whose references differ by 25 points) has been **withdrawn pending
+  re-analysis** rather than defended or deleted.
+- The 25-point difference is duplicate-cleaning, not discovery, and it acts to
+  **raise** image's recall by removing student double-marks that would
+  otherwise count as false negatives. The direction is known; the magnitude is
+  not, and will not be until the fits are re-run against a single reference.
+- Under ruling 21 nothing here is recomputed yet. The unification is queue item
+  1 in `reports/verification/reference-standardisation-queue.md`.
+
+### Findable later
+
+which ground truth did this run use; name the object; D-S fits versus
+evaluation metadata; image 4745 others 4770; t0.3 unreviewed base evaluation;
+W7-D8 evaluation layer W7-D9 dawid-skene layer; two asymmetries two layers
+different runs opposite directions; analyse_dawid_skene.py:57 _STUDENT_GT_PATH
+default; census did not invert the blind pass; three successive statements each
+partly right and unfalsifiable; MCC comparison is like-for-like all four
+artefacts reviewed layer; Image versus T=0.3 ordering withdrawn 0.7990 0.7988
+0.0002 gap 25 points; Session 128 2026-08-04.
+
+### Related observations and artefacts
+
+- **[[Obs 389]]** (the 55-map ground truth is four layers) — **the parent.**
+  Obs 389 enumerated the layers; this entry shows that which layer a number
+  came from is a property of the *stage*, not of the run.
+- **[[Obs 388]]** (F1 and MCC are computed against different ground truths) —
+  the sibling asymmetry, one level up. Obs 388 is across metrics; this is
+  across stages within a metric's own pipeline.
+- **[[Obs 391]]** (a false green is a thread) — how this was found.
+- **[[Obs 393]]** (the one-point test) — how it was settled.
+- `reports/verification/phase3-rulings-2026-07-31.md` § 21 — the ruling this
+  finding triggered.
+
+## Observation 393: A test for one known point settled in minutes what count-inference had left open for a day — cheap decisive tests beat aggregate agreement (Session 128, 2026-08-04)
+
+*Source anchors: the added feature was identified on 2026-08-04 by diffing
+`inputs/vectors/references/student-mounds-55maps-reviewed.geojson` at
+`baf1497a7^` (4,744 features) against `baf1497a7` (4,745) — a single added
+feature, `uuid` `manual-2026-05-03-K35-064-3-002`, `source_map`
+`K-35-064-3_Dimitrovgrad_4326`, at projected coordinates
+(396492.2142937911, 4662802.316746469). Membership was then tested against
+each run's `dawid-skene/item-posteriors.csv` (columns `student_label`, `x`,
+`y`). The count evidence it replaced is each run's
+`dawid-skene-results.json` `$.item_counts`. Recorded in
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json` under
+`confirmed_defects_unrepaired` W7-D9 (`evidence`) and
+`open_research_findings[0].resolution_of_open_question_2.evidence`.*
+
+### The test
+
+Rather than ask "do the item counts imply which layer this run used?", ask a
+question with a binary answer: **is this one specific point present as a
+student reference?**
+
+Commit `baf1497a7` added exactly one feature to the reviewed layer. If a run
+consumed the reviewed layer, that point must appear with `student_label = 1`.
+If it consumed the fixed base, it cannot — the base has one commit in its
+history and has never contained it.
+
+| Run | point present as student? | verdict |
+| :--- | :--- | :--- |
+| image | yes (`student_label = 1`, distance 0.000 m) | reviewed layer |
+| T=0.7 | no — `student_label = 0` at that exact coordinate | fixed base |
+| T=0.3 | no | fixed base |
+| text-MIN | no | fixed base |
+
+The T=0.7 result is the sharp one: an item exists at that coordinate, but as a
+**VLM-only detection** rather than a student reference. The curator addition
+was made at a position a detector had already flagged, so the coordinate is
+occupied in both worlds and only the *label* distinguishes them.
+
+### Why this matters
+
+**Count agreement is circumstantial; membership is decisive.** The counts
+(4,770 / 4,770 / 4,770 against 4,745) were strong evidence and were correct —
+but they are an aggregate, and an aggregate can agree by coincidence. That
+possibility is exactly what kept W7-R1's second question open, recorded as
+"still unverified", for a day: the blind pass had reasoned from implied counts
+and the register itself noted that "those are different objects, so its claim
+is not strictly refuted".
+
+The one-point test cannot agree by coincidence. It took minutes: diff two
+commits of a GeoJSON, extract the added coordinate, grep four CSVs.
+
+**The same lesson had already been learnt once this week, in the other
+direction.** The register's own method note records that the census "only
+settled it because it read `cli_args.ground_truth` directly instead of
+inferring a reference from implied counts". Both closures came from reading a
+*direct* signal — a recorded argument, or a specific point's membership — and
+both replaced an inference from aggregates. The pattern is stable enough to
+generalise.
+
+### The rule this yields
+
+When a question is "which input did this process consume?", look for a
+**witness**: a single element present in one candidate input and absent from
+the others. Then test for the witness. Prefer, in order:
+
+1. A recorded argument (`cli_args`, a manifest, a run meta) — direct.
+2. A witness element's membership — decisive, immune to coincidence.
+3. Aggregate agreement (counts, totals, checksums over the whole set) —
+   suggestive, and enough to *raise* a question, rarely enough to close one.
+
+A corrections history is a **generator of witnesses**. Every commit that added
+or removed one feature from a reference layer defines a test that
+distinguishes that layer from its neighbours by a single lookup — and this
+project's four-layer ground truth has a well-documented set of such commits
+(`dea1155fa`, `baf1497a7`, `2e075eb99`).
+
+### Caveats / methodological notes
+
+- A witness test proves membership, not provenance: it establishes that a run
+  saw a layer *containing* that point, which combined with the layer sizes and
+  the script default is conclusive here, but would not be if two candidate
+  inputs both contained the witness.
+- The 0.000 m distance is exact because both records derive from the same
+  source coordinate; do not expect that in general, and use a tolerance when
+  the witness has passed through a reprojection.
+- `uuid` in the base layer is a **symbol code, not an identifier** — 4,770
+  features share 833 distinct values — so the witness had to be matched on
+  coordinates, not on `uuid`.
+
+### Findable later
+
+one-point test; witness element; baf1497a7 added one feature; uuid
+manual-2026-05-03-K35-064-3-002; K-35-064-3_Dimitrovgrad_4326; 396492.2142937911
+4662802.316746469; student_label 1 only in image item set; T=0.7 student_label 0
+at the same coordinate vlm_only; counts can agree by coincidence membership
+cannot; prefer recorded argument then witness membership then aggregate
+agreement; corrections history is a generator of witnesses; dea1155fa
+baf1497a7 2e075eb99; uuid is a symbol code not an identifier 833 distinct
+values; Session 128 2026-08-04.
+
+### Related observations and artefacts
+
+- **[[Obs 392]]** (name the object) — the question this method closed.
+- **[[Obs 391]]** (a false green is a thread) — how the question was reached.
+- **[[Obs 389]]** (the four ground-truth layers) — the source of the
+  correction commits that make witnesses available.
+
+## Observation 394: The same validation returns "128/128 valid" on one machine and "FAIL: 3/128" on another — verification results can be machine-dependent, and only cross-host running reveals it (Session 128, 2026-08-04)
+
+*Source anchors: both runs were executed on 2026-08-04 from the same commit
+(`a5db86673`) with `python3 scripts/validate_c4_extraction.py --at-era`.
+amd-tower returned "all 128 files valid; 5939 claims; 39 checked at their
+extraction blob"; sapphire returned "FAIL: 3/128 files with errors". The three
+anchors are `results/leaderboard/era2/.cache/.metadata.json` (referenced by
+`086.json` claim 41 and `088-ci-registry.json` claim 0) and
+`archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops` (referenced
+by `034-configuration-audit-h8-v2.json` claims 42 and 43). Both paths were
+confirmed present on amd-tower and untracked (`git ls-files --error-unmatch`
+fails on each). Registered as W7-I4 in
+`reports/verification/c4-triage/wave7-open-items-2026-08-04.json`; the
+governing ruling is `reports/verification/phase3-rulings-2026-07-31.md` § 15.*
+
+### The finding
+
+Three extraction anchors point at paths that are **untracked**. They exist on
+amd-tower, where they were authored, and not on sapphire. The validator
+therefore reports a clean corpus on one host and three failures on the other,
+from an identical commit.
+
+Ruling 15 already governs this case: mechanical verification scope is
+git-tracked artefacts **plus tracked proxies** (a regeneration manifest, or a
+bundle index), and "claims anchored to neither are a NAMED triage family,
+never silently mechanical". These three are anchored to neither and were being
+treated as mechanical.
+
+### Why this matters
+
+**The programme's headline claim is reproducibility, and this is a
+reproducibility defect in the instrument itself.** An external reader cannot
+check these three claims at all — the artefacts are not in the repository and
+never will be. Worse, we could not check them either, depending on where we
+happened to run.
+
+It also means **the ledger and the validator have been disagreeing about scope
+without anyone noticing**. Sapphire is the canonical host for the recompute
+report (`_meta.host` records it, and the project's compute rule sends heavy
+work there); amd-tower is where interactive validation runs. Each was
+internally consistent and they were measuring different corpora.
+
+The methodological point is more general than the three paths. **Every
+verification run so far has been single-host, and a single-host run is
+structurally incapable of detecting this class.** It is not a matter of
+looking harder — the information is not present in one machine's output. The
+check that finds it is trivial (run the same command twice, on two hosts) and
+had simply never been part of the protocol, because nothing suggested the
+answer could depend on the machine.
+
+### The rule this yields
+
+**Run the validator on both hosts at GATE 3, and treat a divergence as a
+finding rather than an environment problem.** The reflex on seeing "works here,
+fails there" is to fix the environment; here the environment is the message.
+Any anchor whose resolution depends on the host is, by definition, not a
+tracked referent.
+
+More generally: for any check whose result is asserted to be a property of the
+*repository*, ask what else the result depends on. If it depends on the
+filesystem outside git, the assertion is weaker than it appears.
+
+### Caveats / methodological notes
+
+- This says nothing about the other 5,936 claims, which validate identically on
+  both hosts. The defect is three anchors, not a systemic failure — but it was
+  **invisible**, and invisibility is the property worth recording.
+- `scripts/check_c4_plan_coverage.py`, added the same session, does **not**
+  test anchor existence; it checks line coverage and claim containment. Both
+  tools want running on both hosts.
+- The remedy under ruling 15 is a referent, not a deletion: a regeneration
+  manifest for the crop tree, and for the leaderboard cache either a tracked
+  proxy or a re-anchor to the artefact the cache derives from. Failing that,
+  the named triage family.
+- The two `.cache` references sit in `086.json` and `088-ci-registry.json`,
+  the latter being the extraction of the CI metadata registry — a document
+  already carrying its own HIGH-severity defects (W7-I2). Repair them together.
+
+### Findable later
+
+machine-dependent verification; 128/128 valid on amd-tower FAIL 3/128 on
+sapphire; same commit a5db86673; validate_c4_extraction --at-era; untracked
+anchors; results/leaderboard/era2/.cache/.metadata.json; archive/h10-v2-prefilter-pools
+pool_160_hp16hn16_prefilter crops; 086.json claim 41 088-ci-registry.json claim 0
+034-configuration-audit-h8-v2.json claims 42 43; ruling 15 tracked proxies
+named triage family never silently mechanical; single-host run structurally
+incapable of detecting this class; run the validator on both hosts at GATE 3;
+works here fails there is the message not the problem; ledger host sapphire
+validator host amd-tower disagreeing about scope; W7-I4; Session 128 2026-08-04.
+
+### Related observations and artefacts
+
+- **[[Obs 383]]** (the question ruling 15 answered — machine scope) — the
+  parent. Ruling 15 anticipated this class in the abstract; this entry is the
+  first concrete instance of it biting.
+- `reports/verification/phase3-rulings-2026-07-31.md` § 15 — the governing
+  ruling, adopted 2026-08-03.
+- `scripts/check_c4_plan_coverage.py` — the sibling whole-corpus check added
+  the same session, which covers coverage and containment but not anchor
+  existence.
