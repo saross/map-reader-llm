@@ -1,19 +1,39 @@
 # Precise-location (point-marking) app — build specification
 
-> **Last revised**: 2026-08-05 (built in Session 129; imagery pointer
-> corrected, two measured constraints added). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-08-05 (built in Session 129; scope widened to 906
+> items at a 50 m cut; imagery pointer corrected). See
+> [§ Changelog](#changelog) for revision history.
 
 **Why this exists**: ruling 21 makes a fixed reference the gate for every
 reference-tainted re-analysis, and ruling 20(d) makes this app step 1 of the
 sequence. Five queued analyses wait on it
 (`reports/verification/reference-standardisation-queue.md`).
 
-**Scope** (ruling 21c): the **773 promoted phantoms only**. The 4,746 student
-mounds are *not* re-marked — that option was priced at ≈ 6 hours and declined.
-The resulting reference is mixed-provenance by design.
+**Scope**: ruling 21c set this at the **773 promoted phantoms only**. The PI
+widened it on 2026-08-05 to sweep up every possible conflation in the same
+pass, at a **50 m** cut — mound symbols run ~12–18 px across at ~5 m/px, so
+two mounds 50 m apart are nearly touching, and the proximity audit showed the
+widening from 40 m to 50 m cost only ~25 further items.
 
-**Budget**: ≈ 1 hour of PI review. No API spend. The build is agent work.
+The queue is **906 items**, built by `scripts/build_marking_queue.py`:
+
+| Item type | Count | Why it is in the queue |
+|---|---:|---|
+| `phantom` | 773 | Original scope; every one needs a centre for Obs 371 |
+| `student_conflation` | 105 | Within 50 m of a phantom (incl. 4 inside the 5 m de-duplication tolerance) |
+| `merge_site` | 26 | The merged centroids separating layer 2 from layer 1 |
+| `student_pair` | 6 | Within 50 m of another student point |
+| `curator_addition` | 2 | The two layer-2 additions with no layer-1 antecedent |
+
+Counts sum to more than 906 because an item qualifying under several headings
+is emitted **once**, with its reasons joined. Distinct student items: 133.
+
+The remaining ~4,600 student mounds are still not re-marked. The proximity
+audit found layer 2 essentially clean at this range — 3 pairs within 50 m,
+minimum separation 38.14 m — so there is nothing there to adjudicate. The
+resulting reference is mixed-provenance by design.
+
+**Budget**: ≈ 1.2 hours of PI review. No API spend. The build is agent work.
 
 ## What the app has to do
 
@@ -214,7 +234,33 @@ exists, because the re-marked file makes the gating recomputable from scratch.
 
 ## Changelog
 
-### 2026-08-05 — Built; imagery pointer corrected; two constraints measured
+### 2026-08-05 (b) — Scope widened to all conflations at a 50 m cut
+
+Refresh trigger: the PI widened the pass — "I'm hoping to simply sweep all of
+that up in this pass… I'd widen out to 50 m, it's not that many more" — after
+`scripts/audit_mound_proximity.py` priced the options.
+
+| Claim | Before | After |
+|---|---|---|
+| Scope | 773 phantoms | **906 items** (773 + 133 student) |
+| Cut | n/a (15 m borderline band) | **50 m**, all layers |
+| Budget | ≈ 1 h | ≈ 1.2 h |
+| Student-side coverage | none | conflations, near-pairs, 26 merge sites, 2 curator additions |
+
+Three build consequences. The app now consumes a **queue** rather than
+`canonical-review.csv` directly, so phantom and student items share one
+cursor and one output schema. Overlays gained two layers — orange for other
+phantoms (so a phantom-phantom pair is visible as such) and red for the
+superseded layer-1 positions a merged centroid replaced (so a merge can be
+checked rather than inherited). And zoom became a per-item control: the 26
+merged pairs are separated by between **1.7 m and 49.2 m**, 11 of them under
+10 m, so no single window width serves them — at 200 m a 1.7 m separation is
+about six display pixels, at 50 m it is 23.
+
+What did **not** change: the output contract, the ±2.5 m precision floor, the
+framing-offset correction, and the cumulative buffer series.
+
+### 2026-08-05 (a) — Built; imagery pointer corrected; two constraints measured
 
 Refresh trigger: Session 129 built the app from this spec, and the build's
 dry-run gap analysis contradicted the spec in one place and sharpened it in

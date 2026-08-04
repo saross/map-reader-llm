@@ -6,10 +6,18 @@ reference-tainted re-analysis, and ruling 20(d) makes this app step 1 of
 that sequence. Five queued analyses wait on its output — see
 ``reports/verification/reference-standardisation-queue.md``.
 
-**Scope** (ruling 21c): the **773 promoted phantoms only**. The 4,746
-student mounds are *not* re-marked; that option was priced at roughly six
-hours of reviewer time and declined. The resulting reference is
-mixed-provenance by design and is explicitly NOT a gold standard.
+**Scope**: ruling 21c set this at the 773 promoted phantoms only. The PI
+widened it on 2026-08-05 to sweep up every possible conflation in the same
+pass, at a **50 m** cut. The queue is built by
+``scripts/build_marking_queue.py`` and comes to **906 items** — the 773
+phantoms plus 133 corrected-student points that either conflate with a
+phantom, sit close to another student point, or are one of the 26 merged
+centroids and 2 curator additions that distinguish layer 2 from layer 1.
+
+The remaining ~4,600 student mounds are still *not* re-marked: the proximity
+audit found layer 2 essentially clean at this range, so there is nothing
+there to adjudicate. The resulting reference is mixed-provenance by design
+and is explicitly NOT a gold standard.
 
 For each phantom the app shows a georeferenced window of the source
 topographic sheet centred on the recorded position, overlays any nearby
@@ -19,12 +27,16 @@ true centre. Three things resolve at once (ruling 20d step 2):
 1. **Obs 371** — match distances were recorded as 25 m rings anchored at
    50 m rather than measured from marked centres, so sub-50 m Track-2
    figures penalise correct detections of student-missed mounds.
-2. **The borderline conflations** — pairs between 7.3 m and 15 m from a
-   student point, closer than the ~15-20 m "genuinely distinct mounds"
-   floor and further than the 5 m de-duplication tolerance. They cannot
-   be settled from coordinates; they have to be seen. The ``c`` verdict
-   ("same mound as the student point") is what settles them.
-3. **Row sorting** — handled downstream, not here.
+2. **The conflations** — any two mounds within 50 m, whether phantom to
+   student, phantom to phantom, or student to student. They cannot be
+   settled from coordinates; they have to be seen. The ``c`` verdict
+   ("same mound as a neighbouring point") is what settles them. Four
+   phantom-student pairs sit *inside* the 5 m de-duplication tolerance
+   (0.98 m at the tightest) and are near-certain double-counts.
+3. **The merge sites** — the 26 positions where two student points were
+   replaced by a merged centroid. The app overlays the two superseded
+   layer-1 positions so the merge can be checked, not just inherited.
+4. **Row sorting** — handled downstream, not here.
 
 Why this does not simply reuse ``review_candidates.render_candidate_context_crop``:
 that renderer returns an image and nothing else, and it centres the crop
@@ -120,19 +132,24 @@ _STUDENT_SEARCH_M = 250.0
 _MAGENTA = (255, 0, 255)
 _CYAN = (0, 255, 255)
 _YELLOW = (255, 255, 0)
+_ORANGE = (255, 140, 0)
+_RED = (255, 40, 40)
 
 # Reviewer verdicts. Keys double as the keyboard shortcut; button labels
 # are rendered "<key>: <label>" so review_candidates.py's key-binding JS
 # (reused verbatim below) can find them.
 _VERDICTS = {
     "d": ("distinct", "Distinct mound"),
-    "c": ("same_as_student", "Same as student point"),
+    "c": ("same_as_neighbour", "Same as a neighbour"),
     "u": ("uncertain", "Uncertain"),
     "s": ("skipped", "Skip"),
 }
 
 _OUTPUT_COLUMNS = [
-    "row_index",
+    "queue_index",
+    "item_type",
+    "source_layer",
+    "source_index",
     "candidate_id",
     "map_name",
     "buffer_metres",
@@ -141,13 +158,22 @@ _OUTPUT_COLUMNS = [
     "x_marked",
     "y_marked",
     "displacement_m",
-    "nearest_student_m",
+    "nearest_neighbour_m",
     "verdict",
     "uncertain",
     "skipped",
     "marked_by",
     "marked_at",
 ]
+
+# Overlay layers drawn as context around the subject point. Each entry is
+# (colour, radius_px, stroke_px); the subject itself is drawn separately as
+# a cross so it is never confused with its neighbours.
+_CONTEXT_STYLES = {
+    "student": (_CYAN, 7, 3),
+    "phantom": (_ORANGE, 9, 3),
+    "superseded": (_RED, 5, 2),
+}
 
 
 # ---------------------------------------------------------------------------
@@ -372,26 +398,30 @@ def draw_overlays(
     base: Image.Image,
     geom: CropGeometry,
     recorded: tuple[float, float],
-    student_points: list[tuple[float, float]],
+    context: dict[str, list[tuple[float, float]]],
     marked: tuple[float, float] | None,
     rings_m: tuple[float, ...] = _CONTEXT_RINGS_M,
 ) -> Image.Image:
     """Composite the review overlays onto a base crop.
 
     Draws, in back-to-front order: reference rings around the recorded
-    position, the recorded position itself (magenta cross), nearby
-    student ground-truth points (cyan circles), the reviewer's mark
-    (yellow cross with a connecting line), and a scale bar.
+    position, neighbouring points from each context layer, the recorded
+    position itself (magenta cross), the reviewer's mark (yellow cross
+    with a connecting line), and a scale bar.
 
     Colours are chosen for contrast against Soviet 1:50k topographic
-    sheets, where magenta and cyan are essentially absent from the map
-    content.
+    sheets, where magenta, cyan and orange are essentially absent from the
+    map content.
 
     Args:
         base: The unannotated crop from :func:`render_base_crop`.
         geom: That crop's geometry, used for every world-to-pixel step.
-        recorded: The ``(x, y)`` position as recorded in the review CSV.
-        student_points: Nearby student ground-truth ``(x, y)`` positions.
+        recorded: The ``(x, y)`` position of the item under review.
+        context: Neighbouring positions by layer name — ``"student"``
+            (cyan), ``"phantom"`` (orange) and ``"superseded"`` (red, the
+            layer-1 points a merged centroid replaced). Unknown names are
+            ignored rather than raising, so a caller can pass a layer the
+            styles do not yet cover.
         marked: The reviewer's clicked ``(x, y)``, or ``None`` if unmarked.
         rings_m: Reference-ring radii in ground metres.
 
@@ -414,15 +444,21 @@ def draw_overlays(
             width=1 if radius_m >= _DISTINCT_FLOOR_M else 2,
         )
 
-    # Student ground-truth points — the conflation judgement is exactly
-    # "is that the same mound as this one?", so they must be visible.
-    for sx, sy in student_points:
-        spx, spy = geom.world_to_display(sx, sy)
-        r = 7
-        draw.ellipse(
-            [(spx - r, spy - r), (spx + r, spy + r)],
-            outline=(*_CYAN, 255), width=3,
-        )
+    # Neighbouring points — the conflation judgement is exactly "is that
+    # the same mound as this one?", so every candidate partner must be
+    # visible and distinguishable by layer.
+    for layer_name, points in context.items():
+        style = _CONTEXT_STYLES.get(layer_name)
+        if style is None:
+            continue
+        colour, radius, stroke = style
+        for point_x, point_y in points:
+            point_px, point_py = geom.world_to_display(point_x, point_y)
+            draw.ellipse(
+                [(point_px - radius, point_py - radius),
+                 (point_px + radius, point_py + radius)],
+                outline=(*colour, 255), width=stroke,
+            )
 
     # Recorded position.
     half = 9
@@ -461,53 +497,69 @@ def draw_overlays(
 # ---------------------------------------------------------------------------
 
 
-def load_phantoms(review_csv: Path) -> pd.DataFrame:
-    """Load the promoted phantoms, normalising the buffer column.
+def load_queue(queue_csv: Path) -> pd.DataFrame:
+    """Load the review queue built by ``build_marking_queue.py``.
 
-    ``buffer_metres`` is stored in the source CSV in **two string
+    ``buffer_metres`` is cast to float explicitly. In the upstream
+    ``canonical-review.csv`` that column is stored in **two string
     formats** — 410 rows carry ``'50'`` and 5 carry ``'50.0'``, and
-    similarly at the other bands. Any consumer that buckets on the raw
-    text reports 410 at R = 50 m instead of the true 415: a
-    plausible-looking number that is simply wrong. ``pd.read_csv``
-    happens to coerce the mixed column to float already, but the cast is
-    made explicit here so the guarantee survives a future change of
-    reader (``csv.reader`` and shell ``cut`` both see the raw strings).
+    similarly at the other bands — so any consumer bucketing on the raw
+    text reports 410 at R = 50 m instead of the true 415. The queue
+    builder already normalises it; the cast here keeps the guarantee if
+    a queue is ever produced by another route. Student rows carry no
+    buffer, so the column is nullable.
 
-    A ``row_index`` column is added as the stable key. ``candidate_id``
-    is **not** unique across runs and must not be used as an identifier;
-    it is carried through as metadata only.
+    ``queue_index`` is the stable key. ``candidate_id`` is **not** unique
+    across runs and must not be used as an identifier; it is carried
+    through as metadata only, and is empty for student rows.
 
     Args:
-        review_csv: Path to ``canonical-review.csv``.
+        queue_csv: Path to ``marking-queue.csv``.
 
     Returns:
-        The phantom rows with ``buffer_metres`` as float and a
-        ``row_index`` key.
+        The queue with ``buffer_metres`` coerced to float.
 
     Raises:
-        ValueError: If a required column is missing, or if any row is not
-            a confirmed mound (the file is expected to be
-            all-``human_label == 'mound'``).
+        ValueError: If a required column is missing.
     """
-    df = pd.read_csv(review_csv)
-    required = {"candidate_id", "human_label", "buffer_metres", "x", "y",
-                "map_name"}
+    df = pd.read_csv(queue_csv)
+    required = {"queue_index", "item_type", "source_layer", "source_index",
+                "x", "y"}
     missing = required - set(df.columns)
     if missing:
         raise ValueError(
-            f"{review_csv} is missing required column(s): "
+            f"{queue_csv} is missing required column(s): "
             f"{', '.join(sorted(missing))}",
         )
-    non_mound = set(df["human_label"].unique()) - {"mound"}
-    if non_mound:
-        raise ValueError(
-            f"{review_csv} contains non-mound rows ({sorted(non_mound)}); "
-            "the marking scope is confirmed mounds only (ruling 21c).",
-        )
     df = df.copy()
-    df["buffer_metres"] = df["buffer_metres"].astype(float)
-    df["row_index"] = np.arange(len(df), dtype=int)
+    if "buffer_metres" in df.columns:
+        df["buffer_metres"] = pd.to_numeric(
+            df["buffer_metres"], errors="coerce",
+        )
     return df
+
+
+@st.cache_data(show_spinner=False)
+def load_superseded_points(superseded_csv: str) -> np.ndarray:
+    """Load the layer-1 positions that merged centroids replaced.
+
+    Overlaid in red at merge sites so the reviewer can check the merge
+    rather than inherit it. Returns an empty array when the file is
+    absent, since the overlay is context rather than a requirement.
+
+    Args:
+        superseded_csv: Path to the superseded-positions CSV.
+
+    Returns:
+        An ``(n, 2)`` array of projected coordinates.
+    """
+    path = Path(superseded_csv)
+    if not path.exists():
+        return np.zeros((0, 2))
+    frame = pd.read_csv(path)
+    return np.column_stack([
+        frame["x"].to_numpy(dtype=float), frame["y"].to_numpy(dtype=float),
+    ])
 
 
 @st.cache_data(show_spinner=False)
@@ -533,6 +585,35 @@ def load_student_points(student_gt: str) -> np.ndarray:
         gdf = gdf.to_crs(_TARGET_CRS)
     centroids = gdf.geometry.centroid
     return np.column_stack([centroids.x.to_numpy(), centroids.y.to_numpy()])
+
+
+@st.cache_data(show_spinner=False)
+def load_phantom_points(phantom_csv: str) -> np.ndarray:
+    """Load the promoted-phantom positions as an ``(n, 2)`` array.
+
+    Overlaid in orange so a phantom-to-phantom pair is visible as such.
+    The queue already contains every phantom as an item; this layer is
+    what lets the reviewer see the *partner* while judging one of them.
+
+    Args:
+        phantom_csv: Path to ``canonical-review.csv``.
+
+    Returns:
+        Projected ``(x, y)`` coordinates.
+    """
+    frame = pd.read_csv(phantom_csv)
+    return np.column_stack([
+        frame["x"].to_numpy(dtype=float), frame["y"].to_numpy(dtype=float),
+    ])
+
+
+def _nearest_distance(
+    points: list[tuple[float, float]], x: float, y: float,
+) -> float | None:
+    """Distance to the closest of ``points``, or ``None`` if empty."""
+    if not points:
+        return None
+    return min(math.hypot(px - x, py - y) for px, py in points)
 
 
 def nearby_student_points(
@@ -580,11 +661,11 @@ def load_existing_marks(output_csv: Path) -> dict[int, dict]:
     if not output_csv.exists():
         return {}
     df = pd.read_csv(output_csv)
-    if "row_index" not in df.columns:
+    if "queue_index" not in df.columns:
         return {}
     marks: dict[int, dict] = {}
     for record in df.to_dict("records"):
-        marks[int(record["row_index"])] = record
+        marks[int(record["queue_index"])] = record
     return marks
 
 
@@ -596,7 +677,7 @@ def save_marks(marks: dict[int, dict], output_csv: Path) -> None:
     against a truncated file if the write is interrupted mid-flight.
 
     Args:
-        marks: Mapping of ``row_index`` to record.
+        marks: Mapping of ``queue_index`` to record.
         output_csv: Destination path. Parent directories are created.
     """
     output_csv.parent.mkdir(parents=True, exist_ok=True)
@@ -611,7 +692,7 @@ def build_record(
     row: pd.Series,
     marked: tuple[float, float] | None,
     verdict: str,
-    nearest_student_m: float | None,
+    nearest_neighbour_m: float | None,
     marked_by: str,
 ) -> dict:
     """Assemble one output row.
@@ -620,11 +701,12 @@ def build_record(
     here rather than downstream so the saved file is self-contained.
 
     Args:
-        row: The phantom's row from :func:`load_phantoms`.
+        row: The item's row from :func:`load_queue`.
         marked: Clicked ``(x, y)``, or ``None`` for skipped/uncertain
             rows with no click.
         verdict: One of the values in :data:`_VERDICTS`.
-        nearest_student_m: Distance to the closest student point, if any.
+        nearest_neighbour_m: Distance to the closest point in any other
+            layer, if one falls within the search radius.
         marked_by: Reviewer name recorded in the output.
 
     Returns:
@@ -636,17 +718,24 @@ def build_record(
         )
     else:
         displacement = None
+    buffer_value = row.get("buffer_metres")
     return {
-        "row_index": int(row["row_index"]),
-        "candidate_id": row["candidate_id"],
-        "map_name": row["map_name"],
-        "buffer_metres": float(row["buffer_metres"]),
+        "queue_index": int(row["queue_index"]),
+        "item_type": row["item_type"],
+        "source_layer": row["source_layer"],
+        "source_index": int(row["source_index"]),
+        "candidate_id": row.get("candidate_id", ""),
+        "map_name": row.get("map_name", ""),
+        "buffer_metres": (
+            None if buffer_value is None or pd.isna(buffer_value)
+            else float(buffer_value)
+        ),
         "x": float(row["x"]),
         "y": float(row["y"]),
         "x_marked": marked[0] if marked else None,
         "y_marked": marked[1] if marked else None,
         "displacement_m": displacement,
-        "nearest_student_m": nearest_student_m,
+        "nearest_neighbour_m": nearest_neighbour_m,
         "verdict": verdict,
         "uncertain": verdict == "uncertain",
         "skipped": verdict == "skipped",
@@ -767,8 +856,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Mark true centres for the 773 promoted phantoms.",
     )
     parser.add_argument(
-        "--review-csv", required=True, type=Path,
-        help="canonical-review.csv (773 confirmed mounds).",
+        "--queue-csv", required=True, type=Path,
+        help="marking-queue.csv from scripts/build_marking_queue.py.",
     )
     parser.add_argument(
         "--rasters-dir", required=True, type=Path,
@@ -777,6 +866,17 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--student-gt", required=True, type=Path,
         help="Reviewed student-mound GeoJSON, overlaid for conflation calls.",
+    )
+    parser.add_argument(
+        "--phantom-csv", required=True, type=Path,
+        help="canonical-review.csv, overlaid so phantom pairs are visible.",
+    )
+    parser.add_argument(
+        "--superseded-csv", type=Path, default=None,
+        help=(
+            "Superseded layer-1 positions from build_marking_queue.py, "
+            "overlaid in red at merge sites. Optional context."
+        ),
     )
     parser.add_argument(
         "--output", required=True, type=Path,
@@ -815,30 +915,37 @@ def main() -> None:
     st.set_page_config(page_title="Mark mound centres", layout="wide")
     args = parse_args()
 
-    if args.output.resolve() == args.review_csv.resolve():
-        st.error(
-            "--output must not be --review-csv: the canonical review file "
-            "is never mutated in place.",
-        )
-        return
+    for reserved in (args.queue_csv, args.phantom_csv, args.student_gt):
+        if args.output.resolve() == reserved.resolve():
+            st.error(
+                f"--output must not be {reserved}: source layers are never "
+                "mutated in place.",
+            )
+            return
 
-    phantoms = load_phantoms(args.review_csv)
+    queue = load_queue(args.queue_csv)
     students = load_student_points(str(args.student_gt))
+    phantoms = load_phantom_points(str(args.phantom_csv))
+    superseded = (
+        load_superseded_points(str(args.superseded_csv))
+        if args.superseded_csv else np.zeros((0, 2))
+    )
 
     if "marks" not in st.session_state:
         st.session_state.marks = load_existing_marks(args.output)
     if "cursor" not in st.session_state:
         # Resume at the first unmarked row rather than at zero.
         done = set(st.session_state.marks)
-        remaining = [i for i in range(len(phantoms)) if i not in done]
+        remaining = [i for i in range(len(queue)) if i not in done]
         st.session_state.cursor = remaining[0] if remaining else 0
     if "pending" not in st.session_state:
         st.session_state.pending = {}
 
     marks: dict[int, dict] = st.session_state.marks
     cursor: int = st.session_state.cursor
-    row = phantoms.iloc[cursor]
-    n_total = len(phantoms)
+    row = queue.iloc[cursor]
+    n_total = len(queue)
+    is_phantom = row["source_layer"] == "promoted_phantom"
 
     # --- sidebar: progress and navigation ------------------------------
     with st.sidebar:
@@ -846,13 +953,31 @@ def main() -> None:
         st.progress(len(marks) / n_total if n_total else 0.0)
         st.caption(
             "Click the true centre, then press a verdict key.\n\n"
-            "**d** distinct · **c** same as student · "
+            "**d** distinct · **c** same as a neighbour · "
             "**u** uncertain · **s** skip\n\n"
             "**n** next · **b** back",
         )
+        st.caption(
+            "Overlays: :violet[magenta] this point · :blue[cyan] student GT "
+            "· :orange[orange] other phantoms · :red[red] superseded "
+            "(pre-merge) positions",
+        )
         st.caption(f"Output: `{args.output}`")
+
+        # Zoom has to be adjustable per item, not fixed at launch. The 26
+        # merged pairs are separated by between 1.7 m and 49.2 m, so no
+        # single window shows them all: at 200 m a 1.7 m separation is
+        # about six display pixels.
+        zoom_options = sorted({50.0, 100.0, 200.0, 400.0, args.context_m})
+        context_m = st.select_slider(
+            "Window width (m)", options=zoom_options,
+            value=st.session_state.get("context_m", args.context_m),
+            format_func=lambda v: f"{v:.0f} m",
+        )
+        st.session_state.context_m = context_m
+
         jump = st.number_input(
-            "Jump to row", min_value=0, max_value=max(0, n_total - 1),
+            "Jump to item", min_value=0, max_value=max(0, n_total - 1),
             value=cursor, step=1,
         )
         if jump != cursor:
@@ -862,11 +987,40 @@ def main() -> None:
     # --- the crop -------------------------------------------------------
     base, geom = render_base_crop(
         float(row["x"]), float(row["y"]), str(args.rasters_dir),
-        args.context_m, args.display_px, args.resampling,
+        context_m, args.display_px, args.resampling,
     )
-    nearby, nearest_m = nearby_student_points(
-        students, float(row["x"]), float(row["y"]),
+    point_x, point_y = float(row["x"]), float(row["y"])
+    nearby_students, nearest_student_m = nearby_student_points(
+        students, point_x, point_y,
     )
+    nearby_phantoms, nearest_phantom_m = nearby_student_points(
+        phantoms, point_x, point_y,
+    )
+    nearby_superseded, _ = nearby_student_points(
+        superseded, point_x, point_y,
+    )
+    # The subject itself lives in one of these layers, so drop the
+    # coincident copy — otherwise every point appears to have a neighbour
+    # at 0 m and the readout is meaningless.
+    own_layer = nearby_phantoms if is_phantom else nearby_students
+    own_layer[:] = [
+        p for p in own_layer
+        if math.hypot(p[0] - point_x, p[1] - point_y) > 1e-6
+    ]
+    if is_phantom:
+        nearest_phantom_m = _nearest_distance(nearby_phantoms, point_x, point_y)
+    else:
+        nearest_student_m = _nearest_distance(
+            nearby_students, point_x, point_y,
+        )
+    candidates = [d for d in (nearest_student_m, nearest_phantom_m)
+                  if d is not None]
+    nearest_m = min(candidates) if candidates else None
+    context = {
+        "student": nearby_students,
+        "phantom": nearby_phantoms,
+        "superseded": nearby_superseded,
+    }
 
     existing = marks.get(cursor)
     marked: tuple[float, float] | None = st.session_state.pending.get(cursor)
@@ -879,10 +1033,13 @@ def main() -> None:
     left, right = st.columns([3, 1])
 
     with left:
-        st.subheader(
-            f"Row {cursor} of {n_total - 1} · candidate "
-            f"{row['candidate_id']} · {row['map_name']}",
+        label = (
+            f"candidate {row['candidate_id']} · {row['map_name']}"
+            if is_phantom
+            else f"student point #{int(row['source_index'])}"
         )
+        st.subheader(f"Item {cursor} of {n_total - 1} · {label}")
+        st.caption(f"`{row['item_type']}` from `{row['source_layer']}`")
         if geom is None:
             st.image(base)
             st.error(
@@ -890,11 +1047,13 @@ def main() -> None:
             )
         else:
             annotated = draw_overlays(
-                base, geom, (float(row["x"]), float(row["y"])), nearby,
-                marked,
+                base, geom, (point_x, point_y), context, marked,
             )
+            # The zoom level is part of the widget key: a click captured
+            # at one window width must not be re-applied after the reviewer
+            # zooms, since the pixel means a different distance.
             click = streamlit_image_coordinates(
-                annotated, key=f"crop_{cursor}",
+                annotated, key=f"crop_{cursor}_{context_m:.0f}",
             )
             if click is not None:
                 world = geom.display_to_world(click["x"], click["y"])
@@ -904,25 +1063,45 @@ def main() -> None:
 
     with right:
         st.markdown("**Recorded**")
-        st.caption(f"{float(row['x']):.2f}, {float(row['y']):.2f}")
-        st.caption(f"buffer {float(row['buffer_metres']):.0f} m")
-        if nearest_m is not None:
-            st.markdown("**Nearest student point**")
-            st.caption(f"{nearest_m:.1f} m")
-            if _DEDUP_TOLERANCE_M < nearest_m < _DISTINCT_FLOOR_M:
-                st.warning(
-                    f"Borderline: {nearest_m:.1f} m sits between the "
-                    f"{_DEDUP_TOLERANCE_M:.0f} m de-duplication tolerance "
-                    f"and the {_DISTINCT_FLOOR_M:.0f} m distinct-mound "
-                    "floor. Decide whether this is the same mound.",
-                )
-        else:
-            st.caption("No student point within "
-                       f"{_STUDENT_SEARCH_M:.0f} m")
+        st.caption(f"{point_x:.2f}, {point_y:.2f}")
+        if is_phantom and pd.notna(row.get("buffer_metres")):
+            st.caption(f"buffer {float(row['buffer_metres']):.0f} m")
+
+        st.markdown("**Nearest neighbours**")
+        for layer_label, distance in (
+            ("student GT", nearest_student_m),
+            ("other phantom", nearest_phantom_m),
+        ):
+            st.caption(
+                f"{layer_label}: "
+                + (f"{distance:.1f} m" if distance is not None
+                   else f"none within {_STUDENT_SEARCH_M:.0f} m"),
+            )
+
+        if nearest_m is not None and nearest_m <= _DEDUP_TOLERANCE_M:
+            st.error(
+                f"**{nearest_m:.1f} m** — inside the "
+                f"{_DEDUP_TOLERANCE_M:.0f} m de-duplication tolerance. "
+                "This should not have survived de-duplication and is very "
+                "likely the same mound counted twice.",
+            )
+        elif nearest_m is not None and nearest_m < _DISTINCT_FLOOR_M:
+            st.warning(
+                f"Borderline: {nearest_m:.1f} m sits between the "
+                f"{_DEDUP_TOLERANCE_M:.0f} m de-duplication tolerance "
+                f"and the {_DISTINCT_FLOOR_M:.0f} m distinct-mound "
+                "floor. Decide whether this is the same mound.",
+            )
+
+        if "merge_site" in str(row["item_type"]):
+            st.info(
+                f"Merge site: {len(nearby_superseded)} superseded position(s) "
+                "shown in red. Check that the merged centre is right.",
+            )
 
         if marked is not None:
             displacement = math.hypot(
-                marked[0] - float(row["x"]), marked[1] - float(row["y"]),
+                marked[0] - point_x, marked[1] - point_y,
             )
             st.markdown("**Marked**")
             st.caption(f"displacement {displacement:.1f} m")
@@ -945,7 +1124,7 @@ def main() -> None:
 
         st.divider()
         for key, (verdict, label) in _VERDICTS.items():
-            needs_click = verdict in {"distinct", "same_as_student"}
+            needs_click = verdict in {"distinct", "same_as_neighbour"}
             if st.button(
                 f"{key}: {label}", key=f"v_{key}_{cursor}",
                 disabled=needs_click and marked is None,
