@@ -5,7 +5,8 @@
   "author": "Claude Opus 5 session (Session 127)",
   "why_this_file_exists": "Several items surfaced this session were recorded only in commit messages, which are durable but not discoverable at session start. A next session reads the continuity block and the triage JSONs, so everything still open is consolidated here with its evidence pointer.",
   "status_convention": "OPEN unless a resolving commit is named. Nothing here has been adjudicated; the blind-pass verdicts are evidence, not decisions.",
-  "provenance": "Wave-7 blind passes P1-P4 (e86bca52d), the W7-E4 repair verification (18bbcaa18), and the extraction agents' own flags."
+  "provenance": "Wave-7 blind passes P1-P4 (e86bca52d), the W7-E4 repair verification (18bbcaa18), and the extraction agents' own flags.",
+  "census_hazard_note": "The census flagged that `uuid` in the base layer is a SYMBOL CODE, not an identifier — 4,770 features share only 833 distinct values. Do not use it as a key."
  },
  "confirmed_defects_unrepaired": [
   {
@@ -72,18 +73,36 @@
    "found_by": "era_check redesign validation; independently noted by blind pass P3",
    "note": "Not an era failure. The era machinery compares at quoted precision and has no APPROX verdict. Belongs with the comparer/tolerance family (W6-E4/E5), not the era family.",
    "repair": "Give era_check an APPROX status, or teach the comparer sum-of-rounded-components."
+  },
+  {
+   "id": "W7-D8",
+   "severity": "MEDIUM",
+   "artefact": "outputs/55maps-text-high-t0.3-generalisation/evaluation/evaluation.json",
+   "defect": "Evaluated against the UNREVIEWED base student-mounds-55maps.geojson (4,770) while the sibling runs' evaluations used student-mounds-55maps-reviewed.geojson. t0.3 also has no full-buffer-eval, unlike the other three.",
+   "found_by": "student-GT reference census (student-gt-reference-census-2026-08-04.json), independently re-verified from cli_args.ground_truth",
+   "note": "Does NOT affect the MCC comparison — all four MCC artefacts used the reviewed layer. It affects claims anchored to this evaluation directory, and t0.3 is the F1 leader in several documents.",
+   "repair": "Establish which claims anchor there, decide whether t0.3's evaluation should be re-run against the reviewed layer for comparability, and flag any cross-run claim that mixes the two."
   }
  ],
  "open_research_findings": [
   {
    "id": "W7-R1",
-   "severity": "HIGH — affects a cross-run comparison, not just bookkeeping",
+   "severity": "MEDIUM (revised down from HIGH on evidence) — the MCC cross-run comparison is sound; the asymmetry is real but sits elsewhere",
    "finding": "The four 55-map runs' Dawid-Skene fits may rest on DIFFERENT ground-truth references: the image run's fit implies a 4,745-point student ground truth, while the other three imply the 4,770-feature legacy layer.",
    "found_by": "W7-E4 blind verification pass (wave7-w7e4-verification-2026-08-04.json)",
    "why_it_matters": "Every cross-run D-S comparison in results/55maps-ds-summary-v2/report.md assumes a common reference. If the references differ, the comparisons are not like-for-like.",
-   "state": "OPEN and UNADJUDICATED. Recorded in the document itself as a blockquoted correction (18bbcaa18) and in 074.json as a single claim whose four values all carry anchor-unknown.",
+   "state": "PARTIALLY RESOLVED 2026-08-04 by the reference-layer census, which INVERTED the blind pass's split.",
    "history": "Session 127 briefly asserted the CONTRARY — that all D-S aggregations consume the legacy layer — in a dated changelog. The blind pass refuted it and the claim was withdrawn in place rather than edited away.",
-   "in_progress": "A reference-layer census was commissioned 2026-08-04 to establish the fixed base, the correction-layer history, and the 4,770 account: reports/verification/c4-triage/student-gt-reference-census-2026-08-04.json. The PI's framing is that the underlying student GT is FIXED and only the curator-correction layer has moved."
+   "in_progress": "A reference-layer census was commissioned 2026-08-04 to establish the fixed base, the correction-layer history, and the 4,770 account: reports/verification/c4-triage/student-gt-reference-census-2026-08-04.json. The PI's framing is that the underlying student GT is FIXED and only the curator-correction layer has moved.",
+   "census_result": {
+    "fixed_base_confirmed": "inputs/vectors/references/student-mounds-55maps.geojson = 4,770 features, ONE commit ever (301b51128, 2026-04-08), working-tree md5 byte-identical to that commit. The PI's framing that the underlying student GT is fixed is verified, not assumed.",
+    "correction_layer": "student-mounds-55maps-reviewed.geojson: created 4,744 (dea1155fa, 2026-04-19) -> 4,745 (baf1497a7, 2026-05-03 00:32Z) -> 4,746 (2e075eb99, 2026-05-03 05:28Z), unchanged since.",
+    "reconciliation": "4,770 - 52 + 28 = 4,746 closes exactly: 26 merged-centroid replacements of student double-marks under 50 m (corroborated by gt-duplicate-decisions.csv, 26 merge / 70 keep_all) plus 2 curator additions.",
+    "the_inversion": "The blind pass put IMAGE at 4,745 and the other three at 4,770. The census, reading cli_args.ground_truth directly, found the opposite locus: t0.3's outputs/.../evaluation/ consumed the UNREVIEWED 4,770 base while text-high, image and text-min all consumed the reviewed layer. Independently re-verified this session.",
+    "damage_bounded": "All FOUR archived per-run MCC artefacts record ground_truth = student-mounds-55maps-reviewed.geojson. The MCC cross-run table in 55maps-mcc-v2-summary §§ 2-4 is therefore like-for-like, and the F1-versus-MCC rank-divergence finding does not rest on a reference mismatch."
+   },
+   "what_remains_open": "Two things. (1) The t0.3 evaluation-layer difference is a NEW finding in its own right: any claim anchored to outputs/55maps-text-high-t0.3-generalisation/evaluation/ is on a different reference from its siblings, and t0.3 is the F1 leader in several places. (2) The blind pass reasoned from what the DAWID-SKENE FITS imply, not from evaluation metadata; those are different objects, so its claim is not strictly refuted by the census. Whether the D-S fits themselves share a reference is still unverified.",
+   "method_note": "Worth keeping: the blind pass corrected the repair, and the census corrected the blind pass. Neither layer was redundant, and the census only settled it because it read cli_args.ground_truth directly instead of inferring a reference from implied counts."
   }
  ],
  "instrument_gaps": [

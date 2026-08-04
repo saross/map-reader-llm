@@ -1,0 +1,293 @@
+{
+  "document": {
+    "title": "Student ground-truth reference census — 55-map corpus",
+    "date": "2026-08-04",
+    "repository": "/home/shawn/Code/map-reader-llm",
+    "git_head_at_census": "26cd7599f",
+    "purpose": "Establish empirically which reference layer holds which feature count, whether the underlying student digitisation is genuinely fixed, and how the 4,744 / 4,745 / 4,746 / 4,770 family relates. Does NOT settle the Dawid-Skene comparability question; supplies the ground facts for it.",
+    "method": "Every count parsed directly from the GeoJSON with Python json (len(features)); historical counts parsed from `git show <commit>:<path>` piped to the same parser. No count in this document is taken from any prose document.",
+    "constraint_honoured": "This is the only file written. Nothing committed, pushed, or edited."
+  },
+
+  "1_layer_inventory": {
+    "note": "All counts parsed today (2026-08-04) from the working tree. The 55-map corpus layers are the first two; the remainder are listed to close out the 'are there other variants' question.",
+    "fi_five_five_map_corpus": [
+      {
+        "path": "inputs/vectors/references/student-mounds-55maps.geojson",
+        "feature_count_today": 4770,
+        "geometry": "Point",
+        "crs": "EPSG:32635",
+        "property_keys": ["FeatureType", "Latitude", "Longitude", "MapSymbol", "source_map", "uuid"],
+        "distinct_source_maps": 55,
+        "md5_working_tree": "2fa374bcdc3c2d30d36d2becdc170538",
+        "role": "FIXED BASE — the untouched student digitisation",
+        "provenance_per_commit_301b51128": "4,770 hairy-only mound symbols from MapMounds17_18LLgood.csv, filtered to exclude non-mound symbols (triangulation points, benchmarks), reprojected to EPSG:32635; covers the 55 maps excluding the 4 gold-standard maps",
+        "verified": true
+      },
+      {
+        "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "feature_count_today": 4746,
+        "geometry": "Point",
+        "crs": "EPSG:32635",
+        "property_keys": ["FeatureType", "Latitude", "Longitude", "MapSymbol", "_added_2026-05-03", "_merged", "_reviewed_subtype", "source_map", "uuid"],
+        "distinct_source_maps": 55,
+        "md5_working_tree": "f5eda0c5e3ac59266c1af4e9c0e88d2f",
+        "working_tree_matches_HEAD": true,
+        "role": "CORRECTION LAYER — PI/curator corrections applied on top of the fixed base",
+        "correction_markers_present_today": {
+          "_merged_true": 26,
+          "_added_2026-05-03": 2,
+          "_reviewed_subtype_non_null": 26,
+          "note": "The 26 features carrying _reviewed_subtype are exactly the 26 carrying _merged=true (verified by intersection). Subtype breakdown: burial_mound 16, bench_mark_on_mound 7, trig_point_on_mound 2, settlement_mound 1."
+        },
+        "verified": true
+      }
+    ],
+    "other_corpora_and_variants_found": [
+      {
+        "path": "inputs/vectors/references/student-mounds-gs-4maps.geojson",
+        "feature_count_today": 560,
+        "corpus": "4-map gold-standard corpus (NOT the 55-map corpus)",
+        "first_and_only_commit": "a0ee28c68 (2026-04-30) data(gs-4maps): filter Hairy + reuse review UI for manual dedup"
+      },
+      {
+        "path": "inputs/vectors/references/student-mounds-gs-4maps-reviewed.geojson",
+        "feature_count_today": 556,
+        "corpus": "4-map gold-standard corpus (NOT the 55-map corpus)",
+        "first_and_only_commit": "a8b576d5b (2026-05-01) data(gs-4maps): apply student-GT dedup review (23 decisions; 4 merges)"
+      },
+      {
+        "path": "inputs/vectors/references/mounds-reference.geojson",
+        "feature_count_today": 569,
+        "corpus": "4-map gold-standard curator-corrected reference",
+        "commit": "cfc10c133 (2026-01-09)",
+        "note": "Equals the sum of the four per-map reference_*.geojson files (136 + 217 + 196 + 20 = 569) — verified arithmetically."
+      },
+      {
+        "path": "inputs/vectors/references/reference_K-35-052-4_32635.geojson",
+        "feature_count_today": 136,
+        "commit": "cfc10c133 (2026-01-09)"
+      },
+      {
+        "path": "inputs/vectors/references/reference_K-35-053-3_Elenovo.geojson",
+        "feature_count_today": 217,
+        "commit": "cfc10c133 (2026-01-09)"
+      },
+      {
+        "path": "inputs/vectors/references/reference_K-35-062-2_Rakovski.geojson",
+        "feature_count_today": 196,
+        "commit": "cfc10c133 (2026-01-09)"
+      },
+      {
+        "path": "inputs/vectors/references/reference_K-35-078-1_Lesovo.geojson",
+        "feature_count_today": 20,
+        "commit": "cfc10c133 (2026-01-09)"
+      },
+      {
+        "path": "archive/qa-visual-checks/qgis-dedup-check/qgis_dedup_gt_multi.geojson",
+        "feature_count_today": 244,
+        "role": "QA visual-check subset, not a reference layer"
+      },
+      {
+        "path": "archive/qa-visual-checks/qgis-wbf-check/wbf_check_gt_points.geojson",
+        "feature_count_today": 319,
+        "role": "QA visual-check subset, not a reference layer"
+      },
+      {
+        "path": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+        "row_count_today": 773,
+        "format": "CSV, not GeoJSON",
+        "all_rows_human_label": "mound (773/773)",
+        "columns": ["candidate_id", "human_label", "buffer_metres", "x", "y", "map_name"],
+        "role": "EXTENSION layer — human-confirmed 'phantom' mounds absent from the student GT, applied per-buffer on top of the reviewed layer in results/55maps-extended-gt-2026-06-07/*/evaluation.json. NOT a replacement for the reviewed layer.",
+        "verified": true
+      }
+    ],
+    "search_scope_note": "`find / -name 'student-mounds-55maps*.geojson'` returned exactly the two files under inputs/vectors/references/ — no stray, legacy, per-map, or untracked variant of the 55-map student GT exists anywhere on this machine. All tracked *.geojson were enumerated via `git ls-files` and counted; no other file in the repository holds a count in the 4,7xx range."
+  },
+
+  "2_fixed_base_determination": {
+    "verdict": "CONFIRMED FIXED. The PI's claim holds without qualification.",
+    "layer": "inputs/vectors/references/student-mounds-55maps.geojson",
+    "count": 4770,
+    "evidence": [
+      "`git log --follow` on the path returns exactly ONE commit: 301b511286e1b5b7bb25f8eb0834c18f36456510, 2026-04-08, 'data(inputs): add 55-map student ground truth and evaluation bounds'.",
+      "`git log --all --diff-filter=A -- '*student-mounds*'` shows no earlier path or rename — the file was born at that commit under that name.",
+      "Feature count parsed from `git show 301b51128:<path>` = 4770; feature count parsed from the working tree = 4770.",
+      "md5 of the working-tree file (2fa374bcdc3c2d30d36d2becdc170538) is byte-identical to md5 of `git show 301b51128:<path>` — the file has never been touched, not even for whitespace.",
+      "`git diff --stat HEAD -- <path>` is empty."
+    ],
+    "verified": true,
+    "inferred": []
+  },
+
+  "3_correction_layer_history": {
+    "layer": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "history_is_complete": "Yes — `git log --follow` on the path returns exactly three commits, and `git log --all --diff-filter=A` confirms the file was created (not renamed into place) at dea1155fa. Every count below was parsed from `git show <commit>:<path>`.",
+    "table": [
+      {
+        "commit": "dea1155fa3c26a22bb90ae829b73b188b4c3cd8c",
+        "short": "dea1155fa",
+        "date": "2026-04-19",
+        "timestamp": "2026-04-19 16:08:37 +1000",
+        "subject": "data(gt-review): cleaned GT + cleaned-GT F1 re-evaluation + Obs 261",
+        "count_from": null,
+        "count_to": 4744,
+        "delta": "-26 relative to the 4,770 base (file created here)",
+        "why": "Manual GT-duplicate review: 96 reviewed clusters across 50 m and 75 m threshold passes; 26 'merge' decisions (all under 50 m) and 70 'keep_all'. Decision counts independently verified from results/gt-duplicate-review/gt-duplicate-decisions.csv (96 rows; decision column = merge 26, keep_all 70)."
+      },
+      {
+        "commit": "baf1497a7f13ae1b8a10d27ca3cd536f10f2dc35",
+        "short": "baf1497a7",
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03 10:32:53 +1000 (2026-05-03 00:32:53 UTC)",
+        "subject": "data(gt): add missing curator GT mound — second of two touching mounds at K-35-064-3 cand 4264",
+        "count_from": 4744,
+        "count_to": 4745,
+        "delta": "+1",
+        "why": "Curator addition. Feature uuid 'manual-2026-05-03-K35-064-3-002', source_map K-35-064-3_Dimitrovgrad_4326, property _added_2026-05-03 = 'second of two-touching-mounds at cand 4264; missed by curator GT, observed via T=0.7 recovery propagation'."
+      },
+      {
+        "commit": "2e075eb99ac1dbcc75c1c1258acbd735dfd458b5",
+        "short": "2e075eb99",
+        "date": "2026-05-03",
+        "timestamp": "2026-05-03 15:28:57 +1000 (2026-05-03 05:28:57 UTC)",
+        "subject": "data(gt): add missing curator GT mound at image cand 2397 (K-35-062-4)",
+        "count_from": 4745,
+        "count_to": 4746,
+        "delta": "+1",
+        "why": "Curator addition. Feature uuid 'manual-2026-05-03-K35-062-4-001', source_map K-35-062-4_Asenovgrad_4326, property _added_2026-05-03 = 'phantom-FP rescue at image cand 2397 (trig_point_on_mound, verifier_p=1.0); curator GT missed entire region; surfaced via image-recovery propagation 2026-05-03'."
+      }
+    ],
+    "current_state": {
+      "count": 4746,
+      "as_at": "2026-08-04",
+      "identical_to_HEAD": true,
+      "no_changes_since": "2e075eb99 (2026-05-03)"
+    },
+    "verified": true
+  },
+
+  "4_the_4770_account": {
+    "answer": "4,770 is the FIXED BASE — the raw student digitisation in inputs/vectors/references/student-mounds-55maps.geojson. It is current in the sense that the file is unchanged and still on disk; it is NOT the current recommended evaluation reference.",
+    "arithmetic_from_4770_to_4746": {
+      "4770": "base features",
+      "minus_52": "52 base features participating in the 26 merge clusters are absent from the reviewed layer",
+      "plus_26": "26 replacement features, each at a NEW merged-centroid coordinate, carrying _merged=true",
+      "equals_4744": "state at dea1155fa",
+      "plus_2": "two curator additions (baf1497a7, 2e075eb99), each carrying _added_2026-05-03",
+      "equals_4746": "state today"
+    },
+    "empirical_verification_of_the_arithmetic": {
+      "method": "Multiset comparison of both layers on the key (source_map, round(easting,3), round(northing,3)). Both layers have as many distinct coordinate keys as features (4,770 and 4,746 respectively), so the key is unique within each layer.",
+      "features_in_base_absent_from_reviewed": 52,
+      "features_in_reviewed_absent_from_base": 28,
+      "reconciliation": "28 = 26 merged replacements + 2 curator additions. All 26 _merged=true features have coordinate keys NOT present in the base (they sit at cluster centroids, per merged_centroid_x/y in results/gt-duplicate-review/gt-duplicate-decisions.csv). Both _added_2026-05-03 features likewise have keys not present in the base. 4770 - 52 + 28 = 4746. Closed exactly; nothing unaccounted for.",
+      "verified": true
+    },
+    "semantic_account": "The ~25-point gap is student double-marking, not disagreement about which mounds exist. The 26 merge clusters were all pairs separated by under 50 m; the review found a bimodal signal (merges concentrated below 50 m, zero merges in the 50-75 m band), consistent with 50 m being the true floor for genuine mound spacing in this corpus. Per commit dea1155fa the affected fraction is 26/4770 = 0.55 % of GT points.",
+    "caution": "The `uuid` property is NOT a unique identifier in the base layer: 4,770 features carry only 833 distinct uuid values (the most common, '100005e13', appears 1,162 times). It is a map-symbol code, not a feature ID. Any de-duplication, join, or D-S alignment keyed on `uuid` will be wrong. Use coordinates (plus source_map) as the join key. VERIFIED by counting.",
+    "verified": true
+  },
+
+  "5_should_cite_guidance": {
+    "a_fixed_student_digitisation": {
+      "cite": 4770,
+      "layer": "inputs/vectors/references/student-mounds-55maps.geojson",
+      "anchor": "commit 301b51128 (2026-04-08), unchanged since — md5 2fa374bcdc3c2d30d36d2becdc170538",
+      "phrasing_note": "This is the correct number for any sentence about what the students digitised. It includes 26 double-marks."
+    },
+    "b_current_corrected_reviewed_gt": {
+      "cite": 4746,
+      "layer": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "anchor": "commit 2e075eb99 (2026-05-03), unchanged since; count re-parsed 2026-08-04",
+      "phrasing_note": "This is the correct number for any sentence about the current curator-corrected reference. 4,744 and 4,745 are historical states of THIS layer, not separate layers."
+    },
+    "c_what_a_2026_05_03_evaluation_consumed": {
+      "answer": "4,745 — but only for the three runs re-evaluated that day, and only because they ran inside a ~5-hour window.",
+      "reasoning": "baf1497a7 set the layer to 4,745 at 2026-05-03 00:32:53 UTC; 2e075eb99 set it to 4,746 at 2026-05-03 05:28:57 UTC. The 2026-05-03 re-evaluations all carry generated_at_utc between 00:39 and 02:43 UTC — inside that window. Their commit subjects independently say so ('re-evaluate against updated GT (4745 features, baf1497a)', 'analysis(image-recovery): re-evaluate vs reviewed GT 4745 (Stage 8)', 'analysis(text-min-recovery): re-evaluate vs reviewed GT 4745 (Stages 8-9)').",
+      "important_exception": "The t0.3 run was NOT re-evaluated on 2026-05-03 and does not consume 4,745 or 4,746 at all — see section 6.",
+      "verified": true
+    }
+  },
+
+  "6_which_run_consumed_which_reference": {
+    "why_recorded": "This is the ground fact the Dawid-Skene comparability question needs. Reported as fact only; the D-S question itself is explicitly NOT settled here.",
+    "source": "The `_metadata.input_files.ground_truth` and `_metadata.generated_at_utc` fields inside each committed evaluation.json — read from the artefacts, not from any prose report.",
+    "rows": [
+      {
+        "run": "55maps-image-generalisation",
+        "eval_path": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "ground_truth_path_recorded": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "generated_at_utc": "2026-05-03T02:42:58.458072+00:00",
+        "reference_count_in_force_at_that_instant": 4745,
+        "landing_commit": "8699f456b (2026-05-03 02:45:24 UTC) 'data(image-recovery): correct Stage-3 race + propagate +1 candidate'"
+      },
+      {
+        "run": "55maps-text-high-generalisation",
+        "eval_path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "ground_truth_path_recorded": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "generated_at_utc": "2026-05-03T00:39:14.117035+00:00",
+        "reference_count_in_force_at_that_instant": 4745,
+        "landing_commit": "f533fda5f (2026-05-03 00:42:38 UTC) 'analysis(t0.7-recovery): re-evaluate against updated GT (4745 features, baf1497a)'"
+      },
+      {
+        "run": "55maps-text-min-generalisation",
+        "eval_path": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "ground_truth_path_recorded": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "generated_at_utc": "2026-05-03T02:03:51.608388+00:00",
+        "reference_count_in_force_at_that_instant": 4745,
+        "landing_commit": "236327d80 (2026-05-03 02:10:43 UTC) 'analysis(text-min-recovery): re-evaluate vs reviewed GT 4745 (Stages 8-9)'"
+      },
+      {
+        "run": "55maps-text-high-t0.3-generalisation",
+        "eval_path": "outputs/55maps-text-high-t0.3-generalisation/evaluation/evaluation.json",
+        "ground_truth_path_recorded": "inputs/vectors/references/student-mounds-55maps.geojson",
+        "generated_at_utc": "2026-04-27T01:06:40.540110+00:00",
+        "reference_count_in_force_at_that_instant": 4770,
+        "landing_commit": "548604d95 (2026-04-27 01:19:39 UTC) 'data(55maps-t0.3): single-round recovery — 18 proposer + 1 verifier'",
+        "flag": "This run points at the UNREVIEWED BASE layer. Its extended-buffer-eval (generated 2026-04-27T01:40:52 UTC) does too. It has no full-buffer-eval."
+      }
+    ],
+    "verified_finding": "Three of the four 55-map runs' committed evaluations consumed the reviewed layer at its 4,745 state; the fourth (t0.3) consumed the 4,770 unreviewed base. NONE of the four consumed the current 4,746 state.",
+    "relation_to_the_prompt_s_framing": "The prompt reports an independent verification pass concluding that the IMAGE run implies 4,745 while the OTHER THREE imply 4,770. The artefact metadata inverts that split: image/text-high/text-min all recorded the reviewed layer (4,745 in force), and only t0.3 recorded the 4,770 base. Recorded here as a discrepancy to be resolved by whoever settles the D-S question — this census does not adjudicate it, because a D-S fit could have been assembled from inputs other than these evaluation.json files.",
+    "inferred_not_verified": "The mapping from generated_at_utc to a reference count is an INFERENCE from timestamps (the evaluation.json files record the ground-truth PATH but not its feature count). It is corroborated by the three commit subjects that state '4745' explicitly, and by the fact that all three timestamps fall strictly between baf1497a7 and 2e075eb99. It is not directly attested by a count field inside the artefacts."
+  },
+
+  "7_document_staleness_map": {
+    "purpose": "Not authority — recorded so downstream editors know which prose to check. Every line re-read at census time.",
+    "cites_4770_correctly_as_base": [
+      "results/gt-spacing-analysis/55maps-student/spacing-report.md:12,15,21 — 'Total rows: 4770', analysis retains all 4,770 rows",
+      "results/gt-duplicate-review/gt-duplicate-diff.md:7 — 'Original points: 4770'"
+    ],
+    "cites_4744_now_stale_as_a_current_figure": [
+      "results/evaluation-scopes.md:207 — 'Student-digitised (not curator-annotated); 4,744 mounds'",
+      "results/meta-findings-summary.md:782 — 'null (4,744 mounds) on the full 55-map corpus'",
+      "results/limitations-consolidation/report.md:61 — '472 / (4,744 + 472)'",
+      "results/55maps-per-map-shell-variance/report.md:45 — '4,744-point reviewed reference' (contradicts the same document's lines 5 and 50, which say 4745)",
+      "results/gt-duplicate-review/gt-duplicate-diff.md:8 — 'Cleaned points: 4744' (correct as history of that commit)"
+    ],
+    "cites_4745_correct_as_historical_state": [
+      "results/temperature-failure-recovery-analysis/report.md:514,610,623,631 — all four are explicitly framed as history of the 2026-05-03 re-evaluations; the document's own changelog (lines 1033-1040) records the decision to leave them",
+      "results/55maps-mcc-v2-summary/report.md:11,31,40,104,211 — framed as the reference in force for those table rows",
+      "results/55maps-vs-gs-tp-localisation/report.md:5 — '55-map post-review n=4745'",
+      "results/55maps-per-map-shell-variance/report.md:5,50 — '4745 reviewed reference points'",
+      "results/55maps-attractor-pull-v2/report_autogen.md:9 — '4745 mounds'",
+      "results/gold-standard-extended-buffer-sweep/extended-buffer-report.md:11,155"
+    ],
+    "cites_4746_correctly_as_current": [
+      "results/55maps-mcc-v2-summary/report.md:20 — '4,746 features as at 2026-08-04 ... 4,744 when this report was first published'",
+      "results/55map-leaderboard/55map-leaderboard-50m.md:28 — 'n = 4,746'",
+      "results/limitations-consolidation/report.md:216 — 'vs reviewed GT 4,746'",
+      "results/methods-curator-gt-incompleteness-limitation.md:22-23 — records both the 4,745 and 4,746 steps against their commits",
+      "results/55maps-extended-gt-2026-06-07/*/evaluation.json — _metadata.gt_reference names the reviewed layer at 4,746 plus 773 per-buffer-gated phantoms"
+    ],
+    "note": "No document was edited. Several documents legitimately cite 4,744 or 4,745 as history; the ones flagged 'stale' are those presenting the figure as the current reference count."
+  },
+
+  "8_open_items": {
+    "unaccounted_numbers": "None. Every one of 4,744 / 4,745 / 4,746 / 4,770 is fully explained: 4,770 is the fixed base; 4,744, 4,745 and 4,746 are three successive states of the single correction layer at commits dea1155fa, baf1497a7 and 2e075eb99 respectively.",
+    "residual_question_for_others": "Whether the D-S fits in results/55maps-ds-summary-v2/report.md were built from the four evaluation.json artefacts audited in section 6 or from some other intermediate. Section 6 establishes what those artefacts record; it does not establish what the D-S pipeline read. That is deliberately out of scope here.",
+    "operational_hazard_surfaced": "The t0.3 run's committed evaluation points at the UNREVIEWED 4,770 base while the other three point at the reviewed layer. Any four-way comparison drawing on outputs/55maps-*/evaluation/evaluation.json is comparing across two different references regardless of how the D-S question resolves."
+  }
+}
