@@ -1,0 +1,895 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.md",
+    "git_blob": "8618cde32887",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          131
+        ],
+        "section": "§12 Caveats / risk register — item 1"
+      },
+      "claim_text": "Mound prevalence on the VLM-only slice is 0.459 — substantially higher than the full-corpus detection prevalence.",
+      "values": [
+        {
+          "quantity": "mound prevalence, VLM-only candidate slice, 55-map image-generalisation run",
+          "value_verbatim": "0.459",
+          "value_parsed": 0.459,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.prevalence",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b082] Assigned range is lines 128–186 of this document (batch b081 covers 1–127); nothing outside 128–186 is extracted, and earlier lines were read for context only. Scope decisions for this batch: section numbers in headings (`## 12.`, `## 13.`, `### 13.1`, `## 14.`, `## 15.`) and in-text section references (§8) are out of C4 scope per instrument rule 5; likewise the git commit hash `401ec227` (line 185), Obs identifiers (Obs 268/269/272), Theme labels (T5), session numbers and item identifiers (\"Session 75 item 6 / Session 76 carry-over\", line 174), dates (2026-04-24), the Python version string `≥ 3.11` (line 186), and numbers inside file paths and directory names (`55maps-image-generalisation`, `buffer-100m-diagnostics`). Sweep-threshold labels used only to identify which row a metric belongs to (\"to 0.854 at t = 0.50\", line 149) are treated as row labels rather than claims, following the 078.json precedent for buffer radii; thresholds asserted as what-was-run (the 0.15 production accept threshold, the ECE bin boundaries) ARE extracted. The hypothetical \"tiles with zero VLM candidates\" (line 131) is a design description, not an asserted study fact, and is not extracted. The default anchor for this batch is the sibling machine-readable `calibration.json` in the same directory, which the document itself names at line 161 as \"machine-readable headline numbers + bootstrap CIs\"; where a value belongs to another analysis the anchor is that analysis's own JSON rather than its markdown report (rule 2: never anchor prose to prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "§12 Caveats / risk register — item 2"
+      },
+      "claim_text": "The verifier's probability outputs are heavily discrete (5 dominant modes).",
+      "values": [
+        {
+          "quantity": "count, dominant modes in the verifier probability distribution",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "No committed artefact records a mode count; deciding it requires tallying the `verifier_probability` column of the review CSV and applying a \"dominant\" cut-off, which is a judgement the document does not define. §2 of the same document (line 23, outside this batch's range) states that 13 distinct probability values appear across the 1,028 candidates, so 5 is a claim about dominant modes rather than distinct values. Included with the doubt recorded per the instrument's over-inclusion rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "§12 Caveats / risk register — item 2"
+      },
+      "claim_text": "ECE is computed with bin boundaries at [0.15, 0.30, 0.50, 0.70, 0.90, 0.95, 1.00] to reflect the actual distribution; moving bin edges would change the ECE value by 0.01–0.03.",
+      "values": [
+        {
+          "quantity": "ECE bin boundary, lowest edge",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.bin_edges[0][0]",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE bin boundary, second edge",
+          "value_verbatim": "0.30",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.bin_edges[0][1]",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE bin boundary, third edge",
+          "value_verbatim": "0.50",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.bin_edges[1][1]",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE bin boundary, fourth edge",
+          "value_verbatim": "0.70",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.bin_edges[2][1]",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE bin boundary, fifth edge",
+          "value_verbatim": "0.90",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.bin_edges[3][1]",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE bin boundary, sixth edge",
+          "value_verbatim": "0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.bin_edges[4][1]",
+          "method": "read"
+        },
+        {
+          "quantity": "ECE bin boundary, highest edge",
+          "value_verbatim": "1.00",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.bin_edges[6][1]",
+          "method": "read"
+        },
+        {
+          "quantity": "lower bound of the asserted ECE sensitivity to re-binning",
+          "value_verbatim": "0.01",
+          "value_parsed": 0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of the asserted ECE sensitivity to re-binning",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document lists seven boundaries; the artefact's `$.config.bin_edges` is a list of seven [lo, hi] pairs whose distinct edges are 0.15, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99, 1.0 — i.e. the artefact carries an extra 0.99 edge that the document's list omits (the (0.95, 0.99] bin is the empty one noted at line 23). Recorded, not adjudicated; per-value paths map each quoted boundary to the edge slot it corresponds to. The 0.01–0.03 re-binning sensitivity range is anchor-unknown: no re-binning sweep artefact was found (searched this directory and `results/55maps-image-generalisation/` for a bin-sensitivity JSON), so triage would need a scripted re-binning sweep to decide it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          133
+        ],
+        "section": "§12 Caveats / risk register — item 3"
+      },
+      "claim_text": "The human-review labels are from a single reviewer using the calibrated UI.",
+      "values": [
+        {
+          "quantity": "count, human reviewers contributing the review labels",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Word-number count, extracted following the 078.json precedent of treating spelled-out counts (\"five discrete buffer steps\") as claims. No artefact records reviewer identity or count: `results/55maps-image-generalisation/human-review.csv` has columns candidate_id, verifier_probability, human_label, symbol_type, source_tile, map_name, x, y, buffer_metres, timestamp — no reviewer field. Borderline inclusion; the doubt is that this is a study-design statement rather than a measured quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          133
+        ],
+        "section": "§12 Caveats / risk register — item 3"
+      },
+      "claim_text": "Inter-reviewer calibration bias is out of scope; see `uncalibrated-vs-calibrated-crosstab/crosstab.md` for the within-reviewer UI-effect quantification (21.4 % flip rate).",
+      "values": [
+        {
+          "quantity": "within-reviewer label flip rate between the uncalibrated and calibrated review UIs",
+          "value_verbatim": "21.4",
+          "value_parsed": 21.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json",
+        "path": null,
+        "expression": "100 * a",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json",
+            "path": "$.rates.disagreement_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "The document cites the sibling markdown `uncalibrated-vs-calibrated-crosstab/crosstab.md`; per rule 2 the anchor is that analysis's machine-readable `crosstab.json` in the same directory rather than its prose report. The flip rate is stored as a fraction, so the percentage is expressed as a derivation rather than a direct read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          135
+        ],
+        "section": "§12 Caveats / risk register — item 5"
+      },
+      "claim_text": "5. **P(mound | p ≤ 0.25) estimate is coarse**. Tail sample n = 230, with 40 mounds; the bootstrap CI width of ~0.10 reflects the limited positive-class count.",
+      "values": [
+        {
+          "quantity": "verifier-probability cut-off defining the low-p tail",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.low_p_deep_dive.cutoff",
+          "method": "read"
+        },
+        {
+          "quantity": "count, candidates in the low-p tail (p ≤ 0.25)",
+          "value_verbatim": "230",
+          "value_parsed": 230,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.n_total_in_tail",
+          "method": "read"
+        },
+        {
+          "quantity": "count, human-confirmed mounds in the low-p tail",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.n_mound_in_tail",
+          "method": "read"
+        },
+        {
+          "quantity": "width of the bootstrap 95 % CI on P(mound | p ≤ 0.25)",
+          "value_verbatim": "~0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.p_mound_low_tail.hi"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.p_mound_low_tail.lo"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained on ~0.10 per v1.2 amendment 5. The 0.25 in \"P(mound | p ≤ 0.25)\" doubles as a quantity label and as the tail cut-off actually run; it is extracted because the artefact records it as a scalar at $.low_p_deep_dive.cutoff (rule 5's name-and-fact case), with the doubt recorded here. The CI-width operands are given method-free `read` locators of their own so neither bound inherits the derivation (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "§13.1 Verifier alone cannot discharge confidence"
+      },
+      "claim_text": "The combination of modest discrimination (AUC = 0.655) and substantial over-confidence (ECE = 0.269) at the high end means the verifier's probability output is not a reliable per-candidate confidence estimate.",
+      "values": [
+        {
+          "quantity": "AUC, verifier probability vs human-review label, VLM-only slice (quoted to 3 dp)",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE), verifier probabilities, VLM-only slice (quoted to 3 dp)",
+          "value_verbatim": "0.269",
+          "value_parsed": 0.269,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both figures are quoted to 3 decimal places here while §1 and §3 of the same document (outside this batch's range) quote 0.6545 and 0.2689; recorded at quoted precision per the instrument's known-traps note, with rounding tolerance owned by the harness."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "§13.2 Architectural complement with attractor-pull scale"
+      },
+      "claim_text": "The saturated-high-confidence output bin is exactly the range that the buffer-band lift analysis (`buffer-band-lift/report.md`, Obs 272) identifies as including detections pulled from 50–125 m away from their mounds.",
+      "values": [
+        {
+          "quantity": "inner radius of the attractor-pull band over which detections are asserted to be displaced from their mounds",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[1].R_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "outer radius of the attractor-pull band over which detections are asserted to be displaced from their mounds",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell[3].R_outer_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document cites the prose report `buffer-band-lift/report.md`; per rule 2 the anchor is that analysis's sibling `summary.json`. Shared unit set on both endpoints per v1.2 amendment 6. Doubt recorded: 50 and 125 are read here as the inner bound of the first beyond-match-tolerance shell and the outer bound of the last statistically distinguishable shell in `$.shell[]`; if triage judges the band to be an interpretive summary rather than a read of specific shell bounds, these should be demoted to anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "§13.2 Architectural complement with attractor-pull scale"
+      },
+      "claim_text": "The verifier cannot filter these because it already rates them at p = 1.0.",
+      "values": [
+        {
+          "quantity": "mean predicted verifier probability in the saturated (0.99, 1.00] calibration bin",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[6].mean_predicted",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "§13.2 Architectural complement with attractor-pull scale"
+      },
+      "claim_text": "This is the Theme T5 architectural finding: no post-hoc verifier filter can relax the 125 m tolerance cap without new information.",
+      "values": [
+        {
+          "quantity": "spatial tolerance cap asserted as irreducible without new information",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The cap is the largest shell outer radius at which the attractor-pull lift is statistically distinguishable, so deciding it means reading the shell permutation p-values rather than a single scalar: `$.shell[3]` is the (100, 125] m shell and `$.shell[4]` the (125, 150] m shell, each with a `p_value` field. Obs 272 itself lives in `docs/notes/reflections/working-notes.md` (prose — not anchored to, per rule 2). The Theme label T5 is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "§13.3 Threshold recommendation"
+      },
+      "claim_text": "For downstream fieldwork seeding: **retain the 0.15 accept threshold** (as used in the production pipeline).",
+      "values": [
+        {
+          "quantity": "verifier probability accept threshold as run in the 55-map image-generalisation production pipeline",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.evaluate.prob_threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/resolved_config.yaml",
+        "path": "$.evaluate.prob_threshold"
+      },
+      "method": "read",
+      "notes": "This is a what-was-run assertion, so it anchors to the executed run's resolved config rather than to the sweep grid in `calibration.json` ($.config.sweep_thresholds[0] carries the same value but describes the sweep, not the production pipeline). YAML anchor — non-JSON anchors are legitimate per the v1.1 calibration note and route to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "§13.3 Threshold recommendation"
+      },
+      "claim_text": "Precision rises only modestly with a higher threshold (plateau at 0.571 by threshold = 0.50) while recall drops substantially (to 0.854 at t = 0.50, to 0.669 at t = 0.90).",
+      "values": [
+        {
+          "quantity": "precision plateau value on the VLM-only slice threshold sweep",
+          "value_verbatim": "0.571",
+          "value_parsed": 0.571,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[5].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only set at accept threshold 0.50",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[3].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only set at accept threshold 0.90",
+          "value_verbatim": "0.669",
+          "value_parsed": 0.669,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[5].recall_within_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The sweep thresholds 0.50 and 0.90 are treated as row labels identifying which sweep row each metric belongs to, not as separate claims (078.json precedent for buffer radii); the sweep grid itself is asserted in §7, outside this batch's range. Path-selection doubt on 0.571: the document says the plateau is reached \"by threshold = 0.50\", but the 0.50 sweep row is $.threshold_sweep[3].precision while the value 0.571 first appears at the 0.90 row ($.threshold_sweep[5].precision) — the 0.90 row is used here as the closer match to the quoted digits. Triage may prefer $.threshold_sweep[3].precision if the claim is read as being about the 0.50 row. Recorded, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "§13.4 Suggested paper text (Results — verifier calibration)"
+      },
+      "claim_text": "> A calibration analysis of the VLM verifier's probability output against human-review labels on the 55-map image-generalisation VLM-only candidate set (n = 1,028; 472 mounds, 556 non-mounds) finds substantial over-confidence and only modest discrimination.",
+      "values": [
+        {
+          "quantity": "map count, image-generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "count, VLM-only candidates in the calibration analysis",
+          "value_verbatim": "1,028",
+          "value_parsed": 1028,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_total",
+          "method": "read"
+        },
+        {
+          "quantity": "count, human-confirmed mounds in the VLM-only candidate set",
+          "value_verbatim": "472",
+          "value_parsed": 472,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "count, human-confirmed non-mounds in the VLM-only candidate set",
+          "value_verbatim": "556",
+          "value_parsed": 556,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_not_mound",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"55-map\" is used both as a run name and as an asserted map count, so it is extracted per rule 5's name-and-fact case; `calibration.json` records no map count, so the value carries a cross-file locator (v1.2 amendment 2) into the sibling buffer-100m diagnostic, which is where 078.json also anchored this quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "§13.4 Suggested paper text (Results — verifier calibration)"
+      },
+      "claim_text": "ECE = 0.269; AUC = 0.655 [0.622, 0.687] (95 % bootstrap CI, 10,000 resamples, seed 42); Brier = 0.323 [0.297, 0.348].",
+      "values": [
+        {
+          "quantity": "Expected Calibration Error (ECE), verifier probabilities, VLM-only slice (quoted to 3 dp)",
+          "value_verbatim": "0.269",
+          "value_parsed": 0.269,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "AUC, verifier probability vs human-review label, VLM-only slice (quoted to 3 dp)",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, AUC (quoted to 3 dp)",
+          "value_verbatim": "0.622",
+          "value_parsed": 0.622,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, AUC (quoted to 3 dp)",
+          "value_verbatim": "0.687",
+          "value_parsed": 0.687,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "confidence level of the reported bootstrap intervals",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap resamples, verifier calibration analysis",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, verifier calibration bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "overall Brier score, verifier probabilities, VLM-only slice (quoted to 3 dp)",
+          "value_verbatim": "0.323",
+          "value_parsed": 0.323,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.brier.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, Brier score (quoted to 3 dp)",
+          "value_verbatim": "0.297",
+          "value_parsed": 0.297,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, Brier score (quoted to 3 dp)",
+          "value_verbatim": "0.348",
+          "value_parsed": 0.348,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier.hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "All point estimates and CI bounds are quoted to 3 decimal places here while the artefact holds full precision; recorded at quoted precision, rounding tolerance owned by the harness. The 95 % confidence level has no scalar in `calibration.json` (the `config` block records only `n_bootstrap`, `seed`, `bin_edges` and `sweep_thresholds`), so it is anchor-unknown; `scripts/crosstab_verifier_vs_human.py` is the plausible chase target for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "§13.4 Suggested paper text (Results — verifier calibration)"
+      },
+      "claim_text": "Probability-bin gaps range from -0.010 (lowest bin, roughly calibrated) to -0.451 (saturated high-confidence bin; p = 1.000 predictions are correct 54.9 % of the time).",
+      "values": [
+        {
+          "quantity": "calibration gap (empirical − predicted) in the lowest bin [0.15, 0.30]",
+          "value_verbatim": "-0.010",
+          "value_parsed": -0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[0].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[0].mean_predicted"
+            }
+          ]
+        },
+        {
+          "quantity": "calibration gap (empirical − predicted) in the saturated bin (0.99, 1.00]",
+          "value_verbatim": "-0.451",
+          "value_parsed": -0.451,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].mean_predicted"
+            }
+          ]
+        },
+        {
+          "quantity": "mean predicted verifier probability in the saturated (0.99, 1.00] calibration bin",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[6].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "share of saturated-confidence (p = 1.000) predictions that are human-confirmed mounds",
+          "value_verbatim": "54.9",
+          "value_parsed": 54.9,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].empirical_p_mound"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Three derived values in one span, so each carries its own value-level expression and operands (v1.2 amendment 1); the operand quantities are not themselves re-declared as arithmetic — p = 1.000 appears in the span and is given a plain `read` path of its own. The gap sign convention is empirical minus predicted, as stated at line 39 of the same document (outside this batch's range). The bin labels \"lowest\" and \"saturated high-confidence\" fix which `calibration_bins` element each gap belongs to."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "§13.4 Suggested paper text (Results — verifier calibration)"
+      },
+      "claim_text": "The per-symbol Brier breakdown shows the calibration failure is rejection-specific: each mound sub-type is assigned appropriately high mean predicted probabilities (0.841 – 0.876, Brier 0.057 – 0.088), whereas non-mounds receive mean predicted probability 0.625 (Brier 0.524).",
+      "values": [
+        {
+          "quantity": "lowest mean predicted probability across the mound sub-types (bench_mark_on_mound)",
+          "value_verbatim": "0.841",
+          "value_parsed": 0.841,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.bench_mark_on_mound.mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "highest mean predicted probability across the mound sub-types (trig_point_on_mound)",
+          "value_verbatim": "0.876",
+          "value_parsed": 0.876,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.trig_point_on_mound.mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "lowest per-symbol Brier score across the mound sub-types (settlement_mound)",
+          "value_verbatim": "0.057",
+          "value_parsed": 0.057,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.settlement_mound.brier",
+          "method": "read"
+        },
+        {
+          "quantity": "highest per-symbol Brier score across the mound sub-types (burial_mound)",
+          "value_verbatim": "0.088",
+          "value_parsed": 0.088,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.burial_mound.brier",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted verifier probability assigned to true non-mounds",
+          "value_verbatim": "0.625",
+          "value_parsed": 0.625,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.not_mound.mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, not_mound class",
+          "value_verbatim": "0.524",
+          "value_parsed": 0.524,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.not_mound.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The two ranges are quoted as min–max envelopes over the four mound sub-types; each endpoint is anchored to the sub-type that carries it in `$.per_symbol_brier`. Values are quoted to 3 decimal places while the §8 table (outside this batch's range) quotes 4; recorded at quoted precision."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          168
+        ],
+        "section": "§14 Files manifest — Inputs"
+      },
+      "claim_text": "- `results/55maps-image-generalisation/human-review.csv` — human-review labels (1,028 rows).",
+      "values": [
+        {
+          "quantity": "count, human-review label rows in the input CSV",
+          "value_verbatim": "1,028",
+          "value_parsed": 1028,
+          "unit": null,
+          "kind": "count",
+          "path": "len:rows",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review.csv",
+        "path": "len:rows"
+      },
+      "method": "read",
+      "notes": "CSV anchor — non-JSON anchors are legitimate per the v1.1 calibration note and route to triage. The count is intended as data rows excluding the header line (the file's first line is the header `candidate_id,verifier_probability,human_label,symbol_type,source_tile,map_name,x,y,buffer_metres,timestamp`). The derived cross-check is `results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json` at $.n_total, which the document also reports as the candidate-set size at line 153."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          175
+        ],
+        "section": "§15 Reproducibility"
+      },
+      "claim_text": "- **Bootstrap**: 10,000 resamples, seed 42 (seed configurable via `--seed`).",
+      "values": [
+        {
+          "quantity": "bootstrap resamples, verifier calibration analysis",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, verifier calibration bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    }
+  ]
+}

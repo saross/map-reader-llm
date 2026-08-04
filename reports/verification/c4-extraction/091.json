@@ -1,0 +1,1208 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/documentation-audit/priority-backfill.md",
+    "git_blob": "5a7abb14f048",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          16
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "unsurfaced backlog: 160 originally-failed tile-passes were 100 %\n> recovered",
+      "values": [
+        {
+          "quantity": "count, originally-failed tile-passes in the 55maps-text-high-generalisation proposer stage (summed over the five passes)",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d + e",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            },
+            {
+              "name": "d",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            },
+            {
+              "name": "e",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            }
+          ]
+        },
+        {
+          "quantity": "percentage of originally-failed tile-passes recovered, 55maps-text-high-generalisation recovery",
+          "value_verbatim": "100 %",
+          "value_parsed": 100,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * (a + b + c + d + e) / (f + g + h + i + j)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].recovered"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].recovered"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].recovered"
+            },
+            {
+              "name": "d",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].recovered"
+            },
+            {
+              "name": "e",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].recovered"
+            },
+            {
+              "name": "f",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            },
+            {
+              "name": "g",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            },
+            {
+              "name": "h",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            },
+            {
+              "name": "i",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            },
+            {
+              "name": "j",
+              "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+              "path": "$.recovery_history[0].initial_failed"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "[BATCH NOTE b091] Scope decisions for this batch. Excluded per instrument rule 5: dates and timestamps (2026-04-10, 2026-04-18, 2026-04-19, 2026-04-20/21, 2026-04-22, 2026-05-03); git commit hashes (`731466d8`, `e07dae37`, `e3aef6fa`, `a9e280a3`, `7f05f529`, `4e5c5e5a..`); session numbers (Session 83); Obs identifiers (Obs 268, 270, 273); the erratum identifier E54; backfill item identifiers (N1-N5, O1, O2, T2) and Tier 1/2/3 labels; hypothesis and run names (h8-v2, h10, h11, h12-v2, `55maps-text-high-generalisation`); numbers inside file paths and condition names (`consensus-384-UNINTENDED-T1.0`, `single-pass-384-UNINTENDED-T1.0`, `pv-diag-384`, `results/h11-384-pv-diagnostic/`, `confusion_matrix_4x4_buf50.csv`, `4326` in map-sheet names); line-number citations (`working-notes.md:12840`, `protocol-errata.md:1695-1697`); the in-quotation section citation \"Section 3.5\"; and the phase reference Phase 3c. Inclusive decisions (over-inclusion per instrument preamble, doubt recorded on each claim): (a) forward-looking effort estimates (15 min, 5 min, 1-2 h, 30 min, 4-6 h, 8-11 h, ~15-20 h) are extracted as asserted quantities but no artefact can decide them, so they are anchor-unknown; (b) design-descriptor counts (\"3-tier repair\", \"two-stage design\", \"three-way null\", \"two-annotator identifiability\") are extracted because each asserts a structural fact about the study, but they may be read as names rather than claims; (c) buffer radii for analyses recorded as \"Still open\" (30/40/50 m) are extracted although no run exists to anchor them. Anchoring note: this is an audit/plan document whose sources are largely other markdown documents, so `anchor-unknown` is common; every such claim names what was searched. Registration/protocol claims follow the v1.1 calibration rule and anchor to the lodged documents under `docs/methodology/preregistration/`. This claim: 160 is the sum of `recovery_history[0].initial_failed` across the five proposer passes and 100 % is recovered/initial_failed over the same five files; per v1.2 amendment 1 the operands are given their own read paths rather than inheriting the arithmetic method."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "Three new bugs surfaced and were fixed during the recovery",
+      "values": [
+        {
+          "quantity": "count, bugs surfaced and fixed during the 55maps-text-high-generalisation recovery",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed artefact records a bug count for the recovery. Searched `results/` and `planning/` for a recovery bug register; the only enumeration found is prose (`planning/paper-writeup-continuity.md`, which the document itself cites at line 31), and rule 2 forbids anchoring prose to prose. The three fix commits named in the same sentence are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          23
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "The parser fix in turn surfaced **3 outstanding recoveries** that\n> are now backfill targets",
+      "values": [
+        {
+          "quantity": "count, outstanding recoveries surfaced by the realtime-parser fix",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The three runs are listed as a bullet list immediately below (lines 25-27) but no committed artefact enumerates them as a scalar. Searched `planning/paper-writeup-continuity.md` (prose, cited by the document itself) and `results/temperature-failure-recovery-analysis/report.md` (prose, no sibling JSON in that directory). Anchor-unknown per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          30
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "Per the parser-fix audit, these three runs collectively lost 163\n> tiles to JSON-parse failures",
+      "values": [
+        {
+          "quantity": "count, runs affected by the strict-parse policy and awaiting recovery",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, tiles lost to JSON-parse failures across the three outstanding runs",
+          "value_verbatim": "163",
+          "value_parsed": 163,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The 163-tile figure is the parser-fix audit's headline; the audit exists only as prose (`results/temperature-failure-recovery-analysis/report.md`, whose directory holds no JSON, and `configs/run-configs/55maps_text_high_generalisation_post_run_report.md`). Searched `results/` and `outputs/` for a JSON recording a parse-failure tally for the image-HIGH, text-MIN and GS-v2 runs and found none; triage will need to chase the chain to the per-run proposer metas (`recovery_history[*].initial_failed` in each run's `*.meta.json`)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          31
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "JSON-parse failures that the 3-tier repair would now\n> recover.",
+      "values": [
+        {
+          "quantity": "count, tiers in the malformed-JSON repair pipeline applied by the realtime parser",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_batch_api.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Doubt recorded: \"3-tier repair\" may be a name rather than a claim (rule 5), but it asserts a structural fact about the parser and is checkable. The repair pipeline is `parse_response_with_repair()` in `scripts/lib_batch_api.py`, imported by `scripts/4_detect_mounds_batch.py` (its comment at lines 574-577 describes a three-tier ladder: trailing-comma, json5, longest-valid-prefix). Non-JSON anchor, legitimate per the v1.1 note; the harness routes it to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "Status of prior Tier 1 items (table)"
+      },
+      "claim_text": "| Text-high cost harmonisation with min / image cohorts | **Closed** | 2026-04-19 re-run at `outputs/55maps-text-high-generalisation/` produced `cost_manifest.json` with `totals.cost_usd` = 69.60 (commit range `4e5c5e5a..`) |",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps text-high generalisation re-run, as recorded in the run's cost manifest totals",
+          "value_verbatim": "69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row extracted per instrument rule 6. The document names its own anchor (`cost_manifest.json` under the named output directory), so the anchor is that file at `$.totals.cost_usd`. Date and commit range are out of scope per rule 5. Triage should note that the manifest has been rebuilt since this document was written (the post-recovery annotation at lines 12-21 states the cost-manifest was rebuilt); not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "Status of prior Tier 2 items (table)"
+      },
+      "claim_text": "| h8-v2 multi-buffer curves (30/40/50 m) | Still open |",
+      "values": [
+        {
+          "quantity": "buffer radius, first step of the proposed h8-v2 multi-buffer curve",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer radius, second step of the proposed h8-v2 multi-buffer curve",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer radius, third step of the proposed h8-v2 multi-buffer curve",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row extracted per rule 6. Doubt recorded: the row marks the analysis \"Still open\", so these radii describe a planned (not executed) buffer grid and no artefact can decide them; searched `results/` for an h8-v2 multi-buffer artefact and found none. Triage may prune as a plan rather than a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "Status of prior Tier 2 items (table)"
+      },
+      "claim_text": "| h12-v2 multi-buffer curves + re-run of three-way null across buffers | Still open |",
+      "values": [
+        {
+          "quantity": "count, arms in the h12-v2 null comparison (\"three-way null\")",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row extracted per rule 6. Doubt recorded: \"three-way null\" may be a test name rather than a claim (rule 5); it is included because it asserts the arm count of the h12-v2 comparison. Searched `results/` for an h12-v2 three-way null artefact recording the arm count and found none."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "N1. Dawid-Skene caveat on the image-run posterior"
+      },
+      "claim_text": "**Item**: the paper should cite the image-run D-S corrected F1 of 0.795",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, 55-map image-generalisation run (quoted to 3 dp)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted at 3 dp here and at 4 dp at line 81; both recorded verbatim at their quoted precision (known-traps note). The document predates the 2026-05-03 recovery, which rebuilt the D-S artefact; the pre-recovery state is preserved at `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json.pre-recovery-20260503T023258.backup` if triage wants the as-written baseline. Not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          82
+        ],
+        "section": "N1. Dawid-Skene caveat on the image-run posterior"
+      },
+      "claim_text": "The\n`dawid-skene-results.json` file still records 0.7954 without a caveat\npointer.",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, 55-map image-generalisation run, as recorded in dawid-skene-results.json (quoted to 4 dp)",
+          "value_verbatim": "0.7954",
+          "value_parsed": 0.7954,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names its own anchor file. Live claim, not a correction block: the document asserts the current contents of the JSON as of writing (2026-04-22, pre-recovery). Pre-recovery backup preserved at `...dawid-skene-results.json.pre-recovery-20260503T023258.backup`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "N1. Dawid-Skene caveat on the image-run posterior"
+      },
+      "claim_text": "One paragraph; zero re-computation.",
+      "values": [
+        {
+          "quantity": "count, paragraphs of new text the N1 backfill action requires",
+          "value_verbatim": "One",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, re-computations the N1 backfill action requires",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt recorded: these are forward-looking work-scope quantities for an unexecuted action, so no artefact can decide them. Included under the instrument's over-inclusion preamble; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "N1. Dawid-Skene caveat on the image-run posterior"
+      },
+      "claim_text": "**Effort**: 15 minutes.",
+      "values": [
+        {
+          "quantity": "estimated effort, N1 D-S caveat paragraph",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "min",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking effort estimate; no artefact can decide it. Restated in the schedule table at line 206, so the two spans are internally cross-checkable within this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          97
+        ],
+        "section": "N2. Paper methods wording for E54"
+      },
+      "claim_text": "includes the recommended text: \"Confidence intervals on primary F1,\nprecision, and recall are derived from 1 000-iteration tile-level\nbootstrap resampling (preregistered Section 3.5, percentile method\n2.5th / 97.5th).",
+      "values": [
+        {
+          "quantity": "bootstrap iterations for confidence intervals on primary F1, precision and recall, as preregistered",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "lower percentile bound of the preregistered bootstrap CI method",
+          "value_verbatim": "2.5th",
+          "value_parsed": 2.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper percentile bound of the preregistered bootstrap CI method",
+          "value_verbatim": "97.5th",
+          "value_parsed": 97.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "This is a claim about what the REGISTRATION specifies (\"preregistered Section 3.5\"), so per the v1.1 calibration rule it anchors to the lodged document `docs/methodology/preregistration/osf/preregistration.md`, never to an executed config. The lodged document is markdown and offers no mechanical locator, so per v1.2 amendment 3 the values take an explicit non-read method rather than pathless `read`. The span is itself a verbatim quotation of `docs/methodology/preregistration/protocol-errata.md` (E54); \"Section 3.5\" is a section citation, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          101
+        ],
+        "section": "N2. Paper methods wording for E54"
+      },
+      "claim_text": "Post-hoc analyses — human-reviewed corrected F1\n(single- and multi-buffer), subtype classification, and review-UI\ncalibration cross-tabs — use 10 000 iterations to tighten CIs on\nnarrow effect sizes; the resampling unit and percentile method are\nunchanged.\"",
+      "values": [
+        {
+          "quantity": "bootstrap iterations for post-hoc analyses (corrected F1, subtype classification, review-UI cross-tabs) under the E54 erratum",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claim about what the protocol erratum specifies, so it anchors to the lodged errata register (v1.1 calibration rule); non-JSON anchor with whole-artefact scope, routed to triage. Single-value span, so a null path is safe (no anchor.path fallback trap). The document quotes this text as already present in the errata register."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "N2. Paper methods wording for E54"
+      },
+      "claim_text": "**Effort**: 5 minutes; paper-side only.",
+      "values": [
+        {
+          "quantity": "estimated effort, N2 paper methods E54 wording",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "min",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking effort estimate; no artefact can decide it. Restated in the schedule table at line 207."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          111
+        ],
+        "section": "N3. Retrospective text-run pre-launch audit (still open)"
+      },
+      "claim_text": "For symmetry with the other\nthree runs, a retrospective pre-launch audit would record the",
+      "values": [
+        {
+          "quantity": "count, other generalisation runs that already hold a pre-launch audit",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Line 117 identifies the three as the text-min / text-high / image audits. Searched `configs/run-configs/` for `*pre_launch_audit*.md` files and found no manifest enumerating them as a scalar, so the count is anchor-unknown; triage can resolve by listing that directory."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "N3. Retrospective text-run pre-launch audit (still open)"
+      },
+      "claim_text": "**Effort**: 1-2 hours.",
+      "values": [
+        {
+          "quantity": "estimated effort, N3 retrospective pre-launch audit — lower bound of range",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated effort, N3 retrospective pre-launch audit — upper bound of range",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking effort estimate expressed as a range; both endpoints carry the shared unit per v1.2 amendment 6. Restated in the schedule table at line 208."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "N4. UNINTENDED h11 runs — formal exclusion"
+      },
+      "claim_text": "**Effort**: 30 minutes.",
+      "values": [
+        {
+          "quantity": "estimated effort, N4 archiving of the UNINTENDED h11 runs",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "min",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking effort estimate; no artefact can decide it. Restated in the schedule table at line 209."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          136
+        ],
+        "section": "N5. h11 proposer-vs-verifier paired test"
+      },
+      "claim_text": "12 sub-runs under `outputs/h11/` share a two-stage design",
+      "values": [
+        {
+          "quantity": "count, sub-runs under outputs/h11/",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, stages in the shared h11 proposer-verifier design",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed manifest enumerates h11 sub-runs as a scalar: `results/conditions-manifest.json` is condition-level rather than sub-run-level. Triage can resolve by counting sub-directories under `outputs/h11/`. Doubt recorded on \"two-stage\": it may be an architecture name (rule 5) rather than a claim, though it asserts the stage count of the proposer-verifier design."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "N5. h11 proposer-vs-verifier paired test"
+      },
+      "claim_text": "draft a short post-run narrative integrating the twelve sub-runs.",
+      "values": [
+        {
+          "quantity": "count, h11 sub-runs to be integrated by the post-run narrative",
+          "value_verbatim": "twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the count asserted at line 136 in words; extracted as its own span per rule 1. Same anchor search as that claim: no scalar sub-run count exists in `results/conditions-manifest.json`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "N5. h11 proposer-vs-verifier paired test"
+      },
+      "claim_text": "**Effort**: 4-6 hours.",
+      "values": [
+        {
+          "quantity": "estimated effort, N5 h11 paired test plus narrative — lower bound of range",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated effort, N5 h11 paired test plus narrative — upper bound of range",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking effort estimate expressed as a range; shared unit carried on both endpoints per amendment 6. Restated in the schedule table at line 210."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          156,
+          157
+        ],
+        "section": "O1. Subtype classification verification"
+      },
+      "claim_text": "**Artefact**: `results/gold-standard-subtype-classification/`\n— headline weighted-F1 0.8873 at 50 m buffer (Obs 270).",
+      "values": [
+        {
+          "quantity": "weighted F1, gold-standard subtype classification, headline buffer",
+          "value_verbatim": "0.8873",
+          "value_parsed": 0.8873,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary_f1.weighted_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "headline buffer radius, gold-standard subtype classification",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_headline_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-subtype-classification/macro_weighted_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names the artefact directory; the headline weighted F1 and headline buffer both live in that directory's `macro_weighted_summary.json`. Per v1.2 amendment 3, each read value carries its own path. Obs 270 is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          162
+        ],
+        "section": "O1. Subtype classification verification"
+      },
+      "claim_text": "**Status**: all deliverables present — `report.md`, confusion matrices\nat 4×4 and 5×5, per-map confusion, per-class F1, kappa/MCC, consensus\nthreshold sweep, buffer sensitivity, bootstrap CIs (10 000 iterations\nper E54), `run_manifest.json`. No backfill needed.",
+      "values": [
+        {
+          "quantity": "class count (matrix dimension) of the matched-pairs subtype confusion matrix",
+          "value_verbatim": "4×4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "class count (matrix dimension) of the subtype confusion matrix including the no-match class",
+          "value_verbatim": "5×5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, gold-standard subtype classification CIs",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_n",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-subtype-classification/run_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The matrix dimensions double as artefact names (`confusion_matrix_4x4_buf50.csv`, `confusion_matrix_5x5_buf50.csv`), which is why they are marked anchor-unknown rather than read: the CSVs are non-JSON and offer no mechanical locator for their own dimension, and per amendment 3 a pathless value in a multi-value claim must take a non-read method. Triage can resolve by reading those two CSVs. The bootstrap iteration count anchors to `run_manifest.json` `$.bootstrap_n` (the same figure also appears at `$.summary_f1_ci.total_bootstrap_iter` in `macro_weighted_summary.json`). E54 is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          166,
+          167
+        ],
+        "section": "O2. Human-review workflow artefacts"
+      },
+      "claim_text": "**Artefact**: `results/55maps-image-generalisation/human-review-multi-buffer.csv`\n(557 rows; second review day)",
+      "values": [
+        {
+          "quantity": "row count, second-review-day human-review CSV for the image-generalisation run",
+          "value_verbatim": "557",
+          "value_parsed": 557,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names its own anchor. Non-JSON anchor with whole-artefact scope (row count), legitimate per the v1.1 note; single-value span so the null path carries no fallback risk. Triage should decide whether the quoted row count includes the header row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "Ongoing standards (post-backfill)"
+      },
+      "claim_text": "`evaluation/evaluation.json` with F1/P/R at 20/30/40/50 m",
+      "values": [
+        {
+          "quantity": "evaluation buffer radius, first of the required grid",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation buffer radius, second of the required grid",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation buffer radius, third of the required grid",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation buffer radius, fourth of the required grid",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Normative standard (\"For every future run\") restating the preregistered evaluation buffer grid, so per the v1.1 calibration rule the anchor is the lodged preregistration rather than any executed evaluation. The lodged document is markdown and offers no mechanical locator, so the values take a non-read method per amendment 3. If triage prefers an executed artefact, a run's `evaluation/evaluation.json` (e.g. `outputs/55maps-text-high-generalisation/evaluation/`) carries the buffer keys actually used."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          191
+        ],
+        "section": "Ongoing standards (post-backfill)"
+      },
+      "claim_text": "bootstrap CIs (1 000 iterations, seed 42, tile-level resampling per\n   protocol E54)",
+      "values": [
+        {
+          "quantity": "bootstrap iterations required for primary evaluation CIs under protocol E54",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "random seed required for bootstrap resampling under protocol E54",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Claim about what the protocol (as amended by erratum E54) requires, so it anchors to the lodged errata register per the v1.1 calibration rule, not to any executed config. Markdown anchor with no mechanical locator, so both values take a non-read method per amendment 3. E54 itself is an identifier, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          195
+        ],
+        "section": "Ongoing standards (post-backfill)"
+      },
+      "claim_text": "5. Paired permutation test for every planned comparator (10 000\n   permutations for narrow-effect analyses; 1 000 for primary).",
+      "values": [
+        {
+          "quantity": "permutation count required for narrow-effect paired permutation tests",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation count required for primary paired permutation tests",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Normative standard restating the protocol/E54 permutation counts; anchored to the lodged errata register per the v1.1 calibration rule (never to `scripts/pairwise_permutation_test.py`, which would record the deviation rather than the promise). Markdown anchor with no mechanical locator, so both values take a non-read method per amendment 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          196,
+          197
+        ],
+        "section": "Ongoing standards (post-backfill)"
+      },
+      "claim_text": "6. Dawid-Skene latent-truth correction **plus** Obs 273 caveat\n   discussion when two-annotator identifiability applies.",
+      "values": [
+        {
+          "quantity": "count, annotators in the Dawid-Skene identifiability condition triggering the Obs 273 caveat",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubt recorded: \"two-annotator identifiability\" reads as a technical term rather than an asserted count, but it does assert the annotator count of the D-S configuration used here. The D-S artefact `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json` records student and VLM annotator estimates separately but carries no annotator-count scalar, hence anchor-unknown. Obs 273 is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          206
+        ],
+        "section": "Schedule (suggested, not committed) (table)"
+      },
+      "claim_text": "| N1 D-S caveat paragraph | none | 15 min | High (paper-adjacent) |",
+      "values": [
+        {
+          "quantity": "scheduled effort, N1 D-S caveat paragraph (schedule table row)",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "min",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row extracted per rule 6; the Effort column is the only numeric cell. Forward-looking estimate, no artefact anchor; restates line 87."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          207
+        ],
+        "section": "Schedule (suggested, not committed) (table)"
+      },
+      "claim_text": "| N2 Paper methods E54 wording | paper revision session | 5 min | High (paper-adjacent) |",
+      "values": [
+        {
+          "quantity": "scheduled effort, N2 paper methods E54 wording (schedule table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "min",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row extracted per rule 6. Forward-looking estimate, no artefact anchor; restates line 105."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          208,
+          208
+        ],
+        "section": "Schedule (suggested, not committed) (table)"
+      },
+      "claim_text": "| N3 Retrospective pre-launch audit | none | 1-2 h | Medium |",
+      "values": [
+        {
+          "quantity": "scheduled effort, N3 retrospective pre-launch audit — lower bound (schedule table row)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "scheduled effort, N3 retrospective pre-launch audit — upper bound (schedule table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row extracted per rule 6; range endpoints share the unit per amendment 6. Restates line 119."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          209,
+          209
+        ],
+        "section": "Schedule (suggested, not committed) (table)"
+      },
+      "claim_text": "| N4 UNINTENDED archive | none | 30 min | Medium (cleanup) |",
+      "values": [
+        {
+          "quantity": "scheduled effort, N4 UNINTENDED archive (schedule table row)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "min",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row extracted per rule 6. Forward-looking estimate, no artefact anchor; restates line 132."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          210
+        ],
+        "section": "Schedule (suggested, not committed) (table)"
+      },
+      "claim_text": "| N5 h11 paired test + narrative | N4 | 4-6 h | Medium |",
+      "values": [
+        {
+          "quantity": "scheduled effort, N5 h11 paired test plus narrative — lower bound (schedule table row)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "scheduled effort, N5 h11 paired test plus narrative — upper bound (schedule table row)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row extracted per rule 6; range endpoints share the unit per amendment 6. Restates line 144."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          211
+        ],
+        "section": "Schedule (suggested, not committed) (table)"
+      },
+      "claim_text": "| T2 prior items (h8 / h10 / h12 multi-buffer curves) | none | 8-11 h | Low (confirmatory) |",
+      "values": [
+        {
+          "quantity": "scheduled effort, prior Tier 2 multi-buffer items — lower bound (schedule table row)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "scheduled effort, prior Tier 2 multi-buffer items — upper bound (schedule table row)",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row extracted per rule 6; range endpoints share the unit per amendment 6. The hypothesis labels h8 / h10 / h12 are names, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          214
+        ],
+        "section": "Schedule (suggested, not committed)"
+      },
+      "claim_text": "**Cumulative estimated effort**: ~15-20 hours once N1, N2 are off the\npile.",
+      "values": [
+        {
+          "quantity": "cumulative estimated effort for the remaining backfill queue — lower bound",
+          "value_verbatim": "~15",
+          "value_parsed": 15,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cumulative estimated effort for the remaining backfill queue — upper bound",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "h",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approx marker retained in value_verbatim per v1.2 amendment 5; the shared unit is carried on both endpoints per amendment 6. This total appears to aggregate the Effort column of the schedule table (lines 208-211, excluding N1 and N2), but all operands live in this same markdown document, so no mechanical derivation is available — anchor-unknown rather than arithmetic. Triage may treat it as an in-document consistency check."
+    }
+  ]
+}

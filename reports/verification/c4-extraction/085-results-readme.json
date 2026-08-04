@@ -1,0 +1,554 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/README.md",
+    "git_blob": "0a8e8f145bb4467275e5e6760756452a5a8832e9",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          32
+        ],
+        "section": "How to navigate"
+      },
+      "claim_text": "it groups the 62 sub-directories by what\nthey analyse",
+      "values": [
+        {
+          "quantity": "count, sub-directories under results/",
+          "value_verbatim": "62",
+          "value_parsed": 62,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "[BATCH NOTE b085] Scope decisions for this file, which covers the whole of results/README.md (lines 1-300; the document is 300 lines long). Out of C4 scope per instrument rule 5 and therefore not extracted: dates (2026-05-26, 2026-04-08, the 'May 2026' currency stamp at line 247); preregistration version strings (v2.0, v2.9); hypothesis identifiers (H1, H3, H4, H5, H7, H8, H9, H10, H11, H12); phase identifiers (Phases 2a-2e, Phase 2c, Phase 3a, 3b, 3c, 3d, and 'Phase 3' of the audit plan); Obs 322; 'Stage Gate 1'; the Era 1 / Era 2 shorthand; and every number inside a directory or file name (`phase3a-image-matrix/`, `h11-384-pv-diagnostic/`, `h11-384-single-pass-t0-rerun/`, `h8-v2/`, `h10/`, `h12-v2/`, `e47-propose-brief/`, `gs-125m-fp-side-6-crop-review/`, `gt-duplicate-review-gs4/`, `-era2`, `55maps-*`, `phase2*`, `phase3d-*`, `strand1-verbosity`, `strand2-h5-confirm`, `h6-flash-pro`). The changelog row at line 276 carries only version strings and strand names and so yields no claim at all. Corpus sizes are extracted where the prose asserts them ('the 4-map gold-standard sub-corpus' at line 84, 'the full 4-map tileset' at line 95, 'the full 55-map corpus' at line 125) but not where '55-map' merely labels a heading, a directory, or a group of directories (lines 122, 129-145, 175, and the 'After' cell of line 275). Anchor note: several counts here enumerate the working tree rather than reading a scalar out of a JSON artefact (sub-directories under results/, top-level .md files, Python scripts under scripts/, threshold_sweep_summary.md files under results/h11-384-pv-diagnostic/); those are recorded as method recompute-script with the directory itself named as anchor.file, since no committed artefact holds the scalar. Tile-pool counts anchor to the tracked manifests under inputs/tiles/ (calibration_manifest.json, validation_manifest.json), which are JSON arrays of tile filenames and so are counted with the len: prefix."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          51
+        ],
+        "section": "Conceptual groupings"
+      },
+      "claim_text": "The work falls into six categories, presented here in roughly the\norder it was carried out.",
+      "values": [
+        {
+          "quantity": "count, conceptual groupings the README organises the work into",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Borderline inclusion, flagged for possible pruning: this is a self-referential count of the README's own numbered sub-sections (§§ 1-6 at lines 55, 82, 122, 148, 175 and 181) rather than a fact about the study, and anchoring it would mean anchoring prose to prose (rule 2). The same count is restated in the changelog table at line 275."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          86
+        ],
+        "section": "Conceptual groupings — 2. Gold-standard (4-map) analyses"
+      },
+      "claim_text": "Strict-evaluation analyses on the 4-map gold-standard sub-corpus.\nThese preceded the 55-map generalisation runs and were the bridge\nbetween OFAT hypothesis testing and full-corpus generalisation.",
+      "values": [
+        {
+          "quantity": "count, maps in the gold-standard sub-corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, maps in the generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-per-map-shell-variance/per_map_shell_rates.json#$.map_universe_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The 4-map count is the number of per-map tile sub-directories under the tracked gold-standard tile input directory (K-35-052-4_32635, K-35-053-3_Elenovo, K-35-062-2_Rakovski, K-35-078-1_Lesovo), so it needs a directory enumeration rather than a JSON read; the sibling manifests there are flat lists of tile filenames, from which the distinct map count would have to be derived. The 55-map count uses a cross-file locator (v1.2 amendment 2) to $.map_universe_size in the per-map shell-variance artefact, which is the nearest committed scalar — the 55-map tile input directory (inputs/tiles_384_55maps/) is not present in the working tree."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          89
+        ],
+        "section": "Conceptual groupings — 2. Gold-standard (4-map) analyses"
+      },
+      "claim_text": "**Methodological sub-division**: gold-standard analyses span two\nphases of evaluation methodology:",
+      "values": [
+        {
+          "quantity": "count, evaluation-methodology phases spanned by the gold-standard analyses",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Borderline inclusion, flagged for possible pruning: a count of methodological phases introduced by this README's own bullet list (the 'Earlier phase' / 'Later phase' items at lines 91-95). No artefact enumerates the phases; the nearest chase target is reports/gs-tile-pool-mapping-2026-05-28.md, which is prose (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          92
+        ],
+        "section": "Conceptual groupings — 2. Gold-standard (4-map) analyses"
+      },
+      "claim_text": "- **Earlier phase** — used a smaller tile subset for evaluation\n  (~60 tiles, to be confirmed empirically).",
+      "values": [
+        {
+          "quantity": "count, tiles in the earlier-phase gold-standard evaluation subset",
+          "value_verbatim": "~60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "Approx marker retained in value_verbatim per v1.2 amendment 5. The document itself flags the figure as 'to be confirmed empirically'. The proposed anchor is the tracked gold-standard validation manifest, a flat JSON array of tile filenames; triage should confirm that the 'smaller tile subset' the README means is the validation pool rather than some other subset."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Conceptual groupings — 2. Gold-standard (4-map) analyses"
+      },
+      "claim_text": "- **Later phase** — moved to the full 4-map tileset for evaluation.",
+      "values": [
+        {
+          "quantity": "count, maps in the full gold-standard tileset used by the later evaluation phase",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Same quantity as the first value of the claim at lines 84-86, restated in its own span; counted as the number of per-map tile sub-directories under the tracked gold-standard tile input directory."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          98
+        ],
+        "section": "Conceptual groupings — 2. Gold-standard (4-map) analyses"
+      },
+      "claim_text": "In **both** phases, a 20-tile \"calibration\" set was reserved for\ntraining-style work and excluded from the test pool.",
+      "values": [
+        {
+          "quantity": "count, tiles reserved in the calibration set",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "The tracked calibration manifest is a flat JSON array of tile filenames, so the count uses the len: prefix per v1.2 amendment 4. 'both phases' is a bare determiner and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          125
+        ],
+        "section": "Conceptual groupings — 3. 55-map generalisation runs"
+      },
+      "claim_text": "The final phase of the project — running the OFAT-winning\nconfigurations on the full 55-map corpus to test generalisation.",
+      "values": [
+        {
+          "quantity": "count, maps in the full generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.map_universe_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": "$.map_universe_size"
+      },
+      "method": "read",
+      "notes": "Anchored to the nearest committed scalar recording the corpus size; the 55-map tile input directory (inputs/tiles_384_55maps/) referenced by the run configs is not present in the working tree. Triage may prefer a less-writable anchor such as a 55-map run's launch_manifest.json if one records a map count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "Conceptual groupings — 3. 55-map generalisation runs"
+      },
+      "claim_text": "- `55maps-text-high-t0.3-generalisation/` — text-high at T=0.3.",
+      "values": [
+        {
+          "quantity": "proposer temperature, 55-map text-high T=0.3 generalisation run",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.proposer.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-t0.3-generalisation/resolved_config.yaml",
+        "path": "$.proposer.temperature"
+      },
+      "method": "read",
+      "notes": "The '0.3' inside the directory name `55maps-text-high-t0.3-generalisation/` is a name and out of scope per rule 5, but the gloss 'text-high at T=0.3' asserts the temperature the run used, so it is extracted as a what-was-run parameter and anchored to the run's resolved config (a YAML file — non-JSON anchor, expected to route to triage per the v1.1 calibration rule)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          191,
+          192
+        ],
+        "section": "Top-level documents"
+      },
+      "claim_text": "The 25 top-level `.md` and JSON files at `results/*` are paper-prep\nnarrative anchors and machine-readable indices.",
+      "values": [
+        {
+          "quantity": "count, top-level .md and JSON files directly under results/",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A working-tree enumeration, not a stored scalar. Note the ambiguity triage will have to settle: this span says '25 top-level `.md` and JSON files' while the changelog verification note at lines 284-286 says '25 top-level `.md` files' — the two readings differ over whether JSON files are inside the 25."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          224,
+          225
+        ],
+        "section": "Conventions"
+      },
+      "claim_text": "- **Anchor docs** (the paper-cited subset, ~35–50 docs) follow the\n  Document Revision Policy in `/CLAUDE.md`.",
+      "values": [
+        {
+          "quantity": "lower bound, count of paper-cited anchor documents under results/",
+          "value_verbatim": "~35",
+          "value_parsed": 35,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound, count of paper-cited anchor documents under results/",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approx marker retained per v1.2 amendment 5. No committed artefact enumerates the paper-cited anchor-document subset; the nearest chase target is the 'Documents in Revision Policy Scope' enumeration in docs/methodology/output-directory-standard.md, which is prose and so cannot be anchored to per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          227,
+          230
+        ],
+        "section": "Conventions"
+      },
+      "claim_text": "- **Machine-generated summaries** (e.g., the ~50\n  `threshold_sweep_summary.md` files under\n  `h11-384-pv-diagnostic/*/`) are treated as artefacts, not anchor\n  docs — they do not require the Revision Policy treatment.",
+      "values": [
+        {
+          "quantity": "count, threshold_sweep_summary.md files under results/h11-384-pv-diagnostic/",
+          "value_verbatim": "~50",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Approx marker retained per v1.2 amendment 5. A working-tree enumeration (files named threshold_sweep_summary.md in the immediate sub-directories of the anchor), not a stored scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          246,
+          247
+        ],
+        "section": "Reproducibility"
+      },
+      "claim_text": "- Analysis scripts live in `scripts/` (currently 168 Python scripts,\n  May 2026).",
+      "values": [
+        {
+          "quantity": "count, Python scripts under scripts/",
+          "value_verbatim": "168",
+          "value_parsed": 168,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A working-tree enumeration, not a stored scalar; the document stamps it 'currently ... May 2026', so triage should expect drift against the current tree. 'May 2026' is a date and out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          267,
+          269
+        ],
+        "section": "Changelog — 2026-05-26 Full rewrite"
+      },
+      "claim_text": "None of those\ndirectories exist; the real `results/` is flat with 62 sub-directories\ngrouped by analysis topic.",
+      "values": [
+        {
+          "quantity": "count, sub-directories under results/",
+          "value_verbatim": "62",
+          "value_parsed": 62,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A live claim about the current tree stated inside the changelog's refresh-trigger paragraph, not a superseded 'before' value, so it is not marked historical. Same quantity as the claim at lines 31-32."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          275,
+          275
+        ],
+        "section": "Changelog — 2026-05-26 Full rewrite, before → after table"
+      },
+      "claim_text": "| Directory structure section | Hierarchical 5-phase tree with 20+ sub-paths; **none of those paths exist** | Six conceptual groupings (OFAT / GS / 55-map / cross-cutting / paper-output / audit) covering all 62 real sub-directories |",
+      "values": [
+        {
+          "quantity": "count, phases in the superseded README's hierarchical directory tree",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, sub-paths enumerated by the superseded README's directory tree",
+          "value_verbatim": "20+",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, conceptual groupings in the current README",
+          "value_verbatim": "Six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, sub-directories under results/",
+          "value_verbatim": "62",
+          "value_parsed": 62,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Changelog before → after row: the 'Before (stale)' cell values (5-phase tree, 20+ sub-paths) are the quoted old side and are marked historical per instrument rule 3; the 'After (current)' cell values are live claims. The '20+' is an open lower bound — value_parsed records 20 but the '+' is kept in value_verbatim so the harness does not promote it to an equality. 'Six conceptual groupings' is the same self-referential section count as line 50 and is anchor-unknown. The '55-map' inside the After cell labels one of the groupings and is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          277,
+          277
+        ],
+        "section": "Changelog — 2026-05-26 Full rewrite, before → after table"
+      },
+      "claim_text": "| Analysis pipeline section | Enumerated 4 script names (`aggregate_results.py`, `analyse_phase2_results.py`, `generate_figures.py`, `compile_report.py`) of which only one exists today | Replaced by pointer to per-run `post_run_report.md` reproducibility recipes (Phase 3 audit-back-fill target) |",
+      "values": [
+        {
+          "quantity": "count, script names enumerated by the superseded README's analysis-pipeline section",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, of those four named scripts that still exist under scripts/",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Mixed span: the '4' counts what the superseded README listed and is marked historical per rule 3, while 'only one exists today' is a live claim about the current tree, checked by testing which of aggregate_results.py, analyse_phase2_results.py, generate_figures.py and compile_report.py are present under scripts/. 'Phase 3' in the After cell is a phase identifier and out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          284,
+          286
+        ],
+        "section": "Changelog — 2026-05-26 Full rewrite, verification note"
+      },
+      "claim_text": "**Verification**: pre-rewrite `ls`-based survey confirmed 62\nsub-directories, 25 top-level `.md` files, and that none of the\n5 stale phase directories in the old structure exist.",
+      "values": [
+        {
+          "quantity": "count, sub-directories under results/",
+          "value_verbatim": "62",
+          "value_parsed": 62,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, top-level .md files directly under results/",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, stale phase directories from the superseded structure asserted absent from results/",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "All three are working-tree enumerations. The '5 stale phase directories' straddles the historical / live boundary: it counts directories described by the superseded structure, but the assertion made is the live negative that none of them exist, so it is recorded as a live recompute-script claim rather than historical — triage may prefer to reclassify. Note the '25 top-level `.md` files' here reads narrower than the '25 top-level `.md` and JSON files' at line 191; both are recorded verbatim and not adjudicated."
+    }
+  ]
+}

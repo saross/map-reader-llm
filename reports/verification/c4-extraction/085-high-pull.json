@@ -1,0 +1,996 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md",
+    "git_blob": "8ddbea3169211de19db601f0bb71edd8a47fd84c",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          138
+        ],
+        "section": "Cross-cut analysis — A control is visually indistinguishable from the high-pull leader"
+      },
+      "claim_text": "K-35-074-3 — a control map with 0 % shell rate in all four runs — is visually\nindistinguishable from K-35-067-2 (the multi-run high-pull leader, top-3 in\nT=0.3, T=0.7, and text-MIN with rates of 42.86 %, 75.00 %, and 50.00 %\nrespectively) and from K-35-067-3 (top-3 in text-MIN at 28.57 %).",
+      "values": [
+        {
+          "quantity": "(50, 75] m shell rate, control map K-35-074-3, asserted constant across all four runs",
+          "value_verbatim": "0 %",
+          "value_parsed": 0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs[*].per_map[?(@.map_name=='K-35-074-3')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "count, runs in the per-map shell-variance comparison",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-067-2, T=0.3 text-HIGH run",
+          "value_verbatim": "42.86 %",
+          "value_parsed": 42.86,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-067-2')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-067-2, T=0.7 text-HIGH run",
+          "value_verbatim": "75.00 %",
+          "value_parsed": 75.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-067-2, text-MIN run",
+          "value_verbatim": "50.00 %",
+          "value_parsed": 50.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-2')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-067-3, text-MIN run",
+          "value_verbatim": "28.57 %",
+          "value_parsed": 28.57,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-3')].shell_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b085] Scope decisions for this file, which covers lines 132-247 only; lines 1-131 of the same document are batch b084's assignment and were read for context only. Out of C4 scope per instrument rule 5 and therefore not extracted: Obs identifiers (Obs 296, 300, 301, 302); the map-sheet names (K-35-067-2 and siblings), the '1981' in 'Soviet 1981 edition', and the raster path `inputs/rasters/Russian1981_32635/`, all of which are edition or path identifiers; the run labels 'T=0.3', 'T=0.7', 'text-MIN' and 'image', which name conditions rather than assert temperatures; and the '(50, 75] m' shell bounds, which identify the annulus rather than assert a measured quantity — note that the anchor does record them at $.shell_inner_m / $.shell_outer_m should triage prefer to treat them as claims. 'top-3' is treated as a set label for the per-run high-pull triple rather than a claim, because the selection rule it names is stated in the document's Methods section at lines 55-56 (batch b084's range). Bare determiners ('both groups', 'a single detection', 'only K-35-051-3') are not extracted, but counts spelled as words ('nine high-pull maps', 'four runs', 'Twelve maps', 'All three sheets', 'two ... mechanisms') are, with the more rhetorical ones flagged individually. Anchor note: the document names its two sources in its Methods and Provenance sections — results/55maps-per-map-shell-variance/per_map_shell_rates.json (per-map shell rates, run keys 't0.3' / 't0.7' / 'image' / 'text-min') and results/55maps-fp-classification/fp_classifications.json (a flat array of per-FP records keyed by map_name) — and both are used as anchors here. Per-map false-positive totals, medians, and group ranges require a scripted group-by over the latter and are recorded as recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          141
+        ],
+        "section": "Cross-cut analysis — A control is visually indistinguishable from the high-pull leader"
+      },
+      "claim_text": "All three\nsheets show the same heavily forested mountainous terrain, dense contours,\nsparse settlement, similar river-network topology, and the same Soviet 1981\nedition appearance.",
+      "values": [
+        {
+          "quantity": "count, map sheets compared in the visual-indistinguishability argument (K-35-074-3, K-35-067-2, K-35-067-3)",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Borderline inclusion, flagged for possible pruning: 'All three sheets' counts the three map sheets named in the immediately preceding sentence, so it is a self-referential prose count rather than a measured quantity, and no artefact enumerates this comparison set. The '1981' in 'Soviet 1981 edition appearance' is an edition year and is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          148
+        ],
+        "section": "Cross-cut analysis — Image-track and text-track tails do not overlap meaningfully"
+      },
+      "claim_text": "Of the nine high-pull maps, only K-35-051-3 appears in both a text-track top-3\n(T=0.3, T=0.7) and the image-track top-3.",
+      "values": [
+        {
+          "quantity": "count, high-pull maps inspected (union of the per-run top-3 triples across the four runs)",
+          "value_verbatim": "nine",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The nine-map set is enumerated in this document's own Methods section (lines 57-59, batch b084's range) — prose, so not anchored to per rule 2. The count is recomputable as the size of the union of the top-3 per-map shell rates across $.runs['t0.3'], $.runs['t0.7'], $.runs['image'] and $.runs['text-min'] in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          150
+        ],
+        "section": "Cross-cut analysis — Image-track and text-track tails do not overlap meaningfully"
+      },
+      "claim_text": "K-35-067-2 is the multi-run text-track\nleader but ranks at 31.58 % on the image run (well below the image top-3\nthreshold of 40 %).",
+      "values": [
+        {
+          "quantity": "(50, 75] m shell rate, K-35-067-2, image run",
+          "value_verbatim": "31.58 %",
+          "value_parsed": 31.58,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['image'].per_map[?(@.map_name=='K-35-067-2')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "shell rate at the image-run top-3 cut-off (third-highest per-map image rate)",
+          "value_verbatim": "40 %",
+          "value_parsed": 40,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 40 % 'top-3 threshold' is not a stored scalar; it is the third-largest value of $.runs['image'].per_map[*].shell_rate and needs a scripted rank computation, so it carries method recompute-script with no path (v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          155
+        ],
+        "section": "Cross-cut analysis — Image-track and text-track tails do not overlap meaningfully"
+      },
+      "claim_text": "This near-disjoint structure\nis consistent with two qualitatively different mechanisms by track (per Obs 301:\nimage-track is uniformly distributed across all maps; text-track is bimodal\nwith a sparse high-pull tail), rather than with a single shared cartographic\nmechanism.",
+      "values": [
+        {
+          "quantity": "count, distinct distractor-pull mechanisms posited by track",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Borderline inclusion, flagged for possible pruning: 'two qualitatively different mechanisms' is an interpretive count of proposed explanations, not a measured quantity, and no artefact can decide it. Included because rule 4 of the task instrument prefers over-inclusion to omission."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          160
+        ],
+        "section": "Cross-cut analysis — FP categorical distributions are similar between high-pull and control groups"
+      },
+      "claim_text": "The Obs 302 FP-classification audit shows that across both groups, contour-ring\nis the dominant FP category (high-pull: present in 8 of 9 maps; controls: 3 of 3).",
+      "values": [
+        {
+          "quantity": "count, high-pull maps on which the contour-ring FP category is present",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, high-pull maps inspected (denominator)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, control maps on which the contour-ring FP category is present",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, low-pull control maps inspected (denominator)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "All four values require a scripted group-by over the anchor's per-FP records (filter on $[?(@.map_name=='<map>')] and count $.category == 'contour-ring'), against the nine high-pull and three control maps enumerated in this document's Methods section at lines 57-60 (batch b084's range). The document's own comparison table at lines 105-116 (also b084's range) lists the per-map dominant categories."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          162
+        ],
+        "section": "Cross-cut analysis — FP categorical distributions are similar between high-pull and control groups"
+      },
+      "claim_text": "Absolute FP counts are similar: high-pull maps span 4–20 total FPs across the\nfour runs (median 12); controls span 8–19 (median 14).",
+      "values": [
+        {
+          "quantity": "minimum total FP count across the four runs, high-pull maps",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum total FP count across the four runs, high-pull maps",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, runs over which FP totals are pooled",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-fp-classification/category_distribution.json#len:$.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "median total FP count, high-pull maps",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "minimum total FP count across the four runs, control maps",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum total FP count across the four runs, control maps",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "median total FP count, control maps",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Ranges and medians need a scripted per-map group-by over the anchor. The run count uses a cross-file locator (v1.2 amendment 2) into the sibling category_distribution.json, whose $.runs list enumerates the four classified runs; the anchor itself carries no run-count scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          164
+        ],
+        "section": "Cross-cut analysis — FP categorical distributions are similar between high-pull and control groups"
+      },
+      "claim_text": "The control K-35-077-4\nhas 19 FPs — among the highest counts in the entire 12-map sample — yet a 0 %\nshell rate.",
+      "values": [
+        {
+          "quantity": "total FP count across the four runs, control map K-35-077-4",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-077-4')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count, maps in the visual-inspection sample (nine high-pull plus three controls)",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, control map K-35-077-4, across all four runs",
+          "value_verbatim": "0 %",
+          "value_parsed": 0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "results/55maps-per-map-shell-variance/per_map_shell_rates.json#$.runs[*].per_map[?(@.map_name=='K-35-077-4')].shell_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 12-map sample is defined by this document's own Methods section (lines 55-60, batch b084's range) and has no repo artefact enumerating it, hence anchor-unknown; the FP-classification anchor covers all 55 corpus maps, not just the twelve inspected. The shell rate uses a cross-file locator into per_map_shell_rates.json (v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          173
+        ],
+        "section": "Cross-cut analysis — Small-denominator arithmetic accounts for the most extreme rates"
+      },
+      "claim_text": "Several of the highest per-map rates resolve to a 1–3 detection count when the\nnumerator and denominator are inspected.",
+      "values": [
+        {
+          "quantity": "minimum in-shell detection count behind the highest per-map rates",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum in-shell detection count behind the highest per-map rates",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The range summarises $.runs[*].per_map[*].n_in_shell over the highest-rate cells and needs a scripted selection; the individual cells it summarises are extracted separately at lines 173-175."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          173,
+          175
+        ],
+        "section": "Cross-cut analysis — Small-denominator arithmetic accounts for the most extreme rates"
+      },
+      "claim_text": "K-35-067-2 at T=0.7 = 3 of 4 (75 %);\nK-35-056-3 at image = 3 of 6 (50 %); K-35-067-2 at text-MIN = 3 of 6 (50 %);\nK-35-042-3 at T=0.3 = 1 of 3 (33 %); K-35-051-3 at T=0.7 = 1 of 3 (33 %).",
+      "values": [
+        {
+          "quantity": "in-shell detections, K-35-067-2, T=0.7 run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].n_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "total detections, K-35-067-2, T=0.7 run",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-067-2, T=0.7 run",
+          "value_verbatim": "75 %",
+          "value_parsed": 75,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "in-shell detections, K-35-056-3, image run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['image'].per_map[?(@.map_name=='K-35-056-3')].n_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "total detections, K-35-056-3, image run",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['image'].per_map[?(@.map_name=='K-35-056-3')].n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-056-3, image run",
+          "value_verbatim": "50 %",
+          "value_parsed": 50,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['image'].per_map[?(@.map_name=='K-35-056-3')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "in-shell detections, K-35-067-2, text-MIN run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-2')].n_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "total detections, K-35-067-2, text-MIN run",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-2')].n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-067-2, text-MIN run",
+          "value_verbatim": "50 %",
+          "value_parsed": 50,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-2')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "in-shell detections, K-35-042-3, T=0.3 run",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-042-3')].n_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "total detections, K-35-042-3, T=0.3 run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-042-3')].n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-042-3, T=0.3 run",
+          "value_verbatim": "33 %",
+          "value_parsed": 33,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-042-3')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "in-shell detections, K-35-051-3, T=0.7 run",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-051-3')].n_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "total detections, K-35-051-3, T=0.7 run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-051-3')].n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "(50, 75] m shell rate, K-35-051-3, T=0.7 run",
+          "value_verbatim": "33 %",
+          "value_parsed": 33,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-051-3')].shell_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Five per-map cells, each quoted as numerator / denominator / rate. The rates are quoted here to whole percentage points while the comparison table at lines 88-99 (batch b084's range) quotes two decimal places for the same cells; recorded at quoted precision per the instrument's known-traps note. The '=' signs are the document's shorthand for 'was', not asserted equalities to be recomputed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          176,
+          177
+        ],
+        "section": "Cross-cut analysis — Small-denominator arithmetic accounts for the most extreme rates"
+      },
+      "claim_text": "Removing or adding a single detection in these cells flips the per-map rate by\n20–25 percentage points.",
+      "values": [
+        {
+          "quantity": "lower bound, sensitivity of the per-map shell rate to a one-detection change in the small-denominator cells",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "percentage points",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper bound, sensitivity of the per-map shell rate to a one-detection change in the small-denominator cells",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "percentage points",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A sensitivity range derived by perturbing the numerators of the five cells at lines 173-175 by one; needs a scripted recomputation over $.runs[*].per_map[*].n_in_shell and .n_detections. 'a single detection' is the perturbation unit rather than an asserted measurement and is not extracted as a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          188,
+          190
+        ],
+        "section": "Paper implications — suggested phrasing (block quote)"
+      },
+      "claim_text": "> Per-map (50, 75] m shell rates are heavily right-skewed on the text track\n> (median 0 %; long tail to 33–75 %), indicating that the corpus-level rate of\n> 3–4 % is driven by 2–3 maps rather than uniform across the corpus.",
+      "values": [
+        {
+          "quantity": "median per-map (50, 75] m shell rate, text-track runs",
+          "value_verbatim": "0 %",
+          "value_parsed": 0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lower end of the per-map shell-rate tail, text-track runs",
+          "value_verbatim": "33",
+          "value_parsed": 33,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper end of the per-map shell-rate tail, text-track runs",
+          "value_verbatim": "75 %",
+          "value_parsed": 75,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lower bound, corpus-level (50, 75] m shell rate across the text-track runs",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper bound, corpus-level (50, 75] m shell rate across the text-track runs",
+          "value_verbatim": "4 %",
+          "value_parsed": 4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lower bound, count of maps driving the corpus-level text-track shell rate",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper bound, count of maps driving the corpus-level text-track shell rate",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Suggested paper phrasing, but still a set of claims the document asserts, so extracted. All seven values summarise across the three text-track runs ($.runs['t0.3'], $.runs['t0.7'], $.runs['text-min']) and need scripted medians, extrema and counts; the corpus-rate range should be checked against $.runs['t0.3'].aggregate.corpus_rate, $.runs['t0.7'].aggregate.corpus_rate and $.runs['text-min'].aggregate.corpus_rate. Note the anchor stores rates as fractions while the document quotes percentages."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          195
+        ],
+        "section": "Paper implications — suggested phrasing (block quote)"
+      },
+      "claim_text": "Control maps\n> with visually indistinguishable cartographic character to the most\n> high-pull text-track map (K-35-067-2) record 0 % shell rates",
+      "values": [
+        {
+          "quantity": "(50, 75] m shell rate, the control map visually matched to K-35-067-2 (K-35-074-3), all runs",
+          "value_verbatim": "0 %",
+          "value_parsed": 0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs[*].per_map[?(@.map_name=='K-35-074-3')].shell_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The plural 'Control maps' generalises what the body of the document (lines 135-143) states for the single visually matched control K-35-074-3; the anchor path resolves that map."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          197,
+          198
+        ],
+        "section": "Paper implications — suggested phrasing (block quote)"
+      },
+      "claim_text": "> right-skew is most parsimoniously attributed to small-denominator variance\n> on text-track sheets (where n_detections is typically 4–20 per map) compounded",
+      "values": [
+        {
+          "quantity": "typical lower bound, per-map detection count on text-track sheets",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "typical upper bound, per-map detection count on text-track sheets",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A 'typical' range over $.runs[*].per_map[*].n_detections for the three text-track runs; needs a scripted summary. Note the same 4-20 pair is used at line 161 for FP totals rather than detections — the two spans are recorded separately and the difference in quantity is not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          203,
+          204
+        ],
+        "section": "Paper implications"
+      },
+      "claim_text": "For the image track, the per-map distribution is broadly centred (Obs 301:\nmedian 15.4 %)",
+      "values": [
+        {
+          "quantity": "median per-map (50, 75] m shell rate, image run",
+          "value_verbatim": "15.4 %",
+          "value_parsed": 15.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Median over $.runs['image'].per_map[*].shell_rate; the anchor holds no median scalar. Attributed to Obs 301 in docs/notes/reflections/working-notes.md, which is prose and therefore not anchored to per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          210
+        ],
+        "section": "Caveats and limitations — 1. Sample size"
+      },
+      "claim_text": "1. **Sample size.** Twelve maps inspected (9 + 3) is a small sample.",
+      "values": [
+        {
+          "quantity": "count, maps visually inspected for this characterisation",
+          "value_verbatim": "Twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, high-pull maps inspected",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, low-pull control maps inspected",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The inspection sample is defined only in this document's own Methods section (lines 55-60, batch b084's range) — prose, so not anchored per rule 2. The span also asserts the internal identity 9 + 3 = Twelve; it is not recorded as an arithmetic value because both operands are themselves anchor-unknown and v1.2 amendment 1 forbids operands inheriting a derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          213
+        ],
+        "section": "Caveats and limitations — 1. Sample size"
+      },
+      "claim_text": "Stronger\n   counter-examples (a feature shared by 8 of 9 high-pull maps and absent in all\n   3 controls) would have been detectable; a feature shared by, e.g., 5 of 9\n   may not have been.",
+      "values": [
+        {
+          "quantity": "hypothetical count of high-pull maps sharing a feature that would have been detectable",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, high-pull maps inspected (denominator)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, low-pull control maps inspected",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "hypothetical count of high-pull maps sharing a feature that might not have been detectable",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, high-pull maps inspected (denominator)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The 8 and the 5 are hypothetical detection-power thresholds, not measurements, and are flagged for possible pruning; the 9 and 3 denominators are the real inspection-set sizes but are defined only in this document's Methods prose (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          216,
+          217
+        ],
+        "section": "Caveats and limitations — 2. Qualitative judgement"
+      },
+      "claim_text": "2. **Qualitative judgement.** The \"sparse / moderate / dense\" labels are\n   subjective and were applied by visual inspection at 2,048 px.",
+      "values": [
+        {
+          "quantity": "preview width used for the qualitative visual inspection",
+          "value_verbatim": "2,048",
+          "value_parsed": 2048,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed artefact records the previews: the document's Provenance section says they were generated on the fly with `gdal_translate -outsize 2048 0 -of PNG -scale`, and a search for a 2,048 px preview under results/55maps-per-map-shell-variance/figures/ found only per_map_rate_distribution.png. The only in-repo statement of the width is this document's own prose (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          221,
+          221
+        ],
+        "section": "Caveats and limitations — 3. Resolution constraint"
+      },
+      "claim_text": "3. **Resolution constraint.** At 2,048 px wide, fine-grained features",
+      "values": [
+        {
+          "quantity": "preview width at which fine-grained cartographic features are asserted illegible",
+          "value_verbatim": "2,048",
+          "value_parsed": 2048,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same width as the claim at lines 216-217; no committed preview artefact exists to anchor it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          225,
+          226
+        ],
+        "section": "Caveats and limitations — 3. Resolution constraint"
+      },
+      "claim_text": "The Obs 302 VLM-based FP classification, which\n   operates on 150 m crops (much higher effective resolution per FP), provides",
+      "values": [
+        {
+          "quantity": "crop size used by the 55-map FP-classification pass",
+          "value_verbatim": "150",
+          "value_parsed": 150.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "CROP_SIZE_M",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/55maps-fp-classify.py",
+        "path": "CROP_SIZE_M"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the crop size is a module-level constant (`CROP_SIZE_M: float = 150.0`) in the script that produced results/55maps-fp-classification/fp_classifications.json. The v1.1 calibration rule expects such anchors to route to triage rather than resolve mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          246,
+          246
+        ],
+        "section": "Provenance"
+      },
+      "claim_text": "- Previews generated: `gdal_translate -outsize 2048 0 -of PNG -scale`",
+      "values": [
+        {
+          "quantity": "preview width parameter passed to gdal_translate when generating the inspection previews",
+          "value_verbatim": "2048",
+          "value_parsed": 2048,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The '0' in `-outsize 2048 0` is gdal_translate's auto-height placeholder, not an asserted quantity, and is not extracted. No preview artefact is committed, so the width cannot be anchored to anything but this document's own prose."
+    }
+  ]
+}

@@ -1,0 +1,2300 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md",
+    "git_blob": "8ddbea3169211de19db601f0bb71edd8a47fd84c",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          5
+        ],
+        "section": "Front matter — Obs 301 framing"
+      },
+      "claim_text": "Per Obs 301, the per-map (50, 75] m shell-rate distribution on the 55-map text-track\nruns is heavily right-skewed: median 0 % across three of four runs, with corpus\nrates of 3–4 % driven by 2–3 high-pull maps showing rates of 33–75 %.",
+      "values": [
+        {
+          "quantity": "shell inner radius, per-map shell-rate analysis",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_inner_m",
+          "method": "read"
+        },
+        {
+          "quantity": "shell outer radius, per-map shell-rate analysis",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.shell_outer_m",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, per-map shell-variance corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.map_universe_size",
+          "method": "read"
+        },
+        {
+          "quantity": "median per-map (50, 75] m shell rate",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "%",
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of runs whose median per-map shell rate is 0 %",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total run count in the per-map shell-rate analysis",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "corpus (50, 75] m shell rate, lower end of the text-track range",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['t0.7'].aggregate.corpus_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "corpus (50, 75] m shell rate, upper end of the text-track range",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.runs['t0.3'].aggregate.corpus_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "count of high-pull maps driving the corpus rate, lower end",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of high-pull maps driving the corpus rate, upper end",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "per-map shell rate of the high-pull maps, lower end of range",
+          "value_verbatim": "33",
+          "value_parsed": 33,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "per-map shell rate of the high-pull maps, upper end of range",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b084] Scope for this batch is lines 1-131 only (a sibling agent covers 132-247). Scope decisions: Obs identifiers (Obs 301, Obs 302), condition/run names (T=0.3, T=0.7, image (T=0.7), text-MIN), map-sheet names (K-35-067-2, K-35-054-2_Atolov_4326, the '1981' in 'Russian1981_32635', etc.) and numbers inside file paths are out of C4 scope per instrument rule 5. The '(50, 75] m' shell bounds are extracted once at line 3 as the analysis parameter actually run; the repeat at line 35 is treated as a shell identifier. The quoted column label \"Runs in top-3\" (line 81) and the 'Top-3 in' table header (line 86) are names; the selection rule 'top-3 per run' (line 55) IS extracted. Positional descriptors ('mountainous L half', 'forest L portion') are qualitative, not quantities. The '0' in 'gdal_translate -outsize 2048 0' is gdal's auto-height sentinel, not an asserted quantity. SCALE CONVENTION: this document quotes shell rates as percentages while the anchor artefact results/55maps-per-map-shell-variance/per_map_shell_rates.json stores them as fractions (0.75 for '75.00 %'); every such value carries unit '%' per instrument v1.2 amendment 6 so the harness can bridge the scale. MAX-RATE CONVENTION: the comparison table's 'Max rate' column is defined at line 81 as the maximum across the four runs, so each row is emitted as arithmetic with expression '100 * max(a, b, c, d)' over the four per-run shell_rate operands; if the harness cannot evaluate max(), every per-run operand path is present for triage. Preview PNGs are not committed and inputs/rasters/Russian1981_32635/*.tif is present on disk but untracked ('git ls-files inputs/rasters/' returns nothing), so preview-resolution and raster-size claims are anchor-unknown. Claim-specific: the 3–4 % corpus-rate endpoints are rounded summaries over the three text-track runs (t0.3, t0.7, text-min) — the minimum and maximum text-track corpus_rate paths are given, but the endpoints are quoted to whole percent so triage owns the rounding tolerance. The median, the 'three of four runs' count, the '2–3 maps' count and the 33–75 % rate range are all aggregations over $.runs[*].per_map[*].shell_rate and are marked recompute-script rather than pinned to a single locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          12,
+          14
+        ],
+        "section": "Executive summary — verdict"
+      },
+      "claim_text": "**not supported** by qualitative inspection of the nine high-pull maps and three\nlow-pull controls. At 2,048 px-wide preview resolution:",
+      "values": [
+        {
+          "quantity": "count, high-pull maps inspected",
+          "value_verbatim": "nine",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, low-pull control maps inspected",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "preview raster width used for visual inspection",
+          "value_verbatim": "2,048",
+          "value_parsed": 2048,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The nine high-pull maps are defined at line 55 as the union of the top-3 per run across the four runs, so the count is recomputable from $.runs[*].per_map[*].shell_rate in the anchor. The three controls are a selection from among the many maps at 0 % in all four runs — a choice, not a derivation — hence anchor-unknown. No preview PNG is committed to the repository, so the 2,048 px preview width is anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "Executive summary — point 1"
+      },
+      "claim_text": "1. The nine high-pull maps span the full range of cartographic landscape types",
+      "values": [
+        {
+          "quantity": "count, high-pull maps inspected",
+          "value_verbatim": "nine",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Repeat of the nine-map count first asserted at line 13."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "Executive summary — point 2"
+      },
+      "claim_text": "2. Critically, control map K-35-074-3 (0 % shell rate in all four runs) is",
+      "values": [
+        {
+          "quantity": "per-map (50, 75] m shell rate, K-35-074-3, all four runs",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "%",
+          "kind": "metric",
+          "path": "$.runs[*].per_map[?(@.map_name=='K-35-074-3')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "total run count in the per-map shell-rate analysis",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0 % value uses the [*] constant-collapse form across the four run keys (instrument v1.2 amendment 7): the claim is that every run's shell_rate for this map is 0."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          33
+        ],
+        "section": "Executive summary — point 3"
+      },
+      "claim_text": "   three controls are similar — contour-rings dominate in both groups, and\n   absolute FP counts on controls (n = 8, 14, 19) are within or above the range\n   of high-pull maps (n = 4–20).",
+      "values": [
+        {
+          "quantity": "count, low-pull control maps inspected",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total false positives, control map K-35-074-3, all four runs combined",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-074-3')]",
+          "method": "read"
+        },
+        {
+          "quantity": "total false positives, control map K-35-065-3_Glavan_4326, all four runs combined",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-065-3_Glavan_4326')]",
+          "method": "read"
+        },
+        {
+          "quantity": "total false positives, control map K-35-077-4, all four runs combined",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-077-4')]",
+          "method": "read"
+        },
+        {
+          "quantity": "total false positives per high-pull map, lower end of range",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total false positives per high-pull map, upper end of range",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document lists the three control FP counts in ascending order (8, 14, 19) without naming which control each belongs to; the mapping used here (8 → K-35-074-3, 14 → K-35-065-3_Glavan_4326, 19 → K-35-077-4) is read off the same document's FP-distribution table rows at lines 114-116 and should be confirmed at triage. The 4–20 range endpoints are minima/maxima over the nine high-pull maps' FP counts, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          39
+        ],
+        "section": "Executive summary — point 4"
+      },
+      "claim_text": "   by the **arithmetic of small denominators** (e.g., K-35-067-2 at T=0.7 has\n   3 in-shell of only 4 total detections — the 75 % rate is a 3-detection signal),",
+      "values": [
+        {
+          "quantity": "in-shell detections, K-35-067-2, T=0.7 text-HIGH run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].n_in_shell",
+          "method": "read"
+        },
+        {
+          "quantity": "total detections, K-35-067-2, T=0.7 text-HIGH run",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "per-map (50, 75] m shell rate, K-35-067-2, T=0.7 text-HIGH run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "%",
+          "kind": "metric",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].shell_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "in-shell detections behind the 75 % rate, K-35-067-2, T=0.7 text-HIGH run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].n_in_shell",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The trailing '3-detection signal' restates the same in-shell count and is emitted as a fourth value per instrument rule 1 (every checkable value in the span, in order of appearance)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          58
+        ],
+        "section": "Methods — maps inspected"
+      },
+      "claim_text": "- **Maps inspected (12).** Nine high-pull maps drawn from the prompt — top-3 per\n  run across T=0.3 text-HIGH, T=0.7 text-HIGH, image (T=0.7), and text-MIN:\n  K-35-067-2, K-35-042-3, K-35-051-3, K-35-054-2_Atolov_4326, K-35-056-3,\n  K-35-066-3, K-35-076-3, K-35-055-1, K-35-067-3.",
+      "values": [
+        {
+          "quantity": "count, maps visually inspected for this characterisation",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, high-pull maps inspected",
+          "value_verbatim": "Nine",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maps taken per run when selecting the high-pull set",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "'12' is the document's own inspection count (nine high-pull plus three controls); no committed artefact records the inspected set, so it is anchor-unknown. The nine-map set and the top-3-per-run rule are recomputable from $.runs[*].per_map[*].shell_rate in the anchor. Run labels (T=0.3 text-HIGH, T=0.7 text-HIGH, image (T=0.7), text-MIN) are condition names, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          60
+        ],
+        "section": "Methods — controls"
+      },
+      "claim_text": "Three low-pull controls\n  selected from maps with 0 % shell rate across all four runs:\n  K-35-074-3, K-35-077-4, K-35-065-3_Glavan_4326.",
+      "values": [
+        {
+          "quantity": "count, low-pull control maps inspected",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "per-map (50, 75] m shell rate of each control map, all four runs",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total run count in the per-map shell-rate analysis",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0 % assertion spans three maps at once, so no single locator covers it; the three per-map filter paths are $.runs[*].per_map[?(@.map_name=='K-35-074-3')].shell_rate and the equivalents for K-35-077-4 and K-35-065-3_Glavan_4326."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          64
+        ],
+        "section": "Methods — inspection method"
+      },
+      "claim_text": "- **Inspection method.** Each raster\n  (`inputs/rasters/Russian1981_32635/<map>.tif`, 40–52 MB GeoTIFFs) was\n  downsampled to a 2,048 px-wide PNG preview using\n  `gdal_translate -outsize 2048 0 -of PNG -scale`, then visually inspected.",
+      "values": [
+        {
+          "quantity": "source GeoTIFF file size, lower end of range",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "MB",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "source GeoTIFF file size, upper end of range",
+          "value_verbatim": "52",
+          "value_parsed": 52,
+          "unit": "MB",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "preview raster width used for visual inspection",
+          "value_verbatim": "2,048",
+          "value_parsed": 2048,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "gdal_translate -outsize width argument as run",
+          "value_verbatim": "2048",
+          "value_parsed": 2048,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "inputs/rasters/Russian1981_32635/*.tif exists on disk but is not git-tracked ('git ls-files inputs/rasters/' returns nothing) and no raster-size manifest was found under results/ or inputs/, so the 40–52 MB range cannot be decided from a committed artefact. No preview PNG is committed either. The '0' in '-outsize 2048 0' is gdal's auto-height sentinel and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          65
+        ],
+        "section": "Methods — inspection method"
+      },
+      "claim_text": "One\n  preview per map was sufficient for cartographic-feature inspection;",
+      "values": [
+        {
+          "quantity": "previews generated and inspected per map",
+          "value_verbatim": "One",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No preview PNG is committed to the repository."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "Methods — resolution caveat"
+      },
+      "claim_text": "- **Resolution caveat.** At 2,048 px wide the broad cartographic character",
+      "values": [
+        {
+          "quantity": "preview raster width used for visual inspection",
+          "value_verbatim": "2,048",
+          "value_parsed": 2048,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Repeat of the preview width first asserted at line 14."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          77
+        ],
+        "section": "Methods — calibration"
+      },
+      "claim_text": "  vegetation hatching, and contour density were applied consistently across all\n  12 maps via direct visual comparison.",
+      "values": [
+        {
+          "quantity": "count, maps visually inspected for this characterisation",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Repeat of the inspected-map count first asserted at line 55."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "Comparison table — preamble"
+      },
+      "claim_text": "Twelve maps. Max shell rate is the maximum across the four runs.",
+      "values": [
+        {
+          "quantity": "count, maps visually inspected for this characterisation",
+          "value_verbatim": "Twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total run count in the per-map shell-rate analysis",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This sentence defines the table's 'Max rate' column as a maximum across the four runs, which is why each table row below is emitted as arithmetic over four per-run operands."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          84
+        ],
+        "section": "Comparison table — preamble"
+      },
+      "claim_text": "Numeric-label density, vegetation hatching, contour\ndensity, and settlement density are coarse qualitative judgements at 2,048 px.",
+      "values": [
+        {
+          "quantity": "preview raster width at which the qualitative judgements were made",
+          "value_verbatim": "2,048",
+          "value_parsed": 2048,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Repeat of the preview width first asserted at line 14."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          88
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-067-2 | T=0.3, T=0.7, MIN | 75.00 % | moderate | heavy (forested) | dense (mountainous) | sparse | river/stream system; high-relief mountainous |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-067-2 (comparison-table row)",
+          "value_verbatim": "75.00",
+          "value_parsed": 75.0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-067-2')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-067-2')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-2')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-067-2')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-2')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-067-2')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-2')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-042-3 | T=0.3 | 33.33 % | moderate | moderate-heavy | dense (mountainous L half) | moderate | mixed valley + mountain; multiple settlements |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-042-3 (comparison-table row)",
+          "value_verbatim": "33.33",
+          "value_parsed": 33.33,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-042-3')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-042-3')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-042-3')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-042-3')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-042-3')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-042-3')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-042-3')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-042-3')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-051-3 | T=0.3, T=0.7 | 36.36 % | moderate-dense | moderate | moderate | moderate-dense | mixed forest/agricultural mosaic; multiple villages |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-051-3 (comparison-table row)",
+          "value_verbatim": "36.36",
+          "value_parsed": 36.36,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-051-3')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-051-3')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-051-3')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-051-3')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-051-3')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-051-3')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-051-3')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-051-3')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-054-2_Atolov_4326 | T=0.7 | 25.00 % | dense (near villages) | sparse | light-moderate | dense (many villages) | open agricultural plain; field-pattern hatching |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-054-2_Atolov_4326 (comparison-table row)",
+          "value_verbatim": "25.00",
+          "value_parsed": 25.0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-054-2_Atolov_4326')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-054-2_Atolov_4326')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-054-2_Atolov_4326')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-054-2_Atolov_4326')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-054-2_Atolov_4326')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-054-2_Atolov_4326')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-054-2_Atolov_4326')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-054-2_Atolov_4326')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-056-3 | image | 50.00 % | sparse | moderate (forest L portion) | moderate (coastal hills) | sparse | **coastal — large sea (Black Sea) covers ~50 % of sheet** |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-056-3 (comparison-table row)",
+          "value_verbatim": "50.00",
+          "value_parsed": 50.0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-056-3')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-056-3')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-056-3')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-056-3')].shell_rate"
+            }
+          ]
+        },
+        {
+          "quantity": "share of the K-35-056-3 sheet covered by sea (Black Sea)",
+          "value_verbatim": "~50",
+          "value_parsed": 50,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-056-3')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-056-3')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-056-3')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-056-3')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "The '~50 % of sheet' sea-coverage figure is an eyeball estimate from the 2,048 px preview with no committed artefact behind it; the approx marker is retained in value_verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-066-3 | image | 42.86 % | moderate | moderate-heavy (patches) | moderate-dense | moderate | hilly mixed forest/open; villages and small streams |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-066-3 (comparison-table row)",
+          "value_verbatim": "42.86",
+          "value_parsed": 42.86,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-066-3')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-066-3')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-066-3')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-066-3')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-066-3')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-066-3')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-066-3')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-066-3')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-076-3 | image | 40.00 % | moderate | moderate | dense (mountainous) | moderate | mountainous valley network; river systems |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-076-3 (comparison-table row)",
+          "value_verbatim": "40.00",
+          "value_parsed": 40.0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-076-3')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-076-3')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-076-3')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-076-3')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-076-3')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-076-3')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-076-3')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-076-3')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-055-1 | MIN | 42.86 % | moderate | sparse | light | dense (many villages) | open agricultural; field-pattern hatching |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-055-1 (comparison-table row)",
+          "value_verbatim": "42.86",
+          "value_parsed": 42.86,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-055-1')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-055-1')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-055-1')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-055-1')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-055-1')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-055-1')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-055-1')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-055-1')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-067-3 | MIN | 30.00 % | moderate | heavy (forested) | dense (mountainous) | sparse | heavily forested mountains; same character as K-35-067-2 |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-067-3 (comparison-table row)",
+          "value_verbatim": "30.00",
+          "value_parsed": 30.0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-067-3')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-3')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-067-3')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-3')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-067-3')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-067-3')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-067-3')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-067-3')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-074-3 (control) | — | 0.00 % | moderate | heavy (forested) | dense (mountainous) | sparse | **visually indistinguishable from K-35-067-2/067-3** |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-074-3 (comparison-table row)",
+          "value_verbatim": "0.00",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-074-3')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-074-3')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-074-3')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-074-3')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-074-3')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-074-3')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-074-3')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-074-3')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-077-4 (control) | — | 0.00 % | moderate | sparse | light | moderate | major river valley running W–E; open ground |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-077-4 (comparison-table row)",
+          "value_verbatim": "0.00",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-077-4')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-077-4')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-077-4')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-077-4')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-077-4')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-077-4')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-077-4')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-077-4')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "Comparison table"
+      },
+      "claim_text": "| K-35-065-3_Glavan_4326 (control) | — | 0.00 % | moderate | moderate | moderate | moderate-dense | mixed forest/open with multiple settlements; similar to K-35-051-3 / K-35-066-3 |",
+      "values": [
+        {
+          "quantity": "maximum per-map (50, 75] m shell rate across the four runs, K-35-065-3_Glavan_4326 (comparison-table row)",
+          "value_verbatim": "0.00",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * max(a, b, c, d)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-065-3_Glavan_4326')].shell_rate"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-065-3_Glavan_4326')].shell_rate"
+            },
+            {
+              "name": "c",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['image'].per_map[?(@.map_name=='K-35-065-3_Glavan_4326')].shell_rate"
+            },
+            {
+              "name": "d",
+              "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+              "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-065-3_Glavan_4326')].shell_rate"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null,
+        "expression": "100 * max(a, b, c, d)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.3'].per_map[?(@.map_name=='K-35-065-3_Glavan_4326')].shell_rate"
+          },
+          {
+            "name": "b",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['t0.7'].per_map[?(@.map_name=='K-35-065-3_Glavan_4326')].shell_rate"
+          },
+          {
+            "name": "c",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['image'].per_map[?(@.map_name=='K-35-065-3_Glavan_4326')].shell_rate"
+          },
+          {
+            "name": "d",
+            "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+            "path": "$.runs['text-min'].per_map[?(@.map_name=='K-35-065-3_Glavan_4326')].shell_rate"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "FP category distribution per map — heading"
+      },
+      "claim_text": "### FP category distribution per map (Obs 302 source data, all four runs combined)",
+      "values": [
+        {
+          "quantity": "run count combined in the FP category classification",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/category_distribution.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the run list in the FP-classification distribution summary (results/55maps-fp-classification/category_distribution.json), which is the scalar-bearing sibling of the per-detection fp_classifications.json used for the row counts below."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-067-2 | 4 | contour-ring (2) | settlement (2) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-067-2, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-067-2')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-067-2, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-067-2' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'settlement', K-35-067-2, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-067-2' && @.category=='settlement')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-042-3 | 11 | contour-ring (6) | benchmark (2), number (2) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-042-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-042-3')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-042-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-042-3' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'benchmark', K-35-042-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-042-3' && @.category=='benchmark')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'number', K-35-042-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-042-3' && @.category=='number')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-051-3 | 17 | settlement (6) | contour-ring (5), water-feature (3), number (3) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-051-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-051-3')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'settlement', K-35-051-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-051-3' && @.category=='settlement')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-051-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-051-3' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'water-feature', K-35-051-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-051-3' && @.category=='water-feature')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'number', K-35-051-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-051-3' && @.category=='number')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-054-2_Atolov_4326 | 6 | contour-ring (3) | number (2) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-054-2_Atolov_4326, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-054-2_Atolov_4326')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-054-2_Atolov_4326, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-054-2_Atolov_4326' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'number', K-35-054-2_Atolov_4326, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-054-2_Atolov_4326' && @.category=='number')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-056-3 | 6 | vegetation (2), settlement (2) | contour-ring (1), number (1) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-056-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-056-3')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'vegetation', K-35-056-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-056-3' && @.category=='vegetation')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'settlement', K-35-056-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-056-3' && @.category=='settlement')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-056-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-056-3' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'number', K-35-056-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-056-3' && @.category=='number')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-066-3 | 14 | contour-ring (7) | number (5) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-066-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-066-3')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-066-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-066-3' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'number', K-35-066-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-066-3' && @.category=='number')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-076-3 | 19 | contour-ring (13) | water-feature (4) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-076-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-076-3')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-076-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-076-3' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'water-feature', K-35-076-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-076-3' && @.category=='water-feature')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-055-1 | 12 | benchmark (4) | contour-ring (3), water-feature (2) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-055-1, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-055-1')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'benchmark', K-35-055-1, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-055-1' && @.category=='benchmark')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-055-1, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-055-1' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'water-feature', K-35-055-1, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-055-1' && @.category=='water-feature')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-067-3 | 20 | contour-ring (5), number (5) | settlement (4), vegetation (3) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-067-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-067-3')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-067-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-067-3' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'number', K-35-067-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-067-3' && @.category=='number')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'settlement', K-35-067-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-067-3' && @.category=='settlement')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'vegetation', K-35-067-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-067-3' && @.category=='vegetation')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-074-3 (control) | 8 | contour-ring (6) | water-feature (1), settlement (1) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-074-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-074-3')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-074-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-074-3' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'water-feature', K-35-074-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-074-3' && @.category=='water-feature')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'settlement', K-35-074-3, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-074-3' && @.category=='settlement')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row counts resolve as filtered lengths over the per-detection classification array; the '(control)' suffix in the document's Map cell is a label, the artefact's map_name carries no suffix."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-077-4 (control) | 19 | contour-ring (10) | settlement (5), water-feature (2) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-077-4, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-077-4')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-077-4, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-077-4' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'settlement', K-35-077-4, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-077-4' && @.category=='settlement')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'water-feature', K-35-077-4, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-077-4' && @.category=='water-feature')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row counts resolve as filtered lengths over the per-detection classification array; the '(control)' suffix in the document's Map cell is a label, the artefact's map_name carries no suffix."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "FP category distribution per map"
+      },
+      "claim_text": "| K-35-065-3_Glavan_4326 (control) | 14 | number (5) | contour-ring (4), settlement (2), water-feature (2) |",
+      "values": [
+        {
+          "quantity": "total false positives, K-35-065-3_Glavan_4326, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-065-3_Glavan_4326')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'number', K-35-065-3_Glavan_4326, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-065-3_Glavan_4326' && @.category=='number')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'contour-ring', K-35-065-3_Glavan_4326, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-065-3_Glavan_4326' && @.category=='contour-ring')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'settlement', K-35-065-3_Glavan_4326, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-065-3_Glavan_4326' && @.category=='settlement')]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives classified 'water-feature', K-35-065-3_Glavan_4326, all four runs combined (FP-distribution table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$[?(@.map_name=='K-35-065-3_Glavan_4326' && @.category=='water-feature')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Row counts resolve as filtered lengths over the per-detection classification array; the '(control)' suffix in the document's Map cell is a label, the artefact's map_name carries no suffix."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "Cross-cut analysis — no shared feature across the high-pull set"
+      },
+      "claim_text": "The nine high-pull maps span the corpus's full landscape range.",
+      "values": [
+        {
+          "quantity": "count, high-pull maps inspected",
+          "value_verbatim": "nine",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Repeat of the nine-map count first asserted at line 13."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Cross-cut analysis — no shared feature across the high-pull set"
+      },
+      "claim_text": "K-35-056-3 is a coastal sheet with sea covering roughly half the area.",
+      "values": [
+        {
+          "quantity": "share of the K-35-056-3 sheet covered by sea",
+          "value_verbatim": "half",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Word-form restatement of the '~50 % of sheet' figure in the comparison table (line 92); included because it is a quantitative assertion, though 'roughly half' is an eyeball estimate with no committed artefact behind it."
+    }
+  ]
+}

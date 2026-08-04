@@ -1,0 +1,1884 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/era1-pv-stage-d/stage-d-findings.md",
+    "git_blob": "4fb8030242327e75bcf8c4632a54c1cda71fd090",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          4
+        ],
+        "section": "Revision banner"
+      },
+      "claim_text": "> **Last revised**: 2026-06-09 (initial publication — consolidates the Session 107\n> PV grid (5 cells) and the Session 108 384 leg into one results narrative).",
+      "values": [
+        {
+          "quantity": "count, cells in the Session 107 Stage-D proposer-verifier grid",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b097] Scope decisions for this batch: dates (2026-06-09), session numbers (Session 107, Session 108), Obs identifiers (Obs 172, 174/175, 179, 351, 352), gap identifiers (GAP-9), cell identifiers (D1), git commit hashes (`4532a896b`, `9451f1b39`), markdown section numerals (`## 1.`, `### 3.5`, `§ 1`), version suffixes (`-v2`), model names (`gemini-3-flash`) and numbers inside file paths, run identifiers and condition names (`pv-diag-384`, `retest-phase2b`, `text-consensus-5of5`, `flash-high-text-16of30`, `_384.json`, `tiering_20m.json`) are out of C4 scope per instrument rule 5. Bare tile-size mentions used only to name a size or a leg (\"the 384-px leg\", \"the 256-px consensus pool\", \"the 256/384/512 column\") are treated as names; tile COUNTS asserted as facts (487 / 1032 / 340) and the tile-size ORDERINGS asserted as results (§ 3.5 table) ARE extracted. \"F1@20 m\" used purely as a metric label is context; the 20 m reporting buffer asserted as the operating point (line 38) is extracted once. This document's Changelog holds a single \"Original publication\" entry with NO before→after table, so none of its values are `historical` — they are live restatements of body claims and are extracted as such (instrument rule 3 / known-traps note). The `len:$` paths on the two score-summary files count top-level cell keys (the files are flat objects keyed by cell name)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          9
+        ],
+        "section": "Preamble"
+      },
+      "claim_text": "This document is the single citable home for the **Stage-D proposer-verifier\nresults** of the Era-1 (Gold-Standard 4-map, curator ground truth) leaderboard\nprogramme.",
+      "values": [
+        {
+          "quantity": "count, maps in the Era-1 Gold-Standard corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Gold-Standard sheet-bounds GeoJSON is the least-writable artefact carrying the map count (one feature per sheet)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          12
+        ],
+        "section": "Preamble"
+      },
+      "claim_text": "Stage-D added a clean PV grid — consensus champions and clean\nsingle-pass cells, each judged by one carry-forward adversarial verifier — to\nreplace the sidelined `proposer-verifier-512` cell (D1) and to close the open\n256-px consensus+verifier question (Obs 351).",
+      "values": [
+        {
+          "quantity": "count, distinct verifier configurations applied across the Stage-D grid",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/verify_adversarial-text.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Included with doubt recorded per instrument rule on over-inclusion: \"one\" here is a uniformity assertion (all six cells share a single verifier configuration) rather than a scalar sitting in any artefact. The named config is prompts/configs/verify_adversarial-text.json; triage could confirm uniformity by comparing verifier_config blocks across the six registered PV conditions in results/conditions-manifest.json. Restated at line 21 (§ 1 heading)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "Preamble"
+      },
+      "claim_text": "It draws together six verified cells produced across two sessions:",
+      "values": [
+        {
+          "quantity": "count, verified Stage-D cells drawn together by this document",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+              "path": "len:$"
+            },
+            {
+              "name": "b",
+              "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+              "path": "len:$"
+            }
+          ]
+        },
+        {
+          "quantity": "count, working sessions across which the six Stage-D cells were produced",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The six-cell total is the sum of the two committed score summaries (five 256/512-px cells + one 384-px cell). The session count is provenance narrative with no repo artefact; included with the doubt recorded (session numbers themselves are out of scope per rule 5, but a count of sessions is a count)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "Preamble — session provenance"
+      },
+      "claim_text": "- **Session 107** (gated API run, ~$5 flex): the five 256/512-px cells.",
+      "values": [
+        {
+          "quantity": "cost USD (pre-run flex-tier estimate), Session 107 gated Stage-D API run",
+          "value_verbatim": "~$5",
+          "value_parsed": 5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, 256/512-px Stage-D cells produced in the Session 107 run",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/era1-pv-stage-d/stage_d_score_summary.json#len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_era1_pv_stage_d.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained in value_verbatim per v1.2 amendment 5. The cost is an estimate, not an audited or billed figure: the only repo trace is the gate note in the header comment block of scripts/run_era1_pv_stage_d.py plus the per-candidate flex estimator in that script (`flex = total * 0.000697`); no billing artefact exists, so the cost value is anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          19
+        ],
+        "section": "Preamble — session provenance"
+      },
+      "claim_text": "- **Session 108** ($0, on-disk re-score): the missing **384-px** consensus+PV\n  leg — see the provenance/disambiguation record in\n  [`384-leg-recon.md`](384-leg-recon.md).",
+      "values": [
+        {
+          "quantity": "cost USD, Session 108 384-px on-disk re-score (asserted as zero API spend)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A zero-spend assertion: the 384 leg is described as a re-score of an already-materialised pool, so no API artefact records it. The named prose record is results/era1-pv-stage-d/384-leg-recon.md — not anchored to, per rule 2 (never anchor prose to prose); triage may chase that document to an artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "§ 1 The carry-forward verifier"
+      },
+      "claim_text": "## 1. The carry-forward verifier (one configuration, all cells)",
+      "values": [
+        {
+          "quantity": "count, verifier configurations shared by all Stage-D cells",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/verify_adversarial-text.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Restates the assertion extracted at lines 9-12; both spans recorded for full enumeration. The leading `1.` is a markdown section numeral, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "§ 1 Verifier configuration table"
+      },
+      "claim_text": "| temperature | 0.0 |",
+      "values": [
+        {
+          "quantity": "verifier temperature as run (carry-forward verifier config table, value column)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/verify_adversarial-text.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claim about what was RUN, so it anchors to the executed config (v1.1 calibration rule), not to the preregistration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "§ 1 Verifier configuration table"
+      },
+      "claim_text": "| passes (n) | 1 |",
+      "values": [
+        {
+          "quantity": "verifier pass count n per Stage-D cell (carry-forward verifier config table, value column)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered PV conditions each carry n_passes for the verifier stage; the 384 consensus+PV condition is used as the representative locator, and triage may collapse across the six registered Stage-D PV conditions."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "§ 1 Verifier configuration table"
+      },
+      "claim_text": "| execution | realtime, flex (50%-off) |",
+      "values": [
+        {
+          "quantity": "vendor flex-tier discount applied to the Stage-D verifier run (config table, value column)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor pricing figure (Gemini flex service tier); no repo artefact can decide it — attestation material only per rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          39
+        ],
+        "section": "§ 1 Scoring standard"
+      },
+      "claim_text": "Each cell's accepted set was materialised over a `prob_t` sweep\n`[0.1, 0.15, 0.2, 0.3, 0.5]` and scored at the **14-buffer corrected-F1 +\ntile-MCC** standard against the curator ground truth; the **best-F1@20 m**\noperating point per cell is reported.",
+      "values": [
+        {
+          "quantity": "prob_t sweep step 1, Stage-D materialisation",
+          "value_verbatim": "0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prob_t_sweep[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep step 2, Stage-D materialisation",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prob_t_sweep[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep step 3, Stage-D materialisation",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prob_t_sweep[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep step 4, Stage-D materialisation",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prob_t_sweep[3]",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep step 5, Stage-D materialisation",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prob_t_sweep[4]",
+          "method": "read"
+        },
+        {
+          "quantity": "count, buffer radii in the corrected-F1 scoring standard applied to each Stage-D cell",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius at which the best-F1 operating point is reported per Stage-D cell",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/tile-size-sweep/tile_size_sweep.json#$.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_era1_pv_stage_d.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The sweep list is a Python literal (the `prob_t_sweep` default in the orchestration script's main()), a non-JSON anchor that the harness routes to triage per the v1.1 note; the corresponding materialised artefacts are outputs/era1-pv-stage-d/<cell>/eval_t{0.1,0.15,0.2,0.3,0.5}/. Buffer count and reporting radius use cross-file locators (v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "§ 2 The Stage-D grid"
+      },
+      "claim_text": "| 384-consensus-text-high | `pv-diag-384::verified-adv-text-consensus-16of30` | consensus+PV | 487 | **0.890** | 0.790 | 0.2 |",
+      "values": [
+        {
+          "quantity": "tile count, 384-consensus-text-high cell (Stage-D grid, tiles column)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/tile-size-sweep/tile_size_sweep.json#$.tile_counts['384']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 384-consensus-text-high cell (Stage-D grid, F1@20 m column)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 384-consensus-text-high cell (Stage-D grid, tile-MCC column)",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "best prob_t, 384-consensus-text-high cell (Stage-D grid, prob_t column)",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['384-consensus-text-high'].prob_t",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names this row's source at lines 53-54 (`stage_d_score_summary_384.json` for the 384 leg). Cell name and registered condition string are names, out of scope per rule 5. Tile count uses a cross-file locator into the tile-size sweep, which records the per-size tile bases; the sibling per-cell evaluation.json also carries it at $.summary.buffers[*].coverage.n_tiles."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "§ 2 The Stage-D grid"
+      },
+      "claim_text": "| 256-consensus-text-5of5 | `pv-diag-256::verified-adv-text-consensus-5of5` | consensus+PV | 1032 | 0.856 | 0.745 | 0.2 |",
+      "values": [
+        {
+          "quantity": "tile count, 256-consensus-text-5of5 cell (Stage-D grid, tiles column)",
+          "value_verbatim": "1032",
+          "value_parsed": 1032,
+          "unit": null,
+          "kind": "count",
+          "path": "results/tile-size-sweep/tile_size_sweep.json#$.tile_counts['256']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 256-consensus-text-5of5 cell (Stage-D grid, F1@20 m column)",
+          "value_verbatim": "0.856",
+          "value_parsed": 0.856,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['256-consensus-text-5of5'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 256-consensus-text-5of5 cell (Stage-D grid, tile-MCC column)",
+          "value_verbatim": "0.745",
+          "value_parsed": 0.745,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['256-consensus-text-5of5'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "best prob_t, 256-consensus-text-5of5 cell (Stage-D grid, prob_t column)",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['256-consensus-text-5of5'].prob_t",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "§ 2 The Stage-D grid"
+      },
+      "claim_text": "| 512-consensus-text-high | `retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30` | consensus+PV | 340 | 0.792 | 0.676 | 0.1 |",
+      "values": [
+        {
+          "quantity": "tile count, 512-consensus-text-high cell (Stage-D grid, tiles column)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/tile-size-sweep/tile_size_sweep.json#$.tile_counts['512']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 512-consensus-text-high cell (Stage-D grid, F1@20 m column)",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-consensus-text-high'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512-consensus-text-high cell (Stage-D grid, tile-MCC column)",
+          "value_verbatim": "0.676",
+          "value_parsed": 0.676,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-consensus-text-high'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "best prob_t, 512-consensus-text-high cell (Stage-D grid, prob_t column)",
+          "value_verbatim": "0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['512-consensus-text-high'].prob_t",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "§ 2 The Stage-D grid"
+      },
+      "claim_text": "| 512-single-text-t0.0 | `retest-phase2b::verified-adv-text-t0.0` | single-pass+PV | 340 | 0.770 | 0.789 | 0.2 |",
+      "values": [
+        {
+          "quantity": "tile count, 512-single-text-t0.0 cell (Stage-D grid, tiles column)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/tile-size-sweep/tile_size_sweep.json#$.tile_counts['512']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 512-single-text-t0.0 cell (Stage-D grid, F1@20 m column)",
+          "value_verbatim": "0.770",
+          "value_parsed": 0.77,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-single-text-t0.0'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512-single-text-t0.0 cell (Stage-D grid, tile-MCC column)",
+          "value_verbatim": "0.789",
+          "value_parsed": 0.789,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-single-text-t0.0'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "best prob_t, 512-single-text-t0.0 cell (Stage-D grid, prob_t column)",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['512-single-text-t0.0'].prob_t",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The `t0.0` inside the cell name is a name, not a claim (rule 5); the verifier temperature is extracted separately at lines 31 and 131."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "§ 2 The Stage-D grid"
+      },
+      "claim_text": "| 512-consensus-image | `retest-phase3a::verified-adv-image-t0.7-n30-18of30` | consensus+PV | 340 | 0.728 | 0.785 | 0.15 |",
+      "values": [
+        {
+          "quantity": "tile count, 512-consensus-image cell (Stage-D grid, tiles column)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/tile-size-sweep/tile_size_sweep.json#$.tile_counts['512']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 512-consensus-image cell (Stage-D grid, F1@20 m column)",
+          "value_verbatim": "0.728",
+          "value_parsed": 0.728,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-consensus-image'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512-consensus-image cell (Stage-D grid, tile-MCC column)",
+          "value_verbatim": "0.785",
+          "value_parsed": 0.785,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-consensus-image'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "best prob_t, 512-consensus-image cell (Stage-D grid, prob_t column)",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['512-consensus-image'].prob_t",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "§ 2 The Stage-D grid"
+      },
+      "claim_text": "| 512-single-image-t0.0 | `retest-phase2b::verified-adv-image-t0.0` | single-pass+PV | 340 | 0.674 | **0.889** | 0.15 |",
+      "values": [
+        {
+          "quantity": "tile count, 512-single-image-t0.0 cell (Stage-D grid, tiles column)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/tile-size-sweep/tile_size_sweep.json#$.tile_counts['512']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 512-single-image-t0.0 cell (Stage-D grid, F1@20 m column)",
+          "value_verbatim": "0.674",
+          "value_parsed": 0.674,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-single-image-t0.0'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512-single-image-t0.0 cell (Stage-D grid, tile-MCC column)",
+          "value_verbatim": "0.889",
+          "value_parsed": 0.889,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-single-image-t0.0'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "best prob_t, 512-single-image-t0.0 cell (Stage-D grid, prob_t column)",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['512-single-image-t0.0'].prob_t",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          58
+        ],
+        "section": "§ 2 Comparability"
+      },
+      "claim_text": "**Comparability**: F1@20 m IS cross-size comparable (the three tile sizes are\ndifferent tilings of the same four Gold-Standard maps + the same curator\nground-truth mounds), so the 256/384/512 column compares directly.",
+      "values": [
+        {
+          "quantity": "count, tile sizes compared in the Era-1 tile-size head-to-head",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.tile_counts",
+          "method": "read"
+        },
+        {
+          "quantity": "count, Gold-Standard maps underlying all three tilings",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson#len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"256/384/512\" here names the column, not a measured quantity (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          60
+        ],
+        "section": "§ 2 Comparability"
+      },
+      "claim_text": "**tile-MCC is\nNOT differenced across sizes** — the true-negative base differs with tile count\n(1032 / 487 / 340), so MCC is read per cell, never subtracted across sizes.",
+      "values": [
+        {
+          "quantity": "tile count, 256 px tiling of the Gold-Standard 4-map corpus",
+          "value_verbatim": "1032",
+          "value_parsed": 1032,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tile_counts['256']",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, 384 px tiling of the Gold-Standard 4-map corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tile_counts['384']",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, 512 px tiling of the Gold-Standard 4-map corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tile_counts['512']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          61
+        ],
+        "section": "§ 2 Comparability"
+      },
+      "claim_text": "The\nfour 512-px cells are mutually MCC-comparable (shared 340-tile base).",
+      "values": [
+        {
+          "quantity": "count, 512-px cells in the Stage-D grid",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile count, shared 512-px MCC base",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tile_counts['512']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No artefact holds \"number of 512-px Stage-D cells\" as a scalar; the four `512-*` top-level keys of outputs/era1-pv-stage-d/stage_d_score_summary.json are the chase target for triage, which is why the count is anchor-unknown rather than a pathless `read` (v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          70
+        ],
+        "section": "§ 3.1 Proposer-verifier is the single best Era-1 architecture"
+      },
+      "claim_text": "On the definitive 512-px Era-1 leaderboard (`era1-leaderboard`, 82 cells, 10\ntiers), the **sole Tier-1 leader** is `512-consensus-text-high` —\nHIGH-thinking text consensus + the adversarial verifier, **F1 0.792 / MCC\n0.676**.",
+      "values": [
+        {
+          "quantity": "count, cells ranked on the definitive Era-1 512-px leaderboard",
+          "value_verbatim": "82",
+          "value_parsed": 82,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.ranking",
+          "method": "read"
+        },
+        {
+          "quantity": "count, tiers on the definitive Era-1 512-px leaderboard",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.tiers",
+          "method": "read"
+        },
+        {
+          "quantity": "tier assignment of 512-consensus-text-high on the Era-1 leaderboard (asserted as sole Tier-1 member)",
+          "value_verbatim": "Tier-1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "other",
+          "path": "$.ranking[?(@.ref=='retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30')].tier",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1@20 m, 512-consensus-text-high (Era-1 leaderboard leader)",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512-consensus-text-high (Era-1 leaderboard leader)",
+          "value_verbatim": "0.676",
+          "value_parsed": 0.676,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30')].mcc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tier assignment is a tiering result and so takes recompute-script per the instrument, recorded not computed. The \"sole\" qualifier additionally asserts a Tier-1 membership count of one, which triage can check at len:$.tiers[0].members in the same anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          71
+        ],
+        "section": "§ 3.1 Proposer-verifier is the single best Era-1 architecture"
+      },
+      "claim_text": "The verifier lifts the bare consensus champion **0.775 → 0.792**, just\nenough to break the old six-way HIGH-consensus tie (now Tier 2).",
+      "values": [
+        {
+          "quantity": "F1@20 m, bare HIGH-thinking consensus champion (pre-verifier)",
+          "value_verbatim": "0.775",
+          "value_parsed": 0.775,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase3a-high::text-high-t1.0-n30-23of30')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, same consensus pool after the adversarial verifier",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "count, members of the superseded HIGH-consensus statistical tie",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tier now occupied by the former HIGH-consensus tie set",
+          "value_verbatim": "Tier 2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"the old six-way ... tie\" describes a pre-Stage-D leaderboard state, not a 'was X, now Y' correction, so it is anchor-unknown rather than historical; the current tie structure lives at $.tie_set and $.tiers[1].members in the anchor, which is the chase target for triage. The Tier-2 placement is a tiering result (recompute-script)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          78
+        ],
+        "section": "§ 3.2 Cheap single-pass+PV rivals expensive consensus"
+      },
+      "claim_text": "`512-single-text-t0.0` is a **MINIMAL single-pass proposer + one verifier pass —\ntwo model calls per tile**, ~15× cheaper than the 30-pass HIGH-thinking\nconsensus.",
+      "values": [
+        {
+          "quantity": "verifier pass count, 512-single-text-t0.0 cell",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='retest-phase2b::verified-adv-text-t0.0')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "count, model calls per tile in the single-pass+PV architecture",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cost ratio, single-pass+PV relative to the 30-pass HIGH-thinking consensus",
+          "value_verbatim": "~15×",
+          "value_parsed": 15,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "proposer pass count, HIGH-thinking text consensus comparator",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='retest-phase3a-high::text-high-t1.0-n30-23of30')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained per v1.2 amendment 5. \"two model calls per tile\" (1 proposer + 1 verifier) and the ~15× cost ratio are asserted arithmetic over call counts with no committed artefact recording either as a scalar; both are anchor-unknown rather than arithmetic because the intended operand set (whether the consensus side counts 30 or 31 calls) is not stated by the document. Triage should confirm the divisor before promoting to a derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          79
+        ],
+        "section": "§ 3.2 Cheap single-pass+PV rivals expensive consensus"
+      },
+      "claim_text": "It reaches **Tier 2 (F1 0.770)**, matching the 30-call consensus on\nF1 and **beating it on MCC (0.789 vs ~0.55–0.64)**.",
+      "values": [
+        {
+          "quantity": "tier assignment of 512-single-text-t0.0 on the Era-1 leaderboard",
+          "value_verbatim": "Tier 2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "other",
+          "path": "$.ranking[?(@.ref=='retest-phase2b::verified-adv-text-t0.0')].tier",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1@20 m, 512-single-text-t0.0",
+          "value_verbatim": "0.770",
+          "value_parsed": 0.77,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase2b::verified-adv-text-t0.0')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer call count, HIGH-thinking consensus comparator",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='retest-phase3a-high::text-high-t1.0-n30-23of30')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512-single-text-t0.0",
+          "value_verbatim": "0.789",
+          "value_parsed": 0.789,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase2b::verified-adv-text-t0.0')].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "lower end of the tile-MCC range spanned by the HIGH-thinking consensus cells",
+          "value_verbatim": "~0.55",
+          "value_parsed": 0.55,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper end of the tile-MCC range spanned by the HIGH-thinking consensus cells",
+          "value_verbatim": "0.64",
+          "value_parsed": 0.64,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ~0.55–0.64 range summarises several HIGH-thinking consensus cells rather than one locatable cell, so both endpoints are anchor-unknown; the chase target is the mcc field of the consensus-kind rows in $.ranking of the anchor. Approx marker retained on the lower bound per v1.2 amendment 5; the shared range sign applies to both endpoints (v1.2 amendment 6, unitless metric)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          88
+        ],
+        "section": "§ 3.3 The verifier lifts MCC across the board"
+      },
+      "claim_text": "`512-single-image-t0.0`\nposts the **board-best MCC 0.889** (at a modest F1 0.674 — the F1-vs-MCC\ndivergence again), and `512-consensus-image` 0.785.",
+      "values": [
+        {
+          "quantity": "tile-MCC, 512-single-image-t0.0 (asserted board-best)",
+          "value_verbatim": "0.889",
+          "value_parsed": 0.889,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-single-image-t0.0'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 512-single-image-t0.0",
+          "value_verbatim": "0.674",
+          "value_parsed": 0.674,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-single-image-t0.0'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512-consensus-image",
+          "value_verbatim": "0.785",
+          "value_parsed": 0.785,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-consensus-image'].mcc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"board-best\" additionally asserts a maximum over the 82-cell leaderboard's mcc column (results/era1-leaderboard/tiering_20m.json $.ranking[*].mcc) — recorded here as context for triage, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          96
+        ],
+        "section": "§ 3.4 Tile size at consensus+PV: 384 is the sweet spot"
+      },
+      "claim_text": "The consensus+PV tile-size head-to-head (`tile-size-sweep` View 3) orders\n**384 (0.890) > 256 (0.856) > 512 (0.792)** — **384 px leads**, the same sweet\nspot it holds at consensus-only, **confirming the Obs 179 prior** (its\noriginal-eval estimate ≈ 0.883).",
+      "values": [
+        {
+          "quantity": "F1@20 m, consensus+PV at 384 px (tile-size head-to-head)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pv_matched[0].by_size['384']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, consensus+PV at 256 px (tile-size head-to-head)",
+          "value_verbatim": "0.856",
+          "value_parsed": 0.856,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pv_matched[0].by_size['256']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, consensus+PV at 512 px (tile-size head-to-head)",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pv_matched[0].by_size['512']",
+          "method": "read"
+        },
+        {
+          "quantity": "original-eval F1 estimate for the 384 px sweet spot recorded by the Obs 179 prior",
+          "value_verbatim": "≈ 0.883",
+          "value_parsed": 0.883,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tile sizes 384/256/512 label which F1 belongs to which tiling and are treated as names; the F1 values are the claims. The ≈ 0.883 figure belongs to Obs 179 in the working-notes prose (docs/notes/working-notes.md), which cannot be anchored to per rule 2, so it is anchor-unknown with the approx sign retained (v1.2 amendment 5). \"View 3\" is a view identifier, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          102
+        ],
+        "section": "§ 3.5 The verifier RESCUES 256 px"
+      },
+      "claim_text": "The 256-px consensus pool is the **worst**\narchitecture at consensus-only (F1 **0.460**, below 512's 0.775 and 384's\n0.814).",
+      "values": [
+        {
+          "quantity": "F1@20 m, best consensus-only text cell at 256 px",
+          "value_verbatim": "0.460",
+          "value_parsed": 0.46,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.best_per_size.by_arch_modality['256']['consensus/text'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, best consensus-only text cell at 512 px",
+          "value_verbatim": "0.775",
+          "value_parsed": 0.775,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.best_per_size.by_arch_modality['512']['consensus/text'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, best consensus-only text cell at 384 px",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.best_per_size.by_arch_modality['384']['consensus/text'].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          103
+        ],
+        "section": "§ 3.5 The verifier RESCUES 256 px"
+      },
+      "claim_text": "The **same pool**, verified, jumps to **0.856 (+0.396)** — the largest\nPV lift of any cell — **leapfrogging 512** to take second place.",
+      "values": [
+        {
+          "quantity": "F1@20 m, 256 px consensus pool after verification",
+          "value_verbatim": "0.856",
+          "value_parsed": 0.856,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pv_matched[0].by_size['256']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m lift from verification at 256 px (verified minus consensus-only)",
+          "value_verbatim": "+0.396",
+          "value_parsed": 0.396,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/tile-size-sweep/tile_size_sweep.json",
+              "path": "$.pv_matched[0].by_size['256']"
+            },
+            {
+              "name": "b",
+              "file": "results/tile-size-sweep/tile_size_sweep.json",
+              "path": "$.best_per_size.by_arch_modality['256']['consensus/text'].f1"
+            }
+          ]
+        },
+        {
+          "quantity": "rank of the 256 px consensus+PV cell in the consensus+PV tile-size ordering",
+          "value_verbatim": "second",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The operands of the +0.396 derivation are each given their own read path inside the operand objects and are NOT emitted as arithmetic values (v1.2 amendment 1); the same two numbers appear as read claims at lines 93-96 and 100-102. \"second place\" is an ordering result over $.pv_matched[0].by_size and takes recompute-script; included with the doubt recorded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "§ 3.5 Per-architecture tile-size order table"
+      },
+      "claim_text": "| single-pass | 512 > 384 > 256 |",
+      "values": [
+        {
+          "quantity": "tile size ranked first by F1@20 m, single-pass architecture (tile-size order table)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile size ranked second by F1@20 m, single-pass architecture (tile-size order table)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile size ranked third by F1@20 m, single-pass architecture (tile-size order table)",
+          "value_verbatim": "256",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Borderline inclusion recorded per the over-inclusion rule: the numerals are tile-size names (rule 5), but the row asserts an ordering result, so the row is extracted as a checkable claim. The ordering must be recomputed from $.single_pass_isolation[*].by_size / $.best_per_size.by_arch_modality['<size>']['single-pass/text'] in the anchor; no scalar records the order itself."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "§ 3.5 Per-architecture tile-size order table"
+      },
+      "claim_text": "| consensus-only | 384 > 512 > 256 |",
+      "values": [
+        {
+          "quantity": "tile size ranked first by F1@20 m, consensus-only architecture (tile-size order table)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile size ranked second by F1@20 m, consensus-only architecture (tile-size order table)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile size ranked third by F1@20 m, consensus-only architecture (tile-size order table)",
+          "value_verbatim": "256",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Ordering recomputed from $.best_per_size.by_arch_modality['<size>']['consensus/text'].f1 in the anchor (0.4599 / 0.8141 / 0.7747 for 256 / 384 / 512)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "§ 3.5 Per-architecture tile-size order table"
+      },
+      "claim_text": "| **consensus+PV** | **384 > 256 > 512** |",
+      "values": [
+        {
+          "quantity": "tile size ranked first by F1@20 m, consensus+PV architecture (tile-size order table)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile size ranked second by F1@20 m, consensus+PV architecture (tile-size order table)",
+          "value_verbatim": "256",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile size ranked third by F1@20 m, consensus+PV architecture (tile-size order table)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Ordering recomputed from $.pv_matched[0].by_size in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          122
+        ],
+        "section": "§ 3.5 Caveat"
+      },
+      "claim_text": "**Caveat**: the 256 cell's proposer is the *plain* text 5-of-5 (N=5) family,\nwhereas 384/512 share the HIGH-thinking text N=30 lineage (HIGH-text was not run\nat 256), so the 256 cell remains a thin-provenance anchor — see\n[`384-leg-recon.md`](384-leg-recon.md) § 1.",
+      "values": [
+        {
+          "quantity": "proposer pass count N, 256 px plain-text consensus proposer pool",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-256::text-consensus-5of5')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer pass count N, HIGH-thinking text lineage shared by the 384 and 512 cells",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='retest-phase3a-high::text-high-t1.0-n30-23of30')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Scope decision: \"text 5-of-5\" names the proposer family (the registered condition `pv-diag-256::text-consensus-5of5`) and is treated as a name per rule 5; the explicit \"(N=5)\" and \"N=30\" ARE extracted as pass-count claims. The vote threshold implied by \"5-of-5\" sits at .vote_threshold on the same manifest entry if triage wants it. \"§ 1\" is a section reference, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          127
+        ],
+        "section": "§ 4 Provenance and caveats"
+      },
+      "claim_text": "- The sidelined `proposer-verifier-512::verified-adversarial-text` cell (D1: thin\n  GAP-9 provenance, n=1) is **excluded** from this grid and the 82-cell board.",
+      "values": [
+        {
+          "quantity": "pass count n, sidelined proposer-verifier-512 adversarial-text cell",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='proposer-verifier-512::verified-adversarial-text')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "count, cells on the definitive Era-1 leaderboard from which this cell is excluded",
+          "value_verbatim": "82",
+          "value_parsed": 82,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-leaderboard/tiering_20m.json#len:$.ranking",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"D1\" and \"GAP-9\" are identifiers, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          130
+        ],
+        "section": "§ 4 Provenance and caveats"
+      },
+      "claim_text": "- The pre-existing `proposer-verifier-384::verified-adversarial-text` (F1 0.471)\n  is a **single-pass+PV** cell (`detect_brief-text`, 1 pass) — a different\n  architecture, NOT the 384 consensus+PV cell, and is not superseded by it.",
+      "values": [
+        {
+          "quantity": "F1@20 m, pre-existing proposer-verifier-384 adversarial-text cell",
+          "value_verbatim": "0.471",
+          "value_parsed": 0.471,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='proposer-verifier-384::verified-adversarial-text')].metrics.per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer pass count, pre-existing proposer-verifier-384 adversarial-text cell",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='proposer-verifier-384::verified-adversarial-text')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document quotes F1 to 3 dp; the manifest holds 4 dp. Recorded at quoted precision — the harness owns rounding tolerance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          131
+        ],
+        "section": "§ 4 Provenance and caveats"
+      },
+      "claim_text": "- Determinism: every cell is **n=1** at T=0.0.",
+      "values": [
+        {
+          "quantity": "verifier pass count n per Stage-D cell",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier temperature T as run, Stage-D cells",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].verifier_config.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"every cell\" is a uniformity assertion; the 384 consensus+PV condition is the representative locator, and the same two fields exist on each of the six registered Stage-D PV conditions."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          133
+        ],
+        "section": "§ 4 Provenance and caveats"
+      },
+      "claim_text": "T=0.0 is *not* fully deterministic\n  (the PV `-v2` replicate accepted-count drift), so a multi-verifier (N=5)\n  robustness check on a few cells remains future work.",
+      "values": [
+        {
+          "quantity": "verifier temperature T asserted as not fully deterministic",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].verifier_config.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "planned replicate count N for the future multi-verifier robustness check",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "N=5 describes work not yet done (\"remains future work\"), so no artefact can hold it; included with the doubt recorded because it is stated as a design parameter. The `-v2` suffix is a version string, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          138
+        ],
+        "section": "§ 5 Artefacts"
+      },
+      "claim_text": "- Per-cell evals: `results/era1-pv-stage-d/<cell>/evaluation.json` (14-buffer + MCC)",
+      "values": [
+        {
+          "quantity": "count, buffer radii in each Stage-D per-cell evaluation",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One representative per-cell evaluation is used as the anchor; the same array length should hold for all six cells."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          150
+        ],
+        "section": "Changelog — 2026-06-09 Original publication"
+      },
+      "claim_text": "Consolidates Stage-D into one results narrative. Session 107 produced the five\n256/512-px cells (gated API run, carry-forward adversarial verifier, ~$5 flex);",
+      "values": [
+        {
+          "quantity": "count, 256/512-px Stage-D cells produced in the Session 107 run",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "cost USD (flex-tier estimate), Session 107 gated Stage-D API run",
+          "value_verbatim": "~$5",
+          "value_parsed": 5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This changelog entry is an \"Original publication\" stub with no before→after table, so its values are live restatements of body claims, NOT historical (instrument rule 3). Restates line 16."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          153
+        ],
+        "section": "Changelog — 2026-06-09 Original publication"
+      },
+      "claim_text": "Session 108 added the 384-px consensus+PV leg ($0, on-disk re-score of the\n`flash-high-text-16of30` pool verified by the same carry-forward verifier) and\nregistered it as `pv-diag-384::verified-adv-text-consensus-16of30`.",
+      "values": [
+        {
+          "quantity": "cost USD, Session 108 384-px on-disk re-score (asserted as zero API spend)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates line 17. Live claim, not historical — this changelog entry carries no before→after table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          154
+        ],
+        "section": "Changelog — 2026-06-09 Original publication"
+      },
+      "claim_text": "PV is the single best Era-1 architecture (sole Tier-1, F1 0.792)",
+      "values": [
+        {
+          "quantity": "tier assignment of the PV leader on the Era-1 leaderboard (asserted as sole Tier-1 member)",
+          "value_verbatim": "Tier-1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "other",
+          "path": "$.ranking[?(@.ref=='retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30')].tier",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1@20 m, Era-1 leaderboard PV leader",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30')].eval_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates lines 67-70."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          155
+        ],
+        "section": "Changelog — 2026-06-09 Original publication"
+      },
+      "claim_text": "cheap\nsingle-pass+PV rivals expensive consensus (Tier 2, F1 0.770, MCC 0.790)",
+      "values": [
+        {
+          "quantity": "tier assignment of 512-single-text-t0.0 on the Era-1 leaderboard",
+          "value_verbatim": "Tier 2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "other",
+          "path": "$.ranking[?(@.ref=='retest-phase2b::verified-adv-text-t0.0')].tier",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1@20 m, 512-single-text-t0.0",
+          "value_verbatim": "0.770",
+          "value_parsed": 0.77,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase2b::verified-adv-text-t0.0')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512-single-text-t0.0",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='retest-phase2b::verified-adv-text-t0.0')].mcc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The changelog quotes this cell's tile-MCC as 0.790 while the § 2 grid (line 49) and § 3.2 (line 79) quote 0.789 — both recorded verbatim from their own spans, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          157
+        ],
+        "section": "Changelog — 2026-06-09 Original publication"
+      },
+      "claim_text": "384 px\nis the consensus+PV tile-size sweet spot (0.890 > 256 0.856 > 512 0.792,\nconfirming Obs 179)",
+      "values": [
+        {
+          "quantity": "F1@20 m, consensus+PV at 384 px",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pv_matched[0].by_size['384']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, consensus+PV at 256 px",
+          "value_verbatim": "0.856",
+          "value_parsed": 0.856,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pv_matched[0].by_size['256']",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, consensus+PV at 512 px",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pv_matched[0].by_size['512']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The bare \"384 px\", \"256\" and \"512\" label which F1 belongs to which tiling (names, rule 5). Restates lines 93-96."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          158
+        ],
+        "section": "Changelog — 2026-06-09 Original publication"
+      },
+      "claim_text": "the verifier rescues 256 px (0.460 → 0.856, Obs 352) without\noverturning 384.",
+      "values": [
+        {
+          "quantity": "F1@20 m, best consensus-only text cell at 256 px (pre-verifier)",
+          "value_verbatim": "0.460",
+          "value_parsed": 0.46,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.best_per_size.by_arch_modality['256']['consensus/text'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 256 px consensus pool after verification",
+          "value_verbatim": "0.856",
+          "value_parsed": 0.856,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pv_matched[0].by_size['256']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/tile-size-sweep/tile_size_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The arrow here contrasts two live architectures (consensus-only vs consensus+PV), NOT an old-value/new-value correction, so neither side is historical (instrument rule 3 and the changelog known-trap). Restates lines 100-103."
+    }
+  ]
+}

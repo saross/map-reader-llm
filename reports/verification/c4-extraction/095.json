@@ -1,0 +1,1283 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/documentation-audit/verification-2026-04-21.md",
+    "git_blob": "a200b49b16a7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C73 | results-audit-2026-04-21.md:242-243 | text-min D-S 0.7834 and vlm_only_posterior 0.2947 | `results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json` | 0.7834 / 0.2947 | 0.7834 / 0.2947 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, 55-map text-min generalisation run (as at the 2026-04-21 verification date)",
+          "value_verbatim": "0.7834",
+          "value_parsed": 0.7834,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene VLM-only posterior, 55-map text-min generalisation run (as at the 2026-04-21 verification date)",
+          "value_verbatim": "0.2947",
+          "value_parsed": 0.2947,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b095] Scope for this batch: lines 118-233 of results/documentation-audit/verification-2026-04-21.md (rows C73-C85 of the verification table, the two Failure blocks, the uncited-sample table, the protocol notes and the Conclusion). Lines 1-117 belong to sibling batch b094; earlier lines were read for context only (notably the post-recovery banner at lines 15-26). Scope decisions: (a) verification-table cells repeat the same figure across the claim_text, cited_value and actual_value columns — one value is emitted per DISTINCT quantity per row, with both members recorded only where the columns differ in magnitude or precision; (b) claim ids (C01-C85, U01-U07, FAIL-01/02), Obs and erratum identifiers (Obs 246, E47), draft line-number citations (`audit-summary.md:44`, `:277-288`, `line 10694`), git hashes (`2165013c`), dates and version strings are out of C4 scope per instrument rule 5, which empties row C82 (line 127) and row U07 (line 183) of claims — both are recorded here as deliberate no-claim rows; (c) buffer radii appearing only to identify which evaluation row a metric belongs to (\"F1 @ 50 m\", \"at 20-50 m\", \"paired 30 m\") are treated as context, not claims, matching the b078 convention; (d) rounding-precision descriptors (\"3 dp\", \"2 dp\" at lines 191-193) are protocol description, not study quantities, and are not extracted; (e) word-form negations/determiners that imply a count without a numeral (\"No dead citations\", line 223; \"Both failures\", line 228) are not extracted — the numeric forms sit at lines 34-36, inside batch b094; cardinal numerals in word form (\"Seven\", \"ten\", \"four\", \"Two\") ARE extracted. (f) DATED-SNAPSHOT handling: this is a dated verification record and the document's own banner (lines 15-26, batch b094) states that claims C09-C12, C44 and C74-C81 remain accurate for the 2026-04-19 launch state while the same files now record post-recovery values. Those figures are recorded verbatim with the as-at framing carried in `quantity` and `notes`, and are left as `read` against their cited artefacts rather than reclassified `historical`, so the harness still resolves them and triage can adjudicate the as-at gap with the banner in hand; only figures the document itself refutes or attributes to a superseded prior audit (the \"28 files\" count, the prior audit's \"$165.74\") are marked `historical`. (g) The draft files cited in the location column (`audit-summary.md`, `results-audit-2026-04-21.md`) no longer sit under `results/documentation-audit/draft/`; they are now at `results/documentation-audit/audit-summary.md` and `results/documentation-audit/results-audit-2026-04-21.md`. This row (C73) is not in the banner's superseded list."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C74 | results-audit-2026-04-21.md:277-288 | text-high totals.cost_usd 69.6017, wall_clock 10,754.918, tiles 42,545, failed 160 | `outputs/55maps-text-high-generalisation/cost_manifest.json` | as listed | 69.6017 / 10754.918 / 42545 / 160 | PASS |",
+      "values": [
+        {
+          "quantity": "total run cost USD, 55-map text-high generalisation run, as at the 2026-04-21 verification date (pre-recovery launch state)",
+          "value_verbatim": "69.6017",
+          "value_parsed": 69.6017,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total wall-clock seconds, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "10,754.918",
+          "value_parsed": 10754.918,
+          "unit": "s",
+          "kind": "other",
+          "path": "$.totals.wall_clock_seconds",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles processed by the proposer stage, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "42,545",
+          "value_parsed": 42545,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles failed in the proposer stage, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_failed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Banner-listed dated snapshot: the document's post-recovery annotation (lines 15-26, batch b094) names C74 among the claims that \"remain accurate for the 2026-04-19 launch state\" and states the same files now record post-recovery values, citing `totals.cost_usd: 126.8051` and `tiles_failed: 0` as examples; the recovery is documented in configs/run-configs/55maps_text_high_generalisation_post_run_report.md \"Recovery 2026-05-02/03\". Recorded verbatim at the verification date, not modernised. The actual_value column repeats wall_clock without the thousands separator (10754.918)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C75 | results-audit-2026-04-21.md:283 | text-high thinking_tokens 115,013,258 | same::totals.thinking_tokens | 115,013,258 | 115013258 | PASS |",
+      "values": [
+        {
+          "quantity": "total thinking tokens, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "115,013,258",
+          "value_parsed": 115013258,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.thinking_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"same\" in the cited_source column refers back to the C74 anchor (outputs/55maps-text-high-generalisation/cost_manifest.json), resolved here. This is a 55-map generalisation-era token total recorded in a committed cost manifest, not a phase2a-3c retest-era usage claim, so it is `read` rather than `unverifiable-era`. Banner-listed dated snapshot (C74-C81; lines 15-26, batch b094)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C76 | results-audit-2026-04-21.md:281 | text-high output_tokens 9,782,952 | same::totals.output_tokens | 9,782,952 | 9782952 | PASS |",
+      "values": [
+        {
+          "quantity": "total output tokens, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "9,782,952",
+          "value_parsed": 9782952,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.output_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"same\" resolves to the C74 anchor. Banner-listed dated snapshot (C74-C81; lines 15-26, batch b094)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C77 | results-audit-2026-04-21.md:298-301 | text-high F1/CI at 20-50 m | `outputs/55maps-text-high-generalisation/evaluation/evaluation.json::summary.buffers[*]` | 0.6227/0.7533/0.7829/0.7883 | 0.6227/0.7533/0.7829/0.7883 | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m buffer, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.6227",
+          "value_parsed": 0.6227,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 30 m buffer, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.7533",
+          "value_parsed": 0.7533,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 40 m buffer, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.7829",
+          "value_parsed": 0.7829,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.7883",
+          "value_parsed": 0.7883,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row heading says \"F1/CI\" but quotes only the four F1 values; no confidence-interval numbers appear in the span, so none are extracted. Buffer radii 20 and 50 in \"at 20-50 m\" identify the range of rows, not asserted quantities. Banner-listed dated snapshot: the annotation at lines 15-26 (batch b094) gives the post-recovery 50 m F1 as 0.7920."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C78 | results-audit-2026-04-21.md:311-313 | text-high D-S measured.f1 0.7883, corrected.f1 0.8129, vlm_only_posterior 0.2935 | `results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json` | all three | 0.7883 / 0.8129 / 0.2935 | PASS |",
+      "values": [
+        {
+          "quantity": "measured F1 input to Dawid-Skene, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.7883",
+          "value_parsed": 0.7883,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.measured.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.8129",
+          "value_parsed": 0.8129,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene VLM-only posterior, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.2935",
+          "value_parsed": 0.2935,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Banner-listed dated snapshot: the annotation at lines 15-26 (batch b094) gives the post-recovery D-S corrected F1 as 0.8142."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C79 | results-audit-2026-04-21.md:322-325 | paired permutation vs min 20m 0.004681 / 0.4647 / 10000 | `results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json::permutation_test` | as listed | 0.004681 / 0.4647 / 10000 | PASS |",
+      "values": [
+        {
+          "quantity": "observed F1 difference, text-high vs text-min paired permutation test at 20 m, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.004681",
+          "value_parsed": 0.004681,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, text-high vs text-min paired test at 20 m, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.4647",
+          "value_parsed": 0.4647,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of permutations, text-high vs text-min paired test at 20 m",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed-method span: the p-value is a permutation statistic (recompute-script per instrument rule 3) while the observed delta and the permutation count are stored scalars. \"20m\" in \"vs min 20m\" is part of the run-directory name and the test's buffer identifier. Banner-listed dated snapshot (C74-C81; lines 15-26, batch b094) — triage should note that the recovery banner's examples touch the cost manifest, evaluation and D-S artefacts, and does not say explicitly whether the paired-permutation artefacts were regenerated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C80 | results-audit-2026-04-21.md:323-325 | paired 30 m 0.025904 / 0.0 / 10000 | paired-vs-min-30m | as listed | 0.025904 / 0.0 / 10000 | PASS |",
+      "values": [
+        {
+          "quantity": "observed F1 difference, text-high vs text-min paired permutation test at 30 m, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.025904",
+          "value_parsed": 0.025904,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, text-high vs text-min paired test at 30 m, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of permutations, text-high vs text-min paired test at 30 m",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-30m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited_source cell abbreviates to the directory name \"paired-vs-min-30m\"; the anchor is resolved to that directory's pairwise_permutation_result.json by analogy with the C79 row. Banner-listed dated snapshot (C74-C81; lines 15-26, batch b094)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C81 | results-audit-2026-04-21.md:324 | paired 40 m 0.029107 / 0.0 / 10000 | paired-vs-min-40m | as listed | 0.029107 / 0.0 / 10000 | PASS |",
+      "values": [
+        {
+          "quantity": "observed F1 difference, text-high vs text-min paired permutation test at 40 m, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.029107",
+          "value_parsed": 0.029107,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, text-high vs text-min paired test at 40 m, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of permutations, text-high vs text-min paired test at 40 m",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-40m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchor resolved from the abbreviated \"paired-vs-min-40m\" cell as for C80. Banner-listed dated snapshot (C74-C81; lines 15-26, batch b094)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C83 | results-audit-2026-04-21.md:489-493 | cleaned-GT F1 @ 50 m image=0.7729, text-min=0.7614, text-high=0.7906 | `results/55maps-cleaned-gt-evaluation/{image,text-min,text-high}/evaluation.json::summary.buffers[3].f1` | 0.7729/0.7614/0.7906 | 0.7729/0.7614/0.7906 | PASS |",
+      "values": [
+        {
+          "quantity": "cleaned-GT F1 at 50 m, image condition, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.7729",
+          "value_parsed": 0.7729,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "cleaned-GT F1 at 50 m, text-min condition, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.7614",
+          "value_parsed": 0.7614,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-min/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "cleaned-GT F1 at 50 m, text-high condition, as at the 2026-04-21 verification date",
+          "value_verbatim": "0.7906",
+          "value_parsed": 0.7906,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-high/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/image/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited path results/55maps-cleaned-gt-evaluation/ no longer exists in the working tree; the three evaluations have been archived to archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/{image,text-min,text-high}/evaluation.json, which are used as the anchors (cross-file locators per v1.2 amendment 2). C83 is NOT in the post-recovery banner's superseded list (C09-C12, C44, C74-C81), although its text-high cell derives from the same run that the recovery re-ran — flagged for triage, not adjudicated. \"@ 50 m\" and \"buffers[3]\" identify the row, not asserted quantities."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C84 | results-audit-2026-04-21.md:20-21 | v2-verifier quarantine 100 files | `archive/v2-verifier-contamination/MANIFEST.md` (\"Total: 100 files moved\") | 100 | MANIFEST states 100; 102 physical files include MANIFEST.md + README.md | PASS |",
+      "values": [
+        {
+          "quantity": "count, files moved into the v2-verifier contamination quarantine as recorded by its MANIFEST",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": "Total: <N> files moved.",
+          "method": "read"
+        },
+        {
+          "quantity": "count, physical files present in the v2-verifier quarantine directory (including MANIFEST.md and README.md)",
+          "value_verbatim": "102",
+          "value_parsed": 102,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/v2-verifier-contamination/#len:**/*",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/MANIFEST.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchors (instrument v1.1 note: legitimate, triage-routed). The 100 sits in a prose line of the quarantine MANIFEST (confirmed present at MANIFEST.md line 15 while locating anchor.path — not adjudicated); the MANIFEST is the archive's own manifest artefact rather than narrative prose, so rule 2's prose-to-prose prohibition is read as not engaged, but triage may prefer a filesystem count. The 102 is a filesystem file count over the quarantine tree, expressed as a cross-file `len:` locator. The claim_text and cited_value cells both give 100; a single value is emitted for that quantity per the batch-note de-duplication convention."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          130
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C85 | results-audit-2026-04-21.md:408-411 | 7 sub-directories moved to `archive/v2-verifier-contamination/raw-outputs/` | `archive/v2-verifier-contamination/raw-outputs/*/` | 7 | 7 | PASS |",
+      "values": [
+        {
+          "quantity": "count, sub-directories moved into archive/v2-verifier-contamination/raw-outputs/",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:*/",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/raw-outputs/",
+        "path": "len:*/"
+      },
+      "method": "read",
+      "notes": "Filesystem directory count against a directory anchor (non-JSON, triage-routed); `len:*/` denotes the number of immediate sub-directories, per v1.2 amendment 4's `len:` spelling. The row states 7 three times (claim, cited_value, actual_value) — one value emitted per the batch-note de-duplication convention."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          142
+        ],
+        "section": "Failures — FAIL-01 (C40): paper-tables file count"
+      },
+      "claim_text": "- **Claim text**: \"`results/paper-tables/` contains 28 files including\n  `gold-standard-spatial-tolerance.{md,csv}` and\n  `subtype-classification.{md,csv}` plus cross-hypothesis metrics\n  master tables with CI-metadata sidecars.\" (audit-summary.md:167-170;\n  also echoed in results-audit-2026-04-21.md:506).",
+      "values": [
+        {
+          "quantity": "count, files in results/paper-tables/ as claimed by the audit draft (quoted and refuted by this document)",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Quoted-and-refuted side of a correction block (instrument rule 3): this document quotes the draft's \"28 files\" in order to declare it wrong and give 26 as the actual count. The quoted draft text now lives at results/documentation-audit/audit-summary.md (the draft/ subdirectory no longer exists); the directory anchor is retained for triage context only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          145
+        ],
+        "section": "Failures — FAIL-01 (C40): paper-tables file count"
+      },
+      "claim_text": "- **Claimed value**: 28 files.\n- **Actual value**: 26 files (verified by `ls` and `find … -type f`).",
+      "values": [
+        {
+          "quantity": "count, files in results/paper-tables/ as claimed by the audit draft (refuted)",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, files present in results/paper-tables/ at the 2026-04-21 verification date",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:*",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/",
+        "path": "len:*"
+      },
+      "method": "read",
+      "notes": "Directory anchor, non-JSON (triage-routed): `len:*` denotes the count of files the document says it obtained via `ls` and `find … -type f`. Dated snapshot — the count is asserted as at 2026-04-21 and results/paper-tables/ may have grown since; recorded, not modernised."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          146,
+          149
+        ],
+        "section": "Failures — FAIL-01 (C40): paper-tables file count"
+      },
+      "claim_text": "- **Diagnosis**: the file is off by two. Summing the enumerated\n  file list given in the draft itself yields 26\n  (3+3+3+2+2+2+2+2+2+1+1+1+1+1), matching the filesystem. The \"28\"\n  figure is inconsistent with the draft's own enumeration.",
+      "values": [
+        {
+          "quantity": "magnitude of the discrepancy between the draft's claimed paper-tables file count and the filesystem count",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "sum of the draft's enumerated per-group paper-tables file counts, asserted to match the filesystem count",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:*",
+          "method": "read"
+        },
+        {
+          "quantity": "file count, first group of the draft's enumerated results/paper-tables file list (summation addend 1)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, second group of the draft's enumerated results/paper-tables file list (summation addend 2)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, third group of the draft's enumerated results/paper-tables file list (summation addend 3)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, fourth group of the draft's enumerated results/paper-tables file list (summation addend 4)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, fifth group of the draft's enumerated results/paper-tables file list (summation addend 5)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, sixth group of the draft's enumerated results/paper-tables file list (summation addend 6)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, seventh group of the draft's enumerated results/paper-tables file list (summation addend 7)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, eighth group of the draft's enumerated results/paper-tables file list (summation addend 8)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, ninth group of the draft's enumerated results/paper-tables file list (summation addend 9)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, tenth group of the draft's enumerated results/paper-tables file list (summation addend 10)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, eleventh group of the draft's enumerated results/paper-tables file list (summation addend 11)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, twelfth group of the draft's enumerated results/paper-tables file list (summation addend 12)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, thirteenth group of the draft's enumerated results/paper-tables file list (summation addend 13)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "file count, fourteenth group of the draft's enumerated results/paper-tables file list (summation addend 14)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, files in results/paper-tables/ as claimed by the audit draft (refuted)",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/",
+        "path": "len:*"
+      },
+      "method": "read",
+      "notes": "The 14 addends are the document's arithmetic working over a per-group file enumeration that lives only in the audit draft prose (now results/documentation-audit/audit-summary.md lines 167-170); rule 2 forbids anchoring prose to prose, so each addend is `anchor-unknown` with that document named here — over-included per the instrument's include-and-flag-the-doubt rule and cheap for triage to prune. Their group identities cannot be determined without reading the draft, which rule 7 puts out of scope, so they are labelled by position. The \"off by two\" delta is 28 - 26, but its first operand (28) exists only in the draft prose, so it takes `anchor-unknown` rather than `arithmetic` (no mechanically anchorable operand pair). Per v1.2 amendment 1, the 26 and the addends are not allowed to inherit an arithmetic method."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          173
+        ],
+        "section": "Uncited-sample findings"
+      },
+      "claim_text": "Seven uncited numeric / specific claims were sampled and re-verified\nagainst the filesystem.",
+      "values": [
+        {
+          "quantity": "count, uncited numeric or specific claims sampled and re-verified in this audit",
+          "value_verbatim": "Seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count over this same document: the uncited-sample table at lines 175-183 runs U01-U07, and the Summary block at line 35 (batch b094 range) states \"UNCITED (sampled): 7 (5 PASS, 2 no-match / context-only)\". No external artefact records the sample size, and rule 2 forbids anchoring prose to prose, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "Uncited-sample findings"
+      },
+      "claim_text": "| U01 | audit-summary.md:189-190 | \"the paper headline of F1 = 0.904 was produced before the v2 verifier existed\" | NO-MATCH-FILE (figure appears in downstream narrative files such as `reports/adversarial-audit-report.md` and working-notes, consistent with a known legacy headline; the specific number is not re-derived here) — **matches** reference usage across the repo |",
+      "values": [
+        {
+          "quantity": "legacy paper headline F1 (pre-v2-verifier), as quoted from the audit draft",
+          "value_verbatim": "0.904",
+          "value_parsed": 0.904,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The row itself declines to re-derive the figure and points only at prose (reports/adversarial-audit-report.md, which exists, and the working-notes file, whose cited path docs/notes/reflections/working-notes.md no longer resolves in the working tree). Rule 2 forbids anchoring prose to prose. Plausible artefact-level chase targets for triage: results/conditions-manifest.json and results/all-bootstrap-cis.json, which carry per-condition F1 values at this magnitude; not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          178,
+          178
+        ],
+        "section": "Uncited-sample findings"
+      },
+      "claim_text": "| U02 | audit-summary.md:17 | prior audit's \"$165.74\" claim about text-min cost | NOT VERIFIABLE from current files (draft is making a claim about a prior audit error, not the source data). The relevant check is that the current source says $60.79 — which PASSES. No independent check possible without reading the prior audit (anti-collusion rule prohibits). |",
+      "values": [
+        {
+          "quantity": "text-min run cost USD as erroneously claimed by the prior audit (quoted historical figure)",
+          "value_verbatim": "$165.74",
+          "value_parsed": 165.74,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total run cost USD, 55-map text-min generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "$60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The $165.74 is quoted as a prior audit's error, not asserted as fact — `historical` per rule 3. The $60.79 is a rounded quote of the cost-manifest total (the row C05 at line 50, batch b094, gives 60.7866 -> 60.79); recorded at quoted precision, the harness owns rounding."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          179
+        ],
+        "section": "Uncited-sample findings"
+      },
+      "claim_text": "| U03 | audit-summary.md:54-55 | \"the preregistered student-FN prior of 0.05 is mis-specified\" | PASS: `dawid-skene-results.json::parameters.student_fn_rate_prior = 0.05` confirmed (actual 0.050000000000000044 = 0.05 at printed precision) |",
+      "values": [
+        {
+          "quantity": "student false-negative rate prior as specified by the preregistration (registration-side claim)",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "student false-negative rate prior as recorded in the executed Dawid-Skene artefact",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        },
+        {
+          "quantity": "student false-negative rate prior, exact stored float in the Dawid-Skene artefact",
+          "value_verbatim": "0.050000000000000044",
+          "value_parsed": 0.050000000000000044,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.student_fn_rate_prior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Two-sided claim. The first value is a statement about what the REGISTRATION specifies, which the v1.1 calibration rule says must anchor to the lodged preregistration rather than to the executed config; a search of docs/methodology/preregistration/ for the student false-negative prior (and for any Dawid-Skene material) returned no match, so no lodged-document anchor could be located and the value is anchor-unknown. The second and third values are the executed artefact's parameter, quoted at printed and full float precision. Anchor-file ambiguity: the row cites a bare \"dawid-skene-results.json\"; the surrounding audit-summary.md:51-57 region concerns the image run (rows C15-C16, lines 60-61, batch b094), so the image run's D-S results file is proposed — triage should confirm against the text-min and text-high siblings, which carry the same parameter key."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          180,
+          180
+        ],
+        "section": "Uncited-sample findings"
+      },
+      "claim_text": "| U04 | audit-summary.md:119 (and elsewhere) | \"subtype-classification, which is on the 4-map gold-standard\" | PASS (structural): `inputs/vectors/references/` contains exactly four `reference_*.geojson` gold-standard maps (K-35-052-4, K-35-053-3, K-35-062-2, K-35-078-1) |",
+      "values": [
+        {
+          "quantity": "map count, gold-standard corpus underlying the subtype-classification analysis (as quoted from the draft)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:reference_*.geojson",
+          "method": "read"
+        },
+        {
+          "quantity": "count, reference_*.geojson gold-standard maps in inputs/vectors/references/",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:reference_*.geojson",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/",
+        "path": "len:reference_*.geojson"
+      },
+      "method": "read",
+      "notes": "Directory anchor, non-JSON (triage-routed): a glob count of files matching reference_*.geojson. Both numerals are retained because the span states the same quantity in two forms (the draft's \"4-map gold-standard\" and the verifier's \"exactly four\"). The four map-sheet identifiers (K-35-052-4 etc.) are names, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          181,
+          181
+        ],
+        "section": "Uncited-sample findings"
+      },
+      "claim_text": "| U05 | results-audit-2026-04-21.md:394-406 | \"12 unarchived subdirs\" under `outputs/h11/` | PASS: `ls -d outputs/h11/*/` returns exactly 12 directories, and all 12 names in the draft's list match the filesystem |",
+      "values": [
+        {
+          "quantity": "count, unarchived sub-directories under outputs/h11/ at the 2026-04-21 verification date",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "len:*/",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/",
+        "path": "len:*/"
+      },
+      "method": "read",
+      "notes": "Directory anchor, non-JSON (triage-routed). The span states 12 three times (draft claim, `ls` result, name-match count) for one quantity; a single value is emitted per the batch-note de-duplication convention. Dated snapshot: outputs/h11/ may have been archived further since 2026-04-21 — recorded as at the verification date, not modernised."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          182
+        ],
+        "section": "Uncited-sample findings"
+      },
+      "claim_text": "| U06 | audit-summary.md:203 | \"Total production-run API spend for the four 55-map runs is at least $495.09 measured ($364.70 + $60.79 + $69.60)\" | PASS: arithmetic is exact |",
+      "values": [
+        {
+          "quantity": "count, 55-map production runs whose API spend is aggregated",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total measured production-run API spend USD across the 55-map runs (stated as a lower bound)",
+          "value_verbatim": "$495.09",
+          "value_parsed": 495.09,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "measured cost USD, 55-map image generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "$364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "measured cost USD, 55-map text-min generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "$60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "measured cost USD, 55-map text-high generalisation run, as at the 2026-04-21 verification date",
+          "value_verbatim": "$69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed-method span: the total is a derivation (one expression, carried at value level per v1.2 amendment 1) while its three operands are separately quoted figures given their own `read` paths so they are never compared against the sum. The span says \"four 55-map runs\" but sums only three costs — the fourth (the retrospective text run) contributes no separate manifest total; the count is anchor-unknown because no artefact enumerates \"the four 55-map runs\" as a set (outputs/55maps-* directories are the plausible chase target). Dated-snapshot caveat: the $69.60 text-high component is the pre-recovery figure; the document's own post-recovery banner (lines 15-26, batch b094) states the text-high manifest now records totals.cost_usd 126.8051, though U06 is not in the banner's enumerated claim list. \"at least\" is a lower-bound qualifier, retained in the quantity wording."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          193
+        ],
+        "section": "Notes on verification protocol"
+      },
+      "claim_text": "- **Rounding discipline**: all numeric comparisons use standard\n  half-away-from-zero rounding to the draft's stated precision. Example:\n  draft `0.771` matches source `0.7710` (exact to 3 dp). Draft `0.795`\n  matches source `0.7954` (rounds to 3 dp). Draft `60.79` matches\n  source `60.7866` (rounds to 2 dp).",
+      "values": [
+        {
+          "quantity": "F1 at 50 m, 55-map image generalisation run, as quoted by the draft to 3 dp",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m, 55-map image generalisation run, source value to 4 dp",
+          "value_verbatim": "0.7710",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55-map image generalisation run, as quoted by the draft to 3 dp",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55-map image generalisation run, source value to 4 dp",
+          "value_verbatim": "0.7954",
+          "value_parsed": 0.7954,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "total run cost USD, 55-map text-min generalisation run, as quoted by the draft to 2 dp",
+          "value_verbatim": "60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total run cost USD, 55-map text-min generalisation run, source value to 4 dp",
+          "value_verbatim": "60.7866",
+          "value_parsed": 60.7866,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both members of each draft/source pair are extracted because the pairs differ in quoted precision (known-traps note: record value_verbatim exactly; the harness owns rounding tolerance). Cross-file locators per v1.2 amendment 2 for the D-S and cost-manifest pairs. The precision descriptors \"3 dp\" / \"2 dp\" describe the rounding protocol rather than a study quantity and are not extracted (batch-note decision d)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          198,
+          200
+        ],
+        "section": "Notes on verification protocol"
+      },
+      "claim_text": "- **Spot-checks**: all ten post-matrix anchor values (C15, C16, C21,\n  C22, C24, C27, C29, C32, C34, C35) were re-verified independently\n  rather than relying on any primary self-check.",
+      "values": [
+        {
+          "quantity": "count, post-matrix anchor values independently re-verified as spot-checks",
+          "value_verbatim": "ten",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count checkable only against the ten claim ids enumerated in the same sentence and their rows in this document's own table (lines 60-80, batch b094 range); rule 2 forbids anchoring prose to prose, so anchor-unknown. The claim ids themselves are identifiers, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          207
+        ],
+        "section": "Conclusion"
+      },
+      "claim_text": "The draft is largely accurate on its cited claims — 82 of 85 checked\nclaims pass at the stated precision,",
+      "values": [
+        {
+          "quantity": "count, checked claims with a PASS verdict in this verification report",
+          "value_verbatim": "82",
+          "value_parsed": 82,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, claims checked in this verification report",
+          "value_verbatim": "85",
+          "value_parsed": 85,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential counts over this document's own table of checked claims (rows C01-C85, lines 46-130) and its Summary block at lines 32-34 (batch b094 range, which states Claims checked 85 / PASS 82 / FAIL 2). No external artefact records them and rule 2 forbids anchoring prose to prose, hence anchor-unknown; triage may wish to reconcile the PASS + FAIL totals against the checked total, which this extraction does not adjudicate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          209,
+          210
+        ],
+        "section": "Conclusion"
+      },
+      "claim_text": "Every Observation line number (18 cites\nspanning Obs 256–273) resolves to a matching heading.",
+      "values": [
+        {
+          "quantity": "count, Observation line-number citations in the audit draft that were resolved to matching headings",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Count of Observation citations in the audit draft (now results/documentation-audit/audit-summary.md and results-audit-2026-04-21.md) — prose sources, so anchor-unknown per rule 2. \"Obs 256–273\" are observation identifiers, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          212
+        ],
+        "section": "Conclusion"
+      },
+      "claim_text": "Two failures were identified:",
+      "values": [
+        {
+          "quantity": "count, FAIL verdicts identified in this verification report",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count over this document's Failures section (FAIL-01 at line 136, FAIL-02 at line 151) and its Summary block at line 34 (batch b094 range, \"FAIL: 2\"); prose-only, hence anchor-unknown per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          217
+        ],
+        "section": "Conclusion"
+      },
+      "claim_text": "1. **C40 / FAIL-01**: the paper-tables file count of \"28\" is wrong;\n   the filesystem has 26 files, consistent with the draft's own\n   enumerated file list. Appears in two places (audit-summary.md and\n   results-audit-2026-04-21.md).",
+      "values": [
+        {
+          "quantity": "count, files in results/paper-tables/ as claimed by the audit draft (refuted)",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, files present in results/paper-tables/ at the 2026-04-21 verification date",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:*",
+          "method": "read"
+        },
+        {
+          "quantity": "count, draft documents in which the erroneous paper-tables file count appears",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/",
+        "path": "len:*"
+      },
+      "method": "read",
+      "notes": "Restates FAIL-01 (lines 138-149). The \"two places\" count is over the two audit draft documents (now results/documentation-audit/audit-summary.md and results/documentation-audit/results-audit-2026-04-21.md) — prose, so anchor-unknown per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          223,
+          226
+        ],
+        "section": "Conclusion"
+      },
+      "claim_text": "No dead citations. The seven sampled uncited claims all verify or are\nstructural narrative statements that can't be falsified from the source\n(e.g., a claim about what a prior audit erroneously said, which is a\nmeta-claim rather than a data claim).",
+      "values": [
+        {
+          "quantity": "count, uncited claims sampled and re-verified in this audit",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the sample size given at line 172; self-referential over the U01-U07 table (lines 175-183), so anchor-unknown per rule 2. \"No dead citations\" asserts a zero without a numeral and is not extracted here (batch-note decision e); the numeric form \"DEAD CITATION: 0\" sits at line 36, inside batch b094's range."
+    }
+  ]
+}

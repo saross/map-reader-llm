@@ -1,0 +1,4150 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/documentation-audit/results-audit-2026-04-21.md",
+    "git_blob": "f76d12a2cd38305eca17d234a8c8d8772737d984",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          12,
+          13
+        ],
+        "section": "Post-recovery 2026-05-03 annotation banner"
+      },
+      "claim_text": "launch state (cost manifest `cost_usd: 69.6017`; tiles\n> processed 42,545; tiles failed 160; F1 @50m 0.7883; D-S 0.8129).",
+      "values": [
+        {
+          "quantity": "total cost USD, 55maps-text-high-generalisation, 2026-04-19 launch snapshot (superseded)",
+          "value_verbatim": "69.6017",
+          "value_parsed": 69.6017,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "proposer tiles processed, text-high run, launch snapshot (superseded)",
+          "value_verbatim": "42,545",
+          "value_parsed": 42545,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "proposer tiles failed, text-high run, launch snapshot (superseded)",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m, text-high run, launch snapshot (superseded)",
+          "value_verbatim": "0.7883",
+          "value_parsed": 0.7883,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1 at 50 m, text-high run, launch snapshot (superseded)",
+          "value_verbatim": "0.8129",
+          "value_parsed": 0.8129,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "[BATCH NOTE b092] Scope for this batch: lines 1-359 of the audit document (sibling batch b093 covers 360-637). Scope decisions per instrument rule 5: dates (2026-04-21, 2026-04-19, 2026-05-02/03), git commit hashes (2165013c, 731466d8, e07dae37), Obs identifiers, working-notes line-number citations (line 11206, :12840, 'lines 115-117'), version strings (verifier v1/v2, gemini-3-flash) and numbers inside file paths or condition names (55maps-*, paired-vs-min-{20,30,40,50}m, gold-standard-v2-greedy-v2-327tile) are NOT extracted. Numbers that name a corpus AND assert its size in prose ('55-map generalisation', 'the 4-map gold-standard set') ARE extracted. Purely structural presence/absence statements carrying no numeral ('Cost manifest: NOT PRESENT', 'no single 50 m paired test ... is stored', 'Pre-launch audit: NOT PRESENT') are not extracted, matching the document's own preamble which declares uncited statements structural rather than measurements; the one exception is 'outputs/results/ is an empty directory', extracted as a zero-count with the doubt flagged. DATED-SNAPSHOT FRAMING: this is a 2026-04-21/22 audit record; every figure is recorded exactly as the document quotes it at that date and has NOT been modernised to the current artefact state. The top-of-document post-recovery banner explicitly declares the A4 (55maps-text-high-generalisation) cells to be the 2026-04-19 launch snapshot, superseded by the 2026-05-02/03 recovery; the banner's launch-side figures are classed 'historical' per rule 3, while the A4 table body is left as live 'read' claims against the cited manifest with the as-at framing noted, so triage can see the snapshot/current divergence rather than having it silently resolved at extraction. File byte-size claims ('present; 9,611 bytes') are extracted as counts against non-JSON anchors (v1.1 note: expected and routed to triage). Several cited paths have since been archived; where so, the archived copy is named as anchor and the substitution recorded in that claim's notes. This claim is the 'was' side of the banner's correction block (rule 3 historical); the 'now' side is the next claim. The same five figures are restated as live-looking cells in the A4 table (lines 294, 301, 302, 315, 325) and are extracted there separately with their as-at framing noted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          19
+        ],
+        "section": "Post-recovery 2026-05-03 annotation banner"
+      },
+      "claim_text": "post-recovery\n> totals are `cost_usd: 126.8051` (proposer + recovery + verifier\n> cleanup + FP-classify share); attempted tiles 42,705 (failed 0);\n> verified detections 4,164; F1 @50m 0.7920; D-S 0.8142; F1\n> corrected @50m (Approach B) 0.8273.",
+      "values": [
+        {
+          "quantity": "total cost USD, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "126.8051",
+          "value_parsed": 126.8051,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer tiles attempted, text-high run, post-recovery",
+          "value_verbatim": "42,705",
+          "value_parsed": 42705,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer tiles failed, text-high run, post-recovery",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_failed",
+          "method": "read"
+        },
+        {
+          "quantity": "verified detections, text-high run, post-recovery",
+          "value_verbatim": "4,164",
+          "value_parsed": 4164,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m, text-high run, post-recovery",
+          "value_verbatim": "0.7920",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1 at 50 m, text-high run, post-recovery",
+          "value_verbatim": "0.8142",
+          "value_parsed": 0.8142,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at 50 m (Approach B), text-high run, post-recovery",
+          "value_verbatim": "0.8273",
+          "value_parsed": 0.8273,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'now' side of the banner's correction block, so these are live claims. Cross-file value paths per v1.2 amendment 2: the last four values live in the sibling evaluation, Dawid-Skene and corrected-F1 artefacts rather than in the cost manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "Scope exclusions"
+      },
+      "claim_text": "- `archive/v2-verifier-contamination/` — 100 files moved on 2026-04-21",
+      "values": [
+        {
+          "quantity": "count, files moved into the v2-verifier-contamination archive on 2026-04-21",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/MANIFEST.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the archive directory's own manifest enumerates the moved files; the count can alternatively be taken as the recursive tracked-file count of archive/v2-verifier-contamination/. Dated snapshot ('moved on 2026-04-21') — recorded as quoted, not modernised."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          34
+        ],
+        "section": "Scope exclusions"
+      },
+      "claim_text": "  because the v2 verifier prompt was derived by analysing FPs on the\n  4-map gold-standard set.",
+      "values": [
+        {
+          "quantity": "map count, gold-standard evaluation set",
+          "value_verbatim": "4-map",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.per_map",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/gt-spacing-analysis/gold-standard/spacing-summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'4-map gold-standard set' names the corpus and asserts its size, so it is a claim per rule 5's 487-tile example. No scalar map-count key was found in the gold-standard output manifests (searched outputs/gs/gold-standard-v2/ and results/leaderboard/cells/); the per-map block of the gold-standard spacing summary is used as the count locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          37
+        ],
+        "section": "Scope exclusions"
+      },
+      "claim_text": "the entire `results/e47-v1-vs-v2/` tree, and seven raw-output\n  subdirectories under `outputs/h11/`.",
+      "values": [
+        {
+          "quantity": "count, raw-output subdirectories moved out of outputs/h11/ into the contamination archive",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/raw-outputs/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: subdirectory count of the archive's raw-outputs tree (archive/v2-verifier-contamination/MANIFEST.md enumerates the moves). '327tile' inside the leaderboard-cell filename on line 35 is a name, not a claim, so the span is trimmed to start at line 36."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          40
+        ],
+        "section": "Scope exclusions"
+      },
+      "claim_text": "- `outputs/results/` is an empty directory that exists in the tree;\n  not audited.",
+      "values": [
+        {
+          "quantity": "count, files in outputs/results/",
+          "value_verbatim": "empty",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/results/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "DOUBT FLAGGED: no numeral appears — 'empty directory' is extracted as a zero-count claim under the instrument's include-when-in-doubt rule. Cheap to prune if triage judges it a structural statement rather than a measurement. Non-JSON anchor (directory listing)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "A. The four 55-map generalisation runs (Era 2)"
+      },
+      "claim_text": "## A. The four 55-map generalisation runs (Era 2)",
+      "values": [
+        {
+          "quantity": "count, 55-map generalisation runs audited as Era 2",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map count, 55-map generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No manifest enumerating the four Era 2 generalisation runs as a set was located (searched results/conditions-manifest.json and results/leaderboard/ for an era/run roster), so the run count is anchor-unknown; the four are A1-A4 of this document's own section A."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          49
+        ],
+        "section": "A1 Scope"
+      },
+      "claim_text": "**Scope**: 55-map image-modality generalisation; gemini-3-flash at\nHIGH thinking with context caching; 5-pass proposer + verifier v1.",
+      "values": [
+        {
+          "quantity": "map count, image-modality generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer pass count, image run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'verifier v1' is a version string, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "A1 Cost manifest table"
+      },
+      "claim_text": "| Total cost (USD) | `totals.cost_usd` | 364.6971 → 364.70 |",
+      "values": [
+        {
+          "quantity": "total cost USD, image run (§A1 cost table row 'Total cost (USD)')",
+          "value_verbatim": "364.6971",
+          "value_parsed": 364.6971,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, image run, rounded (§A1 cost table row 'Total cost (USD)')",
+          "value_verbatim": "364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: quoted as at the 2026-04-21 audit. Recorded verbatim, not modernised to the manifest's present state."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          56
+        ],
+        "section": "A1 Cost manifest table"
+      },
+      "claim_text": "| Input tokens | `totals.input_tokens` | 682,800,923 |",
+      "values": [
+        {
+          "quantity": "input tokens, image run (§A1 cost table row 'Input tokens')",
+          "value_verbatim": "682,800,923",
+          "value_parsed": 682800923,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.input_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Era 2 run with a populated cost manifest, so the token total is verifiable (the unverifiable-era rule covers the phase2a-3c retest era only)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "A1 Cost manifest table"
+      },
+      "claim_text": "| Cached tokens | `totals.cached_tokens` | 621,315,045 |",
+      "values": [
+        {
+          "quantity": "cached tokens, image run (§A1 cost table row 'Cached tokens')",
+          "value_verbatim": "621,315,045",
+          "value_parsed": 621315045,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.cached_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "A1 Cost manifest table"
+      },
+      "claim_text": "| Cache-hit rate | `totals.cache_hit_rate` | 0.91 |",
+      "values": [
+        {
+          "quantity": "cache-hit rate, image run (§A1 cost table row 'Cache-hit rate')",
+          "value_verbatim": "0.91",
+          "value_parsed": 0.91,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "A1 Cost manifest table"
+      },
+      "claim_text": "| Wall-clock (s) | `totals.wall_clock_seconds` | 14,947.18 |",
+      "values": [
+        {
+          "quantity": "wall-clock seconds, image run (§A1 cost table row 'Wall-clock (s)')",
+          "value_verbatim": "14,947.18",
+          "value_parsed": 14947.18,
+          "unit": "s",
+          "kind": "physical",
+          "path": "$.totals.wall_clock_seconds",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "A1 Cost manifest table"
+      },
+      "claim_text": "| Proposer cost (USD) | `by_stage.proposer.cost_usd` | 353.6201 |",
+      "values": [
+        {
+          "quantity": "proposer-stage cost USD, image run (§A1 cost table row 'Proposer cost (USD)')",
+          "value_verbatim": "353.6201",
+          "value_parsed": 353.6201,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.proposer.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "A1 Cost manifest table"
+      },
+      "claim_text": "| Tiles processed | `by_stage.proposer.tiles_processed` | 42,705 |",
+      "values": [
+        {
+          "quantity": "proposer tiles processed, image run (§A1 cost table row 'Tiles processed')",
+          "value_verbatim": "42,705",
+          "value_parsed": 42705,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_processed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "A1 F1 / precision / recall table"
+      },
+      "claim_text": "| 20 | 0.506 | [0.492, 0.520] | 0.5117 | 0.5004 | `summary.buffers[0]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 20 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 20 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.506",
+          "value_parsed": 0.506,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 20 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.492",
+          "value_parsed": 0.492,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 20 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.520",
+          "value_parsed": 0.52,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 20 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.5117",
+          "value_parsed": 0.5117,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 20 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.5004",
+          "value_parsed": 0.5004,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "A1 F1 / precision / recall table"
+      },
+      "claim_text": "| 30 | 0.6855 | [0.6723, 0.6974] | 0.6932 | 0.678 | `summary.buffers[1]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 30 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 30 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.6855",
+          "value_parsed": 0.6855,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 30 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.6723",
+          "value_parsed": 0.6723,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[1].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 30 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.6974",
+          "value_parsed": 0.6974,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[1].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 30 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.6932",
+          "value_parsed": 0.6932,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 30 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.678",
+          "value_parsed": 0.678,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "A1 F1 / precision / recall table"
+      },
+      "claim_text": "| 40 | 0.7483 | [0.7372, 0.7595] | 0.7567 | 0.74 | `summary.buffers[2]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 40 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[2].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 40 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.7483",
+          "value_parsed": 0.7483,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 40 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.7372",
+          "value_parsed": 0.7372,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[2].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 40 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.7595",
+          "value_parsed": 0.7595,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[2].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 40 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.7567",
+          "value_parsed": 0.7567,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 40 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.74",
+          "value_parsed": 0.74,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "A1 F1 / precision / recall table"
+      },
+      "claim_text": "| 50 | 0.771 | [0.7604, 0.7817] | 0.7796 | 0.7625 | `summary.buffers[3]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 50 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[3].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 50 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.7604",
+          "value_parsed": 0.7604,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 50 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.7817",
+          "value_parsed": 0.7817,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 50 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.7796",
+          "value_parsed": 0.7796,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 50 m (§A1 image-run evaluation table row)",
+          "value_verbatim": "0.7625",
+          "value_parsed": 0.7625,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          75
+        ],
+        "section": "A1 Bootstrap metadata"
+      },
+      "claim_text": "- `bootstrap.n_iterations = 1000`, `bootstrap.seed = 42`,\n  `bootstrap.resampling_unit = \"tile_level\"`.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, image-run evaluation",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, image-run evaluation bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "bootstrap.resampling_unit is a string, not a numeric claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "A1 Dawid-Skene"
+      },
+      "claim_text": "- `measured.f1` = 0.771 (matches the evaluation above at 50 m buffer)",
+      "values": [
+        {
+          "quantity": "measured F1 at 50 m, image run (Dawid-Skene input)",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.measured.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'at 50 m buffer' is context identifying the buffer; the buffer parameter itself is extracted separately from line 83."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "A1 Dawid-Skene"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.f1` = 0.7954 → rounds to **0.795**",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, image run",
+          "value_verbatim": "0.7954",
+          "value_parsed": 0.7954,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, image run, rounded",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "A1 Dawid-Skene"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.vlm_only_posterior` = 0.1862",
+      "values": [
+        {
+          "quantity": "Dawid-Skene VLM-only posterior, image run",
+          "value_verbatim": "0.1862",
+          "value_parsed": 0.1862,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "A1 Dawid-Skene"
+      },
+      "claim_text": "- `parameters.buffer_metres` = 50",
+      "values": [
+        {
+          "quantity": "buffer parameter of the image-run Dawid-Skene analysis",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.parameters.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "A1 D-S caveat (Obs 273)"
+      },
+      "claim_text": "states \"the 'D-S aggregate corrected F1 = 0.795' recorded in",
+      "values": [
+        {
+          "quantity": "Dawid-Skene aggregate corrected F1, image run (as quoted in the Obs 273 caveat)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The figure is quoted from Obs 273 in docs/notes/reflections/working-notes.md and from results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md; both are prose, so per rule 2 the anchor is the Dawid-Skene results JSON. Duplicates the rounded figure on line 81."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          96
+        ],
+        "section": "A1 D-S v2 (data-driven prior sweep)"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.f1` = 0.8917 (at empirical prior;\n  posterior degenerates to 1.0)",
+      "values": [
+        {
+          "quantity": "Dawid-Skene v2 corrected F1 at the empirical prior, image run",
+          "value_verbatim": "0.8917",
+          "value_parsed": 0.8917,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene v2 VLM-only posterior at the empirical prior, image run",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "A1 D-S v2 (data-driven prior sweep)"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.vlm_only_posterior` = 1.0",
+      "values": [
+        {
+          "quantity": "Dawid-Skene v2 VLM-only posterior, image run",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          108
+        ],
+        "section": "A1 Pre-launch audit"
+      },
+      "claim_text": "**Pre-launch audit**:\n`configs/run-configs/55maps_image_generalisation_pre_launch_audit.md`\n(present; 9,611 bytes).",
+      "values": [
+        {
+          "quantity": "file size in bytes, image-run pre-launch audit document",
+          "value_verbatim": "9,611",
+          "value_parsed": 9611,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-audits/configs-55maps_image_generalisation_pre_launch_audit.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited path configs/run-configs/55maps_image_generalisation_pre_launch_audit.md is no longer in the working tree; the document has been moved to archive/superseded-audits/, which is used as the anchor. Non-JSON anchor (file byte size), dated to the 2026-04-21 audit."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          112
+        ],
+        "section": "A1 Post-run report"
+      },
+      "claim_text": "**Post-run report**:\n`configs/run-configs/55maps_image_generalisation_post_run_report.md`\n(present; 11,323 bytes).",
+      "values": [
+        {
+          "quantity": "file size in bytes, image-run post-run report",
+          "value_verbatim": "11,323",
+          "value_parsed": 11323,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "configs/run-configs/55maps_image_generalisation_post_run_report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (file byte size), dated to the 2026-04-21 audit. Lines 112-114 record a second copy at outputs/55maps-image-generalisation/post_run_report.md, which triage may prefer if the configs/ copy has since been revised."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "A1 Working-notes observation cites"
+      },
+      "claim_text": "- Obs 256 (line 11206) — F1 = 0.771 measured, 0.795 D-S corrected.",
+      "values": [
+        {
+          "quantity": "measured F1 at 50 m, image run (as cited by Obs 256)",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.measured.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, image run (as cited by Obs 256)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Obs 256 and its working-notes line citation are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          120
+        ],
+        "section": "A1 Working-notes observation cites"
+      },
+      "claim_text": "- Obs 257 (line 11287) — per-map heterogeneity, 4× wider F1 distribution\n  out-of-sample.",
+      "values": [
+        {
+          "quantity": "ratio, out-of-sample per-map F1 distribution width relative to in-sample (as cited by Obs 257)",
+          "value_verbatim": "4×",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No artefact recording a per-map F1 dispersion ratio was located: searched results/55maps-image-generalisation/ for a per-map F1 spread summary and checked the cost manifest's per_map block (which carries per-map tiles, candidates and cost but no F1). Obs 257 itself lives in docs/notes/reflections/working-notes.md — prose, not anchorable per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "A1 Working-notes observation cites"
+      },
+      "claim_text": "- Obs 267 (line 12394) — human-reviewed corrected F1 = 0.830 at 50 m.",
+      "values": [
+        {
+          "quantity": "human-reviewed corrected F1 at 50 m, image run (as cited by Obs 267)",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The live path results/55maps-image-generalisation/human-reviewed-corrected/ no longer exists; the single-buffer human-reviewed artefact has been archived to archive/55maps-superseded-gt-evals/per-run/, used here as the anchor (rule 2: never anchor prose to prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          131
+        ],
+        "section": "A1 Working-notes observation cites"
+      },
+      "claim_text": "- Obs 272 (line 12770) — attractor-pull scale ends at 125 m.",
+      "values": [
+        {
+          "quantity": "outer radius at which the attractor-pull effect ends (as cited by Obs 272)",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The shell-wise permutation p-values that decide where the effect ends live at $.shell[*].p_value in the buffer-band-lift summary; a post-recovery restatement lives in results/55maps-attractor-pull-v2/attractor-pull-v2.json. Obs 272 itself is prose in docs/notes/reflections/working-notes.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          138
+        ],
+        "section": "A1 Post-matrix analyses table"
+      },
+      "claim_text": "| Human-reviewed corrected F1 (50 m) | `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json` → `corrected.f1` | 0.8295 → 0.830 |",
+      "values": [
+        {
+          "quantity": "human-reviewed corrected F1 at 50 m, image run (§A1 post-matrix table row 'Human-reviewed corrected F1')",
+          "value_verbatim": "0.8295",
+          "value_parsed": 0.8295,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "human-reviewed corrected F1 at 50 m, image run, rounded (§A1 post-matrix table row)",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited path is no longer in the working tree; the archived copy under archive/55maps-superseded-gt-evals/per-run/ is used as anchor. '(50 m)' in the row label identifies the analysis, not an independent claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "A1 Post-matrix analyses table"
+      },
+      "claim_text": "| Multi-buffer corrected F1 | `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` → `results[*].F1` | 0.832 at R=50 m → 0.855 at R=150 m |",
+      "values": [
+        {
+          "quantity": "multi-buffer corrected F1 at R = 50 m, image run (§A1 post-matrix table row 'Multi-buffer corrected F1')",
+          "value_verbatim": "0.832",
+          "value_parsed": 0.832,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "multi-buffer corrected F1 at R = 150 m, image run (§A1 post-matrix table row)",
+          "value_verbatim": "0.855",
+          "value_parsed": 0.855,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "R=50 m and R=150 m identify which rows of results[*] the two F1 values come from; the buffer grid itself is not re-extracted here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "A1 Post-matrix analyses table"
+      },
+      "claim_text": "| Buffer-band lift | `results/55maps-image-generalisation/buffer-band-lift/summary.json` → `cumulative[*].lift_ratio` | 118× at R=50 m; effect ends ~125 m |",
+      "values": [
+        {
+          "quantity": "cumulative buffer-band lift ratio at R = 50 m, image run (§A1 post-matrix table row 'Buffer-band lift')",
+          "value_verbatim": "118×",
+          "value_parsed": 118,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[0].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "outer radius at which the buffer-band lift effect ends (§A1 post-matrix table row)",
+          "value_verbatim": "~125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained on ~125 per v1.2 amendment 5. The end-of-effect radius is decided by the shell-wise permutation p-values at $.shell[*].p_value, hence recompute-script rather than read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "A1 Post-matrix analyses table"
+      },
+      "claim_text": "| Verifier calibration | `results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json` → `ece`, `auc.point` | ECE 0.269, AUC 0.655 |",
+      "values": [
+        {
+          "quantity": "expected calibration error (ECE), image-run verifier calibration (§A1 post-matrix table row 'Verifier calibration')",
+          "value_verbatim": "0.269",
+          "value_parsed": 0.269,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "AUC point estimate, image-run verifier calibration (§A1 post-matrix table row)",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.point",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "A1 Post-matrix analyses table"
+      },
+      "claim_text": "| Uncalibrated vs calibrated review | `results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json` → `rates.disagreement_rate` | 21 % one-directional flip |",
+      "values": [
+        {
+          "quantity": "disagreement rate, uncalibrated vs calibrated review (§A1 post-matrix table row 'Uncalibrated vs calibrated review')",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.rates.disagreement_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted as a percentage while the anchor key stores the rate as a fraction; unit '%' is set so the harness can bridge scales (v1.2 amendment 6). 'one-directional flip' is a qualitative gloss, not a second value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "A1 Post-matrix analyses table"
+      },
+      "claim_text": "| D-S v1 cross-tab | `results/55maps-image-generalisation/ds-human-crosstab/summary.json` → `ece`, `auc` | ECE 0.539, AUC 0.500 (prior-invariant) |",
+      "values": [
+        {
+          "quantity": "expected calibration error (ECE), D-S v1 human cross-tab (§A1 post-matrix table row 'D-S v1 cross-tab')",
+          "value_verbatim": "0.539",
+          "value_parsed": 0.539,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "AUC, D-S v1 human cross-tab (§A1 post-matrix table row)",
+          "value_verbatim": "0.500",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "A1 Post-matrix analyses table"
+      },
+      "claim_text": "| D-S v2 prior sweep | `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json` | Posterior collapses to 1.0 at empirical prior |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene v2 posterior at the empirical prior (§A1 post-matrix table row 'D-S v2 prior sweep')",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          146,
+          146
+        ],
+        "section": "A1 Post-matrix analyses table"
+      },
+      "claim_text": "| Human-review multi-buffer CSV | `results/55maps-image-generalisation/human-review-multi-buffer.csv` | 557 rows |",
+      "values": [
+        {
+          "quantity": "row count, image-run human-review multi-buffer CSV (§A1 post-matrix table row 'Human-review multi-buffer CSV')",
+          "value_verbatim": "557",
+          "value_parsed": 557,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: data-row count of the CSV (i.e. excluding the header line)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          152
+        ],
+        "section": "A2 Scope"
+      },
+      "claim_text": "**Scope**: Text-modality HIGH-thinking 5-pass generalisation.",
+      "values": [
+        {
+          "quantity": "proposer pass count, retrospective text HIGH run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/proposer/detect_brief-text/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the run_N pass directories under the proposer output tree. This run predates the publishable launcher, so it has no cost manifest with a per_pass array to count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          160
+        ],
+        "section": "A2 Cost manifest (NOT PRESENT)"
+      },
+      "claim_text": "\"Proposer estimate: 5 × (8541 / 487) × $0.70 ≈\n\"$61 (estimated)\", \"Verifier v1 (measured): $12.43\", and \"Total\nestimated: ~$75 (v1-only); ~$88 including v2.\"",
+      "values": [
+        {
+          "quantity": "proposer pass count used in the retrospective cost estimate",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile count, 55-map generalisation corpus (numerator of the cost-scaling estimate)",
+          "value_verbatim": "8541",
+          "value_parsed": 8541,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-generalisation/buffer_sensitivity.json#$.evaluation_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, pv-diag-384 scaling baseline corpus (denominator of the cost-scaling estimate)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "per-pass proposer cost USD of the pv-diag-384 baseline used to scale the estimate",
+          "value_verbatim": "$0.70",
+          "value_parsed": 0.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated proposer cost USD, retrospective text HIGH run",
+          "value_verbatim": "$61",
+          "value_parsed": 61,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "measured verifier v1 cost USD, retrospective text HIGH run",
+          "value_verbatim": "$12.43",
+          "value_parsed": 12.43,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-generalisation/verified/run.meta.json#$.cost_estimate.total_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "estimated total cost USD, retrospective text HIGH run, v1 verifier only",
+          "value_verbatim": "~$75",
+          "value_parsed": 75,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated total cost USD, retrospective text HIGH run, including v2 verifier",
+          "value_verbatim": "~$88",
+          "value_parsed": 88,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/verified/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "A quotation of three lines from configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md; per rule 2 the prose source is not the anchor. Only the $12.43 verifier figure is measured — it is anchored to the verifier run.meta cost_estimate. The estimate inputs are anchor-unknown: the 5-pass count is not carried as a scalar in any Era 2 artefact for this run (only as run_N directories); no artefact recording the 487-tile pv-diag-384 baseline tile count or its $0.70 per-pass unit cost was located under outputs/h11/pv-diag-384/flash-high-text-n5/ during anchor identification; the $61, ~$75 and ~$88 figures are the report's own arithmetic on those estimates and have no committed artefact. Approx markers retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          161
+        ],
+        "section": "A2 Cost manifest (NOT PRESENT)"
+      },
+      "claim_text": "The $12.43\nverifier figure is measured from `outputs/55maps-generalisation/verified/run.meta.json`",
+      "values": [
+        {
+          "quantity": "measured verifier v1 cost USD, retrospective text HIGH run",
+          "value_verbatim": "$12.43",
+          "value_parsed": 12.43,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.cost_estimate.total_cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/verified/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the quoted figure from line 159 with its measurement source named; extracted separately because this span, not the quotation, is where the document asserts the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          172
+        ],
+        "section": "A2 F1 / precision / recall table"
+      },
+      "claim_text": "| 20 | 0.6232 | [0.6087, 0.6375] | `buffers[0].f1`, `.ci.f1.lower/upper` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 20 m (§A2 retrospective evaluation table row)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 20 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.6232",
+          "value_parsed": 0.6232,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 20 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.6087",
+          "value_parsed": 0.6087,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[0].ci.f1.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 20 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.6375",
+          "value_parsed": 0.6375,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[0].ci.f1.upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          173,
+          173
+        ],
+        "section": "A2 F1 / precision / recall table"
+      },
+      "claim_text": "| 30 | 0.7551 | [0.7433, 0.7668] | `buffers[1]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 30 m (§A2 retrospective evaluation table row)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 30 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.7551",
+          "value_parsed": 0.7551,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[1].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 30 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.7433",
+          "value_parsed": 0.7433,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[1].ci.f1.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 30 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.7668",
+          "value_parsed": 0.7668,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[1].ci.f1.upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "A2 F1 / precision / recall table"
+      },
+      "claim_text": "| 40 | 0.7832 | [0.7723, 0.794] | `buffers[2]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 40 m (§A2 retrospective evaluation table row)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[2].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 40 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.7832",
+          "value_parsed": 0.7832,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[2].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 40 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.7723",
+          "value_parsed": 0.7723,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[2].ci.f1.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 40 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.794",
+          "value_parsed": 0.794,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[2].ci.f1.upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          175
+        ],
+        "section": "A2 F1 / precision / recall table"
+      },
+      "claim_text": "| 50 | 0.7898 | [0.7793, 0.8005] | `buffers[3]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 50 m (§A2 retrospective evaluation table row)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[3].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.7898",
+          "value_parsed": 0.7898,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 50 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.7793",
+          "value_parsed": 0.7793,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[3].ci.f1.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 50 m, retrospective text HIGH run (§A2 table row)",
+          "value_verbatim": "0.8005",
+          "value_parsed": 0.8005,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[3].ci.f1.upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          179
+        ],
+        "section": "A2 Threshold optimum"
+      },
+      "claim_text": "The retrospective report (line 42) also quotes F1 = 0.7902 at threshold\n0.20 as the numerical optimum; the 0.15 value used for cross-modality\nsymmetry is 0.7898 → 0.790.",
+      "values": [
+        {
+          "quantity": "F1 at 50 m at the numerically optimal threshold, retrospective text HIGH run",
+          "value_verbatim": "0.7902",
+          "value_parsed": 0.7902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "numerically optimal verifier probability threshold, retrospective text HIGH run",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier probability threshold used for cross-modality symmetry",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/55maps-generalisation/buffer_sensitivity.json#$.threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m at threshold 0.15, retrospective text HIGH run",
+          "value_verbatim": "0.7898",
+          "value_parsed": 0.7898,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-generalisation/buffer_sensitivity.json#$.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m at threshold 0.15, rounded",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-generalisation/buffer_sensitivity.json#$.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/threshold-sweep-50m/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document cites the retrospective post-run report (prose) as its source; per rule 2 the anchors used are the threshold sweep JSON for the optimum and the buffer-sensitivity JSON for the 0.15 figures. '(line 42)' is a line-number citation, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          183
+        ],
+        "section": "A2 Bootstrap metadata (retrospective)"
+      },
+      "claim_text": "\"bootstrap = 1,000, seed = 42, 50 m buffer, 1,000-\niteration tile-level resampling\".",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, retrospective text HIGH evaluation",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, retrospective text HIGH evaluation bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation buffer, retrospective text HIGH bootstrap",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.buffers[3].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, restated as the tile-level resampling count",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted from the retrospective post-run report (prose); per rule 2 the anchor is the buffer-sensitivity JSON, which carries the bootstrap parameters as scalars. The '1,000-iteration' restatement is the same quantity as the first value, recorded because it appears twice in the span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          188,
+          191
+        ],
+        "section": "A2 Dawid-Skene"
+      },
+      "claim_text": "**Dawid-Skene**: `results/dawid-skene/dawid-skene-results.json` (shared\nlocation for the retrospective run; the three post-retrospective runs\neach have their own `dawid-skene/` sub-directory under\n`results/55maps-*/`)",
+      "values": [
+        {
+          "quantity": "count, post-retrospective 55-map runs holding their own dawid-skene/ sub-directory",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Verifiable only as a directory listing, not from any JSON: the three are results/55maps-image-generalisation/dawid-skene/, results/55maps-text-min-generalisation/dawid-skene/ and results/55maps-text-high-generalisation/dawid-skene/. No manifest enumerating them was located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "A2 Dawid-Skene"
+      },
+      "claim_text": "- `measured.f1` = 0.7898 → rounds to 0.790",
+      "values": [
+        {
+          "quantity": "measured F1 at 50 m, retrospective text HIGH run (Dawid-Skene input)",
+          "value_verbatim": "0.7898",
+          "value_parsed": 0.7898,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.measured.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "measured F1 at 50 m, retrospective text HIGH run, rounded",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.measured.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          194
+        ],
+        "section": "A2 Dawid-Skene"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.f1` = 0.8144 → rounds to **0.814**",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, retrospective text HIGH run",
+          "value_verbatim": "0.8144",
+          "value_parsed": 0.8144,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, retrospective text HIGH run, rounded",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "A2 Dawid-Skene"
+      },
+      "claim_text": "- `parameters.buffer_metres` = 50",
+      "values": [
+        {
+          "quantity": "buffer parameter of the retrospective Dawid-Skene analysis",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.parameters.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          196,
+          196
+        ],
+        "section": "A2 Dawid-Skene"
+      },
+      "claim_text": "- `parameters.threshold` = 0.15",
+      "values": [
+        {
+          "quantity": "verifier probability threshold of the retrospective Dawid-Skene analysis",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          207
+        ],
+        "section": "A2 Post-run report"
+      },
+      "claim_text": "**Post-run report**:\n`configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md`\n(present; 10,873 bytes).",
+      "values": [
+        {
+          "quantity": "file size in bytes, retrospective text HIGH post-run report",
+          "value_verbatim": "10,873",
+          "value_parsed": 10873,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (file byte size), dated to the 2026-04-21 audit. Lines 207-209 note a second summary at outputs/55maps-generalisation/post_run_report_retrospective.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          215
+        ],
+        "section": "A2 Working-notes observation cites"
+      },
+      "claim_text": "- The retrospective is the comparator for **Obs 258** (line 11378) —\n  HIGH thinking on 55-map text generalisation, paired permutation vs\n  text-min by buffer.",
+      "values": [
+        {
+          "quantity": "map count, text-modality generalisation corpus (as described by Obs 258)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'55-map text generalisation' asserts corpus size, so it is extracted per rule 5's 487-tile precedent. The retrospective run has no cost manifest, so the anchor is the text-high re-run manifest over the same 55-map corpus."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          221,
+          221
+        ],
+        "section": "A3 Scope"
+      },
+      "claim_text": "**Scope**: Text-modality MINIMAL-thinking 5-pass generalisation.",
+      "values": [
+        {
+          "quantity": "proposer pass count, text MINIMAL run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          227,
+          227
+        ],
+        "section": "A3 Cost manifest table"
+      },
+      "claim_text": "| Total cost (USD) | `totals.cost_usd` | 60.7866 → 60.79 |",
+      "values": [
+        {
+          "quantity": "total cost USD, text MINIMAL run (§A3 cost table row 'Total cost (USD)')",
+          "value_verbatim": "60.7866",
+          "value_parsed": 60.7866,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, text MINIMAL run, rounded (§A3 cost table row)",
+          "value_verbatim": "60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: quoted as at the 2026-04-21 audit, not modernised."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          228,
+          228
+        ],
+        "section": "A3 Cost manifest table"
+      },
+      "claim_text": "| Input tokens | `totals.input_tokens` | 82,297,662 |",
+      "values": [
+        {
+          "quantity": "input tokens, text MINIMAL run (§A3 cost table row 'Input tokens')",
+          "value_verbatim": "82,297,662",
+          "value_parsed": 82297662,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.input_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          229,
+          229
+        ],
+        "section": "A3 Cost manifest table"
+      },
+      "claim_text": "| Cached tokens | `totals.cached_tokens` | 0 |",
+      "values": [
+        {
+          "quantity": "cached tokens, text MINIMAL run (§A3 cost table row 'Cached tokens')",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.cached_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          230,
+          230
+        ],
+        "section": "A3 Cost manifest table"
+      },
+      "claim_text": "| Cache-hit rate | `totals.cache_hit_rate` | 0.0 |",
+      "values": [
+        {
+          "quantity": "cache-hit rate, text MINIMAL run (§A3 cost table row 'Cache-hit rate')",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          231,
+          231
+        ],
+        "section": "A3 Cost manifest table"
+      },
+      "claim_text": "| Wall-clock (s) | `totals.wall_clock_seconds` | 6,953.106 |",
+      "values": [
+        {
+          "quantity": "wall-clock seconds, text MINIMAL run (§A3 cost table row 'Wall-clock (s)')",
+          "value_verbatim": "6,953.106",
+          "value_parsed": 6953.106,
+          "unit": "s",
+          "kind": "physical",
+          "path": "$.totals.wall_clock_seconds",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          232,
+          232
+        ],
+        "section": "A3 Cost manifest table"
+      },
+      "claim_text": "| Tiles processed | `by_stage.proposer.tiles_processed` | 42,705 |",
+      "values": [
+        {
+          "quantity": "proposer tiles processed, text MINIMAL run (§A3 cost table row 'Tiles processed')",
+          "value_verbatim": "42,705",
+          "value_parsed": 42705,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_processed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          233
+        ],
+        "section": "A3 Cost manifest table"
+      },
+      "claim_text": "| Tiles failed | `by_stage.proposer.tiles_failed` | 124 (failure rate 0.0029) |",
+      "values": [
+        {
+          "quantity": "proposer tiles failed, text MINIMAL run (§A3 cost table row 'Tiles failed')",
+          "value_verbatim": "124",
+          "value_parsed": 124,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_failed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer tile failure rate, text MINIMAL run (§A3 cost table row)",
+          "value_verbatim": "0.0029",
+          "value_parsed": 0.0029,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.by_stage.proposer.failure_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          237
+        ],
+        "section": "A3 Cache commentary"
+      },
+      "claim_text": "The 0 cached tokens is the single biggest divergence from the image\nrun; text prompts are below the Flash minimum cache size so context\ncaching does not apply.",
+      "values": [
+        {
+          "quantity": "cached tokens, text MINIMAL run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.cached_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the cached-token total from the §A3 table row at line 229."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          243,
+          243
+        ],
+        "section": "A3 F1 / precision / recall table"
+      },
+      "claim_text": "| 20 | 0.618 | [0.6024, 0.6339] | 0.6908 | 0.5591 | `summary.buffers[0]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 20 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 20 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.618",
+          "value_parsed": 0.618,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 20 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.6024",
+          "value_parsed": 0.6024,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 20 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.6339",
+          "value_parsed": 0.6339,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 20 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.6908",
+          "value_parsed": 0.6908,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 20 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.5591",
+          "value_parsed": 0.5591,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          244,
+          244
+        ],
+        "section": "A3 F1 / precision / recall table"
+      },
+      "claim_text": "| 30 | 0.7274 | [0.714, 0.7399] | 0.813 | 0.6581 | `summary.buffers[1]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 30 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 30 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.7274",
+          "value_parsed": 0.7274,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 30 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.714",
+          "value_parsed": 0.714,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[1].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 30 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.7399",
+          "value_parsed": 0.7399,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[1].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 30 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.813",
+          "value_parsed": 0.813,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 30 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.6581",
+          "value_parsed": 0.6581,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          245,
+          245
+        ],
+        "section": "A3 F1 / precision / recall table"
+      },
+      "claim_text": "| 40 | 0.7538 | [0.7415, 0.7661] | 0.8425 | 0.682 | `summary.buffers[2]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 40 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[2].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 40 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.7538",
+          "value_parsed": 0.7538,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 40 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.7415",
+          "value_parsed": 0.7415,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[2].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 40 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.7661",
+          "value_parsed": 0.7661,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[2].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 40 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.8425",
+          "value_parsed": 0.8425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 40 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.682",
+          "value_parsed": 0.682,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          246,
+          246
+        ],
+        "section": "A3 F1 / precision / recall table"
+      },
+      "claim_text": "| 50 | 0.7591 | [0.7469, 0.7715] | 0.8485 | 0.6868 | `summary.buffers[3]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 50 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[3].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.7591",
+          "value_parsed": 0.7591,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 50 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.7469",
+          "value_parsed": 0.7469,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 50 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.7715",
+          "value_parsed": 0.7715,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 50 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.8485",
+          "value_parsed": 0.8485,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 50 m (§A3 text-MINIMAL evaluation table row)",
+          "value_verbatim": "0.6868",
+          "value_parsed": 0.6868,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          249,
+          250
+        ],
+        "section": "A3 Bootstrap metadata"
+      },
+      "claim_text": "— `bootstrap.n_iterations = 1000`, `bootstrap.seed = 42`,\n`bootstrap.resampling_unit = \"tile_level\"`.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text MINIMAL evaluation",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text MINIMAL evaluation bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "bootstrap.resampling_unit is a string, not a numeric claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          255,
+          255
+        ],
+        "section": "A3 Dawid-Skene"
+      },
+      "claim_text": "- `measured.f1` = 0.7591 (matches evaluation at 50 m)",
+      "values": [
+        {
+          "quantity": "measured F1 at 50 m, text MINIMAL run (Dawid-Skene input)",
+          "value_verbatim": "0.7591",
+          "value_parsed": 0.7591,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.measured.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          256,
+          256
+        ],
+        "section": "A3 Dawid-Skene"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.f1` = 0.7834 → rounds to **0.783**",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, text MINIMAL run",
+          "value_verbatim": "0.7834",
+          "value_parsed": 0.7834,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, text MINIMAL run, rounded",
+          "value_verbatim": "0.783",
+          "value_parsed": 0.783,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          257,
+          257
+        ],
+        "section": "A3 Dawid-Skene"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.vlm_only_posterior` = 0.2947",
+      "values": [
+        {
+          "quantity": "Dawid-Skene VLM-only posterior, text MINIMAL run",
+          "value_verbatim": "0.2947",
+          "value_parsed": 0.2947,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          258,
+          258
+        ],
+        "section": "A3 Dawid-Skene"
+      },
+      "claim_text": "- `parameters.buffer_metres` = 50",
+      "values": [
+        {
+          "quantity": "buffer parameter of the text MINIMAL Dawid-Skene analysis",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.parameters.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          262,
+          264
+        ],
+        "section": "A3 Paired permutation tests"
+      },
+      "claim_text": "Each\nholds one `pairwise_permutation_result.json`; these record\n10,000-iteration permutation tests against the text HIGH comparator.",
+      "values": [
+        {
+          "quantity": "count, pairwise_permutation_result.json files per paired-comparison directory",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation iterations, text MINIMAL vs text HIGH paired tests",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/paired-vs-high/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The per-directory file count is a directory-listing fact with no JSON locator, hence anchor-unknown (v1.2 amendment 3 forbids letting it fall back to anchor.path). The 10,000 figure is asserted of both paired-vs-high/ and paired-vs-high-20m/; the former is used as anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          266,
+          268
+        ],
+        "section": "A3 Pre-launch audit"
+      },
+      "claim_text": "**Pre-launch audit**:\n`configs/run-configs/55maps_text_min_generalisation_pre_launch_audit.md`\n(present; 13,691 bytes).",
+      "values": [
+        {
+          "quantity": "file size in bytes, text MINIMAL pre-launch audit document",
+          "value_verbatim": "13,691",
+          "value_parsed": 13691,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-audits/configs-55maps_text_min_generalisation_pre_launch_audit.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited configs/run-configs/ path is no longer in the working tree; the document has been moved to archive/superseded-audits/, used as anchor. Non-JSON anchor (file byte size)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          270,
+          272
+        ],
+        "section": "A3 Post-run report"
+      },
+      "claim_text": "**Post-run report**:\n`configs/run-configs/55maps_text_min_generalisation_post_run_report.md`\n(present; 17,112 bytes).",
+      "values": [
+        {
+          "quantity": "file size in bytes, text MINIMAL post-run report",
+          "value_verbatim": "17,112",
+          "value_parsed": 17112,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "configs/run-configs/55maps_text_min_generalisation_post_run_report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (file byte size), dated to the 2026-04-21 audit. A second copy is noted at outputs/55maps-text-min-generalisation/post_run_report.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          279,
+          280
+        ],
+        "section": "A3 Working-notes observation cites"
+      },
+      "claim_text": "- Obs 259 (line 11502) — text HIGH uses 20 % more thinking tokens per\n  call than image HIGH.",
+      "values": [
+        {
+          "quantity": "percentage by which text HIGH exceeds image HIGH in thinking tokens per call (as cited by Obs 259)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No artefact records a per-call thinking-token ratio as a scalar. The plausible chase target for triage is $.totals.thinking_tokens in outputs/55maps-text-high-generalisation/cost_manifest.json versus outputs/55maps-image-generalisation/cost_manifest.json, normalised by call count; the per-call normalisation is not recorded, so no mechanical expression is proposed rather than manufacture one. Obs 259 itself is prose in docs/notes/reflections/working-notes.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          286,
+          288
+        ],
+        "section": "A4 Scope"
+      },
+      "claim_text": "**Scope**: Text-modality HIGH-thinking 5-pass generalisation, re-run\nunder the publishable launcher to obtain a `cost_manifest.json`\ncompanion to the 2026-04-10 retrospective text run.",
+      "values": [
+        {
+          "quantity": "proposer pass count, text HIGH re-run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.by_stage.proposer.per_pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          294,
+          294
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Total cost (USD) | `totals.cost_usd` | 69.6017 → 69.60 |",
+      "values": [
+        {
+          "quantity": "total cost USD, text HIGH re-run (§A4 cost table row 'Total cost (USD)')",
+          "value_verbatim": "69.6017",
+          "value_parsed": 69.6017,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, text HIGH re-run, rounded (§A4 cost table row)",
+          "value_verbatim": "69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          295,
+          295
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Input tokens | `totals.input_tokens` | 80,505,662 |",
+      "values": [
+        {
+          "quantity": "input tokens, text HIGH re-run (§A4 cost table row 'Input tokens')",
+          "value_verbatim": "80,505,662",
+          "value_parsed": 80505662,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.input_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          296,
+          296
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Output tokens | `totals.output_tokens` | 9,782,952 |",
+      "values": [
+        {
+          "quantity": "output tokens, text HIGH re-run (§A4 cost table row 'Output tokens')",
+          "value_verbatim": "9,782,952",
+          "value_parsed": 9782952,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.output_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          297,
+          297
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Cached tokens | `totals.cached_tokens` | 0 |",
+      "values": [
+        {
+          "quantity": "cached tokens, text HIGH re-run (§A4 cost table row 'Cached tokens')",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.cached_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          298,
+          298
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Thinking tokens | `totals.thinking_tokens` | 115,013,258 |",
+      "values": [
+        {
+          "quantity": "thinking tokens, text HIGH re-run (§A4 cost table row 'Thinking tokens')",
+          "value_verbatim": "115,013,258",
+          "value_parsed": 115013258,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.thinking_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          299,
+          299
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Cache-hit rate | `totals.cache_hit_rate` | 0.0 |",
+      "values": [
+        {
+          "quantity": "cache-hit rate, text HIGH re-run (§A4 cost table row 'Cache-hit rate')",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          300,
+          300
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Wall-clock (s) | `totals.wall_clock_seconds` | 10,754.918 |",
+      "values": [
+        {
+          "quantity": "wall-clock seconds, text HIGH re-run (§A4 cost table row 'Wall-clock (s)')",
+          "value_verbatim": "10,754.918",
+          "value_parsed": 10754.918,
+          "unit": "s",
+          "kind": "physical",
+          "path": "$.totals.wall_clock_seconds",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          301,
+          301
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Tiles processed | `by_stage.proposer.tiles_processed` | 42,545 |",
+      "values": [
+        {
+          "quantity": "proposer tiles processed, text HIGH re-run (§A4 cost table row 'Tiles processed')",
+          "value_verbatim": "42,545",
+          "value_parsed": 42545,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_processed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          302,
+          302
+        ],
+        "section": "A4 Cost manifest table"
+      },
+      "claim_text": "| Tiles failed | `by_stage.proposer.tiles_failed` | 160 (failure rate 0.0037) |",
+      "values": [
+        {
+          "quantity": "proposer tiles failed, text HIGH re-run (§A4 cost table row 'Tiles failed')",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_failed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer tile failure rate, text HIGH re-run (§A4 cost table row)",
+          "value_verbatim": "0.0037",
+          "value_parsed": 0.0037,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.by_stage.proposer.failure_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          304,
+          306
+        ],
+        "section": "A4 Thinking-token commentary"
+      },
+      "claim_text": "The 115 M thinking tokens is the HIGH-thinking cost driver; the cost\nis nonetheless comparable to text-min because no thinking-token cost\napplies under the gemini-3-flash pricing as of the run date.",
+      "values": [
+        {
+          "quantity": "thinking tokens, text HIGH re-run, quoted to the nearest 5 million",
+          "value_verbatim": "115 M",
+          "value_parsed": 115000000,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.thinking_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted as an order-of-magnitude rounding of the §A4 table figure (115,013,258) — the harness owns rounding tolerance at the quoted precision. Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          312,
+          312
+        ],
+        "section": "A4 F1 / precision / recall table"
+      },
+      "claim_text": "| 20 | 0.6227 | [0.6078, 0.6379] | 0.6698 | 0.5818 | `summary.buffers[0]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 20 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 20 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.6227",
+          "value_parsed": 0.6227,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 20 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.6078",
+          "value_parsed": 0.6078,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 20 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.6379",
+          "value_parsed": 0.6379,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 20 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.6698",
+          "value_parsed": 0.6698,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 20 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.5818",
+          "value_parsed": 0.5818,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          313,
+          313
+        ],
+        "section": "A4 F1 / precision / recall table"
+      },
+      "claim_text": "| 30 | 0.7533 | [0.741, 0.7658] | 0.8103 | 0.7038 | `summary.buffers[1]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 30 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 30 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7533",
+          "value_parsed": 0.7533,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 30 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.741",
+          "value_parsed": 0.741,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[1].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 30 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7658",
+          "value_parsed": 0.7658,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[1].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 30 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.8103",
+          "value_parsed": 0.8103,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 30 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7038",
+          "value_parsed": 0.7038,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          314,
+          314
+        ],
+        "section": "A4 F1 / precision / recall table"
+      },
+      "claim_text": "| 40 | 0.7829 | [0.7717, 0.7946] | 0.8421 | 0.7314 | `summary.buffers[2]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 40 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[2].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 40 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7829",
+          "value_parsed": 0.7829,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 40 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7717",
+          "value_parsed": 0.7717,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[2].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 40 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7946",
+          "value_parsed": 0.7946,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[2].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 40 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.8421",
+          "value_parsed": 0.8421,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 40 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7314",
+          "value_parsed": 0.7314,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          315,
+          315
+        ],
+        "section": "A4 F1 / precision / recall table"
+      },
+      "claim_text": "| 50 | 0.7883 | [0.7773, 0.8] | 0.8479 | 0.7365 | `summary.buffers[3]` |",
+      "values": [
+        {
+          "quantity": "buffer radius, 50 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[3].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7883",
+          "value_parsed": 0.7883,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 50 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7773",
+          "value_parsed": 0.7773,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 50 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.8",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision at 50 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.8479",
+          "value_parsed": 0.8479,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall at 50 m (§A4 text-HIGH re-run evaluation table row)",
+          "value_verbatim": "0.7365",
+          "value_parsed": 0.7365,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          319,
+          319
+        ],
+        "section": "A4 Bootstrap metadata"
+      },
+      "claim_text": "— `bootstrap.n_iterations = 1000`, `bootstrap.seed = 42`.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text HIGH re-run evaluation",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text HIGH re-run evaluation bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          324,
+          324
+        ],
+        "section": "A4 Dawid-Skene"
+      },
+      "claim_text": "- `measured.f1` = 0.7883 (matches evaluation at 50 m)",
+      "values": [
+        {
+          "quantity": "measured F1 at 50 m, text HIGH re-run (Dawid-Skene input)",
+          "value_verbatim": "0.7883",
+          "value_parsed": 0.7883,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.measured.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          325,
+          325
+        ],
+        "section": "A4 Dawid-Skene"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.f1` = 0.8129 → rounds to **0.813**",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, text HIGH re-run",
+          "value_verbatim": "0.8129",
+          "value_parsed": 0.8129,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, text HIGH re-run, rounded",
+          "value_verbatim": "0.813",
+          "value_parsed": 0.813,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship. A pre-rerun backup of this artefact is preserved at results/55maps-text-high-generalisation/dawid-skene.pre-rerun-20260503T010627.backup/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          326,
+          326
+        ],
+        "section": "A4 Dawid-Skene"
+      },
+      "claim_text": "- `dawid_skene.corrected_metrics.vlm_only_posterior` = 0.2935",
+      "values": [
+        {
+          "quantity": "Dawid-Skene VLM-only posterior, text HIGH re-run",
+          "value_verbatim": "0.2935",
+          "value_parsed": 0.2935,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the top-of-document banner (lines 10-22) declares the §A4 cells to be the 2026-04-19 launch state, superseded by the 2026-05-02/03 recovery. Recorded here as the document asserts it, against the cited manifest key, without modernising to the post-recovery value; triage adjudicates the snapshot/current relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          327,
+          327
+        ],
+        "section": "A4 Dawid-Skene"
+      },
+      "claim_text": "- `parameters.buffer_metres` = 50",
+      "values": [
+        {
+          "quantity": "buffer parameter of the text HIGH re-run Dawid-Skene analysis",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.parameters.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          336,
+          336
+        ],
+        "section": "A4 Paired permutation table"
+      },
+      "claim_text": "| 20 m | 0.004681 | 0.4647 | 10,000 | `permutation_test.{observed_f1_diff, p_value, n_permutations}` |",
+      "values": [
+        {
+          "quantity": "buffer of the text HIGH vs text MINIMAL paired permutation test, 20 m (§A4 permutation table row)",
+          "value_verbatim": "20 m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed F1 difference (HIGH - MINIMAL) at 20 m (§A4 permutation table row)",
+          "value_verbatim": "0.004681",
+          "value_parsed": 0.004681,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value at 20 m (§A4 permutation table row)",
+          "value_verbatim": "0.4647",
+          "value_parsed": 0.4647,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation iterations at 20 m (§A4 permutation table row)",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-20m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The buffer column doubles as the directory name (paired-vs-min-20m); it is extracted because the anchor file records it as a scalar at $.metadata.buffer_metres, not merely as a path fragment."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          337,
+          337
+        ],
+        "section": "A4 Paired permutation table"
+      },
+      "claim_text": "| 30 m | 0.025904 | 0.0 | 10,000 | same |",
+      "values": [
+        {
+          "quantity": "buffer of the text HIGH vs text MINIMAL paired permutation test, 30 m (§A4 permutation table row)",
+          "value_verbatim": "30 m",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed F1 difference (HIGH - MINIMAL) at 30 m (§A4 permutation table row)",
+          "value_verbatim": "0.025904",
+          "value_parsed": 0.025904,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value at 30 m (§A4 permutation table row)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation iterations at 30 m (§A4 permutation table row)",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-30m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The buffer column doubles as the directory name (paired-vs-min-30m); it is extracted because the anchor file records it as a scalar at $.metadata.buffer_metres, not merely as a path fragment."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          338,
+          338
+        ],
+        "section": "A4 Paired permutation table"
+      },
+      "claim_text": "| 40 m | 0.029107 | 0.0 | 10,000 | same |",
+      "values": [
+        {
+          "quantity": "buffer of the text HIGH vs text MINIMAL paired permutation test, 40 m (§A4 permutation table row)",
+          "value_verbatim": "40 m",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed F1 difference (HIGH - MINIMAL) at 40 m (§A4 permutation table row)",
+          "value_verbatim": "0.029107",
+          "value_parsed": 0.029107,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value at 40 m (§A4 permutation table row)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation iterations at 40 m (§A4 permutation table row)",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-40m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The buffer column doubles as the directory name (paired-vs-min-40m); it is extracted because the anchor file records it as a scalar at $.metadata.buffer_metres, not merely as a path fragment."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          339,
+          339
+        ],
+        "section": "A4 Paired permutation table"
+      },
+      "claim_text": "| 50 m | 0.029163 | 0.0 | 10,000 | same |",
+      "values": [
+        {
+          "quantity": "buffer of the text HIGH vs text MINIMAL paired permutation test, 50 m (§A4 permutation table row)",
+          "value_verbatim": "50 m",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed F1 difference (HIGH - MINIMAL) at 50 m (§A4 permutation table row)",
+          "value_verbatim": "0.029163",
+          "value_parsed": 0.029163,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "two-sided permutation p-value at 50 m (§A4 permutation table row)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation iterations at 50 m (§A4 permutation table row)",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The buffer column doubles as the directory name (paired-vs-min-50m); it is extracted because the anchor file records it as a scalar at $.metadata.buffer_metres, not merely as a path fragment."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          341,
+          343
+        ],
+        "section": "A4 Obs 258 quotation"
+      },
+      "claim_text": "These tests underpin Obs 258 (\"HIGH thinking helps approximate-match\nretention, not precise localisation — paired permutation test on\n55-map text generalisation reveals a buffer-dependent split\").",
+      "values": [
+        {
+          "quantity": "map count, text-modality generalisation corpus (as described in the quoted Obs 258 title)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          345,
+          347
+        ],
+        "section": "A4 Pre-launch audit"
+      },
+      "claim_text": "**Pre-launch audit**:\n`configs/run-configs/55maps_text_high_generalisation_pre_launch_audit.md`\n(present; 16,677 bytes).",
+      "values": [
+        {
+          "quantity": "file size in bytes, text HIGH pre-launch audit document",
+          "value_verbatim": "16,677",
+          "value_parsed": 16677,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-audits/configs-55maps_text_high_generalisation_pre_launch_audit.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited configs/run-configs/ path is no longer in the working tree; the document has been moved to archive/superseded-audits/, used as anchor. Non-JSON anchor (file byte size)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          349,
+          351
+        ],
+        "section": "A4 Post-run report"
+      },
+      "claim_text": "**Post-run report**:\n`configs/run-configs/55maps_text_high_generalisation_post_run_report.md`\n(present; 18,978 bytes).",
+      "values": [
+        {
+          "quantity": "file size in bytes, text HIGH post-run report",
+          "value_verbatim": "18,978",
+          "value_parsed": 18978,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "configs/run-configs/55maps_text_high_generalisation_post_run_report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (file byte size), dated to the 2026-04-21 audit. Lines 351-352 assert this is the only copy (no outputs/ duplicate)."
+    }
+  ]
+}

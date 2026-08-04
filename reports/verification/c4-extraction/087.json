@@ -1,0 +1,2826 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/ci-metadata-registry.md",
+    "git_blob": "efaff5840c9afc05db41301ae47a39f0573781ca",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          173,
+          173
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-tables/tile_size_comparison.json` | various | (aggregate) | 10000 perm + 1000 boot | 42 | tile (paired) | `scripts/consolidate_paper_metrics.py` | not recorded | 2026-03 | YES_SIDECAR | `results/paper-tables/tile_size_comparison.metadata.json` | Uses McNemar + permutation primary; bootstrap CIs inherited. |",
+      "values": [
+        {
+          "quantity": "permutation count, paper-tables tile-size comparison aggregate",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.statistical_methodology.primary_test",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, CIs inherited into the paper-tables tile-size comparison",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.statistical_methodology.bootstrap_CIs_source",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paper-tables tile-size comparison",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/pairwise/tile-size-mcnemar-30m/tile_size_comparison.json#$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/tile_size_comparison.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b087] Scope decisions for this batch (registry-table rows, lines 173-214; one claim per table row per instrument rule 6, with every numeric cell of the row — including the notes column — carried in values[] in order of appearance). Out of C4 scope per rule 5 and therefore not extracted: the `date_generated` column and all dates/timestamps, git commit hashes (`f533fda5`, `da84a3d2`, `239a6bf4`, `aeb9fb7f`, ...), version strings (`v2`, `GS-v2`), session numbers (\"Session 84\"), stage labels (\"Stage 8\"), Obs identifiers, and numbers inside file paths, glob patterns and condition names (`tile-size-30m`, `paired-vs-min-{20,30,40,50}m`, `paired-t0.3-vs-t0.7`, `buffer-100m-diagnostics`, `55maps`, `384`, `era2`). JSON field names carrying numerals (`disagreement_rate_ci_95`, `f1_ci_lower`) are names, not claims. INCLUDED WITH DOUBT: \"T=0.7\", which labels the text-high track throughout the registry but is also the temperature that was run — extracted as a parameter anchored to outputs/55maps-text-high-generalisation/resolved_config.yaml ($.proposer.temperature) so triage can prune it cheaply if it reads as a condition name. Structural counts (\"3 metrics\", \"3 CIs\", \"2 CIs\" per row) have no scalar locator and take method anchor-unknown; the buffer counts beside them are anchored mechanically via len:$.summary.buffers. ci_count cells reading 0 / NO-CI assert the ABSENCE of CIs in a whole artefact: the named file is given as anchor with method anchor-unknown, since no path resolves an absence. ANCHOR MOVES: several registry paths no longer exist in the working tree — results/55maps-cleaned-gt-evaluation/**, results/55maps-{image,text-high,text-min}-generalisation/mcc/evaluation.json and .../human-reviewed-corrected/corrected-f1-human-reviewed.json now live under archive/55maps-superseded-gt-evals/; those claims anchor to the archived copies and say so individually. Row-specific: the sidecar records the 10000 permutations and the inherited n=1000 bootstrap inside prose strings ($.statistical_methodology.*), not as scalars; the seed resolves cleanly as a scalar in the primary McNemar/permutation artefact results/pairwise/tile-size-mcnemar-30m/tile_size_comparison.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-tables/cost_retrospective.json` | 0 | none | — | — | — | `scripts/consolidate_paper_metrics.py` | not recorded | 2026-03 | YES_SIDECAR | `results/paper-tables/cost_retrospective.metadata.json` | Cost accounting; no CIs. Sidecar present for registry completeness. |",
+      "values": [
+        {
+          "quantity": "CI count asserted for results/paper-tables/cost_retrospective.json",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/cost_retrospective.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Asserts the absence of confidence intervals in the whole artefact; no path can resolve an absence. The sidecar results/paper-tables/cost_retrospective.metadata.json carries $.bootstrap.applies = false as the nearest machine-readable statement."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          175
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-cleaned-gt-evaluation/image/evaluation.json` | 3 × 4 | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-19T06:06Z | YES_SIDECAR | `results/55maps-cleaned-gt-evaluation/image/evaluation.metadata.json` | Cleaned-GT re-eval of 55maps image track. |",
+      "values": [
+        {
+          "quantity": "count, metrics carrying CIs per buffer, cleaned-GT image evaluation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, buffers evaluated, cleaned-GT image evaluation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, cleaned-GT image evaluation",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, cleaned-GT image evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/image/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registry path results/55maps-cleaned-gt-evaluation/image/evaluation.json (and its sidecar) no longer exists in the working tree; both were archived to archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/image/. The archived sidecar evaluation.metadata.json records $.ci_count and $.ci_count_derivation (\"3 metrics (F1, precision, recall) x 4 buffers\") if triage prefers that locator. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          176,
+          176
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-cleaned-gt-evaluation/text-high/evaluation.json` | 3 × 4 | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-19 | YES_SIDECAR | `results/55maps-cleaned-gt-evaluation/text-high/evaluation.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "count, metrics carrying CIs per buffer, cleaned-GT text-high evaluation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, buffers evaluated, cleaned-GT text-high evaluation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, cleaned-GT text-high evaluation",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, cleaned-GT text-high evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registry path results/55maps-cleaned-gt-evaluation/text-high/evaluation.json (and its sidecar) no longer exists in the working tree; both were archived to archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-high/. The archived sidecar evaluation.metadata.json records $.ci_count and $.ci_count_derivation (\"3 metrics (F1, precision, recall) x 4 buffers\") if triage prefers that locator. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-cleaned-gt-evaluation/text-min/evaluation.json` | 3 × 4 | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-19 | YES_SIDECAR | `results/55maps-cleaned-gt-evaluation/text-min/evaluation.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "count, metrics carrying CIs per buffer, cleaned-GT text-min evaluation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, buffers evaluated, cleaned-GT text-min evaluation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, cleaned-GT text-min evaluation",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, cleaned-GT text-min evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-min/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registry path results/55maps-cleaned-gt-evaluation/text-min/evaluation.json (and its sidecar) no longer exists in the working tree; both were archived to archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-min/. The archived sidecar evaluation.metadata.json records $.ci_count and $.ci_count_derivation (\"3 metrics (F1, precision, recall) x 4 buffers\") if triage prefers that locator. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          178,
+          178
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/gold-standard-extended-buffer-sweep/evaluation.json` | 3 × (number of buffers) | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-18T23:37Z | YES_SIDECAR | `results/gold-standard-extended-buffer-sweep/evaluation.metadata.json` | Extended buffer sweep. |",
+      "values": [
+        {
+          "quantity": "count, metrics carrying CIs per buffer, gold-standard extended buffer sweep",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, gold-standard extended buffer sweep",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, gold-standard extended buffer sweep",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-extended-buffer-sweep/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ci_count cell leaves the buffer count as words (\"number of buffers\"), so only the 3-metric factor is numeric here; len:$.summary.buffers is the locator if triage wants the multiplier. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          179
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/gold-standard-subtype-classification/macro_weighted_summary.json` | 4 summary CIs | matched-pair bootstrap | 10000 | 42 | matched-pair (stratified by map) | `scripts/analyse_subtype_classification.py` | recorded in sibling `run_manifest.json` | 2026-04-19/20 | YES | — | `valid_bootstrap_iter=10000, total_bootstrap_iter=10000` in-file; seed and git_commit in `run_manifest.json` in same dir. |",
+      "values": [
+        {
+          "quantity": "count, summary CIs reported in macro_weighted_summary.json",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, subtype-classification matched-pair bootstrap",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.summary_f1_ci.valid_bootstrap_iter",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, subtype-classification matched-pair bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/gold-standard-subtype-classification/run_manifest.json#$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "valid bootstrap iterations recorded in-file (valid_bootstrap_iter)",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.summary_f1_ci.valid_bootstrap_iter",
+          "method": "read"
+        },
+        {
+          "quantity": "total bootstrap iterations recorded in-file (total_bootstrap_iter)",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.summary_f1_ci.total_bootstrap_iter",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-subtype-classification/macro_weighted_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No scalar CI-count field exists for the \"4 summary CIs\" claim; candidate locator for triage is $.summary_f1_ci (which holds a mix of CI arrays and iteration counters). The seed lives in the sibling run_manifest.json, as the row itself states."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          180,
+          180
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json` | 0 (descriptive only) | — | — | — | — | `scripts/diagnose_100m_buffer.py` | — | 2026-04-21 | NO-CI | — | No CIs reported; cluster-count and pair-drift diagnostics only. |",
+      "values": [
+        {
+          "quantity": "CI count asserted for the 100 m buffer diagnostics summary",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Absence claim over the whole artefact (see batch note). \"100m\" in the directory name is a path element, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          181,
+          181
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/buffer-band-lift/summary.json` | 12 rows × 2 CIs (null percentile) | permutation null CI | 1000 | 42 | detection (spatial null; tiles as strata) | `scripts/analyse_buffer_band_lift.py` | not recorded | 2026-04-21 | YES | — | `permutations=1000, seed=42` explicit in top matter. Permutation null CIs, not bootstrap CIs. |",
+      "values": [
+        {
+          "quantity": "count, rows in the buffer-band-lift summary",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+              "path": "len:$.cumulative"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+              "path": "len:$.shell"
+            }
+          ]
+        },
+        {
+          "quantity": "count, CIs reported per buffer-band-lift row",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation iterations, buffer-band-lift null",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, buffer-band-lift null",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation iterations recorded in-file (permutations=1000)",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed recorded in-file (seed=42)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 12 rows are read as the cumulative block plus the shell block, hence the a + b derivation over two len: operands (each operand is itself a read, per v1.2 amendment 1). The \"2 CIs\" per row has no scalar locator; the per-row null bounds are null_ci_lo / null_ci_hi."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          182
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` | 5 rows × 3 CIs | review-level bootstrap | 10000 | 42 | review-level (human labels) | `scripts/compute_corrected_f1_multi_buffer.py` | `508f76989...` | 2026-04-21T09:19Z | YES | — | Complete metadata block: `metadata.seed=42, bootstrap_n=10000, git_commit`; methodology, input paths, exclusions all recorded. Gold-standard record. |",
+      "values": [
+        {
+          "quantity": "count, buffer rows in the image corrected-F1 multi-buffer summary",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CIs reported per corrected-F1 row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, image corrected-F1 multi-buffer",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_n",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, image corrected-F1 multi-buffer",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed recorded in-file (metadata.seed=42)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations recorded in-file (bootstrap_n=10000)",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_n",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The quoted git_commit (`508f76989...`) is out of scope per rule 5. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          183,
+          183
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/ds-human-crosstab/summary.json` | 0 (degenerate) | — | — | — | — | `scripts/analyse_ds_vs_human_review.py` | — | 2026-04-21 | NO-CI | — | D-S posterior degenerated to single value; CIs are NaN. Descriptive crosstab only. Wilson CIs reported for sub-band human-mound-rate where N>0 (none here). |",
+      "values": [
+        {
+          "quantity": "CI count asserted for the D-S vs human crosstab summary",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Absence claim over the whole artefact. The trailing \"where N>0 (none here)\" states a condition rather than a measured quantity and is not extracted as a separate value; flagged here so triage can add it if it disagrees."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          184,
+          184
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json` | 2 × 3 (measured + corrected) | review-level bootstrap + tile bootstrap | 10000 | 42 | review-level (corrected); tile (measured) | `scripts/compute_corrected_f1_human_reviewed.py` | not recorded | 2026-04-20T07:13Z | YES | — | `provenance.n_bootstrap=10000, provenance.seed=42` explicit. Two commensurate CI families — measured (tile-level, inherited from `outputs/55maps-image-generalisation/evaluation/evaluation.json`) and corrected (review-level). Documented in-file. |",
+      "values": [
+        {
+          "quantity": "count, CI families (measured and corrected) in the human-reviewed corrected-F1 file",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per family",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, human-reviewed corrected-F1",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.provenance.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, human-reviewed corrected-F1",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.provenance.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations recorded in-file (provenance.n_bootstrap=10000)",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.provenance.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed recorded in-file (provenance.seed=42)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.provenance.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "count, commensurate CI families documented in the file",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registry path results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json no longer exists in the working tree; anchored to the archived copy under archive/55maps-superseded-gt-evals/per-run/. The two families are $.measured.*_ci and $.corrected.*_ci; neither family count nor the per-family metric count has a scalar locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          185,
+          185
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json` | 1 Wilson CI (disagreement rate) + 2 tile-level inherited | review-level bootstrap | 10000 | 42 | review-level | `scripts/crosstab_uncalibrated_vs_calibrated.py` | not recorded | 2026-04-20T07:33Z | YES | — | `provenance.n_bootstrap=10000, provenance.seed=42` explicit. Note: disagreement_rate_ci_95 is Wilson (closed-form), not bootstrap — included for completeness. |",
+      "values": [
+        {
+          "quantity": "count, Wilson CIs in the uncalibrated-vs-calibrated crosstab",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, inherited tile-level CIs in the uncalibrated-vs-calibrated crosstab",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, uncalibrated-vs-calibrated crosstab",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.provenance.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, uncalibrated-vs-calibrated crosstab",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.provenance.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations recorded in-file (provenance.n_bootstrap=10000)",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.provenance.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed recorded in-file (provenance.seed=42)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.provenance.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Wilson interval itself is at $.rates.disagreement_rate_ci_95; the \"95\" inside that field name is a name, not a claim. Neither CI-count assertion has a scalar locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          186
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json` | many bins + sweeps | bootstrap at threshold sweep | 10000 | 42 | review-level | `scripts/crosstab_verifier_vs_human.py` | not recorded | 2026-04 | YES | — | `config.n_bootstrap=10000, config.seed=42` explicit at the end of the file. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, verifier-calibration crosstab",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, verifier-calibration crosstab",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations recorded in-file (config.n_bootstrap=10000)",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed recorded in-file (config.seed=42)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ci_count cell (\"many bins + sweeps\") carries no number."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` (post-recovery, BCa N = 10K) | 12 (3 metrics × 4 buffers) | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-02T23:58Z | YES | — | T=0.7 post-recovery re-evaluation (commit `e20f3e18` for the BCa N=10K migration; commit `f533fda5` for the GT-update re-eval). Replaces the 2026-04-18 N=1000 percentile entry above. F1@50m = 0.7920 [0.7820, 0.8017]. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-high post-recovery evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CI triples in the text-high post-recovery evaluation",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "3 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+              "path": "len:$.summary.buffers"
+            }
+          ]
+        },
+        {
+          "quantity": "count, metrics carrying CIs per buffer",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, buffers evaluated, text-high post-recovery evaluation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, text-high post-recovery evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-high post-recovery evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.proposer.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations introduced by the BCa migration (N=10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, superseded 2026-04-18 percentile entry",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, text-high post-recovery evaluation",
+          "value_verbatim": "0.7920",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 50 m, text-high post-recovery",
+          "value_verbatim": "0.7820",
+          "value_parsed": 0.782,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 50 m, text-high post-recovery",
+          "value_verbatim": "0.8017",
+          "value_parsed": 0.8017,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Buffer index 3 is the 50 m row of $.summary.buffers ([20, 30, 40, 50]). The superseded N=1000 percentile entry is the 'was' side of a replacement statement and takes method historical per instrument rule 3. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          188,
+          188
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json` (post-recovery, BCa N = 10K) | 12 | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-02T23:58Z | YES | — | T=0.7 post-recovery full-buffer evaluation; commit `e20f3e18`. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-high full-buffer evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CI triples in the text-high full-buffer evaluation",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, text-high full-buffer evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-high full-buffer evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.proposer.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This row states the ci_count as a bare 12 without the \"3 metrics x 4 buffers\" decomposition given in the row above, so no derivation is asserted here; recorded as anchor-unknown with len:$.summary.buffers as the candidate multiplier for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json` (post-recovery, BCa N = 10K) | per-buffer F1 + CIs | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-02T23:58Z | YES | — | T=0.7 post-recovery extended-buffer (75/100/125 m); commit `e20f3e18`. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-high extended-buffer evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, text-high extended-buffer evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-high extended-buffer evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.proposer.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "first extended buffer radius evaluated, text-high",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "second extended buffer radius evaluated, text-high",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "third extended buffer radius evaluated, text-high",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[2].buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The three extended radii share one unit marker in the source (\"75/100/125 m\"); the unit field is set on all three per v1.2 amendment 6."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          190
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json` (post-recovery) | 5 rows × 3 CIs | review-level bootstrap | 10000 | 42 | review-level (human labels) | `scripts/compute_corrected_f1_multi_buffer.py` | `f533fda5fb1528106f4a7b22ea41d1f046cf25ca` | 2026-05-03T00:43Z | YES | — | T=0.7 post-recovery corrected-F1 multi-buffer (commit `f6eaeca9` integrates 6 new reviews + 1 new GT mound from `baf1497a`). F1@50m = 0.8273 [0.8173, 0.8370]. |",
+      "values": [
+        {
+          "quantity": "count, buffer rows in the text-high corrected-F1 multi-buffer summary",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CIs reported per corrected-F1 row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, text-high corrected-F1 multi-buffer",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_n",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-high corrected-F1 multi-buffer",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.proposer.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count, new human reviews integrated by the corrected-F1 refresh",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, new ground-truth mounds integrated by the corrected-F1 refresh",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "corrected F1 at 50 m, text-high post-recovery",
+          "value_verbatim": "0.8273",
+          "value_parsed": 0.8273,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, corrected F1 at 50 m, text-high",
+          "value_verbatim": "0.8173",
+          "value_parsed": 0.8173,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, corrected F1 at 50 m, text-high",
+          "value_verbatim": "0.8370",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.results[0].F1_CI[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No artefact was located that records the split of \"6 new reviews + 1 new GT mound\" as scalars (searched the run's summary.json metadata block and the review CSV directory); both are anchor-unknown. $.results[0] is the R = 50 m row. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          191,
+          191
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-text-high-generalisation/mcc/evaluation.json` (post-recovery) | tile-level MCC + per-buffer | bootstrap BCa | 10000 | 42 | tile (paired) | `scripts/evaluate_detections.py` (MCC mirror) | recorded | 2026-05-02T23:58Z | YES | — | T=0.7 post-recovery tile-level MCC re-evaluation; MCC@50m = 0.6476 [0.6331, 0.6620]. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-high tile-level MCC evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-high tile-level MCC evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.proposer.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, text-high post-recovery",
+          "value_verbatim": "0.6476",
+          "value_parsed": 0.6476,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, text-high",
+          "value_verbatim": "0.6331",
+          "value_parsed": 0.6331,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, text-high",
+          "value_verbatim": "0.6620",
+          "value_parsed": 0.662,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registry path results/55maps-text-high-generalisation/mcc/evaluation.json no longer exists in the working tree; anchored to the archived copy under archive/55maps-superseded-gt-evals/per-run/. The document labels the statistic MCC@50m, but tile-level MCC in this artefact sits at $.summary.tile_classification.mcc (whole-run, not per-buffer) — recorded, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          192,
+          192
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-text-high-generalisation/paired-vs-min-{20,30,40,50}m/pairwise_permutation_result.json` (4 files; v2 post-recovery) | 1 per file | permutation | 10000 | 42 | tile (paired permutation) | `scripts/run_pairwise_tests.py` | recorded | 2026-05-03 | YES | — | Pairwise-permutation v2 — 3 pairs touching T=0.7 re-run post-recovery; commit `aeb9fb7f`. |",
+      "values": [
+        {
+          "quantity": "count, pairwise-permutation result files in the paired-vs-min set",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, comparisons per pairwise-permutation result file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation iterations, paired-vs-min pairwise tests",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paired-vs-min pairwise tests",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "count, pairs re-run post-recovery in the pairwise-permutation v2 pass",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.proposer.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the 50 m member of the four-file set (paired-vs-min-{20,30,40,50}m); the radii in those directory names are path elements, out of scope. The file count and the \"3 pairs re-run\" count require a filesystem enumeration rather than a JSON path, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-text-high-generalisation/paired-vs-high-2026-04-10-50m/pairwise_permutation_result.json` (post-recovery) | 1 | permutation | 10000 | 42 | tile (paired permutation) | `scripts/run_pairwise_tests.py` | recorded | 2026-05-03 | YES | — | Pairwise-permutation v2 — 1 pair vs the 2026-04-10 high reference at 50 m; commit `aeb9fb7f`. |",
+      "values": [
+        {
+          "quantity": "count, comparisons in the paired-vs-high result file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation iterations, paired-vs-high pairwise test",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paired-vs-high pairwise test",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "count, pairs tested against the 2026-04-10 high reference",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer radius at which the paired-vs-high comparison was run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-high-2026-04-10-50m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"2026-04-10\" is a date (out of scope) even though it also forms part of the directory name. The 50 m radius is extracted because the row asserts the comparison was run at that buffer, not merely because it appears in the path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          194
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json` (post-recovery; stable-ID join) | EM posteriors | — | — | 42 | review-level | `scripts/analyse_dawid_skene.py` (post commit `a9e280a3`) | recorded | 2026-05-03 | NO-CI | — | T=0.7 post-recovery D-S re-aggregation using fixed stable-ID join (commit `a9e280a3`); commit `366f9c66`. CIs not computed in this aggregator. |",
+      "values": [
+        {
+          "quantity": "random seed, text-high Dawid-Skene re-aggregation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.proposer.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "The D-S results file records $.parameters (threshold, buffer_metres, verifier, student_fn_rate_prior) but no seed field, and scripts/analyse_dawid_skene.py contains no seed constant (grepped); the registry's seed = 42 therefore has no located anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-text-high-generalisation/ds-human-crosstab/summary.json` (post-recovery) | crosstab | — | — | — | — | `scripts/analyse_ds_vs_human_review.py` (post commit `a9e280a3`) | recorded | 2026-05-03 | NO-CI | — | T=0.7 post-recovery D-S vs human crosstab; commit `e07dae37`. |",
+      "values": [
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.proposer.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/resolved_config.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The only numeric content of this row outside dates and commit hashes is the T=0.7 track label, included with doubt per the batch note; the row's own file (results/55maps-text-high-generalisation/ds-human-crosstab/summary.json) reports no CIs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          196,
+          196
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-image-generalisation/evaluation/evaluation.json` (post-recovery, BCa N = 10K) | 12 (3 metrics × 4 buffers) | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-03T02:35Z | YES | — | Image post-recovery re-evaluation (Stage 8; commit `da84a3d2`). Replaces 2026-04-18 N=1000 percentile entry. F1@50m = 0.7745 (was 0.771); MCC@50m = 0.6924 [0.6784, 0.7062]. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, image post-recovery evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CI triples in the image post-recovery evaluation",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "3 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+              "path": "len:$.summary.buffers"
+            }
+          ]
+        },
+        {
+          "quantity": "count, metrics carrying CIs per buffer",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, buffers evaluated, image post-recovery evaluation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, image post-recovery evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, image post-recovery evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, superseded 2026-04-18 percentile entry",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, image post-recovery evaluation",
+          "value_verbatim": "0.7745",
+          "value_parsed": 0.7745,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, image pre-recovery",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile-level MCC, image post-recovery",
+          "value_verbatim": "0.6924",
+          "value_parsed": 0.6924,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, image",
+          "value_verbatim": "0.6784",
+          "value_parsed": 0.6784,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, image",
+          "value_verbatim": "0.7062",
+          "value_parsed": 0.7062,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"Stage 8\" is a workflow-stage label, out of scope per rule 5. Buffer index 3 is the 50 m row of $.summary.buffers ([20, 30, 40, 50]). \"(was 0.771)\" and the superseded N=1000 entry are the 'was' side of correction statements and take method historical. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          197,
+          197
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json` (post-recovery, BCa N = 10K) | 12 | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-03T02:35Z | YES | — | Image post-recovery full-buffer (50–150 m); commit `da84a3d2`. F1@150m = 0.800. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, image full-buffer evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CI triples in the image full-buffer evaluation",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, image full-buffer evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, image full-buffer evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "smallest buffer radius in the image full-buffer evaluation range",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "largest buffer radius in the image full-buffer evaluation range",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[4].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 150 m buffer, image post-recovery full-buffer evaluation",
+          "value_verbatim": "0.800",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[4].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"50-150 m\" shares one unit marker; the unit field is set on both bounds per v1.2 amendment 6. The \"150\" inside the label \"F1@150m\" identifies which row the metric belongs to and is not extracted a second time. The bare ci_count 12 carries no asserted decomposition here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          198,
+          198
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-image-generalisation/extended-buffer-eval/evaluation.json` (post-recovery, BCa N = 10K) | per-buffer F1 + CIs | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-03T02:35Z | YES | — | Image post-recovery extended-buffer (75/100/125 m); commit `da84a3d2`. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, image extended-buffer evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, image extended-buffer evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, image extended-buffer evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "first extended buffer radius evaluated, image",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "second extended buffer radius evaluated, image",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "third extended buffer radius evaluated, image",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[2].buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/extended-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Shared unit marker on the \"75/100/125 m\" list handled per v1.2 amendment 6."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          199,
+          199
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` (post-recovery) | 5 rows × 3 CIs | review-level bootstrap | 10000 | 42 | review-level (human labels) | `scripts/compute_corrected_f1_multi_buffer.py` | recorded | 2026-05-03 | YES | — | Image post-recovery corrected-F1 multi-buffer (commit `da84a3d2`); F1@50m = 0.8333 (was 0.8316). |",
+      "values": [
+        {
+          "quantity": "count, buffer rows in the image corrected-F1 multi-buffer summary",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CIs reported per corrected-F1 row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, image corrected-F1 multi-buffer",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_n",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, image corrected-F1 multi-buffer",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at 50 m, image post-recovery",
+          "value_verbatim": "0.8333",
+          "value_parsed": 0.8333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at 50 m, image pre-recovery",
+          "value_verbatim": "0.8316",
+          "value_parsed": 0.8316,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The pre-recovery 0.8316 is the 'was' side of a correction statement (rule 3); the preserved pre-recovery artefact is summary.json.pre-recovery-20260503T023134.backup in the same directory. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          200,
+          200
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-image-generalisation/mcc/evaluation.json` (post-recovery) | tile-level MCC + per-buffer | bootstrap BCa | 10000 | 42 | tile (paired) | `scripts/evaluate_detections.py` (MCC mirror) | recorded | 2026-05-03 | YES | — | Image post-recovery tile-level MCC; MCC@50m = 0.6924 [0.6784, 0.7062]. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, image tile-level MCC evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, image tile-level MCC evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, image post-recovery",
+          "value_verbatim": "0.6924",
+          "value_parsed": 0.6924,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, image",
+          "value_verbatim": "0.6784",
+          "value_parsed": 0.6784,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, image",
+          "value_verbatim": "0.7062",
+          "value_parsed": 0.7062,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registry path results/55maps-image-generalisation/mcc/evaluation.json no longer exists in the working tree; anchored to the archived copy. Tile-level MCC in this artefact is a whole-run statistic at $.summary.tile_classification.mcc despite the MCC@50m label."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          201,
+          201
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` (post-recovery, BCa N = 10K) | 12 (3 metrics × 4 buffers) | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-03 | YES | — | Text-MIN post-recovery re-evaluation (commit `c1ea6df3` for the recovery; commit `236327d8` for the GT-update re-eval). Replaces 2026-04-18 N=1000 percentile entry. F1@50m = 0.7595 (was 0.7591) per `c1ea6df3`; current evaluation.json (post-GT-swap) reports 0.7619. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-MIN post-recovery evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CI triples in the text-MIN post-recovery evaluation",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "3 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+              "path": "len:$.summary.buffers"
+            }
+          ]
+        },
+        {
+          "quantity": "count, metrics carrying CIs per buffer",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, buffers evaluated, text-MIN post-recovery evaluation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, text-MIN post-recovery evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-MIN post-recovery evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, superseded 2026-04-18 percentile entry",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m, text-MIN as of the recovery commit",
+          "value_verbatim": "0.7595",
+          "value_parsed": 0.7595,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m, text-MIN pre-recovery",
+          "value_verbatim": "0.7591",
+          "value_parsed": 0.7591,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m, text-MIN current post-GT-swap evaluation",
+          "value_verbatim": "0.7619",
+          "value_parsed": 0.7619,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row quotes three F1 values: 0.7595 as of the recovery commit and 0.7591 before it are both superseded ('was' side, method historical), while 0.7619 is stated as what the current evaluation.json reports and is the live read. Buffer index 3 is the 50 m row. Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          202
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json` (post-recovery, BCa N = 10K) | 12 | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-03 | YES | — | Text-MIN post-recovery full-buffer; commit `236327d8`. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-MIN full-buffer evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CI triples in the text-MIN full-buffer evaluation",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, text-MIN full-buffer evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-MIN full-buffer evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Bare ci_count with no asserted decomposition; len:$.summary.buffers is the candidate multiplier for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          203,
+          203
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json` (post-recovery, BCa N = 10K) | per-buffer F1 + CIs | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-03 | YES | — | Text-MIN post-recovery extended-buffer; commit `236327d8`. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-MIN extended-buffer evaluation (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, text-MIN extended-buffer evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-MIN extended-buffer evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          204
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json` (post-recovery) | 5 rows × 3 CIs | extended-GT bootstrap | 10000 | 42 | tile | `scripts/compute_corrected_f1_multi_buffer.py` | recorded | 2026-05-03 | YES | — | Text-MIN post-recovery corrected-F1 multi-buffer (commit `236327d8`); F1@50m = 0.7968. No human-review for text-MIN — uses extended GT only. |",
+      "values": [
+        {
+          "quantity": "count, buffer rows in the text-MIN corrected-F1 multi-buffer summary",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "count, CIs reported per corrected-F1 row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, text-MIN corrected-F1 multi-buffer",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_n",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-MIN corrected-F1 multi-buffer",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at 50 m, text-MIN post-recovery",
+          "value_verbatim": "0.7968",
+          "value_parsed": 0.7968,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Structural CI-triple counts have no scalar locator in any artefact; recorded as anchor-unknown per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          205
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-text-min-generalisation/mcc/evaluation.json` (post-recovery) | tile-level MCC + per-buffer | bootstrap BCa | 10000 | 42 | tile (paired) | `scripts/evaluate_detections.py` (MCC mirror) | recorded | 2026-05-03 | YES | — | Text-MIN post-recovery tile-level MCC (newly computed Session 84; commit `6e077005`); MCC@50m = 0.626 [0.611, 0.641]. |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, text-MIN tile-level MCC evaluation",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, text-MIN tile-level MCC evaluation",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, text-MIN post-recovery",
+          "value_verbatim": "0.626",
+          "value_parsed": 0.626,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, text-MIN",
+          "value_verbatim": "0.611",
+          "value_parsed": 0.611,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, text-MIN",
+          "value_verbatim": "0.641",
+          "value_parsed": 0.641,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registry path results/55maps-text-min-generalisation/mcc/evaluation.json no longer exists in the working tree; anchored to the archived copy. \"Session 84\" is out of scope per rule 5. MCC and its bounds are quoted to 3 dp here while the artefact holds 4 dp — recorded at quoted precision; the harness owns rounding tolerance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          206
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` (post-recovery, BCa N = 10K + --mcc) | per-buffer F1 + CIs | bootstrap BCa | 10000 | 42 | tile | `scripts/evaluate_detections.py` | recorded | 2026-05-03 | YES | — | GS-v2 post-recovery re-evaluation (Era 2 487-tile baseline; commit `239a6bf4`). F1@50m = 0.8859 [0.8798, 0.8919] (was 0.8734); MCC@50m = 0.7778 [0.7663, 0.7896] (newly computed). |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, Era 2 gold-standard sweep (BCa N = 10K)",
+          "value_verbatim": "10K",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, Era 2 gold-standard sweep",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, Era 2 gold-standard sweep",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Era 2 gold-standard baseline corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+              "path": "$.summary.tile_classification.confusion.tp"
+            },
+            {
+              "name": "b",
+              "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+              "path": "$.summary.tile_classification.confusion.tn"
+            },
+            {
+              "name": "c",
+              "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+              "path": "$.summary.tile_classification.confusion.fp"
+            },
+            {
+              "name": "d",
+              "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+              "path": "$.summary.tile_classification.confusion.fn"
+            }
+          ]
+        },
+        {
+          "quantity": "F1 at 50 m, Era 2 gold-standard post-recovery",
+          "value_verbatim": "0.8859",
+          "value_parsed": 0.8859,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[9].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, F1 at 50 m, Era 2",
+          "value_verbatim": "0.8798",
+          "value_parsed": 0.8798,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[9].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, F1 at 50 m, Era 2",
+          "value_verbatim": "0.8919",
+          "value_parsed": 0.8919,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[9].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1 at 50 m, Era 2 gold-standard pre-recovery",
+          "value_verbatim": "0.8734",
+          "value_parsed": 0.8734,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile-level MCC, Era 2 gold-standard post-recovery",
+          "value_verbatim": "0.7778",
+          "value_parsed": 0.7778,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, tile-level MCC, Era 2",
+          "value_verbatim": "0.7663",
+          "value_parsed": 0.7663,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, tile-level MCC, Era 2",
+          "value_verbatim": "0.7896",
+          "value_parsed": 0.7896,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.tile_classification.mcc.ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"Era 2 487-tile baseline\" uses 487 both as a corpus label and as an asserted tile count, so it is extracted (rule 5's 487-tile example). The only tile-count locator inside this artefact is the tile-classification confusion matrix, whose four cells partition the evaluated tiles; each operand is an independent read per v1.2 amendment 1. Buffer index 9 is the 50 m row of the 10-buffer sweep ([5, 10, ..., 50])."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          207
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-pairwise-permutation-v2/paired-{t0.3-vs-t0.7,t0.3-vs-image,t0.7-vs-image,t0.3-vs-tmin,t0.7-vs-tmin,image-vs-tmin}/summary.json` (6 pairs × 10 buffers) | 10 buffers × delta + p_BH per pair | permutation + BCa | 10000 / 10000 | 42 | tile (paired permutation) + tile (BCa CI) | `scripts/run_pairwise_tests.py` (v2) | `c816d4bd42fb87a897698a03066dea077ccd576a` | 2026-05-03T04:20Z | YES | — | Cross-track v2 — all 6 pairs across the 4 corrected runs; commit `a7a0caaa`. 5 of 6 significant at BH-FDR q=0.05; T=0.7 vs image (Δ=−0.0060, p_BH=0.215) is the only ns pair. |",
+      "values": [
+        {
+          "quantity": "count, cross-track pairs in the pairwise-permutation v2 set",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, buffers per pair, pairwise-permutation v2",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "count, buffers carrying a delta and a p_BH per pair",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.per_buffer",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation iterations, pairwise-permutation v2",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations for the BCa CIs, pairwise-permutation v2",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pairwise-permutation v2",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "count, pairs run in the cross-track v2 pass",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, corrected runs compared in the cross-track v2 pass",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, pairs significant at BH-FDR q = 0.05",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, pairs tested at BH-FDR q = 0.05",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "false-discovery-rate level q, pairwise-permutation v2",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer temperature, text-high 55-map generalisation run",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#$.proposer.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "delta F1 at 50 m, text-high (T=0.7) versus image pair",
+          "value_verbatim": "−0.0060",
+          "value_parsed": -0.006,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[6].delta_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Benjamini-Hochberg adjusted p-value at 50 m, text-high versus image pair",
+          "value_verbatim": "0.215",
+          "value_parsed": 0.215,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.per_buffer[6].p_bh",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the T=0.7-vs-image member of the six-pair set because that pair carries the quoted delta and p_BH; the other five pairs live in sibling directories under results/55maps-pairwise-permutation-v2/. Index 6 of $.per_buffer is the 50 m row ([20, 25, 30, 35, 40, 45, 50, 75, 100, 125]). The \"5 of 6 significant\" tally requires reading the significance flags across all six pair files, hence recompute-script. The minus sign in −0.0060 is U+2212, copied verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          208,
+          208
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-fp-classification/cost_summary.json` (post-recovery 4-corpus re-classify) | 0 (cost only) | — | — | — | — | FP-classify driver | recorded | 2026-05-03T04:34Z | NO-CI | — | Cost ledger for the 4-corpus re-classify; commit `42ed1d32`. Total cost $0.5818; chi-square (image vs text) χ²=31.28, p=0.0018 (qualitatively unchanged from baseline χ²=31.81, p=0.0015). |",
+      "values": [
+        {
+          "quantity": "count, corpora in the post-recovery FP re-classification",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.per_run",
+          "method": "read"
+        },
+        {
+          "quantity": "CI count asserted for the FP-classification cost summary",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, corpora in the re-classify cost ledger",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.per_run",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, 4-corpus FP re-classification",
+          "value_verbatim": "$0.5818",
+          "value_parsed": 0.5818,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "chi-square statistic, image versus text FP category distribution",
+          "value_verbatim": "31.28",
+          "value_parsed": 31.28,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-fp-classification/category_distribution.json#$.chi_square_image_vs_text.chi2",
+          "method": "read"
+        },
+        {
+          "quantity": "p-value, image versus text FP category chi-square",
+          "value_verbatim": "0.0018",
+          "value_parsed": 0.0018,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/55maps-fp-classification/category_distribution.json#$.chi_square_image_vs_text.p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "chi-square statistic, baseline (pre-re-classification) image versus text",
+          "value_verbatim": "31.81",
+          "value_parsed": 31.81,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "p-value, baseline image versus text chi-square",
+          "value_verbatim": "0.0015",
+          "value_parsed": 0.0015,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-fp-classification/cost_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cost ledger holds only cost fields; the chi-square pair lives in the sibling category_distribution.json ($.chi_square_image_vs_text), reached by cross-file locator per v1.2 amendment 2. The baseline chi-square and p are the quoted prior values of a comparison and take method historical; the pre-rerun backups in the same directory (category_distribution.json.pre-rerun-*.backup) are the preserved artefacts if triage wants a live check."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          209,
+          209
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-generalisation/buffer_sensitivity.json` | per-threshold × 4 buffers | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_pv_buffer_sensitivity.py` | not recorded | 2026-04 | YES | — | Metadata verified on 2026-04-20: `bootstrap_iterations=1000, seed=42` explicit at top level. Upgraded from YES (assumed). |",
+      "values": [
+        {
+          "quantity": "count, buffers in the 55-map generalisation buffer-sensitivity sweep",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, 55-map generalisation buffer sensitivity",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, 55-map generalisation buffer sensitivity",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations recorded in-file (bootstrap_iterations=1000)",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed recorded in-file (seed=42)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The verification date (2026-04-20) is out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          210
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/factor-analysis/factor_analysis_results.json` | 0 (p-values only, no CIs) | permutation | 10000 | 42 | tile (permutation) | `scripts/run_pairwise_tests.py` | not recorded | 2026-03 | NO-CI | — | Point effect sizes + p-values only; sibling CSV carries same. Pairwise CIs, where cited, come from `results/pairwise/**/*.json`. |",
+      "values": [
+        {
+          "quantity": "CI count asserted for the factor-analysis results file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation iterations, factor-analysis pairwise tests",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/run_pairwise_tests.py#--n-permutations (argparse default)",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, factor-analysis pairwise tests",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/run_pairwise_tests.py#--seed (argparse default)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/factor-analysis/factor_analysis_results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The results file records only per-comparison effect sizes and p-values (no metadata block), so the iteration count and seed are anchored to the generating script's argparse defaults (scripts/run_pairwise_tests.py, --n-permutations default 10_000 and --seed default 42) — a non-JSON anchor, legitimate per instrument v1.1. The ci_count 0 is an absence claim over the whole artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          211
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/tolerance-sensitivity/tolerance-sensitivity.json` | 0 (point estimates) | — | — | — | — | `scripts/analyse_tolerance_sensitivity.py` | — | 2026-03 | NO-CI | — | Point estimates only; no CIs reported. |",
+      "values": [
+        {
+          "quantity": "CI count asserted for the tolerance-sensitivity results file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/tolerance-sensitivity/tolerance-sensitivity.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Absence claim over the whole artefact (see batch note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          212
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/dawid-skene/dawid-skene-results.json` | 0 (EM posteriors only) | — | — | — | — | `scripts/analyse_dawid_skene.py` | — | 2026-04 | NO-CI | — | D-S posterior probabilities; CIs not computed in this file. |",
+      "values": [
+        {
+          "quantity": "CI count asserted for the Dawid-Skene results file",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Absence claim over the whole artefact (see batch note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          213
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/consensus-build-manifest_20260416T071249Z.json` | 0 | — | — | — | — | `scripts/build_all_consensus.py` | recorded | 2026-04-16 | NO-CI | — | Manifest; no CIs. |",
+      "values": [
+        {
+          "quantity": "CI count asserted for the consensus build manifest",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/consensus-build-manifest_20260416T071249Z.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Absence claim over the whole artefact. The timestamp embedded in the filename is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/55maps-cleanup-report.json` | 0 | — | — | — | — | `scripts/55maps-cleanup-analysis.py` | — | 2026-04 | NO-CI | — | Cleanup bookkeeping. |",
+      "values": [
+        {
+          "quantity": "CI count asserted for the 55-map cleanup report",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-cleanup-report.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Absence claim over the whole artefact (see batch note)."
+    }
+  ]
+}

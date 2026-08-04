@@ -1,0 +1,654 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/ci-metadata-registry.md",
+    "git_blob": "efaff5840c9a",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          218,
+          220
+        ],
+        "section": "Summary counts"
+      },
+      "claim_text": "Counting distinct file-classes (not individual files), and treating\n`leaderboard_all_evaluations.json` + the thousands of `era2/.cache/**`\nfiles as one class each (updated after the 2026-04-20 sidecar pass):",
+      "values": [
+        {
+          "quantity": "count, cached per-cell evaluation files under results/leaderboard/era2/.cache/ (asserted only as an order of magnitude, \"thousands\")",
+          "value_verbatim": "thousands",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count_approximate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/.cache/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b088] This file covers ONLY lines 215-343 of results/ci-metadata-registry.md; sibling batches cover lines 1-172 (b086) and 173-214 (b087). Batch-level scope decisions: dates and timestamps (2026-04-20, 2026-04-16/17), git commit hashes and blob ids, session numbers, version strings, the \"ISO 8601\" standard name, sidecar schema key names, and numbers that appear only inside file paths or class names (`era2`, `e47-v1-vs-v2`, `h8-v2`, `h12-v2`, `phase3a`, `phase2a/b/c/d`, `tile-size-30m`, `prompt-engineering-20m`, `55maps-generalisation`) are out of C4 scope per instrument rule 5. The phrase \"A one-line metadata block\" at line 339 is treated as a rhetorical descriptor rather than a quantitative claim; the proposed `\"_metadata\"` patch at lines 339-341 contains no numeric literals. § Provenance chains (lines 318-333) carries no numeric claim. IMPORTANT ANCHORING NOTE for this batch: the § Summary counts class totals (lines 222-251) are tallies over the registry TABLE that occupies lines 1-214 of this same markdown document; instrument rule 2 forbids anchoring prose to prose, so every class-count value in those claims takes method `anchor-unknown` with the registry table named here — triage must chase the tallied rows to artefacts. This first value (\"thousands\") is a qualitative magnitude, not a figure; it is recorded with value_parsed null and flagged as doubtful inclusion. The directory-level sidecar records the count as `coverage_file_count_approximate`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          222,
+          228
+        ],
+        "section": "Summary counts"
+      },
+      "claim_text": "- `YES` (complete metadata in file or co-located manifest): 36\n  classes — PV, leaderboard tiers, pairwise permutation, consensus\n  analysis reports, aggregate bootstrap-CI files, corrected-F1\n  review-level bootstraps, buffer-band-lift, subtype classification,\n  plus two formerly \"YES (assumed)\" classes confirmed on 2026-04-20\n  (`55maps-generalisation/buffer_sensitivity.json` and\n  `prompt-engineering-20m/prompt_engineering_pairwise.json`).",
+      "values": [
+        {
+          "quantity": "count, distinct CI-bearing file-classes with completeness state YES",
+          "value_verbatim": "36",
+          "value_parsed": 36,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, classes upgraded from \"YES (assumed)\" to confirmed YES in the 2026-04-20 pass",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Both values tally rows of the registry table at lines 1-214 of this same document (results/ci-metadata-registry.md) — prose, so no anchor is proposed per instrument rule 2. Searched results/ for a machine-readable registry manifest (results/analyses-manifest.json, results/conditions-manifest.json, results/commitments.json) and found none that enumerates CI completeness states. The two named classes correspond to results/55maps-generalisation/buffer_sensitivity.json and a prompt-engineering-20m pairwise file, which triage can inspect directly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          229,
+          234
+        ],
+        "section": "Summary counts"
+      },
+      "claim_text": "- `YES_SIDECAR` (resolved metadata in a co-located sidecar,\n  `<name>.metadata.json` or directory-level `.metadata.json`): 36\n  classes (+ the per-file CSV derivative of metrics_master) covering\n  ~520 individual files. Introduced 2026-04-20; see \"Sidecar upgrade\n  pass\" below. Every class previously marked `INFERABLE` has been\n  upgraded.",
+      "values": [
+        {
+          "quantity": "count, distinct CI-bearing file-classes with completeness state YES_SIDECAR",
+          "value_verbatim": "36",
+          "value_parsed": 36,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, individual data files covered by the YES_SIDECAR classes",
+          "value_verbatim": "~520",
+          "value_parsed": 520,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Class tally over the registry table at lines 1-214 of this same document (rule 2, no prose-to-prose anchor). The ~520 file-coverage figure is not the same quantity as the ~1580 at line 292 (which counts per-file plus directory-aggregate coverage); no artefact was located that records either total as a scalar. Approx marker retained in value_verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          237
+        ],
+        "section": "Summary counts"
+      },
+      "claim_text": "- `INFERABLE` (script default retrievable from version control but\n  not materialised alongside the data): **0 classes after the\n  2026-04-20 pass.**",
+      "values": [
+        {
+          "quantity": "count, file-classes remaining in completeness state INFERABLE after the sidecar pass",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Tally over the registry table at lines 1-214 of this same document (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          238,
+          240
+        ],
+        "section": "Summary counts"
+      },
+      "claim_text": "- `NO-CI` (file does not report CIs, not in scope): 10+ classes —\n  threshold sweep cells, factor-analysis p-values, D-S posteriors,\n  manifests, descriptive diagnostics.",
+      "values": [
+        {
+          "quantity": "count, file-classes in completeness state NO-CI (stated as a lower bound)",
+          "value_verbatim": "10+",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Stated as a lower bound (\"10+\"), not a point estimate; the \"+\" is kept in value_verbatim so the harness does not promote it to an equality comparison. Tally over the registry table at lines 1-214 of this same document (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          241,
+          241
+        ],
+        "section": "Summary counts"
+      },
+      "claim_text": "- `NO` (metadata not retrievable — requires re-run): **0 classes**.",
+      "values": [
+        {
+          "quantity": "count, file-classes in completeness state NO (metadata not retrievable)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Tally over the registry table at lines 1-214 of this same document (rule 2). The document's own § Purpose (line 31, outside this batch's range) points NO entries at archive/planning-completed-session-81-82/ci-rerun-todo.md, which triage may use as the chase target."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          242,
+          245
+        ],
+        "section": "Summary counts"
+      },
+      "claim_text": "- `STALE_ENTRY`: 1 class — the registry row describing\n  `results/e47-v1-vs-v2/grid-multibuffer/**/evaluation.json` (16\n  files) was stale: no `evaluation.json` files actually existed\n  under this path on 2026-04-20.",
+      "values": [
+        {
+          "quantity": "count, registry rows classed STALE_ENTRY",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, evaluation.json files the stale registry row claimed for the e47-v1-vs-v2 grid-multibuffer subtree",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, evaluation.json files actually present under the e47-v1-vs-v2 grid-multibuffer subtree",
+          "value_verbatim": "no",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "count of `**/evaluation.json` files under this archived subtree",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/e47-v1-vs-v2/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The path the document names (results/e47-v1-vs-v2/grid-multibuffer/**/evaluation.json) does not exist in the working tree at HEAD; the subtree was quarantined to archive/v2-verifier-contamination/e47-v1-vs-v2/, which is used as the anchor for the zero-count value. The 1-class and 16-file figures are tallies/quotes over the registry table at lines 1-214 of this same document and take anchor-unknown per rule 2. \"no `evaluation.json` files\" is recorded as a count of zero — flagged as a borderline inclusion (a negation rather than a numeral)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          255,
+          258
+        ],
+        "section": "Sidecar upgrade pass (2026-04-20)"
+      },
+      "claim_text": "Motivation: a paper reviewer should not need to open a Python script\nand read a `DEFAULT_SEED = 42` line to confirm the bootstrap\nspecification for a reported CI.",
+      "values": [
+        {
+          "quantity": "default bootstrap random seed constant in the evaluation script",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_SEED constant",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": "DEFAULT_SEED constant"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (a Python module constant); legitimate and expected per instrument v1.1, routed to triage rather than resolved mechanically. The document's own defaults table (line 43, batch b086's range) attributes DEFAULT_SEED = 42 to scripts/evaluate_detections.py, which is the anchor used here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          260,
+          262
+        ],
+        "section": "Sidecar upgrade pass (2026-04-20)"
+      },
+      "claim_text": "Convention: for a data file `path/to/foo.json`, a sidecar is written\nat `path/to/foo.metadata.json` recording the RESOLVED values (not\n\"script default: 42\" but literally `\"seed\": 42`).",
+      "values": [
+        {
+          "quantity": "bootstrap seed as it would appear quoted from the script default (the rejected form)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/evaluate_detections.py#DEFAULT_SEED constant",
+          "method": "read"
+        },
+        {
+          "quantity": "resolved bootstrap seed value recorded in the sidecars written by the 2026-04-20 pass",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3a-text-matrix/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The claim is about the sidecar convention rather than one named file; results/phase3a-text-matrix/.metadata.json is used as a representative sidecar written by this pass, and every value carries its own path per v1.2 amendment 3. Flagged as a borderline inclusion: the numerals are illustrative of the convention rather than a study result."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          289,
+          289
+        ],
+        "section": "Sidecar upgrade pass — File counts table"
+      },
+      "claim_text": "| Per-file sidecars (`<name>.metadata.json`) | 41 |",
+      "values": [
+        {
+          "quantity": "count, per-file sidecars written in the 2026-04-20 pass (File-counts table row \"Per-file sidecars\")",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "count of `*.metadata.json` files under results/ and outputs/, excluding directory-level `.metadata.json`",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": "count of `*.metadata.json` files under results/ and outputs/, excluding directory-level `.metadata.json`"
+      },
+      "method": "read",
+      "notes": "Directory anchor with a descriptive locator (house style, cf. 001-config-audit.json). The sidecars are split across results/ and outputs/; the anchor names results/ as the primary tree and the locator states the full scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          290,
+          290
+        ],
+        "section": "Sidecar upgrade pass — File counts table"
+      },
+      "claim_text": "| Directory-level sidecars (`<dir>/.metadata.json`) | 7 |",
+      "values": [
+        {
+          "quantity": "count, directory-level sidecars written in the 2026-04-20 pass (File-counts table row \"Directory-level sidecars\")",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "count of directory-level `.metadata.json` files under results/ and outputs/",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": "count of directory-level `.metadata.json` files under results/ and outputs/"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          291,
+          291
+        ],
+        "section": "Sidecar upgrade pass — File counts table"
+      },
+      "claim_text": "| Total sidecars | 48 |",
+      "values": [
+        {
+          "quantity": "count, total sidecars written in the 2026-04-20 pass (File-counts table row \"Total sidecars\")",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/",
+              "path": "count of `*.metadata.json` files under results/ and outputs/, excluding directory-level `.metadata.json`"
+            },
+            {
+              "name": "b",
+              "file": "results/",
+              "path": "count of directory-level `.metadata.json` files under results/ and outputs/"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null,
+        "expression": "a + b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/",
+            "path": "count of `*.metadata.json` files under results/ and outputs/, excluding directory-level `.metadata.json`"
+          },
+          {
+            "name": "b",
+            "file": "results/",
+            "path": "count of directory-level `.metadata.json` files under results/ and outputs/"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "The total is the sum of the two preceding table rows (41 + 7); the operands are given their own directory locators so neither inherits the arithmetic method, per v1.2 amendment 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          292,
+          292
+        ],
+        "section": "Sidecar upgrade pass — File counts table"
+      },
+      "claim_text": "| Individual files covered (per-file + directory aggregates) | ~1580 |",
+      "values": [
+        {
+          "quantity": "count, individual data files covered by all sidecars (per-file targets plus directory aggregates)",
+          "value_verbatim": "~1580",
+          "value_parsed": 1580,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Requires summing the per-file sidecar targets with the seven directory sidecars' `coverage_file_count` / `coverage_file_count_approximate` fields (results/phase3a-text-matrix/, results/phase3a-image-matrix/, results/paper-eval/, results/h8-v2/, results/h12-v2/, results/pairwise/tile-size-30m/, results/leaderboard/era2/.cache/) — recorded, not computed, per instrument rule 4. Approx marker retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          294,
+          303
+        ],
+        "section": "Sidecar upgrade pass — per-file sidecar coverage"
+      },
+      "claim_text": "Per-file sidecars were written for every paper-headline or\npaper-derivative file (the three 55maps generalisation evaluations,\nthe cleaned-GT trio, gold-standard-extended-buffer-sweep, the seven\nphase2a/b/c/d analysis roll-ups, the twelve retest phase2/phase3a\nevaluations, the h11 UNINTENDED analysis report, paper-tables\nmetrics_master / pipeline_progression / pro_2x2_matrix /\ntile_size_comparison / cost_retrospective, phase3a-*-matrix\nall-evaluations, secondary_effects.json x2, phase3c diversity\nconsensus sweep, h10 variant_c_vs_greedy_hp4hn4, and the three\nper-era leaderboard_all_evaluations files).",
+      "values": [
+        {
+          "quantity": "count, 55maps generalisation evaluation files given per-file sidecars",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "count of `55maps-*-generalisation/evaluation/evaluation.metadata.json` files under outputs/",
+          "method": "read"
+        },
+        {
+          "quantity": "count, cleaned-GT files given per-file sidecars (\"the cleaned-GT trio\")",
+          "value_verbatim": "trio",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, phase2a/b/c/d analysis roll-up files given per-file sidecars",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "count of `phase2*-*.metadata.json` roll-up sidecars directly under results/",
+          "method": "read"
+        },
+        {
+          "quantity": "count, retest phase2/phase3a evaluation files given per-file sidecars",
+          "value_verbatim": "twelve",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "count of `*.metadata.json` files under results/retest/",
+          "method": "read"
+        },
+        {
+          "quantity": "count, secondary_effects.json files given per-file sidecars",
+          "value_verbatim": "x2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "count of `secondary_effects.metadata.json` files under results/",
+          "method": "read"
+        },
+        {
+          "quantity": "count, per-era leaderboard_all_evaluations files given per-file sidecars",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "count of `leaderboard/era*/leaderboard_all_evaluations.metadata.json` files under results/",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One contiguous sentence carrying six counting words; each value carries its own directory locator per v1.2 amendment 3. \"the cleaned-GT trio\" names no path and no cleaned-GT sidecar was located by inspection of the sidecar file list, so that value is anchor-unknown. Class labels containing digits (h11, h10, phase2a/b/c/d, phase3a, phase3c, pro_2x2_matrix, variant_c_vs_greedy_hp4hn4) are names, out of scope per rule 5. Note for triage: results/leaderboard/combined/era*/ also holds leaderboard_all_evaluations sidecars, so the \"three per-era\" locator may be ambiguous between results/leaderboard/era*/ and results/leaderboard/combined/era*/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          305,
+          309
+        ],
+        "section": "Sidecar upgrade pass — directory-level sidecar coverage"
+      },
+      "claim_text": "Directory-level sidecars were written for the seven bulk classes:\n`phase3a-text-matrix/` (156 cells), `phase3a-image-matrix/` (96),\n`paper-eval/` (~156), `h8-v2/` (43), `h12-v2/` (18),\n`pairwise/tile-size-30m/` (5), and\n`leaderboard/era2/.cache/` (~1056).",
+      "values": [
+        {
+          "quantity": "count, bulk classes given directory-level sidecars",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "count of directory-level `.metadata.json` files under results/ and outputs/",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation cells covered by the phase3a-text-matrix directory sidecar",
+          "value_verbatim": "156",
+          "value_parsed": 156,
+          "unit": null,
+          "kind": "count",
+          "path": "results/phase3a-text-matrix/.metadata.json#$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation cells covered by the phase3a-image-matrix directory sidecar",
+          "value_verbatim": "96",
+          "value_parsed": 96,
+          "unit": null,
+          "kind": "count",
+          "path": "results/phase3a-image-matrix/.metadata.json#$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation files covered by the paper-eval directory sidecar",
+          "value_verbatim": "~156",
+          "value_parsed": 156,
+          "unit": null,
+          "kind": "count",
+          "path": "results/paper-eval/.metadata.json#$.coverage_file_count_approximate",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation files covered by the h8-v2 directory sidecar",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": "results/h8-v2/.metadata.json#$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation files covered by the h12-v2 directory sidecar",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": "results/h12-v2/.metadata.json#$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation files covered by the pairwise/tile-size-30m directory sidecar",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "results/pairwise/tile-size-30m/.metadata.json#$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, cached evaluation files covered by the leaderboard/era2/.cache directory sidecar",
+          "value_verbatim": "~1056",
+          "value_parsed": 1056,
+          "unit": null,
+          "kind": "count",
+          "path": "results/leaderboard/era2/.cache/.metadata.json#$.coverage_file_count_approximate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cross-file locators per v1.2 amendment 2; every value carries its own path per amendment 3. Approx markers retained per amendment 5 — note that the two approximate figures (~156 for paper-eval and ~1056 for the era2 cache) are recorded in their sidecars under `coverage_file_count_approximate`, while the exact ones use `coverage_file_count`. Directory names containing digits (`phase3a-*`, `h8-v2`, `h12-v2`, `tile-size-30m`, `era2`) are names, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          313,
+          316
+        ],
+        "section": "Sidecar upgrade pass — ambiguities"
+      },
+      "claim_text": "Ambiguities encountered: zero. Every CLI invocation found in a\nrun.log or resolved_config.yaml specified the same defaults the\nscripts use (n=1000, seed=42), so no `cli_overrides_script_defaults`\nwas flagged `true` anywhere in the pass.",
+      "values": [
+        {
+          "quantity": "count, ambiguities encountered during the 2026-04-20 sidecar pass",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iteration count specified by every CLI invocation found during the pass",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/phase3a-text-matrix/.metadata.json#$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap random seed specified by every CLI invocation found during the pass",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/phase3a-text-matrix/.metadata.json#$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "count, sidecars in which `cli_overrides_script_defaults` was flagged true",
+          "value_verbatim": "no",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "count of sidecars whose `$.invocation.cli_overrides_script_defaults` is true",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span (rule 6): the ambiguity count is a process assertion with no artefact and takes anchor-unknown; the two parameter values are resolved against a representative sidecar written by the pass; the final zero-count is a sweep over every sidecar's `invocation` block. \"no ... was flagged `true`\" is recorded as a count of zero — flagged as a borderline inclusion (a negation rather than a numeral)."
+    }
+  ]
+}

@@ -1,0 +1,1728 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-image-generalisation/k35-075-3-diagnostic.md",
+    "git_blob": "babaa9c675a7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          4,
+          5
+        ],
+        "section": "Front matter — Context"
+      },
+      "claim_text": "**Context**: Persistent low-outlier in the 55-map image generalisation\nheterogeneity analysis.",
+      "values": [
+        {
+          "quantity": "map count, 55-map image-generalisation heterogeneity analysis",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.dataset_55map.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b080] Scope decisions for this batch: map sheet names (K-35-075-1/-2/-3/-4, K-35-077-2) and the candidate identifiers in the two confidence tables (5560, 5601, 5556, 5616) are names/identifiers, out of C4 scope per instrument rule 5 — the vote counts, probabilities and distances reported against those identifiers ARE extracted. Numbered list markers in § Recommendation for the paper (1., 2., 3., 4.) and markdown table alignment rows are not claims. Buffer radii appearing only to label which row/column a metric belongs to (\"Hungarian match @ 50 m\", \"Mean F1 @ 50 m\", \"SD @ 50 m\", \"Min F1 @ 50 m\") are treated as row identifiers, not claims, following the b078 precedent; radii asserted as the grid actually run (line 5's 20/30/40/50 m; line 42's 50 m matching buffer) ARE extracted. Anchor notes for the batch: the document reports per-map quantities that no committed artefact records at per-map granularity beyond results/55maps-image-generalisation/per_map_metrics.csv (columns dataset, map_name, buffer_m, n_tiles, n_refs, n_dets, precision, recall, f1) — per-map TP/FP/FN, match distances, and the n=54 (map-excluded) distribution all require recomputation and are marked recompute-script. per_map_metrics.csv filters of the form $[?(@.map_name=='K-35-075-3')].f1 match the map's four buffer rows, whose values are identical for every column quoted here (constant-collapse, v1.2 amendment 7). The tile manifest named by the run (inputs/tiles_384_55maps/full_evaluation_manifest.json per outputs/55maps-image-generalisation/launch_manifest.json $.resolved_config.proposer.manifest) is not present in the working tree, so the \"tiles in manifest\" count anchors to per_map_metrics.csv instead."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          5,
+          7
+        ],
+        "section": "Front matter — Context"
+      },
+      "claim_text": "F1 = 0.286 across all four buffers (20/30/40/50 m)\n— buffer loosening does not help, which means the 10 FPs are not\n\"almost-matches\" that a wider tolerance would rescue.",
+      "values": [
+        {
+          "quantity": "per-map F1, K-35-075-3, identical at every buffer",
+          "value_verbatim": "0.286",
+          "value_parsed": 0.286,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/per_map_metrics.csv#$[?(@.map_name=='K-35-075-3')].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "count, buffer radii in the heterogeneity analysis grid",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, first grid step of the heterogeneity analysis",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, second grid step of the heterogeneity analysis",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, third grid step of the heterogeneity analysis",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fourth grid step of the heterogeneity analysis",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[3]",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives on K-35-075-3 at every buffer",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No committed artefact records per-map TP/FP/FN, so the 10-FP count is recompute-script (Hungarian match of the 12 K-35-075-3 detections in outputs/55maps-image-generalisation/verified/verified_detections.geojson against the 2 K-35-075-3 references in inputs/vectors/references/student-mounds-55maps.geojson). Note for triage: n_dets − n_refs = 12 − 2 = 10 in per_map_metrics.csv, but that identity only holds because recall is reported as 1.0, so it is not treated as a mechanical arithmetic derivation here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "§ The raw numbers"
+      },
+      "claim_text": "| Tiles in manifest | 156 |",
+      "values": [
+        {
+          "quantity": "tile count for K-35-075-3 in the 55-map evaluation manifest",
+          "value_verbatim": "156",
+          "value_parsed": 156,
+          "unit": null,
+          "kind": "count",
+          "path": "$[?(@.map_name=='K-35-075-3')].n_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The manifest the row names (inputs/tiles_384_55maps/full_evaluation_manifest.json, per outputs/55maps-image-generalisation/launch_manifest.json $.resolved_config.proposer.manifest) is absent from the working tree; per_map_metrics.csv carries the same quantity as its n_tiles column."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "§ The raw numbers"
+      },
+      "claim_text": "| Reference mounds (student-annotated) | **2** |",
+      "values": [
+        {
+          "quantity": "student-annotated reference mounds on K-35-075-3",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.source_map=='K-35-075-3')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the student ground-truth input (least-writable artefact, and the file the document itself names at line 131). The same quantity appears at results/55maps-image-generalisation/per_map_metrics.csv#$[?(@.map_name=='K-35-075-3')].n_refs if triage prefers the derived table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "§ The raw numbers"
+      },
+      "claim_text": "| Final detections (vote ≥ 3 & prob ≥ 0.15) | 12 |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold applied to the 55-map image-generalisation run",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/launch_manifest.json#$.resolved_config.consensus.vote_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier probability threshold applied at evaluation, 55-map image-generalisation run",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/launch_manifest.json#$.resolved_config.evaluate.prob_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "final detections on K-35-075-3 after vote and probability thresholding",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "$[?(@.map_name=='K-35-075-3')].n_dets",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The two thresholds are also recorded together at results/55maps-image-generalisation/heterogeneity_summary.json ($.vote_threshold, $.prob_threshold); the launch manifest is the less-writable record of what was actually run and is used here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "§ The raw numbers"
+      },
+      "claim_text": "| Hungarian match @ 50 m | TP=2, FP=10, FN=0 |",
+      "values": [
+        {
+          "quantity": "true positives on K-35-075-3, Hungarian match at 50 m",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false positives on K-35-075-3, Hungarian match at 50 m",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "false negatives on K-35-075-3, Hungarian match at 50 m",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "per_map_metrics.csv stops at n_refs / n_dets / precision / recall / f1 — no per-map confusion counts are committed anywhere I could find (searched results/55maps-image-generalisation/ and outputs/55maps-image-generalisation/evaluation/; the aggregate evaluation.json carries tile-level confusion only). Recomputation would re-run the Hungarian match for this map's detections against its references at 50 m. '@ 50 m' is treated as the row identifier per the batch note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "§ The raw numbers"
+      },
+      "claim_text": "| Precision | 0.167 |",
+      "values": [
+        {
+          "quantity": "per-map precision, K-35-075-3, identical at every buffer",
+          "value_verbatim": "0.167",
+          "value_parsed": 0.167,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.map_name=='K-35-075-3')].precision",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted to 3 dp; the CSV holds 4 dp. Recorded at quoted precision — the harness owns rounding tolerance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          18
+        ],
+        "section": "§ The raw numbers"
+      },
+      "claim_text": "| Recall | 1.000 |",
+      "values": [
+        {
+          "quantity": "per-map recall, K-35-075-3, identical at every buffer",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.map_name=='K-35-075-3')].recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "§ The raw numbers"
+      },
+      "claim_text": "| F1 | 0.286 |",
+      "values": [
+        {
+          "quantity": "per-map F1, K-35-075-3, identical at every buffer",
+          "value_verbatim": "0.286",
+          "value_parsed": 0.286,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[?(@.map_name=='K-35-075-3')].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          23
+        ],
+        "section": "§ The raw numbers — commentary"
+      },
+      "claim_text": "Recall is perfect — both ground-truth mounds were found, at excellent\nspatial precision (matched detections are ~11 m and ~12 m from the\nreference points).",
+      "values": [
+        {
+          "quantity": "student-annotated reference mounds on K-35-075-3, all of them matched",
+          "value_verbatim": "both",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/per_map_metrics.csv#$[?(@.map_name=='K-35-075-3')].n_refs",
+          "method": "read"
+        },
+        {
+          "quantity": "match distance, first matched K-35-075-3 detection to its reference point",
+          "value_verbatim": "~11",
+          "value_parsed": 11,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "match distance, second matched K-35-075-3 detection to its reference point",
+          "value_verbatim": "~12",
+          "value_parsed": 12,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Approx markers retained in value_verbatim per v1.2 amendment 5. Distances require geodesic recomputation between the matched detections in the anchor and the two K-35-075-3 features of inputs/vectors/references/student-mounds-55maps.geojson; no committed artefact records per-pair match distances for this run. 'both ground-truth mounds' is a word-form restatement of the reference-mound count extracted at line 14; included on the over-inclusion principle."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          24
+        ],
+        "section": "§ The raw numbers — commentary"
+      },
+      "claim_text": "The score is dragged down entirely by the 10\ndetections that have no matching ground-truth.",
+      "values": [
+        {
+          "quantity": "K-35-075-3 detections with no matching ground truth (false positives)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Same quantity as the FP cell at line 16; recorded separately because it is asserted in its own span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "§ Why this isn't a pipeline failure"
+      },
+      "claim_text": "### The two TP detections are high-confidence",
+      "values": [
+        {
+          "quantity": "true-positive detections on K-35-075-3",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Same quantity as the TP cell at line 16; recorded separately because it is asserted in its own span (a heading)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "§ The two TP detections are high-confidence"
+      },
+      "claim_text": "| 5560 | 5 / 5 | 1.00 | ~11 m |",
+      "values": [
+        {
+          "quantity": "vote count for the first TP candidate on K-35-075-3",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[?(@.properties.candidate_id==5560)].properties.vote_count",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer passes run in the 55-map image-generalisation run (vote-count denominator)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/launch_manifest.json#$.resolved_config.proposer.passes",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier probability for the first TP candidate on K-35-075-3",
+          "value_verbatim": "1.00",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.features[?(@.properties.candidate_id==5560)].properties.probability",
+          "method": "read"
+        },
+        {
+          "quantity": "match distance to the nearest reference point, first TP candidate on K-35-075-3",
+          "value_verbatim": "~11",
+          "value_parsed": 11,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The candidate identifier 5560 is out of C4 scope per rule 5 but is used as the filter key. The '5 /' numerator is the candidate's vote_count; the '/ 5' denominator is the number of proposer passes, anchored cross-file to the launch manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "§ The two TP detections are high-confidence"
+      },
+      "claim_text": "| 5601 | 4 / 5 | 1.00 | ~12 m |",
+      "values": [
+        {
+          "quantity": "vote count for the second TP candidate on K-35-075-3",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[?(@.properties.candidate_id==5601)].properties.vote_count",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer passes run in the 55-map image-generalisation run (vote-count denominator)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/launch_manifest.json#$.resolved_config.proposer.passes",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier probability for the second TP candidate on K-35-075-3",
+          "value_verbatim": "1.00",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.features[?(@.properties.candidate_id==5601)].properties.probability",
+          "method": "read"
+        },
+        {
+          "quantity": "match distance to the nearest reference point, second TP candidate on K-35-075-3",
+          "value_verbatim": "~12",
+          "value_parsed": 12,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Candidate identifier 5601 is out of C4 scope per rule 5 but is used as the filter key."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "§ Why this isn't a pipeline failure"
+      },
+      "claim_text": "### Among the 10 \"FPs\", two are also very high confidence",
+      "values": [
+        {
+          "quantity": "false positives on K-35-075-3",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, K-35-075-3 false positives carrying very high verifier confidence",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The 'two very high confidence' count is defined by the document at lines 43 and 81 as verifier probability ≥ 0.95; recomputing it means counting K-35-075-3 features in the anchor with probability ≥ 0.95 that fall outside the 50 m buffer of both references."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "§ Among the 10 \"FPs\", two are also very high confidence"
+      },
+      "claim_text": "| 5556 | 3 / 5 | **1.00** | >3 km away |",
+      "values": [
+        {
+          "quantity": "vote count for the first high-confidence FP candidate on K-35-075-3",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[?(@.properties.candidate_id==5556)].properties.vote_count",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer passes run in the 55-map image-generalisation run (vote-count denominator)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/launch_manifest.json#$.resolved_config.proposer.passes",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier probability for the first high-confidence FP candidate on K-35-075-3",
+          "value_verbatim": "1.00",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.features[?(@.properties.candidate_id==5556)].properties.probability",
+          "method": "read"
+        },
+        {
+          "quantity": "distance to the nearest ground-truth point, first high-confidence FP candidate on K-35-075-3",
+          "value_verbatim": ">3",
+          "value_parsed": 3,
+          "unit": "km",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '>' marker is retained in value_verbatim so the harness treats the distance as a lower bound rather than an equality (same principle as v1.2 amendment 5). Candidate identifier 5556 is out of scope per rule 5 but is used as the filter key."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "§ Among the 10 \"FPs\", two are also very high confidence"
+      },
+      "claim_text": "| 5616 | 5 / 5 | **0.95** | ~2 km away |",
+      "values": [
+        {
+          "quantity": "vote count for the second high-confidence FP candidate on K-35-075-3",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[?(@.properties.candidate_id==5616)].properties.vote_count",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer passes run in the 55-map image-generalisation run (vote-count denominator)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/launch_manifest.json#$.resolved_config.proposer.passes",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier probability for the second high-confidence FP candidate on K-35-075-3",
+          "value_verbatim": "0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.features[?(@.properties.candidate_id==5616)].properties.probability",
+          "method": "read"
+        },
+        {
+          "quantity": "distance to the nearest ground-truth point, second high-confidence FP candidate on K-35-075-3",
+          "value_verbatim": "~2",
+          "value_parsed": 2,
+          "unit": "km",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained per v1.2 amendment 5. Candidate identifier 5616 is out of scope per rule 5 but is used as the filter key."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          44
+        ],
+        "section": "§ Among the 10 \"FPs\", two are also very high confidence"
+      },
+      "claim_text": "These two are well outside the 50 m buffer of both reference mounds,\nso they score as FPs. But they carry verifier probability ≥ 0.95 —\nthe same confidence the pipeline assigned to the two confirmed TPs.",
+      "values": [
+        {
+          "quantity": "count, K-35-075-3 false positives carrying verifier probability at or above 0.95",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "student-annotated reference mounds on K-35-075-3 whose buffers the two FPs fall outside",
+          "value_verbatim": "both",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/per_map_metrics.csv#$[?(@.map_name=='K-35-075-3')].n_refs",
+          "method": "read"
+        },
+        {
+          "quantity": "matching buffer radius asserted for the K-35-075-3 FP determination",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "outputs/55maps-image-generalisation/launch_manifest.json#$.resolved_config.evaluate.buffers[3]",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier probability floor asserted for the two high-confidence K-35-075-3 FPs",
+          "value_verbatim": "≥ 0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "true-positive detections on K-35-075-3",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The ≥ marker is kept in value_verbatim so the harness does not promote the probability floor to an equality comparison. The 50 m buffer here is asserted as the matching tolerance actually applied (not a row label), so it is extracted; it is the fourth entry of the evaluate buffer grid in the launch manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "§ The map's reference count is anomalously low — adjacent same-row maps"
+      },
+      "claim_text": "| K-35-075-1 | 73 |",
+      "values": [
+        {
+          "quantity": "student-annotated reference mounds on K-35-075-1",
+          "value_verbatim": "73",
+          "value_parsed": 73,
+          "unit": null,
+          "kind": "count",
+          "path": "$[?(@.map_name=='K-35-075-1')].n_refs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the per-map metrics table rather than the reference GeoJSON because the source_map property strings for the adjacent sheets may carry locality/CRS suffixes (the K-35-075-3 entries do not, but others in the file do, e.g. 'K-35-065-3_Glavan_4326'), which would make an equality filter unreliable."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          56
+        ],
+        "section": "§ The map's reference count is anomalously low — adjacent same-row maps"
+      },
+      "claim_text": "| K-35-075-2 | 142 |",
+      "values": [
+        {
+          "quantity": "student-annotated reference mounds on K-35-075-2",
+          "value_verbatim": "142",
+          "value_parsed": 142,
+          "unit": null,
+          "kind": "count",
+          "path": "$[?(@.map_name=='K-35-075-2')].n_refs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "§ The map's reference count is anomalously low — adjacent same-row maps"
+      },
+      "claim_text": "| **K-35-075-3** | **2** |",
+      "values": [
+        {
+          "quantity": "student-annotated reference mounds on K-35-075-3",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$[?(@.map_name=='K-35-075-3')].n_refs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the count extracted at line 14; anchored here to the same table as its adjacent-map neighbours for row consistency."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "§ The map's reference count is anomalously low — adjacent same-row maps"
+      },
+      "claim_text": "| K-35-075-4 | 58 |",
+      "values": [
+        {
+          "quantity": "student-annotated reference mounds on K-35-075-4",
+          "value_verbatim": "58",
+          "value_parsed": 58,
+          "unit": null,
+          "kind": "count",
+          "path": "$[?(@.map_name=='K-35-075-4')].n_refs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "§ The map's reference count is anomalously low — distribution"
+      },
+      "claim_text": "Distribution across all 55 maps:",
+      "values": [
+        {
+          "quantity": "map count, image-generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.dataset_55map.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "§ The map's reference count is anomalously low — distribution"
+      },
+      "claim_text": "| Min | 2 (this map) |",
+      "values": [
+        {
+          "quantity": "minimum reference mounds per map across the 55-map set",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "This table reports quantiles of REFERENCE MOUNDS per map, not of F1; results/55maps-image-generalisation/heterogeneity_summary.json holds quantiles of the F1 distribution only, so the five quantile rows need recomputation over the n_refs column of the anchor (one row per map, deduplicated across the four buffer rows)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "§ The map's reference count is anomalously low — distribution"
+      },
+      "claim_text": "| Q1 | 56 |",
+      "values": [
+        {
+          "quantity": "first quartile of reference mounds per map across the 55-map set",
+          "value_verbatim": "56",
+          "value_parsed": 56,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Quantile of the reference-mound distribution, not the F1 distribution — see the note on the Min row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "§ The map's reference count is anomalously low — distribution"
+      },
+      "claim_text": "| Median | 82 |",
+      "values": [
+        {
+          "quantity": "median reference mounds per map across the 55-map set",
+          "value_verbatim": "82",
+          "value_parsed": 82,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "§ The map's reference count is anomalously low — distribution"
+      },
+      "claim_text": "| Q3 | 115 |",
+      "values": [
+        {
+          "quantity": "third quartile of reference mounds per map across the 55-map set",
+          "value_verbatim": "115",
+          "value_parsed": 115,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "§ The map's reference count is anomalously low — distribution"
+      },
+      "claim_text": "| Max | 246 |",
+      "values": [
+        {
+          "quantity": "maximum reference mounds per map across the 55-map set",
+          "value_verbatim": "246",
+          "value_parsed": 246,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          71
+        ],
+        "section": "§ The map's reference count is anomalously low — commentary"
+      },
+      "claim_text": "K-35-075-3 is 28× below the median and 29× below the mean of its\nadjacent row-075 sheets.",
+      "values": [
+        {
+          "quantity": "ratio of the median reference-mound count to K-35-075-3's reference-mound count",
+          "value_verbatim": "28×",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ratio of the mean reference-mound count of the adjacent row-075 sheets to K-35-075-3's reference-mound count",
+          "value_verbatim": "29×",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Deliberately NOT emitted as arithmetic because the reference population is ambiguous: 'the median' could be the 55-map median (82 at line 66) or the median of the adjacent row-075 sheets, and 'the mean of its adjacent row-075 sheets' may or may not include K-35-075-3 itself. Flagging without adjudicating (rule 4): triage should fix the intended population before comparing, since none of the obvious readings of the anchor's n_refs column obviously reproduce 28 and 29."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          71,
+          72
+        ],
+        "section": "§ The map's reference count is anomalously low — commentary"
+      },
+      "claim_text": "No other map in the set has fewer than 10\nreference mounds.",
+      "values": [
+        {
+          "quantity": "asserted floor on reference mounds per map across the 55-map set excluding K-35-075-3",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Asserted as a strict lower bound over the n_refs column with K-35-075-3 excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          77
+        ],
+        "section": "§ Conclusion: under-annotation, not a pipeline problem"
+      },
+      "claim_text": "incomplete. The pipeline found 12 candidates, of which:",
+      "values": [
+        {
+          "quantity": "final detections on K-35-075-3 after vote and probability thresholding",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "$[?(@.map_name=='K-35-075-3')].n_dets",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span begins mid-line at line 77 to keep the sentence contiguous and verbatim; the sentence's opening word 'incomplete.' belongs to the preceding sentence and is included so the span starts at a line boundary."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          80
+        ],
+        "section": "§ Conclusion: under-annotation, not a pipeline problem"
+      },
+      "claim_text": "- 2 match the (probably incomplete) ground truth with high confidence\n  at tight spatial tolerance",
+      "values": [
+        {
+          "quantity": "K-35-075-3 candidates matching the student ground truth (true positives)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          83
+        ],
+        "section": "§ Conclusion: under-annotation, not a pipeline problem"
+      },
+      "claim_text": "- 2 more are flagged at verifier confidence ≥ 0.95 in areas where no\n  ground truth exists — almost certainly real mounds the annotators\n  missed",
+      "values": [
+        {
+          "quantity": "K-35-075-3 unmatched candidates carrying verifier confidence at or above 0.95",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier confidence floor defining the high-confidence unmatched K-35-075-3 candidates",
+          "value_verbatim": "≥ 0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The ≥ marker is retained in value_verbatim so the threshold is compared as a bound, not an equality."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          85
+        ],
+        "section": "§ Conclusion: under-annotation, not a pipeline problem"
+      },
+      "claim_text": "- 8 are lower-confidence candidates (verifier p = 0.20–0.40) that may\n  or may not be real",
+      "values": [
+        {
+          "quantity": "K-35-075-3 lower-confidence unmatched candidates",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lower bound of the verifier-probability range spanned by the 8 lower-confidence K-35-075-3 candidates",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper bound of the verifier-probability range spanned by the 8 lower-confidence K-35-075-3 candidates",
+          "value_verbatim": "0.40",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Recomputation means selecting the anchor's features whose source_tile begins 'K-35-075-3', excluding the 2 matched and 2 high-confidence unmatched candidates, and checking the count and the min/max of their probability property."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          90
+        ],
+        "section": "§ Conclusion: under-annotation, not a pipeline problem"
+      },
+      "claim_text": "If the map had been annotated with typical completeness (~80–100\nmounds based on adjacent sheets), the pipeline's 12 candidates would\nfall inside the normal over-detection pattern and F1 would track the\n55-map average.",
+      "values": [
+        {
+          "quantity": "lower end of the typical-completeness reference-mound range asserted for a sheet like K-35-075-3",
+          "value_verbatim": "~80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper end of the typical-completeness reference-mound range asserted for a sheet like K-35-075-3",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "final detections on K-35-075-3 after vote and probability thresholding",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "$[?(@.map_name=='K-35-075-3')].n_dets",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, image-generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/heterogeneity_summary.json#$.dataset_55map.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/per_map_metrics.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ~80–100 range is a counterfactual estimate 'based on adjacent sheets'; the approx marker is retained on the lower bound per v1.2 amendment 5, and both bounds are marked recompute-script because the derivation from the adjacent-sheet counts is not specified. Including it as a checkable claim on the over-inclusion principle — triage may prune it as a hypothetical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "§ Sensitivity analysis"
+      },
+      "claim_text": "Excluding K-35-075-3 tightens the 55-map F1 distribution considerably:",
+      "values": [
+        {
+          "quantity": "map count, image-generalisation F1 distribution",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.dataset_55map.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "§ Sensitivity analysis"
+      },
+      "claim_text": "| Metric | With K-35-075-3 (n=55) | Without K-35-075-3 (n=54) | Δ |",
+      "values": [
+        {
+          "quantity": "map count in the with-K-35-075-3 F1 distribution",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.dataset_55map.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "map count in the without-K-35-075-3 F1 distribution",
+          "value_verbatim": "54",
+          "value_parsed": 54,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+              "path": "$.dataset_55map.n_maps"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table header row carrying the two sample sizes; the n=54 side is the 55-map set with the single outlier removed, so it is emitted as a one-operand derivation rather than inheriting the n=55 path (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "§ Sensitivity analysis"
+      },
+      "claim_text": "| Mean F1 @ 50 m | 0.750 | 0.759 | +0.009 |",
+      "values": [
+        {
+          "quantity": "mean per-map F1 at 50 m, all 55 maps",
+          "value_verbatim": "0.750",
+          "value_parsed": 0.75,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dataset_55map.distribution['50'].mean",
+          "method": "read"
+        },
+        {
+          "quantity": "mean per-map F1 at 50 m, 54 maps excluding K-35-075-3",
+          "value_verbatim": "0.759",
+          "value_parsed": 0.759,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "change in mean per-map F1 at 50 m when K-35-075-3 is excluded",
+          "value_verbatim": "+0.009",
+          "value_parsed": 0.009,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Only the with-outlier column is committed (heterogeneity_summary.json holds the 55-map distribution only). The n=54 column and the Δ therefore both require recomputation over results/55maps-image-generalisation/per_map_metrics.csv with K-35-075-3 dropped; the Δ is not emitted as arithmetic because one of its operands has no committed anchor (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "§ Sensitivity analysis"
+      },
+      "claim_text": "| SD @ 50 m | 0.093 | **0.069** | **−26%** |",
+      "values": [
+        {
+          "quantity": "standard deviation of per-map F1 at 50 m, all 55 maps",
+          "value_verbatim": "0.093",
+          "value_parsed": 0.093,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dataset_55map.distribution['50'].sd",
+          "method": "read"
+        },
+        {
+          "quantity": "standard deviation of per-map F1 at 50 m, 54 maps excluding K-35-075-3",
+          "value_verbatim": "0.069",
+          "value_parsed": 0.069,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "relative change in the standard deviation of per-map F1 at 50 m when K-35-075-3 is excluded",
+          "value_verbatim": "−26%",
+          "value_parsed": -26,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document quotes the with-outlier SD to 3 dp; the anchor holds 4 dp. Recorded at quoted precision — the harness owns rounding tolerance. The Δ column is a percentage change, not an absolute difference."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "§ Sensitivity analysis"
+      },
+      "claim_text": "| Min F1 @ 50 m | 0.286 | 0.587 | +0.301 |",
+      "values": [
+        {
+          "quantity": "minimum per-map F1 at 50 m, all 55 maps",
+          "value_verbatim": "0.286",
+          "value_parsed": 0.286,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dataset_55map.distribution['50'].min",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum per-map F1 at 50 m, 54 maps excluding K-35-075-3",
+          "value_verbatim": "0.587",
+          "value_parsed": 0.587,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "change in the minimum per-map F1 at 50 m when K-35-075-3 is excluded",
+          "value_verbatim": "+0.301",
+          "value_parsed": 0.301,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          103
+        ],
+        "section": "§ Sensitivity analysis — commentary"
+      },
+      "claim_text": "The 4-map calibration SD @ 50 m is 0.021; the 55-map SD is 4.4× that\nwith K-35-075-3 included, or 3.3× without.",
+      "values": [
+        {
+          "quantity": "map count, calibration set",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.dataset_4map.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "standard deviation of per-map F1 at 50 m, 4-map calibration set",
+          "value_verbatim": "0.021",
+          "value_parsed": 0.021,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dataset_4map.distribution['50'].sd",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, image-generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.dataset_55map.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "ratio of the 55-map F1 standard deviation at 50 m to the 4-map calibration standard deviation, K-35-075-3 included",
+          "value_verbatim": "4.4×",
+          "value_parsed": 4.4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+              "path": "$.dataset_55map.distribution['50'].sd"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+              "path": "$.dataset_4map.distribution['50'].sd"
+            }
+          ]
+        },
+        {
+          "quantity": "ratio of the 54-map F1 standard deviation at 50 m to the 4-map calibration standard deviation, K-35-075-3 excluded",
+          "value_verbatim": "3.3×",
+          "value_parsed": 3.3,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'4-map calibration' asserts the calibration set size as a fact, so it is a count claim rather than a condition name (rule 5, the '487-tile Era 2 corpus' case). The 4.4× ratio has both operands committed in the anchor and is emitted as arithmetic; the 3.3× ratio needs the n=54 SD, which is not committed, so it stays recompute-script. Per v1.2 amendment 1 the 0.021 operand carries its own read path in this claim and does not inherit the derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          105
+        ],
+        "section": "§ Sensitivity analysis — commentary"
+      },
+      "claim_text": "Either way the\ndistribution widens meaningfully at generalisation, but K-35-075-3\nalone accounts for a quarter of the measured spread.",
+      "values": [
+        {
+          "quantity": "share of the measured 55-map F1 spread attributed to K-35-075-3 alone",
+          "value_verbatim": "a quarter",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/heterogeneity_summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Included on the over-inclusion principle: 'a quarter' is a fraction asserted as a fact, expressed in words rather than digits. It plausibly restates the −26 % SD reduction at line 99, but the document does not say so; triage may prune it as a rhetorical restatement rather than an independent claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          121
+        ],
+        "section": "§ Recommendation for the paper"
+      },
+      "claim_text": "3. **Headline F1 = 0.771** is an aggregate (tile-level Hungarian) and\n   therefore already less affected by this issue — the per-map mean of\n   0.750 drifts further from the aggregate partly because of this one\n   outlier.",
+      "values": [
+        {
+          "quantity": "aggregate headline F1 at 50 m, 55-map image-generalisation run",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "mean per-map F1 at 50 m, all 55 maps",
+          "value_verbatim": "0.750",
+          "value_parsed": 0.75,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/heterogeneity_summary.json#$.dataset_55map.distribution['50'].mean",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The list marker '3.' is out of scope per rule 5. Anchor caveat for triage, recorded not adjudicated: this diagnostic is dated 2026-04-18 while the anchor evaluation.json was regenerated post-recovery ($.timestamp = 2026-05-03), so the headline it quotes may predate the current artefact; the same 0.771 figure also appears in the run's own outputs/55maps-image-generalisation/post_run_report.md, which is prose and therefore not used as the anchor (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          130
+        ],
+        "section": "§ Artefacts"
+      },
+      "claim_text": "- Source: `outputs/55maps-image-generalisation/verified/verified_detections.geojson`\n  (subset: 12 detections where source_tile startswith `K-35-075-3`)",
+      "values": [
+        {
+          "quantity": "verified detections whose source_tile begins K-35-075-3",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A prefix ('startswith') selection over $.features[*].properties.source_tile — emitted as recompute-script rather than a len: filter because prefix matching is not expressible as the equality/[*] filters the harness resolves mechanically (v1.2 amendment 7). The same count is readable at results/55maps-image-generalisation/per_map_metrics.csv#$[?(@.map_name=='K-35-075-3')].n_dets if triage prefers a mechanical route."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          132
+        ],
+        "section": "§ Artefacts"
+      },
+      "claim_text": "- Reference: `inputs/vectors/references/student-mounds-55maps.geojson`\n  (subset: 2 features with source_map == `K-35-075-3`)",
+      "values": [
+        {
+          "quantity": "student reference features whose source_map equals K-35-075-3",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.source_map=='K-35-075-3')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    }
+  ]
+}

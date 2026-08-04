@@ -1,0 +1,2325 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/documentation-audit/audit-summary.md",
+    "git_blob": "9014a9432d92",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          8
+        ],
+        "section": "Front matter — Supersedes"
+      },
+      "claim_text": "2026-04-18), which contained hallucinated cost figures, a conflation of\ntwo distinct text-high runs, and a blanket \"Obs 255\" attribution.",
+      "values": [
+        {
+          "quantity": "count, distinct text-HIGH generalisation runs conflated by the superseded audit",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b090] Scope decisions for this batch (both files, per instrument rule 5): dates and timestamps, git commit hashes (`731466d8`, `e07dae37`, `ad023fc3`, `8747d726`), Observation identifiers (Obs 255, 256–273, 318/319), errata identifiers (E47, E52, E54), line-number citations (line 12840, line 12490, lines 115–117, line 37, `:1670`), phase identifiers (\"phase 2 + 3\"), hypothesis and condition names (h8, h10, h11, h12-v2, \"h11 two-stage\", Era 1 / Era 2, `UNINTENDED-T1.0`, `single-pass-384-…`), version strings (v1, v2, D-S v1/v2), and numbers inside file paths or run names (`55maps-…`, `buffer-100m-diagnostics`, `paired-vs-min-50m`, `results-audit-2026-04-21.md`, `confusion_matrix_4x4_buf50.csv`) are all OUT of scope. Ordinal markers on numbered lists are formatting, not claims; \"the prior audit conflated the two\" (line 84) is an anaphoric back-reference to a cardinality already extracted here, so it is not double-counted. Buffer radii used purely to label which metric is which are context, except where the span asserts the grid actually evaluated (lines 95, 153–155), which IS extracted. \"55-map\", \"4-map\" and \"eight deliverables\" are extracted as counts per rule 5's name-and-fact clause. Anchoring: this audit cites other markdown documents throughout — `results-audit-2026-04-21.md`, `configs/run-configs/*_post_run_report.md`, `docs/notes/reflections/working-notes.md`, `results/ci-metadata-registry.md`, `results/h12-v2/analysis_summary.md`, `docs/methodology/v2-verifier-contamination-policy.md` — and rule 2 forbids anchoring prose to prose, so wherever a committed JSON/YAML/CSV artefact sits behind the citation it is used instead and where none exists the claim is `anchor-unknown` naming what was chased. For THIS claim: no manifest records a run count; the enumeration lives in the anchor table of this same document and in `results-audit-2026-04-21.md` (both prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          13
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "`55maps-text-high-generalisation` row in the anchor table below cites\n> the pre-recovery 2026-04-19 launch state (cost $69.60; F1 @50m\n> 0.788; D-S 0.813; cache-hit 0.0 %).",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, pre-recovery launch state",
+          "value_verbatim": "$69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "0.788",
+          "value_parsed": 0.788,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "0.813",
+          "value_parsed": 0.813,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cache-hit rate, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "The \"was\" side of the correction block that runs to line 24 (instrument rule 3). The cache-hit value is restated as still-current at line 18 (\"Cache-hit remains 0.0 %\") and is extracted as a live claim from that span; here it is quoted as part of the pre-recovery snapshot. Preserved pre-recovery artefacts for triage: `results/55maps-text-high-generalisation/dawid-skene.pre-rerun-20260503T010627.backup/dawid-skene-results.json`, `outputs/55maps-text-high-generalisation/evaluation/evaluation.json.pre-gtupdate-20260503T003825.backup`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          14
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "On 2026-05-02/03 the run was\n> recovered: 160 of 160 originally-failed tile-passes recovered;",
+      "values": [
+        {
+          "quantity": "count, originally-failed tile-passes recovered in the text-high recovery",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, originally-failed tile-passes eligible for recovery in the text-high run",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed JSON scalar for the recovered tile-pass count was located: `outputs/55maps-text-high-generalisation/cost_manifest.json` records `$.by_stage.proposer.tiles_failed` post-recovery only, and the run meta carries no recovered-count field. Triage's chase targets are `outputs/55maps-text-high-generalisation/recovery-logs/stage2-20260502T154407.log` and the diff between `outputs/55maps-text-high-generalisation/verified/run.meta.json` and its `.pre-recovery-20260502T235106.backup`. Both values are given an explicit non-read method rather than a null path per v1.2 amendment 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "> verified detections 4,143 → 4,164;",
+      "values": [
+        {
+          "quantity": "verified detections, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "4,143",
+          "value_parsed": 4143,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "verified detections, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "4,164",
+          "value_parsed": 4164,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.final_detection_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Before→after pair: the pre-recovery side is `historical`. An alternative anchor for the live side is `len:$.features` over `outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`; the cost-manifest scalar is preferred as it resolves without loading a large GeoJSON."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "F1 raw @50m 0.7896 → 0.7920;",
+      "values": [
+        {
+          "quantity": "raw F1 at 50 m, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "0.7896",
+          "value_parsed": 0.7896,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "raw F1 at 50 m, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.7920",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`$.summary.buffers[3]` is the 50 m entry (buffers run 20/30/40/50 m). Pre-recovery artefact preserved at `outputs/55maps-text-high-generalisation/evaluation/evaluation.json.pre-gtupdate-20260503T003825.backup`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "> F1 corrected @50m 0.8260 → 0.8273;",
+      "values": [
+        {
+          "quantity": "corrected F1 at 50 m, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "0.8260",
+          "value_parsed": 0.826,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "corrected F1 at 50 m, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.8273",
+          "value_parsed": 0.8273,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`$.results[0]` is the R = 50 m row of the text-high multi-buffer corrected-F1 summary."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "D-S F1 0.8129 → 0.8142;",
+      "values": [
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "0.8129",
+          "value_parsed": 0.8129,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.8142",
+          "value_parsed": 0.8142,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pre-recovery artefact preserved at `results/55maps-text-high-generalisation/dawid-skene.pre-rerun-20260503T010627.backup/dawid-skene-results.json`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          18
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "total\n> cost $69.60 → $126.81 (recovery overrun $57.10 + verifier cleanup\n> $0.10 + FP-classify share $0.01).",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, pre-recovery total",
+          "value_verbatim": "$69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, post-recovery total",
+          "value_verbatim": "$126.81",
+          "value_parsed": 126.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cost USD, recovery-overrun component of the text-high post-recovery total",
+          "value_verbatim": "$57.10",
+          "value_parsed": 57.1,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cost USD, verifier-cleanup component of the text-high post-recovery total",
+          "value_verbatim": "$0.10",
+          "value_parsed": 0.1,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cost USD, FP-classify share component of the text-high post-recovery total",
+          "value_verbatim": "$0.01",
+          "value_parsed": 0.01,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed-method span. The cost manifest carries only stage-level totals (`$.by_stage.proposer.cost_usd`, `$.by_stage.verifier.cost_usd`), not the three recovery-attributed components, so those are `anchor-unknown`; the $57.10 overrun is asserted in `results/limitations-consolidation/report.md` and `configs/run-configs/55maps_text_high_generalisation_post_run_report.md`, both prose (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          18
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "Cache-hit remains 0.0 %.",
+      "values": [
+        {
+          "quantity": "cache-hit rate, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Live (the \"remains\" side of the correction block). Unit note: the document writes a percentage; `$.totals.cache_hit_rate` stores a fraction. The two coincide at zero."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          21
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "The\n> total measured-cost figure of $495.09 in §\"What this means for the\n> paper\" should be read as $552.30 post-recovery ($364.70 image +\n> $60.79 text-MIN + $126.81 text-HIGH).",
+      "values": [
+        {
+          "quantity": "total measured API spend USD across the three launcher-produced 55-map runs, pre-recovery",
+          "value_verbatim": "$495.09",
+          "value_parsed": 495.09,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total measured API spend USD across the three launcher-produced 55-map runs, post-recovery",
+          "value_verbatim": "$552.30",
+          "value_parsed": 552.3,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "cost USD, 55maps-image-generalisation",
+          "value_verbatim": "$364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cost USD, 55maps-text-min-generalisation",
+          "value_verbatim": "$60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "$126.81",
+          "value_parsed": 126.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per v1.2 amendment 1, the three summands are given `method: read` with their own cross-file paths so they are not compared against the sum; only the $552.30 total carries the derivation. $495.09 is the superseded total (this span is the correction block that retires it)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "Headline"
+      },
+      "claim_text": "The project has a stark two-era documentation pattern:",
+      "values": [
+        {
+          "quantity": "count, documentation eras identified by the audit",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Marginal inclusion, flagged as doubtful: the era split is an analytic framing of this audit and its sibling `results-audit-2026-04-21.md` (prose, rule 2); no artefact records an era count. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          39
+        ],
+        "section": "Headline — Era 2"
+      },
+      "claim_text": "- **Era 2** (55-map generalisation, 2026-04-10 onwards): return to\n  best-practice deliverables",
+      "values": [
+        {
+          "quantity": "map count, 55-map generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"Era 2\" is a label (rule 5, out of scope); the corpus size is the only claim in the span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          44
+        ],
+        "section": "Headline — Era 2"
+      },
+      "claim_text": "Four runs fit this era; three\n  were produced by the publishable `scripts/run_generalisation.py`\n  launcher and one (the 2026-04-10 text run) is documented\n  retrospectively because it predates the launcher.",
+      "values": [
+        {
+          "quantity": "count, 55-map generalisation runs in Era 2",
+          "value_verbatim": "Four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, Era 2 runs produced by the publishable run_generalisation.py launcher",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, Era 2 runs documented retrospectively (predating the launcher)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No manifest enumerates Era 2 runs. The mechanically checkable proxy is the presence of `outputs/55maps-*/cost_manifest.json` (three exist: image, text-min, text-high) against the four `outputs/55maps-*` run directories including `outputs/55maps-generalisation/`; recorded for triage, not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          49
+        ],
+        "section": "Headline"
+      },
+      "claim_text": "The 2026-04-20/21 human-review day added a large cohort of post-hoc\nanalyses on top of the 55-map image run — multi-buffer corrected F1,\nD-S v1/v2 cross-tabs, subtype classification, buffer-band lift,\nverifier calibration, and a CI-metadata registry covering 48 files.",
+      "values": [
+        {
+          "quantity": "map count, 55-map image-generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, files covered by the CI-metadata registry",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 48-file figure's only stated source is `results/ci-metadata-registry.md`, a markdown register (rule 2); it is recomputable by globbing `*.metadata.json` across `outputs/`, `results/` and `results/leaderboard/` plus the directory-level entries. Same figure re-asserted with its 41 + 7 breakdown at lines 190–192."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "Four 55-map generalisation runs — anchor values"
+      },
+      "claim_text": "## Four 55-map generalisation runs — anchor values",
+      "values": [
+        {
+          "quantity": "count, 55-map generalisation runs in the anchor table",
+          "value_verbatim": "Four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map count, 55-map generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The run count is checkable against the table immediately below it (four data rows), which is prose in this same document — hence `anchor-unknown` per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "Four 55-map generalisation runs — anchor table"
+      },
+      "claim_text": "| `55maps-image-generalisation` | 364.70 | 0.771 | 0.795 | 91.0 % | Obs 256 / 257 / 262–269 / 272–273 |",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-image-generalisation (anchor-table row)",
+          "value_verbatim": "364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "measured F1 at 50 m, 55maps-image-generalisation (anchor-table row)",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-image-generalisation/evaluation/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-image-generalisation (anchor-table row)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "cache-hit rate, 55maps-image-generalisation (anchor-table row)",
+          "value_verbatim": "91.0",
+          "value_parsed": 91.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row per instrument rule 6. Obs identifiers are out of scope. Scale note for the harness: the cache-hit cell is a percentage while `$.totals.cache_hit_rate` is a fraction (0–1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "Four 55-map generalisation runs — anchor table"
+      },
+      "claim_text": "| `55maps-generalisation` (retrospective text HIGH, 2026-04-10) | ~75 (estimate; no cost manifest) | 0.790 | 0.814 | not recorded | referenced by Obs 258 |",
+      "values": [
+        {
+          "quantity": "cost USD, 2026-04-10 retrospective text-HIGH run (scaling estimate, not audited)",
+          "value_verbatim": "~75",
+          "value_parsed": 75,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "measured F1 at 50 m, retrospective text-HIGH run (anchor-table row)",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, retrospective text-HIGH run (anchor-table row)",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained per v1.2 amendment 5. `outputs/55maps-generalisation/` genuinely has no `cost_manifest.json` (confirmed), and the ~$75 estimate is stated only in `configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md` (prose, rule 2), so it is `anchor-unknown`; `results/paper-tables/cost_retrospective.json` was checked and covers a different, project-wide 2026-02/03 accounting. This run's evaluation is `results/55maps-generalisation/buffer_sensitivity.json` (`$.buffers[3]` is the 50 m entry); the un-suffixed `results/dawid-skene/` directory is its D-S artefact — triage should confirm that mapping, which was inferred from the artefact's matching measured F1 rather than from a manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "Four 55-map generalisation runs — anchor table"
+      },
+      "claim_text": "| `55maps-text-min-generalisation` | 60.79 | 0.759 | 0.783 | 0.0 % | Obs 258 / 259 |",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-text-min-generalisation (anchor-table row)",
+          "value_verbatim": "60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "measured F1 at 50 m, 55maps-text-min-generalisation (anchor-table row)",
+          "value_verbatim": "0.759",
+          "value_parsed": 0.759,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-text-min-generalisation (anchor-table row)",
+          "value_verbatim": "0.783",
+          "value_parsed": 0.783,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "cache-hit rate, 55maps-text-min-generalisation (anchor-table row)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row per rule 6. This run's evaluation artefacts also carry `.pre-gtupdate-20260503T020345.backup` siblings; the live files are used."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "Four 55-map generalisation runs — anchor table"
+      },
+      "claim_text": "| `55maps-text-high-generalisation` (2026-04-19 re-run) | 69.60 | 0.788 | 0.813 | 0.0 % | Obs 258 / 259 / 260 |",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, pre-recovery (anchor-table row, superseded in place by the lines 10–24 annotation)",
+          "value_verbatim": "69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "measured F1 at 50 m, 55maps-text-high-generalisation, pre-recovery (anchor-table row)",
+          "value_verbatim": "0.788",
+          "value_parsed": 0.788,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-text-high-generalisation, pre-recovery (anchor-table row)",
+          "value_verbatim": "0.813",
+          "value_parsed": 0.813,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cache-hit rate, 55maps-text-high-generalisation (anchor-table row)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Classification call worth triage attention: the document's own banner (lines 10–13) states in terms that THIS row \"cites the pre-recovery 2026-04-19 launch state\", so the cost and the two F1 cells are treated as superseded-and-marked and given `historical` (instrument rule 3's changelog clause), which prevents three false mismatches against post-recovery artefacts. The cache-hit cell is NOT superseded — line 18 says it remains 0.0 % — so it stays a live read. If triage prefers to treat the table as live-with-caveat, the live anchors are `$.totals.cost_usd`, `outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[3].f1` and `results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          69
+        ],
+        "section": "Four 55-map generalisation runs — Notes"
+      },
+      "claim_text": "- The D-S posterior F1 at 50 m for the image run is **0.7954** in\n  `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json`\n  under `dawid_skene.corrected_metrics.f1`; this rounds to 0.795.",
+      "values": [
+        {
+          "quantity": "buffer radius at which the image-run Dawid-Skene correction was computed",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.parameters.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-image-generalisation (4 dp)",
+          "value_verbatim": "0.7954",
+          "value_parsed": 0.7954,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-image-generalisation (3 dp)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names both the file and the key path, so this is the rare directly-anchored claim. The same quantity is quoted at two precisions in one span; both are recorded verbatim per the instrument's known-traps note (the harness owns rounding tolerance)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          71
+        ],
+        "section": "Four 55-map generalisation runs — Notes"
+      },
+      "claim_text": "**Caveat from Obs 273** (line 12840): the preregistered student-FN\n  prior of 0.05 is mis-specified on this cohort",
+      "values": [
+        {
+          "quantity": "preregistered student false-negative rate prior for the Dawid-Skene correction",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: this is a claim about what the REGISTRATION specifies (\"the preregistered student-FN prior\"), so it anchors to the lodged preregistration with `path` null, NOT to the executed artefact. For reference only, the executed value sits at `$.parameters.student_fn_rate_prior` in `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json`; anchoring there would manufacture a false mismatch if the run deviated. Obs identifier and line-number citation are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          71,
+          73
+        ],
+        "section": "Four 55-map generalisation runs — Notes"
+      },
+      "claim_text": "the posterior is\n  degenerate (every VLM-only candidate receives the same posterior of\n  0.1862)",
+      "values": [
+        {
+          "quantity": "degenerate Dawid-Skene posterior shared by every VLM-only candidate, image run",
+          "value_verbatim": "0.1862",
+          "value_parsed": 0.1862,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.unique_ds_posteriors[0]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The crosstab artefact records the collapsed posterior explicitly (`$.unique_ds_posteriors`, with `$.degenerate_posterior` as the accompanying flag), so it is preferred over the D-S results file, whose nearest field is `$.dawid_skene.corrected_metrics.vlm_only_posterior`. The same 0.1862 figure is re-asserted at line 167."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          75
+        ],
+        "section": "Four 55-map generalisation runs — Notes"
+      },
+      "claim_text": "and the headline 0.795 should be cited with the qualification\n  that human adjudication, not D-S, is the only working per-item\n  signal on the VLM-only slice.",
+      "values": [
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-image-generalisation (headline, 3 dp)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "Four 55-map generalisation runs — Notes"
+      },
+      "claim_text": "The measured F1 of 0.771 is unchanged.",
+      "values": [
+        {
+          "quantity": "measured F1 at 50 m, 55maps-image-generalisation",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"Unchanged\" here refers to the D-S caveat not altering the measured metric; it is a live claim, not the \"was\" side of a correction block. `$.measured.f1` in the D-S results file is an alternative anchor for the same quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          81
+        ],
+        "section": "Four 55-map generalisation runs — Notes"
+      },
+      "claim_text": "- The retrospective text run at `outputs/55maps-generalisation/` has\n  no `cost_manifest.json`; the retrospective post-run report at\n  `configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md`\n  (lines 115–117) states \"**~$75** (v1-only)\" as a scaling estimate\n  and flags proposer cost as unrecoverable from the original meta\n  artefacts.",
+      "values": [
+        {
+          "quantity": "cost USD, 2026-04-10 retrospective text run (v1-only scaling estimate)",
+          "value_verbatim": "~$75",
+          "value_parsed": 75,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approx marker retained per v1.2 amendment 5. The named source is a markdown post-run report (rule 2 forbids anchoring prose to prose) and the run has no cost manifest — confirmed, `outputs/55maps-generalisation/` contains only consensus/, crops/, proposer/, verified/, verified-v2/ and a retrospective post-run report. Line-number citation out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "Deliverable coverage"
+      },
+      "claim_text": "## Deliverable coverage (the eight-column framework, unchanged)",
+      "values": [
+        {
+          "quantity": "count, columns in the deliverable-coverage framework",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Framework structure carried over from the superseded audit; no artefact records it. Checkable only against the deliverable table in this document and `results-audit-2026-04-21.md`, both prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          91
+        ],
+        "section": "Deliverable coverage"
+      },
+      "claim_text": "Each 55-map production run is assessed against eight deliverables. The\ntable below covers the four runs in the anchor table; the\nrun-by-run table in `results-audit-2026-04-21.md` extends this to\nEra 1 runs.",
+      "values": [
+        {
+          "quantity": "map count, 55-map generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, deliverables each 55-map production run is assessed against",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, 55-map generalisation runs covered by the deliverable table",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed-method span: only the corpus size has an artefact anchor; the framework and run counts are checkable against sibling markdown only (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Deliverable coverage table"
+      },
+      "claim_text": "| F1 / P / R at 20/30/40/50 m | yes | yes | yes | yes |",
+      "values": [
+        {
+          "quantity": "buffer radius, first evaluated grid step (deliverable table row)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, second evaluated grid step (deliverable table row)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, third evaluated grid step (deliverable table row)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[2].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fourth evaluated grid step (deliverable table row)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[3].buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row per rule 6. This row asserts the buffer grid actually evaluated across all four runs (not merely labelling a metric), so the radii are extracted. The image run's evaluation is used as the anchor; the claim covers all four columns, and the sibling evaluations are `outputs/55maps-text-min-generalisation/evaluation/evaluation.json`, `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` and `results/55maps-generalisation/buffer_sensitivity.json` (`$.buffers[i].buffer_metres`)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Deliverable coverage table"
+      },
+      "claim_text": "| Bootstrap 95 % CIs (1 000 iter, seed 42) | yes | yes (1 000 iter per retrospective report line 37) | yes | yes |",
+      "values": [
+        {
+          "quantity": "bootstrap confidence-interval level for the 55-map runs",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap iterations, 55-map production runs",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, 55-map production-run bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations, 2026-04-10 retrospective text run",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/55maps-generalisation/buffer_sensitivity.json#$.bootstrap_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The CI level is recorded in the sidecar only inside the free-text `$.bootstrap.methodology` string rather than as a numeric field, so it is given an explicit non-read method rather than a path that would compare a string (v1.2 amendment 3). The retrospective column's separate 1 000-iteration assertion cites a markdown report line, but the same value sits as a scalar in that run's `buffer_sensitivity.json`, which is used instead."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "Deliverable coverage table"
+      },
+      "claim_text": "| Paired permutation test vs a comparator | yes | no (no planned comparator in original design) | yes (vs text-high) | yes (vs text-min, 4 buffers) |",
+      "values": [
+        {
+          "quantity": "count, buffers at which the text-high vs text-min paired permutation test was run",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table row per rule 6. No single artefact records the buffer count; it is the number of sibling result directories `results/55maps-text-high-generalisation/paired-vs-min-{20,30,40,50}m/`, each holding a `pairwise_permutation_result.json` with its own `$.metadata.buffer_metres`. Recorded as anchor-unknown so triage can decide whether a directory count is an acceptable check."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "Deliverable coverage table"
+      },
+      "claim_text": "| Cost manifest | yes ($364.70) | no (~$75 estimate) | yes ($60.79) | yes ($69.60) |",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-image-generalisation (deliverable table row)",
+          "value_verbatim": "$364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cost USD, retrospective text run (estimate, deliverable table row)",
+          "value_verbatim": "~$75",
+          "value_parsed": 75,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cost USD, 55maps-text-min-generalisation (deliverable table row)",
+          "value_verbatim": "$60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, pre-recovery (deliverable table row)",
+          "value_verbatim": "$69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row per rule 6, with per-value cross-file paths (v1.2 amendments 2 and 3). The text-high cell is given `historical` for the same reason as the anchor-table row at line 63: the document's banner declares the $69.60 figure superseded by $126.81 post-recovery."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          120
+        ],
+        "section": "Era 1 status (h-series, retest)"
+      },
+      "claim_text": "proposer-vs-verifier paired test never formally computed; two\n  \"UNINTENDED-T1.0\" runs exist (`outputs/h11/single-pass-384-UNINTENDED-T1.0/`\n  and `outputs/h11/consensus-384-UNINTENDED-T1.0/`)",
+      "values": [
+        {
+          "quantity": "count, UNINTENDED-T1.0 runs under outputs/h11/ not formally excluded or archived",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The check is the existence of the two named run directories, not a JSON scalar; `results/conditions-manifest.json` was considered but records conditions rather than an unintended-run tally. `T1.0` and `384` inside the directory names are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          124
+        ],
+        "section": "Era 1 status (h-series, retest)"
+      },
+      "claim_text": "- **h12-v2 HP:HN ratio**: `results/h12-v2/analysis_summary.md` is a\n  strong single-file narrative including threshold sweeps, three-way\n  permutation tests with Benjamini-Hochberg FDR correction, and",
+      "values": [
+        {
+          "quantity": "count, arms in the h12-v2 permutation-test comparison",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The cited source `results/h12-v2/analysis_summary.md` is prose (rule 2). Triage's chase targets are the artefacts under `results/h12-v2/permutation-t4/` and `results/h12-v2/permutation-wbf/` plus `results/h12-v2/fdr_summary.txt`. \"h12-v2\" is a condition name (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          134
+        ],
+        "section": "Post-matrix analytical work (2026-04-20 onwards)"
+      },
+      "claim_text": "not in it. All are scoped under `results/55maps-image-generalisation/`\n(except subtype-classification, which is on the 4-map gold-standard)",
+      "values": [
+        {
+          "quantity": "map count, gold-standard evaluation set",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.rows",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-subtype-classification/per_map_summary.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (CSV), legitimate per v1.1; the count is the data-row count excluding the header, one row per map. `results/gold-standard-subtype-classification/run_manifest.json` was checked first and records ground-truth feature counts but no map count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          140
+        ],
+        "section": "Post-matrix analytical work — Review-UI effect cross-tab"
+      },
+      "claim_text": "— 21 % one-directional reviewer flip rate after the tolerance-circle\n  UI was added.",
+      "values": [
+        {
+          "quantity": "one-directional reviewer flip (disagreement) rate between uncalibrated and calibrated review UIs",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.rates.disagreement_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names this file. Scale note: the document quotes a percentage while `$.rates.disagreement_rate` is stored as a fraction. The \"one-directional\" qualifier corresponds to `$.counts.uncal_mound_to_cal_not_mound` versus `$.counts.uncal_not_mound_to_cal_mound`; triage may prefer a count-based check."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          144
+        ],
+        "section": "Post-matrix analytical work — Verifier calibration cross-tab"
+      },
+      "claim_text": "— expected calibration error (ECE) 0.269, area under the receiver\n  operating characteristic curve (AUC) 0.655, pronounced quantisation",
+      "values": [
+        {
+          "quantity": "expected calibration error (ECE), verifier calibration cross-tab, image run",
+          "value_verbatim": "0.269",
+          "value_parsed": 0.269,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "area under the ROC curve (AUC), verifier calibration cross-tab, image run",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.point",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names this file. AUC is stored as a point estimate with bootstrap bounds (`$.auc.lo` / `$.auc.hi`); the point estimate is the quoted quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          150
+        ],
+        "section": "Post-matrix analytical work — Human-reviewed corrected F1"
+      },
+      "claim_text": "— corrected F1 at 50 m buffer = 0.8295 (rounds to 0.830) under the\n  extended-ground-truth counting rule, 2.5× more phantom TPs than D-S\n  estimated.",
+      "values": [
+        {
+          "quantity": "buffer radius at which the human-reviewed corrected F1 is valid",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review corrected F1 at 50 m, image run (4 dp)",
+          "value_verbatim": "0.8295",
+          "value_parsed": 0.8295,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review corrected F1 at 50 m, image run (3 dp)",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ratio of human-reviewed phantom true positives to the Dawid-Skene expected reclassification",
+          "value_verbatim": "2.5",
+          "value_parsed": 2.5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+              "path": "$.human_review.phantom_tp"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+              "path": "$.dawid_skene.corrected_metrics.expected_reclassified"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The path cited by the document, `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json`, no longer exists in the working tree; the artefact has been archived to `archive/55maps-superseded-gt-evals/per-run/…`, which is used as the anchor (the same relocation was recorded in batch b078). The 2.5× ratio's denominator is inferred: the document says \"than D-S estimated\", and the D-S artefact's comparable quantity is the expected reclassification of VLM-only candidates — triage should confirm that reading before adjudicating."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          155
+        ],
+        "section": "Post-matrix analytical work — Multi-buffer corrected F1"
+      },
+      "claim_text": "— F1 at R = 50/75/100/125/150 m = 0.832 / 0.848 / 0.852 / 0.854 /\n  0.855 (rounded from the source JSON's 0.8317 / 0.8477 / 0.8521 /\n  0.8538 / 0.8551).",
+      "values": [
+        {
+          "quantity": "buffer radius, first grid step of the image-run multi-buffer corrected F1",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[0].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, second grid step of the image-run multi-buffer corrected F1",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[1].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, third grid step of the image-run multi-buffer corrected F1",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[2].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fourth grid step of the image-run multi-buffer corrected F1",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[3].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fifth grid step of the image-run multi-buffer corrected F1",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[4].R_m",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 50 m, image run (3 dp)",
+          "value_verbatim": "0.832",
+          "value_parsed": 0.832,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 75 m, image run (3 dp)",
+          "value_verbatim": "0.848",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 100 m, image run (3 dp)",
+          "value_verbatim": "0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 125 m, image run (3 dp)",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 150 m, image run (3 dp)",
+          "value_verbatim": "0.855",
+          "value_parsed": 0.855,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 50 m, image run, as quoted from the source JSON (4 dp)",
+          "value_verbatim": "0.8317",
+          "value_parsed": 0.8317,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 75 m, image run, as quoted from the source JSON (4 dp)",
+          "value_verbatim": "0.8477",
+          "value_parsed": 0.8477,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 100 m, image run, as quoted from the source JSON (4 dp)",
+          "value_verbatim": "0.8521",
+          "value_parsed": 0.8521,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 125 m, image run, as quoted from the source JSON (4 dp)",
+          "value_verbatim": "0.8538",
+          "value_parsed": 0.8538,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at R = 150 m, image run, as quoted from the source JSON (4 dp)",
+          "value_verbatim": "0.8551",
+          "value_parsed": 0.8551,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names this file and asserts the 4 dp figures as its literal contents, so all fifteen values are live `read` claims — none is marked historical, because this span carries no correction marker. Context for triage (not an adjudication): this audit is dated 2026-04-22 and the multi-buffer artefact was regenerated in the 2026-05-03 recovery, with the pre-recovery state preserved at `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-recovery-20260503T023134.backup`. The R grid is extracted because this span asserts the grid actually computed, per the batch-note convention."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          160
+        ],
+        "section": "Post-matrix analytical work — Buffer-band lift"
+      },
+      "claim_text": "— attractor-pull effect statistically significant through 125 m;\n  shells beyond 125 m are indistinguishable from within-tile random\n  placement.",
+      "values": [
+        {
+          "quantity": "outer radius through which the attractor-pull effect remains statistically significant",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "radius beyond which shells are indistinguishable from within-tile random placement",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The document names this file. The claim is a significance boundary rather than a stored scalar: it follows from the per-shell permutation results at `$.shell[*]` (1 000 permutations, seed 42 per `$.permutations` / `$.seed`), so it is recorded for scripted recomputation and not adjudicated here. Both occurrences of 125 m are recorded in order of appearance per rule 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          168
+        ],
+        "section": "Post-matrix analytical work — D-S v1 cross-tab vs human review"
+      },
+      "claim_text": "— D-S posteriors collapse to a single value (0.1862) on every\n  VLM-only candidate; ECE 0.539, AUC 0.500.",
+      "values": [
+        {
+          "quantity": "degenerate Dawid-Skene posterior shared by every VLM-only candidate, image run",
+          "value_verbatim": "0.1862",
+          "value_parsed": 0.1862,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.unique_ds_posteriors[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "expected calibration error (ECE), D-S v1 posteriors against human review",
+          "value_verbatim": "0.539",
+          "value_parsed": 0.539,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "area under the ROC curve (AUC), D-S v1 posteriors against human review",
+          "value_verbatim": "0.500",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names this file. `$.auc_degenerate` is the accompanying flag for the 0.500 value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          173
+        ],
+        "section": "Post-matrix analytical work — D-S v2 data-driven prior sweep"
+      },
+      "claim_text": "— confirms the pathology at every informative prior including\n  held-out 80/20 control.",
+      "values": [
+        {
+          "quantity": "training share of the held-out sensitivity check, D-S v2 prior sweep",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "$.train_frac",
+          "method": "read"
+        },
+        {
+          "quantity": "test share of the held-out sensitivity check, D-S v2 prior sweep",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * (1 - a)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+              "path": "$.train_frac"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/holdout.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document cites `dawid-skene-results-v2.json`, which was checked and carries no hold-out block; the sibling `holdout.json` in the same directory is the artefact that records the split, so it is used as the anchor. Scale note: `$.train_frac` is stored as a fraction (train share) while the document writes percentages; the test share is therefore given its own derivation per v1.2 amendment 1 rather than a path. `$.n_train` / `$.n_test` are the count-side alternative."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          176,
+          178
+        ],
+        "section": "Post-matrix analytical work — Subtype classification"
+      },
+      "claim_text": "— weighted-F1 0.8873 (rounds to 0.887) at 50 m buffer on the 4-map\n  gold-standard set; 57 % benchmark_mound → triangulation_mound\n  asymmetric confusion.",
+      "values": [
+        {
+          "quantity": "weighted F1, subtype classification at 50 m on the gold-standard set (4 dp)",
+          "value_verbatim": "0.8873",
+          "value_parsed": 0.8873,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary_f1.weighted_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "weighted F1, subtype classification at 50 m on the gold-standard set (3 dp)",
+          "value_verbatim": "0.887",
+          "value_parsed": 0.887,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary_f1.weighted_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "headline buffer radius, subtype classification",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_headline_m",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, gold-standard evaluation set",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "results/gold-standard-subtype-classification/per_map_summary.csv#len:$.rows",
+          "method": "read"
+        },
+        {
+          "quantity": "share of ground-truth benchmark_mound pairs predicted as triangulation_mound",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / (a + b + c)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/gold-standard-subtype-classification/hierarchical_decomposition.json",
+              "path": "$.level2.confusion.benchmark_mound.triangulation_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/gold-standard-subtype-classification/hierarchical_decomposition.json",
+              "path": "$.level2.confusion.benchmark_mound.burial_mound"
+            },
+            {
+              "name": "c",
+              "file": "results/gold-standard-subtype-classification/hierarchical_decomposition.json",
+              "path": "$.level2.confusion.benchmark_mound.benchmark_mound"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-subtype-classification/macro_weighted_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names the macro/weighted summary, which carries the F1 and buffer but no confusion figures; the 57 % rate is derived from the row-normalised benchmark_mound row of `hierarchical_decomposition.json` (equivalently `confusion_matrix_4x4_buf50.csv`). The row-total denominator is the extractor's reading of \"asymmetric confusion\" — triage should confirm the intended normalisation before adjudicating. `4x4`/`buf50` inside the CSV filename are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          181,
+          182
+        ],
+        "section": "Post-matrix analytical work — Human re-review multi-buffer CSV"
+      },
+      "claim_text": "(557 rows re-reviewing yesterday's not-mound candidates at five\n  tolerance bands).",
+      "values": [
+        {
+          "quantity": "count, data rows in the human re-review multi-buffer CSV",
+          "value_verbatim": "557",
+          "value_parsed": 557,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.rows",
+          "method": "read"
+        },
+        {
+          "quantity": "count, tolerance bands at which candidates were re-reviewed",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.buffer_metres (distinct count)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (CSV), legitimate per v1.1. Both locators are over the parsed CSV: the row count excludes the header line, and the band count is the number of distinct values in the `buffer_metres` column (v1.2 amendment 4 permits the `(distinct count)` annotation)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          183,
+          184
+        ],
+        "section": "Post-matrix analytical work — Paper-tables consolidation"
+      },
+      "claim_text": "- **Paper-tables consolidation** — `results/paper-tables/` contains 26\n  files including `gold-standard-spatial-tolerance.{md,csv}` and",
+      "values": [
+        {
+          "quantity": "count, files in the consolidated paper-tables directory",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A directory file count rather than a JSON scalar; recorded for mechanical recount (top-level files, not recursive) rather than adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          192
+        ],
+        "section": "CI-metadata registry + protocol errata E54"
+      },
+      "claim_text": "The CI-metadata registry at `results/ci-metadata-registry.md` enumerates\n48 sidecar files (41 per-file `*.metadata.json` + 7 directory-level\nentries) across `outputs/`, `results/`, and `results/leaderboard/`.",
+      "values": [
+        {
+          "quantity": "count, sidecar files enumerated by the CI-metadata registry",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, per-file *.metadata.json sidecars in the CI-metadata registry",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, directory-level entries in the CI-metadata registry",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The registry is `results/ci-metadata-registry.md`, a markdown document — rule 2 forbids anchoring prose to prose, and no JSON manifest of the sidecars was found under `results/` or `docs/manifest-schemas/`. The counts are recomputable by globbing `*.metadata.json` across `outputs/`, `results/` and `results/leaderboard/` and by counting directory-level entries; 48 should also equal 41 + 7, but no `arithmetic` derivation is emitted because neither operand has a resolvable path (v1.2 amendment 1 forbids letting operands inherit a derivation)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          199,
+          200
+        ],
+        "section": "CI-metadata registry + protocol errata E54"
+      },
+      "claim_text": "the split between 1 000-iteration (preregistered) and 10 000-iteration\n(post-hoc) bootstrap analyses, with the explicit list of scripts in",
+      "values": [
+        {
+          "quantity": "preregistered bootstrap iteration count",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "post-hoc bootstrap iteration count",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: the 1 000-iteration figure is explicitly labelled preregistered, so it anchors to the lodged preregistration with `path` null (the whole artefact) and must NOT be anchored to an executing script or sidecar. The 10 000-iteration post-hoc figure is a class claim across many analyses whose only stated source is `docs/methodology/preregistration/protocol-errata.md` § E54 (prose, rule 2); exemplar artefacts that record it as a scalar are `results/gold-standard-subtype-classification/run_manifest.json#$.bootstrap_n` and `results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json#$.config.n_bootstrap`, but picking one instance would misrepresent a claim about a whole category, so it is left `anchor-unknown`. Note on amendment 3: the 1 000 value has a null path only because the registration anchor is a whole document; `anchor.path` is also null, so there is no wrong-quantity fallback."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          206
+        ],
+        "section": "What this means for the paper"
+      },
+      "claim_text": "1. The paper headline of F1 = 0.904 was produced before the v2\n   verifier existed and uses verifier v1",
+      "values": [
+        {
+          "quantity": "paper headline F1, proposer-verifier flash-high-text-16-of-30 condition",
+          "value_verbatim": "0.904",
+          "value_parsed": 0.904,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rows[73].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/metrics_master.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document does not name a source file or a buffer for the headline. The nearest committed artefact is the cross-hypothesis metrics master table; `$.rows[73]` is the `flash-high-text-16-of-30--flash-min-vf` PV row at buffer 30 m, the only place a value rounding to 0.904 appears for that condition (the same condition's 20 m row is 0.8902). An index locator is used because the row is identified by a condition-plus-buffer pair rather than a single equality filter; triage should confirm the intended buffer, since the document's silence on it is itself a gap."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          209
+        ],
+        "section": "What this means for the paper"
+      },
+      "claim_text": "the\n   quarantine of 100 contaminated files on 2026-04-21 does not\n   touch the headline.",
+      "values": [
+        {
+          "quantity": "count, files quarantined under archive/v2-verifier-contamination/",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A recursive filesystem count over the quarantine directory rather than a JSON scalar; `archive/v2-verifier-contamination/MANIFEST.md` documents the move but is prose (rule 2). Same figure asserted in the sibling README at line 72."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          212
+        ],
+        "section": "What this means for the paper"
+      },
+      "claim_text": "2. The image-run D-S posterior of 0.795 should be cited with the\n   Obs 273 caveat; human-review corrected F1 of 0.830 at 50 m is the\n   preferred lower-bound narrative.",
+      "values": [
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-image-generalisation",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review corrected F1 at 50 m, image run (3 dp)",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json#$.corrected.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius at which the human-review corrected F1 is valid",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json#$.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The corrected-F1 artefact cited elsewhere in this document has been archived out of `results/55maps-image-generalisation/human-reviewed-corrected/`; the archived copy is used for the cross-file locators."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          214
+        ],
+        "section": "What this means for the paper"
+      },
+      "claim_text": "3. The text-high versus text-min paired test at 50 m returns\n   ΔF1 = 0.029163 with p = 0.0 across 10 000 permutations",
+      "values": [
+        {
+          "quantity": "buffer radius of the text-high vs text-min paired permutation test",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "observed F1 difference, text-high minus text-min at 50 m",
+          "value_verbatim": "0.029163",
+          "value_parsed": 0.029163,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, text-high vs text-min at 50 m",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation count, text-high vs text-min paired test at 50 m",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names this file. The p-value is marked `recompute-script` per instrument rule 3 (permutation p-values need scripted recomputation, not a read); the stored scalar is given as its locator for convenience. `$.metadata.seed` = 42 is the accompanying seed, not quoted in this span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          216,
+          217
+        ],
+        "section": "What this means for the paper"
+      },
+      "claim_text": "4. Cost accounting is complete across the three publishable-launcher\n   runs; the retrospective text run is flagged as estimate-only.",
+      "values": [
+        {
+          "quantity": "count, 55-map runs produced by the publishable launcher with complete cost accounting",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Checkable as the number of `outputs/55maps-*/cost_manifest.json` files, but no manifest asserts the count; recorded as anchor-unknown for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          217,
+          220
+        ],
+        "section": "What this means for the paper"
+      },
+      "claim_text": "Total\n   production-run API spend for the four 55-map runs is at least\n   $495.09 measured ($364.70 + $60.79 + $69.60) plus ~$75 estimated for\n   the retrospective text run.",
+      "values": [
+        {
+          "quantity": "count, 55-map generalisation runs in the total-spend accounting",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map count, 55-map generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.unit_costs.map_count",
+          "method": "read"
+        },
+        {
+          "quantity": "total measured API spend USD across the three launcher-produced 55-map runs",
+          "value_verbatim": "$495.09",
+          "value_parsed": 495.09,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "cost USD, 55maps-image-generalisation",
+          "value_verbatim": "$364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cost USD, 55maps-text-min-generalisation",
+          "value_verbatim": "$60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "$69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cost USD, 2026-04-10 retrospective text run (estimate)",
+          "value_verbatim": "~$75",
+          "value_parsed": 75,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This is the §\"What this means for the paper\" total that the document's own banner (lines 18–21) retires in favour of $552.30. The $495.09 total is kept as a live `arithmetic` claim here — it is the sum this span asserts, and the banner is a separate span already extracted — while its third summand $69.60 is `historical`, matching the banner's statement that the text-high cost is superseded. The summands carry `method: read` with their own paths so they are not compared against the sum (v1.2 amendment 1). Approx marker on ~$75 retained per amendment 5; that estimate has no artefact (see lines 76–81)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          226,
+          226
+        ],
+        "section": "Known gaps remaining"
+      },
+      "claim_text": "- Era 1 multi-buffer curves for h8, h10, h12-v2 (only 20 m reported).",
+      "values": [
+        {
+          "quantity": "buffer radius, the only one reported for the Era 1 h8 / h10 / h12-v2 analyses",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "An absence claim about Era 1 coverage: the assertion is that no buffer other than 20 m was reported for those hypotheses, which no single artefact records. Chase targets for triage are the per-hypothesis evaluation outputs under `results/h8-v2/`, `results/h10/` and `results/h12-v2/`, plus `results/paper-tables/metrics_master.json#$.rows[*].buffer_metres` filtered to those conditions. h8 / h10 / h12-v2 are condition names (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          227,
+          228
+        ],
+        "section": "Known gaps remaining"
+      },
+      "claim_text": "- h11 proposer-vs-verifier paired test never computed; two UNINTENDED\n  runs not formally excluded.",
+      "values": [
+        {
+          "quantity": "count, UNINTENDED runs under outputs/h11/ not formally excluded",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the count from lines 118–120; extracted separately because it is a distinct verbatim span. The check is the existence of `outputs/h11/single-pass-384-UNINTENDED-T1.0/` and `outputs/h11/consensus-384-UNINTENDED-T1.0/`."
+    }
+  ]
+}

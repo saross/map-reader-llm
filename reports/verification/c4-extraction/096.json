@@ -1,0 +1,2124 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/era1-pv-stage-d/384-leg-recon.md",
+    "git_blob": "1b0167401eea",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          4,
+          4
+        ],
+        "section": "Front matter — revision banner"
+      },
+      "claim_text": "> consensus+PV head-to-head, scored at 14-buffer + tile-MCC on zbook).",
+      "values": [
+        {
+          "quantity": "count, buffer radii in the 14-buffer scoring protocol applied to the 384 consensus+PV cell",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b096] Scope decisions for this batch: dates (2026-06-09, March 2026), the git commit `0b0202da2`, session numbers (Session 107), Obs identifiers (Obs 179), version strings (Python 3.12.3, geopandas 1.1.2, model ids `gemini-3-flash-preview`/`gemini-3-flash`, `\"variant\": \"v1\"`), line-number citations (\"lines 100–103\"), View 3 / View-3 identifiers, and numbers inside file paths are out of C4 scope per instrument rule 5. TILE SIZES: this document names tile sizes constantly (256 / 384 / 512, `384 px`, `pv-diag-384`, `384-consensus-text-high`, `best=384px`, the `size` column of the §3 table, and the size labels in \"256→1032, 384→487\") — all treated as NAMES, not claims, per rule 5. Counts asserted as facts about the study (729 candidates, 487 tiles, 1032 tiles, 340 tiles, 215 features, N=30, 4 GS maps) ARE extracted. The `--mcc` flag, `\"vote_threshold\": null` and `\"derived_from\": \"1-of-30 union\"` carry no checkable numeric value (the last is a provenance label). Buffer radii used only to identify which metric row is meant (\"F1@20 m\", \"the order at 20 m\", \"R ≤ 150 m\") are treated as context, not claims; the buffer GRID actually run (line 142) and the 14-buffer protocol count ARE extracted. The hypothetical \"(e.g. near 0)\" at line 158 is not an asserted value. The \"14-buffer\" protocol count recurs at lines 4, 11, 123, 147, 152 (x2), 156 and 221 and is extracted at every occurrence rather than deduplicated, following the repeated-value house style of 078.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          10,
+          11
+        ],
+        "section": "Front matter — purpose"
+      },
+      "claim_text": "were produced in Session 107 Stage-D; only the 384 leg was missing at the\n**14-buffer + tile-MCC** scoring protocol.",
+      "values": [
+        {
+          "quantity": "count, buffer radii in the 14-buffer scoring protocol",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeat assertion of the 14-buffer protocol count. \"Session 107\" is out of scope per rule 5; \"384 leg\" is a name."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          15
+        ],
+        "section": "Front matter — cost statement"
+      },
+      "claim_text": "**Zero API calls.** The 384 leg is a pure re-score of verifier outputs that\nalready existed on disk (the carry-forward adversarial verifier ran over the\npv-diag-384 consensus pools in March 2026).",
+      "values": [
+        {
+          "quantity": "count, API calls made by the 384 leg re-score",
+          "value_verbatim": "Zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No artefact records a zero API-call figure for this leg. I looked for a run.meta.json / cost_estimate under outputs/era1-pv-stage-d/384-consensus-text-high/ (only eval_t0.1–eval_t0.5 evaluation.json files and pass_1/accepted_t*.geojson are present there; sibling 256 and 512 legs DO carry pass_1/verified/run.meta.json). The absence of a verifier run.meta for the 384 leg is the plausible chase target for triage; not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          21
+        ],
+        "section": "§1 The matched 384 verified pool"
+      },
+      "claim_text": "**Pool used**: `outputs/h11/pv-diag-384/verified/flash-high-text-16of30/`\n(candidate_manifest.json + probabilities.json — 729 candidates).",
+      "values": [
+        {
+          "quantity": "count, candidates in the matched 384 verified pool (flash-high-text-16of30)",
+          "value_verbatim": "729",
+          "value_parsed": 729,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_detections",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The manifest also exposes the same count as `len:$.candidates` and as `$.successful_extractions`; `$.total_detections` is the primary scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          30
+        ],
+        "section": "§1 Provenance proof"
+      },
+      "claim_text": "{ \"source\": \"outputs/h11/pv-diag-384/verified/flash-high-text-1of30/probabilities.json\",\n  \"derived_from\": \"1-of-30 union\", \"vote_threshold\": 16 }",
+      "values": [
+        {
+          "quantity": "vote threshold applied to derive the flash-high-text-16of30 consensus pool",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.vote_threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "A JSON excerpt pasted into a hand-written document is still a claim the document makes (rule 6). `\"derived_from\": \"1-of-30 union\"` is a provenance label, not an extracted value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "§1 Provenance proof — configuration table"
+      },
+      "claim_text": "| `temperature` | `0.0` |",
+      "values": [
+        {
+          "quantity": "verifier temperature as run (flash-high-text-1of30 verifier pass over pv-diag-384)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row per rule 6. This is a what-was-RUN claim, so it anchors to the run meta, not to the config."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "§1 Provenance proof — configuration table"
+      },
+      "claim_text": "| `example_count` | `0` (`library_hash: no_examples`) |",
+      "values": [
+        {
+          "quantity": "example count in the verifier configuration as run (flash-high-text-1of30 verifier pass)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.configuration.example_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`library_hash: no_examples` is a corroborating string, not a numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "§1 Provenance proof — configuration table"
+      },
+      "claim_text": "| iterations / n | `1` |",
+      "values": [
+        {
+          "quantity": "verifier iterations / n as recorded for the flash-high-text-1of30 verifier pass",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/run.meta.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "The document attributes this row to the run.meta.json `configuration` block. At HEAD that block's keys are version, model, instruction_file, system_instruction_hash, system_instruction_text, library_hash, temperature, max_output_tokens, thinking_level, tile_size, include_example_images, example_count and full_config_snapshot — there is no `iterations` or `n` key, and the embedded full_config_snapshot has none either. Anchor left unresolved; the registered `n_passes: 1` at results/run-conditions.json $.decomposition['pv-diag-384'].conditions[?(@.label=='verified-adv-text-consensus-16of30')].n_passes is the plausible chase target. Not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          50
+        ],
+        "section": "§1 Provenance proof — exact-match statement"
+      },
+      "claim_text": "This is an **exact match** to the Stage-D carry-forward verifier\n(`prompts/configs/verify_adversarial-text.json`: gemini-3-flash,\n`verify_adversarial.md`, T=0.0, minimal thinking, text-only labels, examples=[],\nn=1)",
+      "values": [
+        {
+          "quantity": "temperature specified by the Stage-D carry-forward verifier config",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count, worked examples in the Stage-D carry-forward verifier config",
+          "value_verbatim": "[]",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": "read"
+        },
+        {
+          "quantity": "n (iterations) specified by the Stage-D carry-forward verifier config",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/verify_adversarial-text.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The `examples=[]` value is written as an empty list rather than a numeral; value_verbatim keeps the source form and value_parsed records the count it asserts (0), emitted with the `len:` prefix per v1.2 amendment 4. `n=1` has no counterpart key in prompts/configs/verify_adversarial-text.json (keys: version, description, hypothesis, model, instruction_file, temperature, max_output_tokens, thinking_level, _config_notes, examples, text_only_labels, crop_label), so it takes anchor-unknown per v1.2 amendment 3 rather than falling back to anchor.path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          51
+        ],
+        "section": "§1 Provenance proof — exact-match statement"
+      },
+      "claim_text": "and to the registered `verifier_config` on the 256/512 Stage-D conditions\n(which also record `gemini-3-flash-preview`, minimal, T=0.0).",
+      "values": [
+        {
+          "quantity": "verifier temperature registered on the 256 Stage-D condition (pv-diag-256::verified-adv-text-consensus-5of5)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['pv-diag-256'].conditions[?(@.label=='verified-adv-text-consensus-5of5')].verifier_config.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier temperature registered on the 512 Stage-D condition (retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['retest-phase3a-high'].conditions[?(@.label=='verified-adv-text-high-t1.0-n30-23of30')].verifier_config.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span carries a single verbatim \"0.0\" asserted about BOTH registered Stage-D conditions, so it is emitted as two values with distinct filter paths so each side is checkable. The 512 Stage-D condition is the run-conditions entry whose eval_path is results/era1-pv-stage-d/512-consensus-text-high/evaluation.json (registered under run `retest-phase3a-high`, label `verified-adv-text-high-t1.0-n30-23of30`), located by eval_path search."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          67
+        ],
+        "section": "§1 Why this pool"
+      },
+      "claim_text": "which is the **HIGH-thinking text proposer, N=30 passes, 23-of-30 vote**\n(verified: every feature has `total_passes: 30`, `min vote_count = 23`).",
+      "values": [
+        {
+          "quantity": "count, proposer passes behind the 512 Stage-D consensus champion (N)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold of the 512 Stage-D consensus champion",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.features[*].properties.vote_count",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "denominator of the 512 vote fraction (total passes)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "total_passes property carried by every feature of the 512 consensus champion",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum vote_count across features of the 512 consensus champion",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[*].properties.vote_count",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The `total_passes` values resolve as a constant collapse across the feature collection (v1.2 amendment 7). The two `23` values are a MINIMUM over `vote_count`, not a constant collapse, so they take recompute-script (a scripted min over $.features[*].properties.vote_count) rather than read. The `23` in the file name consensus_t23.geojson is a name; the `23` asserted here as the vote threshold and as the observed minimum is a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          71
+        ],
+        "section": "§1 Why this pool"
+      },
+      "claim_text": "So the matched 384 cell is the **`flash-high-text` (HIGH-thinking,\nN=30) consensus family**.",
+      "values": [
+        {
+          "quantity": "count, proposer passes in the matched 384 flash-high-text consensus family (N)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[*].properties.total_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 1-of-30 union geojson is the source pool named by outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json $.source_geojson; its features carry the per-pass total_passes property."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          76
+        ],
+        "section": "§1 Why this pool"
+      },
+      "claim_text": "Within that N=30 HIGH-text family, the **best-F1 operating point** (from\n`results/h11-384-pv-diagnostic/summary.json`, where the project established the\n384 consensus champion) is **`flash-high-text-16of30`** (single-buffer optimal\nF1 0.8902 at prob_t 0.2).",
+      "values": [
+        {
+          "quantity": "count, proposer passes in the 384 HIGH-text family (N)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "single-buffer optimal F1, flash-high-text-16of30 diagnostic sweep",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.thresholds[4].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t at the single-buffer optimum, flash-high-text-16of30 diagnostic sweep",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.thresholds[4].threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names results/h11-384-pv-diagnostic/summary.json as the source. At HEAD that file's keys are image-1of5…image-baseline and text-1of10…text-baseline and do not include a flash-high-text-16of30 entry, so I anchored to the per-pool threshold sweep in the same tree, which does carry the 0.2/0.8902 pair as numeric scalars. Anchor identification only — not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          77
+        ],
+        "section": "§1 Why this pool"
+      },
+      "claim_text": "Each tile size selects its own best vote threshold —\n512 settled at 23-of-30, 384 at 16-of-30 — consistent with the project's",
+      "values": [
+        {
+          "quantity": "vote threshold selected at 512",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson#$.features[*].properties.vote_count",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "denominator of the 512 vote fraction (total proposer passes)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold selected at 384",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.vote_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "denominator of the 384 vote fraction (total proposer passes)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cross-file value paths per v1.2 amendment 2. \"512\" and \"384\" are tile-size names. The 512 threshold is a minimum over vote_count, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          82
+        ],
+        "section": "§1 Judgement call"
+      },
+      "claim_text": "**Judgement call, stated plainly for review**: I matched on *proposer config*\n(gemini-3-flash, HIGH-thinking, text, N=30) + *verifier config* (carry-forward),",
+      "values": [
+        {
+          "quantity": "count, proposer passes in the matched proposer config (N)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[*].properties.total_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          87
+        ],
+        "section": "§1 Judgement call"
+      },
+      "claim_text": "the 256 cell uses the *plain* `text`\nfamily (5-of-5, N=5), because HIGH-thinking text was not separately run at 256",
+      "values": [
+        {
+          "quantity": "vote threshold of the 256 consensus cell",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['pv-diag-256'].conditions[?(@.label=='text-consensus-5of5')].vote_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "denominator of the 256 vote fraction (total proposer passes)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.decomposition['pv-diag-256'].conditions[?(@.label=='text-consensus-5of5')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "count, proposer passes in the 256 plain-text consensus family (N)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.decomposition['pv-diag-256'].conditions[?(@.label=='text-consensus-5of5')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"256\" is a tile-size name throughout this span. The registered 256 consensus cell is pv-diag-256::text-consensus-5of5 (the proposer pool feeding pv-diag-256::verified-adv-text-consensus-5of5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          89
+        ],
+        "section": "§1 Judgement call"
+      },
+      "claim_text": "So 384 and 512 share the HIGH-\ntext N=30 lineage; 256 is its own anchor.",
+      "values": [
+        {
+          "quantity": "count, proposer passes in the shared HIGH-text lineage (N)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[*].properties.total_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One N=30 asserted about both the 384 and 512 lineages; anchored on the 384 side. The 512 counterpart is outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson $.features[*].properties.total_passes."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          95
+        ],
+        "section": "§1 prob_t sweep feasibility"
+      },
+      "claim_text": "The pool carries per-candidate `mound_probability` for all 729 candidates, so\nthe prob_t sweep `[0.1, 0.15, 0.2, 0.3, 0.5]` is fully materialisable",
+      "values": [
+        {
+          "quantity": "count, candidates carrying a per-candidate mound_probability in the 384 verified pool",
+          "value_verbatim": "729",
+          "value_parsed": 729,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.results",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep grid, first point",
+          "value_verbatim": "0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json#$.thresholds[2].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep grid, second point",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json#$.thresholds[3].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep grid, third point",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json#$.thresholds[4].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep grid, fourth point",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json#$.thresholds[6].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t sweep grid, fifth point",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json#$.thresholds[10].threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The probabilities file is a derived-probabilities artefact (keys source/derived_from/vote_threshold/results) with no total_results scalar, so the candidate count is emitted as `len:$.results` per v1.2 amendment 4. The five sweep points are anchored to the diagnostic threshold sweep, which holds them as numeric scalars; the re-score materialised the same five points as outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t{0.1,0.15,0.2,0.3,0.5}.geojson and eval_t{0.1,0.15,0.2,0.3,0.5}/, where the thresholds are encoded in file names rather than JSON scalars — triage may prefer that route."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          97
+        ],
+        "section": "§1 prob_t sweep feasibility"
+      },
+      "claim_text": "(Acceptance counts\nvary across prob_t: 502 / 418 / 412 / 391 / 373.)",
+      "values": [
+        {
+          "quantity": "count, accepted detections at prob_t 0.1, 384 consensus+PV re-score",
+          "value_verbatim": "502",
+          "value_parsed": 502,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.1.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count, accepted detections at prob_t 0.15, 384 consensus+PV re-score",
+          "value_verbatim": "418",
+          "value_parsed": 418,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.15.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count, accepted detections at prob_t 0.2, 384 consensus+PV re-score",
+          "value_verbatim": "412",
+          "value_parsed": 412,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count, accepted detections at prob_t 0.3, 384 consensus+PV re-score",
+          "value_verbatim": "391",
+          "value_parsed": 391,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.3.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count, accepted detections at prob_t 0.5, 384 consensus+PV re-score",
+          "value_verbatim": "373",
+          "value_parsed": 373,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.5.geojson#len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The five counts are ordered against the sweep grid stated in the previous sentence (0.1 / 0.15 / 0.2 / 0.3 / 0.5); each is anchored to its own materialised accepted geojson via a cross-file `len:` path (v1.2 amendments 2 and 4). The diagnostic sweep results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json also carries n_accepted at $.thresholds[2,3,4,6,10].n_accepted if triage prefers a single-file route."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "§2 heading"
+      },
+      "claim_text": "## 2. What the existing `proposer-verifier-384::verified-adversarial-text` (F1 0.471) actually is",
+      "values": [
+        {
+          "quantity": "F1@20 m, proposer-verifier-384::verified-adversarial-text (quoted to 3 dp)",
+          "value_verbatim": "0.471",
+          "value_parsed": 0.471,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-05-31/proposer-verifier-384/verified-adversarial-text-accepted/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted to 3 dp here and to 4 dp at line 104; recorded at quoted precision per the instrument's known-traps note. buffers[3] is the 20 m row of the 14-buffer array."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          104
+        ],
+        "section": "§2 The pre-existing condition"
+      },
+      "claim_text": "The pre-existing condition (eval at\n`results/rescore-2026-05-31/proposer-verifier-384/verified-adversarial-text-accepted/evaluation.json`,\n**F1@20m 0.4708, MCC 0.4313**) is registered with:",
+      "values": [
+        {
+          "quantity": "F1@20 m, proposer-verifier-384::verified-adversarial-text",
+          "value_verbatim": "0.4708",
+          "value_parsed": 0.4708,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, proposer-verifier-384::verified-adversarial-text",
+          "value_verbatim": "0.4313",
+          "value_parsed": 0.4313,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.point",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-05-31/proposer-verifier-384/verified-adversarial-text-accepted/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"@20m\" identifies which buffer row the F1 belongs to (context, not a claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "§2 The pre-existing condition"
+      },
+      "claim_text": "- `proposer_pool: \"detect_brief-text\"`, `n_passes: 1`, `vote_threshold: null`",
+      "values": [
+        {
+          "quantity": "registered n_passes, proposer-verifier-384::verified-adversarial-text",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['proposer-verifier-384'].conditions[?(@.label=='verified-adversarial-text')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`vote_threshold: null` carries no numeric value and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          111
+        ],
+        "section": "§2 The pre-existing condition"
+      },
+      "claim_text": "Its detections file\n`outputs/h11/proposer-verifier-384/verified-adversarial-text-accepted.geojson`\nholds 215 features.",
+      "values": [
+        {
+          "quantity": "count, features in the proposer-verifier-384 verified-adversarial-text detections file",
+          "value_verbatim": "215",
+          "value_parsed": 215,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/proposer-verifier-384/verified-adversarial-text-accepted.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          118
+        ],
+        "section": "§2 Verdict"
+      },
+      "claim_text": "The 0.471\nnumber should **not** be used as \"the 384 consensus+PV cell\"; the new\n`384-consensus-text-high` cell (F1 0.890) is that cell.",
+      "values": [
+        {
+          "quantity": "F1@20 m, proposer-verifier-384::verified-adversarial-text (quoted to 3 dp)",
+          "value_verbatim": "0.471",
+          "value_parsed": 0.471,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-05-31/proposer-verifier-384/verified-adversarial-text-accepted/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 384-consensus-text-high (quoted to 3 dp)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both F1s are quoted to 3 dp while the artefacts hold 4 dp; recorded at quoted precision (harness owns rounding tolerance)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          123
+        ],
+        "section": "§3 The completed comparison"
+      },
+      "claim_text": "All three legs: consensus champion **verified** with the carry-forward\nadversarial verifier, scored at **14-buffer + tile-MCC**, **F1@20 m** headline,",
+      "values": [
+        {
+          "quantity": "count, legs in the completed 256/384/512 consensus+PV comparison",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, buffer radii in the 14-buffer scoring protocol",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No committed artefact enumerates \"the three legs\" as a scalar; the §3 table below has three rows and the three per-leg eval directories (results/era1-pv-stage-d/256-consensus-text-5of5, 384-consensus-text-high, 512-consensus-text-high) exist, but neither is a mechanical locator, so the count takes anchor-unknown (v1.2 amendment 3 forbids letting it fall back to anchor.path). \"F1@20 m headline\" names the headline buffer and is treated as context."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          130
+        ],
+        "section": "§3 Comparison table"
+      },
+      "claim_text": "| 256 | `256-consensus-text-5of5` | flash / (thin) / N=5 / 5-of-5 | **0.8558** | 0.7448 | 0.2 | 1032 |",
+      "values": [
+        {
+          "quantity": "count, proposer passes (N), 256 row of the §3 comparison table",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#$.decomposition['pv-diag-256'].conditions[?(@.label=='text-consensus-5of5')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold, 256 row of the §3 comparison table",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/run-conditions.json#$.decomposition['pv-diag-256'].conditions[?(@.label=='text-consensus-5of5')].vote_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "denominator of the vote fraction, 256 row of the §3 comparison table",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "results/run-conditions.json#$.decomposition['pv-diag-256'].conditions[?(@.label=='text-consensus-5of5')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 256 row of the §3 comparison table",
+          "value_verbatim": "0.8558",
+          "value_parsed": 0.8558,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['256-consensus-text-5of5'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 256 row of the §3 comparison table",
+          "value_verbatim": "0.7448",
+          "value_parsed": 0.7448,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['256-consensus-text-5of5'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t operating point, 256 row of the §3 comparison table",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['256-consensus-text-5of5'].prob_t",
+          "method": "read"
+        },
+        {
+          "quantity": "n_tiles, 256 row of the §3 comparison table",
+          "value_verbatim": "1032",
+          "value_parsed": 1032,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/256-consensus-text-5of5/evaluation.json#$.summary.buffers[3].coverage.n_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6). The `size` cell (256) and the cell name `256-consensus-text-5of5` are names, not claims. The document states 256/512 were read from outputs/era1-pv-stage-d/stage_d_score_summary.json, so F1/MCC/prob_t anchor there; n_tiles is not in that summary and takes a cross-file path into the per-leg evaluation (buffers[3] = the 20 m row)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          131
+        ],
+        "section": "§3 Comparison table"
+      },
+      "claim_text": "| **384** | **`384-consensus-text-high`** | **flash / HIGH / N=30 / 16-of-30** | **0.8902** | **0.7903** | **0.2** | **487** |",
+      "values": [
+        {
+          "quantity": "count, proposer passes (N), 384 row of the §3 comparison table",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold, 384 row of the §3 comparison table",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json#$.vote_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "denominator of the vote fraction, 384 row of the §3 comparison table",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 384 row of the §3 comparison table",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 384 row of the §3 comparison table",
+          "value_verbatim": "0.7903",
+          "value_parsed": 0.7903,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t operating point, 384 row of the §3 comparison table",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['384-consensus-text-high'].prob_t",
+          "method": "read"
+        },
+        {
+          "quantity": "n_tiles, 384 row of the §3 comparison table",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#$.summary.buffers[3].coverage.n_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The `size` cell (384) and the cell name are names, not claims. The document states the 384 figures were read from outputs/era1-pv-stage-d/stage_d_score_summary_384.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "§3 Comparison table"
+      },
+      "claim_text": "| 512 | `512-consensus-text-high` | flash / HIGH / N=30 / 23-of-30 | 0.7925 | 0.6765 | 0.1 | 340 |",
+      "values": [
+        {
+          "quantity": "count, proposer passes (N), 512 row of the §3 comparison table",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold, 512 row of the §3 comparison table",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson#$.features[*].properties.vote_count",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "denominator of the vote fraction, 512 row of the §3 comparison table",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 512 row of the §3 comparison table",
+          "value_verbatim": "0.7925",
+          "value_parsed": 0.7925,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-consensus-text-high'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 512 row of the §3 comparison table",
+          "value_verbatim": "0.6765",
+          "value_parsed": 0.6765,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-consensus-text-high'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t operating point, 512 row of the §3 comparison table",
+          "value_verbatim": "0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['512-consensus-text-high'].prob_t",
+          "method": "read"
+        },
+        {
+          "quantity": "n_tiles, 512 row of the §3 comparison table",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/512-consensus-text-high/evaluation.json#$.summary.buffers[3].coverage.n_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The `size` cell (512) and the cell name are names. The 23 vote threshold is a minimum over the consensus feature collection's vote_count, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          135
+        ],
+        "section": "§3 384 detail"
+      },
+      "claim_text": "384 detail at the chosen operating point (prob_t 0.2): precision 0.915,\nrecall 0.8667, 412 detections, n_tiles 487, eval CRS EPSG:32635.",
+      "values": [
+        {
+          "quantity": "prob_t operating point chosen for the 384 consensus+PV cell",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json#$['384-consensus-text-high'].prob_t",
+          "method": "read"
+        },
+        {
+          "quantity": "precision@20 m, 384-consensus-text-high at prob_t 0.2",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall@20 m, 384-consensus-text-high at prob_t 0.2",
+          "value_verbatim": "0.8667",
+          "value_parsed": 0.8667,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].recall",
+          "method": "read"
+        },
+        {
+          "quantity": "count, detections scored for 384-consensus-text-high at prob_t 0.2",
+          "value_verbatim": "412",
+          "value_parsed": 412,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation tiles for 384-consensus-text-high",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.buffers[3].coverage.n_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation coordinate reference system used to score 384-consensus-text-high",
+          "value_verbatim": "EPSG:32635",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "other",
+          "path": "$._metadata.spatial.evaluation_crs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The leading \"384\" is a tile-size name. INCLUSION DOUBT: EPSG:32635 is a registry identifier rather than a measured quantity and could reasonably be read as out of scope under rule 5 (\"version strings\" / identifiers); it is included because it is asserted as a parameter of what was run and resolves mechanically at $._metadata.spatial.evaluation_crs. value_parsed is left null so the harness compares the verbatim string rather than a bare 32635."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "§3 Pipeline inputs"
+      },
+      "claim_text": "- bounds: `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` (**487 tiles**)",
+      "values": [
+        {
+          "quantity": "count, tiles in the 384 full evaluation bounds",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The \"384\" inside the path is out of scope per rule 5; the 487-tile count is a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "§3 Pipeline inputs"
+      },
+      "claim_text": "- buffers: `[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150]`, `--mcc`",
+      "values": [
+        {
+          "quantity": "buffer radius, first grid step actually run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[0]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, second grid step actually run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[1]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, third grid step actually run",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[2]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fourth grid step actually run",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[3]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fifth grid step actually run",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[4]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, sixth grid step actually run",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[5]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, seventh grid step actually run",
+          "value_verbatim": "35",
+          "value_parsed": 35,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[6]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, eighth grid step actually run",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[7]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, ninth grid step actually run",
+          "value_verbatim": "45",
+          "value_parsed": 45,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[8]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, tenth grid step actually run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[9]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, eleventh grid step actually run",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[10]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, twelfth grid step actually run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[11]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, thirteenth grid step actually run",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[12]",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius, fourteenth grid step actually run",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$._metadata.cli_args.buffers[13]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Shared unit (metres) applied to every value per v1.2 amendment 6. `--mcc` is a flag, not a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          146,
+          147
+        ],
+        "section": "§4 Verdict"
+      },
+      "claim_text": "**Yes. 384 leads 256 (F1@20 m 0.8902 vs 0.8558, Δ +0.0344) when both are scored\nconsensus+PV the same way (14-buffer + tile-MCC, 4 GS maps + curator GT).**",
+      "values": [
+        {
+          "quantity": "F1@20 m, 384-consensus-text-high",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 256-consensus-text-5of5",
+          "value_verbatim": "0.8558",
+          "value_parsed": 0.8558,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/era1-pv-stage-d/stage_d_score_summary.json#$['256-consensus-text-5of5'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m difference, 384 consensus+PV minus 256 consensus+PV",
+          "value_verbatim": "+0.0344",
+          "value_parsed": 0.0344,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+              "path": "$['384-consensus-text-high'].f1"
+            },
+            {
+              "name": "b",
+              "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+              "path": "$['256-consensus-text-5of5'].f1"
+            }
+          ]
+        },
+        {
+          "quantity": "count, buffer radii in the 14-buffer scoring protocol",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "count, Gold-Standard maps in the shared evaluation corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson#len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per v1.2 amendment 1 the two operands of the +0.0344 derivation (0.8902 and 0.8558) each carry method `read` with their own paths rather than inheriting `arithmetic`; only the delta itself carries the expression. The 4-map count is anchored to the Gold-Standard sheet-bounds file; inputs/vectors/bounds/384/full_evaluation_bounds.geojson also carries exactly four distinct `map_name` values if triage prefers that route."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          148
+        ],
+        "section": "§4 Verdict"
+      },
+      "claim_text": "512\nsits below both at 0.7925.",
+      "values": [
+        {
+          "quantity": "F1@20 m, 512-consensus-text-high",
+          "value_verbatim": "0.7925",
+          "value_parsed": 0.7925,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['512-consensus-text-high'].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The following sentence's ordering claim (\"The order at 20 m is **512 < 256 < 384**\") contains only tile-size names and a buffer identifier, so it carries no separately extractable value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          153
+        ],
+        "section": "§4 Confirms the prior"
+      },
+      "claim_text": "Obs 179's original-eval estimate\n(F1 ≈ 0.883, a 487-tile eval, NOT 14-buffer+MCC) predicted 384 would still lead;\nthe re-scored 14-buffer+MCC value (0.890) lands right next to it.",
+      "values": [
+        {
+          "quantity": "F1 estimate for the 384 consensus+PV cell under the original (single-buffer) evaluation, as reported by Obs 179",
+          "value_verbatim": "≈ 0.883",
+          "value_parsed": 0.883,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, evaluation tiles in the original 384 eval",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json#$.evaluation_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "count, buffer radii in the 14-buffer scoring protocol (first mention in this span)",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "count, buffer radii in the 14-buffer scoring protocol (second mention in this span)",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 384-consensus-text-high re-scored at 14-buffer + tile-MCC (quoted to 3 dp)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained in value_verbatim per v1.2 amendment 5. The ≈ 0.883 figure is attributed to Obs 179, which lives in prose (docs/notes/working-notes.md, with the same figure echoed in docs/notes/reflections/session-reflection.md and session-log.md); rule 2 forbids anchoring prose to prose, so it takes anchor-unknown for triage to chase to an artefact. \"Obs 179\" itself is an out-of-scope identifier."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          156
+        ],
+        "section": "§4 Sanity checks"
+      },
+      "claim_text": "Two\nindependent sanity checks that the pipeline is correct (right GT, right 487-tile\nbounds, right verifier, right operating point, EPSG:32635 eval CRS, no double-\nreprojection)",
+      "values": [
+        {
+          "quantity": "count, independent sanity checks reported for the 384 re-score",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, tiles in the evaluation bounds used for the 384 re-score",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation coordinate reference system used for the 384 re-score",
+          "value_verbatim": "EPSG:32635",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "other",
+          "path": "$._metadata.spatial.evaluation_crs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "INCLUSION DOUBT on \"Two\": the count is self-referential — it enumerates the (a) and (b) items in the same paragraph rather than a quantity about the study — so no artefact can decide it; included per the charter's when-in-doubt rule with method anchor-unknown. Same EPSG inclusion doubt as the line 134–135 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          156,
+          157
+        ],
+        "section": "§4 Sanity checks"
+      },
+      "claim_text": "(a) the 14-buffer F1@20 m (0.8902) reproduces the diagnostic's\nsingle-buffer optimal F1 (0.8902 at prob_t 0.2) to four decimals",
+      "values": [
+        {
+          "quantity": "count, buffer radii in the 14-buffer scoring protocol",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m from the 14-buffer re-score, 384-consensus-text-high",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "single-buffer optimal F1 from the flash-high-text-16of30 diagnostic sweep",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.thresholds[4].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "prob_t at the diagnostic single-buffer optimum",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.thresholds[4].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "decimal places to which the 14-buffer and single-buffer F1 values are asserted to agree",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "INCLUSION DOUBT on \"four decimals\": it is a statement about the agreement precision between two values already extracted in this same span, not an independent quantity about the study; included per the when-in-doubt rule with anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          163
+        ],
+        "section": "§4 Comparability note"
+      },
+      "claim_text": "- **F1@20 m IS cross-size comparable** — the three sizes are different tilings of\n  the same four Gold-Standard maps + the same curator ground-truth mounds, so",
+      "values": [
+        {
+          "quantity": "count, tile sizes compared",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, Gold-Standard maps shared by all three tilings",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The \"three sizes\" count has no mechanical locator (the three sizes are the named 256/384/512 legs), so it takes anchor-unknown rather than falling back to anchor.path per v1.2 amendment 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          165,
+          167
+        ],
+        "section": "§4 Comparability note"
+      },
+      "claim_text": "- **tile-MCC is NOT differenced across sizes** — the true-negative base differs\n  with tile count (256→1032, 384→487, 512→340 tiles), so MCC is reported per\n  size, never subtracted across sizes.",
+      "values": [
+        {
+          "quantity": "count, evaluation tiles at 256 px",
+          "value_verbatim": "1032",
+          "value_parsed": 1032,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/256-consensus-text-5of5/evaluation.json#$.summary.buffers[3].coverage.n_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation tiles at 384 px",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.buffers[3].coverage.n_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation tiles at 512 px",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/512-consensus-text-high/evaluation.json#$.summary.buffers[3].coverage.n_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 256/384/512 left-hand sides of each arrow are tile-size names; only the tile counts are extracted. The three counts are also independently locatable as `len:$.features` on inputs/vectors/bounds/256/full_evaluation_bounds.geojson, inputs/vectors/bounds/384/full_evaluation_bounds.geojson and inputs/vectors/bounds/full_evaluation_bounds.geojson respectively."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          185,
+          185
+        ],
+        "section": "§5 Registration block"
+      },
+      "claim_text": "  \"n_passes\": 1,",
+      "values": [
+        {
+          "quantity": "n_passes proposed for (and now registered on) pv-diag-384::verified-adv-text-consensus-16of30",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['pv-diag-384'].conditions[?(@.label=='verified-adv-text-consensus-16of30')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document presents this block as proposed and \"NOT applied here\"; at HEAD results/run-conditions.json does contain a pv-diag-384 condition with label `verified-adv-text-consensus-16of30`, so the block is anchored there. `\"vote_threshold\": null` on the next line carries no numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "§5 Registration block"
+      },
+      "claim_text": "  \"prob_threshold\": 0.2,",
+      "values": [
+        {
+          "quantity": "prob_threshold proposed for (and now registered on) pv-diag-384::verified-adv-text-consensus-16of30",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['pv-diag-384'].conditions[?(@.label=='verified-adv-text-consensus-16of30')].prob_threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "§5 Registration block"
+      },
+      "claim_text": "    \"temperature\": 0.0",
+      "values": [
+        {
+          "quantity": "verifier temperature proposed for (and now registered on) pv-diag-384::verified-adv-text-consensus-16of30",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['pv-diag-384'].conditions[?(@.label=='verified-adv-text-consensus-16of30')].verifier_config.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`\"variant\": \"v1\"` in the same block is a version string, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          204
+        ],
+        "section": "§5 Notes on field choices"
+      },
+      "claim_text": "- `n_passes: 1`, `vote_threshold: null` — these describe the **verifier** pass (a\n  single verifier pass over the already-consensused pool), exactly as on the 256\n  cell. The proposer consensus (N=30, 16-of-30) is carried in `proposer_pool`.",
+      "values": [
+        {
+          "quantity": "n_passes registered on pv-diag-384::verified-adv-text-consensus-16of30",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['pv-diag-384'].conditions[?(@.label=='verified-adv-text-consensus-16of30')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "count, proposer passes in the 384 consensus (N)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold of the 384 proposer consensus",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json#$.vote_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "denominator of the 384 vote fraction (total proposer passes)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson#$.features[*].properties.total_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          205
+        ],
+        "section": "§5 Notes on field choices"
+      },
+      "claim_text": "- `prob_threshold: 0.2` — the best-F1@20 m prob_t operating point for this cell.",
+      "values": [
+        {
+          "quantity": "prob_threshold registered on pv-diag-384::verified-adv-text-consensus-16of30 (best-F1@20 m operating point)",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.decomposition['pv-diag-384'].conditions[?(@.label=='verified-adv-text-consensus-16of30')].prob_threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          207
+        ],
+        "section": "§5 Notes on field choices"
+      },
+      "claim_text": "- `proposer_pool: \"flash-high-text-consensus-16of30\"` — the HIGH-text N=30\n  consensus champion at 384 (analogue of the 256 cell's `text-consensus-5of5`).",
+      "values": [
+        {
+          "quantity": "count, proposer passes in the HIGH-text consensus champion at 384 (N)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.features[*].properties.total_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"16of30\" and \"5of5\" appear only inside pool/condition names here and are not re-extracted from this span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          213
+        ],
+        "section": "§5 Downstream effect"
+      },
+      "claim_text": "Once applied, re-running\n`python scripts/tile_size_sweep.py` will populate the 384 PV cell (0.890) and\nflip the View-3 direction annotation to `best=384px`.",
+      "values": [
+        {
+          "quantity": "F1@20 m that will populate the 384 PV cell of the tile-size sweep View 3 (quoted to 3 dp)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"View-3\" is an identifier and `best=384px` a name, both out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          221,
+          222
+        ],
+        "section": "Changelog — 2026-06-09 Original publication"
+      },
+      "claim_text": "scored it at 14-buffer + tile-MCC on\nzbook (best prob_t 0.2 → F1@20 m 0.8902, MCC 0.7903, n_tiles 487)",
+      "values": [
+        {
+          "quantity": "count, buffer radii in the 14-buffer scoring protocol",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "best prob_t operating point, 384-consensus-text-high",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$['384-consensus-text-high'].prob_t",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 384-consensus-text-high",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-MCC, 384-consensus-text-high",
+          "value_verbatim": "0.7903",
+          "value_parsed": 0.7903,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "count, evaluation tiles, 384-consensus-text-high",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json#$.summary.buffers[3].coverage.n_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This is the \"Original publication\" changelog entry, not a before→after correction block, so these are LIVE claims rather than `historical` values (instrument rule 3 / known-traps note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          223,
+          223
+        ],
+        "section": "Changelog — 2026-06-09 Original publication"
+      },
+      "claim_text": "established that **384 leads 256** consensus+PV (0.890 vs 0.856), confirming the",
+      "values": [
+        {
+          "quantity": "F1@20 m, 384-consensus-text-high (quoted to 3 dp)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['384-consensus-text-high'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, 256-consensus-text-5of5 (quoted to 3 dp)",
+          "value_verbatim": "0.856",
+          "value_parsed": 0.856,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/era1-pv-stage-d/stage_d_score_summary.json#$['256-consensus-text-5of5'].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/era1-pv-stage-d/stage_d_score_summary_384.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both values quoted to 3 dp; the artefacts hold 4 dp. Recorded at quoted precision per the instrument's known-traps note."
+    }
+  ]
+}

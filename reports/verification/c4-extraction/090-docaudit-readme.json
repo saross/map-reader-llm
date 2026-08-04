@@ -1,0 +1,521 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/documentation-audit/README.md",
+    "git_blob": "e83e2cafbe14",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          8,
+          9
+        ],
+        "section": "Front matter — Supersedes"
+      },
+      "claim_text": "`planning/doc-audit-rerun-plan.md` for the driver document and the\ntwo-agent workflow.",
+      "values": [
+        {
+          "quantity": "count, agents in the documentation re-audit workflow",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b090] Scope decisions for this batch (both files, per instrument rule 5): dates and timestamps (2026-04-22, 2026-05-02/03, 2026-04-19 …), git commit hashes (`8747d726`, `731466d8`, `e07dae37`, `e3aef6fa`, `a9e280a3`, `7f05f529`, `ad023fc3`), Observation identifiers (Obs 255, 256–273, 318/319), errata identifiers (E47, E52, E54), working-notes line-number citations (line 12840, lines 115–117, line 37, :1670), phase identifiers (phase 2 + 3), hypothesis/condition names (h8, h10, h11, h12-v2, Era 1 / Era 2, `pv-diag`-style labels), version strings (v1, v2, D-S v1/v2), and numbers inside file paths or run names (`55maps_text_high_generalisation`, `single-pass-384-UNINTENDED-T1.0`, `results-audit-2026-04-21.md`, `buffer-100m-diagnostics`) are all OUT of scope. Ordinal markers on numbered lists (\"1.\", \"2.\", \"3.\") are formatting, not claims. Numerals that assert the cardinality of study entities (\"two distinct runs\", \"all four 55-map runs\", \"three bugs\", \"100 files\") ARE extracted; purely anaphoric back-references (\"the prior audit conflated the two\", audit-summary.md line 84) are not, since the same cardinality is already captured from the span that asserts it. \"55-map\" and \"4-map\" are treated per instrument rule 5's name-and-fact clause: they are extracted as corpus-size counts wherever the surrounding span is substantively about those runs. Anchoring: this is an audit document whose stated sources are overwhelmingly OTHER markdown documents (`planning/doc-audit-rerun-plan.md`, `configs/run-configs/*_post_run_report.md`, `docs/notes/reflections/working-notes.md`, `results/ci-metadata-registry.md`, `results/documentation-audit/results-audit-2026-04-21.md`), which instrument rule 2 forbids anchoring to; wherever a committed JSON/YAML/CSV artefact could be located behind the citation it is used instead, and where none exists the claim is `anchor-unknown` with the chased-but-unresolved target named. For THIS claim: the two-agent workflow is described only in `planning/doc-audit-rerun-plan.md` (prose); no manifest or config records an agent count. Included despite being a workflow rather than a study quantity, per the instrument's include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          12
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "the T=0.7 55-map text-high\n> run was recovered on 2026-05-02/03",
+      "values": [
+        {
+          "quantity": "proposer temperature, 55maps-text-high-generalisation run as executed",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.proposer.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, text-high generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/resolved_config.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"T=0.7\" straddles the name/fact boundary of instrument rule 5 — it identifies the run but also asserts the temperature that was used, so it is extracted as a what-was-run parameter and anchored to the executed config (NOT to the preregistration, which is the v1.1 calibration rule's anchor only for claims about what the registration specifies). The resolved config is YAML, a legitimate non-JSON anchor per v1.1; the locator is expressed in JSONPath form over the parsed YAML."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          16
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "The audit figures below for `55maps-text-high-generalisation` (cost\n> $69.60, F1 @50m 0.788, D-S 0.813) are the **pre-recovery 2026-04-19\n> launch state** and remain accurate for that snapshot.",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, pre-recovery 2026-04-19 launch state",
+          "value_verbatim": "$69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "0.788",
+          "value_parsed": 0.788,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-text-high-generalisation, pre-recovery",
+          "value_verbatim": "0.813",
+          "value_parsed": 0.813,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Explicit correction block (instrument rule 3): this span is the \"was\" side, superseded by the post-recovery canonical state quoted immediately below at lines 16–18. Preserved pre-recovery artefacts exist for triage if a live check is wanted: `results/55maps-text-high-generalisation/dawid-skene.pre-rerun-20260503T010627.backup/dawid-skene-results.json` and `outputs/55maps-text-high-generalisation/evaluation/evaluation.json.pre-gtupdate-20260503T003825.backup`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          18
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "Post-recovery\n> canonical state is **cost $126.81, F1 raw @50m 0.792, F1 corrected\n> @50m 0.8273, D-S 0.814**",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-text-high-generalisation, post-recovery canonical",
+          "value_verbatim": "$126.81",
+          "value_parsed": 126.81,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "raw F1 at 50 m, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 at 50 m, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.8273",
+          "value_parsed": 0.8273,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json#$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene posterior F1 at 50 m, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The \"now\" side of the correction block at lines 14–18, so all four values are live claims. The document names the cost manifest as its source for the cost; the other three take cross-file locators per v1.2 amendment 2. `$.summary.buffers[3]` is the 50 m entry of the evaluation (buffers run 20/30/40/50 m); `$.results[0]` is the R = 50 m row of the text-high multi-buffer summary."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          24
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "The recovery also surfaced three bugs (parser realtime-vs-batch\n> asymmetry; D-S row-position; `cost_manifest` cleanup-overwrites-meta;",
+      "values": [
+        {
+          "quantity": "count, bugs surfaced by the text-high recovery",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The cited evidence is Obs 318/319 in `docs/notes/reflections/working-notes.md` (prose — rule 2 forbids anchoring there) and three commits. Searched `results/` and `reports/` for a JSON bug register recording this count; none found."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          27
+        ],
+        "section": "Post-recovery annotation (2026-05-03)"
+      },
+      "claim_text": "queued **three outstanding recoveries** (image HIGH, text-MIN, GS-v2;\n> ~163 tiles total under the same realtime-parser fix).",
+      "values": [
+        {
+          "quantity": "count, outstanding recoveries queued after the text-high recovery",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, tiles lost to realtime JSON-parse failures across the three outstanding recoveries",
+          "value_verbatim": "~163",
+          "value_parsed": 163,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approx marker retained per v1.2 amendment 5. The 163-tile figure is asserted in markdown only — `results/temperature-failure-recovery-analysis/report.md`, `results/limitations-consolidation/report.md` and `configs/run-configs/55maps_text_high_generalisation_post_run_report.md` — all prose, so rule 2 blocks anchoring. Searched `outputs/*/recovery-logs/` and `results/**/*.json` for a scalar recording the outstanding-tile total; none found."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          36
+        ],
+        "section": "Why this draft exists"
+      },
+      "claim_text": "- `55maps-text-min-generalisation` was stated to cost **$165.74** with a\n  90.2 % cache-hit rate; the `cost_manifest.json` actually records\n  **$60.79** with a 0.0 % cache-hit rate.",
+      "values": [
+        {
+          "quantity": "cost USD, 55maps-text-min-generalisation, as (incorrectly) stated by the 2026-04-19 audit",
+          "value_verbatim": "$165.74",
+          "value_parsed": 165.74,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cache-hit rate, 55maps-text-min-generalisation, as (incorrectly) stated by the 2026-04-19 audit",
+          "value_verbatim": "90.2",
+          "value_parsed": 90.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cost USD, 55maps-text-min-generalisation, per cost manifest",
+          "value_verbatim": "$60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cache-hit rate, 55maps-text-min-generalisation, per cost manifest",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Correction block: the two figures attributed to the superseded audit are `historical`; the two attributed to the cost manifest are live. Unit note for the harness — the document writes cache-hit as a percentage while `$.totals.cache_hit_rate` is stored as a fraction; the two coincide at zero but differ in scale for non-zero rows (see the 91.0 % image row in audit-summary.md)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          42
+        ],
+        "section": "Why this draft exists"
+      },
+      "claim_text": "- `55maps-text-high-generalisation` was written up as a single run\n  costing **$359.53**; there are in fact two distinct runs — the 2026-04-10\n  retrospective run at `outputs/55maps-generalisation/` (no cost manifest;\n  ~$75 estimate in the retrospective post-run report) and the 2026-04-19\n  re-run at `outputs/55maps-text-high-generalisation/` (cost manifest\n  records $69.60).",
+      "values": [
+        {
+          "quantity": "cost USD, text-high, as (incorrectly) stated by the 2026-04-19 audit for a single conflated run",
+          "value_verbatim": "$359.53",
+          "value_parsed": 359.53,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, distinct text-HIGH generalisation runs",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cost USD, 2026-04-10 retrospective text run (scaling estimate, not audited)",
+          "value_verbatim": "~$75",
+          "value_parsed": 75,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cost USD, 2026-04-19 text-high re-run, per cost manifest",
+          "value_verbatim": "$69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed-method span. The ~$75 figure is an estimate whose only stated source is `configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md` (markdown prose — rule 2); `outputs/55maps-generalisation/` confirmedly has no `cost_manifest.json`, and `results/paper-tables/cost_retrospective.json` was checked and covers a different (project-wide 2026-02/03) accounting, so the estimate is `anchor-unknown`. The two-run count has no manifest recording it. NOTE for triage: the $69.60 here is asserted as a live cost-manifest read, but the document's own post-recovery annotation (lines 14–18) declares that figure superseded by $126.81 — recorded as read, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          44
+        ],
+        "section": "Why this draft exists"
+      },
+      "claim_text": "- All four 55-map runs were attributed to \"Obs 255\"; the correct\n  working-notes anchors span Obs 256–273.",
+      "values": [
+        {
+          "quantity": "count, 55-map generalisation runs in the audit scope",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map count, 55-map generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The four-run enumeration lives only in sibling markdown (`results/documentation-audit/audit-summary.md`, `results-audit-2026-04-21.md`) — rule 2 blocks anchoring there, so the count is `anchor-unknown`. Obs identifiers are out of scope per rule 5. The map count is anchored to the image run's cost manifest as the least-writable artefact carrying a corpus size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          75
+        ],
+        "section": "Scope notes (unchanged from prior audit)"
+      },
+      "claim_text": "- **Quarantine**: `archive/v2-verifier-contamination/` holds 100 files\n  moved on 2026-04-21 because the v2 verifier prompt was derived by\n  analysing false positives on the 4-map gold-standard set (calibration-\n  on-test).",
+      "values": [
+        {
+          "quantity": "count, files quarantined under archive/v2-verifier-contamination/",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "map count, gold-standard evaluation set",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "results/gold-standard-subtype-classification/per_map_summary.csv#len:$.rows",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The 100-file count is a recursive filesystem count over the quarantine directory, not a JSON scalar; `archive/v2-verifier-contamination/MANIFEST.md` documents the move but is prose (rule 2). The gold-standard map count is taken as the data-row count of the per-map summary CSV (one row per map, header excluded); triage may prefer `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` if a vector-side count is wanted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          81
+        ],
+        "section": "Scope notes (unchanged from prior audit)"
+      },
+      "claim_text": "Post-matrix range (Obs 256–\n  273) covers every 55-map generalisation finding plus the 2026-04-20/21\n  human-review day analyses.",
+      "values": [
+        {
+          "quantity": "map count, 55-map generalisation evaluation set",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.unit_costs.map_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Marginal inclusion: \"55-map\" here functions mainly as a corpus label, and the substantive content of the span (the Obs range) is out of scope per rule 5. Included under the instrument's include-when-in-doubt rule; cheap to prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          86
+        ],
+        "section": "Relationship to the prior audit"
+      },
+      "claim_text": "- **Structure preserved**: the two-tier / era split, the deliverable\n  checklist, and the tiered backfill framing all carry over.",
+      "values": [
+        {
+          "quantity": "count, tiers in the audit's documentation-coverage framework",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Marginal inclusion, flagged as doubtful: \"two-tier\" describes the structure of a sibling markdown document (`results-audit-2026-04-21.md`) rather than a study quantity, and no committed artefact records a tier count. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          100
+        ],
+        "section": "How a reviewer should read this draft"
+      },
+      "claim_text": "1. Skim `audit-summary.md` for the overall coverage picture (a six-page\n   executive view).",
+      "values": [
+        {
+          "quantity": "page count, audit-summary.md executive view",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Marginal inclusion, flagged as doubtful: a page count is a rendering property of `results/documentation-audit/audit-summary.md`, which is prose (rule 2) and in any case has no committed pagination. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          113
+        ],
+        "section": "Verifier checklist"
+      },
+      "claim_text": "- Every cost figure resolves to `totals.cost_usd` in the cited\n  `cost_manifest.json` (to 2 decimal places).",
+      "values": [
+        {
+          "quantity": "decimal places to which cost figures are required to match their cost manifest",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Marginal inclusion, flagged as doubtful: this is a verification tolerance addressed to the audit's own verifier agent, not an assertion about the study, and no artefact records it. Included per the include-when-in-doubt rule; a reasonable triage outcome is to prune it."
+    }
+  ]
+}

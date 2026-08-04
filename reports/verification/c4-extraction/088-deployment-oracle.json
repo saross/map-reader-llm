@@ -1,0 +1,2327 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/deployment-oracle-2026-06-06/deployment-oracle-findings.md",
+    "git_blob": "b9d81fdcce67",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1,
+          1
+        ],
+        "section": "Title"
+      },
+      "claim_text": "# 55-map deployment oracle — carry-forward vs oracle-best (Session 104)",
+      "values": [
+        {
+          "quantity": "map count, out-of-sample student deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.inputs.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b088] This file covers ONLY lines 1-156 of results/deployment-oracle-2026-06-06/deployment-oracle-findings.md; a sibling batch (b089) covers lines 157-274. Batch-level scope decisions: dates, timestamps, session numbers (Session 104/105/106), git commit hashes, section cross-references (§1, §§3-4, §4b, § Changelog), the line-number citation \"its lines 406-407\" at line 135, and model names (`gemini-3-flash`) are out of C4 scope per instrument rule 5. Vote-threshold strings used purely as row/column labels or condition names (\"k3\", \"k4\", \"3-of-5\", \"4-of-5\", \"5-of-5\", \"2-of-5\", \"vote=2\", \"vote=3\", \"vote≥3\", \"1-of-N\", \"T0.3\", \"T0.7\") are treated as names; the underlying vote threshold and pass count ARE extracted once, where the Headline asserts them as the configuration that was run (lines 12-15). Buffer radii that only identify which metric a number belongs to (\"corrected F1 @ 50 m\", \"F1 @ 20 m\", the 75-150 m ring labels) are treated as context rather than claims, following the 078 precedent; the 487-tile Era 2 corpus size IS extracted because it is asserted as a fact. The rank column of the § 3 table (ranks 1-4) is an ordinal row label, not a measured quantity, and is not extracted. Anchor note: this document's own directory holds no map count, so the 55-map corpus size is anchored to the sibling diagnostic summary that records n_maps."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          5,
+          8
+        ],
+        "section": "Question"
+      },
+      "claim_text": "**Question.** The 4 GS (gold-standard) maps are the calibration+test instrument; the\n55-map student corpus is the out-of-sample deployment. We carried forward a PV\n(proposer → consensus → verifier) configuration calibrated on GS and deployed it on\nthe 55 maps.",
+      "values": [
+        {
+          "quantity": "map count, gold-standard calibration and test instrument",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map count, out-of-sample student deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.inputs.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, out-of-sample student deployment corpus (second mention in the same span)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.inputs.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No artefact in the deployment-oracle tree records the GS map count as a scalar (the GS corpus is identified in this document only by its 487-tile Era 2 evaluation grid at line 24), so the 4-map figure is anchor-unknown; triage may chase inputs/vectors/references/mounds-reference.geojson or the Era-2 bounds file. Every read value carries its own path per v1.2 amendment 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          12,
+          15
+        ],
+        "section": "Headline"
+      },
+      "claim_text": "**Headline.** The carry-forward (proposer **text HIGH, T=0.7**; consensus **vote 4-of-5**;\ntext-adversarial verifier, prob≥0.15) was on the GS-optimal *plateau* but **left\n+0.032 corrected-F1 @ 50 m on the table** versus the joint oracle (**text HIGH, T=0.3**;\nconsensus **3-of-5**) — significant (p<0.001).",
+      "values": [
+        {
+          "quantity": "proposer sampling temperature, carried-forward text-HIGH configuration",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/resolved_config.yaml#proposer temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, carried-forward configuration",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/consensus/consensus_meta.json#$.vote_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "total proposer passes entering consensus, carried-forward configuration",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-generalisation/consensus/consensus_meta.json#$.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier probability threshold for retaining a candidate",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-high-generalisation/kit_summary.json#$.prob_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected-F1 gap at R = 50 m, joint oracle minus carry-forward (fixed-union reference)",
+          "value_verbatim": "+0.032",
+          "value_parsed": 0.032,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "proposer sampling temperature, joint-oracle text-HIGH configuration",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-t0.3-generalisation/resolved_config.yaml#proposer temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, joint-oracle configuration",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total proposer passes entering consensus, joint-oracle configuration",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/55maps-text-high-t0.3-generalisation/consensus/consensus_meta.json#$.total_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, joint oracle vs carry-forward at R = 50 m (fixed union)",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span (rule 6). The k3 (3-of-5) operating point was produced by re-filtering the verified candidate pool rather than by a consensus run, so no consensus_meta records vote_threshold = 3; the vote-3 shell artefacts are results/deployment-oracle-2026-06-06/vote3-shells/*/vote3_shell.geojson, which triage may use. The signed gap is recorded as a derivation because the permutation artefact stores observed_f1_diff with the opposite sign convention (condition_a minus condition_b). \"p<0.001\" is quoted as a bound, not a point estimate; the bound marker is dropped from value_verbatim because only the numeral is quoted in the source. Non-JSON anchors (resolved_config.yaml) are legitimate per instrument v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          17
+        ],
+        "section": "Headline"
+      },
+      "claim_text": "**calibrate→deploy generalisation gap**: the deployment optimum is one consensus notch\nlooser and one temperature step lower than the carried configuration.",
+      "values": [
+        {
+          "quantity": "count, consensus-threshold notches between the carried operating point and the deployment optimum",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count, temperature steps between the carried operating point and the deployment optimum",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Borderline inclusion recorded per the instrument's include-when-in-doubt rule: these are step counts over the factor grid rather than measured quantities, and no artefact enumerates the grid spacing. Triage can settle them from the vote thresholds (4 → 3) and temperatures (0.7 → 0.3) extracted at lines 12-15."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          22
+        ],
+        "section": "Front matter — method"
+      },
+      "claim_text": "compared cells scored against the *same* extended GT), via\n`paired_permutation_corrected_55maps.py` (10 000 tile-swap permutations, seed 42).",
+      "values": [
+        {
+          "quantity": "permutation iterations, tile-swap paired permutation test on corrected F1",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, tile-swap paired permutation test on corrected F1",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The claim is about every deployment number in the document; the joint-oracle 50 m permutation artefact is used as the representative anchor because the same metadata block is written by every invocation of the script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          24
+        ],
+        "section": "Front matter — method"
+      },
+      "claim_text": "GS numbers are **F1 @ 20 m** against the gold reference (`mounds-reference.geojson`,\nEra-2 487 tiles).",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 gold-standard evaluation grid",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t4/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"487\" is used both as a corpus label and as an asserted tile count, so it is a claim per instrument rule 5. The GS permutation artefacts record the same figure at $.permutation_test.n_tiles."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "§1 Threshold axis — table"
+      },
+      "claim_text": "| text-high **T0.7** | 0.822 | **0.850** | **+0.028** [+0.022, +0.034] | <0.001 |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, text-high T0.7 at k4 (fixed-union, §1 threshold-axis table row)",
+          "value_verbatim": "0.822",
+          "value_parsed": 0.822,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, text-high T0.7 at k3 (fixed-union, §1 threshold-axis table row)",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (k3 − k4), text-high T0.7 at R = 50 m (§1 threshold-axis table row)",
+          "value_verbatim": "+0.028",
+          "value_parsed": 0.028,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "bootstrap CI lower bound on ΔF1 (k3 − k4), text-high T0.7 at R = 50 m",
+          "value_verbatim": "+0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.delta_f1_ci.upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound on ΔF1 (k3 − k4), text-high T0.7 at R = 50 m",
+          "value_verbatim": "+0.034",
+          "value_parsed": 0.034,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.delta_f1_ci.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, k3 vs k4, text-high T0.7 at R = 50 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "SIGN CONVENTION — the artefact stores the delta and its CI as condition_a (k4) minus condition_b (k3), i.e. negated relative to the document's k3 − k4 presentation; the CI bounds are therefore mapped lower→upper and upper→lower and the magnitudes compared. Recorded, not adjudicated. Bootstrap CI bounds and the permutation p take recompute-script per the instrument. \"p <0.001\" is quoted as a bound; only the numeral is placed in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "§1 Threshold axis — table"
+      },
+      "claim_text": "| text-high **T0.3** | 0.841 | **0.851** | +0.010 | <0.001 |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, text-high T0.3 at k4 (fixed-union, §1 threshold-axis table row)",
+          "value_verbatim": "0.841",
+          "value_parsed": 0.841,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, text-high T0.3 at k3 (fixed-union, §1 threshold-axis table row)",
+          "value_verbatim": "0.851",
+          "value_parsed": 0.851,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (k3 − k4), text-high T0.3 at R = 50 m (§1 threshold-axis table row)",
+          "value_verbatim": "+0.010",
+          "value_parsed": 0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value, k3 vs k4, text-high T0.3 at R = 50 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same sign convention as the T0.7 row. \"p <0.001\" is quoted as a bound; only the numeral is placed in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "§1 Threshold axis — table"
+      },
+      "claim_text": "| **text-min** | 0.795 | **0.822** | +0.027 | <0.001 |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, text-min at k4 (fixed-union, §1 threshold-axis table row)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, text-min at k3 (fixed-union, §1 threshold-axis table row)",
+          "value_verbatim": "0.822",
+          "value_parsed": 0.822,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (k3 − k4), text-min at R = 50 m (§1 threshold-axis table row)",
+          "value_verbatim": "+0.027",
+          "value_parsed": 0.027,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value, k3 vs k4, text-min at R = 50 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same sign convention as the T0.7 row. \"p <0.001\" is quoted as a bound; only the numeral is placed in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          41
+        ],
+        "section": "§1 Threshold axis — mechanism"
+      },
+      "claim_text": "**Mechanism.** k3 trades ~3–5 pp precision for ~6–8 pp recall: relaxing consensus from\n4-of-5 to 3-of-5 surfaces **99 / 117 / 61 additional real mounds** (verifier-passed and\nhuman-confirmed) that 4-of-5 missed, and the verifier filters the extra false positives",
+      "values": [
+        {
+          "quantity": "precision cost of relaxing k4 to k3, lower end of range across the three text runs",
+          "value_verbatim": "~3",
+          "value_parsed": 3,
+          "unit": "pp",
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision cost of relaxing k4 to k3, upper end of range across the three text runs",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "pp",
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall gain from relaxing k4 to k3, lower end of range across the three text runs",
+          "value_verbatim": "~6",
+          "value_parsed": 6,
+          "unit": "pp",
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "recall gain from relaxing k4 to k3, upper end of range across the three text runs",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "pp",
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, additional human-confirmed real mounds surfaced by k3 in the text-high T0.7 run",
+          "value_verbatim": "99",
+          "value_parsed": 99,
+          "unit": null,
+          "kind": "count",
+          "path": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3-new-review.csv#count of rows with human_label == 'mound'",
+          "method": "read"
+        },
+        {
+          "quantity": "count, additional human-confirmed real mounds surfaced by k3 in the text-high T0.3 run",
+          "value_verbatim": "117",
+          "value_parsed": 117,
+          "unit": null,
+          "kind": "count",
+          "path": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3-new-review.csv#count of rows with human_label == 'mound'",
+          "method": "read"
+        },
+        {
+          "quantity": "count, additional human-confirmed real mounds surfaced by k3 in the text-min run",
+          "value_verbatim": "61",
+          "value_parsed": 61,
+          "unit": null,
+          "kind": "count",
+          "path": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3-new-review.csv#count of rows with human_label == 'mound'",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3-new-review.csv",
+        "path": "count of rows with human_label == 'mound'"
+      },
+      "method": "read",
+      "notes": "Mixed span (rule 6). The precision/recall ranges are stated in percentage points across all three runs and need the min/max of (k4 − k3) precision and (k3 − k4) recall from the three perm-k3-vs-k4/permutation-R50m.json files ($.global_a.precision, $.global_b.precision, $.global_a.recall, $.global_b.recall) — recorded as recompute-script, not computed here (rule 4). Unit `pp` set on each range value per v1.2 amendment 6. Approx markers retained per amendment 5. The mound counts anchor to non-JSON CSV review files with descriptive locators (house style for CSV anchors)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          46
+        ],
+        "section": "§1 Threshold axis — mechanism"
+      },
+      "claim_text": "This required a **vote=3-shell verifier run** (10 622\ncandidates, `gemini-3-flash` text-adversarial, real-time *flex*, prob≥0.15, **0 failures**,\n≈ $7.4 billed) plus manual review of the new VLM-only candidates (357 genuinely-new\nacross the three runs + 238 auto-fill confirmations; 145 new real mounds in the\nfresh-judgement pass alone).",
+      "values": [
+        {
+          "quantity": "count, candidates verified in the vote=3-shell verifier run across all three text runs",
+          "value_verbatim": "10 622",
+          "value_parsed": 10622,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified/run.meta.json",
+              "path": "$.execution_stats.items_processed"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified/run.meta.json",
+              "path": "$.execution_stats.items_processed"
+            },
+            {
+              "name": "c",
+              "file": "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified/run.meta.json",
+              "path": "$.execution_stats.items_processed"
+            }
+          ]
+        },
+        {
+          "quantity": "verifier probability threshold used in the vote=3-shell run",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-high-generalisation/kit_summary.json#$.prob_threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "count, failed items across the three vote=3-shell verifier runs",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified/run.meta.json",
+              "path": "$.execution_stats.items_failed"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified/run.meta.json",
+              "path": "$.execution_stats.items_failed"
+            },
+            {
+              "name": "c",
+              "file": "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified/run.meta.json",
+              "path": "$.execution_stats.items_failed"
+            }
+          ]
+        },
+        {
+          "quantity": "billed cost USD, vote=3-shell verifier run at real-time flex pricing (billing-console figure)",
+          "value_verbatim": "≈ $7.4",
+          "value_parsed": 7.4,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "count, genuinely-new VLM-only candidates sent to fresh manual review across the three runs",
+          "value_verbatim": "357",
+          "value_parsed": 357,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-high-generalisation/kit_summary.json",
+              "path": "$.n_pass1_new"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-high-t0.3-generalisation/kit_summary.json",
+              "path": "$.n_pass1_new"
+            },
+            {
+              "name": "c",
+              "file": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-min-generalisation/kit_summary.json",
+              "path": "$.n_pass1_new"
+            }
+          ]
+        },
+        {
+          "quantity": "count, deployed text runs contributing to the vote=3-shell review",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "count of per-run subdirectories",
+          "method": "read"
+        },
+        {
+          "quantity": "count, auto-fill confirmations across the three runs",
+          "value_verbatim": "238",
+          "value_parsed": 238,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-high-generalisation/kit_summary.json",
+              "path": "$.n_pass2_autofill"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-high-t0.3-generalisation/kit_summary.json",
+              "path": "$.n_pass2_autofill"
+            },
+            {
+              "name": "c",
+              "file": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-min-generalisation/kit_summary.json",
+              "path": "$.n_pass2_autofill"
+            }
+          ]
+        },
+        {
+          "quantity": "count, new real mounds confirmed in the fresh-judgement (pass-1) review across the three runs",
+          "value_verbatim": "145",
+          "value_parsed": 145,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/vote3-verify/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span (rule 6); every derivation carries its own expression and operands per v1.2 amendment 1, and no operand inherits the arithmetic method. The billed cost is a billing-console figure at flex pricing and takes method `external` per the instrument — for attestation, the three run.meta.json files record standard-rate estimates at $.cost_estimate.total_cost_usd, which are not the billed figure. The 145 fresh-judgement mounds require counting human_label == 'mound' rows across the three results/deployment-oracle-2026-06-06/k3-review/*/pass1-new/human-review.csv files and are recorded as recompute-script. The \"three runs\" count anchors to the vote3-verify directory's per-run subdirectories. Approx marker on the cost retained per amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          52
+        ],
+        "section": "§2 GS calibration check"
+      },
+      "claim_text": "In the **same PV pipeline** on the GS tiles (post-verifier F1 @ 20 m), the curve is\nhump-shaped (the verifier inverts the pre-verifier monotone \"stricter-is-better\" into a\npeak), and the point estimate peaks at **4-of-5**:",
+      "values": [
+        {
+          "quantity": "consensus vote threshold at which the GS post-verifier F1 @ 20 m point estimate peaks",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "An argmax claim over the five post-verifier sweep cells per configuration (t1…t5 subdirectories under gs-postverifier-sweep/high-t0.7/, /high-t0.3/ and /min-t0.7/, each with $.summary.buffers[0].f1) — needs a sweep over the sweep, so recompute-script; recorded, not computed (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          56
+        ],
+        "section": "§2 GS calibration check — table"
+      },
+      "claim_text": "| HIGH-text T0.7 | 0.847 | **0.861** | 0.836 |",
+      "values": [
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, HIGH-text T0.7 at 3-of-5 (§2 table row)",
+          "value_verbatim": "0.847",
+          "value_parsed": 0.847,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t3/evaluation.json#$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, HIGH-text T0.7 at 4-of-5 (§2 table row)",
+          "value_verbatim": "0.861",
+          "value_parsed": 0.861,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, HIGH-text T0.7 at 5-of-5 (§2 table row)",
+          "value_verbatim": "0.836",
+          "value_parsed": 0.836,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t5/evaluation.json#$.summary.buffers[0].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t4/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cross-file locators per v1.2 amendment 2; every value carries its own path per amendment 3. The t3/t4/t5 subdirectory names encode the vote threshold and are treated as condition names."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "§2 GS calibration check — table"
+      },
+      "claim_text": "| HIGH-text T0.3 | 0.874 | **0.884** | 0.868 |",
+      "values": [
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, HIGH-text T0.3 at 3-of-5 (§2 table row)",
+          "value_verbatim": "0.874",
+          "value_parsed": 0.874,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t3/evaluation.json#$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, HIGH-text T0.3 at 4-of-5 (§2 table row)",
+          "value_verbatim": "0.884",
+          "value_parsed": 0.884,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, HIGH-text T0.3 at 5-of-5 (§2 table row)",
+          "value_verbatim": "0.868",
+          "value_parsed": 0.868,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t5/evaluation.json#$.summary.buffers[0].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t4/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "§2 GS calibration check — table"
+      },
+      "claim_text": "| MINIMAL T0.7 | 0.866 | **0.871** | 0.847 |",
+      "values": [
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, MINIMAL T0.7 at 3-of-5 (§2 table row)",
+          "value_verbatim": "0.866",
+          "value_parsed": 0.866,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/t3/evaluation.json#$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, MINIMAL T0.7 at 4-of-5 (§2 table row)",
+          "value_verbatim": "0.871",
+          "value_parsed": 0.871,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, MINIMAL T0.7 at 5-of-5 (§2 table row)",
+          "value_verbatim": "0.847",
+          "value_parsed": 0.847,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/t5/evaluation.json#$.summary.buffers[0].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/t4/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          61
+        ],
+        "section": "§2 GS calibration check"
+      },
+      "claim_text": "But the peak is a **plateau**: 4-of-5 vs 3-of-5 is **not significant** (p = 0.12 / 0.11 /\n0.43), while 4-of-5 vs 5-of-5 **is** (p = 0.004 / 0.036 / 0.015).",
+      "values": [
+        {
+          "quantity": "permutation p-value, GS 4-of-5 vs 3-of-5, HIGH-text T0.7 at 20 m",
+          "value_verbatim": "0.12",
+          "value_parsed": 0.12,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, GS 4-of-5 vs 3-of-5, HIGH-text T0.3 at 20 m",
+          "value_verbatim": "0.11",
+          "value_parsed": 0.11,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/permutation/high-t0.3_4v3/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, GS 4-of-5 vs 3-of-5, MINIMAL T0.7 at 20 m",
+          "value_verbatim": "0.43",
+          "value_parsed": 0.43,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/permutation/min-t0.7_4v3/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, GS 4-of-5 vs 5-of-5, HIGH-text T0.7 at 20 m",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/permutation/high-t0.7_4v5/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, GS 4-of-5 vs 5-of-5, HIGH-text T0.3 at 20 m",
+          "value_verbatim": "0.036",
+          "value_parsed": 0.036,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/permutation/high-t0.3_4v5/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, GS 4-of-5 vs 5-of-5, MINIMAL T0.7 at 20 m",
+          "value_verbatim": "0.015",
+          "value_parsed": 0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/permutation/min-t0.7_4v5/pairwise_permutation_result.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/permutation/high-t0.7_4v3/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The three-way slash lists follow the row order of the §2 table (HIGH-text T0.7, HIGH-text T0.3, MINIMAL T0.7); the mapping is inferred from that order and should be confirmed by triage. Permutation p-values take recompute-script per the instrument. The gs-postverifier-sweep/permutation/test/ directory also holds a result and appears to be a smoke test — not mapped to any value here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          69
+        ],
+        "section": "§2 GS calibration check — derivation blockquote"
+      },
+      "claim_text": "> Derivation was **free** (no new API for GS): the GS verifier had been run on the\n> 1-of-N union, so post-verifier sets at every vote threshold are recovered by filtering\n> `vote_count` + prob≥0.15 (`verify_adversarial-text` probabilities, candidate counts",
+      "values": [
+        {
+          "quantity": "new API cost USD incurred to derive the GS post-verifier sweep",
+          "value_verbatim": "free",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier probability threshold used to recover post-verifier sets at each vote threshold",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/deployment-oracle-2026-06-06/k3-review/55maps-text-high-generalisation/kit_summary.json#$.prob_threshold",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"free\" asserts zero new API spend for the GS derivation; no cost manifest exists in the gs-postverifier-sweep tree (there are no run.meta.json files there, consistent with the claim), so the cost value is anchor-unknown. \"1-of-N union\" names the union threshold and is treated as a condition name per rule 5. The 0.15 threshold is anchored to the deployment kit summary because the GS sweep records no prob_threshold scalar of its own — triage should confirm the GS-side threshold independently."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          75
+        ],
+        "section": "§3 Config axis"
+      },
+      "claim_text": "Comparing the four deployed configs at their carried operating points against a common\nextended GT (reviewed + union of all four carried reviews), corrected F1 @ 50 m:",
+      "values": [
+        {
+          "quantity": "count, deployed configurations compared on the config axis",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "count of per-run subdirectories",
+          "method": "read"
+        },
+        {
+          "quantity": "count, carried human-review sets unioned into the common extended GT",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "count of per-run subdirectories",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/postverifier-eval/",
+        "path": "count of per-run subdirectories"
+      },
+      "method": "read",
+      "notes": "The four deployed configurations are the per-run subdirectories of the post-verifier evaluation tree (55maps-text-high, -text-high-t0.3, -text-min, -image). The second value counts the carried reviews unioned into the fixed-union GT; the union review CSV itself is results/deployment-oracle-2026-06-06/config-axis-fixedunion/union-carried-review.csv, which triage may prefer as the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "§3 Config axis — ranking table"
+      },
+      "claim_text": "| 1 | text-high **T0.3** (k4) | **0.800** |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, text-high T0.3 at k4 under the fixed-union reference (§3 ranking table row)",
+          "value_verbatim": "0.800",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The rank cell (1) is an ordinal row label, not a measured quantity, and is not extracted (see batch note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "§3 Config axis — ranking table"
+      },
+      "claim_text": "| 2 | text-high T0.7 (k4, carried) | 0.780 |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, text-high T0.7 at k4 (carried) under the fixed-union reference (§3 ranking table row)",
+          "value_verbatim": "0.780",
+          "value_parsed": 0.78,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "§3 Config axis — ranking table"
+      },
+      "claim_text": "| 3 | image (k3) | 0.767 |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, image run at k3 under the fixed-union reference (§3 ranking table row)",
+          "value_verbatim": "0.767",
+          "value_parsed": 0.767,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_IM/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "§3 Config axis — ranking table"
+      },
+      "claim_text": "| 4 | text-min (k4) | 0.748 |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, text-min at k4 under the fixed-union reference (§3 ranking table row)",
+          "value_verbatim": "0.748",
+          "value_parsed": 0.748,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_TM/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          86
+        ],
+        "section": "§3 Config axis"
+      },
+      "claim_text": "**All six pairwise contrasts are significant (p<0.001 except T0.7>image p=0.005).** In\nparticular **T0.3 > T0.7 = +0.020 (p<0.001)** — consistent with, and slightly stronger\nthan, the per-side v2 grid's +0.016.",
+      "values": [
+        {
+          "quantity": "count, pairwise config contrasts computed under the fixed-union reference",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "count of pair subdirectories",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value bound asserted for five of the six fixed-union pairwise contrasts",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, text-high T0.7 vs image at R = 50 m (fixed union)",
+          "value_verbatim": "0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_IM/permutation-R50m.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ΔF1 (T0.3 − T0.7) at R = 50 m, fixed-union reference",
+          "value_verbatim": "+0.020",
+          "value_parsed": 0.02,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value, text-high T0.3 vs T0.7 at R = 50 m (fixed union)",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ΔF1 (T0.3 − T0.7) at R = 50 m from the earlier per-side v2 pairwise grid",
+          "value_verbatim": "+0.016",
+          "value_parsed": 0.016,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-pairwise-permutation-v2/paired-t0.3-vs-t0.7/summary.json#$.per_buffer[6].delta_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span (rule 6). The six pairwise contrasts correspond to the six pair subdirectories under config-axis-fixedunion/ (T03_vs_IM, T03_vs_TM, TH7_vs_IM, TH7_vs_T03, TH7_vs_TM, TM_vs_IM); the blanket \"p<0.001\" covers five of them and takes recompute-script with no single path. The v2-grid comparator is per_buffer index 6, which is buffer_metres = 50 in that artefact's buffer list."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "§4 Joint oracle — table"
+      },
+      "claim_text": "| carry-forward (T0.7 × 4-of-5) | 0.799 | 0.913 | 0.710 |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, carry-forward cell (§4 joint-oracle table row)",
+          "value_verbatim": "0.799",
+          "value_parsed": 0.799,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "precision @ 50 m, carry-forward cell (§4 joint-oracle table row)",
+          "value_verbatim": "0.913",
+          "value_parsed": 0.913,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall @ 50 m, carry-forward cell (§4 joint-oracle table row)",
+          "value_verbatim": "0.710",
+          "value_parsed": 0.71,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "§4 Joint oracle — table"
+      },
+      "claim_text": "| **joint oracle (T0.3 × 3-of-5)** | **0.830** | 0.868 | 0.795 |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, joint-oracle cell (§4 joint-oracle table row)",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "precision @ 50 m, joint-oracle cell (§4 joint-oracle table row)",
+          "value_verbatim": "0.868",
+          "value_parsed": 0.868,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall @ 50 m, joint-oracle cell (§4 joint-oracle table row)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.recall",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "§4 Joint oracle — table"
+      },
+      "claim_text": "| **Δ (oracle − carry-forward)** | **+0.032** [+0.024, +0.040] | | p<0.001 |",
+      "values": [
+        {
+          "quantity": "ΔF1 (oracle − carry-forward) at R = 50 m, fixed-union reference (§4 joint-oracle table row)",
+          "value_verbatim": "+0.032",
+          "value_parsed": 0.032,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "bootstrap CI lower bound on ΔF1 (oracle − carry-forward) at R = 50 m",
+          "value_verbatim": "+0.024",
+          "value_parsed": 0.024,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.delta_f1_ci.upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound on ΔF1 (oracle − carry-forward) at R = 50 m",
+          "value_verbatim": "+0.040",
+          "value_parsed": 0.04,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.delta_f1_ci.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, joint oracle vs carry-forward at R = 50 m",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "SIGN CONVENTION as for the §1 table: the artefact stores the CI as condition_a minus condition_b, so the document's positive bounds map to the negated artefact bounds (lower→upper, upper→lower). Recorded, not adjudicated. \"p<0.001\" is quoted as a bound; only the numeral is placed in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          101
+        ],
+        "section": "§4 Joint oracle"
+      },
+      "claim_text": "The carry-forward left **+0.032 corrected-F1** on the table, decomposing roughly into a\nconfig component (T0.7→T0.3, ~+0.020) and a threshold component (4-of-5→3-of-5, ~+0.010–0.028).",
+      "values": [
+        {
+          "quantity": "ΔF1 (oracle − carry-forward) at R = 50 m, fixed-union reference",
+          "value_verbatim": "+0.032",
+          "value_parsed": 0.032,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "config component of the deployment gap (T0.7 → T0.3) at R = 50 m",
+          "value_verbatim": "~+0.020",
+          "value_parsed": 0.02,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "threshold component of the deployment gap (4-of-5 → 3-of-5), lower end of range",
+          "value_verbatim": "~+0.010",
+          "value_parsed": 0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "threshold component of the deployment gap (4-of-5 → 3-of-5), upper end of range",
+          "value_verbatim": "0.028",
+          "value_parsed": 0.028,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Each derived value carries its own expression and operands per v1.2 amendment 1; no operand inherits the arithmetic method. The threshold-component range is read as spanning the smallest (T0.3) and largest (T0.7) k3 − k4 deltas from the §1 table — a mapping triage should confirm. Approx markers retained per amendment 5; the range's shared sign convention means the upper value is quoted without a leading plus."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          112
+        ],
+        "section": "§4b Canonical adjudicated-GT re-score"
+      },
+      "claim_text": "override a `not_mound`). We rebuilt a **canonical adjudicated GT** — one point per\nreal feature: 740 auto-resolved clusters (agreed + min-ring-collapsed), 23 of 24\nhuman-adjudicated conflicts, and 10 of 213 cross-config-corroborated **vote=2**\ncandidates that survived review (a GT-completeness pass toward GS quality; the low\n4.7 % yield confirms the vote≥3 floor was already near-saturated). **773 canonical\nmounds.**",
+      "values": [
+        {
+          "quantity": "count, auto-resolved canonical mound clusters",
+          "value_verbatim": "740",
+          "value_parsed": 740,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_auto_canonical_mounds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, human-adjudicated conflicts resolved as mounds",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "count",
+          "path": "results/deployment-oracle-2026-06-06/canonical-gt/re-review/human-review.csv#count of rows with human_label == 'mound'",
+          "method": "read"
+        },
+        {
+          "quantity": "count, clusters sent to human adjudication",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_re_review",
+          "method": "read"
+        },
+        {
+          "quantity": "count, cross-config-corroborated vote=2 candidates that survived review",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "results/deployment-oracle-2026-06-06/vote2-enrichment/human-review.csv#count of rows with human_label == 'mound'",
+          "method": "read"
+        },
+        {
+          "quantity": "count, cross-config-corroborated vote=2 candidates entering the enrichment review",
+          "value_verbatim": "213",
+          "value_parsed": 213,
+          "unit": null,
+          "kind": "count",
+          "path": "results/deployment-oracle-2026-06-06/vote2-enrichment/summary.json#$.n_vote2_new_features_kept",
+          "method": "read"
+        },
+        {
+          "quantity": "yield of the vote=2 enrichment review (survivors as a percentage of candidates reviewed)",
+          "value_verbatim": "4.7",
+          "value_parsed": 4.7,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/vote2-enrichment/human-review.csv",
+              "path": "count of rows with human_label == 'mound'"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/vote2-enrichment/summary.json",
+              "path": "$.n_vote2_new_features_kept"
+            }
+          ]
+        },
+        {
+          "quantity": "count, canonical adjudicated mounds in the rebuilt GT",
+          "value_verbatim": "773",
+          "value_parsed": 773,
+          "unit": null,
+          "kind": "count",
+          "path": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv#row count excluding the header",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/canonical-gt/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cross-file locators per v1.2 amendment 2; every read value carries its own path per amendment 3. \"vote=2\" and \"vote≥3\" are shell/threshold names, out of scope per rule 5. CSV anchors use descriptive locators (house style). Note for triage: the canonical-review.csv is also the anchor used by batch b001 for the same 773-mound quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "§4b Canonical re-score — table"
+      },
+      "claim_text": "| naive union | 0.800 | 0.780 | 0.767 | 0.748 | +0.020 (p<0.001) | +0.032 (p<0.001) |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, T0.3, naive-union reference (§4b re-score table row)",
+          "value_verbatim": "0.800",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, T0.7, naive-union reference (§4b re-score table row)",
+          "value_verbatim": "0.780",
+          "value_parsed": 0.78,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, image, naive-union reference (§4b re-score table row)",
+          "value_verbatim": "0.767",
+          "value_parsed": 0.767,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_IM/permutation-R50m.json#$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, text-min, naive-union reference (§4b re-score table row)",
+          "value_verbatim": "0.748",
+          "value_parsed": 0.748,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_TM/permutation-R50m.json#$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (T0.3 − T0.7) at R = 50 m, naive-union reference (§4b re-score table row)",
+          "value_verbatim": "+0.020",
+          "value_parsed": 0.02,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value, T0.3 vs T0.7 at R = 50 m, naive-union reference",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ΔF1 (oracle − carry-forward) at R = 50 m, naive-union reference (§4b re-score table row)",
+          "value_verbatim": "+0.032",
+          "value_parsed": 0.032,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value, joint oracle vs carry-forward at R = 50 m, naive-union reference",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/joint-oracle/carryfwd-vs-oracle/permutation-R50m.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/TH7_vs_T03/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The naive-union row restates the §3 and §4 fixed-union figures; each value carries its own path per v1.2 amendment 3 and each derivation its own expression per amendment 1. The two \"p<0.001\" cells are bounds; only the numeral is placed in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "§4b Canonical re-score — table"
+      },
+      "claim_text": "| **canonical GT** | **0.836** | **0.815** | **0.799** | **0.783** | **+0.021 (p<0.001)** | **+0.032 (p<0.001)** |",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, T0.3, canonical adjudicated-GT reference (§4b re-score table row)",
+          "value_verbatim": "0.836",
+          "value_parsed": 0.836,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, T0.7, canonical adjudicated-GT reference (§4b re-score table row)",
+          "value_verbatim": "0.815",
+          "value_parsed": 0.815,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, image, canonical adjudicated-GT reference (§4b re-score table row)",
+          "value_verbatim": "0.799",
+          "value_parsed": 0.799,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/canonical-rescore/config_TH7_vs_IM/permutation-R50m.json#$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, text-min, canonical adjudicated-GT reference (§4b re-score table row)",
+          "value_verbatim": "0.783",
+          "value_parsed": 0.783,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/canonical-rescore/config_TH7_vs_TM/permutation-R50m.json#$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (T0.3 − T0.7) at R = 50 m, canonical adjudicated-GT reference (§4b re-score table row)",
+          "value_verbatim": "+0.021",
+          "value_parsed": 0.021,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/canonical-rescore/config_TH7_vs_T03/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/canonical-rescore/config_TH7_vs_T03/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value, T0.3 vs T0.7 at R = 50 m, canonical adjudicated-GT reference",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ΔF1 (oracle − carry-forward) at R = 50 m, canonical adjudicated-GT reference (§4b re-score table row)",
+          "value_verbatim": "+0.032",
+          "value_parsed": 0.032,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/canonical-rescore/joint_carryfwd_vs_oracle/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/canonical-rescore/joint_carryfwd_vs_oracle/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value, joint oracle vs carry-forward at R = 50 m, canonical adjudicated-GT reference",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/deployment-oracle-2026-06-06/canonical-rescore/joint_carryfwd_vs_oracle/permutation-R50m.json#$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/canonical-rescore/config_TH7_vs_T03/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Each value carries its own path per v1.2 amendment 3 and each derivation its own expression per amendment 1. The two \"p<0.001\" cells are bounds; only the numeral is placed in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "§4b Canonical re-score"
+      },
+      "claim_text": "**Deltas hold; absolutes rise** ~0.02–0.04 as the ~600 duplicate phantoms clear.",
+      "values": [
+        {
+          "quantity": "rise in absolute corrected F1 moving from the naive union to the canonical GT, lower end of range",
+          "value_verbatim": "~0.02",
+          "value_parsed": 0.02,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "rise in absolute corrected F1 moving from the naive union to the canonical GT, upper end of range",
+          "value_verbatim": "0.04",
+          "value_parsed": 0.04,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, duplicate phantom mounds removed by rebuilding the GT canonically",
+          "value_verbatim": "~600",
+          "value_parsed": 600,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/canonical-rescore/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The absolute-rise range needs the per-config differences between the canonical-rescore and config-axis-fixedunion F1 values at R = 50 m across the four configs; the duplicate-phantom count needs the n_phantoms_a/n_phantoms_b difference between the two reference builds. Both are recorded, not computed (rule 4). Approx markers retained per amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          122
+        ],
+        "section": "§4b Canonical re-score"
+      },
+      "claim_text": "Canonical joint oracle: carry-forward (T0.7×4-of-5) = **0.815** vs oracle\n(T0.3×3-of-5) = **0.848**, the carry-forward leaving **+0.032 corrected-F1** on the\ntable (p<0.001).",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, carry-forward cell, canonical adjudicated-GT reference",
+          "value_verbatim": "0.815",
+          "value_parsed": 0.815,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, joint-oracle cell, canonical adjudicated-GT reference",
+          "value_verbatim": "0.848",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_b.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (oracle − carry-forward) at R = 50 m, canonical adjudicated-GT reference",
+          "value_verbatim": "+0.032",
+          "value_parsed": 0.032,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "b - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/deployment-oracle-2026-06-06/canonical-rescore/joint_carryfwd_vs_oracle/permutation-R50m.json",
+              "path": "$.global_a.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/deployment-oracle-2026-06-06/canonical-rescore/joint_carryfwd_vs_oracle/permutation-R50m.json",
+              "path": "$.global_b.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value, joint oracle vs carry-forward at R = 50 m, canonical adjudicated-GT reference",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/canonical-rescore/joint_carryfwd_vs_oracle/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "\"p<0.001\" is quoted as a bound; only the numeral is placed in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          129
+        ],
+        "section": "§5 Two-script reconciliation"
+      },
+      "claim_text": "`compute_corrected_f1_multi_buffer.py` and `paired_permutation_corrected_55maps.py`\ndisagreed by ~0.01 absolute F1 (e.g. k4 T0.7 0.833 vs 0.822). Cause:",
+      "values": [
+        {
+          "quantity": "absolute corrected-F1 disagreement between the standalone script and the permutation script before the phantom-gate fix",
+          "value_verbatim": "~0.01",
+          "value_parsed": 0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, k4 text-high T0.7, as produced by the standalone script before the phantom-gate fix",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, k4 text-high T0.7, as produced by the permutation script",
+          "value_verbatim": "0.822",
+          "value_parsed": 0.822,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.global_a.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.833 figure is the pre-fix standalone output quoted as the 'was' side of a correction block and is therefore `historical` per instrument rule 3; § 5's Resolved paragraph (line 141) states the refreshed standalone value as 0.8222. Triage note: results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json is the published standalone artefact for this run and is a different invocation (single-buffer yesterday), not the fixed-union invocation described here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          133
+        ],
+        "section": "§5 Two-script reconciliation"
+      },
+      "claim_text": "fixed-union invocations here pass a **multi-buffer** review as yesterday, so the standalone\ncorrected-F1 script over-promotes 86 wider-ring (75–150 m) phantoms at R=50, inflating it.",
+      "values": [
+        {
+          "quantity": "count, wider-ring phantoms over-promoted at R = 50 m by the ungated standalone script",
+          "value_verbatim": "86",
+          "value_parsed": 86,
+          "unit": null,
+          "kind": "count",
+          "path": "count of rows whose buffer_metres exceeds 50",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
+        "path": "count of rows whose buffer_metres exceeds 50"
+      },
+      "method": "recompute-script",
+      "notes": "The ring bounds (75-150 m) and R=50 identify which rows are counted and are treated as context, not claims. The count needs a filter over the multi-buffer review CSV used as 'yesterday' in the fixed-union invocations — recorded, not computed (rule 4). Triage should confirm which run's review CSV the 86 refers to; the text-high multi-buffer review is the most likely candidate given the worked example in § 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          137
+        ],
+        "section": "§5 Two-script reconciliation"
+      },
+      "claim_text": "from the permutation script.** The ΔF1s are unaffected (the bias is common to both cells);\nonly the absolute F1 shifts ~0.01.",
+      "values": [
+        {
+          "quantity": "absolute corrected-F1 shift induced by the ungated-phantom bias (ΔF1 unaffected)",
+          "value_verbatim": "~0.01",
+          "value_parsed": 0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/perm-k3-vs-k4/permutation-R50m.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Restates the ~0.01 disagreement quantified at line 129; recorded separately because it is a distinct verbatim span. Approx marker retained per amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          141
+        ],
+        "section": "§5 Two-script reconciliation — Resolved"
+      },
+      "claim_text": "(`buffer_metres ≤ R`); the standalone corrected-F1 now matches the permutation **exactly**\n(k4 T0.7 = 0.8222, k3 = 0.8501, etc. — all six cells agree to 4 d.p.).",
+      "values": [
+        {
+          "quantity": "corrected F1 @ 50 m, k4 text-high T0.7, standalone script after the phantom-gate fix",
+          "value_verbatim": "0.8222",
+          "value_parsed": 0.8222,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected F1 @ 50 m, k3 text-high T0.7, standalone script after the phantom-gate fix",
+          "value_verbatim": "0.8501",
+          "value_parsed": 0.8501,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3-corrected/summary.json#$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "count, k3/k4 cells across the three text runs asserted to agree between the two scripts",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "decimal places to which the two scripts are asserted to agree",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k4-corrected/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span (rule 6). \"six cells\" is the three text runs × two thresholds (k3-corrected and k4-corrected summary.json under each k3-scoring run directory); no artefact records the count as a scalar, so it is anchor-unknown. The 4-d.p. agreement assertion requires comparing the six standalone summaries against the six permutation results and takes recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "§5 Two-script reconciliation — Resolved"
+      },
+      "claim_text": "**published numbers are unchanged**. Fix + 3 tier-1 tests committed; standalone outputs",
+      "values": [
+        {
+          "quantity": "count, tier-1 tests committed alongside the phantom-gate fix",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "count of test functions marked @pytest.mark.tier1 that exercise the yesterday buffer gate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_corrected_f1_phantom_gate.py",
+        "path": "count of test functions marked @pytest.mark.tier1 that exercise the yesterday buffer gate"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (test counts in tests/*.py are legitimate per instrument v1.1). The module now also contains extended-GT de-duplication tests added by a later change, so triage must scope the count to the yesterday-gate tests the fix introduced rather than the module total."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          152
+        ],
+        "section": "§6 Recommendation on 2-of-5"
+      },
+      "claim_text": "Evidence against a further gain: (a) the GS post-verifier curve turns over hard below the\nplateau (2-of-5 = 0.816 vs 3-of-5 0.847 for HIGH-text T0.7); (b) deployment shifted the",
+      "values": [
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, HIGH-text T0.7 at 2-of-5",
+          "value_verbatim": "0.816",
+          "value_parsed": 0.816,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "GS post-verifier F1 @ 20 m, HIGH-text T0.7 at 3-of-5",
+          "value_verbatim": "0.847",
+          "value_parsed": 0.847,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t3/evaluation.json#$.summary.buffers[0].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t2/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cross-file locator per v1.2 amendment 2; each value carries its own path per amendment 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "§6 Recommendation on 2-of-5"
+      },
+      "claim_text": "optimum only *one* notch looser, and k3 precision is already 0.87–0.91. Cost if pursued:",
+      "values": [
+        {
+          "quantity": "count, consensus-threshold notches by which deployment shifted the optimum",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "precision @ 50 m at k3, lower end of range across the three text runs",
+          "value_verbatim": "0.87",
+          "value_parsed": 0.87,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "precision @ 50 m at k3, upper end of range across the three text runs",
+          "value_verbatim": "0.91",
+          "value_parsed": 0.91,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/k3-scoring/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The precision range needs the min and max of $.global_b.precision across the three perm-k3-vs-k4/permutation-R50m.json files — recorded, not computed (rule 4). The \"one notch\" value is the same borderline step-count claim recorded at lines 16-17."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          155
+        ],
+        "section": "§6 Recommendation on 2-of-5"
+      },
+      "claim_text": "the deployment **vote=2 shell is ~8 400 candidates/text run** (≈2× the vote=3 shell) →\n≈ $15–30 flex + ~400–500 new VLM-only review candidates/run.",
+      "values": [
+        {
+          "quantity": "projected candidate count per text run in a vote=2 shell (prospective estimate for an unexecuted run)",
+          "value_verbatim": "~8 400",
+          "value_parsed": 8400,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "projected ratio of vote=2 shell size to vote=3 shell size",
+          "value_verbatim": "≈2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "projected cost USD at flex pricing for a vote=2 shell verifier run, lower end of range",
+          "value_verbatim": "≈ $15",
+          "value_parsed": 15,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "projected cost USD at flex pricing for a vote=2 shell verifier run, upper end of range",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "projected new VLM-only review candidates per run in a vote=2 shell, lower end of range",
+          "value_verbatim": "~400",
+          "value_parsed": 400,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "projected new VLM-only review candidates per run in a vote=2 shell, upper end of range",
+          "value_verbatim": "500",
+          "value_parsed": 500,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Every value here is a forward projection for a run the document explicitly leaves unexecuted (\"Decision deferred to the operator\"), so no repo artefact can decide them; the cost projections are vendor/flex-pricing figures and take `external` per the instrument, with which-kind stated in `quantity` (projected estimate, not audited or billed). The candidate-count projection can be sanity-checked against the vote=3 shell sizes recorded at $.execution_stats.items_processed in the three results/deployment-oracle-2026-06-06/vote3-verify/*/verified/run.meta.json files. Shared units on the ranges set per v1.2 amendment 6; approx markers retained per amendment 5."
+    }
+  ]
+}

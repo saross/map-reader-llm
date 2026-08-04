@@ -1,0 +1,1404 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/diversity-dividend-384/diversity-dividend-analysis.md",
+    "git_blob": "375427d0d054",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          32
+        ],
+        "section": "Method"
+      },
+      "claim_text": "- **Round-robin tile-swap permutation** on micro-average F1@20 m — all C(N, 2)\n  pairs, probability-0.5 per-tile label swap, 10,000 permutations, seed 42,\n  two-sided.",
+      "values": [
+        {
+          "quantity": "evaluation buffer radius of the permutation statistic (micro-average F1)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "per-tile label-swap probability in the round-robin permutation",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation iterations per pairwise contrast",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, diversity-dividend permutation sweep",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b089] Batch-level scope decisions for this file (whole document, lines 1–164). Out of C4 scope per instrument rule 5 and therefore NOT extracted: the revision-banner and changelog dates, session numbers (Session 103), hypothesis and audit identifiers (H3, H9, E56, D17 audit U4/U5), preregistration line-number citations (`osf/preregistration.md:501`, `:519-521`), commit hashes (`db582f1d`, `fd52bb82`, `811bc9b5`), preregistration section references (§8.2, §8.9), and numbers inside artefact or condition names (`pv-diag-384`, `n1-baseline-matrix-384`, `flash-minimal-text-n30-t07`, `image-n5`, `pro-text-high-t-0-0`, `55maps`, `pv-diag-384-consensus-14buf-mcc-2026-06-05.json`). Also treated as method labels rather than claims: 'the project-canonical **N=1** leaderboard method' (line 26) and the 'Pool (T=0.7)' / 'deployable N=5' column headers at line 76, whose values are extracted from the Method section instead. Vote/pool notations that ARE extracted (`26-of-30`, `4-of-5`, `3-of-5`, `N=5`) are extracted because this document asserts them as the operating points that were run, and they resolve mechanically against planning/diversity-dividend-cells-2026-06-06.json. The 0.5 swap probability is a constant inside scripts/n1_baseline_leaderboard_tiering.py rather than a recorded output, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "Method"
+      },
+      "claim_text": "- **Benjamini–Hochberg FDR** at q = 0.05.",
+      "values": [
+        {
+          "quantity": "Benjamini–Hochberg false-discovery-rate level q",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          40
+        ],
+        "section": "Method — board composition"
+      },
+      "claim_text": "The board is **22 cells**: 4 consensus pool-champions (best-F1@20 m per proposer\npool, at the T=0.7 production carry-forward temperature) + the **18 single-pass\ncells** of `n1-baseline-matrix-384`.",
+      "values": [
+        {
+          "quantity": "count, cells on the champions tiering board",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.ranking",
+          "method": "read"
+        },
+        {
+          "quantity": "count, consensus pool-champion cells on the board",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_consensus_cells",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation buffer radius at which the pool champions were selected",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer temperature at which all four consensus champions are anchored",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.champions[0].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count, single-pass cells on the board",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_single_pass_cells",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The T=0.7 temperature is asserted as a constant across all four champions; the cell spec records it per champion at $.champions[*].temperature, so a `[*]` constant-collapse path (v1.2 amendment 7) is an equally valid locator if triage prefers it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          45
+        ],
+        "section": "Method — board composition"
+      },
+      "claim_text": "A\ncompanion **26-cell** run adds the four **deployable N=5** operating points (text\n**4-of-5**, image **3-of-5** — the 55maps deployment thresholds) so deployable\nperformance is tiered too.",
+      "values": [
+        {
+          "quantity": "count, cells on the companion tiering board that includes the deployable operating points",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.ranking",
+          "method": "read"
+        },
+        {
+          "quantity": "count, deployable N=5 operating points added to the companion board",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#len:$.deployable",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer pool size N at the deployable operating points",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[0].pool_N",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, deployable text operating points (of a pool of 5)",
+          "value_verbatim": "4-of-5",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[?(@.label=='deploy-flash-high-text-n5-4of5')].vote",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold, deployable image operating points (of a pool of 5)",
+          "value_verbatim": "3-of-5",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[?(@.label=='deploy-flash-high-image-n5-3of5')].vote",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`value_parsed` for the vote thresholds records the numerator (the vote threshold itself); the denominator is the pool N=5 already extracted as its own value. `55maps` is a corpus name, out of scope per rule 5. The 26-cell count is also available as $.n_consensus_cells + $.n_single_pass_cells (8 + 18) in the same file; `len:$.ranking` is preferred per v1.2 amendment 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          46
+        ],
+        "section": "Method — scope"
+      },
+      "claim_text": "Era-2 487-tile scope, 384 px, `gemini-3-flash`\nproposer; ground truth `mounds-reference.geojson`.",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 evaluation scope",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.pairwise[0].n_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile crop size in pixels used for the proposer passes",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'the 487-tile Era 2 corpus' is a count asserted as fact and therefore in scope, per the worked example in instrument rule 5; the tiering file records it per pairwise contrast, so a `[*]` constant-collapse over $.pairwise[*].n_tiles is an equivalent locator. '384 px' is borderline — elsewhere 384 appears only inside names (`pv-diag-384`), but here it is asserted as the crop size actually used, so it is included with the doubt recorded; the chase target is the tile directory inputs/tiles_384_55maps / the bounds path inputs/vectors/bounds/384/ named in planning/diversity-dividend-cells-2026-06-06.json, neither of which is a scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "Result — both claims confirmed"
+      },
+      "claim_text": "**197 / 231 pairs significant → 7 tiers.**",
+      "values": [
+        {
+          "quantity": "count, pairwise contrasts significant after BH correction (22-cell board)",
+          "value_verbatim": "197",
+          "value_parsed": 197,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.pairwise[?(@.significant==true)]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, pairwise contrasts on the 22-cell board",
+          "value_verbatim": "231",
+          "value_parsed": 231,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.pairwise",
+          "method": "read"
+        },
+        {
+          "quantity": "count, greedy-clique tiers produced on the 22-cell board",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.tiers",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The significant-pair count and the tier count are outputs of the permutation + BH + greedy-clique pipeline, so they take `recompute-script` per the instrument (tiering results are never adjudicated at extraction); the paths are given so triage can also read the stored values. The filtered length path follows v1.2 amendment 7; if the harness cannot resolve `len:` over a filter it can count $.pairwise[*].significant."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "§1 Diversity dividend table"
+      },
+      "claim_text": "| Text | 0.814 | 0.661 | **+0.153** | <0.001 | +0.239 |",
+      "values": [
+        {
+          "quantity": "F1@20 m, HIGH-thinking text consensus champion (26-of-30) — §1 diversity-dividend table, Text row",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[0].f1_a",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, minimal-thinking text consensus champion (29-of-30) — §1 diversity-dividend table, Text row",
+          "value_verbatim": "0.661",
+          "value_parsed": 0.661,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[0].f1_b",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (HIGH − minimal), text modality — §1 diversity-dividend table, Text row",
+          "value_verbatim": "+0.153",
+          "value_parsed": 0.153,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[0].f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "BH-adjusted permutation p-value, HIGH vs minimal text consensus — §1 diversity-dividend table, Text row",
+          "value_verbatim": "<0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[0].bh_adjusted_p",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ΔMCC (HIGH − minimal), text modality — §1 diversity-dividend table, Text row",
+          "value_verbatim": "+0.239",
+          "value_parsed": 0.239,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+              "path": "$.headline_contrasts[0].mcc_a"
+            },
+            {
+              "name": "b",
+              "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+              "path": "$.headline_contrasts[0].mcc_b"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "headline_contrasts[0] carries claim 'diversity-dividend (text): HIGH vs minimal consensus'. ΔMCC is not stored as a field, so it is derived from the two stored MCCs with its own expression per v1.2 amendment 1; the operands are plain reads with their own paths."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "§1 Diversity dividend table"
+      },
+      "claim_text": "| Image | 0.750 | 0.680 | **+0.070** | <0.001 | +0.272 |",
+      "values": [
+        {
+          "quantity": "F1@20 m, HIGH-thinking image consensus champion (7-of-10) — §1 diversity-dividend table, Image row",
+          "value_verbatim": "0.750",
+          "value_parsed": 0.75,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[1].f1_a",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, minimal-thinking image consensus champion (8-of-10) — §1 diversity-dividend table, Image row",
+          "value_verbatim": "0.680",
+          "value_parsed": 0.68,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[1].f1_b",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (HIGH − minimal), image modality — §1 diversity-dividend table, Image row",
+          "value_verbatim": "+0.070",
+          "value_parsed": 0.07,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[1].f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "BH-adjusted permutation p-value, HIGH vs minimal image consensus — §1 diversity-dividend table, Image row",
+          "value_verbatim": "<0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[1].bh_adjusted_p",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ΔMCC (HIGH − minimal), image modality — §1 diversity-dividend table, Image row",
+          "value_verbatim": "+0.272",
+          "value_parsed": 0.272,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+              "path": "$.headline_contrasts[1].mcc_a"
+            },
+            {
+              "name": "b",
+              "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+              "path": "$.headline_contrasts[1].mcc_b"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "headline_contrasts[1] carries claim 'diversity-dividend (image): HIGH vs minimal consensus'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          69
+        ],
+        "section": "§1 Diversity dividend — mechanism"
+      },
+      "claim_text": "(the HIGH-text champion carries 41 tile-level FPs vs the\nminimal-text champion's 115).",
+      "values": [
+        {
+          "quantity": "tile-level false positives, HIGH-text consensus champion (26-of-30)",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.tile_classification.confusion.fp",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level false positives, minimal-text consensus champion (29-of-30)",
+          "value_verbatim": "115",
+          "value_parsed": 115,
+          "unit": null,
+          "kind": "count",
+          "path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t29/evaluation.json#$.summary.tile_classification.confusion.fp",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t26/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Eval paths taken from $.champions[*].eval_path in planning/diversity-dividend-cells-2026-06-06.json (rule 2: anchor to the least-writable artefact the document itself names)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "§2 Consensus vs matched single-pass table"
+      },
+      "claim_text": "| `flash-high-text` (HIGH) | 0.387 | 0.814 | +0.427 | 0.720 (4-of-5) | +0.333 |",
+      "values": [
+        {
+          "quantity": "single-pass F1@20 m, flash-high-text pool — §2 table row",
+          "value_verbatim": "0.387",
+          "value_parsed": 0.387,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[2].f1_b",
+          "method": "read"
+        },
+        {
+          "quantity": "best-F1 consensus F1@20 m, flash-high-text pool — §2 table row",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[2].f1_a",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (best consensus − single pass), flash-high-text pool — §2 table row",
+          "value_verbatim": "+0.427",
+          "value_parsed": 0.427,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[2].f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "deployable N=5 F1@20 m, flash-high-text pool — §2 table row",
+          "value_verbatim": "0.720",
+          "value_parsed": 0.72,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json#$.ranking[?(@.ref=='deploy-flash-high-text-n5-4of5')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold at the flash-high-text deployable point (of a pool of 5)",
+          "value_verbatim": "4-of-5",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[?(@.label=='deploy-flash-high-text-n5-4of5')].vote",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (deployable N=5 − single pass), flash-high-text pool — §2 table row",
+          "value_verbatim": "+0.333",
+          "value_parsed": 0.333,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json#$.headline_contrasts[?(@.ref_a=='deploy-flash-high-text-n5-4of5')].f1_diff",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "headline_contrasts[2] in the champions file carries claim 'consensus vs matched single-pass (consensus-flash-high-text-26of30)'. The deployable columns live in the 26-cell companion file, reached by cross-file locator (v1.2 amendment 2); its headline_contrasts have a unique `ref_a` per deployable cell, so the equality filter resolves singly (v1.2 amendment 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "§2 Consensus vs matched single-pass table"
+      },
+      "claim_text": "| `flash-high-image` (HIGH) | 0.499 | 0.750 | +0.251 | 0.727 (3-of-5) | +0.228 |",
+      "values": [
+        {
+          "quantity": "single-pass F1@20 m, flash-high-image pool — §2 table row",
+          "value_verbatim": "0.499",
+          "value_parsed": 0.499,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[3].f1_b",
+          "method": "read"
+        },
+        {
+          "quantity": "best-F1 consensus F1@20 m, flash-high-image pool — §2 table row",
+          "value_verbatim": "0.750",
+          "value_parsed": 0.75,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[3].f1_a",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (best consensus − single pass), flash-high-image pool — §2 table row",
+          "value_verbatim": "+0.251",
+          "value_parsed": 0.251,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[3].f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "deployable N=5 F1@20 m, flash-high-image pool — §2 table row",
+          "value_verbatim": "0.727",
+          "value_parsed": 0.727,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json#$.ranking[?(@.ref=='deploy-flash-high-image-n5-3of5')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold at the flash-high-image deployable point (of a pool of 5)",
+          "value_verbatim": "3-of-5",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[?(@.label=='deploy-flash-high-image-n5-3of5')].vote",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (deployable N=5 − single pass), flash-high-image pool — §2 table row",
+          "value_verbatim": "+0.228",
+          "value_parsed": 0.228,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json#$.headline_contrasts[?(@.ref_a=='deploy-flash-high-image-n5-3of5')].f1_diff",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "headline_contrasts[3] in the champions file carries claim 'consensus vs matched single-pass (consensus-flash-high-image-7of10)'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "§2 Consensus vs matched single-pass table"
+      },
+      "claim_text": "| `flash-minimal-text` (min) | 0.488 | 0.661 | +0.173 | 0.602 (4-of-5) | +0.114 |",
+      "values": [
+        {
+          "quantity": "single-pass F1@20 m, flash-minimal-text pool — §2 table row",
+          "value_verbatim": "0.488",
+          "value_parsed": 0.488,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[5].f1_b",
+          "method": "read"
+        },
+        {
+          "quantity": "best-F1 consensus F1@20 m, flash-minimal-text pool — §2 table row",
+          "value_verbatim": "0.661",
+          "value_parsed": 0.661,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[5].f1_a",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (best consensus − single pass), flash-minimal-text pool — §2 table row",
+          "value_verbatim": "+0.173",
+          "value_parsed": 0.173,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[5].f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "deployable N=5 F1@20 m, flash-minimal-text pool — §2 table row",
+          "value_verbatim": "0.602",
+          "value_parsed": 0.602,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json#$.ranking[?(@.ref=='deploy-flash-minimal-text-n5-4of5')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold at the flash-minimal-text deployable point (of a pool of 5)",
+          "value_verbatim": "4-of-5",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[?(@.label=='deploy-flash-minimal-text-n5-4of5')].vote",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (deployable N=5 − single pass), flash-minimal-text pool — §2 table row",
+          "value_verbatim": "+0.114",
+          "value_parsed": 0.114,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json#$.headline_contrasts[?(@.ref_a=='deploy-flash-minimal-text-n5-4of5')].f1_diff",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "headline_contrasts[5] in the champions file carries claim 'consensus vs matched single-pass (consensus-flash-minimal-text-29of30)' — note the champions file orders the minimal-image contrast (index 4) before the minimal-text one (index 5), so the index does not follow the document's row order."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "§2 Consensus vs matched single-pass table"
+      },
+      "claim_text": "| `image-n5` (min) | 0.553 | 0.680 | +0.127 | 0.644 (3-of-5) | +0.091 |",
+      "values": [
+        {
+          "quantity": "single-pass F1@20 m, image-n5 (minimal-thinking image) pool — §2 table row",
+          "value_verbatim": "0.553",
+          "value_parsed": 0.553,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[4].f1_b",
+          "method": "read"
+        },
+        {
+          "quantity": "best-F1 consensus F1@20 m, image-n5 pool — §2 table row",
+          "value_verbatim": "0.680",
+          "value_parsed": 0.68,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[4].f1_a",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (best consensus − single pass), image-n5 pool — §2 table row",
+          "value_verbatim": "+0.127",
+          "value_parsed": 0.127,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.headline_contrasts[4].f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "deployable N=5 F1@20 m, image-n5 pool — §2 table row",
+          "value_verbatim": "0.644",
+          "value_parsed": 0.644,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json#$.ranking[?(@.ref=='deploy-flash-minimal-image-n5-3of5')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold at the image-n5 deployable point (of a pool of 5)",
+          "value_verbatim": "3-of-5",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[?(@.label=='deploy-flash-minimal-image-n5-3of5')].vote",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 (deployable N=5 − single pass), image-n5 pool — §2 table row",
+          "value_verbatim": "+0.091",
+          "value_parsed": 0.091,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json#$.headline_contrasts[?(@.ref_a=='deploy-flash-minimal-image-n5-3of5')].f1_diff",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "headline_contrasts[4] in the champions file carries claim 'consensus vs matched single-pass (consensus-flash-minimal-image-8of10)'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          85
+        ],
+        "section": "§2 Consensus vs matched single-pass"
+      },
+      "claim_text": "All eight contrasts BH-p < 0.001. Consensus voting lifts F1 over a single pass\nat both the in-sample best threshold and the honest a-priori N=5 deployable\nthreshold.",
+      "values": [
+        {
+          "quantity": "count, consensus-vs-matched-single-pass contrasts asserted significant",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "BH-adjusted permutation p-value bound asserted across all eight consensus-vs-single-pass contrasts",
+          "value_verbatim": "< 0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[2].bh_adjusted_p",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "proposer pool size N at the deployable operating points",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[0].pool_N",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The eight contrasts are headline_contrasts entries 2–9 of the 26-cell file (four best-F1 champions vs matched single pass, plus four deployable N=5 cells vs matched single pass); the file holds 11 headline contrasts in total, so no single length path yields eight — hence anchor-unknown for the count with the entries named here. The p-value bound is asserted across all eight; the anchor path names the first of them and triage should sweep entries 2–9 at $.headline_contrasts[*].bh_adjusted_p."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "§3 Cross-architecture headline"
+      },
+      "claim_text": "**Tier 1 (the `tie_set`) is a three-member statistical tie:**",
+      "values": [
+        {
+          "quantity": "count, members of the Tier-1 statistical tie set (22-cell board)",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.tie_set",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Tier membership is a greedy-clique tiering output, so it takes `recompute-script` per the instrument; the stored value sits at the given path. 'Tier 1' is an ordinal label, not extracted as a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "§3 Tier-1 table"
+      },
+      "claim_text": "| `flash-high-text` consensus (26-of-30) | 0.814 | 0.620 |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold of the Flash HIGH-text champion (of a pool of 30)",
+          "value_verbatim": "26-of-30",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.champions[?(@.label=='consensus-flash-high-text-26of30')].vote",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, Flash HIGH-text consensus champion — §3 Tier-1 table row",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='consensus-flash-high-text-26of30')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, Flash HIGH-text consensus champion — §3 Tier-1 table row",
+          "value_verbatim": "0.620",
+          "value_parsed": 0.62,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='consensus-flash-high-text-26of30')].mcc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`value_parsed` for the vote notation records the numerator (26); the denominator 30 is the pool depth at $.champions[?(@.label=='consensus-flash-high-text-26of30')].pool_N in the same cell spec. Borderline under rule 5 because 26of30 also appears inside the cell ref, but the table presents it as the operating point that was run, so it is included with the doubt recorded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "§3 Tier-1 table"
+      },
+      "claim_text": "| `pro-text-high-t-0-0` single pass (genuine Pro) | 0.804 | 0.790 |",
+      "values": [
+        {
+          "quantity": "F1@20 m, genuine Gemini 3 Pro text-HIGH single pass — §3 Tier-1 table row",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='n1-pro-rerun-384::baseline-pro-text-high-t-0-0')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, genuine Gemini 3 Pro text-HIGH single pass — §3 Tier-1 table row",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='n1-pro-rerun-384::baseline-pro-text-high-t-0-0')].mcc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`t-0-0` is a condition name (temperature 0.0), out of scope per rule 5. The same metrics are independently recorded in results/conditions-manifest.json at $.conditions[?(@.condition_id=='n1-pro-rerun-384::baseline-pro-text-high-t-0-0')].metrics if triage wants a less-derived anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "§3 Tier-1 table"
+      },
+      "claim_text": "| `pro-text-medium-t-0-0` single pass (genuine Pro) | 0.792 | 0.790 |",
+      "values": [
+        {
+          "quantity": "F1@20 m, genuine Gemini 3 Pro text-MEDIUM single pass — §3 Tier-1 table row",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='pv-diag-384::baseline-pro-text-medium-t-0-0')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, genuine Gemini 3 Pro text-MEDIUM single pass — §3 Tier-1 table row",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='pv-diag-384::baseline-pro-text-medium-t-0-0')].mcc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          98
+        ],
+        "section": "§3 Cross-architecture headline"
+      },
+      "claim_text": "The permutation cannot separate the Flash consensus champion from the genuine\nGemini 3 Pro single-pass leader (p = 0.616, BH-p = 0.66).",
+      "values": [
+        {
+          "quantity": "raw permutation p-value, Flash HIGH-text consensus vs Pro text-HIGH single pass",
+          "value_verbatim": "0.616",
+          "value_parsed": 0.616,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[6].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "BH-adjusted permutation p-value, Flash HIGH-text consensus vs Pro text-HIGH single pass",
+          "value_verbatim": "0.66",
+          "value_parsed": 0.66,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.headline_contrasts[6].bh_adjusted_p",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "headline_contrasts[6] carries claim 'Flash text-HIGH consensus vs Pro single-pass leader'. The 26-cell companion file holds the same contrast at index 10 with a slightly different BH adjustment (different family size); recorded, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          120
+        ],
+        "section": "Operating-point reading — item 1"
+      },
+      "claim_text": "Flash-consensus/Pro-single-pass parity is at the best (N, threshold) point\n   (26-of-30). At the production **N=5** carry-forward point (text 4-of-5), the\n   same pool reaches **Tier 2** (0.720), tying genuine Pro text at **T=0.7** —\n   a **best − N5 delta of ≈0.094 F1**.",
+      "values": [
+        {
+          "quantity": "consensus vote threshold of the Flash HIGH-text champion (of a pool of 30)",
+          "value_verbatim": "26-of-30",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.champions[?(@.label=='consensus-flash-high-text-26of30')].vote",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer pool size N at the production carry-forward operating point",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[?(@.label=='deploy-flash-high-text-n5-4of5')].pool_N",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold at the production text carry-forward point (of a pool of 5)",
+          "value_verbatim": "4-of-5",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[?(@.label=='deploy-flash-high-text-n5-4of5')].vote",
+          "method": "read"
+        },
+        {
+          "quantity": "tier reached by the flash-high-text pool at its deployable N=5 point (26-cell board)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.ranking[?(@.ref=='deploy-flash-high-text-n5-4of5')].tier",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1@20 m at the flash-high-text deployable N=5 point",
+          "value_verbatim": "0.720",
+          "value_parsed": 0.72,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='deploy-flash-high-text-n5-4of5')].eval_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature of the genuine Pro text cell that ties the deployable point",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "best − N5 delta in F1@20 m for the flash-high-text pool",
+          "value_verbatim": "≈0.094",
+          "value_parsed": 0.094,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+              "path": "$.ranking[?(@.ref=='consensus-flash-high-text-26of30')].eval_f1"
+            },
+            {
+              "name": "b",
+              "file": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+              "path": "$.ranking[?(@.ref=='deploy-flash-high-text-n5-4of5')].eval_f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tier membership takes `recompute-script` (greedy-clique output) per the instrument. 'T=0.7' here labels the genuine Pro text cell being tied (`pv-diag-384::baseline-pro-text-high-t-0-7`, ranked in the same tier); the temperature is encoded only in that condition name, so it is anchor-unknown — the chase target is results/conditions-manifest.json. The ≈0.094 delta is derived from the two ranking F1s with its own expression per v1.2 amendment 1; approx marker retained per amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          127
+        ],
+        "section": "Operating-point reading — item 2"
+      },
+      "claim_text": "The genuine Pro text leaders have higher\n   tile-level discrimination (MCC 0.790, 11 tile FPs) than the Flash consensus\n   champion (MCC 0.620, 41 tile FPs); Pro image is the overall MCC leader\n   (0.85–0.91).",
+      "values": [
+        {
+          "quantity": "tile-level MCC, genuine Pro text leaders",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='n1-pro-rerun-384::baseline-pro-text-high-t-0-0')].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level false positives, genuine Pro text-HIGH single pass",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='n1-pro-rerun-384::baseline-pro-text-high-t-0-0')].metrics.tile_classification.fp",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, Flash HIGH-text consensus champion",
+          "value_verbatim": "0.620",
+          "value_parsed": 0.62,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='consensus-flash-high-text-26of30')].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level false positives, Flash HIGH-text consensus champion",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t26/evaluation.json#$.summary.tile_classification.confusion.fp",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, Pro image cells — lower end of the stated range",
+          "value_verbatim": "0.85",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='pv-diag-384::baseline-pro-image-high-t-0-7')].mcc",
+          "method": "read"
+        },
+        {
+          "quantity": "tile-level MCC, Pro image cells — upper end of the stated range",
+          "value_verbatim": "0.91",
+          "value_parsed": 0.91,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.ref=='n1-pro-rerun-384::baseline-pro-image-medium-t-0-7')].mcc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '0.85–0.91' range summarises the four Pro image cells on the board; the two range endpoints are anchored to the cells that carry the extreme values (pro-image-high-t-0-7 and pro-image-medium-t-0-7), with the two intermediate Pro image cells (pro-image-high-t-0-0, pro-image-medium-t-0-0) sitting between them. Triage may prefer to treat this as a bound over $.ranking[*].mcc restricted to Pro image cells. 'MCC 0.790' is stated for 'the genuine Pro text leaders' (plural — both Tier-1 Pro text cells round to 0.790); the anchor names the text-HIGH one."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          131
+        ],
+        "section": "Operating-point reading — item 3"
+      },
+      "claim_text": "HIGH > minimal ordering holds at the production N=5 thresholds, at greedy\n   4-of-5, and at the best (N, threshold).",
+      "values": [
+        {
+          "quantity": "proposer pool size N at the production deployable thresholds",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.deployable[0].pool_N",
+          "method": "read"
+        },
+        {
+          "quantity": "greedy consensus vote threshold at which the HIGH > minimal ordering is asserted to hold (of a pool of 5)",
+          "value_verbatim": "4-of-5",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.deployable[?(@.label=='deploy-flash-high-text-n5-4of5')].vote",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "planning/diversity-dividend-cells-2026-06-06.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          137
+        ],
+        "section": "Provenance"
+      },
+      "claim_text": "**tests**:\n  `tests/test_consensus_vs_baseline_tiering.py` (6 tier-1).",
+      "values": [
+        {
+          "quantity": "count, tier-1 tests covering the consensus-vs-baseline tiering harness",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_consensus_vs_baseline_tiering.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (test-file count), legitimate and expected per the v1.1 calibration rule — the harness routes it to triage, which should count `@pytest.mark.tier1`-decorated test functions in the named file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          140
+        ],
+        "section": "Provenance"
+      },
+      "claim_text": "- **Evals**: `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/` (14-buffer\n  + MCC re-score, worklist `pv-diag-384-consensus-14buf-mcc-2026-06-05.json`).",
+      "values": [
+        {
+          "quantity": "count, buffer radii in the re-scored consensus-sweep evaluations",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t26/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 14-buffer standard is asserted for the whole consensus-sweep directory; the HIGH-text champion's evaluation is used as a representative anchor. The '14buf' inside the worklist filename is part of a file name, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "Provenance"
+      },
+      "claim_text": "- **Compute**: zbook (round-robin permutation sweep); $0 API.",
+      "values": [
+        {
+          "quantity": "cost (USD) of the diversity-dividend analysis — asserted zero API spend",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "An asserted absence of API spend leaves no run.meta.json or cost artefact to anchor to; recorded as attestation material for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          155
+        ],
+        "section": "Changelog — 2026-06-06 Original publication"
+      },
+      "claim_text": "both modalities; consensus significantly beats matched single-pass at both the\nbest (N, threshold) and the production N=5 operating points; and the best Flash\nHIGH-text consensus forms a three-member Tier-1 tie with the two genuine-Pro\nsingle-pass text leaders.",
+      "values": [
+        {
+          "quantity": "proposer pool size N at the production operating points",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "planning/diversity-dividend-cells-2026-06-06.json#$.deployable[0].pool_N",
+          "method": "read"
+        },
+        {
+          "quantity": "count, members of the Tier-1 statistical tie set",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.tie_set",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, genuine-Pro single-pass text leaders inside the Tier-1 tie",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+              "path": "len:$.tie_set"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'two genuine-Pro' count is the tie set minus the single Flash consensus member, hence the a − 1 derivation; triage can instead enumerate $.tiers[?(@.tier==1)].members. 'both modalities' is a non-numeric quantifier and was not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          161
+        ],
+        "section": "Changelog — 2026-06-06 Original publication"
+      },
+      "claim_text": "reading. The best − N5 delta (≈0.094 F1) and the F1≠MCC asymmetry are reported",
+      "values": [
+        {
+          "quantity": "best − N5 delta in F1@20 m for the flash-high-text pool",
+          "value_verbatim": "≈0.094",
+          "value_parsed": 0.094,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+              "path": "$.ranking[?(@.ref=='consensus-flash-high-text-26of30')].eval_f1"
+            },
+            {
+              "name": "b",
+              "file": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+              "path": "$.ranking[?(@.ref=='deploy-flash-high-text-n5-4of5')].eval_f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Restatement of the line-120 figure inside the changelog; live claim, not `historical` (the changelog entry is the original publication, so there is no superseded before→after side). Approx marker retained per v1.2 amendment 5."
+    }
+  ]
+}

@@ -1,0 +1,3508 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.md",
+    "git_blob": "8618cde32887893cea6fe34744476c263e3a0c8d",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1,
+          1
+        ],
+        "section": "Title"
+      },
+      "claim_text": "# Verifier calibration crosstab (55-map image generalisation)",
+      "values": [
+        {
+          "quantity": "map count, 55-map image-generalisation run",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "$.inputs.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json",
+        "path": "$.inputs.n_maps"
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b081] Batch b081 covers lines 1-127 of this document only (lines 128-186 are batch b082). Scope decisions: dates (2026-04-24), session numbers (Session 76), Obs identifiers (Obs 269), Theme labels (T3), section references (§3, §7, §10) and numbered headings are out of C4 scope per instrument rule 5. Probability-bin labels and bin boundaries used purely to identify which row a statistic belongs to (\"n = 370 candidates at p > 0.99\", \"(0.95, 0.99] bin\", the Bin column of the §3 table, \"saturated p = 1.0 / 1.000 predictions\", repeated \"p ≤ 0.25\" conditioners) are treated as identifiers, not claims; boundaries asserted as findings (\"over-promises in every bin above p = 0.30\", \"the entire probability range > 0.5\") ARE extracted, and the low-p cutoff 0.25 is extracted once at its first substantive assertion (line 15). Threshold-sweep and calibration-table row keys ARE extracted (house style of 078.json). Map names in the §10 top-maps table (K-35-077-2 etc.) are names, not claims. The \"95 %\" CI level is extracted wherever it is written beside a CI; it is not a scalar in calibration.json — the [2.5, 97.5] percentile pair is hard-coded in scripts/crosstab_verifier_vs_human.py, so those values are anchor-unknown. Not extracted for want of a numeral: line 126's monotonicity assertion (\"precision rises monotonically with threshold; recall (within-set) falls\") — checkable against $.threshold_sweep but carries no quoted number, flagged here rather than silently dropped. Anchor note: this document's own least-writable artefact is the sibling calibration.json; the 55-map count is not recorded there, so it is anchored cross-file to the buffer-100m diagnostic summary."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          9
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "The Vision Language Model (VLM) verifier on the 55-map image-generalisation run is **miscalibrated in the over-confident direction** across the entire probability range > 0.5 and **discriminates only weakly** between human-confirmed mounds and human-confirmed non-mounds on the VLM-only candidate set. Concretely:",
+      "values": [
+        {
+          "quantity": "map count, image-generalisation run",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_maps",
+          "method": "read"
+        },
+        {
+          "quantity": "lower bound of the probability range over which the verifier is asserted to be miscalibrated in the over-confident direction",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.5 boundary is an asserted finding (where over-confidence begins), not a bin label; verifying it means checking the sign of (empirical_p_mound − mean_predicted) for every bin above 0.5 at $.calibration_bins[*], hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          11
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "- **Expected Calibration Error (ECE) = 0.2689**; the verifier systematically over-promises in every bin above p = 0.30.",
+      "values": [
+        {
+          "quantity": "Expected Calibration Error (ECE), VLM-only candidate set",
+          "value_verbatim": "0.2689",
+          "value_parsed": 0.2689,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "lower bin boundary above which the verifier is asserted to systematically over-promise",
+          "value_verbatim": "0.30",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "As at line 9, the 0.30 boundary is an asserted finding rather than a row label; it requires checking gap signs across $.calibration_bins[*]."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          12,
+          12
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "- **AUC = 0.6545** [0.6217, 0.6867] (95 % bootstrap CI, 10,000 resamples, seed 42) — only modestly above the 0.5 no-information baseline.",
+      "values": [
+        {
+          "quantity": "Area Under the ROC Curve (AUC), VLM-only candidate set",
+          "value_verbatim": "0.6545",
+          "value_parsed": 0.6545,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, AUC",
+          "value_verbatim": "0.6217",
+          "value_parsed": 0.6217,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, AUC",
+          "value_verbatim": "0.6867",
+          "value_parsed": 0.6867,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "confidence-interval level used for the bootstrap intervals",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap resamples, calibration crosstab",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, calibration-crosstab bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "no-information (chance) AUC baseline",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 95 % CI level is not a scalar in calibration.json; the percentile pair [2.5, 97.5] is hard-coded in scripts/crosstab_verifier_vs_human.py (bootstrap_ci helper). The 0.5 no-information baseline is a definitional constant of the AUC metric rather than a study measurement — included per the include-when-in-doubt rule, with the doubt recorded here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "- **Brier score = 0.3226** [0.2974, 0.3476].",
+      "values": [
+        {
+          "quantity": "Brier score, VLM-only candidate set",
+          "value_verbatim": "0.3226",
+          "value_parsed": 0.3226,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.brier.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, Brier score",
+          "value_verbatim": "0.2974",
+          "value_parsed": 0.2974,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, Brier score",
+          "value_verbatim": "0.3476",
+          "value_parsed": 0.3476,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier.hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "- The gap between predicted and empirical P(mound) is steepest in the highest bin: predicted mean 1.000 but empirical P(mound) = 0.549 (gap −0.451; n = 370 candidates at p > 0.99).",
+      "values": [
+        {
+          "quantity": "mean predicted probability, (0.99, 1.00] bin",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[6].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), (0.99, 1.00] bin",
+          "value_verbatim": "0.549",
+          "value_parsed": 0.549,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[6].empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration gap (empirical − predicted), (0.99, 1.00] bin",
+          "value_verbatim": "−0.451",
+          "value_parsed": -0.451,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].mean_predicted"
+            }
+          ]
+        },
+        {
+          "quantity": "candidate count, (0.99, 1.00] bin",
+          "value_verbatim": "370",
+          "value_parsed": 370,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[6].count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The JSON holds seven bins including an empty (0.95, 0.99] bin at index 5, so the highest bin is $.calibration_bins[6]. 'p > 0.99' is a bin identifier, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "Roughly **half the verifier's saturated-high-confidence outputs are wrong**.",
+      "values": [
+        {
+          "quantity": "proportion of saturated-high-confidence (highest-bin) verifier outputs that are wrong",
+          "value_verbatim": "half",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "1 - a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].empirical_p_mound"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "'Roughly' hedges this claim; the derivation returns 1 − 0.5486 = 0.4514, which the document rounds to 'half'. Instrument v1.2 amendment 5 covers the '~'/'≈' symbols only, so the approximation is flagged here instead — triage should treat this as an APPROX comparison, not an equality."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "§1 Executive summary"
+      },
+      "claim_text": "- In the low-p tail (p ≤ 0.25, n = 230), **P(mound | p ≤ 0.25) = 0.1739** [0.1265, 0.2241] — non-zero but low, consistent with a residual under-confidence effect for faint / low-contrast real mounds (≥ 40 mound candidates with p ≤ 0.25 exist in the set).",
+      "values": [
+        {
+          "quantity": "low-p tail cutoff used for the deep dive",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.low_p_deep_dive.cutoff",
+          "method": "read"
+        },
+        {
+          "quantity": "candidate count in the low-p tail (p ≤ 0.25)",
+          "value_verbatim": "230",
+          "value_parsed": 230,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.n_total_in_tail",
+          "method": "read"
+        },
+        {
+          "quantity": "P(mound | p ≤ 0.25), low-p tail",
+          "value_verbatim": "0.1739",
+          "value_parsed": 0.1739,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.p_mound_low_tail.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, P(mound | p ≤ 0.25)",
+          "value_verbatim": "0.1265",
+          "value_parsed": 0.1265,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.p_mound_low_tail.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, P(mound | p ≤ 0.25)",
+          "value_verbatim": "0.2241",
+          "value_parsed": 0.2241,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.p_mound_low_tail.hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "mound candidates in the low-p tail (p ≤ 0.25), asserted as a lower bound",
+          "value_verbatim": "≥ 40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.n_mound_in_tail",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This is the first substantive assertion of the 0.25 cutoff, so it is extracted here and treated as a conditioning identifier at its later repetitions (per the batch note). The '≥' marker is kept in value_verbatim so the harness does not promote the bound to an equality."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "§1 One-line paper claim"
+      },
+      "claim_text": "**One-line paper claim**: \"The VLM verifier used in the pipeline is substantially over-confident at the high end of its probability range (saturated p = 1.0 predictions are correct only 55 % of the time) and shows only weak discrimination overall (AUC = 0.655), so the verifier cannot discharge the pipeline's confidence calibration unaided.\"",
+      "values": [
+        {
+          "quantity": "percentage of saturated (p = 1.0) verifier predictions that are correct",
+          "value_verbatim": "55 %",
+          "value_parsed": 55,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].empirical_p_mound"
+            }
+          ]
+        },
+        {
+          "quantity": "Area Under the ROC Curve (AUC), quoted to 3 dp",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'saturated p = 1.0' identifies the highest bin (identifier, not a claim). The 55 % figure is the highest-bin empirical P(mound) expressed as a percentage and rounded to the nearest whole per cent (100 × 0.5486 = 54.86)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "§2 Data and inputs"
+      },
+      "claim_text": "- **Candidate set**: 1,028 VLM-only candidates from the 55-map image-generalisation run, restricted to candidates that survived the initial calibrated human-review pass (see `results/55maps-image-generalisation/human-review.csv`).",
+      "values": [
+        {
+          "quantity": "VLM-only candidate count entering the calibration crosstab",
+          "value_verbatim": "1,028",
+          "value_parsed": 1028,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_total",
+          "method": "read"
+        },
+        {
+          "quantity": "map count, image-generalisation run",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": "results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_maps",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "§2 Data and inputs"
+      },
+      "claim_text": "- **Ground truth**: human-review labels against a 50 m spatial-tolerance buffer (calibrated UI).",
+      "values": [
+        {
+          "quantity": "spatial-tolerance buffer used for the human-review ground-truth labels",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The review CSV carries a per-row `buffer_metres` column; the claim asserts that column is constantly 50 across the reviewed candidates. Non-JSON (CSV) anchor — legitimate per the v1.1 calibration rule; the harness routes it to triage. The analysis script also hard-codes the assertion 'All candidates: buffer_metres = 50' in its generated prose, which is prose, not an artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "§2 Data and inputs"
+      },
+      "claim_text": "472 human-confirmed mounds (prevalence 0.459 in the VLM-only slice), 556 human-confirmed non-mounds.",
+      "values": [
+        {
+          "quantity": "human-confirmed mounds in the VLM-only slice",
+          "value_verbatim": "472",
+          "value_parsed": 472,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mound prevalence in the VLM-only slice",
+          "value_verbatim": "0.459",
+          "value_parsed": 0.459,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.prevalence",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed non-mounds in the VLM-only slice",
+          "value_verbatim": "556",
+          "value_parsed": 556,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_not_mound",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "§2 Data and inputs"
+      },
+      "claim_text": "- **Verifier probabilities**: the per-candidate `verifier_probability` field, a quantised distribution dominated by a high-end spike at 1.000 (370 rows) and 0.95 (180), a middle cluster at 0.83 (147 rows in (0.70, 0.90]), and a low-end mass of 243 rows in [0.15, 0.30].",
+      "values": [
+        {
+          "quantity": "mean predicted probability, (0.99, 1.00] bin (quoted as the high-end spike)",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[6].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "candidate count, (0.99, 1.00] bin",
+          "value_verbatim": "370",
+          "value_parsed": 370,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[6].count",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted probability, (0.90, 0.95] bin (quoted as the second spike)",
+          "value_verbatim": "0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[4].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "candidate count, (0.90, 0.95] bin",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[4].count",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted probability, (0.70, 0.90] bin (quoted as the middle cluster)",
+          "value_verbatim": "0.83",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[3].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "candidate count, (0.70, 0.90] bin",
+          "value_verbatim": "147",
+          "value_parsed": 147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[3].count",
+          "method": "read"
+        },
+        {
+          "quantity": "candidate count, [0.15, 0.30] bin",
+          "value_verbatim": "243",
+          "value_parsed": 243,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[0].count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The spike/cluster probabilities (1.000, 0.95, 0.83) are anchored to the corresponding bins' mean_predicted; they could alternatively be modal quantised values of the `verifier_probability` column in the review CSV — the ambiguity is recorded, not adjudicated. Bin labels '(0.70, 0.90]' and '[0.15, 0.30]' are identifiers."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "§2 Data and inputs"
+      },
+      "claim_text": "Only 13 distinct probability values appear across 1,028 candidates, with the (0.95, 0.99] bin empty — a property that limits any threshold-triage strategy (see Obs 269 \"Heavy quantisation\").",
+      "values": [
+        {
+          "quantity": "distinct verifier probability values across the candidate set",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "VLM-only candidate count",
+          "value_verbatim": "1,028",
+          "value_parsed": 1028,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_total",
+          "method": "read"
+        },
+        {
+          "quantity": "candidate count, (0.95, 0.99] bin (asserted to be empty)",
+          "value_verbatim": "empty",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[5].count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 13-distinct-values figure is recorded nowhere in calibration.json; it needs a distinct count of the `verifier_probability` column of results/55maps-image-generalisation/human-review.csv, hence recompute-script. 'empty' is a word assertion that the (0.95, 0.99] bin count is zero; recorded verbatim with value_parsed 0."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "§2 Data and inputs"
+      },
+      "claim_text": "- **All candidates evaluated at buffer = 50 m**.",
+      "values": [
+        {
+          "quantity": "evaluation buffer applied to all candidates",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same CSV `buffer_metres` column-constant anchor as the line 22 buffer claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "§3 Probability-binned calibration table"
+      },
+      "claim_text": "| [0.15, 0.30] | 243 | 44 | 199 | 0.192 | 0.181 | -0.010 |",
+      "values": [
+        {
+          "quantity": "candidate count, [0.15, 0.30] bin (§3 calibration table row)",
+          "value_verbatim": "243",
+          "value_parsed": 243,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[0].count",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, [0.15, 0.30] bin (§3 calibration table row)",
+          "value_verbatim": "44",
+          "value_parsed": 44,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[0].n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed non-mounds, [0.15, 0.30] bin (§3 calibration table row)",
+          "value_verbatim": "199",
+          "value_parsed": 199,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[0].n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, [0.15, 0.30] bin (§3 calibration table row)",
+          "value_verbatim": "0.192",
+          "value_parsed": 0.192,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[0].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), [0.15, 0.30] bin (§3 calibration table row)",
+          "value_verbatim": "0.181",
+          "value_parsed": 0.181,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[0].empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration gap (empirical − predicted), [0.15, 0.30] bin (§3 calibration table row)",
+          "value_verbatim": "-0.010",
+          "value_parsed": -0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[0].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[0].mean_predicted"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Bin column is a row identifier, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "§3 Probability-binned calibration table"
+      },
+      "claim_text": "| (0.30, 0.50] | 75 | 25 | 50 | 0.399 | 0.333 | -0.065 |",
+      "values": [
+        {
+          "quantity": "candidate count, (0.30, 0.50] bin (§3 calibration table row)",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[1].count",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, (0.30, 0.50] bin (§3 calibration table row)",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[1].n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed non-mounds, (0.30, 0.50] bin (§3 calibration table row)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[1].n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, (0.30, 0.50] bin (§3 calibration table row)",
+          "value_verbatim": "0.399",
+          "value_parsed": 0.399,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[1].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), (0.30, 0.50] bin (§3 calibration table row)",
+          "value_verbatim": "0.333",
+          "value_parsed": 0.333,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[1].empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration gap (empirical − predicted), (0.30, 0.50] bin (§3 calibration table row)",
+          "value_verbatim": "-0.065",
+          "value_parsed": -0.065,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[1].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[1].mean_predicted"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Bin column is a row identifier, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "§3 Probability-binned calibration table"
+      },
+      "claim_text": "| (0.50, 0.70] | 13 | 5 | 8 | 0.692 | 0.385 | -0.308 |",
+      "values": [
+        {
+          "quantity": "candidate count, (0.50, 0.70] bin (§3 calibration table row)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[2].count",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, (0.50, 0.70] bin (§3 calibration table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[2].n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed non-mounds, (0.50, 0.70] bin (§3 calibration table row)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[2].n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, (0.50, 0.70] bin (§3 calibration table row)",
+          "value_verbatim": "0.692",
+          "value_parsed": 0.692,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[2].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), (0.50, 0.70] bin (§3 calibration table row)",
+          "value_verbatim": "0.385",
+          "value_parsed": 0.385,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[2].empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration gap (empirical − predicted), (0.50, 0.70] bin (§3 calibration table row)",
+          "value_verbatim": "-0.308",
+          "value_parsed": -0.308,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[2].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[2].mean_predicted"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Bin column is a row identifier, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "§3 Probability-binned calibration table"
+      },
+      "claim_text": "| (0.70, 0.90] | 147 | 84 | 63 | 0.830 | 0.571 | -0.259 |",
+      "values": [
+        {
+          "quantity": "candidate count, (0.70, 0.90] bin (§3 calibration table row)",
+          "value_verbatim": "147",
+          "value_parsed": 147,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[3].count",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, (0.70, 0.90] bin (§3 calibration table row)",
+          "value_verbatim": "84",
+          "value_parsed": 84,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[3].n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed non-mounds, (0.70, 0.90] bin (§3 calibration table row)",
+          "value_verbatim": "63",
+          "value_parsed": 63,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[3].n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, (0.70, 0.90] bin (§3 calibration table row)",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[3].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), (0.70, 0.90] bin (§3 calibration table row)",
+          "value_verbatim": "0.571",
+          "value_parsed": 0.571,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[3].empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration gap (empirical − predicted), (0.70, 0.90] bin (§3 calibration table row)",
+          "value_verbatim": "-0.259",
+          "value_parsed": -0.259,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[3].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[3].mean_predicted"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Bin column is a row identifier, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "§3 Probability-binned calibration table"
+      },
+      "claim_text": "| (0.90, 0.95] | 180 | 111 | 69 | 0.950 | 0.617 | -0.333 |",
+      "values": [
+        {
+          "quantity": "candidate count, (0.90, 0.95] bin (§3 calibration table row)",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[4].count",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, (0.90, 0.95] bin (§3 calibration table row)",
+          "value_verbatim": "111",
+          "value_parsed": 111,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[4].n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed non-mounds, (0.90, 0.95] bin (§3 calibration table row)",
+          "value_verbatim": "69",
+          "value_parsed": 69,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[4].n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, (0.90, 0.95] bin (§3 calibration table row)",
+          "value_verbatim": "0.950",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[4].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), (0.90, 0.95] bin (§3 calibration table row)",
+          "value_verbatim": "0.617",
+          "value_parsed": 0.617,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[4].empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration gap (empirical − predicted), (0.90, 0.95] bin (§3 calibration table row)",
+          "value_verbatim": "-0.333",
+          "value_parsed": -0.333,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[4].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[4].mean_predicted"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Bin column is a row identifier, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "§3 Probability-binned calibration table"
+      },
+      "claim_text": "| (0.99, 1.00] | 370 | 203 | 167 | 1.000 | 0.549 | -0.451 |",
+      "values": [
+        {
+          "quantity": "candidate count, (0.99, 1.00] bin (§3 calibration table row)",
+          "value_verbatim": "370",
+          "value_parsed": 370,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[6].count",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, (0.99, 1.00] bin (§3 calibration table row)",
+          "value_verbatim": "203",
+          "value_parsed": 203,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[6].n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed non-mounds, (0.99, 1.00] bin (§3 calibration table row)",
+          "value_verbatim": "167",
+          "value_parsed": 167,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration_bins[6].n_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, (0.99, 1.00] bin (§3 calibration table row)",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[6].mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), (0.99, 1.00] bin (§3 calibration table row)",
+          "value_verbatim": "0.549",
+          "value_parsed": 0.549,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.calibration_bins[6].empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration gap (empirical − predicted), (0.99, 1.00] bin (§3 calibration table row)",
+          "value_verbatim": "-0.451",
+          "value_parsed": -0.451,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].mean_predicted"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Bin column is a row identifier, not a claim. Note the document's table omits the empty (0.95, 0.99] bin, so its sixth data row maps to $.calibration_bins[6]."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "§3 Probability-binned calibration table"
+      },
+      "claim_text": "**Expected Calibration Error (ECE):** 0.2689.",
+      "values": [
+        {
+          "quantity": "Expected Calibration Error (ECE), VLM-only candidate set",
+          "value_verbatim": "0.2689",
+          "value_parsed": 0.2689,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "§3 Probability-binned calibration table"
+      },
+      "claim_text": "Only the lowest bin is close to calibrated (gap −0.010); every bin above 0.30 is increasingly over-confident, with the severity peaking in the saturated-1.0 bin.",
+      "values": [
+        {
+          "quantity": "calibration gap (empirical − predicted), [0.15, 0.30] bin",
+          "value_verbatim": "−0.010",
+          "value_parsed": -0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[0].empirical_p_mound"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[0].mean_predicted"
+            }
+          ]
+        },
+        {
+          "quantity": "lower bin boundary above which over-confidence is asserted to increase monotonically",
+          "value_verbatim": "0.30",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The 'saturated-1.0 bin' phrase is a bin identifier. The 0.30 boundary repeats the line 11 finding and again needs the gap signs across $.calibration_bins[*]."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "§5 ROC curve and AUC"
+      },
+      "claim_text": "- **AUC = 0.6545** (95 % bootstrap CI: 0.6217, 0.6867).",
+      "values": [
+        {
+          "quantity": "Area Under the ROC Curve (AUC), VLM-only candidate set",
+          "value_verbatim": "0.6545",
+          "value_parsed": 0.6545,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "confidence-interval level used for the bootstrap interval",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, AUC",
+          "value_verbatim": "0.6217",
+          "value_parsed": 0.6217,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, AUC",
+          "value_verbatim": "0.6867",
+          "value_parsed": 0.6867,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "§5 ROC curve and AUC"
+      },
+      "claim_text": "Because the AUC metric is prevalence-invariant, the modest value reflects the verifier's inability to consistently rank a mound above a non-mound even on this high-prevalence slice (0.459).",
+      "values": [
+        {
+          "quantity": "mound prevalence in the VLM-only slice",
+          "value_verbatim": "0.459",
+          "value_parsed": 0.459,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.prevalence",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "§6 Precision-Recall curve"
+      },
+      "claim_text": "precision plateaus around 0.57 in the mid-range (0.50 ≤ threshold ≤ 0.90)",
+      "values": [
+        {
+          "quantity": "precision plateau value across the mid-range thresholds, VLM-only slice",
+          "value_verbatim": "0.57",
+          "value_parsed": 0.57,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A plateau assertion across more than one sweep row: the relevant precisions sit at $.threshold_sweep[3].precision, [4].precision and [5].precision (thresholds 0.50, 0.70, 0.90). No single locator carries it, hence recompute-script. The 0.50 and 0.90 bounds are sweep-row identifiers, not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "`precision_delta_vs_0_15` shows the absolute change from the current 0.15 threshold.",
+      "values": [
+        {
+          "quantity": "verifier accept-threshold asserted to be the pipeline's current setting",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This asserts what the production pipeline currently uses, not what the sweep enumerated, so anchoring to $.config.sweep_thresholds[0] would compare the wrong quantity. Looked for a verifier accept-threshold in the calibration artefacts of this directory and found none; triage should chase the verification study config (prompts/configs, study YAML) for the live threshold."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "| 0.15 | 1028 | 472 | 556 | 0.459 | +0.000 | 1.000 | 0.629 |",
+      "values": [
+        {
+          "quantity": "verifier accept threshold actually swept, threshold 0.15 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.threshold_sweep[0].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "accepted candidates (n_accepted), threshold 0.15 (§7 threshold-sweep table row)",
+          "value_verbatim": "1028",
+          "value_parsed": 1028,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[0].n_accepted",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (mound), threshold 0.15 (§7 threshold-sweep table row)",
+          "value_verbatim": "472",
+          "value_parsed": 472,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[0].tp_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (not_mound), threshold 0.15 (§7 threshold-sweep table row)",
+          "value_verbatim": "556",
+          "value_parsed": 556,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[0].fp_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "precision within the VLM-only slice, threshold 0.15 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.459",
+          "value_parsed": 0.459,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[0].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision delta vs the 0.15 threshold, threshold 0.15 (§7 threshold-sweep table row)",
+          "value_verbatim": "+0.000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[0].precision_delta_vs_0_15",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice, threshold 0.15 (§7 threshold-sweep table row)",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[0].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 within the VLM-only slice, threshold 0.15 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.629",
+          "value_parsed": 0.629,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[0].f1_within_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "| 0.20 | 961 | 465 | 496 | 0.484 | +0.025 | 0.985 | 0.649 |",
+      "values": [
+        {
+          "quantity": "verifier accept threshold actually swept, threshold 0.20 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.threshold_sweep[1].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "accepted candidates (n_accepted), threshold 0.20 (§7 threshold-sweep table row)",
+          "value_verbatim": "961",
+          "value_parsed": 961,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[1].n_accepted",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (mound), threshold 0.20 (§7 threshold-sweep table row)",
+          "value_verbatim": "465",
+          "value_parsed": 465,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[1].tp_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (not_mound), threshold 0.20 (§7 threshold-sweep table row)",
+          "value_verbatim": "496",
+          "value_parsed": 496,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[1].fp_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "precision within the VLM-only slice, threshold 0.20 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.484",
+          "value_parsed": 0.484,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[1].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision delta vs the 0.15 threshold, threshold 0.20 (§7 threshold-sweep table row)",
+          "value_verbatim": "+0.025",
+          "value_parsed": 0.025,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[1].precision_delta_vs_0_15",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice, threshold 0.20 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.985",
+          "value_parsed": 0.985,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[1].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 within the VLM-only slice, threshold 0.20 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.649",
+          "value_parsed": 0.649,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[1].f1_within_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "| 0.30 | 798 | 432 | 366 | 0.541 | +0.082 | 0.915 | 0.680 |",
+      "values": [
+        {
+          "quantity": "verifier accept threshold actually swept, threshold 0.30 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.30",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.threshold_sweep[2].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "accepted candidates (n_accepted), threshold 0.30 (§7 threshold-sweep table row)",
+          "value_verbatim": "798",
+          "value_parsed": 798,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[2].n_accepted",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (mound), threshold 0.30 (§7 threshold-sweep table row)",
+          "value_verbatim": "432",
+          "value_parsed": 432,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[2].tp_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (not_mound), threshold 0.30 (§7 threshold-sweep table row)",
+          "value_verbatim": "366",
+          "value_parsed": 366,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[2].fp_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "precision within the VLM-only slice, threshold 0.30 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.541",
+          "value_parsed": 0.541,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[2].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision delta vs the 0.15 threshold, threshold 0.30 (§7 threshold-sweep table row)",
+          "value_verbatim": "+0.082",
+          "value_parsed": 0.082,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[2].precision_delta_vs_0_15",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice, threshold 0.30 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[2].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 within the VLM-only slice, threshold 0.30 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.680",
+          "value_parsed": 0.68,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[2].f1_within_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "| 0.50 | 711 | 403 | 308 | 0.567 | +0.108 | 0.854 | 0.681 |",
+      "values": [
+        {
+          "quantity": "verifier accept threshold actually swept, threshold 0.50 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.50",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.threshold_sweep[3].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "accepted candidates (n_accepted), threshold 0.50 (§7 threshold-sweep table row)",
+          "value_verbatim": "711",
+          "value_parsed": 711,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[3].n_accepted",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (mound), threshold 0.50 (§7 threshold-sweep table row)",
+          "value_verbatim": "403",
+          "value_parsed": 403,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[3].tp_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (not_mound), threshold 0.50 (§7 threshold-sweep table row)",
+          "value_verbatim": "308",
+          "value_parsed": 308,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[3].fp_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "precision within the VLM-only slice, threshold 0.50 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.567",
+          "value_parsed": 0.567,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[3].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision delta vs the 0.15 threshold, threshold 0.50 (§7 threshold-sweep table row)",
+          "value_verbatim": "+0.108",
+          "value_parsed": 0.108,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[3].precision_delta_vs_0_15",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice, threshold 0.50 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[3].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 within the VLM-only slice, threshold 0.50 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.681",
+          "value_parsed": 0.681,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[3].f1_within_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "| 0.70 | 708 | 403 | 305 | 0.569 | +0.110 | 0.854 | 0.683 |",
+      "values": [
+        {
+          "quantity": "verifier accept threshold actually swept, threshold 0.70 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.70",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.threshold_sweep[4].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "accepted candidates (n_accepted), threshold 0.70 (§7 threshold-sweep table row)",
+          "value_verbatim": "708",
+          "value_parsed": 708,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[4].n_accepted",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (mound), threshold 0.70 (§7 threshold-sweep table row)",
+          "value_verbatim": "403",
+          "value_parsed": 403,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[4].tp_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (not_mound), threshold 0.70 (§7 threshold-sweep table row)",
+          "value_verbatim": "305",
+          "value_parsed": 305,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[4].fp_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "precision within the VLM-only slice, threshold 0.70 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.569",
+          "value_parsed": 0.569,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[4].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision delta vs the 0.15 threshold, threshold 0.70 (§7 threshold-sweep table row)",
+          "value_verbatim": "+0.110",
+          "value_parsed": 0.11,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[4].precision_delta_vs_0_15",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice, threshold 0.70 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[4].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 within the VLM-only slice, threshold 0.70 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.683",
+          "value_parsed": 0.683,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[4].f1_within_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "| 0.90 | 553 | 316 | 237 | 0.571 | +0.112 | 0.669 | 0.617 |",
+      "values": [
+        {
+          "quantity": "verifier accept threshold actually swept, threshold 0.90 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.90",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.threshold_sweep[5].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "accepted candidates (n_accepted), threshold 0.90 (§7 threshold-sweep table row)",
+          "value_verbatim": "553",
+          "value_parsed": 553,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[5].n_accepted",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (mound), threshold 0.90 (§7 threshold-sweep table row)",
+          "value_verbatim": "316",
+          "value_parsed": 316,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[5].tp_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (not_mound), threshold 0.90 (§7 threshold-sweep table row)",
+          "value_verbatim": "237",
+          "value_parsed": 237,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[5].fp_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "precision within the VLM-only slice, threshold 0.90 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.571",
+          "value_parsed": 0.571,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[5].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision delta vs the 0.15 threshold, threshold 0.90 (§7 threshold-sweep table row)",
+          "value_verbatim": "+0.112",
+          "value_parsed": 0.112,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[5].precision_delta_vs_0_15",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice, threshold 0.90 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.669",
+          "value_parsed": 0.669,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[5].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 within the VLM-only slice, threshold 0.90 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.617",
+          "value_parsed": 0.617,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[5].f1_within_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "| 0.95 | 550 | 314 | 236 | 0.571 | +0.112 | 0.665 | 0.614 |",
+      "values": [
+        {
+          "quantity": "verifier accept threshold actually swept, threshold 0.95 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.threshold_sweep[6].threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "accepted candidates (n_accepted), threshold 0.95 (§7 threshold-sweep table row)",
+          "value_verbatim": "550",
+          "value_parsed": 550,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[6].n_accepted",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives (mound), threshold 0.95 (§7 threshold-sweep table row)",
+          "value_verbatim": "314",
+          "value_parsed": 314,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[6].tp_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives (not_mound), threshold 0.95 (§7 threshold-sweep table row)",
+          "value_verbatim": "236",
+          "value_parsed": 236,
+          "unit": null,
+          "kind": "count",
+          "path": "$.threshold_sweep[6].fp_not_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "precision within the VLM-only slice, threshold 0.95 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.571",
+          "value_parsed": 0.571,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[6].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "precision delta vs the 0.15 threshold, threshold 0.95 (§7 threshold-sweep table row)",
+          "value_verbatim": "+0.112",
+          "value_parsed": 0.112,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[6].precision_delta_vs_0_15",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice, threshold 0.95 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.665",
+          "value_parsed": 0.665,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[6].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 within the VLM-only slice, threshold 0.95 (§7 threshold-sweep table row)",
+          "value_verbatim": "0.614",
+          "value_parsed": 0.614,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[6].f1_within_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "Thresholds 0.50, 0.70 are essentially equivalent (`n_accepted` differs by only 3, reflecting the quantisation: few verifier outputs fall between these values).",
+      "values": [
+        {
+          "quantity": "difference in n_accepted between the 0.50 and 0.70 sweep thresholds",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.threshold_sweep[3].n_accepted"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.threshold_sweep[4].n_accepted"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "'0.50, 0.70' name the sweep rows being compared (identifiers); only the asserted difference of 3 is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "§7 Threshold-sweep table"
+      },
+      "claim_text": "Precision caps at 0.571 and recall falls from 1.000 to 0.665 — the verifier cannot achieve > 57 % precision on the VLM-only slice at any threshold.",
+      "values": [
+        {
+          "quantity": "maximum precision attained across the threshold sweep, VLM-only slice",
+          "value_verbatim": "0.571",
+          "value_parsed": 0.571,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[5].precision",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice at the lowest swept threshold",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[0].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "recall within the VLM-only slice at the highest swept threshold",
+          "value_verbatim": "0.665",
+          "value_parsed": 0.665,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.threshold_sweep[6].recall_within_set",
+          "method": "read"
+        },
+        {
+          "quantity": "upper bound on attainable precision on the VLM-only slice, as a percentage",
+          "value_verbatim": "57 %",
+          "value_parsed": 57,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.threshold_sweep[5].precision"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.571 cap is anchored to the 0.90 sweep row, the largest precision in the sweep; the 0.95 row also reads 0.571 at 3 dp (0.5709). The '> 57 %' figure is that same precision expressed as a percentage and is asserted as a bound, not an equality."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "§8 Brier score"
+      },
+      "claim_text": "- **Overall Brier score:** 0.3226 (95 % bootstrap CI: 0.2974, 0.3476).",
+      "values": [
+        {
+          "quantity": "Brier score, VLM-only candidate set",
+          "value_verbatim": "0.3226",
+          "value_parsed": 0.3226,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.brier.point",
+          "method": "read"
+        },
+        {
+          "quantity": "confidence-interval level used for the bootstrap interval",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, Brier score",
+          "value_verbatim": "0.2974",
+          "value_parsed": 0.2974,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, Brier score",
+          "value_verbatim": "0.3476",
+          "value_parsed": 0.3476,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier.hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "§8 Per-symbol-type Brier score"
+      },
+      "claim_text": "| bench_mark_on_mound | 92 | 92 | 0.841 | 1.000 | 0.0838 |",
+      "values": [
+        {
+          "quantity": "candidate count, symbol type `bench_mark_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "92",
+          "value_parsed": 92,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.bench_mark_on_mound.n",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, symbol type `bench_mark_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "92",
+          "value_parsed": 92,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.bench_mark_on_mound.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, symbol type `bench_mark_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.841",
+          "value_parsed": 0.841,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.bench_mark_on_mound.mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), symbol type `bench_mark_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.bench_mark_on_mound.empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, symbol type `bench_mark_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.0838",
+          "value_parsed": 0.0838,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.bench_mark_on_mound.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "§8 Per-symbol-type Brier score"
+      },
+      "claim_text": "| burial_mound | 338 | 338 | 0.848 | 1.000 | 0.0876 |",
+      "values": [
+        {
+          "quantity": "candidate count, symbol type `burial_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "338",
+          "value_parsed": 338,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.burial_mound.n",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, symbol type `burial_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "338",
+          "value_parsed": 338,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.burial_mound.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, symbol type `burial_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.848",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.burial_mound.mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), symbol type `burial_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.burial_mound.empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, symbol type `burial_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.0876",
+          "value_parsed": 0.0876,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.burial_mound.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "§8 Per-symbol-type Brier score"
+      },
+      "claim_text": "| not_mound | 556 | 0 | 0.625 | 0.000 | 0.5239 |",
+      "values": [
+        {
+          "quantity": "candidate count, symbol type `not_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "556",
+          "value_parsed": 556,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.not_mound.n",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, symbol type `not_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.not_mound.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, symbol type `not_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.625",
+          "value_parsed": 0.625,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.not_mound.mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), symbol type `not_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.not_mound.empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, symbol type `not_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.5239",
+          "value_parsed": 0.5239,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.not_mound.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "§8 Per-symbol-type Brier score"
+      },
+      "claim_text": "| settlement_mound | 13 | 13 | 0.869 | 1.000 | 0.0573 |",
+      "values": [
+        {
+          "quantity": "candidate count, symbol type `settlement_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.settlement_mound.n",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, symbol type `settlement_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.settlement_mound.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, symbol type `settlement_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.869",
+          "value_parsed": 0.869,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.settlement_mound.mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), symbol type `settlement_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.settlement_mound.empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, symbol type `settlement_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.0573",
+          "value_parsed": 0.0573,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.settlement_mound.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "§8 Per-symbol-type Brier score"
+      },
+      "claim_text": "| trig_point_on_mound | 29 | 29 | 0.876 | 1.000 | 0.0784 |",
+      "values": [
+        {
+          "quantity": "candidate count, symbol type `trig_point_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.trig_point_on_mound.n",
+          "method": "read"
+        },
+        {
+          "quantity": "human-confirmed mounds, symbol type `trig_point_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_symbol_brier.trig_point_on_mound.n_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, symbol type `trig_point_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.876",
+          "value_parsed": 0.876,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.trig_point_on_mound.mean_predicted",
+          "method": "read"
+        },
+        {
+          "quantity": "empirical P(mound), symbol type `trig_point_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "1.000",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.trig_point_on_mound.empirical_p_mound",
+          "method": "read"
+        },
+        {
+          "quantity": "Brier score, symbol type `trig_point_on_mound` (§8 per-symbol Brier table row)",
+          "value_verbatim": "0.0784",
+          "value_parsed": 0.0784,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.trig_point_on_mound.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "§8 Per-symbol-type Brier score"
+      },
+      "claim_text": "The `not_mound` class carries the overall Brier score (0.5239) because the verifier assigns mean predicted P = 0.625 to true non-mounds",
+      "values": [
+        {
+          "quantity": "Brier score, symbol type `not_mound`",
+          "value_verbatim": "0.5239",
+          "value_parsed": 0.5239,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.not_mound.brier",
+          "method": "read"
+        },
+        {
+          "quantity": "mean predicted P, symbol type `not_mound`",
+          "value_verbatim": "0.625",
+          "value_parsed": 0.625,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.not_mound.mean_predicted",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "§8 Per-symbol-type Brier score"
+      },
+      "claim_text": "All mound sub-types have modest Brier scores (0.06 − 0.09)",
+      "values": [
+        {
+          "quantity": "lower end of the Brier-score range across the four mound sub-types",
+          "value_verbatim": "0.06",
+          "value_parsed": 0.06,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper end of the Brier-score range across the four mound sub-types",
+          "value_verbatim": "0.09",
+          "value_parsed": 0.09,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A rounded range asserted over four sub-class Brier scores at $.per_symbol_brier.{bench_mark_on_mound,burial_mound,settlement_mound,trig_point_on_mound}.brier. Giving either endpoint a single read path would manufacture a precision mismatch (e.g. 0.0573 against a quoted 0.06), so both take recompute-script. Note the document uses a minus sign (−) as the range dash."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "§9 Bootstrap confidence intervals"
+      },
+      "claim_text": "## 9. Bootstrap confidence intervals (10,000 resamples, seed 42)",
+      "values": [
+        {
+          "quantity": "bootstrap resamples, calibration crosstab",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, calibration-crosstab bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.config.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "§9 Bootstrap confidence intervals"
+      },
+      "claim_text": "| AUC | 0.6545 | 0.6217 | 0.6867 |",
+      "values": [
+        {
+          "quantity": "point estimate, AUC (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.6545",
+          "value_parsed": 0.6545,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, AUC (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.6217",
+          "value_parsed": 0.6217,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, AUC (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.6867",
+          "value_parsed": 0.6867,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "§9 Bootstrap confidence intervals"
+      },
+      "claim_text": "| Brier | 0.3226 | 0.2974 | 0.3476 |",
+      "values": [
+        {
+          "quantity": "point estimate, Brier (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.3226",
+          "value_parsed": 0.3226,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.brier.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, Brier (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.2974",
+          "value_parsed": 0.2974,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, Brier (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.3476",
+          "value_parsed": 0.3476,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.brier.hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "§9 Bootstrap confidence intervals"
+      },
+      "claim_text": "| P(mound \\| p ≤ 0.25) | 0.1739 | 0.1265 | 0.2241 |",
+      "values": [
+        {
+          "quantity": "point estimate, P(mound | p ≤ 0.25) (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.1739",
+          "value_parsed": 0.1739,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.p_mound_low_tail.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, P(mound | p ≤ 0.25) (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.1265",
+          "value_parsed": 0.1265,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.p_mound_low_tail.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, P(mound | p ≤ 0.25) (§9 bootstrap-CI table row)",
+          "value_verbatim": "0.2241",
+          "value_parsed": 0.2241,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.p_mound_low_tail.hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "§10 Low-p deep dive"
+      },
+      "claim_text": "- Candidates in tail: **230**.",
+      "values": [
+        {
+          "quantity": "candidate count in the low-p tail (p ≤ 0.25)",
+          "value_verbatim": "230",
+          "value_parsed": 230,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.n_total_in_tail",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "§10 Low-p deep dive"
+      },
+      "claim_text": "- Mounds in tail: **40**.",
+      "values": [
+        {
+          "quantity": "human-confirmed mounds in the low-p tail (p ≤ 0.25)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.n_mound_in_tail",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "§10 Low-p deep dive"
+      },
+      "claim_text": "- P(mound | p ≤ 0.25) = **0.1739** (bootstrap 95 % CI: 0.1265, 0.2241).",
+      "values": [
+        {
+          "quantity": "P(mound | p ≤ 0.25), low-p tail",
+          "value_verbatim": "0.1739",
+          "value_parsed": 0.1739,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.p_mound_low_tail.point",
+          "method": "read"
+        },
+        {
+          "quantity": "confidence-interval level used for the bootstrap interval",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, P(mound | p ≤ 0.25)",
+          "value_verbatim": "0.1265",
+          "value_parsed": 0.1265,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.p_mound_low_tail.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, P(mound | p ≤ 0.25)",
+          "value_verbatim": "0.2241",
+          "value_parsed": 0.2241,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.p_mound_low_tail.hi",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "§10 Symbol-type breakdown of mounds in the tail"
+      },
+      "claim_text": "| burial_mound | 30 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail of symbol type `burial_mound` (§10 symbol-type breakdown table row)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.symbol_type_of_mounds_in_tail.burial_mound",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "§10 Symbol-type breakdown of mounds in the tail"
+      },
+      "claim_text": "| bench_mark_on_mound | 7 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail of symbol type `bench_mark_on_mound` (§10 symbol-type breakdown table row)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.symbol_type_of_mounds_in_tail.bench_mark_on_mound",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "§10 Symbol-type breakdown of mounds in the tail"
+      },
+      "claim_text": "| trig_point_on_mound | 2 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail of symbol type `trig_point_on_mound` (§10 symbol-type breakdown table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.symbol_type_of_mounds_in_tail.trig_point_on_mound",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "§10 Symbol-type breakdown of mounds in the tail"
+      },
+      "claim_text": "| settlement_mound | 1 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail of symbol type `settlement_mound` (§10 symbol-type breakdown table row)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.symbol_type_of_mounds_in_tail.settlement_mound",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "§10 Top maps by mound count in the tail"
+      },
+      "claim_text": "### Top 5 maps by mound count in the tail",
+      "values": [
+        {
+          "quantity": "number of maps listed in the top-maps-by-tail-mound-count table",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.low_p_deep_dive.top_maps_with_mounds_in_tail",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The heading's '5' asserts how many maps the table below reports; treated as a count of the artefact's top-maps mapping. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "§10 Top maps by mound count in the tail"
+      },
+      "claim_text": "| K-35-077-2 | 5 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail on map K-35-077-2 (§10 top-maps table row)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.top_maps_with_mounds_in_tail['K-35-077-2']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Numbers inside the map name are part of the name (instrument rule 5), not claims; only the tail-mound count is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "§10 Top maps by mound count in the tail"
+      },
+      "claim_text": "| K-35-053-2 | 3 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail on map K-35-053-2 (§10 top-maps table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.top_maps_with_mounds_in_tail['K-35-053-2']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Numbers inside the map name are part of the name (instrument rule 5), not claims; only the tail-mound count is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "§10 Top maps by mound count in the tail"
+      },
+      "claim_text": "| K-35-067-4 | 3 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail on map K-35-067-4 (§10 top-maps table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.top_maps_with_mounds_in_tail['K-35-067-4']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Numbers inside the map name are part of the name (instrument rule 5), not claims; only the tail-mound count is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "§10 Top maps by mound count in the tail"
+      },
+      "claim_text": "| K-35-076-2 | 3 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail on map K-35-076-2 (§10 top-maps table row)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.top_maps_with_mounds_in_tail['K-35-076-2']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Numbers inside the map name are part of the name (instrument rule 5), not claims; only the tail-mound count is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "§10 Top maps by mound count in the tail"
+      },
+      "claim_text": "| K-35-062-4_Asenovgrad_4326 | 2 |",
+      "values": [
+        {
+          "quantity": "mounds in the low-p tail on map K-35-062-4_Asenovgrad_4326 (§10 top-maps table row)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.top_maps_with_mounds_in_tail['K-35-062-4_Asenovgrad_4326']",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Numbers inside the map name are part of the name (instrument rule 5), not claims; only the tail-mound count is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "§10 Low-p deep dive"
+      },
+      "claim_text": "A non-zero tail P(mound) of 0.1739 [0.1265, 0.2241] is small but meaningfully above zero — the verifier is missing ~17 % of real mounds in what it flags as very-low-confidence. This is a modest but real under-confidence bias on top of the dominant over-confidence bias at the high end.",
+      "values": [
+        {
+          "quantity": "P(mound | p ≤ 0.25), low-p tail",
+          "value_verbatim": "0.1739",
+          "value_parsed": 0.1739,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.p_mound_low_tail.point",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap 95 % CI lower bound, P(mound | p ≤ 0.25)",
+          "value_verbatim": "0.1265",
+          "value_parsed": 0.1265,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.p_mound_low_tail.lo",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95 % CI upper bound, P(mound | p ≤ 0.25)",
+          "value_verbatim": "0.2241",
+          "value_parsed": 0.2241,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.p_mound_low_tail.hi",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "percentage of real mounds the verifier is asserted to miss in its very-low-confidence tail",
+          "value_verbatim": "~17 %",
+          "value_parsed": 17,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.p_mound_low_tail.point"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained in value_verbatim per instrument v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "§11 Interpretation guide"
+      },
+      "claim_text": "The initial hypothesis from a live-review spot-check of 4 / 4 low-p mounds",
+      "values": [
+        {
+          "quantity": "low-p mounds confirmed in the live-review spot-check (numerator)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "low-p candidates inspected in the live-review spot-check (denominator)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No repo artefact records the live-review spot-check; the only other occurrence of '4/4' is a hard-coded prose string inside scripts/crosstab_verifier_vs_human.py, which is generated prose rather than an artefact (instrument rule 2 forbids anchoring prose to prose). Triage should chase the session record if it wants this verified."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "§11 Interpretation guide"
+      },
+      "claim_text": "The full analysis rejects this: P(mound | p ≤ 0.25) = 0.1739 is **below** the overall VLM-only prevalence of 0.459",
+      "values": [
+        {
+          "quantity": "P(mound | p ≤ 0.25), low-p tail",
+          "value_verbatim": "0.1739",
+          "value_parsed": 0.1739,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.p_mound_low_tail.point",
+          "method": "read"
+        },
+        {
+          "quantity": "mound prevalence in the VLM-only slice",
+          "value_verbatim": "0.459",
+          "value_parsed": 0.459,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.prevalence",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "§11 Interpretation guide"
+      },
+      "claim_text": "The tail is still non-zero (40 real mounds below p ≤ 0.25)",
+      "values": [
+        {
+          "quantity": "human-confirmed mounds in the low-p tail (p ≤ 0.25)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": "$.low_p_deep_dive.n_mound_in_tail",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "§11 Interpretation guide"
+      },
+      "claim_text": "Saturated-high-confidence outputs (p = 1.000) are correct only 54.9 % of the time. This is the direct driver of the ECE = 0.269 headline.",
+      "values": [
+        {
+          "quantity": "percentage of saturated (highest-bin) verifier outputs that are correct",
+          "value_verbatim": "54.9 %",
+          "value_parsed": 54.9,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100 * a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+              "path": "$.calibration_bins[6].empirical_p_mound"
+            }
+          ]
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE), quoted to 3 dp",
+          "value_verbatim": "0.269",
+          "value_parsed": 0.269,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'(p = 1.000)' identifies the saturated bin (identifier, not a claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "§11 Interpretation guide"
+      },
+      "claim_text": "so a low accept-threshold (~0.15) is still preferable despite modest precision.",
+      "values": [
+        {
+          "quantity": "recommended low accept-threshold for fieldwork-seeding use",
+          "value_verbatim": "~0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A recommendation about the operating threshold rather than a swept value, so $.config.sweep_thresholds[0] would be the wrong quantity; same anchor gap as the line 57 'current 0.15 threshold' claim. Approx marker retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "§11 Interpretation guide"
+      },
+      "claim_text": "- **Per-class Brier**: `not_mound` carries the overall Brier (0.5239).",
+      "values": [
+        {
+          "quantity": "Brier score, symbol type `not_mound`",
+          "value_verbatim": "0.5239",
+          "value_parsed": 0.5239,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_symbol_brier.not_mound.brier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "§11 Interpretation guide"
+      },
+      "claim_text": "The verifier handles the mound sub-classes well in isolation (each sub-class Brier < 0.09)",
+      "values": [
+        {
+          "quantity": "upper bound on the Brier score of every mound sub-class",
+          "value_verbatim": "< 0.09",
+          "value_parsed": 0.09,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A bound asserted over the four mound sub-class Brier scores at $.per_symbol_brier.{bench_mark_on_mound,burial_mound,settlement_mound,trig_point_on_mound}.brier; the '<' marker is kept in value_verbatim so the harness does not promote the bound to an equality."
+    }
+  ]
+}

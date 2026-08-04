@@ -1,0 +1,5085 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/ci-metadata-registry.md",
+    "git_blob": "efaff5840c9afc05db41301ae47a39f0573781ca",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          8,
+          11
+        ],
+        "section": "Purpose"
+      },
+      "claim_text": "For each CI-bearing file\nor file-class, the registry captures the four paper-reproducibility\nfields: bootstrap iteration count, random seed, resampling unit, and\ngenerating script.",
+      "values": [
+        {
+          "quantity": "count, paper-reproducibility fields the registry captures per CI-bearing file or file-class",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "[BATCH NOTE b086] Scope decisions for this batch (lines 1-172 of results/ci-metadata-registry.md; sibling batches cover lines 173-214 and 215-343). Out of C4 scope per instrument rule 5 and therefore not extracted: all dates and timestamps (the `Generated:` line, every `date_generated` cell, \"Archived 2026-04-23\", \"verified on 2026-04-20\"), the git commit hash `b57cf6c2`, session numbers inside `archive/planning-completed-session-81-82/ci-rerun-todo.md`, schema/version strings, and numbers that sit inside file paths or condition names (`55maps`, `384px`/`512px`, the `20m`/`30m`/`40m`/`50m` directory labels, `h8-v2`, `h12-v2`, `phase2a`-`phase3c`, `t0`/`t4`, `02-canonical-last`, `26-high-25of30`, `hp4hn4`, `pro_2x2_matrix`, `k5_replicate_sweep`, `020_vs_160`, `pool_160`, `single-pass-384-UNINTENDED-T1.0`). Two registry rows yield no claims because every digit in them sits inside a file name: line 131 (verifier_summary.json, NO-CI) and line 157 (the H10 NO-CI row). Anchoring policy: the iterations and seed columns anchor to the artefact the row itself names -- the co-located sidecar ($.bootstrap.n_iterations, $.bootstrap.seed) for YES_SIDECAR rows, the in-file key quoted in the notes cell for YES rows, and the generating script's constant or argparse default where the row asserts a script default (non-JSON anchors are legitimate per the v1.1 calibration note and route to triage). ci_count cells written as products (\"3 metrics x 4 buffers\") are split into their component counts; the product total takes recompute-script unless a sidecar records `ci_count` or `coverage_file_count`. File-class counts (\"(7 files)\", \"~80 files\") take recompute-script against the glob unless a directory-level sidecar records the count. Four rows name paths that are no longer in the working tree (the h11 UNINTENDED analysis_report, the two e47-v1-vs-v2 sweeps and the e47 grid/detect-single-pass classes, and results/h10/statistical_analysis.json plus results/h10/wbf/variant_c_vs_greedy_hp4hn4.json); each is anchored to its archive location and the relocation is named in that claim's notes. Approximation markers (~, >=) are kept inside value_verbatim per v1.2 amendment 5. Correction phrases (\"corrected from 6 to 5\", \"from ~80 to 43\", \"from ~30 to 18\", and the stale 16-file row) record the superseded figure as `historical` and the current figure as a live claim per rule 3. The two document-structural counts extracted at lines 8-11 and 14 (\"four paper-reproducibility fields\", \"Four completeness states\") are included under the include-when-in-doubt rule but are self-referential to this document's own schema and are the most prunable claims in the batch."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "Purpose"
+      },
+      "claim_text": "Four completeness states are used:",
+      "values": [
+        {
+          "quantity": "count, completeness states defined by this registry",
+          "value_verbatim": "Four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential structural count: the document then lists YES, YES_SIDECAR, INFERABLE and NO. No repo artefact decides it; rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          17
+        ],
+        "section": "Purpose -- YES definition"
+      },
+      "claim_text": "All four fields are explicitly recorded in the output\n  file (or a co-located manifest).",
+      "values": [
+        {
+          "quantity": "count, reproducibility fields a YES-state file must record explicitly",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the structural count extracted at lines 8-11 (bootstrap iteration count, random seed, resampling unit, generating script); self-referential to this document's own schema, so no artefact anchor exists."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          22
+        ],
+        "section": "Purpose -- YES_SIDECAR definition"
+      },
+      "claim_text": "Sidecars make the resolved\n  values (e.g., `\"seed\": 42`) available without requiring a reader to\n  consult the generating script.",
+      "values": [
+        {
+          "quantity": "random seed recorded in a resolved-metadata sidecar (quoted as the worked example of a resolved sidecar value)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document gives `\"seed\": 42` as a generic example of a resolved sidecar value rather than naming one sidecar; anchored to the trigger file's sidecar (the first sidecar the registry table lists, line 93), whose schema is shared by every sidecar in the table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/evaluate_detections.py` | `DEFAULT_BOOTSTRAP = 1000` | `DEFAULT_SEED = 42` | tile (see `lib_advanced_metrics.bootstrap_ci`) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/evaluate_detections.py",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/evaluate_detections.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_SEED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: module-level constants. The row also names `lib_advanced_metrics.bootstrap_ci` as the resampler (no numeric claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/build_tiered_leaderboard.py` | `DEFAULT_BOOTSTRAP = 1000` | `DEFAULT_SEED = 42` | tile |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/build_tiered_leaderboard.py",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/build_tiered_leaderboard.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_SEED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_tiered_leaderboard.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: module-level constants."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/analyse_phase2_results.py` | `DEFAULT_N_BOOTSTRAP = 1000` | `random_seed = 42` | tile (multi-run across K runs, averaged) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/analyse_phase2_results.py",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_N_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/analyse_phase2_results.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_phase2_results.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: `DEFAULT_N_BOOTSTRAP` is a module constant; the seed is a keyword default (`random_seed`) on the analysis entry point and an argparse default. 'K runs' in the resampling-unit cell carries no number."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/compute-pairwise-effect-sizes.py` | `1000` | `42` (constant) | tile (paired) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/compute-pairwise-effect-sizes.py",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/compute-pairwise-effect-sizes.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute-pairwise-effect-sizes.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: argparse defaults (the module docstring also states '1000 iterations, seed=42')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/run_pairwise_tests.py` | `10000` permutations | `42` | tile (permutation) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/run_pairwise_tests.py",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --n-permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/run_pairwise_tests.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_pairwise_tests.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: argparse defaults; the source writes the default as `10_000`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/compare_wbf_greedy_pv_permutation.py` | `10000` permutations | `42` | tile (permutation) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/compare_wbf_greedy_pv_permutation.py",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --n-permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/compare_wbf_greedy_pv_permutation.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compare_wbf_greedy_pv_permutation.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: argparse defaults."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/compute_corrected_f1_multi_buffer.py` | `10000` bootstrap | `42` | review-level (matched pair) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/compute_corrected_f1_multi_buffer.py",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --n-bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/compute_corrected_f1_multi_buffer.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_corrected_f1_multi_buffer.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: argparse defaults; the source writes the default as `10_000`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/compute_corrected_f1_human_reviewed.py` | `10000` bootstrap | `42` | review-level |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/compute_corrected_f1_human_reviewed.py",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --n-bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/compute_corrected_f1_human_reviewed.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_corrected_f1_human_reviewed.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: argparse defaults."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/crosstab_verifier_vs_human.py` | `10000` bootstrap | `42` | review-level |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/crosstab_verifier_vs_human.py",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "N_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/crosstab_verifier_vs_human.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "BOOTSTRAP_SEED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/crosstab_verifier_vs_human.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: module-level constants (written `10_000`), also exposed as argparse defaults."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/crosstab_uncalibrated_vs_calibrated.py` | `10000` bootstrap | `42` | review-level (overlap rows) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/crosstab_uncalibrated_vs_calibrated.py",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --n-bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/crosstab_uncalibrated_vs_calibrated.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/crosstab_uncalibrated_vs_calibrated.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: argparse defaults."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/analyse_subtype_classification.py` | `10000` bootstrap | `42` | matched-pair (stratified by map) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/analyse_subtype_classification.py",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --bootstrap-n",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/analyse_subtype_classification.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse default: --seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_subtype_classification.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: argparse defaults (written `10_000`)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "Default bootstrap configuration across the codebase"
+      },
+      "claim_text": "| `scripts/analyse_buffer_band_lift.py` | `1000` permutations | `42` | detection (spatial null) |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, script default, scripts/analyse_buffer_band_lift.py",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "M_PERMUTATIONS",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default, scripts/analyse_buffer_band_lift.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "SEED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_buffer_band_lift.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: module-level constants `M_PERMUTATIONS` and `SEED`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-image-generalisation/evaluation/evaluation.json` | 12 (3 metrics × 4 buffers) | bootstrap percentile (2.5/97.5) | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded in file | 2026-04-18T05:10Z | YES_SIDECAR | `outputs/55maps-image-generalisation/evaluation/evaluation.metadata.json` | Trigger file for this audit. Script default: `DEFAULT_BOOTSTRAP=1000, DEFAULT_SEED=42`; tile-level resampling via `lib_advanced_metrics.bootstrap_ci`. Run command captured verbatim in `outputs/55maps-image-generalisation/run.log` and embedded in the sidecar. |",
+      "values": [
+        {
+          "quantity": "CI count, outputs/55maps-image-generalisation/evaluation/evaluation.json",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "$.ci_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per evaluation (F1, precision, recall)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers evaluated in the 55maps image-generalisation evaluation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.buffers_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "lower percentile of the bootstrap CI",
+          "value_verbatim": "2.5",
+          "value_parsed": 2.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.methodology",
+          "method": "read"
+        },
+        {
+          "quantity": "upper percentile of the bootstrap CI",
+          "value_verbatim": "97.5",
+          "value_parsed": 97.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.methodology",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, 55maps image-generalisation evaluation.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, 55maps image-generalisation evaluation.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted script default DEFAULT_BOOTSTRAP",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/evaluate_detections.py#DEFAULT_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted script default DEFAULT_SEED",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/evaluate_detections.py#DEFAULT_SEED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 2.5/97.5 percentile pair is recorded in the sidecar as free text at $.bootstrap.methodology ('percentile bootstrap, 95% CI (2.5/97.5 quantiles)'), so the harness will need to read it out of a string; recorded, not adjudicated. The metrics count has no scalar locator -- the sidecar states it inside $.ci_count_derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` | 12 | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-18T17:48Z | YES_SIDECAR | `outputs/55maps-text-high-generalisation/evaluation/evaluation.metadata.json` | Sister text-high track; no run.log, values resolved from `resolved_config.yaml`. |",
+      "values": [
+        {
+          "quantity": "CI count, outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "$.ci_count",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, 55maps text-high-generalisation evaluation.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, 55maps text-high-generalisation evaluation.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` | 12 | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-18T12:21Z | YES_SIDECAR | `outputs/55maps-text-min-generalisation/evaluation/evaluation.metadata.json` | Sister text-min track; `run.log` present; sidecar includes CLI invocation. |",
+      "values": [
+        {
+          "quantity": "CI count, outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": "$.ci_count",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, 55maps text-min-generalisation evaluation.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, 55maps text-min-generalisation evaluation.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `outputs/h11/single-pass-384-UNINTENDED-T1.0/analysis_report.json` | ≥ 12 | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/analyse_phase2_results.py` | not recorded | 2026-03-14T11:13Z | YES_SIDECAR | `outputs/h11/single-pass-384-UNINTENDED-T1.0/analysis_report.metadata.json` | `n_bootstrap=1000` in file; seed defaults to 42 in script. UNINTENDED (protocol deviation); kept for provenance. |",
+      "values": [
+        {
+          "quantity": "CI count, h11 single-pass UNINTENDED-T1.0 analysis_report.json",
+          "value_verbatim": "≥ 12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h11 single-pass UNINTENDED-T1.0 analysis_report.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h11 single-pass UNINTENDED-T1.0 analysis_report.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, n_bootstrap recorded in the analysis_report.json itself",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.in_file_values_verified.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, script default asserted for this run",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/analyse_phase2_results.py#random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/analysis_report.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row's cited paths (outputs/h11/single-pass-384-UNINTENDED-T1.0/analysis_report.json and its sidecar) are no longer in the working tree; both have been archived to archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/, which is used as the anchor. The '≥' marker is kept in value_verbatim; this sidecar records no ci_count key, so the count takes recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/all-bootstrap-cis.json` | 2976 | bootstrap percentile | 1000 | 42 | tile | `scripts/consolidate_pv_bootstrap_cis.py` | not recorded | per-entry | YES | — | `_metadata.n_bootstrap=1000, _metadata.random_seed=42` explicit in file. Each entry carries `n_iterations`, `source_file`. |",
+      "values": [
+        {
+          "quantity": "CI count, results/all-bootstrap-cis.json (distinct metric x buffer x condition triples)",
+          "value_verbatim": "2976",
+          "value_parsed": 2976,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, results/all-bootstrap-cis.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/all-bootstrap-cis.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.random_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key _metadata.n_bootstrap",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key _metadata.random_seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/all-bootstrap-cis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "ci_count 2976 needs a scripted count over $.results (the file records $._metadata.total_tasks, not a CI-triple total)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pv/all-bootstrap-cis.json` | (aggregate) | bootstrap percentile | 1000 | 42 | tile | `scripts/consolidate_pv_bootstrap_cis.py` | not recorded | per-entry | YES | — | Same structure as the repo-root aggregate. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/pv/all-bootstrap-cis.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/pv/all-bootstrap-cis.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pv/all-bootstrap-cis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row states only that the structure matches the repo-root aggregate; paths taken from that sibling's schema."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pv/pairwise-effects/pairwise-effect-sizes.json` | 52 comparisons | paired bootstrap percentile | 1000 | 42 | tile (paired) | `scripts/compute-pairwise-effect-sizes.py` | not recorded | per-entry | YES | — | `metadata.n_iterations=1000, metadata.random_seed=42` explicit. |",
+      "values": [
+        {
+          "quantity": "count, comparisons in results/pv/pairwise-effects/pairwise-effect-sizes.json",
+          "value_verbatim": "52",
+          "value_parsed": 52,
+          "unit": null,
+          "kind": "count",
+          "path": "$.metadata.n_comparisons",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, pv pairwise-effect-sizes.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pv pairwise-effect-sizes.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.n_iterations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.random_seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pv/pairwise-effects/pairwise-effect-sizes.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pv/pairwise-effects/pairwise-effect-sizes-v2.json` | 52 comparisons | paired bootstrap percentile | 1000 | 42 | tile (paired) | `scripts/compute-pairwise-effect-sizes.py` | not recorded | per-entry | YES | — | Same, v2. |",
+      "values": [
+        {
+          "quantity": "count, comparisons in pairwise-effect-sizes-v2.json",
+          "value_verbatim": "52",
+          "value_parsed": 52,
+          "unit": null,
+          "kind": "count",
+          "path": "$.metadata.n_comparisons",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, pv pairwise-effect-sizes-v2.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pv pairwise-effect-sizes-v2.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pv/pairwise-effects/pairwise-effect-sizes-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pv/phase1/**/threshold_sweep.json` (7 files) | 21 thresholds × 3 metrics × 7 files | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` (threshold sweep) | not recorded | per-file | YES | — | Each file records `bootstrap_iterations=1000, seed=42` explicitly. |",
+      "values": [
+        {
+          "quantity": "file count, results/pv/phase1/**/threshold_sweep.json",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, thresholds swept per phase1 threshold_sweep.json",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.thresholds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, results/pv/phase1/**/threshold_sweep.json (ci_count factor)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, pv phase1 threshold sweeps",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pv phase1 threshold sweeps",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key bootstrap_iterations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pv/phase1/adversarial-text-150-n5-t0.7/text-n1-t0.0-minimal/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row: anchored to a representative member of the glob results/pv/phase1/**/threshold_sweep.json; the file count itself needs a scripted glob count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pv/phase2/**/threshold_sweep.json` (25 files) | 21 × 3 × 25 | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` | not recorded | per-file | YES | — | Same. Indexed under phase2/02-canonical-last through phase2/26-high-25of30. |",
+      "values": [
+        {
+          "quantity": "file count, results/pv/phase2/**/threshold_sweep.json",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, thresholds swept per phase2 threshold_sweep.json",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.thresholds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, results/pv/phase2/**/threshold_sweep.json (ci_count factor)",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, pv phase2 threshold sweeps",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pv phase2 threshold sweeps",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pv/phase2/02-canonical-last/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative member; `02-canonical-last` and `26-high-25of30` are directory names, out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          103
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-eval/pv/**/buffer_sensitivity.json` (9 files) | 3 metrics × 4 buffers × 9 files | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_pv_buffer_sensitivity.py` | not recorded | per-file | YES | — | `bootstrap_iterations=1000, seed=42` explicit. |",
+      "values": [
+        {
+          "quantity": "file count, results/paper-eval/pv/**/buffer_sensitivity.json",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per buffer_sensitivity.json",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per buffer_sensitivity.json",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "file count, results/paper-eval/pv/**/buffer_sensitivity.json (ci_count factor)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, paper-eval PV buffer-sensitivity files",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paper-eval PV buffer-sensitivity files",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key bootstrap_iterations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-image-3-of-5--flash-min-vf/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative member."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-eval/flash-*/consensus-analysis-report.json` (20 cells) | ~45 configs × 3 metrics × 4 buffers × 20 cells | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_consensus_sweep.py` | not recorded | per-file | YES | — | `metadata.n_bootstrap=1000, metadata.random_seed=42` explicit. |",
+      "values": [
+        {
+          "quantity": "cell count, results/paper-eval/flash-*/consensus-analysis-report.json",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, consensus configurations per flash consensus-analysis-report.json",
+          "value_verbatim": "~45",
+          "value_parsed": 45,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per configuration",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per configuration",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "cell count, flash consensus-analysis-report.json (ci_count factor)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, paper-eval flash consensus reports",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paper-eval flash consensus reports",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.n_bootstrap",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.random_seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/flash-high-image-20m/consensus-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative member; the '~' on the configuration count is retained in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase3a-consensus/*/consensus-analysis-report.json` (3 files) | as above × 3 | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_consensus_sweep.py` | not recorded | 2026-03-25 | YES | — | Replication and per-track cells. |",
+      "values": [
+        {
+          "quantity": "file count, results/retest/phase3a-consensus/*/consensus-analysis-report.json",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "multiplier on the consensus-report ci_count for this class",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, retest phase3a consensus reports",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, retest phase3a consensus reports",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase3a-consensus/replication/consensus-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative member."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h11-384-pv-diagnostic/bootstrap-cis-384px.json` | 81 conditions × 3 metrics | bootstrap percentile | 1000 | 42 | tile | `scripts/consolidate_pv_bootstrap_cis.py` | not recorded | 2026-03-25T23:19Z | YES | — | `_metadata.n_iterations` per-entry; script default seed. |",
+      "values": [
+        {
+          "quantity": "count, conditions in results/h11-384-pv-diagnostic/bootstrap-cis-384px.json",
+          "value_verbatim": "81",
+          "value_parsed": 81,
+          "unit": null,
+          "kind": "count",
+          "path": "$._metadata.n_conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per condition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h11-384 pv diagnostic bootstrap CIs",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.results[*].n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h11-384 pv diagnostic bootstrap CIs",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/bootstrap-cis-384px.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row states the iteration count is recorded per-entry, so the iterations value uses a constant-collapse locator over $.results (v1.2 amendment 7). No seed constant was located in scripts/consolidate_pv_bootstrap_cis.py and the file's $._metadata block carries no seed key, so the seed claim is anchor-unknown; scripts/lib_advanced_metrics.py::bootstrap_ci takes `random_seed` as a parameter and is the chase target for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h11-384-pv-diagnostic/**/threshold_sweep.json` (~80 files) | 21 × 3 per file | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` | not recorded | per-file | YES | — | Each file records `bootstrap_iterations=1000, seed=42`. |",
+      "values": [
+        {
+          "quantity": "file count, results/h11-384-pv-diagnostic/**/threshold_sweep.json",
+          "value_verbatim": "~80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, thresholds swept per file",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.thresholds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h11-384 pv diagnostic threshold sweeps",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h11-384 pv diagnostic threshold sweeps",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key bootstrap_iterations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-image-1of5/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative member."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h11-384-single-pass-t0-rerun/consensus-analysis-report.json` | as consensus reports | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_consensus_sweep.py` | not recorded | 2026-03-25T12:02Z | YES | — | `metadata.n_bootstrap=1000, metadata.random_seed=42` explicit. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/h11-384-single-pass-t0-rerun/consensus-analysis-report.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/h11-384-single-pass-t0-rerun/consensus-analysis-report.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.n_bootstrap",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.random_seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-single-pass-t0-rerun/consensus-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/e47-v1-vs-v2/v1-sweep/threshold_sweep.json` | 21 × 3 | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` | not recorded | 2026-03 | YES | — | Explicit `bootstrap_iterations=1000, seed=42`. Quarantine subtree — see note below. |",
+      "values": [
+        {
+          "quantity": "count, thresholds swept in the e47 v1-sweep threshold_sweep.json",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.thresholds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, e47 v1-sweep threshold sweep",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, e47 v1-sweep threshold sweep",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key bootstrap_iterations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/e47-v1-vs-v2/v1-sweep/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited path results/e47-v1-vs-v2/v1-sweep/threshold_sweep.json is no longer in the working tree; the quarantine agent moved the subtree to archive/v2-verifier-contamination/e47-v1-vs-v2/, which is used as the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/e47-v1-vs-v2/v2-sweep/threshold_sweep.json` | 21 × 3 | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` | not recorded | 2026-03 | YES | — | Same. Quarantine subtree — see note below. |",
+      "values": [
+        {
+          "quantity": "count, thresholds swept in the e47 v2-sweep threshold_sweep.json",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.thresholds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, e47 v2-sweep threshold sweep",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, e47 v2-sweep threshold sweep",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/e47-v1-vs-v2/v2-sweep/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cited path relocated to archive/v2-verifier-contamination/ (see the line-109 claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/e47-v1-vs-v2/grid/**/threshold_sweep.json` (10 files) | 21 × 3 × 10 | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` | not recorded | per-file | YES | — | Explicit metadata. Quarantine subtree — see note below. |",
+      "values": [
+        {
+          "quantity": "file count, results/e47-v1-vs-v2/grid/**/threshold_sweep.json",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, thresholds swept per file",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.thresholds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, e47 grid threshold sweeps (ci_count factor)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, e47 grid threshold sweeps",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, e47 grid threshold sweeps",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/e47-v1-vs-v2/grid/v1-1of5/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row; cited subtree relocated to archive/v2-verifier-contamination/ and anchored to a representative member there."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/e47-v1-vs-v2/detect-single-pass/**/threshold_sweep.json` (8 files) | 21 × 3 × 8 | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` | not recorded | per-file | YES | — | Explicit. Quarantine subtree — see note below. |",
+      "values": [
+        {
+          "quantity": "file count, results/e47-v1-vs-v2/detect-single-pass/**/threshold_sweep.json",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, thresholds swept per file",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.thresholds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, e47 detect-single-pass threshold sweeps (ci_count factor)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, e47 detect-single-pass threshold sweeps",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, e47 detect-single-pass threshold sweeps",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/e47-v1-vs-v2/detect-single-pass/20m-v1/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row; cited subtree relocated to archive/v2-verifier-contamination/ and anchored to a representative member there."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/e47-v1-vs-v2/grid-multibuffer/**/evaluation.json` (0 files; no such files exist) | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | STALE_ENTRY | — | The registry row describing 16 `evaluation.json` files under this path was stale on 2026-04-20: no files match the pattern. The subtree does contain `threshold_sweep.json` files (`YES` metadata, row above) which have been moved to `archive/v2-verifier-contamination/e47-v1-vs-v2/grid-multibuffer/**` by the v2-verifier-contamination quarantine agent during this session. Left in the registry to document the resolution; the quarantine agent should remove or relocate the e47-v1-vs-v2 rows when consolidating. |",
+      "values": [
+        {
+          "quantity": "file count, results/e47-v1-vs-v2/grid-multibuffer/**/evaluation.json (asserted as zero)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "file count, evaluation.json files this registry row previously claimed under grid-multibuffer (superseded)",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/e47-v1-vs-v2/grid-multibuffer",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "STALE_ENTRY row. The zero-count assertion needs a scripted glob check against results/e47-v1-vs-v2/grid-multibuffer/**/evaluation.json (the subtree itself has since moved to archive/v2-verifier-contamination/e47-v1-vs-v2/grid-multibuffer/, used here as the anchor); the 16-file figure is the retracted 'was' side of the correction and is recorded as historical per rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/leaderboard/era1/leaderboard_tiers_20m.json` | 19 conditions × 3 × 4 | bootstrap percentile | 1000 | 42 | tile | `scripts/build_tiered_leaderboard.py` | `b57cf6c2` | 2026-04-17T03:51Z | YES | — | `metadata.bootstrap=1000, metadata.seed=42, metadata.n_permutations=10000, git_commit` all explicit. |",
+      "values": [
+        {
+          "quantity": "count, conditions in results/leaderboard/era1/leaderboard_tiers_20m.json",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per condition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per condition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.metadata.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, era1 tiered leaderboard",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, era1 tiered leaderboard",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.bootstrap",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.n_permutations, era1 tiered leaderboard",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era1/leaderboard_tiers_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The commit `b57cf6c2` in the source_git_commit cell is out of scope per rule 5. The file also records $.metadata.n_conditions_input alongside $.n_conditions; the row's '19 conditions' is anchored to $.n_conditions and left for triage to adjudicate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/leaderboard/era2/leaderboard_tiers_20m.json` | similar | bootstrap percentile | 1000 | 42 | tile | `scripts/build_tiered_leaderboard.py` | recorded in-file | 2026-04-17 | YES | — | Same metadata schema. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, era2 tiered leaderboard",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, era2 tiered leaderboard",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/leaderboard_tiers_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/leaderboard/era3/leaderboard_tiers_20m.json` | similar | bootstrap percentile | 1000 | 42 | tile | `scripts/build_tiered_leaderboard.py` | recorded in-file | 2026-04-17 | YES | — | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, era3 tiered leaderboard",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, era3 tiered leaderboard",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era3/leaderboard_tiers_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/leaderboard/era{1,2,3}/leaderboard_all_evaluations.json` | hundreds (N=72 × 4 buffers × 3 metrics in era1) | bootstrap percentile | 1000 | 42 | tile | `scripts/build_tiered_leaderboard.py` | not recorded in this file | 2026-04-17 | YES_SIDECAR | `results/leaderboard/era{1,2,3}/leaderboard_all_evaluations.metadata.json` (one per era) | Script defaults as above; sibling `leaderboard_tiers_*.json` has explicit metadata for the same run. Per-era sidecars written 2026-04-20. |",
+      "values": [
+        {
+          "quantity": "count, conditions input to the era1 leaderboard (N)",
+          "value_verbatim": "72",
+          "value_parsed": 72,
+          "unit": null,
+          "kind": "count",
+          "path": "results/leaderboard/era1/leaderboard_tiers_20m.json#$.metadata.n_conditions_input",
+          "method": "read"
+        },
+        {
+          "quantity": "count, buffers per condition, era1",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "results/leaderboard/era1/leaderboard_tiers_20m.json#len:$.metadata.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per condition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, leaderboard_all_evaluations.json, eras 1-3",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, leaderboard_all_evaluations.json, eras 1-3",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era1/leaderboard_all_evaluations.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row covers three per-era files and their three sidecars; anchored to the era1 sidecar, with the N=72 and buffer counts taken cross-file from the era1 tiers artefact the row names as the explicit-metadata sibling."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/leaderboard/era2/.cache/evaluations/**/t*_*.json` (thousands) | 3 × 1 per file | bootstrap percentile | 1000 | 42 | tile | `scripts/build_tiered_leaderboard.py` (cache) | not recorded | per-file | YES_SIDECAR | `results/leaderboard/era2/.cache/.metadata.json` (directory-level; gitignored but present in the working tree) | Cache files consumed by the tiered leaderboard. Directory-level sidecar covers all ~1056 cells. The entire `.cache/` subtree is gitignored (reproducible from source detections); the sidecar is present on disk but not versioned. |",
+      "values": [
+        {
+          "quantity": "count, metrics carrying CIs per cache cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per cache cell",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, era2 leaderboard evaluation cache cells",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, era2 leaderboard evaluation cache cells",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "count, cache cells covered by the era2 directory-level sidecar",
+          "value_verbatim": "~1056",
+          "value_parsed": 1056,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count_approximate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/.cache/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The sidecar is present on disk but gitignored, as the row itself states; '(thousands)' in the ci_count cell carries no numeral."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/leaderboard/cells/*.json` (13 files) | n/a | — | — | — | — | `scripts/build_tiered_leaderboard.py` (cells) | — | — | NO-CI | — | Threshold-sweep cells without CIs; out of scope for this registry. |",
+      "values": [
+        {
+          "quantity": "file count, results/leaderboard/cells/*.json",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "NO-CI row; only the file count is checkable and it needs a scripted glob count over the directory."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase2a-analysis-report.json` | 5 × 3 conditions (multi-run) | bootstrap percentile (multi-run) | 1000 | 42 | tile, runs averaged (K=10) | `scripts/analyse_phase2_results.py` | not recorded | 2026-02-06T06:45Z | YES_SIDECAR | `results/phase2a-analysis-report.metadata.json` | `n_bootstrap=1000` explicit in-file; seed default=42 resolved in sidecar. |",
+      "values": [
+        {
+          "quantity": "count, conditions in results/phase2a-analysis-report.json",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per condition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, results/phase2a-analysis-report.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/phase2a-analysis-report.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "passes per condition (K), phase 2a multi-run bootstrap",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, n_bootstrap recorded in phase2a-analysis-report.json itself",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.in_file_values_verified.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, seed resolved in the phase2a sidecar",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The condition count (5) and pass count (K=10) are stated in the sidecar's free-text $.notes ('N=5 conditions, K=10 passes') rather than as scalars, so both take recompute-script against the analysis report."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `archive/outputs-pre-retest-60-tile/phase2b/phase2b-track1-image-analysis.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/analyse_phase2_results.py` | not recorded | 2026-02-08T04:36Z | YES_SIDECAR | `archive/outputs-pre-retest-60-tile/phase2b/phase2b-track1-image-analysis.metadata.json` | Pre-retest 60-tile K=10 pilot. Archived 2026-04-23 (superseded by `results/retest/phase2b-track1-evaluation.json`, 340-tile K=3). |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, pre-retest phase2b track1 image analysis",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pre-retest phase2b track1 image analysis",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, pre-retest phase2b pilot corpus",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes per condition (K), pre-retest phase2b pilot",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile count, superseding retest phase2b evaluation",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes per condition (K), superseding retest phase2b evaluation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/phase2b-track1-image-analysis.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 60-tile and 340-tile corpus sizes and the K values are asserted facts about the pilot and its replacement (rule 5 name-plus-fact exception; the 60 also appears inside the archive directory name). No scalar locator was found for them in the sidecar, so they take recompute-script; the superseding artefact results/retest/phase2b-track1-evaluation.json is the chase target for the 340/K=3 pair."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `archive/outputs-pre-retest-60-tile/phase2b/phase2b-track2-text-analysis.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/analyse_phase2_results.py` | not recorded | 2026-02 | YES_SIDECAR | `archive/outputs-pre-retest-60-tile/phase2b/phase2b-track2-text-analysis.metadata.json` | Pre-retest 60-tile K=10 pilot. Archived 2026-04-23 (superseded by `results/retest/phase2b-track2-evaluation.json`, 340-tile K=3). |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, pre-retest phase2b track2 text analysis",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pre-retest phase2b track2 text analysis",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, pre-retest phase2b pilot corpus",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes per condition (K), pre-retest phase2b pilot",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tile count, superseding retest phase2b evaluation",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes per condition (K), superseding retest phase2b evaluation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/phase2b-track2-text-analysis.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "See the line-121 claim for the corpus-size and K anchoring."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase2c-track1-image-analysis.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/analyse_phase2_results.py` | not recorded | 2026-02 | YES_SIDECAR | `results/phase2c-track1-image-analysis.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/phase2c-track1-image-analysis.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/phase2c-track1-image-analysis.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase2c-exploratory-pure-positive-hp.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/analyse_phase2_results.py` | not recorded | 2026-02 | YES_SIDECAR | `results/phase2c-exploratory-pure-positive-hp.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/phase2c-exploratory-pure-positive-hp.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/phase2c-exploratory-pure-positive-hp.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-exploratory-pure-positive-hp.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase2d-track1-image-analysis.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/analyse_phase2_results.py` | not recorded | 2026-02 | YES_SIDECAR | `results/phase2d-track1-image-analysis.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/phase2d-track1-image-analysis.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/phase2d-track1-image-analysis.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2d-track1-image-analysis.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase2d-track2-text-analysis.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/analyse_phase2_results.py` | not recorded | 2026-02 | YES_SIDECAR | `results/phase2d-track2-text-analysis.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/phase2d-track2-text-analysis.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/phase2d-track2-text-analysis.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2d-track2-text-analysis.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase3a-text-matrix/all-evaluations.json` | aggregate | bootstrap percentile | 1000 | 42 | tile | `scripts/summarise_phase3a_text_matrix.py` | not recorded | 2026-04-17 | YES_SIDECAR | `results/phase3a-text-matrix/all-evaluations.metadata.json` | Aggregate of per-cell `evaluation.json` in the same tree. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/phase3a-text-matrix/all-evaluations.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/phase3a-text-matrix/all-evaluations.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3a-text-matrix/all-evaluations.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase3a-image-matrix/all-evaluations.json` | aggregate | bootstrap percentile | 1000 | 42 | tile | `scripts/summarise_phase3a_matrix.py` | not recorded | 2026-04 | YES_SIDECAR | `results/phase3a-image-matrix/all-evaluations.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/phase3a-image-matrix/all-evaluations.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/phase3a-image-matrix/all-evaluations.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3a-image-matrix/all-evaluations.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase3a-{image,text}-matrix/**/evaluation.json` (~252 files) | 3 × 4 per file | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | per-file | YES_SIDECAR | `results/phase3a-text-matrix/.metadata.json` and `results/phase3a-image-matrix/.metadata.json` (directory-level) | Per-cell outputs; script defaults. Covered by directory-level sidecars (252 cells total: 156 text + 96 image). |",
+      "values": [
+        {
+          "quantity": "file count, results/phase3a-{image,text}-matrix/**/evaluation.json",
+          "value_verbatim": "~252",
+          "value_parsed": 252,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase3a-text-matrix/.metadata.json",
+              "path": "$.coverage_file_count"
+            },
+            {
+              "name": "b",
+              "file": "results/phase3a-image-matrix/.metadata.json",
+              "path": "$.coverage_file_count"
+            }
+          ]
+        },
+        {
+          "quantity": "count, metrics carrying CIs per cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per cell",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.per_cell_buffers_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, phase3a matrix per-cell evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, phase3a matrix per-cell evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "cell count, phase3a image+text matrices combined",
+          "value_verbatim": "252",
+          "value_parsed": 252,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase3a-text-matrix/.metadata.json",
+              "path": "$.coverage_file_count"
+            },
+            {
+              "name": "b",
+              "file": "results/phase3a-image-matrix/.metadata.json",
+              "path": "$.coverage_file_count"
+            }
+          ]
+        },
+        {
+          "quantity": "cell count, phase3a text matrix",
+          "value_verbatim": "156",
+          "value_parsed": 156,
+          "unit": null,
+          "kind": "count",
+          "path": "results/phase3a-text-matrix/.metadata.json#$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "cell count, phase3a image matrix",
+          "value_verbatim": "96",
+          "value_parsed": 96,
+          "unit": null,
+          "kind": "count",
+          "path": "results/phase3a-image-matrix/.metadata.json#$.coverage_file_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3a-text-matrix/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both totals (~252 and 252) are derivations of the two directory-level sidecar counts and carry their own expression/operands per v1.2 amendment 1; the 156 and 96 operands are recorded separately as `read` values with their own cross-file paths so they are never compared against the sum."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          130
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase3a-text-matrix/secondary_effects.json` | ~8 effects × 3 metrics (ci_excludes_zero reported) | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_secondary_effects_text.py` | not recorded | 2026-04 | YES_SIDECAR | `results/phase3a-text-matrix/secondary_effects.metadata.json` | `n_iterations=1000` visible in nested bootstrap blocks; seed default resolved in sidecar. |",
+      "values": [
+        {
+          "quantity": "count, effects in results/phase3a-text-matrix/secondary_effects.json",
+          "value_verbatim": "~8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per effect",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, phase3a text-matrix secondary effects",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, phase3a text-matrix secondary effects",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, n_iterations quoted as visible in the nested bootstrap blocks of secondary_effects.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3a-text-matrix/secondary_effects.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The final iterations value is attributed by the document to nested bootstrap blocks inside results/phase3a-text-matrix/secondary_effects.json itself; no single scalar locator exists there, so it is anchored to the sidecar's resolved value. 'ci_excludes_zero' names a reported field, not a number."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase3c-diversity/track1-image/diversity-analysis-report.json` | many | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_diversity.py` | not recorded | 2026-03-25T07:29Z | YES | — | `metadata.n_bootstrap=1000, metadata.random_seed=42, metadata.n_permutations=10000` explicit. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, phase3c diversity track1-image report",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, phase3c diversity track1-image report",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.n_bootstrap",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.random_seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.n_permutations, phase3c diversity track1-image",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track1-image/diversity-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          133
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase3c-diversity/track2-text/diversity-analysis-report.json` | many | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_diversity.py` | not recorded | 2026-03-25 | YES | — | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, phase3c diversity track2-text report",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, phase3c diversity track2-text report",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          134
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/phase3c-diversity/track2-text/diversity-consensus-sweep.json` | many | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_consensus_sweep.py` | not recorded | 2026-03 | YES_SIDECAR | `results/phase3c-diversity/track2-text/diversity-consensus-sweep.metadata.json` | Consensus sweep cells; sibling `diversity-analysis-report.json` has explicit run-level metadata. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, phase3c diversity track2-text consensus sweep",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, phase3c diversity track2-text consensus sweep",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3c-diversity/track2-text/diversity-consensus-sweep.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          135
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase2a-evaluation.json` | 5 × 3 (multi-run) | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/evaluate_retest_all.py` | not recorded | 2026-02 | YES_SIDECAR | `results/retest/phase2a-evaluation.metadata.json` | Uses `analyse_phase2_results.py`-equivalent multi-run bootstrap; constants BOOTSTRAP_ITERATIONS=1000, RANDOM_SEED=42 in script. |",
+      "values": [
+        {
+          "quantity": "count, conditions in results/retest/phase2a-evaluation.json",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per condition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, results/retest/phase2a-evaluation.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/retest/phase2a-evaluation.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted script constant BOOTSTRAP_ITERATIONS, scripts/evaluate_retest_all.py",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.in_script_constants.BOOTSTRAP_ITERATIONS",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted script constant RANDOM_SEED, scripts/evaluate_retest_all.py",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.in_script_constants.RANDOM_SEED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2a-evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The two quoted script constants are resolved in the sidecar's $.in_script_constants block (which also records the source lines); the underlying non-JSON anchor is scripts/evaluate_retest_all.py."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          136
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase2b-track1-evaluation.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/evaluate_retest_all.py` | not recorded | 2026-02 | YES_SIDECAR | `results/retest/phase2b-track1-evaluation.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/retest/phase2b-track1-evaluation.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/retest/phase2b-track1-evaluation.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2b-track1-evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          137
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase2b-track2-evaluation.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/evaluate_retest_all.py` | not recorded | 2026-02 | YES_SIDECAR | `results/retest/phase2b-track2-evaluation.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/retest/phase2b-track2-evaluation.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/retest/phase2b-track2-evaluation.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2b-track2-evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          138
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase2c-{track1,track2,exploratory}-evaluation.json` (3 files) | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/evaluate_retest_all.py` | not recorded | 2026-02 | YES_SIDECAR | `results/retest/phase2c-track1-evaluation.metadata.json`, `.../phase2c-track2-evaluation.metadata.json`, `.../phase2c-exploratory-evaluation.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "file count, results/retest/phase2c-{track1,track2,exploratory}-evaluation.json",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, retest phase2c evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, retest phase2c evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2c-track1-evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row covering three evaluations and their three sidecars; anchored to the track1 sidecar. The row abbreviates the other two sidecar paths as `.../phase2c-track2-evaluation.metadata.json` and `.../phase2c-exploratory-evaluation.metadata.json`, both of which resolve under results/retest/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase2d-{track1,track2}-evaluation.json` (2 files) | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/evaluate_retest_all.py` | not recorded | 2026-02 | YES_SIDECAR | `results/retest/phase2d-track1-evaluation.metadata.json`, `.../phase2d-track2-evaluation.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "file count, results/retest/phase2d-{track1,track2}-evaluation.json",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, retest phase2d evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, retest phase2d evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2d-track1-evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row covering two evaluations; anchored to the track1 sidecar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase2e-evaluation.json` | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/evaluate_retest_all.py` | not recorded | 2026-02 | YES_SIDECAR | `results/retest/phase2e-evaluation.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/retest/phase2e-evaluation.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/retest/phase2e-evaluation.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2e-evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase3a-{replication,track1,track2}-evaluation.json` (3 files) | as above | bootstrap percentile (multi-run) | 1000 | 42 | tile (multi-run) | `scripts/evaluate_retest_all.py` | not recorded | 2026-02 | YES_SIDECAR | `results/retest/phase3a-replication-evaluation.metadata.json`, `.../phase3a-track1-evaluation.metadata.json`, `.../phase3a-track2-evaluation.metadata.json` | Same. |",
+      "values": [
+        {
+          "quantity": "file count, results/retest/phase3a-{replication,track1,track2}-evaluation.json",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, retest phase3a evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, retest phase3a evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase3a-replication-evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row covering three evaluations; anchored to the replication sidecar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/pairwise-bootstrap-comparisons.json` | 70 comparisons × 3 metrics | bootstrap percentile | 1000 | 42 | tile (paired) | `scripts/run_pairwise_tests.py` (pre-permutation era) | not recorded | 2026-02 | YES | — | `metadata.bootstrap_iterations=1000, metadata.random_seed=42` explicit. |",
+      "values": [
+        {
+          "quantity": "count, comparisons in results/retest/pairwise-bootstrap-comparisons.json",
+          "value_verbatim": "70",
+          "value_parsed": 70,
+          "unit": null,
+          "kind": "count",
+          "path": "$.metadata.n_comparisons",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per comparison",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, retest pairwise bootstrap comparisons",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, retest pairwise bootstrap comparisons",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.bootstrap_iterations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.random_seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase3a-high-text/phase3a-high-text-consensus-sweep.json` | 135 configs × 3 × 1 buffer | bootstrap percentile | 1000 | 42 | tile | `scripts/consensus-sweep-phase3a-high-text.py` | not recorded | 2026-02 | YES | — | `bootstrap_iterations=1000, bootstrap_seed=42` explicit. |",
+      "values": [
+        {
+          "quantity": "count, configurations in the phase3a-high-text consensus sweep",
+          "value_verbatim": "135",
+          "value_parsed": 135,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_configurations",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per configuration",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per configuration",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, phase3a-high-text consensus sweep",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, phase3a-high-text consensus sweep",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key bootstrap_iterations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key bootstrap_seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase3a-high-text/phase3a-high-text-consensus-sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/retest/phase3a-high-text/phase3a-high-text-pairwise.json` | several | bootstrap percentile | 1000 | 42 | tile | `scripts/consensus-sweep-phase3a-high-text.py` | not recorded | 2026-02 | YES | — | Same script writes explicit metadata. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, phase3a-high-text pairwise comparisons",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, phase3a-high-text pairwise comparisons",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase3a-high-text/phase3a-high-text-pairwise.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/20m/run_manifest.json` | n/a (manifest) | permutation | 10000 | 42 | tile (permutation) | `scripts/run_pairwise_tests.py` | not recorded | 2026-03-28T06:54Z | YES | — | Manifest records `metadata.n_permutations=10000, metadata.seed=42`; applies to all cells in the tree. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/pairwise/20m/run_manifest.json",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/pairwise/20m/run_manifest.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.n_permutations",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/run_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          146,
+          146
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/20m/group_*/*.json` (~32 files) | 1 comparison per file | permutation | 10000 | 42 | tile (permutation) | `scripts/run_pairwise_tests.py` | not recorded | 2026-03-28 | YES | — | Each cell records its own `metadata.n_permutations, metadata.seed`. |",
+      "values": [
+        {
+          "quantity": "file count, results/pairwise/20m/group_*/*.json",
+          "value_verbatim": "~32",
+          "value_parsed": 32,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, comparisons per pairwise cell file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, pairwise 20 m cells",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pairwise 20 m cells",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_1_architecture/pv-on-single-pass-image-image-baseline-pv-vs-single-pass-text-5-of-5.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative cell; the file count needs a scripted glob count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/30m/run_manifest.json` | n/a | permutation | 10000 | 42 | tile (permutation) | `scripts/run_pairwise_tests.py` | not recorded | 2026-03-28 | YES | — | As above, 30 m buffer. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/pairwise/30m/run_manifest.json",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/pairwise/30m/run_manifest.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius of the pairwise 30 m tree",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/30m/run_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'30 m buffer' in the notes cell is both the tree's name and an asserted fact about the run, so it is extracted per the rule-5 name-plus-fact exception."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          148
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/30m/group_*/*.json` (~32 files) | 1 per file | permutation | 10000 | 42 | tile (permutation) | `scripts/run_pairwise_tests.py` | not recorded | 2026-03-28 | YES | — | As above. |",
+      "values": [
+        {
+          "quantity": "file count, results/pairwise/30m/group_*/*.json",
+          "value_verbatim": "~32",
+          "value_parsed": 32,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, comparisons per pairwise cell file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, pairwise 30 m cells",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, pairwise 30 m cells",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/30m/group_1_architecture/pv-on-single-pass-image-image-baseline-pv-vs-single-pass-text-5-of-5.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative cell."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/factor-analysis-20m/run_manifest.json` + cells | many | permutation | 10000 | 42 | tile (permutation) | `scripts/run_pairwise_tests.py` | not recorded | 2026-03-28 | YES | — | Cells and manifest both record metadata. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/pairwise/factor-analysis-20m manifest and cells",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/pairwise/factor-analysis-20m manifest and cells",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/factor-analysis-20m/run_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          150,
+          150
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/leaderboard-20m/**`, `leaderboard-30m/**` | each cell | permutation | 10000 | 42 | tile (permutation) | `scripts/run_pairwise_tests.py` | not recorded | 2026-03-28 | YES | — | Same. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/pairwise/leaderboard-20m and leaderboard-30m cells",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/pairwise/leaderboard-20m and leaderboard-30m cells",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/leaderboard-20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row covering two subtrees; anchored to a representative member of leaderboard-20m."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          151
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/tile-size-30m/**/evaluation.json` (5 files) | 3 × 1 | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-03-28 | YES_SIDECAR | `results/pairwise/tile-size-30m/.metadata.json` (directory-level) | Per-condition evaluation inputs for tile-size comparison (file count corrected from 6 to 5 after enumeration). |",
+      "values": [
+        {
+          "quantity": "file count, results/pairwise/tile-size-30m/**/evaluation.json",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per cell",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, tile-size-30m per-condition evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, tile-size-30m per-condition evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "file count previously claimed for tile-size-30m evaluations (superseded)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "file count, tile-size-30m evaluations after enumeration",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/tile-size-30m/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'corrected from 6 to 5' phrase is a correction block: 6 is historical, 5 is the live claim (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          152
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/tile-size-mcnemar-30m/tile_size_comparison.json` | per comparison | McNemar + permutation | 10000 | 42 | tile (paired symbol match) | `scripts/compare_tile_sizes.py` | not recorded | 2026-03-28T08:17Z | YES | — | `metadata.seed=42`; McNemar has no bootstrap iteration count. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, McNemar + permutation tile-size comparison",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "random seed, results/pairwise/tile-size-mcnemar-30m/tile_size_comparison.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/tile-size-mcnemar-30m/tile_size_comparison.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row itself states the file records only metadata.seed, and no permutation-count constant was located in scripts/compare_tile_sizes.py (its module docstring says tile-level permutation tests are invalid for this comparison), so the 10000 permutation claim is anchor-unknown and left for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/pairwise/prompt-engineering-20m/prompt_engineering_pairwise.json` | several | permutation | 10000 | 42 | tile (permutation) | `scripts/run_pairwise_tests.py` | not recorded | 2026-03 | YES | — | Metadata block verified on 2026-04-20: `metadata.n_permutations=10000, metadata.seed=42` explicit. Upgraded from YES (assumed). |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, prompt-engineering 20 m pairwise tests",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, prompt-engineering 20 m pairwise tests",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key metadata.n_permutations",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key metadata.seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/prompt-engineering-20m/prompt_engineering_pairwise.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Upgraded from YES (assumed)' records a status change, not a number."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          154
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/secondary-effects/secondary_effects.json` | ~40 interaction contrasts × 3 metrics | bootstrap percentile | 1000 | 42 | tile | `scripts/analyse_secondary_effects.py` | not recorded | 2026-02 | YES_SIDECAR | `results/secondary-effects/secondary_effects.metadata.json` | Nested blocks record `n_iterations=1000` per contrast; seed default resolved in sidecar. |",
+      "values": [
+        {
+          "quantity": "count, interaction contrasts in results/secondary-effects/secondary_effects.json",
+          "value_verbatim": "~40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per contrast",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, results/secondary-effects/secondary_effects.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/secondary-effects/secondary_effects.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, n_iterations quoted as recorded per contrast in secondary_effects.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/secondary-effects/secondary_effects.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The final iterations value is attributed to nested per-contrast blocks in results/secondary-effects/secondary_effects.json; anchored to the sidecar's resolved value for want of a single scalar locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          155
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h10/statistical_analysis.json` | 3 configs × 3 metrics + permutation | bootstrap + permutation | 1000 bootstrap, 10000 perm | 42 | tile | `scripts/compare_wbf_greedy_pv_permutation.py` (or similar) | not recorded | 2026-03 | YES | — | `parameters.n_bootstrap=1000, parameters.n_permutations=10000, parameters.seed=42` explicit. |",
+      "values": [
+        {
+          "quantity": "count, configurations in results/h10/statistical_analysis.json",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per configuration",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h10 statistical analysis",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h10 statistical analysis",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h10 statistical analysis",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key parameters.n_bootstrap",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.n_bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key parameters.n_permutations",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key parameters.seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.parameters.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-h12-v1-retracted-probe/results/h10/statistical_analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited path results/h10/statistical_analysis.json is no longer in the working tree; the file now sits under archive/h10-h12-v1-retracted-probe/results/h10/, used as the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          156,
+          156
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h10/wbf/variant_c_vs_greedy_hp4hn4.json` | 2 configs × 3 metrics | bootstrap percentile | 1000 | 42 | tile | `scripts/compare_wbf_vs_greedy_canonical.py` | not recorded | 2026-03 | YES_SIDECAR | `results/h10/wbf/variant_c_vs_greedy_hp4hn4.metadata.json` | Script defaults; sibling `statistical_analysis.json` has explicit metadata. |",
+      "values": [
+        {
+          "quantity": "count, configurations compared in variant_c_vs_greedy_hp4hn4.json",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per configuration",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h10 WBF variant C vs greedy comparison",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h10 WBF variant C vs greedy comparison",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both the cited data file and its sidecar have moved to archive/h10-h12-v1-retracted-probe/results/h10/wbf/; the archived sidecar is used as the anchor. `hp4hn4` is a condition name, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          158
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h8-v2/{greedy,wbf}/**/evaluation.json` (43 files) | 3 × 4 per file | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-15 | YES_SIDECAR | `results/h8-v2/.metadata.json` (directory-level) | Standard `evaluate_detections.py` outputs (file count corrected from ~80 to 43 after enumeration; verifier-sweep subtree contains no evaluation.json). |",
+      "values": [
+        {
+          "quantity": "file count, results/h8-v2/{greedy,wbf}/**/evaluation.json",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per cell",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h8-v2 greedy and WBF evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h8-v2 greedy and WBF evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "file count previously claimed for h8-v2 evaluations (superseded)",
+          "value_verbatim": "~80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "file count, h8-v2 evaluations after enumeration",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'corrected from ~80 to 43' is a correction block: the ~80 is historical (approximation marker retained), the 43 is the live claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h8-v2/**/threshold_sweep.json` (~10 files) | 21 × 3 per file | bootstrap percentile | 1000 | 42 | tile | `scripts/run_pv.py` | not recorded | 2026-04-15 | YES | — | Each records explicit metadata. |",
+      "values": [
+        {
+          "quantity": "file count, results/h8-v2/**/threshold_sweep.json",
+          "value_verbatim": "~10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, thresholds swept per file",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.thresholds",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h8-v2 threshold sweeps",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h8-v2 threshold sweeps",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/verifier-sweep/scale-4/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative member."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h12-v2/{greedy,wbf}/**/evaluation.json` (18 files) | 3 × 4 per file | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-04-15 | YES_SIDECAR | `results/h12-v2/.metadata.json` (directory-level) | Standard. File count corrected from ~30 to 18. |",
+      "values": [
+        {
+          "quantity": "file count, results/h12-v2/{greedy,wbf}/**/evaluation.json",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per cell",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h12-v2 greedy and WBF evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h12-v2 greedy and WBF evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "file count previously claimed for h12-v2 evaluations (superseded)",
+          "value_verbatim": "~30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "file count, h12-v2 evaluations after enumeration",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h12-v2/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'File count corrected from ~30 to 18' is a correction block: ~30 historical, 18 live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          161
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h12-v2/permutation-t4/fdr_summary.json` | 3 pairwise contrasts | permutation | 10000 | 42 | tile (permutation) | `scripts/apply_fdr_h12v2.py` + `pairwise_permutation_test.py` | not recorded | 2026-04-15 | YES | — | `n_permutations=10000, seed=42` explicit. |",
+      "values": [
+        {
+          "quantity": "count, pairwise contrasts in results/h12-v2/permutation-t4/fdr_summary.json",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_contrasts",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h12-v2 permutation-t4 FDR summary",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h12-v2 permutation-t4 FDR summary",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, quoted in-file key n_permutations",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, quoted in-file key seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h12-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          162
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h12-v2/permutation-t4/R*/pairwise_permutation_result.json` (3 files) | 1 per file | permutation | 10000 | 42 | tile (permutation) | `scripts/pairwise_permutation_test.py` | not recorded | 2026-04-15 | YES | — | Per-cell metadata. |",
+      "values": [
+        {
+          "quantity": "file count, results/h12-v2/permutation-t4/R*/pairwise_permutation_result.json",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, comparisons per permutation-result file",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h12-v2 permutation-t4 cells",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h12-v2 permutation-t4 cells",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h12-v2/permutation-t4/R12-r1-hn-heavy-vs-r2-balanced/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative cell."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          163,
+          163
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h12-v2/permutation-wbf/**` (parallel structure) | 3 contrasts | permutation | 10000 | 42 | tile (permutation) | same | not recorded | 2026-04-15 | YES | — | WBF track, same defaults. |",
+      "values": [
+        {
+          "quantity": "count, contrasts in results/h12-v2/permutation-wbf/**",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h12-v2 permutation-wbf cells",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, h12-v2 permutation-wbf cells",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.metadata.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h12-v2/permutation-wbf/R12-r1-hn-heavy-vs-r2-balanced/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Class row anchored to a representative cell."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          164
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/h11-384-pv-diagnostic/pairwise/**/*.json` (6 files) | ~6 comparisons | paired bootstrap + permutation | 1000 bootstrap, 10000 perm | 42 | tile (paired) | `scripts/compute-pairwise-effect-sizes.py` | not recorded | 2026-03-26 | YES | — | Each file records metadata. |",
+      "values": [
+        {
+          "quantity": "file count, results/h11-384-pv-diagnostic/pairwise/**/*.json",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, comparisons in the h11-384 pv-diagnostic pairwise class",
+          "value_verbatim": "~6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h11-384 pv diagnostic pairwise files",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/compute-pairwise-effect-sizes.py#argparse default: --bootstrap",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, h11-384 pv diagnostic pairwise permutation tests",
+          "value_verbatim": "10000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "random seed, h11-384 pv diagnostic pairwise files",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/compute-pairwise-effect-sizes.py#argparse default: --seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/pairwise/fair-384-vs-512.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row states each file records metadata, but the two top-level members of results/h11-384-pv-diagnostic/pairwise/ (fair-384-vs-512.json, pairwise-384px.json) carry no metadata block, so the bootstrap and seed values are anchored to the named script's argparse defaults and the permutation count is anchor-unknown; triage should check the two pro-proposer-verifier-thinking-{image,text} subdirectories."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          165,
+          165
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-eval/n1/{384px,512px}/**/evaluation.json` (156 total across subtrees) | 3 × 4 per file | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-03-27 | YES_SIDECAR | `results/paper-eval/.metadata.json` (directory-level) | N=1 baselines; script defaults. Directory sidecar covers all paper-eval evaluate_detections.py outputs. |",
+      "values": [
+        {
+          "quantity": "file count, results/paper-eval/n1/{384px,512px}/**/evaluation.json (total across subtrees)",
+          "value_verbatim": "156",
+          "value_parsed": 156,
+          "unit": null,
+          "kind": "count",
+          "path": "$.coverage_file_count_approximate",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per cell",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, paper-eval N=1 baseline evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paper-eval N=1 baseline evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "passes per condition (N), paper-eval baseline family",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No concrete file resolves under the literal pattern results/paper-eval/n1/{384px,512px}/**/evaluation.json in the working tree (the n1 subtree holds 384px-14buf-mcc, 384px-all-buffers, 512px, 512px-14buf-mcc and 512px-all-buffers), so the row is anchored to the directory-level sidecar it names; the sidecar records the count as $.coverage_file_count_approximate over results/paper-eval/**/evaluation.json. 'N=1' is included under include-when-in-doubt: it is arguably a condition-family name (rule 5) as well as an asserted pass count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          166,
+          166
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-eval/mcc/{384px,512px}/**/evaluation.json` | 3 × 4 per file, some with tile-MCC | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-03-27 | YES_SIDECAR | `results/paper-eval/.metadata.json` (directory-level) | Tile-MCC variants; same defaults. |",
+      "values": [
+        {
+          "quantity": "count, metrics carrying CIs per cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per cell",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, paper-eval tile-MCC evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paper-eval tile-MCC evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the directory-level sidecar the row names."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-eval/mcc/consensus-pv/**` (subset) | several | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` / `run_pv.py` | not recorded | 2026-03 | YES_SIDECAR | `results/paper-eval/.metadata.json` (directory-level) | Combined consensus + PV cells. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, paper-eval mcc/consensus-pv cells",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paper-eval mcc/consensus-pv cells",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the directory-level sidecar the row names."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          168
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-eval/single-pass-t0-{20m,30m,40m,50m}/**/evaluation.json` (8 files) | 3 × 1 per file | bootstrap percentile | 1000 | 42 | tile | `scripts/evaluate_detections.py` | not recorded | 2026-03 | YES_SIDECAR | `results/paper-eval/.metadata.json` (directory-level) | Per-buffer single-pass T=0 evaluations. |",
+      "values": [
+        {
+          "quantity": "file count, results/paper-eval/single-pass-t0-{20m,30m,40m,50m}/**/evaluation.json",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, metrics carrying CIs per cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, buffers per cell",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, paper-eval single-pass T=0 evaluations",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, paper-eval single-pass T=0 evaluations",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, paper-eval single-pass evaluations",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the directory-level sidecar the row names; no evaluation.json resolves under results/paper-eval/single-pass-t0-20m/ in the working tree (that directory holds consensus-analysis-report.json), so the file count needs a scripted glob check. 'T=0' duplicates the `single-pass-t0-*` directory name (rule 5) but is also asserted as the run temperature, so it is included with the doubt flagged here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-tables/metrics_master.json` | 100 rows × 3 metric CIs | (aggregate) | 1000 | 42 | tile | `scripts/consolidate_paper_metrics.py` | not recorded | 2026-03-26T20:39Z | YES_SIDECAR | `results/paper-tables/metrics_master.metadata.json` | Aggregate; sidecar documents the chain. Source files all YES/YES_SIDECAR. |",
+      "values": [
+        {
+          "quantity": "count, rows in results/paper-tables/metrics_master.json",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": "results/paper-tables/metrics_master.json#len:$.rows",
+          "method": "read"
+        },
+        {
+          "quantity": "count, metric CIs per row",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap/permutation iterations, results/paper-tables/metrics_master.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/paper-tables/metrics_master.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/metrics_master.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The row count is anchored cross-file to the aggregate itself ($.rows); the sidecar states the same figure as free text in $.ci_count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          170,
+          170
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-tables/metrics_master.csv` | same as JSON | (aggregate) | 1000 | 42 | tile | `scripts/consolidate_paper_metrics.py` | not recorded | 2026-03-26 | YES_SIDECAR | `results/paper-tables/metrics_master.metadata.json` (shared with JSON) | CSV export of the same table. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/paper-tables/metrics_master.csv",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/paper-tables/metrics_master.csv",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/metrics_master.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The CSV shares the JSON's sidecar, as the row states."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          171
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-tables/pipeline_progression.json` | several | aggregated bootstrap | 1000 | 42 | tile | `scripts/consolidate_paper_metrics.py` | not recorded | 2026-03-26 | YES_SIDECAR | `results/paper-tables/pipeline_progression.metadata.json` | Derived from metrics_master. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/paper-tables/pipeline_progression.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/paper-tables/pipeline_progression.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/pipeline_progression.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          172
+        ],
+        "section": "Registry table"
+      },
+      "claim_text": "| `results/paper-tables/pro_2x2_matrix.json` | various | (aggregate) | 1000 | 42 | tile | `scripts/consolidate_paper_metrics.py` | not recorded | 2026-03 | YES_SIDECAR | `results/paper-tables/pro_2x2_matrix.metadata.json` | Pro model 2x2. |",
+      "values": [
+        {
+          "quantity": "bootstrap/permutation iterations, results/paper-tables/pro_2x2_matrix.json",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, results/paper-tables/pro_2x2_matrix.json",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/pro_2x2_matrix.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'2x2' is part of the file name, out of scope per rule 5."
+    }
+  ]
+}

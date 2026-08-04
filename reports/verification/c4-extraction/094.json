@@ -1,0 +1,2766 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-04T00:00:00Z",
+  "source_document": {
+    "file": "results/documentation-audit/verification-2026-04-21.md",
+    "git_blob": "a200b49b16a7909c05f133da739303ebfdd6e5c9",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          20
+        ],
+        "section": "Post-recovery 2026-05-03 annotation"
+      },
+      "claim_text": "The same files at the same paths now record\n> post-recovery values (e.g., `totals.cost_usd: 126.8051`,\n> `tiles_failed: 0`, F1 @50m 0.7920, D-S 0.8142).",
+      "values": [
+        {
+          "quantity": "total cost USD, 55maps-text-high-generalisation run, post-recovery",
+          "value_verbatim": "126.8051",
+          "value_parsed": 126.8051,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer tiles_failed, 55maps-text-high-generalisation run, post-recovery",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_failed",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.7920",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json#$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-text-high-generalisation, post-recovery",
+          "value_verbatim": "0.8142",
+          "value_parsed": 0.8142,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json#$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b094] Scope decisions for this batch (lines 1-117 of results/documentation-audit/verification-2026-04-21.md; lines 118-233 are sibling batch b095). (1) Out of C4 scope per instrument rule 5 and therefore NOT extracted: dates and timestamps; git commit hashes (731466d8, e07dae37, ad023fc3); verification-claim identifiers (C01-C85); Obs identifiers (Obs 267-273); erratum identifiers (E54); version strings (v1, v2); and every line-number citation, including the `<file>:<line>` locators that fill the draft_file and cited_source columns. Applying this removes rows C17, C18, C20, C23, C26, C31, C33, C37, C38, C42 and C43 in their entirety - their only numbers are working-notes line numbers, Obs headings, a commit hash or an erratum id - so no claim row is emitted for them. That omission is a deliberate scope decision, not an oversight. (2) Table handling (rule 6): one claim per table row, values[] in order of appearance. Where the same figure is restated verbatim across the claim_text, cited_value and actual_value columns (the common case in this table) it is emitted ONCE, because all three columns assert the same fact about the same artefact; where the columns differ in precision (`364.6971 -> 364.70`), in scale (`0.91 (91 %)`) or in content (28 cited vs 26 actual) each distinct figure is emitted separately. (3) Buffer radii used purely to identify which row a metric belongs to ('F1 @ 50 m', 'CIs at 20-50 m') are context, not claims; a radius asserted as a run parameter (C44 buffer, C59 parameters.buffer_metres) or as a result (C30 'effect ends at 125 m') IS extracted. Shell bounds (100-125, 125-150) are shell identifiers. (4) DATED SNAPSHOT: this is a verification record fixed at 2026-04-21 and several anchor artefacts have since been regenerated - the document's own post-recovery banner (lines 15-26) says so for the text-high track. Figures are recorded verbatim as at the verification date and are NOT modernised. Per instrument rule 3 the figures the banner explicitly supersedes (text-high cost, F1 @ 50 m and Dawid-Skene F1: rows C09, C10, C11 and the text-high operand of C45) are marked `historical` and the banner's replacement figures are live claims; rows C12 and C44, which the banner lists but does not restate, are kept as live `read` claims carrying an as-at note. (5) Two cited anchors no longer exist at the cited path and are anchored at their archived locations: results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json -> archive/55maps-superseded-gt-evals/per-run/..., and configs/run-configs/55maps_image_generalisation_pre_launch_audit.md -> archive/superseded-audits/configs-.... (6) C27/C28 quote the pre-recovery multi-buffer F1 curve and are anchored to the preserved pre-recovery snapshot summary.json.pre-recovery-20260503T023134.backup rather than the live summary.json, because the backup is the least-writable artefact that held those values at the verification date. (7) Where the anchor is a non-JSON artefact (markdown report, CSV, directory listing) it is kept per instrument v1.1, which blesses non-JSON anchors and routes them to triage rather than resolving them mechanically. anchor.path is null throughout for those; individual values carry a human-readable section-and-row locator in `path` where the figure sits in a nameable table row (rows C41, C65), and null where the claim is a whole-file property such as a byte count, a line count or a directory listing (rows C39, C40, C61, C62), in which case the method is `read` for single-value claims and `recompute-script` where a count must be derived. CLAIM NOTE: this is the 'now' side of the banner's correction block, so all four figures are live claims (rule 3). `tiles_failed: 0` is quoted without a stage qualifier; the proposer stage is the only stage in the text-high cost manifest that carries a tiles_failed counter, hence the path chosen. The 'e.g.' framing means the banner exemplifies rather than enumerates the post-recovery changes. [REPAIR S127] claim_text was truncated mid-line at 'F1 @50m 0.', dropping the 0.7920 and 0.8142 values it carries; span re-copied verbatim from lines 18-20. Values and anchors unchanged."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "Summary"
+      },
+      "claim_text": "- **Claims checked**: 85",
+      "values": [
+        {
+          "quantity": "count, verification claims checked in this report",
+          "value_verbatim": "85",
+          "value_parsed": 85,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/documentation-audit/verification-2026-04-21.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Self-referential count: the number of verdict rows in this document's own table (rows C01 onward, beginning line 46). No external artefact records it; resolvable by counting rows. Rows C73-C85 fall in sibling batch b095's line range."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "Summary"
+      },
+      "claim_text": "- **PASS**: 82",
+      "values": [
+        {
+          "quantity": "count, checked claims with verdict PASS",
+          "value_verbatim": "82",
+          "value_parsed": 82,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/documentation-audit/verification-2026-04-21.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Self-referential count of PASS verdicts in this document's own table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "Summary"
+      },
+      "claim_text": "- **FAIL**: 2",
+      "values": [
+        {
+          "quantity": "count, checked claims with verdict FAIL",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/documentation-audit/verification-2026-04-21.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Self-referential count of FAIL verdicts in this document's own table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "Summary"
+      },
+      "claim_text": "- **UNCITED (sampled)**: 7 (5 PASS, 2 no-match / context-only)",
+      "values": [
+        {
+          "quantity": "count, uncited draft statements sampled for spot-checking",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, sampled uncited statements that passed",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, sampled uncited statements with no match or context-only",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/documentation-audit/verification-2026-04-21.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Self-referential counts over this document's uncited-sample section, which falls in sibling batch b095's line range (lines 118-233); recorded here because the summary assertion itself sits at line 35."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "Summary"
+      },
+      "claim_text": "- **DEAD CITATION**: 0",
+      "values": [
+        {
+          "quantity": "count, dead citations found (cited sources that do not exist)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/documentation-audit/verification-2026-04-21.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Self-referential count over this document's own citation checks."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C01 | audit-summary.md:44 | image run cost $364.70 | `outputs/55maps-image-generalisation/cost_manifest.json::totals.cost_usd` | 364.70 | 364.6971 → 364.70 | PASS |",
+      "values": [
+        {
+          "quantity": "total cost USD, 55maps-image-generalisation run, as cited and as rounded (as at 2026-04-21)",
+          "value_verbatim": "364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, 55maps-image-generalisation run, full precision (as at 2026-04-21)",
+          "value_verbatim": "364.6971",
+          "value_parsed": 364.6971,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dated snapshot: the row asserts the manifest value as at the 2026-04-21 verification date. The '$364.70' of the claim_text column, the '364.70' of cited_value and the right-hand side of '364.6971 -> 364.70' are one assertion, emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C02 | audit-summary.md:44 | image F1 @ 50 m measured 0.771 | `outputs/55maps-image-generalisation/evaluation/evaluation.json::summary.buffers[3].f1` | 0.771 | 0.771 | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 50 m buffer, 55maps-image-generalisation measured evaluation (as at 2026-04-21)",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "buffers[3] is the 50 m entry (the buffers array runs 20/30/40/50 m). The figure is identical in claim_text, cited_value and actual_value, so it is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C03 | audit-summary.md:44 | image F1 @ 50 m D-S 0.795 | `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json::dawid_skene.corrected_metrics.f1` | 0.795 | 0.7954 → 0.795 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-image-generalisation, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.795",
+          "value_parsed": 0.795,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-image-generalisation, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.7954",
+          "value_parsed": 0.7954,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C04 | audit-summary.md:44 | image cache-hit 91.0 % | `outputs/55maps-image-generalisation/cost_manifest.json::totals.cache_hit_rate` | 0.91 (91 %) | 0.91 | PASS |",
+      "values": [
+        {
+          "quantity": "cache-hit rate as a percentage, 55maps-image-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "91.0",
+          "value_parsed": 91.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "cache-hit rate as a fraction, 55maps-image-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "0.91",
+          "value_parsed": 0.91,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited_value cell writes the same quantity twice, as a fraction and as a percentage ('0.91 (91 %)'); the fraction and the percentage are emitted as separate values because they differ in scale, but the restated '91 %' inside the cited cell and the '91.0 %' of claim_text are one assertion."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C05 | audit-summary.md:46 | text-min cost $60.79 | `outputs/55maps-text-min-generalisation/cost_manifest.json::totals.cost_usd` | 60.79 | 60.7866 → 60.79 | PASS |",
+      "values": [
+        {
+          "quantity": "total cost USD, 55maps-text-min-generalisation run, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, 55maps-text-min-generalisation run, full precision (as at 2026-04-21)",
+          "value_verbatim": "60.7866",
+          "value_parsed": 60.7866,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C06 | audit-summary.md:46 | text-min F1 @ 50 m 0.759 | `outputs/55maps-text-min-generalisation/evaluation/evaluation.json::summary.buffers[3].f1` | 0.759 | 0.7591 → 0.759 | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 50 m buffer, 55maps-text-min-generalisation, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.759",
+          "value_parsed": 0.759,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, 55maps-text-min-generalisation, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.7591",
+          "value_parsed": 0.7591,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C07 | audit-summary.md:46 | text-min D-S 0.783 | `results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json::dawid_skene.corrected_metrics.f1` | 0.783 | 0.7834 → 0.783 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-text-min-generalisation, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.783",
+          "value_parsed": 0.783,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-text-min-generalisation, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.7834",
+          "value_parsed": 0.7834,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C08 | audit-summary.md:46 | text-min cache-hit 0.0 % | `outputs/55maps-text-min-generalisation/cost_manifest.json::totals.cache_hit_rate` | 0.0 | 0.0 | PASS |",
+      "values": [
+        {
+          "quantity": "cache-hit rate, 55maps-text-min-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "claim_text renders the quantity as '0.0 %' and the cited/actual cells as the fraction '0.0'; both are zero and are emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C09 | audit-summary.md:47 | text-high cost $69.60 | `outputs/55maps-text-high-generalisation/cost_manifest.json::totals.cost_usd` | 69.60 | 69.6017 → 69.60 | PASS |",
+      "values": [
+        {
+          "quantity": "total cost USD, 55maps-text-high-generalisation run, as cited/rounded (as at 2026-04-21, superseded)",
+          "value_verbatim": "69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total cost USD, 55maps-text-high-generalisation run, full precision (as at 2026-04-21, superseded)",
+          "value_verbatim": "69.6017",
+          "value_parsed": 69.6017,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Instrument rule 3: the document's own post-recovery banner (lines 15-26) names C09 among the claims that hold only for the 2026-04-19 launch state and states that the same file now records totals.cost_usd 126.8051. These are therefore the 'was' side of a correction block. The anchor file is retained for reference; the live figure is extracted from the banner claim at lines 18-20."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C10 | audit-summary.md:47 | text-high F1 @ 50 m 0.788 | `outputs/55maps-text-high-generalisation/evaluation/evaluation.json::summary.buffers[3].f1` | 0.788 | 0.7883 → 0.788 | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 50 m buffer, 55maps-text-high-generalisation, as cited/rounded (as at 2026-04-21, superseded)",
+          "value_verbatim": "0.788",
+          "value_parsed": 0.788,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, 55maps-text-high-generalisation, full precision (as at 2026-04-21, superseded)",
+          "value_verbatim": "0.7883",
+          "value_parsed": 0.7883,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Rule 3 'was' side: the post-recovery banner (lines 15-26) names C10 and states that the file now records F1 @50m 0.7920."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          56
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C11 | audit-summary.md:47 | text-high D-S 0.813 | `results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json::dawid_skene.corrected_metrics.f1` | 0.813 | 0.8129 → 0.813 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-text-high-generalisation, as cited/rounded (as at 2026-04-21, superseded)",
+          "value_verbatim": "0.813",
+          "value_parsed": 0.813,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-text-high-generalisation, full precision (as at 2026-04-21, superseded)",
+          "value_verbatim": "0.8129",
+          "value_parsed": 0.8129,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Rule 3 'was' side: the post-recovery banner (lines 15-26) names C11 and states that the file now records D-S 0.8142."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C12 | audit-summary.md:47 | text-high cache-hit 0.0 % | `outputs/55maps-text-high-generalisation/cost_manifest.json::totals.cache_hit_rate` | 0.0 | 0.0 | PASS |",
+      "values": [
+        {
+          "quantity": "cache-hit rate, 55maps-text-high-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Kept as a live read claim: the post-recovery banner lists C12 among the launch-state claims but does not restate a replacement cache-hit figure, so no 'now' value exists to make this historical. Dated snapshot - the value is asserted as at 2026-04-21. claim_text renders it '0.0 %', the cited/actual cells '0.0'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C13 | audit-summary.md:45 | retrospective F1 @ 50 m 0.790 | `results/55maps-generalisation/buffer_sensitivity.json::buffers[3].f1` | 0.790 | 0.7898 → 0.790 | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 50 m buffer, 55-map retrospective text run, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, 55-map retrospective text run, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.7898",
+          "value_parsed": 0.7898,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "buffers[3] is the 50 m entry (array runs 20/30/40/50 m)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C14 | audit-summary.md:45 | retrospective D-S 0.814 | `results/dawid-skene/dawid-skene-results.json::dawid_skene.corrected_metrics.f1` | 0.814 | 0.8144 → 0.814 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, 55-map retrospective run, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55-map retrospective run, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.8144",
+          "value_parsed": 0.8144,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C15 | audit-summary.md:51-52 | image D-S corrected f1 = 0.7954 | `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json::dawid_skene.corrected_metrics.f1` | 0.7954 | 0.7954 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7954",
+          "value_parsed": 0.7954,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same quantity as C03 at line 48, quoted here at full precision only; identical in all three columns, so emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C16 | audit-summary.md:57 | vlm_only posterior 0.1862 | `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json::dawid_skene.corrected_metrics.vlm_only_posterior` | 0.1862 | 0.1862 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene VLM-only posterior, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.1862",
+          "value_parsed": 0.1862,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C19 | audit-summary.md:122-123 | review-UI disagreement 21 % | `results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json::rates.disagreement_rate` | 0.21 | 0.2141 → 21 % | PASS |",
+      "values": [
+        {
+          "quantity": "review-UI disagreement rate as a percentage, uncalibrated vs calibrated crosstab (as at 2026-04-21)",
+          "value_verbatim": "21",
+          "value_parsed": 21.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.rates.disagreement_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "review-UI disagreement rate as a fraction, as cited (as at 2026-04-21)",
+          "value_verbatim": "0.21",
+          "value_parsed": 0.21,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.rates.disagreement_rate",
+          "method": "read"
+        },
+        {
+          "quantity": "review-UI disagreement rate as a fraction, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.2141",
+          "value_parsed": 0.2141,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.rates.disagreement_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Three renderings of one artefact field at two scales and two precisions; the restated '21 %' at the end of the actual_value cell duplicates the claim_text percentage and is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C21 | audit-summary.md:127-128 | ECE 0.269 | `results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json::ece` | 0.269 | 0.2689 → 0.269 | PASS |",
+      "values": [
+        {
+          "quantity": "expected calibration error (ECE), verifier calibration crosstab, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.269",
+          "value_parsed": 0.269,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "expected calibration error (ECE), verifier calibration crosstab, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.2689",
+          "value_parsed": 0.2689,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C22 | audit-summary.md:128 | AUC 0.655 | `results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json::auc.point` | 0.655 | 0.6545 → 0.655 | PASS |",
+      "values": [
+        {
+          "quantity": "area under the ROC curve (AUC), verifier calibration crosstab, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "area under the ROC curve (AUC), verifier calibration crosstab, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.6545",
+          "value_parsed": 0.6545,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc.point",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C24 | audit-summary.md:130-134 | corrected F1 @ 50 m = 0.8295 | `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json::corrected.f1` | 0.8295 | 0.82951 → 0.8295 | PASS |",
+      "values": [
+        {
+          "quantity": "human-review corrected F1 at 50 m, 55maps-image-generalisation, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.8295",
+          "value_parsed": 0.8295,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "human-review corrected F1 at 50 m, 55maps-image-generalisation, extra precision (as at 2026-04-21)",
+          "value_verbatim": "0.82951",
+          "value_parsed": 0.82951,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.corrected.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited path results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json no longer exists in the working tree; the artefact has been archived to archive/55maps-superseded-gt-evals/per-run/... and that is the anchor used."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C25 | audit-summary.md:133 | 2.5× more phantom TPs than D-S | same (see dawid_skene_comparison.note) | 2.5× | 472/186 = 2.54 → 2.5× | PASS |",
+      "values": [
+        {
+          "quantity": "ratio of human-review phantom true positives to the Dawid-Skene estimate, as quoted (rounded)",
+          "value_verbatim": "2.5",
+          "value_parsed": 2.5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+              "path": "$.human_review.phantom_tp"
+            },
+            {
+              "name": "b",
+              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+              "path": "$.dawid_skene_comparison.note"
+            }
+          ]
+        },
+        {
+          "quantity": "count, phantom true positives promoted by human review (as at 2026-04-21)",
+          "value_verbatim": "472",
+          "value_parsed": 472,
+          "unit": null,
+          "kind": "count",
+          "path": "$.human_review.phantom_tp",
+          "method": "read"
+        },
+        {
+          "quantity": "count, phantom true positives estimated by the Dawid-Skene aggregate posterior (as at 2026-04-21)",
+          "value_verbatim": "186",
+          "value_parsed": 186,
+          "unit": null,
+          "kind": "count",
+          "path": "$.dawid_skene_comparison.note",
+          "method": "read"
+        },
+        {
+          "quantity": "ratio of human-review phantom true positives to the Dawid-Skene estimate, full precision",
+          "value_verbatim": "2.54",
+          "value_parsed": 2.54,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+              "path": "$.human_review.phantom_tp"
+            },
+            {
+              "name": "b",
+              "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+              "path": "$.dawid_skene_comparison.note"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same (see dawid_skene_comparison.note)', i.e. the C24 artefact, anchored here at its archived location. The 186 figure is embedded in a free-text note string at $.dawid_skene_comparison.note rather than existing as its own scalar, so the operand path resolves to a string that triage will need to parse; the sibling crosstab results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json carries scalar fields of the same magnitude (counts.both_mound, corrected_f1_accounting.overlap_mounds_under_calibrated) if a cleaner anchor is wanted. The trailing '2.5x' of the actual_value cell restates the claim_text ratio and is emitted once. Per v1.2 amendment 1 the two operands are `read` values with their own paths and do not inherit the arithmetic method."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C27 | audit-summary.md:137-139 | multi-buffer F1 0.832 / 0.848 / 0.852 / 0.854 / 0.855 | `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json::results[*].F1` | as listed | 0.8317/0.8477/0.8521/0.8538/0.8551 → 0.832/0.848/0.852/0.854/0.855 | PASS |",
+      "values": [
+        {
+          "quantity": "corrected multi-buffer F1 at R = 50 m, quoted to 3 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.832",
+          "value_parsed": 0.832,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 75 m, quoted to 3 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.848",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 100 m, quoted to 3 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 125 m, quoted to 3 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.854",
+          "value_parsed": 0.854,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 150 m, quoted to 3 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.855",
+          "value_parsed": 0.855,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 50 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8317",
+          "value_parsed": 0.8317,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 75 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8477",
+          "value_parsed": 0.8477,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 100 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8521",
+          "value_parsed": 0.8521,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 125 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8538",
+          "value_parsed": 0.8538,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 150 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8551",
+          "value_parsed": 0.8551,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-recovery-20260503T023134.backup",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document cites the live results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json, but that file was regenerated by the documented 2026-05-03 recovery; the preserved pre-recovery snapshot (the .backup sibling used here) is the least-writable artefact that held these values at the 2026-04-21 verification date. The actual_value cell restates the 3 dp series after the arrow, duplicating claim_text, so each rounded figure is emitted once. results[0..4] correspond to R = 50/75/100/125/150 m."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C28 | audit-summary.md:138-139 | raw JSON figures 0.8317 / 0.8477 / 0.8521 / 0.8538 / 0.8551 | same | as listed | 0.83173.../0.84766.../0.85205.../0.85382.../0.85507... | PASS |",
+      "values": [
+        {
+          "quantity": "corrected multi-buffer F1 at R = 50 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8317",
+          "value_parsed": 0.8317,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 75 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8477",
+          "value_parsed": 0.8477,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 100 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8521",
+          "value_parsed": 0.8521,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 125 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8538",
+          "value_parsed": 0.8538,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 150 m, quoted to 4 dp (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.8551",
+          "value_parsed": 0.8551,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 50 m, quoted to 5 dp with truncation ellipsis (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.83173...",
+          "value_parsed": 0.83173,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[0].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 75 m, quoted to 5 dp with truncation ellipsis (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.84766...",
+          "value_parsed": 0.84766,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[1].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 100 m, quoted to 5 dp with truncation ellipsis (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.85205...",
+          "value_parsed": 0.85205,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[2].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 125 m, quoted to 5 dp with truncation ellipsis (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.85382...",
+          "value_parsed": 0.85382,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected multi-buffer F1 at R = 150 m, quoted to 5 dp with truncation ellipsis (as at 2026-04-21, pre-recovery)",
+          "value_verbatim": "0.85507...",
+          "value_parsed": 0.85507,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[4].F1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json.pre-recovery-20260503T023134.backup",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same anchor rationale as C27. The actual_value cell quotes the same five metrics at greater precision with a truncation ellipsis; the ellipsis is kept inside value_verbatim (v1.2 amendment 5 treatment of approximation markers applied to truncation) so the harness does not promote a truncated quote to an exact comparison. cited_source is 'same', i.e. the C27 artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C29 | audit-summary.md:140-144 | buffer-band lift at R=50m 118× | `results/55maps-image-generalisation/buffer-band-lift/summary.json::cumulative[0].lift_ratio` | 118× | 118.32 → 118× | PASS |",
+      "values": [
+        {
+          "quantity": "cumulative buffer-band lift ratio at R = 50 m, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "118",
+          "value_parsed": 118.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[0].lift_ratio",
+          "method": "read"
+        },
+        {
+          "quantity": "cumulative buffer-band lift ratio at R = 50 m, full precision (as at 2026-04-21)",
+          "value_verbatim": "118.32",
+          "value_parsed": 118.32,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.cumulative[0].lift_ratio",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'x' multiplier sign is not part of the numeric value. 'R=50m' names the cumulative band, and cumulative[0] is that band."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C30 | audit-summary.md:143-144 | attractor effect ends at 125 m (shell p_value 0.381 at 125-150 m) | `results/55maps-image-generalisation/buffer-band-lift/summary.json::shell[]` | effect ends ~125 m | shell p=0.002 at 100-125, p=0.381 at 125-150 | PASS |",
+      "values": [
+        {
+          "quantity": "outer radius at which the attractor-pull effect ceases to be statistically distinguishable",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, (125, 150] m shell, buffer-band lift (as at 2026-04-21)",
+          "value_verbatim": "0.381",
+          "value_parsed": 0.381,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[4].p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "outer radius at which the attractor-pull effect ends, as cited with an approximation marker",
+          "value_verbatim": "~125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, (100, 125] m shell, buffer-band lift (as at 2026-04-21)",
+          "value_verbatim": "0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.shell[3].p_value",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/buffer-band-lift/summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Shell bounds ('125-150 m', '100-125') are shell identifiers, not claims; the shell array runs 0-50/50-75/75-100/100-125/125-150/150-286 m, hence shell[3] and shell[4]. The approximation marker on '~125' is retained inside value_verbatim per v1.2 amendment 5. The trailing '0.381' of the actual_value cell restates the claim_text p-value and is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          77
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C32 | audit-summary.md:149-152 | D-S v1 crosstab ECE 0.539, AUC 0.500 | `results/55maps-image-generalisation/ds-human-crosstab/summary.json::ece, auc` | 0.539, 0.500 | 0.5385 → 0.539; 0.5 → 0.500 | PASS |",
+      "values": [
+        {
+          "quantity": "expected calibration error (ECE), Dawid-Skene v1 vs human crosstab, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.539",
+          "value_parsed": 0.539,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "area under the ROC curve (AUC), Dawid-Skene v1 vs human crosstab, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.500",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc",
+          "method": "read"
+        },
+        {
+          "quantity": "expected calibration error (ECE), Dawid-Skene v1 vs human crosstab, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.5385",
+          "value_parsed": 0.5385,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ece",
+          "method": "read"
+        },
+        {
+          "quantity": "area under the ROC curve (AUC), Dawid-Skene v1 vs human crosstab, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.auc",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/ds-human-crosstab/summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C34 | audit-summary.md:154-157 | D-S v2 at empirical prior, posterior 1.0 | `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json::dawid_skene.corrected_metrics.vlm_only_posterior` | 1.0 | 1.0 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene v2 (empirical prior) VLM-only posterior, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C35 | audit-summary.md:158-162 | subtype weighted-F1 0.8873 → 0.887 | `results/gold-standard-subtype-classification/macro_weighted_summary.json::summary_f1.weighted_f1` | 0.8873 | 0.88735 → 0.8873 | PASS |",
+      "values": [
+        {
+          "quantity": "weighted F1, gold-standard subtype classification, quoted to 4 dp (as at 2026-04-21)",
+          "value_verbatim": "0.8873",
+          "value_parsed": 0.8873,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary_f1.weighted_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "weighted F1, gold-standard subtype classification, quoted to 3 dp (as at 2026-04-21)",
+          "value_verbatim": "0.887",
+          "value_parsed": 0.887,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary_f1.weighted_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "weighted F1, gold-standard subtype classification, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.88735",
+          "value_parsed": 0.88735,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary_f1.weighted_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-subtype-classification/macro_weighted_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C36 | audit-summary.md:162 | 57 % benchmark→triangulation confusion | (narrative from Obs 271) — | 57 % | Obs 271 heading confirms \"57 %\" | PASS |",
+      "values": [
+        {
+          "quantity": "percentage of benchmark-symbol subtype cases confused with triangulation symbols (as at 2026-04-21)",
+          "value_verbatim": "57",
+          "value_parsed": 57.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The row's own cited_source is '(narrative from Obs 271)', i.e. prose in docs/notes/reflections/working-notes.md, and the actual_value cell verifies it against that same Obs heading. Instrument rule 2 forbids anchoring prose to prose, so this is anchor-unknown. Plausible chase targets for triage: results/gold-standard-subtype-classification/confusion_matrix_5x5_buf50.csv and confusion_matrix_4x4_buf50.csv, which hold the subtype confusion counts the 57 % is presumably derived from. The restated '57 %' inside the quoted actual_value is the same assertion and is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C39 | audit-summary.md:163-166 | human-review multi-buffer CSV 557 rows | `results/55maps-image-generalisation/human-review-multi-buffer.csv` | 557 | 558 lines total = 557 data rows + header | PASS |",
+      "values": [
+        {
+          "quantity": "count, data rows in the multi-buffer human-review CSV (as at 2026-04-21)",
+          "value_verbatim": "557",
+          "value_parsed": 557,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count, total lines in the multi-buffer human-review CSV including the header (as at 2026-04-21)",
+          "value_verbatim": "558",
+          "value_parsed": 558,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Non-JSON anchor: the claim is a line/row count over a CSV, so anchor.path and both value paths are null and the method is recompute-script (counting lines), avoiding the v1.2 amendment 3 silent-fallback risk. Dated snapshot - the CSV has been appended to since the verification date in the normal course of review work, so triage should treat 557/558 as the 2026-04-21 state. The '557 data rows' of the actual_value cell restates the cited 557."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C40 | audit-summary.md:167-170 / results-audit-2026-04-21.md:506 | paper-tables 28 files | `results/paper-tables/` | 28 | 26 files present | **FAIL** |",
+      "values": [
+        {
+          "quantity": "count, files in results/paper-tables/ as claimed by the audit draft (found incorrect)",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count, files present in results/paper-tables/ (as at 2026-04-21)",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The one FAIL row in this batch's range. The cited 28 is the draft's erroneous figure, which this document reports as wrong; it is the 'was/claimed' side of a correction and is marked historical per rule 3. The anchor is a directory, so anchor.path and the value path are null and the live figure is a scriptable directory-listing count. Dated snapshot: the directory's contents may have changed since 2026-04-21."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C41 | audit-summary.md:172-176 | CI-metadata registry 48 sidecars (41 per-file + 7 directory) | `results/ci-metadata-registry.md` (lines 267-269) | 48 (41+7) | 48 (41+7) exactly | PASS |",
+      "values": [
+        {
+          "quantity": "count, metadata sidecars recorded in the CI-metadata registry (as at 2026-04-21)",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": null,
+          "kind": "count",
+          "path": "§ Sidecar upgrade pass (2026-04-20) — sidecar totals table, 'Total sidecars' row",
+          "method": "read"
+        },
+        {
+          "quantity": "count, per-file metadata sidecars (as at 2026-04-21)",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "§ Sidecar upgrade pass (2026-04-20) — sidecar totals table, 'Per-file sidecars' row",
+          "method": "read"
+        },
+        {
+          "quantity": "count, directory-level metadata sidecars (as at 2026-04-21)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "§ Sidecar upgrade pass (2026-04-20) — sidecar totals table, directory-level sidecars row",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/ci-metadata-registry.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (a markdown registry); per instrument v1.1 such anchors are legitimate and route to triage, so the value paths are human-readable section-and-row locators rather than JSONPaths and anchor.path is null. The row cites lines 267-269 of the registry (a line-number citation, out of scope as a value); the registry has been revised since and the sidecar totals table now sits under the 'Sidecar upgrade pass (2026-04-20)' heading, which is what the locators name. The additive relation 48 = 41 + 7 is asserted by the row but is not expressed as an arithmetic derivation because markdown operands have no machine-resolvable path. The cited and actual cells restate the same three figures."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C44 | audit-summary.md:198-199 | ΔF1 = 0.029163 @ 50 m, p = 0.0, 10 000 permutations | `results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json::permutation_test` | 0.029163 / 0.0 / 10000 | 0.029163 / 0.0 / 10000 | PASS |",
+      "values": [
+        {
+          "quantity": "observed paired F1 difference at 50 m, text-high versus text-min (as at 2026-04-21)",
+          "value_verbatim": "0.029163",
+          "value_parsed": 0.029163,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer radius at which the paired permutation test was run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, text-high versus text-min at 50 m (as at 2026-04-21)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of permutations in the paired permutation test",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.permutation_test.n_permutations",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-min-50m/pairwise_permutation_result.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The post-recovery banner (lines 15-26) lists C44 among the claims that hold for the 2026-04-19 launch state but does not restate a replacement figure, so these stay live read claims with an as-at caveat; the underlying text-high detections were regenerated by the 2026-05-03 recovery, so triage should expect drift. claim_text writes the permutation count '10 000' with a space and the cited/actual cells write '10000'; one assertion, emitted once at the claim_text spelling. The p-value takes recompute-script per instrument rule 3 even though it sits at a path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C45 | audit-summary.md:202-203 | total measured $495.09 ($364.70 + $60.79 + $69.60) | derived | 495.09 | 364.70+60.79+69.60 = 495.09 | PASS |",
+      "values": [
+        {
+          "quantity": "total measured cost USD across the three 55-map generalisation runs (as at 2026-04-21)",
+          "value_verbatim": "495.09",
+          "value_parsed": 495.09,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/55maps-text-high-generalisation/cost_manifest.json",
+              "path": "$.totals.cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "total cost USD, 55maps-image-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "364.70",
+          "value_parsed": 364.7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, 55maps-text-min-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost USD, 55maps-text-high-generalisation run (as at 2026-04-21, superseded)",
+          "value_verbatim": "69.60",
+          "value_parsed": 69.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per v1.2 amendment 1 the three operands are given their own `read` (or, for the superseded text-high figure, `historical`) methods and do not inherit the derivation; only the 495.09 total carries expression + operands. The text-high operand is the figure the post-recovery banner supersedes (see C09), so both it and the derived total are as-at-2026-04-21 quantities and the live operand files will no longer reproduce 495.09. The actual_value cell restates the three addends and the total; each is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C46 | audit-summary.md:20-22 | prior audit claimed $359.53 text-high (as claim about prior audit) | — (historical claim about prior audit's error) | N/A | not verified against cost_manifests (no such figure exists in text-high cost_manifest) | PASS |",
+      "values": [
+        {
+          "quantity": "total cost USD attributed to the text-high run by the superseded prior audit (reported as erroneous)",
+          "value_verbatim": "359.53",
+          "value_parsed": 359.53,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "A figure this document attributes to the superseded prior audit and explicitly declines to verify ('no such figure exists in text-high cost_manifest'); it is not a live claim about any artefact, so the anchor is null. 'N/A' in the cited_value cell is not a numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C47 | audit-summary.md:17-18 | prior audit claimed text-min $165.74 90.2 % (as claim about prior audit) | — (historical) | N/A | current source manifest states $60.79 / 0.0 %, consistent with draft's narrative | PASS |",
+      "values": [
+        {
+          "quantity": "total cost USD attributed to the text-min run by the superseded prior audit (reported as erroneous)",
+          "value_verbatim": "165.74",
+          "value_parsed": 165.74,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cache-hit rate attributed to the text-min run by the superseded prior audit (reported as erroneous)",
+          "value_verbatim": "90.2",
+          "value_parsed": 90.2,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total cost USD, 55maps-text-min-generalisation run, per the current manifest (as at 2026-04-21)",
+          "value_verbatim": "60.79",
+          "value_parsed": 60.79,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "cache-hit rate, 55maps-text-min-generalisation run, per the current manifest (as at 2026-04-21)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.totals.cache_hit_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span: the two prior-audit figures are historical (quoted as the erroneous 'was'), the two manifest figures are live reads against the text-min cost manifest. 'N/A' in the cited_value cell is not a numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C48 | results-audit-2026-04-21.md:40-47 (image cost_manifest table) | input_tokens 682,800,923 | `outputs/55maps-image-generalisation/cost_manifest.json::totals.input_tokens` | 682,800,923 | 682800923 | PASS |",
+      "values": [
+        {
+          "quantity": "input tokens, 55maps-image-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "682,800,923",
+          "value_parsed": 682800923,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.input_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Not a retest-era claim, so not `unverifiable-era`: the 55-map generalisation runs carry a populated cost manifest. The cited and actual cells write the same figure with and without thousands separators; one assertion. Dated snapshot - the manifest was regenerated by the 2026-06-12 token-load audit."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C49 | results-audit-2026-04-21.md:43 | cached_tokens 621,315,045 | same::totals.cached_tokens | 621,315,045 | 621315045 | PASS |",
+      "values": [
+        {
+          "quantity": "cached tokens, 55maps-image-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "621,315,045",
+          "value_parsed": 621315045,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.cached_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::totals.cached_tokens', i.e. the C48 manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C50 | results-audit-2026-04-21.md:45 | wall_clock_seconds 14,947.18 | same::totals.wall_clock_seconds | 14,947.18 | 14947.18 | PASS |",
+      "values": [
+        {
+          "quantity": "wall-clock seconds, 55maps-image-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "14,947.18",
+          "value_parsed": 14947.18,
+          "unit": "s",
+          "kind": "other",
+          "path": "$.totals.wall_clock_seconds",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::totals.wall_clock_seconds'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C51 | results-audit-2026-04-21.md:46 | proposer cost 353.6201 | same::by_stage.proposer.cost_usd | 353.6201 | 353.6201 | PASS |",
+      "values": [
+        {
+          "quantity": "proposer-stage cost USD, 55maps-image-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "353.6201",
+          "value_parsed": 353.6201,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.by_stage.proposer.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::by_stage.proposer.cost_usd'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C52 | results-audit-2026-04-21.md:47 | image tiles_processed 42,705 | same::by_stage.proposer.tiles_processed | 42,705 | 42705 | PASS |",
+      "values": [
+        {
+          "quantity": "proposer-stage tiles processed, 55maps-image-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "42,705",
+          "value_parsed": 42705,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_processed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::by_stage.proposer.tiles_processed'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C53 | results-audit-2026-04-21.md:53-56 | image evaluation.json F1/CI at 20m | `outputs/55maps-image-generalisation/evaluation/evaluation.json::summary.buffers[0]` | F1=0.506, CI=[0.492, 0.520] | F1=0.506, CI=[0.492, 0.5201] | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m buffer, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.506",
+          "value_parsed": 0.506,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap CI lower bound, F1 at 20 m, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.492",
+          "value_parsed": 0.492,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 20 m, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "0.520",
+          "value_parsed": 0.52,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 20 m, full precision (as at 2026-04-21)",
+          "value_verbatim": "0.5201",
+          "value_parsed": 0.5201,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[0].f1_ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited and actual cells agree except on the CI upper bound, where the draft rounds 0.5201 to 0.520; both are emitted. The F1 and lower bound are restated identically and emitted once. buffers[0] is the 20 m entry."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C54 | results-audit-2026-04-21.md:54 | 30m F1 0.6855 CI [0.6723, 0.6974] | same::buffers[1] | 0.6855 / [0.6723, 0.6974] | 0.6855 / [0.6723, 0.6974] | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 30 m buffer, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.6855",
+          "value_parsed": 0.6855,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap CI lower bound, F1 at 30 m, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.6723",
+          "value_parsed": 0.6723,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[1].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 30 m, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.6974",
+          "value_parsed": 0.6974,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[1].f1_ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::buffers[1]', i.e. the C53 evaluation file. The claim_text, cited and actual cells carry identical figures, so each is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C55 | results-audit-2026-04-21.md:55 | 40m F1 0.7483 CI [0.7372, 0.7595] | same::buffers[2] | 0.7483 / [0.7372, 0.7595] | 0.7483 / [0.7372, 0.7595] | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 40 m buffer, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7483",
+          "value_parsed": 0.7483,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap CI lower bound, F1 at 40 m, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7372",
+          "value_parsed": 0.7372,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[2].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 40 m, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7595",
+          "value_parsed": 0.7595,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[2].f1_ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::buffers[2]', i.e. the C53 evaluation file. The claim_text, cited and actual cells carry identical figures, so each is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C56 | results-audit-2026-04-21.md:56 | 50m F1 0.771 CI [0.7604, 0.7817] | same::buffers[3] | 0.771 / [0.7604, 0.7817] | 0.771 / [0.7604, 0.7817] | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 50 m buffer, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap CI lower bound, F1 at 50 m, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7604",
+          "value_parsed": 0.7604,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 50 m, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7817",
+          "value_parsed": 0.7817,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.summary.buffers[3].f1_ci_upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::buffers[3]', i.e. the C53 evaluation file. The claim_text, cited and actual cells carry identical figures, so each is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C57 | results-audit-2026-04-21.md:60-61 | image bootstrap n_iterations=1000, seed=42, resampling_unit=tile_level | `outputs/55maps-image-generalisation/evaluation/evaluation.metadata.json::bootstrap` | as cited | 1000 / 42 / \"tile_level\" | PASS |",
+      "values": [
+        {
+          "quantity": "bootstrap iterations, 55maps-image-generalisation evaluation",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed, 55maps-image-generalisation evaluation bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/evaluation/evaluation.metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "resampling_unit=tile_level is a string, not a numeric value. Both figures are restated in the actual_value cell and emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          103
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C58 | results-audit-2026-04-21.md:66-68 | image D-S measured.f1 0.771, corrected.f1 0.7954, vlm_only_posterior 0.1862 | `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json` | all three | 0.771 / 0.7954 / 0.1862 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene measured F1, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.771",
+          "value_parsed": 0.771,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.measured.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene corrected F1, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7954",
+          "value_parsed": 0.7954,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene VLM-only posterior, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.1862",
+          "value_parsed": 0.1862,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_value reads 'all three'; the figures live in claim_text and are restated in actual_value, so each is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C59 | results-audit-2026-04-21.md:70 | parameters.buffer_metres = 50 | same::parameters.buffer_metres | 50 | 50 | PASS |",
+      "values": [
+        {
+          "quantity": "buffer radius parameter recorded in the 55maps-image-generalisation Dawid-Skene run",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.parameters.buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::parameters.buffer_metres'. Unlike the '@ 50 m' row labels elsewhere in this table, here the radius is asserted as a recorded run parameter, so it is extracted (rule 5's name-versus-fact distinction)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C60 | results-audit-2026-04-21.md:80-84 | D-S v2 corrected.f1 0.8917, vlm_only 1.0 | `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json` | 0.8917 / 1.0 | 0.8917 / 1.0 | PASS |",
+      "values": [
+        {
+          "quantity": "Dawid-Skene v2 (empirical prior) corrected F1, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.8917",
+          "value_parsed": 0.8917,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.dawid_skene.corrected_metrics.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Dawid-Skene v2 (empirical prior) VLM-only posterior, 55maps-image-generalisation (as at 2026-04-21)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.dawid_skene.corrected_metrics.vlm_only_posterior",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/dawid-skene-results-v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C61 | results-audit-2026-04-21.md:94 | image pre-launch audit 9,611 bytes | `configs/run-configs/55maps_image_generalisation_pre_launch_audit.md` | 9,611 | 9611 bytes | PASS |",
+      "values": [
+        {
+          "quantity": "file size in bytes, 55maps-image-generalisation pre-launch audit document (as at 2026-04-21)",
+          "value_verbatim": "9,611",
+          "value_parsed": 9611,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-audits/configs-55maps_image_generalisation_pre_launch_audit.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited path configs/run-configs/55maps_image_generalisation_pre_launch_audit.md no longer exists in the working tree; the document has been archived to archive/superseded-audits/configs-55maps_image_generalisation_pre_launch_audit.md, which is the anchor used. Non-JSON anchor with a null path (a whole-file byte count); dated snapshot, since a byte count changes with any edit to the file. The cited and actual cells give the same figure with and without a thousands separator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C62 | results-audit-2026-04-21.md:98 | image post-run report 11,323 bytes | `configs/run-configs/55maps_image_generalisation_post_run_report.md` | 11,323 | 11323 bytes | PASS |",
+      "values": [
+        {
+          "quantity": "file size in bytes, 55maps-image-generalisation post-run report (as at 2026-04-21)",
+          "value_verbatim": "11,323",
+          "value_parsed": 11323,
+          "unit": "bytes",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "configs/run-configs/55maps_image_generalisation_post_run_report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor with a null path (whole-file byte count). Dated snapshot: the post-run report has been revised since 2026-04-21, so the byte count is an as-at figure, not a current one."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C63 | results-audit-2026-04-21.md:157-161 | retrospective buffer_sensitivity f1s 0.6232/0.7551/0.7832/0.7898 | `results/55maps-generalisation/buffer_sensitivity.json::buffers[*]` | as listed | 0.6232/0.7551/0.7832/0.7898 exact | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m buffer, 55-map retrospective run buffer sensitivity (as at 2026-04-21)",
+          "value_verbatim": "0.6232",
+          "value_parsed": 0.6232,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 30 m buffer, 55-map retrospective run buffer sensitivity (as at 2026-04-21)",
+          "value_verbatim": "0.7551",
+          "value_parsed": 0.7551,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[1].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 40 m buffer, 55-map retrospective run buffer sensitivity (as at 2026-04-21)",
+          "value_verbatim": "0.7832",
+          "value_parsed": 0.7832,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[2].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, 55-map retrospective run buffer sensitivity (as at 2026-04-21)",
+          "value_verbatim": "0.7898",
+          "value_parsed": 0.7898,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_value reads 'as listed'; the four figures live in claim_text and are restated in actual_value, so each is emitted once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C64 | results-audit-2026-04-21.md:157-161 | retrospective CIs at 20-50 m | same::buffers[*].ci | [0.6087,0.6375]/[0.7433,0.7668]/[0.7723,0.794]/[0.7793,0.8005] | same (exact) | PASS |",
+      "values": [
+        {
+          "quantity": "bootstrap CI lower bound, F1 at 20 m, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.6087",
+          "value_parsed": 0.6087,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[0].ci.f1.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 20 m, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.6375",
+          "value_parsed": 0.6375,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[0].ci.f1.upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI lower bound, F1 at 30 m, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.7433",
+          "value_parsed": 0.7433,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[1].ci.f1.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 30 m, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.7668",
+          "value_parsed": 0.7668,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[1].ci.f1.upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI lower bound, F1 at 40 m, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.7723",
+          "value_parsed": 0.7723,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[2].ci.f1.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 40 m, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.794",
+          "value_parsed": 0.794,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[2].ci.f1.upper",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI lower bound, F1 at 50 m, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.7793",
+          "value_parsed": 0.7793,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[3].ci.f1.lower",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI upper bound, F1 at 50 m, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.8005",
+          "value_parsed": 0.8005,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[3].ci.f1.upper",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-generalisation/buffer_sensitivity.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::buffers[*].ci', i.e. the C63 artefact; actual_value reads 'same (exact)'. '20-50 m' is a buffer-range label, not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C65 | results-audit-2026-04-21.md:163-165 | threshold 0.20 F1=0.7902 (retrospective report line 42) | `configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md:42` | 0.7902 @ 0.20 | line 42 text matches `v1 / 0.20 (optimum) / 0.7902` | PASS |",
+      "values": [
+        {
+          "quantity": "consensus threshold at which the retrospective run reports its optimum",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "§ Top-line result > Measured (against student-annotated ground truth) — threshold table, `v1` row, threshold column",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at the 0.20 consensus threshold, 55-map retrospective run (as at 2026-04-21)",
+          "value_verbatim": "0.7902",
+          "value_parsed": 0.7902,
+          "unit": null,
+          "kind": "metric",
+          "path": "§ Top-line result > Measured (against student-annotated ground truth) — threshold table, `v1` row, F1 column",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (a markdown post-run report); per v1.1 such anchors route to triage, so the value paths are human-readable section-and-row locators rather than JSONPaths and anchor.path is null. The cited line number (42) is out of scope, and 'v1' is a version string. Both figures are restated in the cited and actual cells and are emitted once each."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C66 | results-audit-2026-04-21.md:147-148 | verifier v1 measured $12.43 | `outputs/55maps-generalisation/verified/run.meta.json::cost_estimate.total_cost_usd` | $12.43 | 12.428556 → $12.43 | PASS |",
+      "values": [
+        {
+          "quantity": "verifier v1 measured cost USD, 55-map generalisation run, as cited/rounded (as at 2026-04-21)",
+          "value_verbatim": "12.43",
+          "value_parsed": 12.43,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.cost_estimate.total_cost_usd",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier v1 measured cost USD, 55-map generalisation run, full precision (as at 2026-04-21)",
+          "value_verbatim": "12.428556",
+          "value_parsed": 12.428556,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.cost_estimate.total_cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/verified/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C67 | results-audit-2026-04-21.md:210-219 | text-min totals.cost_usd 60.7866 | `outputs/55maps-text-min-generalisation/cost_manifest.json::totals.cost_usd` | 60.7866 | 60.7866 | PASS |",
+      "values": [
+        {
+          "quantity": "total cost USD, 55maps-text-min-generalisation run, full precision (as at 2026-04-21)",
+          "value_verbatim": "60.7866",
+          "value_parsed": 60.7866,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.totals.cost_usd",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same quantity as C05 at line 50, quoted here at full precision only. Dated snapshot: the text-min manifest was regenerated by the 2026-06-12 token-load audit."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C68 | results-audit-2026-04-21.md:214 | text-min input_tokens 82,297,662 | same::totals.input_tokens | 82297662 | 82297662 | PASS |",
+      "values": [
+        {
+          "quantity": "input tokens, 55maps-text-min-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "82,297,662",
+          "value_parsed": 82297662,
+          "unit": null,
+          "kind": "tokens",
+          "path": "$.totals.input_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::totals.input_tokens'. The cited and actual cells write the figure without separators; one assertion."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C69 | results-audit-2026-04-21.md:217 | text-min wall_clock 6,953.106 | same::totals.wall_clock_seconds | 6953.106 | 6953.106 | PASS |",
+      "values": [
+        {
+          "quantity": "wall-clock seconds, 55maps-text-min-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "6,953.106",
+          "value_parsed": 6953.106,
+          "unit": "s",
+          "kind": "other",
+          "path": "$.totals.wall_clock_seconds",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::totals.wall_clock_seconds'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C70 | results-audit-2026-04-21.md:219 | text-min tiles_failed 124 (rate 0.0029) | same::by_stage.proposer.tiles_failed | 124 | 124 | PASS |",
+      "values": [
+        {
+          "quantity": "proposer-stage tiles failed, 55maps-text-min-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "124",
+          "value_parsed": 124,
+          "unit": null,
+          "kind": "count",
+          "path": "$.by_stage.proposer.tiles_failed",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer-stage tile failure rate, 55maps-text-min-generalisation run (as at 2026-04-21)",
+          "value_verbatim": "0.0029",
+          "value_parsed": 0.0029,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.by_stage.proposer.failure_rate",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::by_stage.proposer.tiles_failed'; the parenthetical failure rate is not separately cited but is asserted by the row and is anchored to the sibling failure_rate field."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C71 | results-audit-2026-04-21.md:229-232 | text-min F1/CI at 20-50 m | `outputs/55maps-text-min-generalisation/evaluation/evaluation.json::summary.buffers[*]` | 0.618/0.7274/0.7538/0.7591 | 0.618/0.7274/0.7538/0.7591 | PASS |",
+      "values": [
+        {
+          "quantity": "F1 at 20 m buffer, 55maps-text-min-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.618",
+          "value_parsed": 0.618,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 30 m buffer, 55maps-text-min-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7274",
+          "value_parsed": 0.7274,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[1].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 40 m buffer, 55maps-text-min-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7538",
+          "value_parsed": 0.7538,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[2].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 50 m buffer, 55maps-text-min-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.7591",
+          "value_parsed": 0.7591,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The cited and actual cells carry the same four figures; each is emitted once. '20-50 m' is a buffer-range label."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "Full table of checked claims"
+      },
+      "claim_text": "| C72 | results-audit-2026-04-21.md:229 | text-min precision @ 20 m 0.6908 | same::buffers[0].precision | 0.6908 | 0.6908 | PASS |",
+      "values": [
+        {
+          "quantity": "precision at 20 m buffer, 55maps-text-min-generalisation (as at 2026-04-21)",
+          "value_verbatim": "0.6908",
+          "value_parsed": 0.6908,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[0].precision",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "cited_source is 'same::buffers[0].precision'."
+    }
+  ]
+}
