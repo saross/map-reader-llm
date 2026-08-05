@@ -185,6 +185,12 @@ _OUTPUT_COLUMNS = [
     "displacement_m",
     "nearest_neighbour_m",
     "verdict",
+    # Which neighbour the reviewer's click actually resolved to. With 116
+    # phantoms carrying more than one neighbour inside the flag radius, a
+    # bare "same_as_neighbour" does not say WHICH -- and inferring it
+    # downstream would re-do, less well, a judgement already made here.
+    "resolved_partner_layer",
+    "resolved_partner_m",
     "symbol_type_prior",
     "symbol_type",
     "symbol_type_changed",
@@ -772,6 +778,7 @@ def build_record(
     nearest_neighbour_m: float | None,
     marked_by: str,
     symbol_type: str = "",
+    resolved_partner: tuple[str, float] | None = None,
 ) -> dict:
     """Assemble one output row.
 
@@ -786,6 +793,10 @@ def build_record(
         nearest_neighbour_m: Distance to the closest point in any other
             layer, if one falls within the search radius.
         marked_by: Reviewer name recorded in the output.
+        resolved_partner: ``(layer, distance_m)`` of the neighbour closest
+            to the MARKED position, or ``None``. This is what disambiguates
+            a "same as a neighbour" verdict when several neighbours are in
+            range.
         symbol_type: The reviewer's symbol-type call. Recorded alongside
             ``symbol_type_prior`` (what the student layer already held) and
             a derived ``symbol_type_changed`` flag, so student
@@ -820,6 +831,12 @@ def build_record(
         "displacement_m": displacement,
         "nearest_neighbour_m": nearest_neighbour_m,
         "verdict": verdict,
+        "resolved_partner_layer": (
+            resolved_partner[0] if resolved_partner else ""
+        ),
+        "resolved_partner_m": (
+            resolved_partner[1] if resolved_partner else None
+        ),
         "symbol_type_prior": prior_symbol,
         "symbol_type": symbol_type,
         # Only meaningful when the reviewer actually made a call and a
@@ -1417,9 +1434,24 @@ def main() -> None:
                     # A click is recorded whenever one was made, including
                     # for uncertain rows — a marked-but-uncertain centre is
                     # more informative than a bare flag.
+                    # Resolve against the MARKED point, not the recorded
+                    # one: the reviewer's click is what says which mound
+                    # this actually is.
+                    resolved = None
+                    if marked is not None:
+                        options = []
+                        for layer_name, points in (
+                            ("corrected_student", nearby_students),
+                            ("promoted_phantom", nearby_phantoms),
+                        ):
+                            d = _nearest_distance(points, *marked)
+                            if d is not None:
+                                options.append((layer_name, d))
+                        if options:
+                            resolved = min(options, key=lambda o: o[1])
                     marks[cursor] = build_record(
                         row, marked, verdict, nearest_m, args.marked_by,
-                        symbol_type,
+                        symbol_type, resolved,
                     )
                     save_marks(marks, args.output)
                     st.session_state.pending.pop(cursor, None)
