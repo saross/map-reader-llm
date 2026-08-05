@@ -42,6 +42,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 from build_marking_queue import classify_layer_diff  # noqa: E402
 from mark_mound_centres import (  # noqa: E402
     _OUTPUT_COLUMNS,
+    _item_id,
     CropGeometry,
     build_record,
     load_existing_marks,
@@ -403,23 +404,28 @@ def test_save_load_round_trip(tmp_path: Path, queue_csv: Path) -> None:
     out = tmp_path / "nested" / "marked-centres.csv"
 
     marks = {
-        0: build_record(
+        _item_id(queue.iloc[0]): build_record(
             queue.iloc[0],
             (float(queue.iloc[0]["x"]) + 1.5,
              float(queue.iloc[0]["y"]) - 2.0),
             "distinct", 30.0, "Tester",
         ),
-        2: build_record(queue.iloc[2], None, "skipped", None, "Tester"),
+        _item_id(queue.iloc[2]): build_record(
+            queue.iloc[2], None, "skipped", None, "Tester",
+        ),
     }
     save_marks(marks, out)
     assert out.exists(), "parent directories should be created"
 
     reloaded = load_existing_marks(out)
-    assert set(reloaded) == {0, 2}
-    assert reloaded[0]["verdict"] == "distinct"
-    assert reloaded[0]["displacement_m"] == pytest.approx(2.5)
-    assert reloaded[2]["skipped"] in (True, "True", np.True_)
-    assert pd.isna(reloaded[2]["x_marked"])
+    # Keyed on identity, not position, so the queue can be re-sorted
+    # without stranding completed work.
+    id_0, id_2 = _item_id(queue.iloc[0]), _item_id(queue.iloc[2])
+    assert set(reloaded) == {id_0, id_2}
+    assert reloaded[id_0]["verdict"] == "distinct"
+    assert reloaded[id_0]["displacement_m"] == pytest.approx(2.5)
+    assert reloaded[id_2]["skipped"] in (True, "True", np.True_)
+    assert pd.isna(reloaded[id_2]["x_marked"])
 
 
 @pytest.mark.tier1
@@ -430,7 +436,8 @@ def test_save_is_atomic_and_leaves_no_temp(
     queue = load_queue(queue_csv)
     out = tmp_path / "marked-centres.csv"
     save_marks(
-        {0: build_record(queue.iloc[0], (1.0, 2.0), "distinct", None, "T")},
+        {_item_id(queue.iloc[0]): build_record(
+            queue.iloc[0], (1.0, 2.0), "distinct", None, "T")},
         out,
     )
     assert list(tmp_path.glob("*.tmp")) == []
@@ -444,7 +451,8 @@ def test_save_preserves_column_order(
     queue = load_queue(queue_csv)
     out = tmp_path / "marked-centres.csv"
     save_marks(
-        {0: build_record(queue.iloc[0], (1.0, 2.0), "distinct", None, "T")},
+        {_item_id(queue.iloc[0]): build_record(
+            queue.iloc[0], (1.0, 2.0), "distinct", None, "T")},
         out,
     )
     assert list(pd.read_csv(out).columns) == _OUTPUT_COLUMNS
@@ -468,13 +476,18 @@ def test_resume_finds_first_unmarked_row(
     queue = load_queue(queue_csv)
     out = tmp_path / "marked-centres.csv"
     marks = {
-        i: build_record(queue.iloc[i], (1.0, 2.0), "distinct", None, "T")
+        _item_id(queue.iloc[i]): build_record(
+            queue.iloc[i], (1.0, 2.0), "distinct", None, "T",
+        )
         for i in (0, 1, 3)
     }
     save_marks(marks, out)
 
     reloaded = load_existing_marks(out)
-    remaining = [i for i in range(len(queue)) if i not in reloaded]
+    remaining = [
+        i for i in range(len(queue))
+        if _item_id(queue.iloc[i]) not in reloaded
+    ]
     assert remaining[0] == 2
 
 

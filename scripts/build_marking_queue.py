@@ -102,8 +102,27 @@ _DEFAULT_JITTER_SAMPLE = 100
 # a partially-completed review.
 _JITTER_SEED = 20260805
 
+# Ordering for the review queue. Grouping like decisions together matters
+# more than it sounds: alternating between "mark the centre" and "this is a
+# duplicate" invites exactly the c/d slips the PI flagged. Sorting by
+# conflict class then symbol type means a run of screens asks the SAME
+# question, and the easy no-conflict cases come first.
+#
+# Class 0 = nothing in range; 1 = a candidate beyond the distinct-mound
+# floor (usually two separate mounds); 2 = inside it (usually a duplicate).
+_FLAG_RADIUS_M = 110.0
+_DISTINCT_FLOOR_M = 15.0
+_SYMBOL_ORDER = [
+    "burial_mound", "bench_mark_on_mound", "trig_point_on_mound",
+    "settlement_mound",
+]
+
 _QUEUE_COLUMNS = [
     "queue_index",
+    # Stable identity, independent of ordering. Marks are keyed on this so
+    # the queue can be re-sorted without stranding completed work -- the
+    # queue_index of a given mound changes, this does not.
+    "item_id",
     "item_type",
     "source_layer",
     "source_index",
@@ -314,6 +333,7 @@ def classify_layer_diff(
 def build_queue(
     threshold_m: float = _DEFAULT_THRESHOLD_M,
     jitter_sample: int = _DEFAULT_JITTER_SAMPLE,
+    order: str = "review",
 ) -> tuple[pd.DataFrame, np.ndarray]:
     """Build the full review queue.
 
@@ -322,6 +342,8 @@ def build_queue(
             conflation.
         jitter_sample: Number of random unconflicted student mounds to add
             for the placement-jitter estimate. Zero disables the sample.
+        order: ``"review"`` groups like decisions together (see
+            :func:`sort_for_review`); ``"source"`` keeps layer order.
 
     Returns:
         A ``(queue, superseded)`` pair: the queue as a DataFrame with
@@ -415,6 +437,7 @@ def build_queue(
         )
         records.append({
             "queue_index": len(records),
+            "item_id": f"promoted_phantom:{int(index)}",
             "item_type": "phantom",
             "source_layer": "promoted_phantom",
             "source_index": int(index),
@@ -455,6 +478,7 @@ def build_queue(
         )
         records.append({
             "queue_index": len(records),
+            "item_id": f"corrected_student:{int(index)}",
             "item_type": "+".join(reasons[index]),
             "source_layer": "corrected_student",
             "source_index": int(index),
@@ -491,7 +515,46 @@ def build_queue(
             ),
         })
 
-    return pd.DataFrame(records, columns=_QUEUE_COLUMNS), superseded
+    frame = pd.DataFrame(records, columns=_QUEUE_COLUMNS)
+    if order == "review":
+        frame = sort_for_review(frame)
+    return frame, superseded
+
+
+def sort_for_review(frame: pd.DataFrame) -> pd.DataFrame:
+    """Order the queue so consecutive items ask the same question.
+
+    Sorts by conflict class, then symbol type, then source. The effect is
+    long runs of identical decisions -- all the unambiguous burial mounds,
+    then the unambiguous benchmarks, and so on -- with the genuinely
+    ambiguous sub-15 m cases last, by which point the reviewer has a
+    calibrated eye rather than meeting them cold.
+
+    ``queue_index`` is renumbered to the new position, but ``item_id`` is
+    untouched, so marks recorded under a previous ordering still resolve.
+
+    Args:
+        frame: The queue in source order.
+
+    Returns:
+        A new frame in review order, with ``queue_index`` renumbered.
+    """
+    distance = frame["nearest_partner_m"].astype(float)
+    conflict_class = np.where(
+        distance.isna() | (distance > _FLAG_RADIUS_M), 0,
+        np.where(distance >= _DISTINCT_FLOOR_M, 1, 2),
+    )
+    symbol_rank = frame["prior_symbol_type"].map(
+        {name: i for i, name in enumerate(_SYMBOL_ORDER)},
+    ).fillna(len(_SYMBOL_ORDER)).astype(int)
+    ordered = frame.assign(
+        _conflict=conflict_class, _symbol=symbol_rank,
+    ).sort_values(
+        ["_conflict", "_symbol", "source_layer", "source_index"],
+        kind="stable",
+    ).drop(columns=["_conflict", "_symbol"]).reset_index(drop=True)
+    ordered["queue_index"] = np.arange(len(ordered), dtype=int)
+    return ordered
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -520,6 +583,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--order", choices=("review", "source"), default="review",
+        help=(
+            "'review' (default) groups like decisions together: "
+            "no-conflict cases first, by symbol type, with the sub-15 m "
+            "ambiguous cases last. 'source' keeps raw layer order."
+        ),
+    )
+    parser.add_argument(
         "--output", type=Path, required=True, help="Destination queue CSV.",
     )
     parser.add_argument(
@@ -536,7 +607,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main() -> None:
     """Build the queue and write it to disk."""
     args = parse_args()
-    queue, superseded = build_queue(args.threshold_m, args.jitter_sample)
+    queue, superseded = build_queue(
+        args.threshold_m, args.jitter_sample, args.order,
+    )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     queue.to_csv(args.output, index=False)

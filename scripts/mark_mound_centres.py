@@ -179,6 +179,7 @@ _VERDICTS_NEEDING_A_CLICK = {"distinct", "same_as_neighbour"}
 
 _OUTPUT_COLUMNS = [
     "queue_index",
+    "item_id",
     "item_type",
     "source_layer",
     "source_index",
@@ -673,6 +674,26 @@ def load_phantom_points(phantom_csv: str) -> np.ndarray:
     ])
 
 
+def _item_id(row: "pd.Series") -> str:
+    """Stable identity for a queue item, independent of its position.
+
+    Marks are keyed on this rather than ``queue_index`` so the queue can be
+    re-sorted without stranding completed work. Derived from the source
+    layer and index, which are recorded on every mark, so a marks file
+    written before ``item_id`` existed still resolves.
+
+    Args:
+        row: A queue row or a previously saved mark.
+
+    Returns:
+        An identifier of the form ``"<source_layer>:<source_index>"``.
+    """
+    stored = row.get("item_id")
+    if stored is not None and not pd.isna(stored) and str(stored).strip():
+        return str(stored)
+    return f"{row['source_layer']}:{int(row['source_index'])}"
+
+
 def _text(value: object) -> str:
     """Coerce a possibly-missing CSV cell to a clean string.
 
@@ -745,17 +766,18 @@ def load_existing_marks(output_csv: Path) -> dict[int, dict]:
         output_csv: Path to this app's own output file.
 
     Returns:
-        Mapping of ``row_index`` to the saved record. Empty when the file
-        does not yet exist.
+        Mapping of ``item_id`` to the saved record. Empty when the file
+        does not yet exist. Keyed on identity rather than position so a
+        re-sorted queue does not strand completed work.
     """
     if not output_csv.exists():
         return {}
     df = pd.read_csv(output_csv)
-    if "queue_index" not in df.columns:
+    if not {"source_layer", "source_index"} <= set(df.columns):
         return {}
-    marks: dict[int, dict] = {}
+    marks: dict[str, dict] = {}
     for record in df.to_dict("records"):
-        marks[int(record["queue_index"])] = record
+        marks[_item_id(pd.Series(record))] = record
     return marks
 
 
@@ -767,11 +789,11 @@ def save_marks(marks: dict[int, dict], output_csv: Path) -> None:
     against a truncated file if the write is interrupted mid-flight.
 
     Args:
-        marks: Mapping of ``queue_index`` to record.
+        marks: Mapping of ``item_id`` to record.
         output_csv: Destination path. Parent directories are created.
     """
     output_csv.parent.mkdir(parents=True, exist_ok=True)
-    rows = [marks[key] for key in sorted(marks)]
+    rows = sorted(marks.values(), key=lambda r: int(r["queue_index"]))
     frame = pd.DataFrame(rows, columns=_OUTPUT_COLUMNS)
     tmp = output_csv.with_suffix(output_csv.suffix + ".tmp")
     frame.to_csv(tmp, index=False)
@@ -822,6 +844,7 @@ def build_record(
     prior_symbol = _text(row.get("prior_symbol_type"))
     return {
         "queue_index": int(row["queue_index"]),
+        "item_id": _item_id(row),
         "item_type": row["item_type"],
         "source_layer": row["source_layer"],
         "source_index": int(row["source_index"]),
@@ -1092,14 +1115,18 @@ def main() -> None:
     if "marks" not in st.session_state:
         st.session_state.marks = load_existing_marks(args.output)
     if "cursor" not in st.session_state:
-        # Resume at the first unmarked row rather than at zero.
+        # Resume at the first unmarked row rather than at zero. Membership
+        # is tested by identity, so a re-sorted queue resumes correctly.
         done = set(st.session_state.marks)
-        remaining = [i for i in range(len(queue)) if i not in done]
+        remaining = [
+            i for i in range(len(queue))
+            if _item_id(queue.iloc[i]) not in done
+        ]
         st.session_state.cursor = remaining[0] if remaining else 0
     if "pending" not in st.session_state:
         st.session_state.pending = {}
 
-    marks: dict[int, dict] = st.session_state.marks
+    marks: dict[str, dict] = st.session_state.marks
     cursor: int = st.session_state.cursor
     row = queue.iloc[cursor]
     n_total = len(queue)
@@ -1190,7 +1217,7 @@ def main() -> None:
         "superseded": nearby_superseded,
     }
 
-    existing = marks.get(cursor)
+    existing = marks.get(_item_id(row))
     marked: tuple[float, float] | None = st.session_state.pending.get(cursor)
     if marked is None and existing is not None:
         if pd.notna(existing.get("x_marked")):
@@ -1456,14 +1483,25 @@ def main() -> None:
                                 options.append((layer_name, d))
                         if options:
                             resolved = min(options, key=lambda o: o[1])
-                    marks[cursor] = build_record(
+                    marks[_item_id(row)] = build_record(
                         row, marked, verdict, nearest_m, args.marked_by,
                         symbol_type, resolved,
                     )
                     save_marks(marks, args.output)
                     st.session_state.pending.pop(cursor, None)
                     st.session_state.pop("refusal", None)
-                    if cursor + 1 < n_total:
+                    # Advance to the next UNMARKED item, not simply the
+                    # next index. Re-sorting the queue scatters previously
+                    # completed work through it, so a naive +1 would walk
+                    # the reviewer back through decisions already made.
+                    nxt = next(
+                        (i for i in range(cursor + 1, n_total)
+                         if _item_id(queue.iloc[i]) not in marks),
+                        None,
+                    )
+                    if nxt is not None:
+                        st.session_state.cursor = nxt
+                    elif cursor + 1 < n_total:
                         st.session_state.cursor = cursor + 1
                 st.rerun()
 
