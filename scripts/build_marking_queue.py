@@ -403,6 +403,8 @@ def build_queue(
     (phantom_symbols, phantom_symbol_sources,
      phantom_symbol_conflicts) = recover_phantom_symbol_types(phantoms)
     phantom_to_student, _ = corrected_tree.query(phantoms, k=1)
+    # k=2 because a phantom's nearest entry in its own tree is itself.
+    phantom_to_phantom, _ = phantom_tree.query(phantoms, k=2)
     phantom_neighbours = phantom_tree.query_ball_point(
         phantoms, r=threshold_m,
     )
@@ -425,8 +427,17 @@ def build_queue(
             "n_partners_within_threshold": (
                 n_phantom_partners + n_student_partners
             ),
-            "nearest_partner_m": float(phantom_to_student[index]),
-            "nearest_partner_layer": "corrected_student",
+            # The nearest partner in EITHER layer. Assuming the student
+            # layer was wrong for the 99 phantoms whose closest neighbour
+            # within the cut is another phantom.
+            "nearest_partner_m": float(min(
+                phantom_to_student[index], phantom_to_phantom[index][1],
+            )),
+            "nearest_partner_layer": (
+                "promoted_phantom"
+                if phantom_to_phantom[index][1] < phantom_to_student[index]
+                else "corrected_student"
+            ),
             "prior_symbol_type": phantom_symbols[index],
             "prior_symbol_source": phantom_symbol_sources[index],
             "prior_symbol_conflict": phantom_symbol_conflicts[index],

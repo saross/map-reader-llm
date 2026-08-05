@@ -1132,6 +1132,15 @@ def main() -> None:
     candidates = [d for d in (nearest_student_m, nearest_phantom_m)
                   if d is not None]
     nearest_m = min(candidates) if candidates else None
+    # Which layer that nearest neighbour is in, named with its overlay
+    # colour: "a neighbour at 53.8 m" sends the reviewer hunting for the
+    # wrong marker when the neighbour is orange and they expect cyan.
+    if nearest_m is None:
+        nearest_label = ""
+    elif nearest_phantom_m is not None and nearest_m == nearest_phantom_m:
+        nearest_label = "another phantom (orange)"
+    else:
+        nearest_label = "a student GT point (cyan)"
     context = {
         "student": nearby_students,
         "phantom": nearby_phantoms,
@@ -1243,14 +1252,14 @@ def main() -> None:
 
         if nearest_m is not None and nearest_m <= _DEDUP_TOLERANCE_M:
             st.error(
-                f"**{nearest_m:.1f} m** — inside the "
+                f"**{nearest_label} at {nearest_m:.1f} m** — inside the "
                 f"{_DEDUP_TOLERANCE_M:.0f} m de-duplication tolerance. "
                 "This should not have survived de-duplication and is very "
                 "likely the same mound counted twice.",
             )
         elif nearest_m is not None and nearest_m < _DISTINCT_FLOOR_M:
             st.warning(
-                f"Borderline: {nearest_m:.1f} m sits between the "
+                f"Borderline: {nearest_label} at {nearest_m:.1f} m, between the "
                 f"{_DEDUP_TOLERANCE_M:.0f} m de-duplication tolerance "
                 f"and the {_DISTINCT_FLOOR_M:.0f} m distinct-mound "
                 "floor. Decide whether this is the same mound.",
@@ -1260,7 +1269,7 @@ def main() -> None:
             # orange marker looks like an error rather than the reason the
             # item is in the queue.
             st.info(
-                f"**Conflation candidate** — a neighbour lies "
+                f"**Conflation candidate** — {nearest_label} lies "
                 f"{nearest_m:.1f} m away, inside the "
                 f"{_CONFLATION_CUT_M:.0f} m review cut. Beyond the "
                 f"{_DISTINCT_FLOOR_M:.0f} m distinct-mound floor, so two "
@@ -1272,7 +1281,7 @@ def main() -> None:
             # still drawn, and an unexplained marker reads as a bug. Every
             # visible neighbour gets an explanation, whatever its distance.
             st.caption(
-                f"Nearest neighbour {nearest_m:.1f} m away — beyond the "
+                f"Nearest neighbour is {nearest_label}, {nearest_m:.1f} m away — beyond the "
                 f"{_CONFLATION_CUT_M:.0f} m review cut, shown for context "
                 "only. Not treated as a conflation candidate.",
             )
