@@ -124,7 +124,11 @@ _DEFAULT_DISPLAY_PX = 700
 # mounds" floor. A point between them is a borderline case.
 _DEDUP_TOLERANCE_M = 5.0
 _DISTINCT_FLOOR_M = 15.0
-_CONTEXT_RINGS_M = (_DEDUP_TOLERANCE_M, _DISTINCT_FLOOR_M, 50.0)
+# The conflation review cut (build_marking_queue._DEFAULT_THRESHOLD_M).
+# Two mounds this close are nearly touching at ~12-18 px symbol sizes, so
+# every such pair is looked at even though most will be genuinely distinct.
+_CONFLATION_CUT_M = 50.0
+_CONTEXT_RINGS_M = (_DEDUP_TOLERANCE_M, _DISTINCT_FLOOR_M, _CONFLATION_CUT_M)
 
 # Radius within which student ground-truth points are drawn. Slightly
 # larger than the window half-width so a point just off-screen still
@@ -1250,6 +1254,18 @@ def main() -> None:
                 f"{_DEDUP_TOLERANCE_M:.0f} m de-duplication tolerance "
                 f"and the {_DISTINCT_FLOOR_M:.0f} m distinct-mound "
                 "floor. Decide whether this is the same mound.",
+            )
+        elif nearest_m is not None and nearest_m <= _CONFLATION_CUT_M:
+            # Why a neighbour is on screen at all. Without this the cyan or
+            # orange marker looks like an error rather than the reason the
+            # item is in the queue.
+            st.info(
+                f"**Conflation candidate** — a neighbour lies "
+                f"{nearest_m:.1f} m away, inside the "
+                f"{_CONFLATION_CUT_M:.0f} m review cut. Beyond the "
+                f"{_DISTINCT_FLOOR_M:.0f} m distinct-mound floor, so two "
+                "separate mounds is the likely reading; mark **c** only if "
+                "the imagery shows one mound recorded twice.",
             )
 
         if "merge_site" in str(row["item_type"]):
