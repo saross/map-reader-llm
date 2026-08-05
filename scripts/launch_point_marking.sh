@@ -33,6 +33,7 @@ GT_DIR="results/deployment-oracle-2026-06-06/canonical-gt"
 exec .venv/bin/streamlit run scripts/mark_mound_centres.py -- \
     --queue-csv "${GT_DIR}/marking-queue.csv" \
     --superseded-csv "${GT_DIR}/superseded-marking-queue.csv" \
+    --re-review-csv "${GT_DIR}/re-review-list.csv" \
     --phantom-csv "${GT_DIR}/canonical-review.csv" \
     --rasters-dir inputs/rasters/Russian1981_32635 \
     --student-gt \

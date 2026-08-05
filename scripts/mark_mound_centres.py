@@ -1053,6 +1053,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="canonical-review.csv, overlaid so phantom pairs are visible.",
     )
     parser.add_argument(
+        "--re-review-csv", type=Path, default=None,
+        help=(
+            "CSV from build_re_review_list.py naming marks that need a "
+            "second look, with reasons. Enables the 'Re-review list' "
+            "navigation mode."
+        ),
+    )
+    parser.add_argument(
         "--superseded-csv", type=Path, default=None,
         help=(
             "Superseded layer-1 positions from build_marking_queue.py, "
@@ -1105,6 +1113,14 @@ def main() -> None:
             return
 
     queue = load_queue(args.queue_csv)
+    re_review = (
+        pd.read_csv(args.re_review_csv)
+        if args.re_review_csv and args.re_review_csv.exists()
+        else pd.DataFrame(columns=["item_id", "reasons"])
+    )
+    re_review_reasons = dict(
+        zip(re_review["item_id"], re_review["reasons"], strict=False),
+    )
     students = load_student_points(str(args.student_gt))
     phantoms = load_phantom_points(str(args.phantom_csv))
     superseded = (
@@ -1168,7 +1184,8 @@ def main() -> None:
         # not contiguous, so they cannot be reached by stepping.
         nav_mode = st.selectbox(
             "Navigate",
-            ["Unmarked only", "All items", "Revisit earliest marks"],
+            ["Unmarked only", "All items", "Re-review list",
+             "Revisit earliest marks"],
             index=0,
         )
         revisit_n = 0
@@ -1251,6 +1268,11 @@ def main() -> None:
     # Which items navigation may land on, given the sidebar scope.
     if nav_mode == "All items":
         allowed = set(range(n_total))
+    elif nav_mode == "Re-review list":
+        allowed = {
+            i for i in range(n_total)
+            if _item_id(queue.iloc[i]) in re_review_reasons
+        }
     elif nav_mode == "Revisit earliest marks":
         # Earliest BY MARKING TIME, which is the order the rule changed in
         # -- not queue order, which the re-sort scrambled relative to it.
@@ -1269,6 +1291,14 @@ def main() -> None:
         }
     if not allowed:
         allowed = {cursor}
+    # Switching scope should land on something in scope. Without this the
+    # reviewer selects "Re-review list" and sits on whatever unrelated item
+    # was already on screen until they press next.
+    if cursor not in allowed and st.session_state.get("nav_scope") != nav_mode:
+        st.session_state.nav_scope = nav_mode
+        st.session_state.cursor = min(allowed)
+        st.rerun()
+    st.session_state.nav_scope = nav_mode
 
     left, right = st.columns([3, 1])
 
@@ -1411,6 +1441,22 @@ def main() -> None:
             st.info(
                 f"Merge site: {len(nearby_superseded)} superseded position(s) "
                 "shown in red. Check that the merged centre is right.",
+            )
+
+        reasons = re_review_reasons.get(_item_id(row))
+        if reasons:
+            explain = {
+                "rule_consistency":
+                    "marked before the adjudication rule was settled — "
+                    "re-check it against the current rule",
+                "partner_ambiguity":
+                    "more than one neighbour was in range and the partner "
+                    "was auto-picked as the nearest — confirm it is the "
+                    "right one",
+            }
+            st.warning(
+                "**Flagged for re-review**: "
+                + "; ".join(explain.get(r, r) for r in str(reasons).split("+")),
             )
 
         if "strange_symbol" in str(row["item_type"]):
