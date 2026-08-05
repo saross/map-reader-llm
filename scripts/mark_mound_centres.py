@@ -184,6 +184,18 @@ _SYMBOL_TYPES = [
     "unsure",
 ]
 
+# Human-readable forms, so the reviewer reads "Benchmark on burial mound"
+# rather than parsing a snake_case identifier at speed. The stored value is
+# always the identifier; only the display changes.
+_SYMBOL_LABELS = {
+    "burial_mound": "Burial mound",
+    "settlement_mound": "Settlement mound",
+    "bench_mark_on_mound": "Benchmark on burial mound",
+    "trig_point_on_mound": "Trig point on burial mound",
+    "not_a_mound": "Not a mound",
+    "unsure": "Unsure",
+}
+
 # Overlay layers drawn as context around the subject point. Each entry is
 # (colour, radius_px, stroke_px); the subject itself is drawn separately as
 # a cross so it is never confused with its neighbours.
@@ -1096,6 +1108,30 @@ def main() -> None:
         )
         st.subheader(f"Item {cursor} of {n_total - 1} · {label}")
         st.caption(f"`{row['item_type']}` from `{row['source_layer']}`")
+
+        # Symbol type up front, not buried beside the verdict buttons: the
+        # reviewer confirms it at a glance on every student item, so it has
+        # to be readable without hunting. MapSymbol is the student's own
+        # description and is always populated; _reviewed_subtype is a
+        # curator re-review present on only 26 of 4,746 features, so it is
+        # shown as an addition when it exists rather than as the headline.
+        if not is_phantom:
+            student_symbol = _text(row.get("student_map_symbol"))
+            student_feature = _text(row.get("student_feature_type"))
+            prior_subtype = _text(row.get("student_reviewed_subtype"))
+            parts = []
+            if student_symbol:
+                parts.append(f"**{student_symbol}**")
+            if student_feature:
+                parts.append(f"*{student_feature}*")
+            if prior_subtype:
+                parts.append(
+                    "curator: **"
+                    + _SYMBOL_LABELS.get(prior_subtype, prior_subtype)
+                    + "**",
+                )
+            if parts:
+                st.markdown("Student recorded: " + " · ".join(parts))
         if geom is None:
             st.image(base)
             st.error(
@@ -1203,9 +1239,8 @@ def main() -> None:
             st.divider()
             st.markdown("**Symbol type**")
             if recorded:
-                st.caption(f"student recorded: {recorded}")
-            if feature:
-                st.caption(f"feature type: {feature}")
+                st.caption(f"student: {recorded}"
+                           + (f" · {feature}" if feature else ""))
             options = list(_SYMBOL_TYPES)
             if prior and prior not in options:
                 options.insert(0, prior)
@@ -1215,15 +1250,17 @@ def main() -> None:
                 options=options,
                 index=default,
                 key=f"symbol_{cursor}",
+                format_func=lambda v: _SYMBOL_LABELS.get(v, v),
                 label_visibility="collapsed",
             )
             if prior:
+                prior_label = _SYMBOL_LABELS.get(prior, prior)
                 if symbol_type != prior:
-                    st.warning(f"changed from `{prior}`")
+                    st.warning(f"changed from **{prior_label}**")
                 else:
-                    st.caption(f"confirms `{prior}`")
+                    st.caption(f"confirms {prior_label}")
             else:
-                st.caption("no prior curator subtype on this feature")
+                st.caption("no prior curator subtype — your call sets it")
 
         st.divider()
         for key, (verdict, label) in _VERDICTS.items():
