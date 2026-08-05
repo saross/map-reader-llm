@@ -166,9 +166,16 @@ _RED = (255, 40, 40)
 _VERDICTS = {
     "d": ("distinct", "Distinct mound"),
     "c": ("same_as_neighbour", "Same as a neighbour"),
+    "x": ("not_a_mound", "Not a mound (FP)"),
     "u": ("uncertain", "Uncertain"),
     "s": ("skipped", "Skip"),
 }
+
+# Verdicts that require a marked centre first. "not_a_mound" does not:
+# there is nothing to mark, and forcing a click would either fabricate a
+# position or push a definite judgement into "uncertain", making the
+# false-positive count unrecoverable afterwards.
+_VERDICTS_NEEDING_A_CLICK = {"distinct", "same_as_neighbour"}
 
 _OUTPUT_COLUMNS = [
     "queue_index",
@@ -1410,7 +1417,7 @@ def main() -> None:
 
         st.divider()
         for key, (verdict, label) in _VERDICTS.items():
-            needs_click = verdict in {"distinct", "same_as_neighbour"}
+            needs_click = verdict in _VERDICTS_NEEDING_A_CLICK
             # Deliberately NOT disabled when a click is still required.
             # A disabled button silently swallows the keyboard shortcut --
             # the browser ignores dispatched clicks on it -- so the
