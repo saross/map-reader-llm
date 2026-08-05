@@ -823,33 +823,53 @@ def build_record(
 _SHORTCUT_JS = """
 <script>
 (function() {
-    const docs = [];
-    try {
-        if (window.parent && window.parent.document !== document) {
-            docs.push(window.parent.document);
-        }
-        if (window.top && window.top.document !== window.parent.document) {
-            docs.push(window.top.document);
-        }
-    } catch (e) {}
-    docs.push(document);
-
+    // Binds a single keypress to any button whose label starts "<key>:".
+    //
+    // The hard part is not matching the key, it is RECEIVING it. Streamlit
+    // renders custom components -- including the click-to-mark image -- in
+    // their own iframes. Clicking the image moves keyboard focus into that
+    // iframe, so a handler attached only to the main document never sees
+    // the subsequent keypress. Since every item starts with a click on the
+    // image, a main-document-only handler works exactly once: before the
+    // first click, and never again.
+    //
+    // So: attach to every same-origin document we can reach (parent, top,
+    // our own, and each sibling component iframe), and re-attach on an
+    // interval because Streamlit destroys and recreates those iframes on
+    // every rerun. Streamlit's iframe sandbox includes allow-same-origin,
+    // which is what makes reaching into siblings possible at all.
     const LOG = function() {
         console.log.apply(console, ['[mark-centres]'].concat(
             Array.prototype.slice.call(arguments)
         ));
     };
 
-    const streamlitDoc = docs[0] || document;
+    let mainDoc = document;
+    try { if (window.parent) mainDoc = window.parent.document; } catch (e) {}
 
-    for (const d of docs) {
-        if (d.__markCentresKeyHandler) {
-            d.removeEventListener('keydown', d.__markCentresKeyHandler, true);
+    const collectDocs = function() {
+        const docs = [];
+        const push = function(d) {
+            if (d && docs.indexOf(d) === -1) docs.push(d);
+        };
+        try { push(window.parent.document); } catch (e) {}
+        try { push(window.top.document); } catch (e) {}
+        push(document);
+        const roots = docs.slice();
+        for (let i = 0; i < roots.length; i++) {
+            let frames;
+            try { frames = roots[i].querySelectorAll('iframe'); }
+            catch (e) { continue; }
+            for (let j = 0; j < frames.length; j++) {
+                try { push(frames[j].contentDocument); } catch (e) {}
+            }
         }
-    }
+        return docs;
+    };
 
     const simulateClick = function(btn, label) {
         if (!btn) return;
+        if (btn.disabled) { LOG('button is disabled:', label); return; }
         btn.scrollIntoView({block: 'nearest', behavior: 'instant'});
         setTimeout(function() {
             const opts = {bubbles: true, cancelable: true, view: window};
@@ -858,48 +878,72 @@ _SHORTCUT_JS = """
                 btn.dispatchEvent(new MouseEvent('mouseup', opts));
                 btn.dispatchEvent(new MouseEvent('click', opts));
                 if (typeof btn.click === 'function') btn.click();
-                LOG('clicked', label || btn.textContent.trim());
+                LOG('clicked', label);
             } catch (err) {
                 LOG('click failed', err);
             }
         }, 0);
     };
 
-    const makeHandler = function(source) {
-        return function(e) {
-            if (e.ctrlKey || e.altKey || e.metaKey) return;
-            if (e.__markCentresSeen) return;
-            e.__markCentresSeen = true;
+    const handler = function(e) {
+        if (e.ctrlKey || e.altKey || e.metaKey) return;
+        if (e.__markCentresSeen) return;
+        e.__markCentresSeen = true;
 
-            const active = (streamlitDoc.activeElement || null);
-            if (active && (active.tagName === 'INPUT' ||
-                           active.tagName === 'TEXTAREA' ||
-                           active.isContentEditable)) return;
-            const key = (e.key || '').toLowerCase();
-            if (!key) return;
+        const target = e.target;
+        if (target && (target.tagName === 'INPUT' ||
+                       target.tagName === 'TEXTAREA' ||
+                       target.isContentEditable)) return;
+        const key = (e.key || '').toLowerCase();
+        if (!key) return;
 
-            const buttons = streamlitDoc.querySelectorAll('button');
-            const matches = [];
-            for (const btn of buttons) {
-                const text = (btn.textContent || '').trim().toLowerCase();
-                if (text.startsWith(key + ':')) matches.push(btn);
-            }
-            if (matches.length === 0) return;
-            const btn = matches[matches.length - 1];
-            const focused = streamlitDoc.activeElement;
+        // Buttons always live in the MAIN document, whichever frame the
+        // keypress happened to arrive in.
+        let buttons;
+        try { buttons = mainDoc.querySelectorAll('button'); }
+        catch (err) { LOG('cannot reach main document', err); return; }
+        const matches = [];
+        for (let i = 0; i < buttons.length; i++) {
+            const text = (buttons[i].textContent || '').trim().toLowerCase();
+            if (text.indexOf(key + ':') === 0) matches.push(buttons[i]);
+        }
+        if (matches.length === 0) return;
+        const btn = matches[matches.length - 1];
+        try {
+            const focused = mainDoc.activeElement;
             if (focused && focused.blur) focused.blur();
-            simulateClick(btn, (btn.textContent || '').trim());
-            e.preventDefault();
-            e.stopPropagation();
-        };
+        } catch (err) {}
+        simulateClick(btn, (btn.textContent || '').trim());
+        e.preventDefault();
+        e.stopPropagation();
     };
 
-    for (let i = 0; i < docs.length; i++) {
-        const h = makeHandler(i === 0 ? 'parent' : 'doc');
-        docs[i].addEventListener('keydown', h, true);
-        docs[i].__markCentresKeyHandler = h;
-    }
-    LOG('handler attached to', docs.length, 'doc(s)');
+    const attach = function() {
+        const docs = collectDocs();
+        let added = 0;
+        for (let i = 0; i < docs.length; i++) {
+            if (docs[i].__markCentresKeyHandler === handler) continue;
+            if (docs[i].__markCentresKeyHandler) {
+                try {
+                    docs[i].removeEventListener(
+                        'keydown', docs[i].__markCentresKeyHandler, true,
+                    );
+                } catch (err) {}
+            }
+            try {
+                docs[i].addEventListener('keydown', handler, true);
+                docs[i].__markCentresKeyHandler = handler;
+                added += 1;
+            } catch (err) {}
+        }
+        if (added) LOG('handler attached to', added, 'new document(s)');
+    };
+
+    attach();
+    // Streamlit recreates component iframes on every rerun, so a one-off
+    // attachment goes stale as soon as the reviewer marks anything.
+    if (window.__markCentresTimer) clearInterval(window.__markCentresTimer);
+    window.__markCentresTimer = setInterval(attach, 700);
 })();
 </script>
 """
@@ -1212,6 +1256,14 @@ def main() -> None:
             st.info(
                 f"Merge site: {len(nearby_superseded)} superseded position(s) "
                 "shown in red. Check that the merged centre is right.",
+            )
+
+        if "strange_symbol" in str(row["item_type"]):
+            st.error(
+                "**Unrecognised symbol** — this feature's MapSymbol is not "
+                "one of the four mapped forms, so nothing is pre-selected. "
+                "Suspected classification error rather than a mound; "
+                "confirm from the imagery.",
             )
 
         if "jitter_sample" in str(row["item_type"]):

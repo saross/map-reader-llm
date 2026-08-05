@@ -663,4 +663,7 @@ def test_app_renders_against_real_inputs(tmp_path: Path) -> None:
     for expected in ("d: Distinct mound", "c: Same as a neighbour",
                      "u: Uncertain", "s: Skip", "n: Next"):
         assert expected in labels, f"missing control: {expected}"
-    assert any("0 / 1006" in str(m.value) for m in app.metric)
+    # Derived, not hard-coded: the queue size changes whenever scope does,
+    # and a literal here turns every scope decision into a test failure.
+    expected = len(pd.read_csv(queue_path))
+    assert any(f"0 / {expected}" in str(m.value) for m in app.metric)

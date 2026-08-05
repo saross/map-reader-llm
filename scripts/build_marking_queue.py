@@ -147,6 +147,31 @@ _SYMBOL_JOIN_TOL_M = 10.0
 # these removes every join conflict at this tolerance.
 _SUPERSEDED_SYMBOL = "not_mound"
 
+# Student MapSymbol -> curator vocabulary, supplied by the PI 2026-08-05.
+# The diamond and the square are the SAME benchmark symbol, merely rotated,
+# which is why they map together. Corroborated by the 26 curator-reviewed
+# features, where the cross-tabulation separates perfectly with no
+# cross-contamination (16 circle->burial, 5 diamond + 2 square->benchmark,
+# 2 triangle->trig point).
+#
+# "Hairy brown circle" is deliberately mapped to burial_mound even though
+# the PI notes some are settlement mounds: the student vocabulary cannot
+# distinguish them, so the mapping supplies the majority reading as a
+# starting point and the reviewer overrides where the imagery says
+# otherwise. It is a default, not a determination.
+_MAP_SYMBOL_TO_TYPE = {
+    "Hairy brown circle": "burial_mound",
+    "Hairy black diamond with a dot inside": "bench_mark_on_mound",
+    "Hairy black square with a dot inside": "bench_mark_on_mound",
+    "Hairy black triangle with a dot inside": "trig_point_on_mound",
+}
+
+# The two MapSymbol values with no mapping are free-text oddities the PI
+# wants to inspect individually: 3 "Other (describe in annotation)" and 1
+# "Hairy brown circle (has black diamond on top)". They are queued as
+# strange_symbol regardless of whether they conflate with anything.
+_STRANGE_SYMBOL_TYPE = "strange_symbol"
+
 
 def _attribute(frame: "gpd.GeoDataFrame", index: int, column: str) -> str:
     """Read one attribute as a string, treating missing values as empty.
@@ -343,6 +368,14 @@ def build_queue(
     for index in curator_additions:
         reasons.setdefault(index, []).append("curator_addition")
 
+    # Unmapped MapSymbol values are queued for individual inspection: the
+    # PI suspects they are classification errors rather than mounds, and
+    # there are few enough to check by eye.
+    for index in range(len(corrected)):
+        symbol = _attribute(student_attributes, index, "MapSymbol")
+        if symbol and symbol not in _MAP_SYMBOL_TO_TYPE:
+            reasons.setdefault(index, []).append(_STRANGE_SYMBOL_TYPE)
+
     # The jitter sample is drawn from student mounds with no near neighbour
     # of any kind, so a displacement measured on one of them reflects
     # digitisation error alone and not an unresolved conflation.
@@ -419,13 +452,21 @@ def build_queue(
             "n_partners_within_threshold": n_partners,
             "nearest_partner_m": float(student_to_phantom[index]),
             "nearest_partner_layer": "promoted_phantom",
-            "prior_symbol_type": _attribute(
-                student_attributes, index, "_reviewed_subtype",
+            "prior_symbol_type": (
+                _attribute(student_attributes, index, "_reviewed_subtype")
+                or _MAP_SYMBOL_TO_TYPE.get(
+                    _attribute(student_attributes, index, "MapSymbol"), "",
+                )
             ),
             "prior_symbol_source": (
                 "student-mounds-55maps-reviewed.geojson:_reviewed_subtype"
                 if _attribute(student_attributes, index, "_reviewed_subtype")
-                else ""
+                else (
+                    "MapSymbol mapping"
+                    if _MAP_SYMBOL_TO_TYPE.get(
+                        _attribute(student_attributes, index, "MapSymbol"),
+                    ) else ""
+                )
             ),
             "prior_symbol_conflict": "",
             "student_map_symbol": _attribute(
