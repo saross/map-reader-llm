@@ -118,6 +118,10 @@ _QUEUE_COLUMNS = [
     # confirmation.
     "prior_symbol_type",
     "prior_symbol_source",
+    # Populated only when the recovery found competing values for one
+    # mound, so the app can ask for an explicit adjudication instead of
+    # showing a silent blank.
+    "prior_symbol_conflict",
     # Student-only context. Empty for phantoms.
     "student_map_symbol",
     "student_feature_type",
@@ -166,7 +170,7 @@ def _attribute(frame: "gpd.GeoDataFrame", index: int, column: str) -> str:
 
 def recover_phantom_symbol_types(
     phantoms: np.ndarray, tolerance_m: float = _SYMBOL_JOIN_TOL_M,
-) -> tuple[list[str], list[str]]:
+) -> tuple[list[str], list[str], list[str]]:
     """Recover each phantom's recorded symbol type from the review outputs.
 
     ``canonical-review.csv`` carries only six columns and no symbol type,
@@ -184,8 +188,10 @@ def recover_phantom_symbol_types(
             10 m is safe here rather than merely convenient.
 
     Returns:
-        A ``(symbol_types, sources)`` pair, one entry per phantom. Both are
-        empty strings where no unambiguous value could be recovered.
+        A ``(symbol_types, sources, conflicts)`` triple, one entry per
+        phantom. ``symbol_types`` is empty where no unambiguous value could
+        be recovered; in that case ``conflicts`` names the competing values
+        so the reviewer can adjudicate rather than face a silent blank.
     """
     frames: list[pd.DataFrame] = []
     for path in sorted(_PROJECT_ROOT.glob(_SYMBOL_SOURCE_GLOB)):
@@ -205,29 +211,33 @@ def recover_phantom_symbol_types(
             frames.append(subset)
 
     if not frames:
-        return [""] * len(phantoms), [""] * len(phantoms)
+        return ([""] * len(phantoms),) * 3
 
     records = pd.concat(frames, ignore_index=True)
     records = records[records["symbol_type"] != _SUPERSEDED_SYMBOL]
     records = records.reset_index(drop=True)
     if not len(records):
-        return [""] * len(phantoms), [""] * len(phantoms)
+        return ([""] * len(phantoms),) * 3
 
     tree = cKDTree(records[["x", "y"]].to_numpy(dtype=float))
     symbol_types: list[str] = []
     sources: list[str] = []
+    conflicts: list[str] = []
     for point in phantoms:
         hits = tree.query_ball_point(point, r=tolerance_m)
         values = {records["symbol_type"].iloc[h] for h in hits}
         if len(values) == 1:
             symbol_types.append(str(values.pop()))
             sources.append(str(records["_source"].iloc[hits[0]]))
+            conflicts.append("")
         else:
-            # Ambiguous or absent: record nothing rather than pick. The
-            # reviewer sets it from the imagery instead.
+            # Ambiguous or absent: record nothing rather than pick. Name
+            # the competing values so the app can ask for an explicit
+            # decision instead of showing an unexplained blank.
             symbol_types.append("")
             sources.append("")
-    return symbol_types, sources
+            conflicts.append(" vs ".join(sorted(str(v) for v in values)))
+    return symbol_types, sources, conflicts
 
 
 def classify_layer_diff(
@@ -354,9 +364,8 @@ def build_queue(
 
     # Phantoms first, in their existing order, so a partially-completed
     # review of the original 773 keeps its row correspondence.
-    phantom_symbols, phantom_symbol_sources = recover_phantom_symbol_types(
-        phantoms,
-    )
+    (phantom_symbols, phantom_symbol_sources,
+     phantom_symbol_conflicts) = recover_phantom_symbol_types(phantoms)
     phantom_to_student, _ = corrected_tree.query(phantoms, k=1)
     phantom_neighbours = phantom_tree.query_ball_point(
         phantoms, r=threshold_m,
@@ -384,6 +393,7 @@ def build_queue(
             "nearest_partner_layer": "corrected_student",
             "prior_symbol_type": phantom_symbols[index],
             "prior_symbol_source": phantom_symbol_sources[index],
+            "prior_symbol_conflict": phantom_symbol_conflicts[index],
             "student_map_symbol": "",
             "student_feature_type": "",
         })
@@ -417,6 +427,7 @@ def build_queue(
                 if _attribute(student_attributes, index, "_reviewed_subtype")
                 else ""
             ),
+            "prior_symbol_conflict": "",
             "student_map_symbol": _attribute(
                 student_attributes, index, "MapSymbol",
             ),

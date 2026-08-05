@@ -1140,6 +1140,20 @@ def main() -> None:
             )
         else:
             st.markdown("### _no symbol type on record_")
+
+        # A recovery conflict is the one case where the blank is not
+        # ignorance but disagreement between passes. Say which values
+        # competed, so this is adjudicated rather than skipped past.
+        conflict = _text(row.get("prior_symbol_conflict"))
+        if conflict:
+            competing = " vs ".join(
+                _SYMBOL_LABELS.get(v.strip(), v.strip())
+                for v in conflict.split(" vs ")
+            )
+            st.error(
+                f"**Symbol type needs adjudicating** — earlier passes "
+                f"disagree: {competing}. Pick one below.",
+            )
         if geom is None:
             st.image(base)
             st.error(
