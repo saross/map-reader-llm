@@ -124,11 +124,30 @@ _DEFAULT_DISPLAY_PX = 700
 # mounds" floor. A point between them is a borderline case.
 _DEDUP_TOLERANCE_M = 5.0
 _DISTINCT_FLOOR_M = 15.0
-# The conflation review cut (build_marking_queue._DEFAULT_THRESHOLD_M).
-# Two mounds this close are nearly touching at ~12-18 px symbol sizes, so
-# every such pair is looked at even though most will be genuinely distinct.
+# How far out a neighbour is FLAGGED for a conflation judgement. This is
+# deliberately wider than the queue's own cut
+# (build_marking_queue._DEFAULT_THRESHOLD_M, 75 m) because the two radii
+# answer different questions and cost differently.
+#
+# The queue cut decides which STUDENT points get their own review item --
+# expensive, since each is a separate decision. The flag radius decides
+# which neighbours get explained on screen -- free, since they are drawn
+# anyway.
+#
+# 110 m is set by the number-attractor effect (PI, 2026-08-05): a label or
+# numeral near a mound can pull a detection well off the mound it belongs
+# to, so a phantom and the student point for the SAME mound can sit 100 m
+# apart (candidate 33: 102.9 m). Those need judging, but the student point
+# itself is correctly placed and needs no re-marking -- only the displaced
+# phantom does, via "c". Flagging to 110 m covers 399 of 773 phantoms;
+# queueing to 110 m would have added ~470 items to re-mark points that are
+# already right.
+_FLAG_RADIUS_M = 110.0
+# The queue's own cut, mirrored here only so the wording can distinguish
+# "queued as its own item" from "flagged for your judgement".
 _CONFLATION_CUT_M = 75.0
-_CONTEXT_RINGS_M = (_DEDUP_TOLERANCE_M, _DISTINCT_FLOOR_M, _CONFLATION_CUT_M)
+_CONTEXT_RINGS_M = (_DEDUP_TOLERANCE_M, _DISTINCT_FLOOR_M,
+                    _CONFLATION_CUT_M, _FLAG_RADIUS_M)
 
 # Radius within which student ground-truth points are drawn. Slightly
 # larger than the window half-width so a point just off-screen still
@@ -1264,26 +1283,27 @@ def main() -> None:
                 f"and the {_DISTINCT_FLOOR_M:.0f} m distinct-mound "
                 "floor. Decide whether this is the same mound.",
             )
-        elif nearest_m is not None and nearest_m <= _CONFLATION_CUT_M:
+        elif nearest_m is not None and nearest_m <= _FLAG_RADIUS_M:
             # Why a neighbour is on screen at all. Without this the cyan or
             # orange marker looks like an error rather than the reason the
             # item is in the queue.
             st.info(
                 f"**Conflation candidate** — {nearest_label} lies "
-                f"{nearest_m:.1f} m away, inside the "
-                f"{_CONFLATION_CUT_M:.0f} m review cut. Beyond the "
+                f"{nearest_m:.1f} m away. Beyond the "
                 f"{_DISTINCT_FLOOR_M:.0f} m distinct-mound floor, so two "
-                "separate mounds is the likely reading; mark **c** only if "
-                "the imagery shows one mound recorded twice.",
+                "separate mounds is the usual reading — but a nearby "
+                "numeral or label can pull a detection this far off the "
+                "mound it belongs to, so mark **c** if the imagery shows "
+                "one mound recorded twice.",
             )
         elif nearest_m is not None:
             # Beyond the cut, so not queued as a conflation -- but it is
             # still drawn, and an unexplained marker reads as a bug. Every
             # visible neighbour gets an explanation, whatever its distance.
             st.caption(
-                f"Nearest neighbour is {nearest_label}, {nearest_m:.1f} m away — beyond the "
-                f"{_CONFLATION_CUT_M:.0f} m review cut, shown for context "
-                "only. Not treated as a conflation candidate.",
+                f"Nearest neighbour is {nearest_label}, {nearest_m:.1f} m "
+                f"away — beyond the {_FLAG_RADIUS_M:.0f} m flag radius, "
+                "shown for context only.",
             )
 
         if "merge_site" in str(row["item_type"]):
