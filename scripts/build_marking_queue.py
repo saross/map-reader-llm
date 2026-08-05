@@ -72,11 +72,14 @@ from audit_mound_proximity import (
     load_points_geojson,
 )
 
-# The PI's cut. Symbols are ~12-18 px at ~5 m/px, so two mounds 40 m apart
-# are nearly touching. Set at 50 m rather than 40 m on the PI's decision
-# (2026-08-05): the proximity audit priced the widening at only ~23 further
-# items, which is cheap insurance against a missed conflation.
-_DEFAULT_THRESHOLD_M = 50.0
+# The PI's cut, widened twice on 2026-08-05: 40 m -> 50 m -> 75 m. Symbols
+# are ~12-18 px at ~5 m/px, so two mounds 40 m apart are nearly touching.
+# The move to 75 m came from live review, where phantoms with a student
+# point just beyond 50 m (63.4 m at candidate 3) were plainly worth
+# adjudicating. It is the expensive widening: 108 -> 296 phantoms gain a
+# student neighbour and the queued student points go 109 -> 416, about
+# +307 items over the 50 m queue.
+_DEFAULT_THRESHOLD_M = 75.0
 
 # Coordinate-identity tolerance when diffing layer 1 against layer 2. These
 # layers share provenance, so an unchanged point matches to floating-point

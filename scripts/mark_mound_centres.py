@@ -127,7 +127,7 @@ _DISTINCT_FLOOR_M = 15.0
 # The conflation review cut (build_marking_queue._DEFAULT_THRESHOLD_M).
 # Two mounds this close are nearly touching at ~12-18 px symbol sizes, so
 # every such pair is looked at even though most will be genuinely distinct.
-_CONFLATION_CUT_M = 50.0
+_CONFLATION_CUT_M = 75.0
 _CONTEXT_RINGS_M = (_DEDUP_TOLERANCE_M, _DISTINCT_FLOOR_M, _CONFLATION_CUT_M)
 
 # Radius within which student ground-truth points are drawn. Slightly
@@ -1266,6 +1266,15 @@ def main() -> None:
                 f"{_DISTINCT_FLOOR_M:.0f} m distinct-mound floor, so two "
                 "separate mounds is the likely reading; mark **c** only if "
                 "the imagery shows one mound recorded twice.",
+            )
+        elif nearest_m is not None:
+            # Beyond the cut, so not queued as a conflation -- but it is
+            # still drawn, and an unexplained marker reads as a bug. Every
+            # visible neighbour gets an explanation, whatever its distance.
+            st.caption(
+                f"Nearest neighbour {nearest_m:.1f} m away — beyond the "
+                f"{_CONFLATION_CUT_M:.0f} m review cut, shown for context "
+                "only. Not treated as a conflation candidate.",
             )
 
         if "merge_site" in str(row["item_type"]):
