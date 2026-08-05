@@ -1218,12 +1218,15 @@ def main() -> None:
     }
 
     existing = marks.get(_item_id(row))
-    marked: tuple[float, float] | None = st.session_state.pending.get(cursor)
-    if marked is None and existing is not None:
-        if pd.notna(existing.get("x_marked")):
-            marked = (
-                float(existing["x_marked"]), float(existing["y_marked"]),
-            )
+    # A key present with value None means the reviewer explicitly cleared
+    # the mark. That has to outrank a previously saved position, or
+    # clearing would silently undo itself on the next rerun.
+    if cursor in st.session_state.pending:
+        marked = st.session_state.pending[cursor]
+    elif existing is not None and pd.notna(existing.get("x_marked")):
+        marked = (float(existing["x_marked"]), float(existing["y_marked"]))
+    else:
+        marked = None
 
     left, right = st.columns([3, 1])
 
@@ -1293,8 +1296,13 @@ def main() -> None:
             # The zoom level is part of the widget key: a click captured
             # at one window width must not be re-applied after the reviewer
             # zooms, since the pixel means a different distance.
+            # The epoch is part of the key so that clearing a mark
+            # produces a FRESH component. Without it the widget keeps
+            # returning its last click, which would re-place the point on
+            # the very next rerun and make "clear" look broken.
+            epoch = st.session_state.get("click_epoch", 0)
             click = streamlit_image_coordinates(
-                annotated, key=f"crop_{cursor}_{context_m:.0f}",
+                annotated, key=f"crop_{cursor}_{context_m:.0f}_{epoch}",
             )
             if click is not None:
                 world = geom.display_to_world(click["x"], click["y"])
@@ -1505,6 +1513,18 @@ def main() -> None:
                         st.session_state.cursor = cursor + 1
                 st.rerun()
 
+        if marked is not None:
+            if st.button(
+                "r: Clear mark", key=f"clear_{cursor}",
+                use_container_width=True,
+            ):
+                st.session_state.pending[cursor] = None
+                st.session_state["click_epoch"] = (
+                    st.session_state.get("click_epoch", 0) + 1
+                )
+                st.session_state.pop("refusal", None)
+                st.rerun()
+
         st.divider()
         nav_back, nav_next = st.columns(2)
         with nav_back:
@@ -1512,6 +1532,7 @@ def main() -> None:
                 "b: Back", disabled=cursor == 0, use_container_width=True,
             ):
                 st.session_state.cursor = max(0, cursor - 1)
+                st.session_state.pending.pop(cursor, None)
                 st.session_state.pop("refusal", None)
                 st.rerun()
         with nav_next:
@@ -1520,6 +1541,7 @@ def main() -> None:
                 use_container_width=True,
             ):
                 st.session_state.cursor = min(n_total - 1, cursor + 1)
+                st.session_state.pending.pop(cursor, None)
                 st.session_state.pop("refusal", None)
                 st.rerun()
 
