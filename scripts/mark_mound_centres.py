@@ -1434,6 +1434,39 @@ def main() -> None:
             )
             st.markdown("**Marked**")
             st.caption(f"displacement {displacement:.1f} m")
+
+        # Which neighbour a "same as neighbour" verdict means. Nearest-to-
+        # the-mark is the right default but is WRONG whenever a nearer
+        # neighbour is a genuinely separate mound -- the case that prompted
+        # this: a phantom pulled off THIS mound by a number attractor sits
+        # further away than a correct, distinct student mound. Auto-
+        # resolution would have recorded the wrong association silently.
+        anchor = marked if marked is not None else (point_x, point_y)
+        candidates = []
+        for layer_name, colour, points in (
+            ("corrected_student", "cyan", nearby_students),
+            ("promoted_phantom", "orange", nearby_phantoms),
+        ):
+            for px, py in points:
+                candidates.append((
+                    math.hypot(px - anchor[0], py - anchor[1]),
+                    layer_name, colour,
+                ))
+        candidates = [c for c in candidates if c[0] <= _FLAG_RADIUS_M]
+        candidates.sort()
+        partner_choice = candidates[0][:2] if candidates else None
+        if len(candidates) > 1:
+            labels = [
+                f"{colour} {layer.split('_')[-1]} — {dist:.1f} m"
+                for dist, layer, colour in candidates
+            ]
+            chosen = st.selectbox(
+                "If 'same as a neighbour', which one?",
+                options=list(range(len(candidates))),
+                format_func=lambda i: labels[i],
+                key=f"partner_{cursor}",
+            )
+            partner_choice = candidates[chosen][:2]
         else:
             st.info("Click the mound centre.")
 
@@ -1521,18 +1554,10 @@ def main() -> None:
                     # Resolve against the MARKED point, not the recorded
                     # one: the reviewer's click is what says which mound
                     # this actually is.
-                    resolved = None
-                    if marked is not None:
-                        options = []
-                        for layer_name, points in (
-                            ("corrected_student", nearby_students),
-                            ("promoted_phantom", nearby_phantoms),
-                        ):
-                            d = _nearest_distance(points, *marked)
-                            if d is not None:
-                                options.append((layer_name, d))
-                        if options:
-                            resolved = min(options, key=lambda o: o[1])
+                    resolved = (
+                        (partner_choice[1], partner_choice[0])
+                        if partner_choice else None
+                    )
                     marks[_item_id(row)] = build_record(
                         row, marked, verdict, nearest_m, args.marked_by,
                         symbol_type, resolved,
