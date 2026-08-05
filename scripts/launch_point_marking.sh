@@ -27,6 +27,7 @@ cd "$(dirname "$0")/.."
 GT_DIR="results/deployment-oracle-2026-06-06/canonical-gt"
 
 .venv/bin/python scripts/build_marking_queue.py \
+    --extra-items "${GT_DIR}/extra-review-items.csv" \
     --output "${GT_DIR}/marking-queue.csv"
 
 exec .venv/bin/streamlit run scripts/mark_mound_centres.py -- \

@@ -28,6 +28,14 @@ This script builds the resulting queue. Five item types:
 ``curator_addition``
     Positions present in layer 2 but not layer 1 with no superseded points
     nearby: the two curator additions.
+``extra_point``
+    A manually specified additional point, supplied via ``--extra-items``.
+    Some map positions carry MORE THAN ONE feature — the known case is a
+    benchmark on a burial mound on a settlement mound, three nested
+    features needing two points — and the queue is otherwise one item per
+    recorded point, so the second feature has nowhere to live. Extra items
+    give it a row without disturbing the original, which keeps recording
+    what the student actually recorded.
 ``jitter_sample``
     A random sample of student mounds with no conflation of any kind,
     drawn to measure typical student placement error. These exist purely
@@ -334,6 +342,7 @@ def build_queue(
     threshold_m: float = _DEFAULT_THRESHOLD_M,
     jitter_sample: int = _DEFAULT_JITTER_SAMPLE,
     order: str = "review",
+    extra_items: Path | None = None,
 ) -> tuple[pd.DataFrame, np.ndarray]:
     """Build the full review queue.
 
@@ -419,6 +428,7 @@ def build_queue(
             reasons.setdefault(index, []).append("jitter_sample")
 
     records: list[dict] = []
+    extra = load_extra_items(extra_items)
 
     # Phantoms first, in their existing order, so a partially-completed
     # review of the original 773 keeps its row correspondence.
@@ -515,6 +525,28 @@ def build_queue(
             ),
         })
 
+    for _, item in extra.iterrows():
+        records.append({
+            "queue_index": len(records),
+            "item_id": f"extra:{item['extra_id']}",
+            "item_type": "extra_point",
+            "source_layer": "extra_point",
+            "source_index": len(records),
+            "candidate_id": "",
+            "map_name": "",
+            "buffer_metres": "",
+            "x": float(item["x"]),
+            "y": float(item["y"]),
+            "n_partners_within_threshold": 0,
+            "nearest_partner_m": float("nan"),
+            "nearest_partner_layer": "",
+            "prior_symbol_type": str(item.get("prior_symbol_type", "") or ""),
+            "prior_symbol_source": "extra-review-items.csv",
+            "prior_symbol_conflict": "",
+            "student_map_symbol": "",
+            "student_feature_type": str(item.get("note", "") or ""),
+        })
+
     frame = pd.DataFrame(records, columns=_QUEUE_COLUMNS)
     if order == "review":
         frame = sort_for_review(frame)
@@ -557,6 +589,33 @@ def sort_for_review(frame: pd.DataFrame) -> pd.DataFrame:
     return ordered
 
 
+def load_extra_items(path: Path | None) -> pd.DataFrame:
+    """Load manually specified additional review points.
+
+    Args:
+        path: CSV with ``extra_id``, ``x``, ``y`` and optionally
+            ``prior_symbol_type`` and ``note``. ``None`` or a missing file
+            yields an empty frame.
+
+    Returns:
+        The extra items, or an empty frame.
+
+    Raises:
+        ValueError: If a required column is missing — a silently ignored
+            typo here would drop a feature from the reference entirely.
+    """
+    if path is None or not path.exists():
+        return pd.DataFrame(columns=["extra_id", "x", "y"])
+    frame = pd.read_csv(path)
+    missing = {"extra_id", "x", "y"} - set(frame.columns)
+    if missing:
+        raise ValueError(
+            f"{path} is missing required column(s): "
+            f"{', '.join(sorted(missing))}",
+        )
+    return frame
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Parse command-line arguments.
 
@@ -580,6 +639,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             f"jitter (default {_DEFAULT_JITTER_SAMPLE}; 0 disables). Drawn "
             f"with a fixed seed ({_JITTER_SEED}) so the queue is stable "
             "across rebuilds."
+        ),
+    )
+    parser.add_argument(
+        "--extra-items", type=Path, default=None,
+        help=(
+            "CSV of manually specified additional points, for map "
+            "positions carrying more than one feature."
         ),
     )
     parser.add_argument(
@@ -608,7 +674,7 @@ def main() -> None:
     """Build the queue and write it to disk."""
     args = parse_args()
     queue, superseded = build_queue(
-        args.threshold_m, args.jitter_sample, args.order,
+        args.threshold_m, args.jitter_sample, args.order, args.extra_items,
     )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
