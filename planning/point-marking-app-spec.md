@@ -178,6 +178,49 @@ Related hazard already on record: `uuid` in the student base layer is a
 **symbol code, not an identifier** — 4,770 features share 833 distinct values.
 Never key on it (`wave7-open-items-2026-08-04.json` `_meta.census_hazard_note`).
 
+## Adjudication rule (PI, 2026-08-05)
+
+Settled during the pass itself, after the first ~130 items showed that
+"is this the same mound?" needs a decision procedure rather than
+case-by-case judgement. Stated as the reviewer stated it:
+
+1. **A clear symbol on the map that has been falsely tagged as a mound is
+   a false positive** (`x`). The detector fired on something real but
+   wrong — the object exists, it simply is not a mound.
+2. **An attractor that pulls the extracted point away from a nearby mound
+   into a relatively clear area, or into a generally messy area with no
+   clear mark, is a displacement** (`c`, or `d` where the point is the
+   first record of that mound). The mound exists and is already counted;
+   the detector mislocated it.
+3. **Beyond roughly 200 m, treat it as a false positive** and the nearby
+   mound as coincidence, not as the source of a pull.
+
+The 200 m ceiling is a judgement call, and deliberately a blunt one. It is
+not derived from the data, because the data cannot yet support it: the
+attractor-pull distance distribution is one of the things this pass exists
+to measure, so using it to set the cut would be circular. Independent
+support that 200 m is not unreasonable: under a uniform-density model
+(0.22 mounds/km², mean spacing ~2.1 km) the chance of a student mound
+within 200 m of an arbitrary point is ~2.7%, against 55.9% of phantoms
+having one within 126.5 m — so coincidence is a weak explanation well
+past 100 m, but not a negligible one at 200 m. That model ignores
+clustering and so understates the true coincidence rate; a
+clustering-aware version belongs in the paper.
+
+**Consistency is the property being optimised, not correctness.** A rule
+applied uniformly is auditable and can be revised wholesale afterwards
+from the recorded displacements; a better rule applied unevenly cannot.
+The rule was therefore applied retroactively to the marks made before it
+was settled, using the app's "Revisit earliest marks" navigation mode —
+those marks are scattered through the re-sorted queue rather than
+contiguous, so they are reachable by marking time, not by position.
+
+**Known limitation to carry into Methods**: rules 2 and 3 partition the
+same evidence on distance alone, and the boundary is set by judgement.
+Every ingredient for re-cutting it later is preserved — `displacement_m`,
+`resolved_partner_layer`, `resolved_partner_m`, and the verdict — so the
+threshold can be moved and its effect measured without re-reviewing.
+
 ## Output contract
 
 Write a **new** file; do not mutate `canonical-review.csv` in place. Each row

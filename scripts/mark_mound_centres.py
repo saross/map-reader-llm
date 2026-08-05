@@ -1161,6 +1161,26 @@ def main() -> None:
         )
         st.session_state.context_m = context_m
 
+        # Navigation scope. "Revisit earliest" exists because an
+        # adjudication rule refined mid-pass has to be applied backwards to
+        # the marks made before it, or the reference is internally
+        # inconsistent -- and those marks are scattered through the queue,
+        # not contiguous, so they cannot be reached by stepping.
+        nav_mode = st.selectbox(
+            "Navigate",
+            ["Unmarked only", "All items", "Revisit earliest marks"],
+            index=0,
+        )
+        revisit_n = 0
+        if nav_mode == "Revisit earliest marks":
+            revisit_n = int(st.number_input(
+                "How many of the earliest marks",
+                min_value=1, max_value=max(1, len(marks)),
+                value=min(130, max(1, len(marks))), step=10,
+            ))
+        st.session_state.nav_mode = nav_mode
+        st.session_state.revisit_n = revisit_n
+
         jump = st.number_input(
             "Jump to item", min_value=0, max_value=max(0, n_total - 1),
             value=cursor, step=1,
@@ -1227,6 +1247,28 @@ def main() -> None:
         marked = (float(existing["x_marked"]), float(existing["y_marked"]))
     else:
         marked = None
+
+    # Which items navigation may land on, given the sidebar scope.
+    if nav_mode == "All items":
+        allowed = set(range(n_total))
+    elif nav_mode == "Revisit earliest marks":
+        # Earliest BY MARKING TIME, which is the order the rule changed in
+        # -- not queue order, which the re-sort scrambled relative to it.
+        timed = [
+            (m.get("marked_at", ""), key) for key, m in marks.items()
+        ]
+        earliest = {key for _, key in sorted(timed)[:revisit_n]}
+        allowed = {
+            i for i in range(n_total)
+            if _item_id(queue.iloc[i]) in earliest
+        }
+    else:
+        allowed = {
+            i for i in range(n_total)
+            if _item_id(queue.iloc[i]) not in marks
+        }
+    if not allowed:
+        allowed = {cursor}
 
     left, right = st.columns([3, 1])
 
@@ -1504,7 +1546,9 @@ def main() -> None:
                     # the reviewer back through decisions already made.
                     nxt = next(
                         (i for i in range(cursor + 1, n_total)
-                         if _item_id(queue.iloc[i]) not in marks),
+                         if i in allowed
+                         and (nav_mode != "Unmarked only"
+                              or _item_id(queue.iloc[i]) not in marks)),
                         None,
                     )
                     if nxt is not None:
@@ -1531,7 +1575,8 @@ def main() -> None:
             if st.button(
                 "b: Back", disabled=cursor == 0, use_container_width=True,
             ):
-                st.session_state.cursor = max(0, cursor - 1)
+                prev = [i for i in sorted(allowed) if i < cursor]
+                st.session_state.cursor = prev[-1] if prev else max(0, cursor - 1)
                 st.session_state.pending.pop(cursor, None)
                 st.session_state.pop("refusal", None)
                 st.rerun()
@@ -1540,7 +1585,9 @@ def main() -> None:
                 "n: Next", disabled=cursor + 1 >= n_total,
                 use_container_width=True,
             ):
-                st.session_state.cursor = min(n_total - 1, cursor + 1)
+                fwd = [i for i in sorted(allowed) if i > cursor]
+                st.session_state.cursor = (
+                    fwd[0] if fwd else min(n_total - 1, cursor + 1))
                 st.session_state.pending.pop(cursor, None)
                 st.session_state.pop("refusal", None)
                 st.rerun()
