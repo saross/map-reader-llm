@@ -9,10 +9,11 @@ that sequence. Five queued analyses wait on its output — see
 **Scope**: ruling 21c set this at the 773 promoted phantoms only. The PI
 widened it on 2026-08-05 to sweep up every possible conflation in the same
 pass, at a **50 m** cut. The queue is built by
-``scripts/build_marking_queue.py`` and comes to **906 items** — the 773
-phantoms plus 133 corrected-student points that either conflate with a
+``scripts/build_marking_queue.py`` and comes to **1,006 items** — the 773
+phantoms, plus 133 corrected-student points that either conflate with a
 phantom, sit close to another student point, or are one of the 26 merged
-centroids and 2 curator additions that distinguish layer 2 from layer 1.
+centroids and 2 curator additions that distinguish layer 2 from layer 1,
+plus a random 100-point sample for the placement-jitter estimate.
 
 The remaining ~4,600 student mounds are still *not* re-marked: the proximity
 audit found layer 2 essentially clean at this range, so there is nothing
@@ -49,24 +50,25 @@ therefore carries a :class:`CropGeometry` alongside every crop and
 converts clicks through the raster's own affine transform, so a marked
 position is exact regardless of how the window was framed.
 
-Usage::
+Usage — normally just::
 
-    .venv/bin/streamlit run scripts/mark_mound_centres.py -- \\
-        --review-csv results/deployment-oracle-2026-06-06/canonical-gt/\\
-canonical-review.csv \\
-        --rasters-dir inputs/rasters/Russian1981_32635 \\
-        --student-gt inputs/vectors/references/\\
-student-mounds-55maps-reviewed.geojson \\
-        --output results/deployment-oracle-2026-06-06/canonical-gt/\\
-marked-centres.csv \\
-        --marked-by "Shawn Ross"
+    scripts/launch_point_marking.sh
 
-or simply ``scripts/launch_point_marking.sh``, which supplies all of the
-above.
+which rebuilds the queue and supplies every path. The underlying call is
+``streamlit run scripts/mark_mound_centres.py --`` with ``--queue-csv``,
+``--phantom-csv``, ``--superseded-csv``, ``--rasters-dir``,
+``--student-gt`` and ``--output``; see :func:`parse_args`.
 
-Output is written to a **new** file; ``canonical-review.csv`` is never
-mutated in place. The file is rewritten atomically after every mark, so
-an interrupted session resumes exactly where it stopped.
+Keys: ``d`` distinct · ``c`` same as a neighbour · ``u`` uncertain ·
+``s`` skip · ``n``/``b`` navigate. ``d`` and ``c`` require a click first;
+pressing them early is refused with an on-screen explanation rather than
+silently ignored. (The buttons are deliberately never *disabled*: a
+disabled button swallows the dispatched keyboard click, so the shortcut
+would appear to do nothing at all.)
+
+Output is written to a **new** file; no source layer is ever mutated in
+place. The file is rewritten atomically after every mark, so an
+interrupted session resumes exactly where it stopped.
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -1035,6 +1037,7 @@ def main() -> None:
         )
         if jump != cursor:
             st.session_state.cursor = int(jump)
+            st.session_state.pop("refusal", None)
             st.rerun()
 
     # --- the crop -------------------------------------------------------
@@ -1112,6 +1115,7 @@ def main() -> None:
                 world = geom.display_to_world(click["x"], click["y"])
                 if st.session_state.pending.get(cursor) != world:
                     st.session_state.pending[cursor] = world
+                    st.session_state.pop("refusal", None)
                     st.rerun()
 
     with right:
@@ -1168,6 +1172,12 @@ def main() -> None:
         else:
             st.info("Click the mound centre.")
 
+        # A refused verdict — pressing "d" before placing a centre — is
+        # reported here rather than swallowed. Cleared as soon as a mark
+        # lands or the reviewer navigates away.
+        if st.session_state.get("refusal"):
+            st.warning(st.session_state["refusal"])
+
         # The source sheets are ~5 m/px, so a click cannot resolve better
         # than about half a pixel however far the crop is magnified. Say
         # so on screen: the output's float columns would otherwise imply
@@ -1218,22 +1228,38 @@ def main() -> None:
         st.divider()
         for key, (verdict, label) in _VERDICTS.items():
             needs_click = verdict in {"distinct", "same_as_neighbour"}
+            # Deliberately NOT disabled when a click is still required.
+            # A disabled button silently swallows the keyboard shortcut --
+            # the browser ignores dispatched clicks on it -- so the
+            # reviewer presses "d", nothing happens, and there is no
+            # feedback explaining why. Keep the button live and refuse
+            # the action explicitly below instead.
             if st.button(
                 f"{key}: {label}", key=f"v_{key}_{cursor}",
-                disabled=needs_click and marked is None,
                 use_container_width=True,
             ):
-                # A click is recorded whenever one was made, including
-                # for uncertain rows — a marked-but-uncertain centre is
-                # more informative than a bare flag.
-                marks[cursor] = build_record(
-                    row, marked, verdict, nearest_m, args.marked_by,
-                    symbol_type,
-                )
-                save_marks(marks, args.output)
-                st.session_state.pending.pop(cursor, None)
-                if cursor + 1 < n_total:
-                    st.session_state.cursor = cursor + 1
+                # Never st.stop() here: the shortcut JS is injected at the
+                # end of the script, so halting early would tear down the
+                # key handler and break the NEXT keypress as well.
+                if needs_click and marked is None:
+                    st.session_state.refusal = (
+                        f"**{label}** needs a centre first — click the mound "
+                        f"on the image, then press **{key}**. Use **s** to "
+                        "skip or **u** for uncertain if you cannot place it."
+                    )
+                else:
+                    # A click is recorded whenever one was made, including
+                    # for uncertain rows — a marked-but-uncertain centre is
+                    # more informative than a bare flag.
+                    marks[cursor] = build_record(
+                        row, marked, verdict, nearest_m, args.marked_by,
+                        symbol_type,
+                    )
+                    save_marks(marks, args.output)
+                    st.session_state.pending.pop(cursor, None)
+                    st.session_state.pop("refusal", None)
+                    if cursor + 1 < n_total:
+                        st.session_state.cursor = cursor + 1
                 st.rerun()
 
         st.divider()
@@ -1243,6 +1269,7 @@ def main() -> None:
                 "b: Back", disabled=cursor == 0, use_container_width=True,
             ):
                 st.session_state.cursor = max(0, cursor - 1)
+                st.session_state.pop("refusal", None)
                 st.rerun()
         with nav_next:
             if st.button(
@@ -1250,6 +1277,7 @@ def main() -> None:
                 use_container_width=True,
             ):
                 st.session_state.cursor = min(n_total - 1, cursor + 1)
+                st.session_state.pop("refusal", None)
                 st.rerun()
 
     # st.iframe, not st.components.v1.html: the latter was scheduled for
