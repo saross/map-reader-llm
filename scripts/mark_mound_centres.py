@@ -461,6 +461,25 @@ def _draw_scale_bar(
     draw.text((x0, y0 - 14), f"{length_m:.0f} m", fill=(255, 255, 255))
 
 
+def _draw_ring_label_text(
+    draw: ImageDraw.ImageDraw, text: str, x: int, y: int,
+    colour: tuple[int, int, int],
+) -> None:
+    """Draw a small boxed label beside a context marker."""
+    pad = 3
+    try:
+        bbox = draw.textbbox((0, 0), text)
+        width, height = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    except (AttributeError, TypeError):
+        width, height = 6 * len(text), 11
+    draw.rectangle(
+        [(x - pad, y - height // 2 - pad),
+         (x + width + pad, y + height // 2 + pad)],
+        fill=(0, 0, 0, 200),
+    )
+    draw.text((x, y - height // 2), text, fill=(*colour, 255))
+
+
 def draw_overlays(
     base: Image.Image,
     geom: CropGeometry,
@@ -468,6 +487,7 @@ def draw_overlays(
     context: dict[str, list[tuple[float, float]]],
     marked: tuple[float, float] | None,
     rings_m: tuple[float, ...] = _CONTEXT_RINGS_M,
+    numbering: dict[tuple[float, float], str] | None = None,
 ) -> Image.Image:
     """Composite the review overlays onto a base crop.
 
@@ -491,6 +511,10 @@ def draw_overlays(
             styles do not yet cover.
         marked: The reviewer's clicked ``(x, y)``, or ``None`` if unmarked.
         rings_m: Reference-ring radii in ground metres.
+        numbering: Optional ``(x, y) -> label`` map, drawn beside the
+            matching marker. Two neighbours of the same layer at similar
+            distances are otherwise indistinguishable between the map and
+            the partner dropdown, which is what this exists to fix.
 
     Returns:
         A new RGB image; ``base`` is not modified.
@@ -526,6 +550,12 @@ def draw_overlays(
                  (point_px + radius, point_py + radius)],
                 outline=(*colour, 255), width=stroke,
             )
+            tag = (numbering or {}).get((point_x, point_y))
+            if tag:
+                _draw_ring_label_text(
+                    draw, tag, int(point_px + radius + 9), int(point_py),
+                    colour,
+                )
 
     # Recorded position.
     half = 9
@@ -1300,6 +1330,39 @@ def main() -> None:
         st.rerun()
     st.session_state.nav_scope = nav_mode
 
+    # Candidates are numbered before the crop is drawn so the markers on
+    # the map and the entries in the partner dropdown carry the SAME label.
+    # Distance alone does not disambiguate two neighbours of one layer that
+    # sit 64.7 m and 65.5 m away.
+    anchor = marked if marked is not None else (point_x, point_y)
+
+    def _bearing(from_xy, to_xy) -> str:
+        """Eight-point compass bearing, for a human-readable label."""
+        east, north = to_xy[0] - from_xy[0], to_xy[1] - from_xy[1]
+        points = ["E", "NE", "N", "NW", "W", "SW", "S", "SE"]
+        idx = int(((math.degrees(math.atan2(north, east)) % 360) + 22.5)
+                  // 45) % 8
+        return points[idx]
+
+    candidates = []
+    for layer_name, colour, points in (
+        ("corrected_student", "cyan", nearby_students),
+        ("promoted_phantom", "orange", nearby_phantoms),
+    ):
+        for cx, cy in points:
+            dist = math.hypot(cx - anchor[0], cy - anchor[1])
+            if dist <= _FLAG_RADIUS_M:
+                candidates.append((dist, layer_name, colour, (cx, cy)))
+    candidates.sort()
+    numbering = {
+        pos: str(i + 1) for i, (_, _, _, pos) in enumerate(candidates)
+    }
+    candidate_labels = [
+        f"{i + 1} · {colour} {layer.split('_')[-1]} — {dist:.1f} m "
+        f"{_bearing(anchor, pos)}"
+        for i, (dist, layer, colour, pos) in enumerate(candidates)
+    ]
+
     left, right = st.columns([3, 1])
 
     with left:
@@ -1364,6 +1427,7 @@ def main() -> None:
         else:
             annotated = draw_overlays(
                 base, geom, (point_x, point_y), context, marked,
+                numbering=numbering,
             )
             # The zoom level is part of the widget key: a click captured
             # at one window width must not be re-applied after the reviewer
@@ -1487,32 +1551,17 @@ def main() -> None:
         # this: a phantom pulled off THIS mound by a number attractor sits
         # further away than a correct, distinct student mound. Auto-
         # resolution would have recorded the wrong association silently.
-        anchor = marked if marked is not None else (point_x, point_y)
-        candidates = []
-        for layer_name, colour, points in (
-            ("corrected_student", "cyan", nearby_students),
-            ("promoted_phantom", "orange", nearby_phantoms),
-        ):
-            for px, py in points:
-                candidates.append((
-                    math.hypot(px - anchor[0], py - anchor[1]),
-                    layer_name, colour,
-                ))
-        candidates = [c for c in candidates if c[0] <= _FLAG_RADIUS_M]
-        candidates.sort()
-        partner_choice = candidates[0][:2] if candidates else None
+        partner_choice = (
+            (candidates[0][0], candidates[0][1]) if candidates else None
+        )
         if len(candidates) > 1:
-            labels = [
-                f"{colour} {layer.split('_')[-1]} — {dist:.1f} m"
-                for dist, layer, colour in candidates
-            ]
             chosen = st.selectbox(
                 "If 'same as a neighbour', which one?",
                 options=list(range(len(candidates))),
-                format_func=lambda i: labels[i],
+                format_func=lambda i: candidate_labels[i],
                 key=f"partner_{cursor}",
             )
-            partner_choice = candidates[chosen][:2]
+            partner_choice = (candidates[chosen][0], candidates[chosen][1])
         else:
             st.info("Click the mound centre.")
 
