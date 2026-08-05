@@ -28,10 +28,20 @@ This script builds the resulting queue. Five item types:
 ``curator_addition``
     Positions present in layer 2 but not layer 1 with no superseded points
     nearby: the two curator additions.
+``jitter_sample``
+    A random sample of student mounds with no conflation of any kind,
+    drawn to measure typical student placement error. These exist purely
+    to yield a displacement distribution, and they are sampled **at
+    random** rather than taken from whatever happened to be in view: the
+    ~400 student mounds visible alongside a queue item are there because
+    they sit near a phantom, i.e. in terrain where the model found mounds
+    students missed, so estimating "typical sloppiness" from them would
+    bias the figure toward the hard cases.
 
 An item appearing under several headings is emitted **once**, with its
 reasons joined in ``item_type``, so the reviewer never sees the same
-mound twice.
+mound twice. Jitter-sample points are drawn only from mounds not already
+queued, so the sample stays clean of conflation cases.
 
 Usage::
 
@@ -76,6 +86,17 @@ _IDENTITY_TOL_M = 0.01
 # comfortably wider than the 50 m band the merges were drawn from, so the
 # classification does not depend on a tight radius.
 _MERGE_SEARCH_M = 60.0
+
+# Random student mounds added to measure placement jitter. n = 100 puts the
+# standard error on the mean near 1 m for a jitter SD of ~10 m, which is
+# ample to characterise typical error and to check the 5 m de-duplication
+# tolerance empirically rather than by convention.
+_DEFAULT_JITTER_SAMPLE = 100
+
+# Fixed so the sample is reproducible: the same corpus and seed must always
+# yield the same points, or a re-run would silently re-draw and invalidate
+# a partially-completed review.
+_JITTER_SEED = 20260805
 
 _QUEUE_COLUMNS = [
     "queue_index",
@@ -138,12 +159,15 @@ def classify_layer_diff(
 
 def build_queue(
     threshold_m: float = _DEFAULT_THRESHOLD_M,
+    jitter_sample: int = _DEFAULT_JITTER_SAMPLE,
 ) -> tuple[pd.DataFrame, np.ndarray]:
     """Build the full review queue.
 
     Args:
         threshold_m: Separation below which two mounds are a possible
             conflation.
+        jitter_sample: Number of random unconflicted student mounds to add
+            for the placement-jitter estimate. Zero disables the sample.
 
     Returns:
         A ``(queue, superseded)`` pair: the queue as a DataFrame with
@@ -185,6 +209,23 @@ def build_queue(
         reasons.setdefault(index, []).append("merge_site")
     for index in curator_additions:
         reasons.setdefault(index, []).append("curator_addition")
+
+    # The jitter sample is drawn from student mounds with no near neighbour
+    # of any kind, so a displacement measured on one of them reflects
+    # digitisation error alone and not an unresolved conflation.
+    if jitter_sample > 0:
+        has_phantom_near = set(np.unique(cross.col).tolist())
+        eligible = np.array([
+            index for index in range(len(corrected))
+            if index not in reasons
+            and index not in has_phantom_near
+        ])
+        rng = np.random.default_rng(_JITTER_SEED)
+        drawn = rng.choice(
+            eligible, size=min(jitter_sample, len(eligible)), replace=False,
+        )
+        for index in sorted(int(i) for i in drawn):
+            reasons.setdefault(index, []).append("jitter_sample")
 
     records: list[dict] = []
 
@@ -260,6 +301,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help=f"Conflation threshold (default {_DEFAULT_THRESHOLD_M:.0f} m).",
     )
     parser.add_argument(
+        "--jitter-sample", type=int, default=_DEFAULT_JITTER_SAMPLE,
+        help=(
+            "Random unconflicted student mounds added to measure placement "
+            f"jitter (default {_DEFAULT_JITTER_SAMPLE}; 0 disables). Drawn "
+            f"with a fixed seed ({_JITTER_SEED}) so the queue is stable "
+            "across rebuilds."
+        ),
+    )
+    parser.add_argument(
         "--output", type=Path, required=True, help="Destination queue CSV.",
     )
     parser.add_argument(
@@ -276,7 +326,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main() -> None:
     """Build the queue and write it to disk."""
     args = parse_args()
-    queue, superseded = build_queue(args.threshold_m)
+    queue, superseded = build_queue(args.threshold_m, args.jitter_sample)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     queue.to_csv(args.output, index=False)

@@ -15,7 +15,7 @@ pass, at a **50 m** cut — mound symbols run ~12–18 px across at ~5 m/px, so
 two mounds 50 m apart are nearly touching, and the proximity audit showed the
 widening from 40 m to 50 m cost only ~25 further items.
 
-The queue is **906 items**, built by `scripts/build_marking_queue.py`:
+The queue is **1,006 items**, built by `scripts/build_marking_queue.py`:
 
 | Item type | Count | Why it is in the queue |
 |---|---:|---|
@@ -24,16 +24,42 @@ The queue is **906 items**, built by `scripts/build_marking_queue.py`:
 | `merge_site` | 26 | The merged centroids separating layer 2 from layer 1 |
 | `student_pair` | 6 | Within 50 m of another student point |
 | `curator_addition` | 2 | The two layer-2 additions with no layer-1 antecedent |
+| `jitter_sample` | 100 | Random unconflicted student mounds, to measure placement error |
 
-Counts sum to more than 906 because an item qualifying under several headings
-is emitted **once**, with its reasons joined. Distinct student items: 133.
+Counts sum to more than 1,006 because an item qualifying under several
+headings is emitted **once**, with its reasons joined. Distinct student
+items: 233.
 
 The remaining ~4,600 student mounds are still not re-marked. The proximity
 audit found layer 2 essentially clean at this range — 3 pairs within 50 m,
 minimum separation 38.14 m — so there is nothing there to adjudicate. The
 resulting reference is mixed-provenance by design.
 
-**Budget**: ≈ 1.2 hours of PI review. No API spend. The build is agent work.
+**Budget**: ≈ 1.3 hours of PI review. No API spend. The build is agent work.
+
+## Why not mark every mound visible in one window?
+
+Considered and rejected on 2026-08-05. Marking all mounds per screen would
+save less than it appears — queue items are mostly isolated (median phantom
+nearest-neighbour ≈ 1,236 m), so at the default 200 m window **572 of 906
+items had no other queue item in view**, and a greedy cover needs 724 screens
+against 906 items: a ~20% saving before accounting for the extra clicks and
+decisions per screen.
+
+The deciding argument is correctness rather than effort. With one click per
+screen the click unambiguously belongs to the item under review. Multi-marking
+requires assigning clicks back to items by proximity, which is least reliable
+exactly where the review matters most: the 1.7 m merged pair, the 0.98 m
+phantom-student conflation. That trades ambiguity in the highest-value rows
+for a modest time saving.
+
+The jitter measurement that motivated the idea is served instead by
+`jitter_sample`, drawn **at random**. The ~400 student mounds that happen to
+fall in view of a queue item are there *because* they sit near a phantom —
+terrain where the model found mounds students missed — so a jitter figure
+estimated from them would be biased toward the hard cases. The random sample
+is verified conflation-free (nearest phantom 55.2 m, nearest other student
+58.4 m, both beyond the 50 m cut) and seeded so rebuilds are stable.
 
 ## What the app has to do
 
@@ -233,6 +259,23 @@ not be cited in Methods until it is. Establishing it is cheap once the app
 exists, because the re-marked file makes the gating recomputable from scratch.
 
 ## Changelog
+
+### 2026-08-05 (c) — Jitter sample added; multi-marking considered and rejected
+
+Refresh trigger: the PI asked whether all mounds in a window could be marked
+at once, to save time and to pick up incidental student-only mounds as a
+measure of "student sloppiness".
+
+Measured rather than assumed: multi-marking saves ~20% of screens (906 items
+→ 724 under a greedy cover at the 200 m default), because 572 items have no
+co-visible neighbour. Rejected on correctness — click-to-item assignment is
+ambiguous precisely at the tight pairs the pass exists to adjudicate. Full
+reasoning in § "Why not mark every mound visible in one window?".
+
+The jitter goal is met instead by a random, seeded, verified-conflation-free
+sample of **100** student mounds (queue 906 → **1,006**, ≈ +7 min). Random
+rather than incidental because the ~400 student mounds visible beside a queue
+item are selected for proximity to a phantom and would bias the estimate.
 
 ### 2026-08-05 (b) — Scope widened to all conflations at a 50 m cut
 

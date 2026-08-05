@@ -1099,6 +1099,13 @@ def main() -> None:
                 "shown in red. Check that the merged centre is right.",
             )
 
+        if "jitter_sample" in str(row["item_type"]):
+            st.info(
+                "Jitter sample — no conflation here by construction. Just "
+                "mark the true centre and press **d**; the displacement "
+                "from the student position is the measurement.",
+            )
+
         if marked is not None:
             displacement = math.hypot(
                 marked[0] - point_x, marked[1] - point_y,

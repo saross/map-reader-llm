@@ -503,6 +503,66 @@ def test_queue_matches_the_recorded_layer_derivation() -> None:
 
 @pytest.mark.tier2
 @pytest.mark.integration
+def test_jitter_sample_is_conflation_free_and_reproducible() -> None:
+    """The jitter sample must be clean and stable across rebuilds.
+
+    Clean: a point with an unresolved neighbour would measure conflation,
+    not digitisation error, so every sampled point must sit further than
+    the conflation threshold from any phantom and any other student mound.
+
+    Stable: the seed is fixed because a re-draw mid-review would silently
+    change the queue under a partially-completed marking session.
+    """
+    from build_marking_queue import _DEFAULT_THRESHOLD_M, build_queue
+
+    gt_dir = PROJECT_ROOT / "results/deployment-oracle-2026-06-06/canonical-gt"
+    if not (gt_dir / "canonical-review.csv").exists():
+        pytest.skip("missing canonical-review.csv")
+
+    from scipy.spatial import cKDTree
+
+    from audit_mound_proximity import (
+        _LAYER_CORRECTED_STUDENT,
+        _LAYER_PROMOTED,
+        load_points_csv,
+        load_points_geojson,
+    )
+
+    queue, _ = build_queue()
+    sample = queue[queue["item_type"] == "jitter_sample"]
+    assert len(sample) == 100
+
+    students = load_points_geojson(PROJECT_ROOT / _LAYER_CORRECTED_STUDENT)
+    phantoms = load_points_csv(PROJECT_ROOT / _LAYER_PROMOTED)
+    points = np.column_stack([
+        sample["x"].to_numpy(float), sample["y"].to_numpy(float),
+    ])
+
+    to_phantom, _ = cKDTree(phantoms).query(points, k=1)
+    # k=2: the closest student point to a sampled student *is* itself.
+    to_student, _ = cKDTree(students).query(points, k=2)
+    assert to_phantom.min() > _DEFAULT_THRESHOLD_M
+    assert to_student[:, 1].min() > _DEFAULT_THRESHOLD_M
+
+    rebuilt, _ = build_queue()
+    rebuilt_sample = rebuilt[rebuilt["item_type"] == "jitter_sample"]
+    assert list(sample["source_index"]) == list(rebuilt_sample["source_index"])
+
+
+@pytest.mark.tier1
+def test_jitter_sample_can_be_disabled() -> None:
+    """``--jitter-sample 0`` leaves the queue at its conflation-only size."""
+    from build_marking_queue import build_queue
+
+    gt_dir = PROJECT_ROOT / "results/deployment-oracle-2026-06-06/canonical-gt"
+    if not (gt_dir / "canonical-review.csv").exists():
+        pytest.skip("missing canonical-review.csv")
+    queue, _ = build_queue(jitter_sample=0)
+    assert (queue["item_type"] == "jitter_sample").sum() == 0
+
+
+@pytest.mark.tier2
+@pytest.mark.integration
 def test_app_renders_against_real_inputs(tmp_path: Path) -> None:
     """The Streamlit script executes end to end against the real corpus.
 
@@ -553,4 +613,4 @@ def test_app_renders_against_real_inputs(tmp_path: Path) -> None:
     for expected in ("d: Distinct mound", "c: Same as a neighbour",
                      "u: Uncertain", "s: Skip", "n: Next"):
         assert expected in labels, f"missing control: {expected}"
-    assert any("0 / 906" in str(m.value) for m in app.metric)
+    assert any("0 / 1006" in str(m.value) for m in app.metric)
