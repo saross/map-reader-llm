@@ -112,12 +112,36 @@ _QUEUE_COLUMNS = [
     "n_partners_within_threshold",
     "nearest_partner_m",
     "nearest_partner_layer",
-    # Student-side attributes, carried so the reviewer can confirm or
-    # correct the symbol type without a second lookup. Empty for phantoms.
+    # The symbol type already on record for this mound, whatever its
+    # source: the curator subtype for student points, the reviewer's own
+    # recorded symbol_type for phantoms. This is what the app offers for
+    # confirmation.
+    "prior_symbol_type",
+    "prior_symbol_source",
+    # Student-only context. Empty for phantoms.
     "student_map_symbol",
     "student_feature_type",
-    "student_reviewed_subtype",
 ]
+
+# Where phantom symbol types are recovered from. review_candidates.py has
+# always written a symbol_type column, but build_canonical_gt.py did not
+# carry it into canonical-review.csv, so it has to be joined back from the
+# review outputs that produced the promotions.
+_SYMBOL_SOURCE_GLOB = "results/**/*.csv"
+
+# Join tolerance for that recovery, in metres. Justified rather than
+# chosen: every one of the 773 phantoms has a symbol-bearing record within
+# 9.26 m, while the closest two canonical phantoms are 20.66 m apart. A
+# 10 m ball around a phantom therefore cannot reach another phantom's
+# records. Matches are exact (0 m) for 425 of them; the rest are displaced
+# because the canonical build merged or adjudicated coordinates.
+_SYMBOL_JOIN_TOL_M = 10.0
+
+# Superseded by construction: canonical-review.csv asserts human_label =
+# mound for all 773 rows, so a not_mound reading recovered from some other
+# pass is an earlier judgement that the canonical build overrode. Dropping
+# these removes every join conflict at this tolerance.
+_SUPERSEDED_SYMBOL = "not_mound"
 
 
 def _attribute(frame: "gpd.GeoDataFrame", index: int, column: str) -> str:
@@ -138,6 +162,72 @@ def _attribute(frame: "gpd.GeoDataFrame", index: int, column: str) -> str:
         return ""
     value = frame.iloc[index][column]
     return "" if pd.isna(value) else str(value)
+
+
+def recover_phantom_symbol_types(
+    phantoms: np.ndarray, tolerance_m: float = _SYMBOL_JOIN_TOL_M,
+) -> tuple[list[str], list[str]]:
+    """Recover each phantom's recorded symbol type from the review outputs.
+
+    ``canonical-review.csv`` carries only six columns and no symbol type,
+    but the reviews that produced those promotions did record one —
+    ``review_candidates.py`` has always written a ``symbol_type`` column.
+    This joins it back.
+
+    The join is on **coordinates, not** ``candidate_id``: that identifier is
+    not unique across runs, and keying on it would silently mix candidates
+    from different passes. See the register's ``census_hazard_note``.
+
+    Args:
+        phantoms: ``(n, 2)`` coordinates of the promoted phantoms.
+        tolerance_m: Join radius. See :data:`_SYMBOL_JOIN_TOL_M` for why
+            10 m is safe here rather than merely convenient.
+
+    Returns:
+        A ``(symbol_types, sources)`` pair, one entry per phantom. Both are
+        empty strings where no unambiguous value could be recovered.
+    """
+    frames: list[pd.DataFrame] = []
+    for path in sorted(_PROJECT_ROOT.glob(_SYMBOL_SOURCE_GLOB)):
+        if path.name == Path(_LAYER_PROMOTED).name:
+            continue
+        try:
+            frame = pd.read_csv(path, low_memory=False)
+        except Exception:  # noqa: BLE001 — a malformed CSV is not fatal here
+            continue
+        if not {"symbol_type", "x", "y"} <= set(frame.columns):
+            continue
+        subset = frame[["x", "y", "symbol_type"]].dropna()
+        subset = subset[subset["symbol_type"].astype(str).str.strip() != ""]
+        if len(subset):
+            subset = subset.copy()
+            subset["_source"] = str(path.relative_to(_PROJECT_ROOT))
+            frames.append(subset)
+
+    if not frames:
+        return [""] * len(phantoms), [""] * len(phantoms)
+
+    records = pd.concat(frames, ignore_index=True)
+    records = records[records["symbol_type"] != _SUPERSEDED_SYMBOL]
+    records = records.reset_index(drop=True)
+    if not len(records):
+        return [""] * len(phantoms), [""] * len(phantoms)
+
+    tree = cKDTree(records[["x", "y"]].to_numpy(dtype=float))
+    symbol_types: list[str] = []
+    sources: list[str] = []
+    for point in phantoms:
+        hits = tree.query_ball_point(point, r=tolerance_m)
+        values = {records["symbol_type"].iloc[h] for h in hits}
+        if len(values) == 1:
+            symbol_types.append(str(values.pop()))
+            sources.append(str(records["_source"].iloc[hits[0]]))
+        else:
+            # Ambiguous or absent: record nothing rather than pick. The
+            # reviewer sets it from the imagery instead.
+            symbol_types.append("")
+            sources.append("")
+    return symbol_types, sources
 
 
 def classify_layer_diff(
@@ -264,6 +354,9 @@ def build_queue(
 
     # Phantoms first, in their existing order, so a partially-completed
     # review of the original 773 keeps its row correspondence.
+    phantom_symbols, phantom_symbol_sources = recover_phantom_symbol_types(
+        phantoms,
+    )
     phantom_to_student, _ = corrected_tree.query(phantoms, k=1)
     phantom_neighbours = phantom_tree.query_ball_point(
         phantoms, r=threshold_m,
@@ -289,9 +382,10 @@ def build_queue(
             ),
             "nearest_partner_m": float(phantom_to_student[index]),
             "nearest_partner_layer": "corrected_student",
+            "prior_symbol_type": phantom_symbols[index],
+            "prior_symbol_source": phantom_symbol_sources[index],
             "student_map_symbol": "",
             "student_feature_type": "",
-            "student_reviewed_subtype": "",
         })
 
     # Then the student points, in layer order.
@@ -315,14 +409,19 @@ def build_queue(
             "n_partners_within_threshold": n_partners,
             "nearest_partner_m": float(student_to_phantom[index]),
             "nearest_partner_layer": "promoted_phantom",
+            "prior_symbol_type": _attribute(
+                student_attributes, index, "_reviewed_subtype",
+            ),
+            "prior_symbol_source": (
+                "student-mounds-55maps-reviewed.geojson:_reviewed_subtype"
+                if _attribute(student_attributes, index, "_reviewed_subtype")
+                else ""
+            ),
             "student_map_symbol": _attribute(
                 student_attributes, index, "MapSymbol",
             ),
             "student_feature_type": _attribute(
                 student_attributes, index, "FeatureType",
-            ),
-            "student_reviewed_subtype": _attribute(
-                student_attributes, index, "_reviewed_subtype",
             ),
         })
 

@@ -778,7 +778,7 @@ def build_record(
     else:
         displacement = None
     buffer_value = row.get("buffer_metres")
-    prior_symbol = _text(row.get("student_reviewed_subtype"))
+    prior_symbol = _text(row.get("prior_symbol_type"))
     return {
         "queue_index": int(row["queue_index"]),
         "item_type": row["item_type"],
@@ -1115,23 +1115,31 @@ def main() -> None:
         # description and is always populated; _reviewed_subtype is a
         # curator re-review present on only 26 of 4,746 features, so it is
         # shown as an addition when it exists rather than as the headline.
-        if not is_phantom:
-            student_symbol = _text(row.get("student_map_symbol"))
-            student_feature = _text(row.get("student_feature_type"))
-            prior_subtype = _text(row.get("student_reviewed_subtype"))
-            parts = []
+        prior_subtype = _text(row.get("prior_symbol_type"))
+        student_symbol = _text(row.get("student_map_symbol"))
+        student_feature = _text(row.get("student_feature_type"))
+        # Headline whatever classification exists for this mound. The
+        # curator vocabulary wins where present; failing that, a student
+        # item still carries its own MapSymbol description, which is the
+        # assertion actually being confirmed on the 4,720 features with no
+        # curator subtype.
+        if prior_subtype:
+            st.markdown(
+                "### " + _SYMBOL_LABELS.get(prior_subtype, prior_subtype),
+            )
             if student_symbol:
-                parts.append(f"**{student_symbol}**")
-            if student_feature:
-                parts.append(f"*{student_feature}*")
-            if prior_subtype:
-                parts.append(
-                    "curator: **"
-                    + _SYMBOL_LABELS.get(prior_subtype, prior_subtype)
-                    + "**",
+                st.caption(
+                    f"student drew: {student_symbol}"
+                    + (f" · {student_feature}" if student_feature else ""),
                 )
-            if parts:
-                st.markdown("Student recorded: " + " · ".join(parts))
+        elif student_symbol:
+            st.markdown(f"### {student_symbol}")
+            st.caption(
+                "student's own description — no curator subtype on record"
+                + (f" · {student_feature}" if student_feature else ""),
+            )
+        else:
+            st.markdown("### _no symbol type on record_")
         if geom is None:
             st.image(base)
             st.error(
@@ -1228,39 +1236,40 @@ def main() -> None:
         if existing is not None:
             st.success(f"Saved: {existing['verdict']}")
 
-        # Symbol type — student items only. Phantoms were promoted by the
-        # verifier rather than classified by a student, so there is no
-        # prior call to confirm and offering one would invite invention.
-        symbol_type = ""
-        if not is_phantom:
-            prior = _text(row.get("student_reviewed_subtype"))
-            recorded = _text(row.get("student_map_symbol"))
-            feature = _text(row.get("student_feature_type"))
-            st.divider()
-            st.markdown("**Symbol type**")
-            if recorded:
-                st.caption(f"student: {recorded}"
-                           + (f" · {feature}" if feature else ""))
-            options = list(_SYMBOL_TYPES)
-            if prior and prior not in options:
-                options.insert(0, prior)
-            default = options.index(prior) if prior in options else 0
-            symbol_type = st.radio(
-                "Confirm or correct",
-                options=options,
-                index=default,
-                key=f"symbol_{cursor}",
-                format_func=lambda v: _SYMBOL_LABELS.get(v, v),
-                label_visibility="collapsed",
+        # Symbol type — offered on every item. Phantoms carry one too: the
+        # reviews that promoted them recorded a symbol_type, which
+        # build_marking_queue.py joins back by coordinate (770 of 773
+        # recovered) since canonical-review.csv dropped the column.
+        prior = _text(row.get("prior_symbol_type"))
+        recorded = _text(row.get("student_map_symbol"))
+        feature = _text(row.get("student_feature_type"))
+
+        st.divider()
+        st.markdown("**Symbol type**")
+        if recorded:
+            st.caption(
+                f"student: {recorded}" + (f" · {feature}" if feature else ""),
             )
-            if prior:
-                prior_label = _SYMBOL_LABELS.get(prior, prior)
-                if symbol_type != prior:
-                    st.warning(f"changed from **{prior_label}**")
-                else:
-                    st.caption(f"confirms {prior_label}")
+        options = list(_SYMBOL_TYPES)
+        if prior and prior not in options:
+            options.insert(0, prior)
+        default = options.index(prior) if prior in options else 0
+        symbol_type = st.radio(
+            "Confirm or correct",
+            options=options,
+            index=default,
+            key=f"symbol_{cursor}",
+            format_func=lambda v: _SYMBOL_LABELS.get(v, v),
+            label_visibility="collapsed",
+        )
+        if prior:
+            prior_label = _SYMBOL_LABELS.get(prior, prior)
+            if symbol_type != prior:
+                st.warning(f"changed from **{prior_label}**")
             else:
-                st.caption("no prior curator subtype — your call sets it")
+                st.caption(f"confirms {prior_label}")
+        else:
+            st.caption("nothing on record — your call sets it")
 
         st.divider()
         for key, (verdict, label) in _VERDICTS.items():

@@ -344,7 +344,7 @@ def test_symbol_type_change_is_flagged(queue_csv: Path) -> None:
     classification error countable straight from the output file.
     """
     row = load_queue(queue_csv).iloc[9].copy()
-    row["student_reviewed_subtype"] = "burial_mound"
+    row["prior_symbol_type"] = "burial_mound"
 
     confirmed = build_record(
         row, (1.0, 2.0), "distinct", 12.0, "T", "burial_mound",
@@ -368,7 +368,7 @@ def test_symbol_type_change_needs_a_prior(queue_csv: Path) -> None:
     where there was nothing to disagree with.
     """
     row = load_queue(queue_csv).iloc[9].copy()
-    row["student_reviewed_subtype"] = ""
+    row["prior_symbol_type"] = ""
     record = build_record(
         row, (1.0, 2.0), "distinct", 12.0, "T", "burial_mound",
     )
