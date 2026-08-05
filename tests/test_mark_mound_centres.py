@@ -337,6 +337,56 @@ def test_build_record_carries_provenance(queue_csv: Path) -> None:
 
 
 @pytest.mark.tier1
+def test_symbol_type_change_is_flagged(queue_csv: Path) -> None:
+    """A corrected symbol type is recorded as changed; a confirmation is not.
+
+    This flag is the whole point of asking: it makes student
+    classification error countable straight from the output file.
+    """
+    row = load_queue(queue_csv).iloc[9].copy()
+    row["student_reviewed_subtype"] = "burial_mound"
+
+    confirmed = build_record(
+        row, (1.0, 2.0), "distinct", 12.0, "T", "burial_mound",
+    )
+    assert confirmed["symbol_type_prior"] == "burial_mound"
+    assert confirmed["symbol_type_changed"] is False
+
+    corrected = build_record(
+        row, (1.0, 2.0), "distinct", 12.0, "T", "trig_point_on_mound",
+    )
+    assert corrected["symbol_type_changed"] is True
+    assert corrected["symbol_type"] == "trig_point_on_mound"
+
+
+@pytest.mark.tier1
+def test_symbol_type_change_needs_a_prior(queue_csv: Path) -> None:
+    """With no prior subtype, a call is recorded but not counted as a change.
+
+    Most student features carry a null ``_reviewed_subtype``. Treating
+    those as "changed" would inflate the student-error rate with rows
+    where there was nothing to disagree with.
+    """
+    row = load_queue(queue_csv).iloc[9].copy()
+    row["student_reviewed_subtype"] = ""
+    record = build_record(
+        row, (1.0, 2.0), "distinct", 12.0, "T", "burial_mound",
+    )
+    assert record["symbol_type"] == "burial_mound"
+    assert record["symbol_type_prior"] == ""
+    assert record["symbol_type_changed"] is False
+
+
+@pytest.mark.tier1
+def test_phantom_rows_carry_no_symbol_call(queue_csv: Path) -> None:
+    """Phantoms have no student classification, so the fields stay empty."""
+    row = load_queue(queue_csv).iloc[0]
+    record = build_record(row, (1.0, 2.0), "distinct", None, "T")
+    assert record["symbol_type"] == ""
+    assert record["symbol_type_changed"] is False
+
+
+@pytest.mark.tier1
 def test_build_record_allows_unmarked_skip(queue_csv: Path) -> None:
     """A skipped row records no position and no displacement."""
     row = load_queue(queue_csv).iloc[0]

@@ -160,10 +160,26 @@ _OUTPUT_COLUMNS = [
     "displacement_m",
     "nearest_neighbour_m",
     "verdict",
+    "symbol_type_prior",
+    "symbol_type",
+    "symbol_type_changed",
     "uncertain",
     "skipped",
     "marked_by",
     "marked_at",
+]
+
+# Curator vocabulary for symbol type, matching review_candidates.py's
+# _MOUND_TYPES plus the two non-mound outcomes. Offered on student items so
+# the reviewer can confirm or correct what the student recorded — which
+# makes student symbol-classification error measurable rather than assumed.
+_SYMBOL_TYPES = [
+    "burial_mound",
+    "settlement_mound",
+    "bench_mark_on_mound",
+    "trig_point_on_mound",
+    "not_a_mound",
+    "unsure",
 ]
 
 # Overlay layers drawn as context around the subject point. Each entry is
@@ -607,6 +623,30 @@ def load_phantom_points(phantom_csv: str) -> np.ndarray:
     ])
 
 
+def _text(value: object) -> str:
+    """Coerce a possibly-missing CSV cell to a clean string.
+
+    A blank cell round-trips through pandas as ``float('nan')``, which is
+    **truthy** — so ``value or ""`` does not catch it and ``str(value)``
+    yields the literal text "nan". That string then appears as a
+    selectable symbol type in the UI. Guard with an explicit null check.
+
+    Args:
+        value: The raw cell value.
+
+    Returns:
+        The value as a string, or ``""`` if missing.
+    """
+    if value is None:
+        return ""
+    try:
+        if pd.isna(value):
+            return ""
+    except (TypeError, ValueError):
+        pass
+    return str(value)
+
+
 def _nearest_distance(
     points: list[tuple[float, float]], x: float, y: float,
 ) -> float | None:
@@ -694,6 +734,7 @@ def build_record(
     verdict: str,
     nearest_neighbour_m: float | None,
     marked_by: str,
+    symbol_type: str = "",
 ) -> dict:
     """Assemble one output row.
 
@@ -708,6 +749,10 @@ def build_record(
         nearest_neighbour_m: Distance to the closest point in any other
             layer, if one falls within the search radius.
         marked_by: Reviewer name recorded in the output.
+        symbol_type: The reviewer's symbol-type call. Recorded alongside
+            ``symbol_type_prior`` (what the student layer already held) and
+            a derived ``symbol_type_changed`` flag, so student
+            classification error is countable directly from this file.
 
     Returns:
         A dict keyed by :data:`_OUTPUT_COLUMNS`.
@@ -719,6 +764,7 @@ def build_record(
     else:
         displacement = None
     buffer_value = row.get("buffer_metres")
+    prior_symbol = _text(row.get("student_reviewed_subtype"))
     return {
         "queue_index": int(row["queue_index"]),
         "item_type": row["item_type"],
@@ -737,6 +783,13 @@ def build_record(
         "displacement_m": displacement,
         "nearest_neighbour_m": nearest_neighbour_m,
         "verdict": verdict,
+        "symbol_type_prior": prior_symbol,
+        "symbol_type": symbol_type,
+        # Only meaningful when the reviewer actually made a call and a
+        # prior existed; otherwise False rather than a spurious "changed".
+        "symbol_type_changed": bool(
+            symbol_type and prior_symbol and symbol_type != prior_symbol,
+        ),
         "uncertain": verdict == "uncertain",
         "skipped": verdict == "skipped",
         "marked_by": marked_by,
@@ -1129,6 +1182,39 @@ def main() -> None:
         if existing is not None:
             st.success(f"Saved: {existing['verdict']}")
 
+        # Symbol type — student items only. Phantoms were promoted by the
+        # verifier rather than classified by a student, so there is no
+        # prior call to confirm and offering one would invite invention.
+        symbol_type = ""
+        if not is_phantom:
+            prior = _text(row.get("student_reviewed_subtype"))
+            recorded = _text(row.get("student_map_symbol"))
+            feature = _text(row.get("student_feature_type"))
+            st.divider()
+            st.markdown("**Symbol type**")
+            if recorded:
+                st.caption(f"student recorded: {recorded}")
+            if feature:
+                st.caption(f"feature type: {feature}")
+            options = list(_SYMBOL_TYPES)
+            if prior and prior not in options:
+                options.insert(0, prior)
+            default = options.index(prior) if prior in options else 0
+            symbol_type = st.radio(
+                "Confirm or correct",
+                options=options,
+                index=default,
+                key=f"symbol_{cursor}",
+                label_visibility="collapsed",
+            )
+            if prior:
+                if symbol_type != prior:
+                    st.warning(f"changed from `{prior}`")
+                else:
+                    st.caption(f"confirms `{prior}`")
+            else:
+                st.caption("no prior curator subtype on this feature")
+
         st.divider()
         for key, (verdict, label) in _VERDICTS.items():
             needs_click = verdict in {"distinct", "same_as_neighbour"}
@@ -1142,6 +1228,7 @@ def main() -> None:
                 # more informative than a bare flag.
                 marks[cursor] = build_record(
                     row, marked, verdict, nearest_m, args.marked_by,
+                    symbol_type,
                 )
                 save_marks(marks, args.output)
                 st.session_state.pending.pop(cursor, None)

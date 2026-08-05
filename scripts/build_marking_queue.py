@@ -58,6 +58,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import geopandas as gpd
 import numpy as np
 import pandas as pd
 from scipy.spatial import cKDTree
@@ -111,7 +112,32 @@ _QUEUE_COLUMNS = [
     "n_partners_within_threshold",
     "nearest_partner_m",
     "nearest_partner_layer",
+    # Student-side attributes, carried so the reviewer can confirm or
+    # correct the symbol type without a second lookup. Empty for phantoms.
+    "student_map_symbol",
+    "student_feature_type",
+    "student_reviewed_subtype",
 ]
+
+
+def _attribute(frame: "gpd.GeoDataFrame", index: int, column: str) -> str:
+    """Read one attribute as a string, treating missing values as empty.
+
+    The student layer's ``_reviewed_subtype`` is null for most features, and
+    a bare ``str(nan)`` would write the literal text "nan" into the queue.
+
+    Args:
+        frame: The attribute table.
+        index: Positional row index.
+        column: Column name; a missing column yields an empty string.
+
+    Returns:
+        The value as a string, or ``""`` if absent or null.
+    """
+    if column not in frame.columns:
+        return ""
+    value = frame.iloc[index][column]
+    return "" if pd.isna(value) else str(value)
 
 
 def classify_layer_diff(
@@ -178,6 +204,13 @@ def build_queue(
     phantoms = load_points_csv(_PROJECT_ROOT / _LAYER_PROMOTED)
     corrected = load_points_geojson(_PROJECT_ROOT / _LAYER_CORRECTED_STUDENT)
     original = load_points_geojson(_PROJECT_ROOT / _LAYER_FIXED_ORIGINAL)
+
+    # Attributes for the student layer, read separately from the geometry
+    # so the coordinate loaders stay single-purpose. Row order matches
+    # `corrected`, since both come from the same file in file order.
+    student_attributes = gpd.read_file(
+        _PROJECT_ROOT / _LAYER_CORRECTED_STUDENT,
+    )
 
     phantom_tree = cKDTree(phantoms)
     corrected_tree = cKDTree(corrected)
@@ -256,6 +289,9 @@ def build_queue(
             ),
             "nearest_partner_m": float(phantom_to_student[index]),
             "nearest_partner_layer": "corrected_student",
+            "student_map_symbol": "",
+            "student_feature_type": "",
+            "student_reviewed_subtype": "",
         })
 
     # Then the student points, in layer order.
@@ -279,6 +315,15 @@ def build_queue(
             "n_partners_within_threshold": n_partners,
             "nearest_partner_m": float(student_to_phantom[index]),
             "nearest_partner_layer": "promoted_phantom",
+            "student_map_symbol": _attribute(
+                student_attributes, index, "MapSymbol",
+            ),
+            "student_feature_type": _attribute(
+                student_attributes, index, "FeatureType",
+            ),
+            "student_reviewed_subtype": _attribute(
+                student_attributes, index, "_reviewed_subtype",
+            ),
         })
 
     return pd.DataFrame(records, columns=_QUEUE_COLUMNS), superseded
