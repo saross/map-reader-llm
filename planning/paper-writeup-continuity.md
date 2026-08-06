@@ -8,130 +8,88 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (129) — BUILD THE POINT-MARKING APP, THEN THE MERGE PASS [Session 128 CLOSED 2026-08-04; ran in Opus]
+## 🎯 NEXT SESSION (130) — FINISH THE MARKING PASS ON ZBOOK, THEN THE GATED QUEUE [Session 129 CLOSED 2026-08-06; ran in Opus]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–21.
-> **Ruling 21 is new and re-orders the programme** — read it first.
 >
-> **START HERE**: `reports/verification/reference-standardisation-queue.md`
-> (what is waiting on the reference, and why nothing may be re-run before it)
-> and `reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
-> (every open defect, research finding and instrument gap, each with a
-> `status` field when repaired).
+> **START HERE**: `planning/point-marking-app-spec.md` (the app, the
+> adjudication rule, and how to count from its output) and
+> `reports/verification/c4-triage/wave7-open-items-2026-08-04.json`
+> (W7-R2 is new and HIGH).
 
-**Ruling 21, in one line**: the ground-truth reference is standardised FIRST,
-then every reference-tainted analysis runs ONCE against it — a generalisation
-of ruling 20(b) from one pair of metrics to the whole class. Marking scope is
-the **773 phantoms only** (≈ 1 h; the 4,746-student option was priced at ≈ 6 h
-and declined). The product is a **best-possible reference, explicitly NOT a
-gold standard** — joint student + model false negatives are not economically
-recoverable, and that limitation ships in the artefact's own header. The 4-map
-**GS corpus is out of scope and needs no review** (four passes, every point
-re-positioned to dead centre within 1–2 px, one extra FN found at the fourth).
+**Session 129 built the app ruling 20(d) gates everything on, then spent nine
+hours being corrected by it.** 39 commits `962f7a283`→`4486d8597`, **US$0.00**.
 
-**What Session 128 did** (commits `e213d009c`→`e7d03613a`, **US$0.00 API**):
-W7-D5, D9, D3, D4, D6, D1 (instance + class measurement), D2, plus ruling 21,
-the queue register, a re-runnable coverage checker, and W7-I4.
+**⚠ MACHINE CHANGE — Session 130 runs on zbook.** Before launching the app:
 
-1. **W7-D5's false green was hiding a real defect.** Re-anchoring the claim
-   from the T=0.7 corrected-F1 artefact to the T=0.7 D-S artefact turned it
-   red and exposed **W7-D9: the four Dawid–Skene fits do not share a ground
-   truth.** Image consumed the reviewed layer (4,745); T=0.7, T=0.3 and
-   text-MIN consumed the fixed 4,770 base — the script default at
-   `analyse_dawid_skene.py:57`. Two independent lines, the decisive one
-   count-free: `baf1497a7`'s single added feature is a student point ONLY in
-   the image item set, while T=0.7 carries `student_label = 0` at that exact
-   coordinate. Commit `366f9c66f`'s message claims otherwise and is
-   contradicted by its own artefact.
-2. **W7-R1(2) is CLOSED, and nobody was wrong.** Blind pass P4 read D-S fits;
-   the census read evaluation metadata. Different objects, both correct — the
-   census never inverted the blind pass. **Two asymmetries in two layers
-   single out different runs**: t0.3 on EVALUATION (W7-D8), image on
-   DAWID–SKENE (W7-D9).
-3. **ds-summary-v2 repaired** — D3, D4, D6, D9 in ONE commit with the rule-14
-   re-extraction, because a second edit costs a second re-extraction. All
-   adjudicated from artefacts. § 4.1's Image-vs-T=0.3 ordering is **withdrawn
-   in place**, nothing recomputed. Re-extraction: 144 spans re-verified
-   verbatim, 7 re-extracted, 8 new claims added — **all 8 recompute GREEN**.
-   One claim DELETED, so b073 indices after 3 have shifted.
-4. **W7-D1 is a CLASS of 24 files, not one.** Instance repaired (including a
-   runnable recipe that raised `FileNotFoundError`); no value moved, only
-   paths. **The instrument is clean**: all 5,492 anchor-file references in the
-   extraction corpus resolve. Per-file dispositions are in the register under
-   `W7-D1.class_measurement`.
-5. **A re-runnable whole-plan coverage checker** —
-   `scripts/check_c4_plan_coverage.py`, the backstop ruling 18 point 4 asks
-   GATE 3 to carry. It independently confirms S127 (17 docs / **1,142
-   unassigned lines** vs S127's separately-derived 1,129) and adds the inverse
-   signal S127 could not see: **13 claims in 4 extractions survey lines the
-   plan does not cover** (036, 046, 049, 054-c4-extraction-instructions).
-6. **W7-I4 — the result is machine-dependent.** From one commit,
-   `--at-era` validation says "128/128 valid" on amd-tower and "FAIL: 3/128"
-   on sapphire, because three anchors point at untracked paths. Ruling 15
-   already governs them; they were being treated as mechanical.
-7. **Ledger refreshed on sapphire** (`3fee6c338`): 16,083 → 16,238 rows,
-   MISMATCH 639 → **619**, MATCH 7,170 → 7,263. It takes **18 seconds** — this
-   is not a job that needs scheduling.
+```bash
+git pull                                   # 39 commits
+.venv/bin/pip install -r requirements.txt  # streamlit-image-coordinates is NEW
+scripts/launch_point_marking.sh
+```
 
-**Session 129's queue, in the order recommended and agreed:**
+The app will not start without `streamlit-image-coordinates`; it was added to
+`requirements.txt` this session and zbook has never installed it.
 
-(a) **BUILD THE POINT-MARKING APP.** Spec is written and the data
-reconnaissance is done: `planning/point-marking-app-spec.md`. It records the
-real column schema, the imagery options, the output contract, and a **data
-hazard found during recon** — `buffer_metres` is stored in two string formats
-(`'50'` and `'50.0'`), so grouping on the raw string reports 410 at R = 50 m
-instead of the true **415**. Cast to float before any gating. No user time
-needed for the build.
-(b) **W7-I2, the CI registry** — HIGH, paper-citable, and it carries **11 of
-W7-D1's dead paths**, so the two repairs are ONE edit.
-(c) **The per-document MERGE PASS.** The scheduling principle worth keeping:
-for each document, apply EVERY known pending change at once — GT-count sweep,
-dead paths, banners, caveats — so it costs one re-extraction instead of four.
-This subsumes the documentation-audit banners, the ~13-document GT sweep, and
-the 7 remaining W7-D1 documents into a single pass.
-(d) **Then the PI's hour**: mark the 773 phantoms → sort
-`canonical-review.csv` → the reference is fixed.
-(e) **Then the five no-API queue items in one batch on sapphire.**
-(f) **Then** W7-E1's top-up and the 1,142-line tail backlog (both now
-measurable with the checker), **then wave 8**.
+**Where the marking stands: 901 of 1,317 items** (~68%). `marked-centres.csv`
+is now COMMITTED — it was untracked for most of Session 129, which would have
+lost the lot on a machine change. Do not let it drift untracked again.
 
-**Why the app comes before wave 8** (agreed 2026-08-04): rule 14 makes
-deferral compound — every reference-tainted document caveated now needs a
-SECOND edit, and each edit costs a re-extraction. It is also the paper's
-critical path, since five queue items feed §Results. And the reason there is
-no overnight-sized compute job right now is precisely that ruling 21 gates
-everything expensive. The trade accepted: wave 8 slips about a session, which
-is right, because its triage would otherwise adjudicate figures about to move.
+**The re-review list is 276 items** and regenerable:
+`scripts/build_re_review_list.py --output …/re-review-list.csv`. Sidebar →
+Navigate → "Re-review list" walks it, each item banner-labelled with its reason:
+rule_consistency 116, jitter_precision 97, partner_ambiguity 44, double_claim 6,
+w7r2_provenance_breach 2. **Regenerate it once more when the pass finishes** —
+every instrument fix this session potentially added to it, and it was already
+regenerated three times.
 
-**GATED, not deferred** — unchanged, and now generalised by ruling 21: no
-reference-tainted analysis is re-run before the marking pass lands. W7-D8
-remains deferred by ruling 19(c) with a load-bearing documentation obligation.
+**W7-R2 (HIGH, new) — model detections in the student ground truth.**
+Features #4744 and #4745 of `student-mounds-55maps-reviewed.geojson` are model
+output ("T=0.7 recovery propagation", "phantom-FP rescue"), promoted into a
+layer used to SCORE the model. Obs 395. PI ruling: **a detection may never enter
+a student or gold-standard layer.** #4744 is also contradicted by the imagery
+(one mound, not two touching). **#4745 has NOT yet been checked against the map**
+— queue index 1313, #4744 at 1289, both flagged in-app. The gold standard was
+audited and is **clean**.
 
-**⚠ Loose ends deliberately left, with their reasons:**
+`scripts/audit_student_gt_integrity.py` re-runs the bound: both originals
+single-commit, 0 survivors moved, 0 attributes changed post-import, 0
+unexplained removals, only the 2 incursions outstanding. Run it after any
+reference change.
 
-- **Three `TBD` commit-hash placeholders** in the changelogs of
-  `results/55maps-ds-summary-v2/report.md`,
-  `results/temperature-failure-recovery-analysis/report.md` and
-  `reports/verification/reference-standardisation-queue.md`. Filling them is
-  a document edit, which under rule 14 costs a re-extraction — so they are
-  left to be filled **inside the merge pass (c)**, where the edit is already
-  being paid for. Do not fill them in a commit of their own.
-- **W7-U2 is sharpened, not closed.** 415 at R = 50 m is now confirmed from
-  the file, and the canonical CSV's own cumulative series is
-  415 / 594 / 685 / 729 / 763 / 773 — which contains neither 474 nor 672, so
-  ruling 19's figures describe a demonstrably different object rather than an
-  off-by-one. Still must not be cited in Methods.
-- **W7-U1** unchanged and still unverified.
+**Do not write reference corrections back during review.** Un-merges (`m`),
+the W7-R2 removals and the duplicate resolutions are all recorded as verdicts
+and applied together under ruling 21. The marking pass produces the instruction
+set, not the correction.
 
-**Carry-forward (S128 additions)**: the rule-14 checklist needs a THIRD step —
-**repair → re-extract → RE-RANGE**. Re-extracting updates the extraction's
-line anchors but leaves the batch plan's ranges, silently opening a tail gap
-on a document that was just fully re-surveyed; this session did exactly that
-to ds-summary-v2 and only the coverage checker caught it. Editing a *pending*
-document costs no re-extraction but still costs a re-range. And a defect found
-in the INSTRUMENT is worth chasing into the DOCUMENT: W7-D5 looked like an
-anchoring nit and turned out to be the thread that unpicked W7-D9.
+**Then the gated queue**, unchanged and still blocked on the reference:
+`reference-standardisation-queue.md` items 1–5 (four Dawid–Skene fits, the t0.3
+evaluation, F1/MCC unification, Obs 280 re-measurement, re-tier both boards +
+re-verify every 55-map figure in `results-draft.md`). All $0, no API.
+
+**The verification programme was not touched this session.** Still open:
+78 of 178 C4 batches pending (~4 waves); **W7-I2 the CI registry (HIGH, carries
+11 of W7-D1 dead paths — one edit)**; W7-D1's remaining 7 documents; the merge
+pass; W7-E1's 95 lines; W7-I1/I3/I4; W7-U1/U2. Planning estimate given
+2026-08-06: extraction + merge pass ≈ 2–3 days at 6–9 sessions; the gated chain
+adds 4–6 sessions *after* the marking lands, because item 5 alone is 8 cells ×
+14 buffers plus a figure-by-figure sweep.
+
+**Carry-forward the docs do not hold:**
+
+- Two pending gates from this session: three working-notes candidates and four
+  user-observation candidates sit as "(pending review)" sections. Re-surface;
+  silence is not a decline.
+- **Every defect class in the re-review list was found by the PI hitting a
+  case, not by a check.** A fifth class would currently be invisible. Treat a
+  reported visual anomaly as higher-value than a passing check.
+- Measured this session and worth reusing: mound density 0.22/km², so a mound
+  within 126.5 m of a random point has ~1.1% probability against 55.9% observed
+  — but that model ignores clustering and understates coincidence. A
+  clustering-aware version is owed to the paper.
+- Placement error, unaided click: ~2.5–5 m in about two thirds of cases (PI, over
+  ~750 trials). With keyboard nudge, ~1 px. Imagery floor ±2.5 m.
 
 ---
 
