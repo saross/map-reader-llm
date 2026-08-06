@@ -1665,7 +1665,13 @@ def main() -> None:
                 key=f"partner_{cursor}",
             )
             partner_choice = _as_partner(candidates[chosen])
-        else:
+        elif candidates:
+            # Exactly one candidate: no dropdown, so the claim warning has
+            # nowhere to appear unless it is stated here. This is the case
+            # where the reviewer can least cross-check it themselves.
+            st.caption(f"Partner: {candidate_labels[0]}")
+
+        if marked is None:
             st.info("Click the mound centre.")
 
         # A refused verdict — pressing "d" before placing a centre — is
