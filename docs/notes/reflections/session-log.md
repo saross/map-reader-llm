@@ -8172,3 +8172,65 @@ split; the wave-6 doc-repair deferral rule (conclusions-entanglement)
 was drawn mid-session under the W6-E1 finding's pressure and then
 generalised into ruling 17's conservatism pattern.
 
+## Session 129 — 2026-08-05/06 — the point-marking app, and what using it found
+
+**Scope**: build the app ruling 20(d) gates the reference on, then run it.
+US$0.00 API. Commits `962f7a283`→`d3e195b12`, all pushed.
+
+### Built
+
+- `scripts/mark_mound_centres.py` — Streamlit reviewer on the "bullseye"
+  framework (`review_candidates.py`), reusing its raster sheet-picker and
+  key-binding JS. Click capture via `streamlit-image-coordinates` (added to
+  `requirements.txt`).
+- `scripts/build_marking_queue.py` — queue from the ruling-19 layers.
+- `scripts/audit_mound_proximity.py`, `scripts/build_re_review_list.py`,
+  `scripts/audit_student_gt_integrity.py`.
+- `tests/test_mark_mound_centres.py` — 30 tests (26 tier-1, 4 tier-2).
+
+### Scope decisions (PI, during the pass)
+
+| decision | outcome |
+|---|---|
+| conflation cut | 40 m → 50 m → **75 m** (queue), flag radius **110 m** |
+| queue size | 773 → 906 → 1,316 → **1,317** |
+| jitter sample | **100** random unconflicted student mounds, seeded |
+| multi-marking | considered, **rejected** (~20% saving; click-to-item ambiguity) |
+| adjudication rule | clear symbol = FP; attractor displacement = `c`/`d`; >200 m = FP |
+
+### Instrument changes forced by real cases
+
+Partner selector (auto-nearest is wrong under attractor inversion); numbered
+candidates matching map and dropdown; keyboard nudge i/j/k/l; alignment circle;
+review ordering by conflict class then symbol type; identity-keyed marks
+(`item_id`) so re-sorting cannot strand work; `x` not-a-mound and `m`
+merge-wrong verdicts; pre-merge positions selectable as partners; claim
+detection for double-used partners.
+
+### Findings
+
+- **W7-R2 (HIGH, new)** — 2 model detections in the student GT (`#4744`,
+  `#4745`). Obs 395. Gold standard checked and **clean**.
+- **Integrity audit** — both originals single-commit; 0 survivors moved, 0
+  attributes changed, 0 unexplained removals; only the 2 incursions outstanding.
+- **4 promoted mounds inside the 5 m de-duplication tolerance** of a student
+  point; 21 within 15 m.
+- **Spec defect** — imagery pointer named a corpus covering 0 of 55 maps.
+- **Framing offset** — crop centring displaces the reference up to 7.09 m
+  (median 4.02); 22.8% exceed the 5 m tolerance. Clicks converted via the
+  affine transform instead.
+
+### Progress at close
+
+**755+ of 1,317 marked**; re-review list **276** (rule consistency 116, jitter
+precision 97, partner ambiguity 44, double claim 6, W7-R2 2).
+
+### Contextual assumptions
+
+The app was built and revised *while in use*, so marks made earlier differ in
+kind from later ones — the re-review list exists to absorb that and was
+regenerated three times as new classes appeared. Every defect class in it was
+found by the PI hitting a case, not by a check; a fifth class would currently be
+invisible. Reference corrections are recorded as verdicts, not written back:
+un-merges, the W7-R2 removals and duplicate resolutions all land together under
+ruling 21.

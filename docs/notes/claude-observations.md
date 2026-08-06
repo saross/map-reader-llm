@@ -939,7 +939,6 @@ brief without re-resolving it in the same turn — the brief is a write-side
 artefact like any other. Cross-references the P3 catch recorded in the
 wave-6 triage `_meta`.
 
-
 ## claude-obs 36 — 2026-08-06 (Session 129): he found four defect classes by looking at pictures, and none of my checks could have
 
 **Pattern.** Every substantive finding today entered through Shawn's eyes on the
