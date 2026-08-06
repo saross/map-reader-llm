@@ -286,6 +286,7 @@ _LAYER_DISPLAY = {
     "promoted_phantom": "promoted mound",
     "corrected_student": "student GT",
     "extra_point": "extra point",
+    "superseded_premerge": "pre-merge position",
 }
 
 
@@ -1451,9 +1452,16 @@ def main() -> None:
         return points[idx]
 
     candidates = []
+    # Superseded pre-merge positions are selectable partners too. Where a
+    # merge is being contradicted, the thing a neighbouring record actually
+    # corresponds to is ONE of the two originals, not the merged centroid
+    # that stands in for both — and the centroid was the only option until
+    # now, which forced an association with a point the reviewer has just
+    # said should not exist.
     for layer_name, colour, points in (
         ("corrected_student", "cyan", nearby_students),
         ("promoted_phantom", "orange", nearby_phantoms),
+        ("superseded_premerge", "red", nearby_superseded),
     ):
         for cx, cy in points:
             dist = math.hypot(cx - anchor[0], cy - anchor[1])
