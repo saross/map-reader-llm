@@ -6552,3 +6552,215 @@ genuinely strong negative alongside this weak one (all 5,492 anchor-file
 references resolve). The precise position is narrower and worse: we can prove
 every anchor points at *something*, and cannot currently prove any anchor
 points at the *right* thing.
+
+## 2026-08-03/04 (Session 126, map-reader-llm): The rescue that lowered recall, and the twin channels nobody crossed
+
+**Session:** 930183e5-ea9a-4a3d-abc8-8fa801c91b10
+**Instance:** primary (written 2026-08-06 at window-end by the same
+instance; the session stayed open and untouched in between)
+
+### Surprising fact
+
+A PI-approved re-run of the corrected-F1 analysis — adding one
+reviewer-confirmed mound (cand 2397) to the extended ground truth —
+made recall at 50 m *fall* (0.7902 → 0.7901) when scored against the
+HEAD student layer. A rescue, whose only function is to credit a real
+mound the students missed, should be monotonically helpful. The
+re-run agent caught this before landing anything: two GT variants,
+same seed, and the 4,746-feature variant carried FN +1 at every
+buffer.
+
+### Probe
+
+The agent traced the added student-layer feature to coordinates
+0.000 m from cand 2397's detection — the curator had entered the same
+rescue through a second channel, with a note naming the candidate.
+`build_extended_gt` concatenates student GT and phantoms with no
+coincidence check, so one physical mound became two GT points;
+one-to-one Hungarian matching credits one and books the other as an
+unmatched FN. The exposure sweep then widened the picture three ways:
+a second curator twin existed five hours earlier (cand 4264, "second
+of two touching mounds"); other configurations' detections of the
+same mounds sit up to 3.776 m from the curator points, so the twin
+class is not exact-coordinate; and the canonical Track-2 build not
+only misses the class — its 20 m phantom-vs-phantom clustering
+*merges* the twins into centroid positions up to 6.8 m adrift,
+laundering them into authoritative-looking phantoms consumed by all
+eight canonical cells.
+
+### Belief revision
+
+I had treated the review CSVs and the student layer as independent
+evidence channels whose union is conservative — more ground truth can
+only be more complete. False: the curation *process* itself
+multi-channels a single physical judgement, and a union of
+non-independent channels double-counts precisely the items someone
+cared enough to record twice. Corollary revisions: "the canonical
+build de-duplicates" was true only within one channel (its ~600
+cleared duplicates were cross-run, never cross-channel); and
+coordinate identity is decidable only pre-merge — after clustering,
+the twin has moved. The durable fixes encode the revision: a 5 m
+coincidence guard where raw coordinates still mean something, placed
+*before* any merge, keyed to the measured duplicate spread (≤3.8 m)
+rather than the principled-but-wrong exact-coordinate assumption
+(1 m, my first landing).
+
+### What would change this belief
+
+A verified imagery case of two genuinely distinct mounds under 5 m
+apart on the same map would break the tolerance (touching mounds
+currently attest ≳15–20 m spacing). And if curator points did not
+carry candidate-naming notes, the twin identification would rest on
+distance alone — the 7.3 m and 16.8 m residual cases show exactly
+where that evidence runs out and the class boundary becomes a
+judgement.
+
+### Implications for practice
+
+Any pipeline that unions human-annotation sources needs a
+cross-channel identity check at the rawest coordinate stage, and the
+check's tolerance should be measured from observed duplicate spread,
+not derived from first principles. The re-run agent's stop-and-compare
+discipline (two GT variants before touching documents) is what turned
+a wrong number into a finding — the deviation *was* the data.
+
+## 2026-08-03 (Session 126, map-reader-llm): The banner that reset the clock it feeds
+
+**Session:** 930183e5-ea9a-4a3d-abc8-8fa801c91b10
+**Instance:** primary
+
+### Surprising fact
+
+Every era_check field on the wave-5 phase3a rows resolved at
+`5d91c2a97a73` — a 2026-08-01 commit — for claims in a document dated
+2026-05-03. Three independent blind passes, given different
+partitions, each discovered the same thing unprompted: 134 of 178
+era_check fields corpus-wide were degenerate restatements of the
+primary verdict, with era commits clustering on exactly two days.
+
+### Probe
+
+`find_era_commit` keys the document's era to the newest commit
+holding the extraction's blob. Ruling 1 — the correction policy —
+prescribes append-only banners on precisely the dated-snapshot class
+where era matters most. Every banner rewrites the blob; the machinery
+then dates the document to its own correction. The passes verified
+the true eras manually (42/43 rows era-faithful at `adf95dbf9` /
+`d78601b62`, with a closure identity summing exactly to the
+document's own 835).
+
+### Belief revision
+
+I had treated era_check as an independent instrument reading; it was
+actually coupled to the remedy the programme applies most often — the
+correction policy and the provenance instrument shared a hidden
+variable (blob identity), so applying the first silently blinded the
+second. The general form: a provenance instrument keyed to *file*
+identity inherits every policy that touches the file; only
+*claim*-level dating (blame, log -S over the claim's lines) escapes
+the coupling. Kin to Obs 382 (the machine decides the verdict) and
+Obs 385 (the measurement method contaminates the census): the
+instrument's implicit frame doing undeclared work — this time the
+frame was the clock. The redesign was implemented in Session 127 by
+the successor instance, from the three passes' convergent
+specification.
+
+---
+
+## 2026-08-06 (Session 129, map-reader-llm): Three points, one mound, and two hypotheses that had to die first
+
+**Session:** 930183e5-ea9a-4a3d-abc8-8fa801c91b10
+**Instance:** primary
+
+### Surprising fact
+
+At queue item 685 of the point-marking review, the reference carried three
+points — a student ground-truth point, a second student point 38 m away, and a
+promoted mound 45 m away — where the map showed **one** mound symbol. Shawn
+stated it flatly: "there is no second mound here". The surprise was not the
+redundancy, which the review exists to find, but that the redundancy was
+*inside the student layer*, which is supposed to be a record of what students
+digitised and nothing else.
+
+### Probe
+
+Three hypotheses, tested in order of prior plausibility. Two were mine and both
+were wrong, which is the useful part.
+
+**H1 — cross-sheet duplication.** Shawn's own first guess: the sheets overlap,
+and the extra points are the same mound digitised from the adjacent map. Highly
+plausible, and cheap to test because the student layer carries `source_map`.
+*Disconfirmed*: all three points carry `K-35-064-3_Dimitrovgrad`, and across the
+whole 4,746-point layer **zero** student-student pairs within 50 m are
+cross-sheet. Sheet-overlap duplication is not a phenomenon in this corpus at
+all.
+
+**H2 — no-data edge artefact.** The crop showed a black band, so perhaps the
+neighbouring points sat off the mapped area of this sheet and their mounds were
+visible only on the adjacent one. *Disconfirmed*: all three sit on 69–76% real
+raster content, and `_best_raster_for_point` selects the same sheet for each.
+
+**H3 — read the record's own annotation.** The second student point is `#4744`,
+near the end of a 4,746-feature layer. Its `_added_2026-05-03` field says:
+"second of two-touching-mounds at cand 4264; missed by curator GT, observed via
+**T=0.7 recovery propagation**". The adjacent feature `#4745` says "**phantom-FP
+rescue** at image cand 2397, verifier_p=1.0".
+
+Both are model detections. A layer diff against the immutable original then
+bounded it exactly: 28 additions, 26 of them merge centroids with two superseded
+originals nearby, **2** unexplained — precisely these.
+
+### Belief revision
+
+**Before**: the student ground truth was a record of student digitisation,
+corrected only by de-duplication; ruling 19's derivation `4770 - 52 + 28 = 4746`
+described that faithfully, and its own gloss called it "a NET DECREASE:
+duplicate-cleaning, not discovery".
+
+**After**: the layer contains two model-derived points, so on those points the
+model is scored against its own output. 0.04% of the layer, but the bias runs
+one way only — it can inflate a score and never depress it.
+
+The deeper revision is about **why every prior audit passed**. The derivation was
+recorded as arithmetic and the arithmetic is *correct*. Counting could not have
+found this, however carefully done, because the count was right and the *kind*
+was wrong. A right-sized wrong ingredient is invisible to reconciliation.
+
+This is structurally identical to W7-D9 from Session 128 — four Dawid–Skene fits
+that each reconciled internally while consuming different references — and the
+repetition is what makes it a class rather than an incident: **components that
+reconcile individually can still be mutually incompatible, and totals cannot
+see it.**
+
+### What would change this belief
+
+Finding that the two annotations misdescribe their own provenance — that #4744
+and #4745 were in fact digitised by a student and the `_added` note is a
+bookkeeping error — would reduce this to a labelling defect. Cheap to test
+against the original import records, and worth doing before removal.
+
+Conversely, finding a *third* incursion by some route with no annotation would
+strengthen it considerably, because the audit that bounded this at two relies on
+merge geometry rather than on the annotations. That audit now exists and is
+re-runnable (`scripts/audit_student_gt_integrity.py`), which is the falsifier
+made standing.
+
+### Implications for practice
+
+1. **A provenance claim needs a provenance check.** Reconciling totals is not a
+   substitute and never was; the two audits answer different questions.
+2. **The check that found it was a human looking at imagery.** No automated
+   check in the programme was capable of surfacing this, and the one now written
+   was written *after* being told what to look for. Worth remembering when
+   estimating what the verification programme can find on its own.
+3. **Bound the class immediately.** Within the hour the same diff was run against
+   the gold-standard layer, which came back clean — 4 additions, all 4 merge
+   centroids. Knowing the breach is confined to one layer and two points is most
+   of what makes it tractable.
+
+### What this is not
+
+Not a claim that the reference is unreliable: the same audit showed zero
+survivors moved, zero attributes changed post-import, and every removal claimed
+by a merge, across both layers. The finding is narrow and the rest of the
+integrity check is a genuinely strong positive.

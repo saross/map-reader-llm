@@ -8107,3 +8107,68 @@ and still unverified. Three `TBD` commit-hash placeholders were left
 deliberately in two report changelogs and the queue register: filling them is
 a document edit, which under rule 14 costs a re-extraction, so they are
 queued into the S129 merge pass where that cost is already being paid.
+
+## Session 126 — 2026-08-03/04 — fleet waves 5–6 end-to-end; rulings 16–17; the cost reversal; W6-E9 cleared
+
+*Entry written 2026-08-06 (window-end), appended after the S127/128
+entries; the session ran before both.*
+
+**Fleet waves 5 and 6 complete** (commits `77ed9bdaa`→`26cd7599f`,
+US$0.00 external API; tier-1 1,352→**1,361**/0): 40 batches over 34
+documents, 2,258 claims / 6,449 values, all validator-clean at
+instrument v1.2, whole fleet Opus per rulings 4–5. Canonical
+recomputes on sapphire: 9,588 rows (`3fdff7803`) then 12,988
+(`3a322d9c2`). **Both Obs 382 joins CLEAN** — wave 5: exactly 12
+attributed pre-wave transitions; wave 6: 53 + 9 reason drifts, the
+wave-5 fix predictions landing exactly (17→MATCH, 7→SKIPPED) plus a
+24-row UNRESOLVED→MATCH bonus from the locator extension.
+
+**Triage: 308 rows blind-adjudicated** (ruling-11 discipline; stories
+pre-registered `e97c08c7b`/`d84acd626`; eight blind passes archived
+in `c4-triage/blind-passes/`). Net: 210 SNAPSHOT-DIVERGENCE, 45
+DOC-DEFECT-AT-ERA, 34 EXTRACTION-DEFECT (37 rows repaired
+`963ab91dc`/`cf11e3baa`, all verified by targeted recompute), 16
+INSTRUMENT, 4 reclassifications. The blind layer corrected the
+triager in both waves (sixth and seventh consecutive), including a
+hash transposition in the triager's own pass brief.
+
+**Instrument fixes landed** (all test-first): comparer half-up
+float-noise (`1e4a13ff7`, blast radius exactly 5 rows), multi-match
+filters map like `[*]` + `!=` operator (`6af00ffad`), census
+`count_symlink_entries` opt-in (`5f2f79856`). **Riders/banners** on
+four wave-5 snapshot docs (`a577f1ef3`).
+
+**Escalations W5-E1..E4 and W6-E1..E10 raised; seven resolved
+in-session with the PI interactive**: rulings **16** (~5% =
+approximately equal) and **17** (two-layer rule: ruling 14 is triage
+vocabulary, the Revision Policy is the repair policy) — `4c9dd2681`;
+the **W6-E1 cost reversal** (audited image $200.83 < text-HIGH
+$207.34 vs the published "2.9× lower" — thinking-token billing vs
+cache savings) repaired across the six-document pass (`723d56a29`,
+every figure agent-re-derived; `docs/paper/` verified clean);
+W6-E7 CI-overlap cell (`a6a18b3c4`); W6-E8 cand-2397 re-run on
+sapphire (`3271d6923`, max movement +0.00021); **W6-E9 cleared in
+full** — exposure sweep (second twin cand 4264, true cutoff
+00:32:53Z; canonical build launders the class; ~30 artefact families
+verdicted, all fourth-decimal, **no re-runs required**) + durable fix
+chain (`1de559119` 1 m de-dup → `30a902f56` artefact regenerated from
+tracked HEAD GT, metrics identical → `fcfc90bff` measured 5 m
+tolerance + `build_canonical_gt` pre-clustering guard +
+`diagnose_100m_buffer` limitation comment). **Deferred to
+S127-with-Fable**: W6-E10 + canonical-GT regeneration bundle (PI
+decision), GATE 3 adjudication, remaining instrument escalations
+(era-selection W5-E1/W6-E2 — subsequently implemented in S127).
+
+**Window handoff**: Fable credit exhausted at session tail; the
+48-hour Opus-window plan stamped into the beacon (`26cd7599f`) with
+scope, conservatism rules, and the Sol/OpenAI lane option; kick-off
+prompt supplied to the PI.
+
+**Contextual assumptions**: the PI was interactively present for the
+escalation sequence (rulings 16–17, W6-E7/E8/E9 approvals landed
+same-session rather than queueing); Fable-credit exhaustion, not
+methodology, dictated both the session boundary and the deferral
+split; the wave-6 doc-repair deferral rule (conclusions-entanglement)
+was drawn mid-session under the W6-E1 finding's pressure and then
+generalised into ruling 17's conservatism pattern.
+

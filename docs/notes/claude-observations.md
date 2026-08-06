@@ -861,3 +861,151 @@ what the available work actually costs before accepting, and report the
 measurement even when it declines the offer. "This takes 18 seconds" is a
 finding about the programme's state; "I ran the overnight queue" would have
 concealed it.
+
+## claude-obs 36 — 2026-08-06 (Session 126): he manages the collaboration's economics as explicitly as its methodology
+
+**Pattern.** Three moves in one session tail: he asked "what can we do now
+that mostly involves Opus agents or OpenAI models?" — a sequencing question
+about *model economics*, not task priority; he chose to leave the expensive
+Fable session open but idle, as a standing escalation channel he would
+"economically" touch only for something serious; and when I answered his
+wording question on W6-E1 he attached a general threshold ("anything within
+~5% is approximately equal") that became ruling 16, converting a one-off
+answer into a reusable rule at zero marginal cost. The common thread: he
+treats credit budgets, open contexts, and his own rulings as resources with
+carrying costs and reuse value, and he engineers the collaboration around
+them the way the charter engineers verification.
+
+**Lesson.** The most useful answer to his economics questions reframes the
+resource, not the task list — "move the main loop to Opus" did more than any
+ranking of queue items, because the expensive thing was the orchestrator, not
+the work. And when he answers a specific question, check whether the answer
+is actually a general rule being handed over; recording it as such (ruling
+16) is the difference between an answer and an asset.
+
+**How to apply.** When credit, quota, or attention constraints surface,
+propose changes to *where computation happens* (session model, agent tier,
+external lanes like Sol) before proposing cuts to *what gets done*. And
+listen for generalisable thresholds inside specific answers — offer to
+register them as rulings on the spot.
+
+## claude-obs 37 — 2026-08-06 (Session 126): "both a and b" carried an ordering I ran as a race
+
+**Pattern.** On W6-E9 he approved "both 'a' and 'b'" — sweep for other
+affected analyses, and build a durable fix. I launched the sweep agent and
+implemented the fix concurrently, landing a 1 m tolerance while the sweep
+was still reading. The sweep then reported cross-run twins at up to 3.776 m
+and a second curator point, and the tolerance had to be revised to a
+measured 5 m within hours. Discovery and remedy were both delivered — but
+the request's own structure (sweep *informs* fix) implied a sequence, and
+running them as a race meant the first fix encoded only the single case I
+already knew.
+
+**Lesson.** When the PI commissions discovery and remedy together, the
+discovery is usually *for* the remedy. Concurrency between them is a bet
+that the discovery will find nothing new — a strange bet to place on a
+sweep whose entire purpose is finding what I have not seen. The cost here
+was small (two commits where one would do, both honest); the pattern would
+bite harder on an expensive remedy.
+
+**How to apply.** Sequence commissioned-together discovery-and-fix work:
+land the fix after the sweep reports, or explicitly gate the fix's
+parameters ("tolerance provisional pending sweep") in the commit itself.
+Parallelism stays for independent work — these were not independent.
+
+## claude-obs 38 — 2026-08-06 (Session 126): self-critique — the write-side five-second checks I skipped are the programme's own subject
+
+**Pattern.** Three source-side slips at high throughput, each caught by a
+downstream guard: two markdownlint errors committed because my command
+chains did not gate on the linter's exit code; an 18,000-line diff churned
+by repairing agent-written JSON at my own indentation instead of the file's;
+and a transposed commit hash in a blind-pass brief, caught and verified by
+the pass itself (P3). All three were five-second checks — gate the chain,
+match the serialisation, `git log -1` the hash — skipped while orchestrating
+twenty agents and two wave cycles. This in a session whose entire subject
+matter is what happens to unverified specifics.
+
+**Lesson.** The guards held, and that is the system working — but each catch
+spent reviewer attention (mine or a pass agent's) on something the writer
+could have prevented for less. Throughput pressure does not suspend the
+anti-confabulation write-side rule; it is precisely when the rule earns its
+keep. The hash transposition is the sharpest instance: I cited a specific
+from memory in a brief to an agent I was instructing to verify specifics.
+
+**How to apply.** Gate commit chains on lint exit codes structurally (`&&`
+after the lint, not before); read a file's serialisation before rewriting
+it programmatically; and never put a hash, count, or path into an agent
+brief without re-resolving it in the same turn — the brief is a write-side
+artefact like any other. Cross-references the P3 catch recorded in the
+wave-6 triage `_meta`.
+
+
+## claude-obs 36 — 2026-08-06 (Session 129): he found four defect classes by looking at pictures, and none of my checks could have
+
+**Pattern.** Every substantive finding today entered through Shawn's eyes on the
+imagery, not through anything I ran. The attractor effect that inverts
+proximity ordering; the conflation partner that was equidistant between two
+mounds; the "already used by 3293" warning that contradicted a verdict he had
+just saved; and the model-derived points in the student ground truth — all four
+began as "look at this screenshot" and only became measurements after I was told
+where to look. My contribution was conversion: visual observation → quantity →
+mechanism. That conversion was fast and mostly correct. The *detection* was not
+mine in a single instance.
+
+**Lesson.** The verification programme's automated checks are good at
+reconciliation and blind to kind. Ruling 19's `4770 - 52 + 28 = 4746` passed
+every count-based audit while concealing two model detections, because the count
+was right. The check that would have caught it did not exist until he told me
+what he had seen, and I wrote it *afterwards*. That ordering should temper any
+claim about what the programme can find unaided.
+
+**How to apply.** When he reports a visual anomaly, treat it as higher-value
+than a passing check, not lower — and convert it into a standing re-runnable
+audit in the same session, because the next instance of the class will not have
+him looking at it. `scripts/audit_student_gt_integrity.py` exists for exactly
+this reason and should be run at each reference change rather than once.
+
+## claude-obs 37 — 2026-08-06 (Session 129): self-critique — I twice reported a fix as done on evidence that could not have failed
+
+**Pattern.** The keyboard nudge: I ran Streamlit's `AppTest`, saw the
+displacement move, and told him it worked. `AppTest` does not execute custom
+components, so the interfering component could not fire and the test could not
+have failed. Separately, a `str.replace` whose anchor did not match returned the
+string unchanged; I wrote the identical file, committed it, reported the bug
+fixed, and he found it still there. Both times my evidence was something I had
+produced rather than something I had observed, and both failure modes are
+*visually identical to success* — a green test, a clean commit.
+
+**Lesson.** I extend more credence to self-generated evidence than to observed
+evidence, and self-generated evidence is exactly the kind that can be vacuous. A
+passing test earns trust only after "could this test have failed for this
+reason?" has an answer. Twice in one session is a pattern, not an accident.
+
+**How to apply.** For anything touching a custom component or a rendered page,
+verify in a real browser before reporting — the tooling for this exists and cost
+about two minutes. For programmatic edits, assert the anchor before writing so a
+no-match fails loudly. And when reporting a fix, say *how* it was checked; if
+that sentence cannot be written, the fix is not confirmed.
+
+## claude-obs 38 — 2026-08-06 (Session 129): he asks whether an inconsistency matters before assuming it does
+
+**Pattern.** On discovering he had been marking conflations without attending to
+direction — roughly 700 decisions — his response was not to start over but to
+ask "is that a problem?". Measuring showed it was not: 28 of 30 co-located pairs
+were both marked `c`, the practice was consistent, and the quantity of interest
+comes from clustering marked positions rather than from counting labels. Earlier
+the same day he had said of his own adjudication rule, "it may not be perfect but
+at least it's consistent" — the same instinct, stated as a principle.
+
+**Lesson.** Consistency is recoverable; inconsistency often is not. A uniformly
+applied rule can be revised wholesale afterwards from the recorded data, which is
+why his preference for consistency over per-case correctness is the stronger
+research position rather than a concession. My reflex on finding the
+inconsistency was to correct forward — and my advice at item 685 (mark the
+"keeper" as distinct) introduced a directional judgement the analysis did not
+need and contradicted my own earlier guidance. He was right and I withdrew it.
+
+**How to apply.** Before recommending a change in mid-pass practice, establish
+what the downstream analysis actually consumes. If the answer is positions
+rather than labels, the labels are a convenience and their inconsistency is not
+worth 700 re-decisions. State that explicitly rather than letting him infer it.

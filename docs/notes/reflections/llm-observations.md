@@ -7032,3 +7032,98 @@ either of them, because the coupling is only as good as its transitive
 closure. The check that caught it was a whole-corpus one written the same
 day; the per-wave validation that has run for eight waves could not have,
 since it sees only its own wave.
+
+## Session 129 — 2026-08-05/06 (a green test that could not fail; the edit that returned unchanged; proximity as a proxy for intent; and the arithmetic that could not see provenance)
+
+**A test harness that cannot exercise the failing path returns green, and green
+is indistinguishable from working.** Streamlit's `AppTest` does not execute
+custom components. The keyboard-nudge feature interacted with one — the image
+component re-reports its last click on every rerun, which overwrote each nudge
+immediately — so in the harness the interfering path never fired and the feature
+passed. I reported it working. It had never worked once in a browser.
+
+The general form: **a test that cannot reach the defect is not weak evidence of
+its absence, it is no evidence at all**, and it presents identically to strong
+evidence. The discriminating question is not "did the test pass" but "could this
+test have failed for this reason". Asking it takes one sentence and would have
+caught this before the user did.
+
+**A string replacement whose anchor does not match succeeds silently.**
+`str.replace` returns the input unchanged when it finds nothing; the file was
+rewritten identically, the commit was clean, and I reported the bug fixed. The
+repair is `assert old in s` before writing — but the lesson is about the class,
+not the call: **any edit primitive with a no-match-is-fine semantics will
+eventually be applied to a stale anchor**, and the failure surfaces as
+"the bug you reported is still there" rather than as an error.
+
+**Twice I encoded proximity as a proxy for intent, and twice it was wrong in the
+same direction.** The conflation partner was auto-resolved to the nearest
+neighbour — correct except in exactly the attractor case the review exists to
+find, where the true partner is *further* than an unrelated mound because a
+numeral pulled the detection away. Then a partner was recorded for every verdict
+including `distinct`, so a point declared *not* the same as its neighbours was
+logged as claiming one. Both times the code inferred a relationship from
+geometry when the reviewer's own judgement was available and would have been
+authoritative. **Where a human is already making the judgement, deriving it from
+coordinates is not a shortcut but a substitution.**
+
+**Arithmetic that reconciles is not provenance that holds.** The student
+ground-truth layer's derivation is recorded as `4770 - 52 + 28 = 4746` and every
+count-based audit passed, because the arithmetic is correct. Two of those 28
+additions were model detections promoted into a layer used to score the model.
+No total could have revealed it: the count was right and the *kind* was wrong.
+The check that found it was reading each difference's annotation — and the thing
+that prompted the check was a human looking at a map and saying "there is only
+one mound here". **A provenance claim needs a provenance check; a right-sized
+wrong ingredient is invisible to reconciliation.** Structurally identical to
+W7-D9, where four Dawid–Skene fits each reconciled internally while consuming
+different references.
+
+## Session 126 — 2026-08-03/04 (the blind layer's value is tier-independent; genre routing solved until the genres ran out; a two-channel trap invisible to per-channel review; measured constants beat principled ones)
+
+*Written 2026-08-06 at window-end by the session's own instance.*
+
+**The blind layer corrects Fable exactly as it corrected everyone
+else.** Waves 5 and 6 were the sixth and seventh consecutive rounds in
+which blind verification passes overturned the triager's
+pre-registered stories — and the triager was the top-tier model both
+times (five family-level calls overturned in wave 6 alone, including
+one where the "obvious" divergence was the document being right and
+the locator wrong). The ruling-11 discipline's value is structural,
+not a compensation for a weaker adjudicator: pre-registration makes
+the correction *visible*, and fresh-context refutation finds what the
+author's framing hides, at every capability tier tried so far. This
+is also what made the 48-hour Opus window a low-risk handoff — the
+safety net was never the main loop's tier.
+
+**Genre rulings made model routing a solved problem — then the genre
+mix collapsed.** Ruling 4/5's Sonnet-for-tracking-prose,
+Opus-for-dense-results rule needed no judgement calls at all in
+either wave: the remaining 138→98 batches are dense audit, errata,
+registration, and results-findings material, so the whole fleet runs
+Opus and the gate machinery (spot-audit duplicates) had nothing to
+arbitrate. A routing policy can be complete and correct and still
+mostly idle, because the corpus's genre distribution, not the
+policy, decides how often the cheap tier is reachable.
+
+**A two-channel provenance trap is invisible to per-channel review.**
+The cand-2397 double-count (see the abductive entry) is an
+LLM-workflow observation as much as a data one: the reviewer did
+their job once, the curator did their job once, every artefact passed
+its own checks, and the defect existed only in the *join* — a
+place no single review pass ever looks. The verification programme
+found it not by reviewing either channel harder but because a re-run
+agent compared two GT variants before landing anything. Fresh-context
+comparison across channels catches what within-channel diligence
+cannot.
+
+**Tolerance constants want measurement, not principle.** The first
+de-dup landing used 1 m — principled ("twins sit AT the detection
+coordinates") and wrong within hours, when the sweep measured the
+actual cross-run duplicate spread at up to 3.776 m and the first
+ambiguous non-twin at 7.3 m. The corrected 5 m constant is not more
+clever; it is simply *located* — inside a measured gap in the
+distance distribution. For pipeline guards, the empirical spread of
+the classes being separated is the only defensible source of a
+threshold, and it costs one probe script to obtain.
+
