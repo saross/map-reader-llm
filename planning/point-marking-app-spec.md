@@ -221,6 +221,35 @@ Every ingredient for re-cutting it later is preserved — `displacement_m`,
 `resolved_partner_layer`, `resolved_partner_m`, and the verdict — so the
 threshold can be moved and its effect measured without re-reviewing.
 
+## How to count mounds and duplicates from the output
+
+**Count clusters of marked positions, not verdict labels.**
+
+Where several records describe one mound, the reviewer marks each at the same
+centre, so the marks cluster far inside the ±2.5 m precision floor and well
+below the 20.66 m minimum real separation. Therefore:
+
+- **distinct mounds** = number of position clusters among marks carrying a
+  centre
+- **redundant records** = (marks with a centre) − (distinct clusters)
+
+**Do not count `same_as_neighbour` verdicts to get the duplicate total.** The
+verdict records that a record is redundant, but not which of a pair is the one
+to keep, and in practice both members of a pair were often marked `c` — 28 of
+30 co-located pairs, measured 2026-08-06. That inflates a `c` count by one per
+pair while leaving the clustering entirely correct.
+
+This is a property of the instrument, not an error to repair. Direction —
+which record survives into the reference — is a **downstream rule** ("prefer
+the student record over the phantom"), applied once in analysis, not a
+judgement made 1,300 times at the screen. Asking the reviewer to decide it
+per-item would add work, add inconsistency, and produce nothing the marked
+positions do not already carry.
+
+The one case where direction is adjudicated explicitly is W7-R2, where the
+question is which of two records is *illegitimate* rather than merely
+redundant. That is two points decided once.
+
 ## Output contract
 
 Write a **new** file; do not mutate `canonical-review.csv` in place. Each row
