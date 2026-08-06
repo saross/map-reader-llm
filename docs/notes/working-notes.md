@@ -26334,3 +26334,76 @@ validator host amd-tower disagreeing about scope; W7-I4; Session 128 2026-08-04.
 - `scripts/check_c4_plan_coverage.py` — the sibling whole-corpus check added
   the same session, which covers coverage and containment but not anchor
   existence.
+
+## Observation 395: Two model-detected mounds were promoted into the student ground truth, making the model a source for the layer it is scored against (Session 129, 2026-08-06)
+
+*Source anchors: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
+features #4744 and #4745, whose `_added_2026-05-03` field records the
+provenance verbatim. Layer diff against the immutable
+`student-mounds-55maps.geojson` (4,770 features, one commit ever,
+`301b51128`) computed 2026-08-06: 28 positions present in the reviewed layer
+and absent from the original, of which 26 are merge centroids with exactly two
+superseded originals within 60 m, leaving 2 unexplained. Surfaced by the PI
+during the point-marking pass at queue item 685, from the map rather than from
+the metadata.*
+
+Ruling 19 describes layer 2 as the "current corrected student GT" and records
+its derivation arithmetically as `4770 - 52 + 28 = 4746`, characterised as "a
+NET DECREASE: duplicate-cleaning, not discovery". The arithmetic closes
+exactly, which is why nothing looked wrong. But **2 of those 28 additions are
+not student digitisation at all — they are model detections**, and their own
+annotations say so:
+
+- **#4744**: "second of two-touching-mounds at cand 4264; missed by curator GT,
+  observed via **T=0.7 recovery propagation**"
+- **#4745**: "**phantom-FP rescue** at image cand 2397 (trig_point_on_mound,
+  verifier_p=1.0); curator GT missed entire region; surfaced via
+  image-recovery propagation"
+
+### Why this matters
+
+**The student layer is a scoring reference, so a model-derived point in it
+scores the model against its own output.** The contamination is small — 2 of
+4,746, about 0.04% — but the direction is the damaging one: it can only ever
+inflate a score, never depress it, and it is exactly the finding a reviewer
+would seize on. The defence "it is only two points" concedes the principle.
+
+Worse, **#4744 appears to be wrong on the map as well as impure in
+provenance**. The PI's reading at item 685: there is one mound symbol at that
+position on this sheet, not two touching mounds. A second mound IS visible on
+the adjacent sheet, which is the likely origin of the propagation, but that
+does not make it a feature of this map. So a model detection was accepted into
+the ground truth with no map evidence supporting it.
+
+Two hypotheses were tested and disconfirmed before the real cause was found,
+which is worth recording because both were plausible: it is **not** cross-sheet
+duplication (all three points carry `source_map = K-35-064-3_Dimitrovgrad`, and
+across the whole layer **zero** student-student pairs within 50 m are
+cross-sheet), and it is **not** a no-data edge artefact (all three sit on
+69-76% real raster content on that sheet).
+
+### The Gold Standard is clean
+
+Checked at the same time, by the same method. `student-mounds-gs-4maps.geojson`
+(560) to `-reviewed` (556): 4 additions, **all 4** merge centroids, **0**
+unexplained, and the schema carries no `_added` column at all. The breach is
+confined to the 55-map layer.
+
+### The rule this yields
+
+**A detection may never enter a student or gold-standard layer, in any
+circumstance.** Model-derived records belong in the promoted-phantom layer
+(layer 4), which exists precisely to hold "real mounds the students missed"
+separately rather than merged. The layer structure was right; the discipline
+lapsed.
+
+The general lesson is about **how the error hid**. The derivation was recorded
+as arithmetic (`4770 - 52 + 28`) and the arithmetic was correct, so every audit
+that checked the numbers passed. What no audit asked was *what kind of thing
+each of the 28 additions was*. **A provenance claim needs a provenance check,
+not a count check** — reconciling totals cannot detect a right-sized wrong
+ingredient. The same shape as W7-D9, where four Dawid-Skene fits reconciled
+individually while using different references.
+
+Both points are queued for adjudication as `curator_addition` items (queue
+indices 1289 and 1313 as of this session's queue).

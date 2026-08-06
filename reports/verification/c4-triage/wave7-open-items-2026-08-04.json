@@ -1,12 +1,12 @@
 {
  "_meta": {
-  "title": "Wave-7 open items — confirmed defects, research findings and instrument gaps not repaired in Session 127",
+  "title": "Wave-7 open items \u2014 confirmed defects, research findings and instrument gaps not repaired in Session 127",
   "date": "2026-08-04",
   "author": "Claude Opus 5 session (Session 127)",
   "why_this_file_exists": "Several items surfaced this session were recorded only in commit messages, which are durable but not discoverable at session start. A next session reads the continuity block and the triage JSONs, so everything still open is consolidated here with its evidence pointer.",
   "status_convention": "OPEN unless a resolving commit is named. Nothing here has been adjudicated; the blind-pass verdicts are evidence, not decisions. As of Session 128 a repaired item carries a `status` field naming the session and the adjudication; items without one are still open.",
   "provenance": "Wave-7 blind passes P1-P4 (e86bca52d), the W7-E4 repair verification (18bbcaa18), and the extraction agents' own flags.",
-  "census_hazard_note": "The census flagged that `uuid` in the base layer is a SYMBOL CODE, not an identifier — 4,770 features share only 833 distinct values. Do not use it as a key.",
+  "census_hazard_note": "The census flagged that `uuid` in the base layer is a SYMBOL CODE, not an identifier \u2014 4,770 features share only 833 distinct values. Do not use it as a key.",
   "session_128_note": "W7-D5 repaired, and repairing it exposed W7-D9. W7-D3, W7-D4 and W7-D6 adjudicated from artefacts and repaired. All four ds-summary-v2 repairs landed in ONE commit with the rule-14 re-extraction of b073 and b074, because the coupling invariant makes a second edit to the same document cost a second re-extraction. Ruling 21 was collected during this work and moves every reference-tainted RE-ANALYSIS behind the standardised reference; see reports/verification/reference-standardisation-queue.md."
  },
  "confirmed_defects_unrepaired": [
@@ -14,10 +14,10 @@
    "id": "W7-D1",
    "severity": "MEDIUM",
    "file": "results/temperature-failure-recovery-analysis/report.md",
-   "location": "§ 12",
+   "location": "\u00a7 12",
    "defect": "Cites three `results/<run>/mcc/evaluation.json` paths that commit `da2cf355f` archived on 2026-06-07 to `archive/55maps-superseded-gt-evals/per-run/`. The paths resolve to nothing.",
    "found_by": "W7-E4 blind verification pass",
-   "note": "The SAME defect was found and repaired in results/55maps-mcc-v2-summary/report.md this session (75e825d47). The instance was fixed and the class was missed — other documents citing per-run mcc/ paths are likely affected. A corpus grep for `mcc/evaluation` is the cheap next step.",
+   "note": "The SAME defect was found and repaired in results/55maps-mcc-v2-summary/report.md this session (75e825d47). The instance was fixed and the class was missed \u2014 other documents citing per-run mcc/ paths are likely affected. A corpus grep for `mcc/evaluation` is the cheap next step.",
    "repair": "Repoint to the archive paths, as done in 75e825d47.",
    "status": "PARTIALLY REPAIRED 2026-08-04 (Session 128). The registered INSTANCE is fixed: all five dead paths in results/temperature-failure-recovery-analysis/report.md repointed to archive/55maps-superseded-gt-evals/per-run/, one of which was a RUNNABLE re-derivation command that raised FileNotFoundError. No value moved -- every MCC figure was re-read from the archived artefacts and matches what the document printed (T=0.7 0.6476 [0.6331, 0.6620], image 0.6924 [0.6784, 0.7062], text-MIN 0.626 [0.611, 0.641]); the defect was purely locational. The recipe was also tightened to print point and both CI bounds so it reproduces the document's own table, and was verified by running it. The document is PENDING extraction (b166-b170), so rule 14 did not apply, but the plan was re-ranged -- see class_measurement.remaining.",
    "class_measurement": {
@@ -25,26 +25,26 @@
     "headline": "The class is 24 FILES, not one. W7-D1 was registered as a single document.",
     "the_good_news": "The EXTRACTION LAYER IS CLEAN. All 5,492 anchor-file references across the c4-extraction corpus resolve -- zero dead anchors. Where an extraction file contains an archived path it is inside claim_text or notes, i.e. a faithful quotation of the document's own dead path, which is correct behaviour and not a defect. The one exception is 072.json, where two value.path locators name the dead corrected-f1-human-reviewed.json while their anchors are live.",
     "dispositions": {
-     "REPAIR — live mine documents": [
-      "results/temperature-failure-recovery-analysis/report.md (5 occ) — DONE this session",
-      "results/ci-metadata-registry.md (11 occ) — belongs to W7-I2, repair there",
-      "results/meta-findings-summary.md (6 occ) — pending b124-b127",
-      "results/55maps-cross-track-comparison/report.md (1 occ) — EXTRACTED b069-b072, so rule 14 applies",
-      "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md (1 occ) — EXTRACTED b078/b079, rule 14 applies",
+     "REPAIR \u2014 live mine documents": [
+      "results/temperature-failure-recovery-analysis/report.md (5 occ) \u2014 DONE this session",
+      "results/ci-metadata-registry.md (11 occ) \u2014 belongs to W7-I2, repair there",
+      "results/meta-findings-summary.md (6 occ) \u2014 pending b124-b127",
+      "results/55maps-cross-track-comparison/report.md (1 occ) \u2014 EXTRACTED b069-b072, so rule 14 applies",
+      "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md (1 occ) \u2014 EXTRACTED b078/b079, rule 14 applies",
       "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.md (1 occ)",
-      "results/limitations-consolidation/report.md (1 occ) — pending b121-b123",
-      "reports/verification/c4-extraction/072.json — two value.path locators to repoint"
+      "results/limitations-consolidation/report.md (1 occ) \u2014 pending b121-b123",
+      "reports/verification/c4-extraction/072.json \u2014 two value.path locators to repoint"
      ],
-     "LEAVE — dated history, repairing would falsify the record": [
-      "docs/notes/working-notes.md (3 occ) and docs/notes/reflections/session-reflection.md (1 occ) — append-only journals",
-      "reports/verification/c4-triage/blind-passes/* and wave7-open-items — dated evidence records",
-      "results/documentation-audit/*.md (4 occ) — dated snapshots; banner-only treatment per the P1/P2/P3 pass files"
+     "LEAVE \u2014 dated history, repairing would falsify the record": [
+      "docs/notes/working-notes.md (3 occ) and docs/notes/reflections/session-reflection.md (1 occ) \u2014 append-only journals",
+      "reports/verification/c4-triage/blind-passes/* and wave7-open-items \u2014 dated evidence records",
+      "results/documentation-audit/*.md (4 occ) \u2014 dated snapshots; banner-only treatment per the P1/P2/P3 pass files"
      ],
      "REGENERATE": [
-      "reports/verification/c4-recompute-report.json — generated, fixed by a whole-corpus recompute on sapphire"
+      "reports/verification/c4-recompute-report.json \u2014 generated, fixed by a whole-corpus recompute on sapphire"
      ],
      "DECIDE": [
-      "planning/interim-docs-review.md (2 occ), planning/paper-writeup-continuity.md (2 occ) — living planning documents"
+      "planning/interim-docs-review.md (2 occ), planning/paper-writeup-continuity.md (2 occ) \u2014 living planning documents"
      ]
     },
     "remaining": "7 live documents plus 072.json's two locators. Two of them (cross-track-comparison, corrected-f1-multi-buffer) are extracted and so cost a rule-14 re-extraction; three are pending and cost a plan re-range instead, as temperature-failure-recovery-analysis did this session (b166-b170 re-mapped and b170's tail extended 1016 -> 1102, which also closed a PRE-EXISTING 43-line coverage gap the S122 plan had left).",
@@ -58,9 +58,9 @@
    "location": "lines 47 and 546",
    "defect": "Gives the T=0.3 corrected F1 at R=50 m as 0.8436. The artefact `results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json` `$.results[0].F1` holds 0.843650287172942, which is 0.8437 at 4 d.p. under round-half-up. Both sibling documents (ds-summary, mcc-v2-summary) say 0.8437.",
    "found_by": "W7-E4 blind verification pass",
-   "note": "A rounding-boundary case — the value sits almost exactly on 0.84365. Related to the S126 comparer half-up float-noise fix (1e4a13ff7). The defect is the INCONSISTENCY with siblings more than the rounding itself.",
+   "note": "A rounding-boundary case \u2014 the value sits almost exactly on 0.84365. Related to the S126 comparer half-up float-noise fix (1e4a13ff7). The defect is the INCONSISTENCY with siblings more than the rounding itself.",
    "repair": "0.8436 -> 0.8437 at both sites, or a documented rounding convention if truncation is deliberate.",
-   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED: 0.8437. The artefact holds 0.843650287172942, which sits just ABOVE the 0.84365 boundary, so round-half-up and round-half-even agree -- this was not a genuine tie. Both sibling documents already said 0.8437, so the defect was the inconsistency as much as the rounding. Corrected at both sites (§ 3 line 47 and § 9 line 546 at the pre-repair numbering)."
+   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED: 0.8437. The artefact holds 0.843650287172942, which sits just ABOVE the 0.84365 boundary, so round-half-up and round-half-even agree -- this was not a genuine tie. Both sibling documents already said 0.8437, so the defect was the inconsistency as much as the rounding. Corrected at both sites (\u00a7 3 line 47 and \u00a7 9 line 546 at the pre-repair numbering)."
   },
   {
    "id": "W7-D3",
@@ -70,7 +70,7 @@
    "defect": "Line 47's measured-F1 ranking (T=0.7 > T=0.3 > image) contradicts line 216's (T=0.7 > Image > T=0.3).",
    "found_by": "b073 re-extraction agent; the W7-E4 blind pass added that the contradiction is DECIDABLE from the artefacts rather than merely noted",
    "repair": "Decide from the artefacts and correct the wrong site; both were left unadjudicated in Session 127.",
-   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED FROM ARTEFACTS: line 216's ranking was right and line 47's wrong. The four runs' $.measured.f1 are 0.7896 (T=0.7), 0.7745 (image), 0.7743 (T=0.3), 0.7591 (text-MIN), so the order is T=0.7 > image > T=0.3 > text-MIN. § 1 corrected to match; § 4.1's table already had it. NOTE the interaction with W7-D9: the image-vs-T=0.3 pair sits at 0.0002 and the two runs are not on a common reference, so that half of the order is separately withdrawn at § 4.1."
+   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED FROM ARTEFACTS: line 216's ranking was right and line 47's wrong. The four runs' $.measured.f1 are 0.7896 (T=0.7), 0.7745 (image), 0.7743 (T=0.3), 0.7591 (text-MIN), so the order is T=0.7 > image > T=0.3 > text-MIN. \u00a7 1 corrected to match; \u00a7 4.1's table already had it. NOTE the interaction with W7-D9: the image-vs-T=0.3 pair sits at 0.0002 and the two runs are not on a common reference, so that half of the order is separately withdrawn at \u00a7 4.1."
   },
   {
    "id": "W7-D4",
@@ -80,106 +80,118 @@
    "defect": "Line 257 calls text-MIN \"the only run with zero unjoined rows\" while lines 189-190 record three runs with zero.",
    "found_by": "b073 re-extraction agent",
    "repair": "Unadjudicated. Both readings recorded in 073.json.",
-   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED FROM ARTEFACTS: lines 189-190 were right. ds-human-crosstab/summary.json $.n_unjoined reads 0 for text-MIN, 0 for T=0.7, 0 for image and 64 for T=0.3, so three runs qualify and text-MIN is not 'the only' one. § 4.2 corrected to 'one of the three', restoring agreement with § 3. The section's conclusion is unaffected: text-MIN's standing as a clean test rests on its VLM-only/matched ratio, not on being uniquely joined."
+   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED FROM ARTEFACTS: lines 189-190 were right. ds-human-crosstab/summary.json $.n_unjoined reads 0 for text-MIN, 0 for T=0.7, 0 for image and 64 for T=0.3, so three runs qualify and text-MIN is not 'the only' one. \u00a7 4.2 corrected to 'one of the three', restoring agreement with \u00a7 3. The section's conclusion is unaffected: text-MIN's standing as a clean test rests on its VLM-only/matched ratio, not on being uniquely joined."
   },
   {
    "id": "W7-D5",
    "severity": "MEDIUM",
    "artefact": "reports/verification/c4-extraction/073.json",
-   "defect": "FALSE GREEN. The re-extraction re-anchors a claim to the T=0.7 corrected-F1 artefact, which verifies green for the wrong computation — a passing verdict on a quantity the document is not asserting.",
+   "defect": "FALSE GREEN. The re-extraction re-anchors a claim to the T=0.7 corrected-F1 artefact, which verifies green for the wrong computation \u2014 a passing verdict on a quantity the document is not asserting.",
    "found_by": "W7-E4 blind verification pass",
    "note": "Worse than a mismatch: a mismatch is visible in triage, a false green is not. Fix before the ledger consumes it.",
    "repair": "Re-anchor to the artefact the claim actually asserts.",
-   "status": "REPAIRED 2026-08-04 (Session 128), in two stages. STAGE 1 — the anchor: claim index 3 of 073.json was re-anchored from results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json::$.results[0].n_ref_student_only (method read, green at 4745) to results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json (method arithmetic, $.item_counts.matched + $.item_counts.student_only). It recomputed to 4,770 against the document's 4,745 and reported MISMATCH with abs_error 25 — the correct verdict, and the thing the false green had hidden. STAGE 2 — the document: that mismatch was a real defect (W7-D9), so the document was repaired in the same session and the withdrawn clause no longer asserts a count. The claim therefore carries no values and was DELETED in the rule-14 re-extraction; b073 claim indices after 3 have shifted, so any external reference to a pre-Session-128 b073 index is stale. The evidence that made the mismatch correct is now extracted as live green claims on the new § 2.1 caveat block.",
-   "ledger_note": "reports/verification/c4-recompute-report.json is a whole-corpus artefact (16,083 rows at Session 127, host sapphire) and is refreshed by a full recompute; a single-file run TRUNCATES it, so never point recompute_c4_claims.py at one batch without redirecting --out. It still predates the Session-128 ds-summary-v2 repairs and the b073/b074 re-extraction. REGENERATE ON SAPPHIRE — pending as of the Session-128 commit."
+   "status": "REPAIRED 2026-08-04 (Session 128), in two stages. STAGE 1 \u2014 the anchor: claim index 3 of 073.json was re-anchored from results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json::$.results[0].n_ref_student_only (method read, green at 4745) to results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json (method arithmetic, $.item_counts.matched + $.item_counts.student_only). It recomputed to 4,770 against the document's 4,745 and reported MISMATCH with abs_error 25 \u2014 the correct verdict, and the thing the false green had hidden. STAGE 2 \u2014 the document: that mismatch was a real defect (W7-D9), so the document was repaired in the same session and the withdrawn clause no longer asserts a count. The claim therefore carries no values and was DELETED in the rule-14 re-extraction; b073 claim indices after 3 have shifted, so any external reference to a pre-Session-128 b073 index is stale. The evidence that made the mismatch correct is now extracted as live green claims on the new \u00a7 2.1 caveat block.",
+   "ledger_note": "reports/verification/c4-recompute-report.json is a whole-corpus artefact (16,083 rows at Session 127, host sapphire) and is refreshed by a full recompute; a single-file run TRUNCATES it, so never point recompute_c4_claims.py at one batch without redirecting --out. It still predates the Session-128 ds-summary-v2 repairs and the b073/b074 re-extraction. REGENERATE ON SAPPHIRE \u2014 pending as of the Session-128 commit."
   },
   {
    "id": "W7-D6",
    "severity": "LOW",
    "file": "results/55maps-ds-summary-v2/report.md",
    "location": "lines 42 and 294",
-   "defect": "Cites 586 rows against 585 data rows in the text-MIN review CSV — a header-handling question.",
+   "defect": "Cites 586 rows against 585 data rows in the text-MIN review CSV \u2014 a header-handling question.",
    "found_by": "b073 re-extraction agent",
    "repair": "Left for the harness to decide on header handling; not adjudicated.",
-   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED: 585, the data-row count. The file has 586 lines and 585 data rows, and the decisive evidence is inside the document's own sentence -- its sibling figure '692' for T=0.3 is a data-row count (that CSV has 693 lines), so the pair was internally inconsistent. Repaired at both sites. A THIRD SITE was found during the repair and fixed with it: the § 6.2 table gave the image today-review as 557 where the file has 558 data rows. 557 was not a typo but the cross-tabulator's accounting (556 today-rows also in the yesterday review, plus 1 today_only from $.source_counts); under the table's own semantics -- the column names the CSV and reports its rows -- it is 558. Both the reasoning and the superseded figures are recorded in a dated note under the table so the old number is not re-read as an error."
+   "status": "REPAIRED 2026-08-04 (Session 128). ADJUDICATED: 585, the data-row count. The file has 586 lines and 585 data rows, and the decisive evidence is inside the document's own sentence -- its sibling figure '692' for T=0.3 is a data-row count (that CSV has 693 lines), so the pair was internally inconsistent. Repaired at both sites. A THIRD SITE was found during the repair and fixed with it: the \u00a7 6.2 table gave the image today-review as 557 where the file has 558 data rows. 557 was not a typo but the cross-tabulator's accounting (556 today-rows also in the yesterday review, plus 1 today_only from $.source_counts); under the table's own semantics -- the column names the CSV and reports its rows -- it is 558. Both the reasoning and the superseded figures are recorded in a dated note under the table so the old number is not re-read as an error."
   },
   {
    "id": "W7-D7",
    "severity": "LOW",
    "row": "090-audit-summary#9[1]",
-   "defect": "era_check reports NOT faithful because the document's $552.30 is a sum of ROUNDED components (364.70 + 60.79 + 126.81) while the era operand sum is 552.2888 — a 0.002 % difference.",
+   "defect": "era_check reports NOT faithful because the document's $552.30 is a sum of ROUNDED components (364.70 + 60.79 + 126.81) while the era operand sum is 552.2888 \u2014 a 0.002 % difference.",
    "found_by": "era_check redesign validation; independently noted by blind pass P3",
    "note": "Not an era failure. The era machinery compares at quoted precision and has no APPROX verdict. Belongs with the comparer/tolerance family (W6-E4/E5), not the era family.",
    "repair": "Give era_check an APPROX status, or teach the comparer sum-of-rounded-components."
   },
   {
    "id": "W7-D8",
-   "severity": "MEDIUM — deferred by PI ruling; documentation obligation is load-bearing",
+   "severity": "MEDIUM \u2014 deferred by PI ruling; documentation obligation is load-bearing",
    "artefact": "outputs/55maps-text-high-t0.3-generalisation/evaluation/evaluation.json",
    "defect": "Evaluated against the UNREVIEWED base student-mounds-55maps.geojson (4,770) while the sibling runs' evaluations used student-mounds-55maps-reviewed.geojson. t0.3 also has no full-buffer-eval, unlike the other three.",
    "found_by": "student-GT reference census (student-gt-reference-census-2026-08-04.json), independently re-verified from cli_args.ground_truth",
-   "note": "Does NOT affect the MCC comparison — all four MCC artefacts used the reviewed layer. It affects claims anchored to this evaluation directory, and t0.3 is the F1 leader in several documents.",
+   "note": "Does NOT affect the MCC comparison \u2014 all four MCC artefacts used the reviewed layer. It affects claims anchored to this evaluation directory, and t0.3 is the F1 leader in several documents.",
    "repair": "Establish which claims anchor there, decide whether t0.3's evaluation should be re-run against the reviewed layer for comparability, and flag any cross-run claim that mixes the two.",
    "pi_disposition": "DEFERRED, NOT DISMISSED (ruling 19c). Touches a run that leads on F1, so it is handled deliberately rather than opportunistically. The documentation obligation is load-bearing: this finding must stay legible until someone acts on it."
   },
   {
    "id": "W7-D9",
-   "severity": "MEDIUM — a document defect with an interpretive consequence in the same document",
+   "severity": "MEDIUM \u2014 a document defect with an interpretive consequence in the same document",
    "file": "results/55maps-ds-summary-v2/report.md",
    "location": "lines 12-13 (front matter, post-recovery refresh); consequence at lines 47, 62-70, 78-85, 209-216",
    "opened": "2026-08-04 (Session 128)",
    "defect": "The front matter states the T=0.7 row was 're-derived against the recovered single-round consensus + verifier and the updated 4,745-mound curator GT'. The T=0.7 Dawid-Skene fit did NOT consume the 4,745 layer: it consumed the fixed 4,770 base. The sentence bundles three commits (366f9c66f D-S re-aggregate, e07dae373 cross-tab, f533fda5f re-evaluate) and the '4,745' is true of f533fda5f (the evaluation) but false of 366f9c66f (the D-S re-aggregation), so the compression misattributes the reference.",
    "found_by": "Session 128, following the W7-D5 re-anchor. The W7-E4 blind pass predicted exactly this: a numerically-agreeing anchor 'will conceal M-class attribution defects from any purely numeric verifier'.",
    "evidence": [
-    "scripts/analyse_dawid_skene.py:57 — _STUDENT_GT_PATH defaults to inputs/vectors/references/student-mounds-55maps.geojson, the fixed 4,770 base (ruling 19 layer 1).",
-    "Count test: item-posteriors.csv student_label==1 rows give 4,770 for T=0.7, T=0.3 and text-MIN, and 4,745 for image — exactly the base and the reviewed layer's size between baf1497a7 and 2e075eb99.",
+    "scripts/analyse_dawid_skene.py:57 \u2014 _STUDENT_GT_PATH defaults to inputs/vectors/references/student-mounds-55maps.geojson, the fixed 4,770 base (ruling 19 layer 1).",
+    "Count test: item-posteriors.csv student_label==1 rows give 4,770 for T=0.7, T=0.3 and text-MIN, and 4,745 for image \u2014 exactly the base and the reviewed layer's size between baf1497a7 and 2e075eb99.",
     "Point test (decisive, independent of counts): the single feature baf1497a7 added to the reviewed layer sits at (396492.2142937911, 4662802.316746469) on K-35-064-3_Dimitrovgrad_4326. It appears as a STUDENT point (student_label=1) in the image item set only. In T=0.7 the same coordinate carries student_label=0 (category vlm_only), i.e. the curator addition was absent from the T=0.7 reference set.",
     "Commit 366f9c66f's own message asserts the D-S re-run used 'the canonical student GT (now including the +1 curator-added mound at K-35-064-3, baf1497a7)'. The artefact contradicts the commit message; the document inherited the commit message's error."
    ],
-   "the_documents_own_contradiction": "Lines 189-194 of the same document already state the correct fact — 'the corrected-f1 pipeline using the *reviewed* student GT at multi-buffer rings while D-S uses the legacy student GT at 50 m'. The front matter contradicts § 3 of its own body. What neither passage records is that IMAGE is the exception to its own rule.",
-   "interpretive_consequence": "UNADJUDICATED — flagged, not decided. The image run's D-S reference is 25 student points smaller than its three siblings', so every cross-run D-S comparison in this document (§ 2.1 item counts, § 2.2 worker accuracy and prevalence, § 4.1 F1 ranking, § 4.2 calibration ranking) compares image against the other three on a different reference. § 4.1's D-S F1 gap between image (0.7990) and T=0.3 (0.7988) is 0.0002 — far smaller than the plausible effect of removing 25 student double-marks, which mechanically reduces student_only (false negatives) and so raises recall. The document already calls that ordering noise-level ('preserved at 4 d.p. only as 0.7745 ≈ 0.7743 within rounding'); this finding adds that the two runs are not on a common reference at all, so the image-vs-T=0.3 rank order is not established by these artefacts.",
+   "the_documents_own_contradiction": "Lines 189-194 of the same document already state the correct fact \u2014 'the corrected-f1 pipeline using the *reviewed* student GT at multi-buffer rings while D-S uses the legacy student GT at 50 m'. The front matter contradicts \u00a7 3 of its own body. What neither passage records is that IMAGE is the exception to its own rule.",
+   "interpretive_consequence": "UNADJUDICATED \u2014 flagged, not decided. The image run's D-S reference is 25 student points smaller than its three siblings', so every cross-run D-S comparison in this document (\u00a7 2.1 item counts, \u00a7 2.2 worker accuracy and prevalence, \u00a7 4.1 F1 ranking, \u00a7 4.2 calibration ranking) compares image against the other three on a different reference. \u00a7 4.1's D-S F1 gap between image (0.7990) and T=0.3 (0.7988) is 0.0002 \u2014 far smaller than the plausible effect of removing 25 student double-marks, which mechanically reduces student_only (false negatives) and so raises recall. The document already calls that ordering noise-level ('preserved at 4 d.p. only as 0.7745 \u2248 0.7743 within rounding'); this finding adds that the two runs are not on a common reference at all, so the image-vs-T=0.3 rank order is not established by these artefacts.",
    "relationship_to_W7_D8": "The MIRROR IMAGE of W7-D8 and easy to conflate. W7-D8 is about the EVALUATION layer, where t0.3 is the odd one out (unreviewed 4,770, siblings reviewed). W7-D9 is about the DAWID-SKENE layer, where IMAGE is the odd one out (reviewed 4,745, siblings the fixed 4,770 base). Different objects, different runs, opposite direction. W7-R1's history shows this pair has already caused one withdrawn claim.",
-   "repair": "Disambiguate the front-matter sentence so the evaluation re-run (4,745, f533fda5f) and the D-S re-aggregation (4,770 base, 366f9c66f) are separated; state at § 2.1 that image's D-S reference differs from the other three; and decide whether § 4.1's image-vs-T=0.3 ordering may still be asserted. The first two are bookkeeping; the third is a PI call.",
-   "status": "REPAIRED (bookkeeping) 2026-08-04 (Session 128); INTERPRETIVE HALF RESOLVED BY DEFERRAL under ruling 21. The front-matter clause is withdrawn in a dated correction block rather than restated, because the sentence describes three commits at once and no single GT count is true of all three. A reference caveat was added at § 2.1 stating the split and its direction, and § 4.1's image-vs-T=0.3 ordering is WITHDRAWN pending re-analysis with the text left in place. NOTHING WAS RECOMPUTED: ruling 21 fixes the reference first, so all four D-S fits re-run once, together, as item 1 of reports/verification/reference-standardisation-queue.md."
+   "repair": "Disambiguate the front-matter sentence so the evaluation re-run (4,745, f533fda5f) and the D-S re-aggregation (4,770 base, 366f9c66f) are separated; state at \u00a7 2.1 that image's D-S reference differs from the other three; and decide whether \u00a7 4.1's image-vs-T=0.3 ordering may still be asserted. The first two are bookkeeping; the third is a PI call.",
+   "status": "REPAIRED (bookkeeping) 2026-08-04 (Session 128); INTERPRETIVE HALF RESOLVED BY DEFERRAL under ruling 21. The front-matter clause is withdrawn in a dated correction block rather than restated, because the sentence describes three commits at once and no single GT count is true of all three. A reference caveat was added at \u00a7 2.1 stating the split and its direction, and \u00a7 4.1's image-vs-T=0.3 ordering is WITHDRAWN pending re-analysis with the text left in place. NOTHING WAS RECOMPUTED: ruling 21 fixes the reference first, so all four D-S fits re-run once, together, as item 1 of reports/verification/reference-standardisation-queue.md."
   }
  ],
  "open_research_findings": [
   {
    "id": "W7-R1",
-   "severity": "MEDIUM (revised down from HIGH on evidence) — the MCC cross-run comparison is sound; the asymmetry is real but sits elsewhere",
+   "severity": "MEDIUM (revised down from HIGH on evidence) \u2014 the MCC cross-run comparison is sound; the asymmetry is real but sits elsewhere",
    "finding": "The four 55-map runs' Dawid-Skene fits may rest on DIFFERENT ground-truth references: the image run's fit implies a 4,745-point student ground truth, while the other three imply the 4,770-feature legacy layer.",
    "found_by": "W7-E4 blind verification pass (wave7-w7e4-verification-2026-08-04.json)",
    "why_it_matters": "Every cross-run D-S comparison in results/55maps-ds-summary-v2/report.md assumes a common reference. If the references differ, the comparisons are not like-for-like.",
    "state": "PARTIALLY RESOLVED 2026-08-04 by the reference-layer census, which INVERTED the blind pass's split.",
-   "history": "Session 127 briefly asserted the CONTRARY — that all D-S aggregations consume the legacy layer — in a dated changelog. The blind pass refuted it and the claim was withdrawn in place rather than edited away.",
+   "history": "Session 127 briefly asserted the CONTRARY \u2014 that all D-S aggregations consume the legacy layer \u2014 in a dated changelog. The blind pass refuted it and the claim was withdrawn in place rather than edited away.",
    "in_progress": "A reference-layer census was commissioned 2026-08-04 to establish the fixed base, the correction-layer history, and the 4,770 account: reports/verification/c4-triage/student-gt-reference-census-2026-08-04.json. The PI's framing is that the underlying student GT is FIXED and only the curator-correction layer has moved.",
    "census_result": {
     "fixed_base_confirmed": "inputs/vectors/references/student-mounds-55maps.geojson = 4,770 features, ONE commit ever (301b51128, 2026-04-08), working-tree md5 byte-identical to that commit. The PI's framing that the underlying student GT is fixed is verified, not assumed.",
     "correction_layer": "student-mounds-55maps-reviewed.geojson: created 4,744 (dea1155fa, 2026-04-19) -> 4,745 (baf1497a7, 2026-05-03 00:32Z) -> 4,746 (2e075eb99, 2026-05-03 05:28Z), unchanged since.",
     "reconciliation": "4,770 - 52 + 28 = 4,746 closes exactly: 26 merged-centroid replacements of student double-marks under 50 m (corroborated by gt-duplicate-decisions.csv, 26 merge / 70 keep_all) plus 2 curator additions.",
     "the_inversion": "The blind pass put IMAGE at 4,745 and the other three at 4,770. The census, reading cli_args.ground_truth directly, found the opposite locus: t0.3's outputs/.../evaluation/ consumed the UNREVIEWED 4,770 base while text-high, image and text-min all consumed the reviewed layer. Independently re-verified this session.",
-    "damage_bounded": "All FOUR archived per-run MCC artefacts record ground_truth = student-mounds-55maps-reviewed.geojson. The MCC cross-run table in 55maps-mcc-v2-summary §§ 2-4 is therefore like-for-like, and the F1-versus-MCC rank-divergence finding does not rest on a reference mismatch."
+    "damage_bounded": "All FOUR archived per-run MCC artefacts record ground_truth = student-mounds-55maps-reviewed.geojson. The MCC cross-run table in 55maps-mcc-v2-summary \u00a7\u00a7 2-4 is therefore like-for-like, and the F1-versus-MCC rank-divergence finding does not rest on a reference mismatch."
    },
-   "what_remains_open": "ONE thing. (1) The t0.3 evaluation-layer difference is a NEW finding in its own right: any claim anchored to outputs/55maps-text-high-t0.3-generalisation/evaluation/ is on a different reference from its siblings, and t0.3 is the F1 leader in several places. Tracked as W7-D8. (2) IS NOW CLOSED — see resolution_of_open_question_2.",
+   "what_remains_open": "ONE thing. (1) The t0.3 evaluation-layer difference is a NEW finding in its own right: any claim anchored to outputs/55maps-text-high-t0.3-generalisation/evaluation/ is on a different reference from its siblings, and t0.3 is the F1 leader in several places. Tracked as W7-D8. (2) IS NOW CLOSED \u2014 see resolution_of_open_question_2.",
    "resolution_of_open_question_2": {
     "closed": "2026-08-04, Session 128",
-    "question": "Whether the four Dawid-Skene fits themselves share a ground-truth reference — a different object from the evaluation metadata the census read.",
+    "question": "Whether the four Dawid-Skene fits themselves share a ground-truth reference \u2014 a different object from the evaluation metadata the census read.",
     "answer": "They do NOT. Image alone consumed the reviewed curator layer (4,745 as it stood between baf1497a7 and 2e075eb99); T=0.7, T=0.3 and text-MIN all consumed the FIXED 4,770 base (ruling 19 layer 1), which is the script default.",
-    "the_blind_pass_was_right_about_the_split_and_wrong_about_its_direction": "Blind pass P4 put image at 4,745 and the other three at 4,770 — which is EXACTLY what the D-S fits show. The census then found the opposite locus (t0.3 odd-one-out at 4,770) and was read as inverting the blind pass. It did not: the census was reading EVALUATION metadata and the blind pass was reading D-S fits. Both were correct about their own object. Two different asymmetries exist, in different layers, singling out different runs.",
+    "the_blind_pass_was_right_about_the_split_and_wrong_about_its_direction": "Blind pass P4 put image at 4,745 and the other three at 4,770 \u2014 which is EXACTLY what the D-S fits show. The census then found the opposite locus (t0.3 odd-one-out at 4,770) and was read as inverting the blind pass. It did not: the census was reading EVALUATION metadata and the blind pass was reading D-S fits. Both were correct about their own object. Two different asymmetries exist, in different layers, singling out different runs.",
     "evidence": [
-     "scripts/analyse_dawid_skene.py:57 — the --ground-truth default is the fixed 4,770 base, so a run inherits 4,770 unless the operator overrode it.",
+     "scripts/analyse_dawid_skene.py:57 \u2014 the --ground-truth default is the fixed 4,770 base, so a run inherits 4,770 unless the operator overrode it.",
      "item-posteriors.csv student_label==1 counts: 4,770 / 4,770 / 4,770 for T=0.7, T=0.3, text-MIN; 4,745 for image.",
      "Decisive point test not relying on counts: baf1497a7's single added feature at (396492.2142937911, 4662802.316746469), K-35-064-3_Dimitrovgrad_4326, is a student point ONLY in the image item set; in T=0.7 that coordinate carries student_label=0."
     ],
-    "consequence": "Registered as document defect W7-D9, whose interpretive half (does § 4.1's image-vs-T=0.3 D-S F1 ordering survive?) is a PI call, not a bookkeeping repair."
+    "consequence": "Registered as document defect W7-D9, whose interpretive half (does \u00a7 4.1's image-vs-T=0.3 D-S F1 ordering survive?) is a PI call, not a bookkeeping repair."
    },
-   "method_note": "Worth keeping: the blind pass corrected the repair, the census corrected the blind pass, and Session 128 found the census and the blind pass were answering DIFFERENT questions and were each right. The lesson is not that one layer beat another but that 'which ground truth did this run use?' has to name the object — evaluation, D-S fit, or MCC — before it has an answer. Note also which evidence settled it: reading cli_args.ground_truth (census) and testing for one known-added POINT (Session 128) both beat inferring a reference from implied counts, which is what left the question open for a day."
+   "method_note": "Worth keeping: the blind pass corrected the repair, the census corrected the blind pass, and Session 128 found the census and the blind pass were answering DIFFERENT questions and were each right. The lesson is not that one layer beat another but that 'which ground truth did this run use?' has to name the object \u2014 evaluation, D-S fit, or MCC \u2014 before it has an answer. Note also which evidence settled it: reading cli_args.ground_truth (census) and testing for one known-added POINT (Session 128) both beat inferring a reference from implied counts, which is what left the question open for a day."
+  },
+  {
+   "id": "W7-R2",
+   "severity": "HIGH \u2014 a contamination breach in a scoring reference, not a bookkeeping error",
+   "finding": "Two model-detected mounds were promoted into the 55-map student ground truth. inputs/vectors/references/student-mounds-55maps-reviewed.geojson features #4744 ('second of two-touching-mounds at cand 4264; observed via T=0.7 recovery propagation') and #4745 ('phantom-FP rescue at image cand 2397, verifier_p=1.0') are model output, not student digitisation. The student layer is a scoring reference, so on those points the model is scored against its own detections. 2 of 4,746 (~0.04%), but the bias can only inflate.",
+   "how_it_hid": "Ruling 19 records the derivation as arithmetic (4770 - 52 + 28 = 4746) and the arithmetic is correct, so every count-based audit passed. No audit asked what KIND of thing each of the 28 additions was. Same shape as W7-D9: components that reconcile individually while differing in provenance.",
+   "evidence": "Layer diff vs the immutable student-mounds-55maps.geojson (4,770; one commit ever, 301b51128), computed 2026-08-06: 28 additions, 26 with exactly two superseded originals within 60 m (merge centroids), 2 unexplained. Both unexplained rows carry an _added_2026-05-03 annotation stating the model origin.",
+   "gold_standard_checked": "CLEAN. student-mounds-gs-4maps.geojson (560) -> -reviewed (556): 4 additions, all 4 merge centroids, 0 unexplained; the schema has no _added column. Breach confined to the 55-map layer.",
+   "disconfirmed_hypotheses": "NOT cross-sheet duplication (all points share source_map K-35-064-3_Dimitrovgrad; zero student-student pairs within 50 m are cross-sheet corpus-wide). NOT a no-data edge artefact (all sit on 69-76% real raster content).",
+   "additional_concern": "#4744 may also be factually wrong: the PI reports one mound symbol at that position on this sheet, not two touching mounds. A second mound is visible on the ADJACENT sheet, the likely origin of the propagation.",
+   "ruling_required": "PI ruling 2026-08-06: a detection may NEVER enter a student or gold-standard layer. Model-derived records belong in layer 4 (promoted phantoms). Removal from layer 2 changes a scoring reference and is therefore gated with the other reference work under ruling 21.",
+   "status": "OPEN \u2014 both points queued for adjudication as curator_addition items (queue indices 1289 and 1313 in the 2026-08-06 queue). Obs 395 records the finding."
   }
  ],
  "instrument_gaps": [
   {
    "id": "W7-I1",
-   "severity": "MEDIUM — recurs on every future repair",
+   "severity": "MEDIUM \u2014 recurs on every future repair",
    "gap": "`git_blob` pins a whole DOCUMENT while batches cover RANGES. Any edit anywhere in a document invalidates the recorded blob for EVERY batch covering it, including batches whose own lines never moved.",
    "evidence": "After the 2026-08-04 withdrawal at ~line 577 (inside b074's range), b073 failed validation on blob mismatch despite all 86 of its spans re-verifying verbatim, with its highest referenced line at 323.",
    "why_it_now_matters": "Charter rule 14 (ruling 18) makes document repair routine, so this will fire constantly.",
@@ -192,30 +204,30 @@
   },
   {
    "id": "W7-I2",
-   "severity": "HIGH (raised from MEDIUM on measurement) — the CI registry's stated purpose is paper CI citation",
-   "gap": "Sidecar metadata disagrees with its artefact. `results/gold-standard-extended-buffer-sweep/evaluation.json` records 10000 iterations / BCa while its co-located `evaluation.metadata.json` still records 1000 / percentile — and results/ci-metadata-registry.md designates the SIDECAR as its authority.",
+   "severity": "HIGH (raised from MEDIUM on measurement) \u2014 the CI registry's stated purpose is paper CI citation",
+   "gap": "Sidecar metadata disagrees with its artefact. `results/gold-standard-extended-buffer-sweep/evaluation.json` records 10000 iterations / BCa while its co-located `evaluation.metadata.json` still records 1000 / percentile \u2014 and results/ci-metadata-registry.md designates the SIDECAR as its authority.",
    "found_by": "blind pass P4",
    "why_it_matters": "results/ci-metadata-registry.md exists to be the citable source for confidence-interval provenance in the paper. As it stands, a paper citing it would state the wrong bootstrap method (percentile rather than BCa) and the wrong iteration count (1000 rather than 10000) for these runs, and would point readers at several artefacts that are no longer where it says they are. This is the same defect P4 found in 55maps-mcc-v2-summary, one layer down: there the Methods prose was stale, here the registry that Methods prose is supposed to defer to is stale too.",
    "state": "MEASURED 2026-08-04. Worse than the sidecars alone.",
-   "next_step": "Refresh the registry rows to the artefacts, repoint the archived paths, and either regenerate the surviving sidecars or retire them — a sidecar that no migration updates is a trap, not a record. Decide whether sidecars remain the registry's nominated authority at all.",
+   "next_step": "Refresh the registry rows to the artefacts, repoint the archived paths, and either regenerate the surviving sidecars or retire them \u2014 a sidecar that no migration updates is a trap, not a record. Decide whether sidecars remain the registry's nominated authority at all.",
    "measurement": {
-    "sidecars": "7 of 7 evaluation.metadata.json sidecars disagree with their co-located evaluation.json — 100%. Every sidecar records 1000 iterations and no method; every artefact records 10000 and BCa.",
+    "sidecars": "7 of 7 evaluation.metadata.json sidecars disagree with their co-located evaluation.json \u2014 100%. Every sidecar records 1000 iterations and no method; every artefact records 10000 and BCa.",
     "mechanism": "The sidecars were created at ad023fc3b (2026-04-21, '48 .metadata.json sidecars') and frozen there. The N=10K upgrade (580f498b6), the 55-map BCa migration (0699769c5) and the gold-standard BCa migration (85f115015) all rewrote evaluation.json and none touched a sidecar.",
     "attrition": "Of that commit's 48 sidecars only 7 evaluation.metadata.json files survive today; the rest were moved or removed without the registry following.",
-    "registry_rows_bootstrap": "All 4 registry rows naming a readable artefact disagree with it on bootstrap method — the registry says 'bootstrap percentile', the artefacts say BCa; where N is legible the registry says 1000 against 10000.",
-    "registry_rows_paths": "Of 70 single-path registry rows, 59 resolve and about 9 name artefacts that no longer exist (excluding two brace-glob notation cells). Several — results/55maps-cleaned-gt-evaluation/{image,text-high,text-min}/evaluation.json and results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json — were archived by da2cf355f, the SAME archival that produced W7-D1."
+    "registry_rows_bootstrap": "All 4 registry rows naming a readable artefact disagree with it on bootstrap method \u2014 the registry says 'bootstrap percentile', the artefacts say BCa; where N is legible the registry says 1000 against 10000.",
+    "registry_rows_paths": "Of 70 single-path registry rows, 59 resolve and about 9 name artefacts that no longer exist (excluding two brace-glob notation cells). Several \u2014 results/55maps-cleaned-gt-evaluation/{image,text-high,text-min}/evaluation.json and results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json \u2014 were archived by da2cf355f, the SAME archival that produced W7-D1."
    },
    "note_on_wave7_rows": "Blind pass P4 already classed the four registry bootstrap rows (087#2[2], 087#3[2], 087#4[2], 087#5[1]) as 'genuinely stale-not-wrong' snapshot divergence. That verdict is right about the rows in isolation; this measurement is about the registry's fitness for the purpose it declares."
   },
   {
    "id": "W7-I3",
    "severity": "LOW",
-   "gap": "The batch plan has no builder script — it was hand-built in S122 — so its `spans` figures cannot be regenerated. Units re-ranged in Session 127 carry density-scaled ESTIMATES flagged by a `spans_basis` field.",
+   "gap": "The batch plan has no builder script \u2014 it was hand-built in S122 \u2014 so its `spans` figures cannot be regenerated. Units re-ranged in Session 127 carry density-scaled ESTIMATES flagged by a `spans_basis` field.",
    "note": "Do not compare estimated spans against original survey figures."
   },
   {
    "id": "W7-I4",
-   "severity": "MEDIUM — the verification result is machine-dependent, which undermines reproducibility claims",
+   "severity": "MEDIUM \u2014 the verification result is machine-dependent, which undermines reproducibility claims",
    "opened": "2026-08-04 (Session 128)",
    "gap": "Three extraction anchors point at UNTRACKED paths. They resolve on amd-tower and are MISSING on sapphire, so `validate_c4_extraction.py --at-era` returns '128/128 valid' on one machine and 'FAIL: 3/128 files with errors' on the other, from the same commit.",
    "found_by": "Session 128, by running the same validation on both machines during the sapphire refresh. A single-machine run cannot see this.",
@@ -223,33 +235,33 @@
     "086.json#41 and 088-ci-registry.json#0 -> results/leaderboard/era2/.cache/.metadata.json (a .cache directory, gitignored)",
     "034-configuration-audit-h8-v2.json#42 and #43 -> archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops (untracked crop tree)"
    ],
-   "why_it_matters": "Ruling 15 already governs this: mechanical verification scope is git-tracked artefacts PLUS tracked proxies, and 'claims anchored to neither are a NAMED triage family, never silently mechanical'. These three are anchored to neither and are currently being treated as mechanical. The cross-machine split is the concrete demonstration of why that ruling exists — an external reader cannot check these at all, and even we get different answers depending on where we run.",
+   "why_it_matters": "Ruling 15 already governs this: mechanical verification scope is git-tracked artefacts PLUS tracked proxies, and 'claims anchored to neither are a NAMED triage family, never silently mechanical'. These three are anchored to neither and are currently being treated as mechanical. The cross-machine split is the concrete demonstration of why that ruling exists \u2014 an external reader cannot check these at all, and even we get different answers depending on where we run.",
    "why_it_was_invisible_until_now": "Every prior validation ran on one machine at a time. The three anchors happen to resolve on amd-tower, which is where they were authored, so the local run says clean. Sapphire is the canonical host for the recompute report, so the ledger and the validator have been disagreeing about scope without anyone noticing.",
-   "next_step": "Give each a ruling-15 referent — a regeneration manifest for the crop tree, and for the leaderboard .cache either a tracked proxy or a re-anchor to the tracked artefact the cache derives from — or move all three into the named triage family. Then make the cross-machine check routine: running the validator on both hosts is cheap and is the only thing that surfaces this class.",
+   "next_step": "Give each a ruling-15 referent \u2014 a regeneration manifest for the crop tree, and for the leaderboard .cache either a tracked proxy or a re-anchor to the tracked artefact the cache derives from \u2014 or move all three into the named triage family. Then make the cross-machine check routine: running the validator on both hosts is cheap and is the only thing that surfaces this class.",
    "note_for_ci": "scripts/check_c4_plan_coverage.py does not test anchor existence; the validator does. Both want running on both hosts at GATE 3."
   }
  ],
  "w7_escalations_status": {
-  "W7-E1": "OPEN — 95 lines across 4 documents were never surveyed at their own extraction era. Top-up re-extraction not yet run. 56 of the 95 are the extraction instrument itself.",
-  "W7-E2": "RESOLVED by ruling 18 — coupling invariant adopted (charter § 5 rule 14); the ~40-batch backlog folds into waves 8-12; GATE 3 carries a whole-corpus drift check.",
-  "W7-E3": "OPEN — whether --at-era becomes the validator default is a GATE 3 completeness question. Landed opt-in at ac547aab7. Current corpus: 128 files, 5,932 claims; default mode 39 failing on blob drift, --at-era 128/128 valid.",
-  "W7-E4": "PARTIAL — repaired in results/55maps-mcc-v2-summary (1085335dc), results/55maps-ds-summary-v2 and results/temperature-failure-recovery-analysis (45aa6a0d1). Roughly 13 documents carrying stale GT counts remain unswept. 55maps-pairwise-permutation-v2/summary.md is GENERATED and must be fixed by regeneration, never by hand-editing."
+  "W7-E1": "OPEN \u2014 95 lines across 4 documents were never surveyed at their own extraction era. Top-up re-extraction not yet run. 56 of the 95 are the extraction instrument itself.",
+  "W7-E2": "RESOLVED by ruling 18 \u2014 coupling invariant adopted (charter \u00a7 5 rule 14); the ~40-batch backlog folds into waves 8-12; GATE 3 carries a whole-corpus drift check.",
+  "W7-E3": "OPEN \u2014 whether --at-era becomes the validator default is a GATE 3 completeness question. Landed opt-in at ac547aab7. Current corpus: 128 files, 5,932 claims; default mode 39 failing on blob drift, --at-era 128/128 valid.",
+  "W7-E4": "PARTIAL \u2014 repaired in results/55maps-mcc-v2-summary (1085335dc), results/55maps-ds-summary-v2 and results/temperature-failure-recovery-analysis (45aa6a0d1). Roughly 13 documents carrying stale GT counts remain unswept. 55maps-pairwise-permutation-v2/summary.md is GENERATED and must be fixed by regeneration, never by hand-editing."
  },
  "carried_from_blind_passes_p1_p3": [
-  "The documentation-audit supersession banners are themselves stale: results-audit-2026-04-21.md's banner says $126.81 against the audited $207.34 and only ever covered § A4. The same superseded figures sit in three sibling files (README.md, audit-summary.md's $552.30 vs audited $438.61, verification-2026-04-21.md). P1 rules the fix is a corrected and EXTENDED banner plus a changelog — not an in-place table refresh, because the measurements are frozen and the pointers are living.",
-  "P2: seven rows (095#21[1-4], 095#22[0],[2],[4]) are verbatim quotations of the audit draft, still exact at audit-summary.md:44 — RECLASSIFY to historical, never repairable under charter § 6.",
+  "The documentation-audit supersession banners are themselves stale: results-audit-2026-04-21.md's banner says $126.81 against the audited $207.34 and only ever covered \u00a7 A4. The same superseded figures sit in three sibling files (README.md, audit-summary.md's $552.30 vs audited $438.61, verification-2026-04-21.md). P1 rules the fix is a corrected and EXTENDED banner plus a changelog \u2014 not an in-place table refresh, because the measurements are frozen and the pointers are living.",
+  "P2: seven rows (095#21[1-4], 095#22[0],[2],[4]) are verbatim quotations of the audit draft, still exact at audit-summary.md:44 \u2014 RECLASSIFY to historical, never repairable under charter \u00a7 6.",
   "P3: README.md is LIVING with two snapshot units, and in-place repair of its 'Why this draft exists' block would CORRUPT a correction record, making the 2026-04-19 audit look wrong by 5.4x instead of the 2.7x it actually established. Do not repair that block in place.",
   "P3: the cache-hit row is a harness unit failure the extractor warned about in prose twice, with a REAL divergence hiding underneath the unit question.",
   "P3: 091#5[0] carries its own commit locator (4e5c5e5a..) that the extraction discarded as rule-5 metadata; resolved there, the claim is permanently true.",
-  "P3: ruling 16's ~5 % threshold rescues almost nothing in the cost family — measured gaps run 12.9 % to 99.7 %, and it bites on exactly one row."
+  "P3: ruling 16's ~5 % threshold rescues almost nothing in the cost family \u2014 measured gaps run 12.9 % to 99.7 %, and it bites on exactly one row."
  ],
  "ground_truth_layers": {
-  "ruling": "phase3-rulings-2026-07-31.md § 19 (PI, 2026-08-04)",
+  "ruling": "phase3-rulings-2026-07-31.md \u00a7 19 (PI, 2026-08-04)",
   "layers": {
    "1_fixed_original_student_digitisation": {
     "path": "inputs/vectors/references/student-mounds-55maps.geojson",
     "count": 4770,
-    "status": "immutable — one commit ever (301b51128, 2026-04-08), md5 byte-identical today"
+    "status": "immutable \u2014 one commit ever (301b51128, 2026-04-08), md5 byte-identical today"
    },
    "2_current_corrected_student_gt": {
     "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
@@ -265,12 +277,12 @@
      "dea1155fa",
      "baf1497a7"
     ],
-    "status": "HISTORICAL RECORD ONLY — must not be used in any analysis postdating the correction to 4,746 (ruling 19a)"
+    "status": "HISTORICAL RECORD ONLY \u2014 must not be used in any analysis postdating the correction to 4,746 (ruling 19a)"
    },
    "4_reviewer_promoted_extension": {
     "path": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
     "count": 773,
-    "note": "All 773 rows human_label=mound. THIS is where the PI's review effort lives — real mounds the students missed, held separately rather than merged into the student GT.",
+    "note": "All 773 rows human_label=mound. THIS is where the PI's review effort lives \u2014 real mounds the students missed, held separately rather than merged into the student GT.",
     "per_buffer_gating": {
      "50": {
       "promoted": 474,
@@ -295,11 +307,11 @@
     }
    }
   },
-  "why_this_was_missed": "The session's census established three layers and stopped, because 4,770 -> 4,746 accounts arithmetically without the fourth. The PI's question — 'did I really find so few additional mounds? I thought I'd found hundreds' — is what surfaced it. A net decrease in the student layer is compatible with hundreds of discoveries living elsewhere, and the arithmetic closing exactly made the gap invisible.",
+  "why_this_was_missed": "The session's census established three layers and stopped, because 4,770 -> 4,746 accounts arithmetically without the fourth. The PI's question \u2014 'did I really find so few additional mounds? I thought I'd found hundreds' \u2014 is what surfaced it. A net decrease in the student layer is compatible with hundreds of discoveries living elsewhere, and the arithmetic closing exactly made the gap invisible.",
   "standing_caution": "Any document citing a student-GT count near a claim about review effort must say WHICH layer it means. '4,746' read as 'all the ground truth' makes the review look vanishingly small."
  },
  "phantom_duplication_audit": {
-  "ruling": "phase3-rulings-2026-07-31.md § 20 (PI, 2026-08-04)",
+  "ruling": "phase3-rulings-2026-07-31.md \u00a7 20 (PI, 2026-08-04)",
   "method": "Same-map nearest-neighbour from each of the 773 reviewer-promoted mounds (canonical-review.csv, EPSG:32635) to the corrected student GT (4,746, reprojected 4326->32635). Cross-map proximity excluded because the de-dup is same-map constrained.",
   "promoted_vs_promoted": {
    "within_1m": 0,
@@ -321,32 +333,32 @@
    "min_nn_m": 0.98,
    "median_nn_m": 115.7
   },
-  "verdict": "Corroborates W6-E9 independently: exactly ONE true twin at 0.98 m, caught by the 5 m de-dup tolerance, consistent with the documented 1/2/2/0 per-pipeline drop counts. The promoted set is overwhelmingly well separated from the student layer — median nearest neighbour 115.7 m.",
-  "residual_grey_zone": "4-6 cases sit between 7.3 m and 15 m — closer than the pipeline's own 'genuinely distinct mounds sit >=15-20 m apart' floor, further than the 5 m de-dup catches. Not resolvable from coordinates; they need visual adjudication on a map. FOLDED INTO the committed point-marking re-review (ruling 20c).",
+  "verdict": "Corroborates W6-E9 independently: exactly ONE true twin at 0.98 m, caught by the 5 m de-dup tolerance, consistent with the documented 1/2/2/0 per-pipeline drop counts. The promoted set is overwhelmingly well separated from the student layer \u2014 median nearest neighbour 115.7 m.",
+  "residual_grey_zone": "4-6 cases sit between 7.3 m and 15 m \u2014 closer than the pipeline's own 'genuinely distinct mounds sit >=15-20 m apart' floor, further than the 5 m de-dup catches. Not resolvable from coordinates; they need visual adjudication on a map. FOLDED INTO the committed point-marking re-review (ruling 20c).",
   "open_question": "canonical-review.csv holds 415 rows at buffer_metres=50 while the image run's summary records 474 promoted at R=50. Likely per-run phantom sets differing from the canonical adjudicated set, but UNVERIFIED."
  },
  "metric_reference_asymmetry": {
-  "finding": "Corrected-F1 scores against the EXTENDED reference (4,746 student + per-buffer promoted phantoms: 5,220 at R=50 m, 5,418 at 150 m). Tile-level MCC scores against the student layer ALONE (4,746, 'no phantoms'), per the matrix-sweep convention documented in 55maps-mcc-v2-summary § 1.",
+  "finding": "Corrected-F1 scores against the EXTENDED reference (4,746 student + per-buffer promoted phantoms: 5,220 at R=50 m, 5,418 at 150 m). Tile-level MCC scores against the student layer ALONE (4,746, 'no phantoms'), per the matrix-sweep convention documented in 55maps-mcc-v2-summary \u00a7 1.",
   "why_it_matters": "The F1-versus-MCC rank-divergence finding (Obs 280: text wins F1, image wins MCC) is measured across metrics that do not share a ground truth. An unknown share of that divergence could be reference effect rather than metric behaviour.",
   "pi_ruling": "Cannot go forward (ruling 20a). Both metrics must use the same reference.",
-  "sequencing": "Do NOT recompute yet (ruling 20b) — the reference moves again at the phantom re-review, and recomputing twice is waste. Unification is gated on the point-marking work.",
-  "status": "OPEN — gated, not deferred indefinitely. Blocks publication of the F1-vs-MCC divergence as a metric-behaviour claim.",
-  "nested_finding_2026_08_04": "Found by the obs-writer while landing Obs 388, and NOT in the original analysis: the MCC side is not on 4,746 either. results/55maps-mcc-v2-summary § 1 records the GT file as 4,746 as at 2026-08-04, but § 2 states the MCC rows were computed against the canonical 4,745-mound curator GT (the 2026-05-03 evaluations). Under the era-disposition rule that § 2 text is historically CORRECT — but it means the MCC side sits one curator addition short of today's student layer ON TOP OF being 474-672 short of the F1 side. When ruling 20's unification is executed, do NOT treat this as '4,746 versus 4,746 plus phantoms'; the student baselines differ too.",
-  "gap_size": "474/5,220 = 9.08 % of the extended set at R = 50 m, rising to 672/5,418 = 12.4 % at 150 m — i.e. the F1 reference is 9.1-12.4 % larger than the MCC reference before the 4,745-versus-4,746 baseline difference is even counted."
+  "sequencing": "Do NOT recompute yet (ruling 20b) \u2014 the reference moves again at the phantom re-review, and recomputing twice is waste. Unification is gated on the point-marking work.",
+  "status": "OPEN \u2014 gated, not deferred indefinitely. Blocks publication of the F1-vs-MCC divergence as a metric-behaviour claim.",
+  "nested_finding_2026_08_04": "Found by the obs-writer while landing Obs 388, and NOT in the original analysis: the MCC side is not on 4,746 either. results/55maps-mcc-v2-summary \u00a7 1 records the GT file as 4,746 as at 2026-08-04, but \u00a7 2 states the MCC rows were computed against the canonical 4,745-mound curator GT (the 2026-05-03 evaluations). Under the era-disposition rule that \u00a7 2 text is historically CORRECT \u2014 but it means the MCC side sits one curator addition short of today's student layer ON TOP OF being 474-672 short of the F1 side. When ruling 20's unification is executed, do NOT treat this as '4,746 versus 4,746 plus phantoms'; the student baselines differ too.",
+  "gap_size": "474/5,220 = 9.08 % of the extended set at R = 50 m, rising to 672/5,418 = 12.4 % at 150 m \u2014 i.e. the F1 reference is 9.1-12.4 % larger than the MCC reference before the 4,745-versus-4,746 baseline difference is even counted."
  },
  "unverified_claims_made_this_session": [
   {
    "id": "W7-U1",
-   "claim": "Ruling 19's description of the per-buffer GATING MECHANISM — that reviewer-promoted phantoms qualify at a buffer R and thereby enter the extended reference.",
+   "claim": "Ruling 19's description of the per-buffer GATING MECHANISM \u2014 that reviewer-promoted phantoms qualify at a buffer R and thereby enter the extended reference.",
    "status": "UNVERIFIED. The COUNTS are verified (773 total; 474/595/642/661/672 promoted at R=50/75/100/125/150; extended 5,220/5,341/5,388/5,407/5,418, all read directly from summary.json fields and canonical-review.csv). The MECHANISM sentence is my reading of the Approach B framing, not something I traced through the code.",
    "why_it_matters": "Ruling 19 is a PI ruling and will be cited. If the mechanism is cited in Methods it must be traced through compute_corrected_f1_multi_buffer.py first.",
    "how_to_close": "Read the phantom-gating path in compute_corrected_f1_multi_buffer.py (build_phantom_gdf and its buffer gate) and confirm or correct the sentence in ruling 19.",
-   "recorded_because": "It was stated twice in session chat and nowhere durable — exactly the residue class the handoff step-0 sweep exists to catch."
+   "recorded_because": "It was stated twice in session chat and nowhere durable \u2014 exactly the residue class the handoff step-0 sweep exists to catch."
   },
   {
    "id": "W7-U2",
    "claim": "That canonical-review.csv's 415 rows at buffer_metres=50 relate to the image run's 474 promoted-at-R=50 by per-run phantom sets differing from the canonical adjudicated set.",
-   "status": "UNVERIFIED — offered as the likely explanation, deliberately not asserted. Both numbers are read directly; only the relationship between them is conjecture.",
+   "status": "UNVERIFIED \u2014 offered as the likely explanation, deliberately not asserted. Both numbers are read directly; only the relationship between them is conjecture.",
    "how_to_close": "Compare a per-run phantom set against canonical-review.csv row-by-row."
   }
  ]
