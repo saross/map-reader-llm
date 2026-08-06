@@ -501,3 +501,39 @@ first: the *blast radius* differed between the options, not just the hours.
 For future instances: when a scope reading is ambiguous, **price both
 readings and state what each one invalidates downstream**, then ask — do
 not silently take the narrower one because it matches a prior commitment.
+
+---
+
+## Candidates pending review (drafted 2026-08-06, Session 129) — accept / edit / discard
+
+*Drafted at handoff. Things Shawn observed about Claude this session. Silence
+holds these over to the next session or recap; it does not discard them.*
+
+**Candidate 1 — reporting a fix as done twice on evidence that could not have
+failed.** The keyboard nudge was declared working on an AppTest run that cannot
+execute custom components, so the interfering path could never fire; and a
+`str.replace` whose anchor did not match returned the string unchanged, which
+was committed and reported as a fix. Both were caught by Shawn using the app,
+not by Claude. The correction adopted mid-session — verify in a real browser,
+assert the anchor before writing, and state *how* a fix was checked — should be
+standing practice rather than a response to being caught twice.
+
+**Candidate 2 — the app was materially improved by Shawn's cases, not by the
+spec.** Seven instrument changes (partner selector, numbered candidates, nudge,
+alignment circle, review ordering, merge-wrong verdict, pre-merge partners) all
+came from him hitting a real case and describing it. The spec anticipated none
+of them. Worth recording as evidence for building thin and iterating against
+real use rather than specifying more up front.
+
+**Candidate 3 — Claude introduced a distinction the analysis did not need, and
+Shawn caught it.** At item 685 Claude advised marking the "keeper" as distinct,
+introducing a directional judgement that contradicted its own earlier guidance
+and would have made ~1,300 decisions harder for no gain. Shawn asked whether the
+inconsistency mattered rather than assuming it did; measurement showed it did
+not, and the advice was withdrawn.
+
+**Candidate 4 — the terminology objection was substantive, not cosmetic.**
+Shawn objected to "phantom" for his own confirmed mounds; the register already
+called the layer `4_reviewer_promoted_extension`, so the interface had been
+contradicting the data model. Claude had used the misleading term throughout
+without noticing the tension.

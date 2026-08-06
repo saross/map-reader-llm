@@ -26407,3 +26407,37 @@ individually while using different references.
 
 Both points are queued for adjudication as `curator_addition` items (queue
 indices 1289 and 1313 as of this session's queue).
+
+---
+
+## Candidates pending review (drafted 2026-08-06, Session 129) — accept / edit / discard
+
+*Obs 395 was written and accepted this session. These three are additional
+candidates from the same session, held pending a verdict. Silence holds them
+over; it does not discard them.*
+
+**Candidate A — the attractor effect inverts proximity ordering, so
+nearest-neighbour pairing gets these backwards.** At queue item 541 a promoted
+mound displaced off *this* mound by a numeral sat further away (44 m) than a
+genuinely distinct student mound (31 m). Any pipeline step that pairs records by
+nearest neighbour will therefore mis-pair exactly the cases the attractor
+produces — the ones that matter most. Measured context: 108 of 773 promoted
+mounds have a student point within 50 m, 296 within 75 m, 399 within 110 m.
+Would become Obs 396.
+
+**Candidate B — mound density makes coincidence a weak explanation out to
+~130 m, which is further than symbol geometry suggests.** Density 0.22/km² over
+21,902 km², mean spacing ~2.1 km, so a random point has ~1.1% chance of a mound
+within 126.5 m — against 55.9% of promoted mounds having one. Observed
+phantom-to-student distances are bimodal (p50 102 m, p75 719 m), which is the
+signature of an associated population and an independent one. The caveat that
+must travel with it: uniform density understates coincidence where mounds
+cluster. Would become Obs 397.
+
+**Candidate C — unaided click placement on 5 m/px imagery is ~2.5–5 m off in
+about two thirds of cases; a keyboard nudge closes it to ~1 px.** The PI's own
+estimate over ~750 trials, which is a usable instrument-precision figure for the
+Methods. Relevant because it is the same order as the imagery quantisation
+(±2.5 m), so neither dominates — and because the 96 jitter-sample marks made
+before nudging existed are the ones where that error propagates into a reported
+number. Would become Obs 398.
