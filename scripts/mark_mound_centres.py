@@ -931,6 +931,7 @@ def build_record(
         displacement = None
     buffer_value = row.get("buffer_metres")
     prior_symbol = _text(row.get("prior_symbol_type"))
+    claims_partner = bool(resolved_partner) and verdict == "same_as_neighbour"
     return {
         "queue_index": int(row["queue_index"]),
         "item_id": _item_id(row),
@@ -950,17 +951,21 @@ def build_record(
         "displacement_m": displacement,
         "nearest_neighbour_m": nearest_neighbour_m,
         "verdict": verdict,
+        # ONLY a conflation verdict claims a partner. "distinct" says the
+        # opposite -- that this is not the same mound as any neighbour --
+        # so recording the auto-selected candidate against it both
+        # misdescribes the decision and makes that neighbour look taken.
         "resolved_partner_layer": (
-            resolved_partner[0] if resolved_partner else ""
+            resolved_partner[0] if claims_partner else ""
         ),
         "resolved_partner_m": (
-            resolved_partner[1] if resolved_partner else None
+            resolved_partner[1] if claims_partner else None
         ),
         "resolved_partner_x": (
-            resolved_partner[2] if resolved_partner else None
+            resolved_partner[2] if claims_partner else None
         ),
         "resolved_partner_y": (
-            resolved_partner[3] if resolved_partner else None
+            resolved_partner[3] if claims_partner else None
         ),
         "symbol_type_prior": prior_symbol,
         "symbol_type": symbol_type,
@@ -1456,6 +1461,8 @@ def main() -> None:
     # earlier decision to notice.
     claimed: dict[tuple[float, float], str] = {}
     for key, record in marks.items():
+        if str(record.get("verdict", "")) != "same_as_neighbour":
+            continue
         px, py = record.get("resolved_partner_x"), record.get(
             "resolved_partner_y",
         )
