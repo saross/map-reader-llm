@@ -1002,7 +1002,9 @@ _SHORTCUT_JS = """
     const simulateClick = function(btn, label) {
         if (!btn) return;
         if (btn.disabled) { LOG('button is disabled:', label); return; }
-        btn.scrollIntoView({block: 'nearest', behavior: 'instant'});
+        // Deliberately NOT scrollIntoView: dispatching works on an
+        // off-screen button, and scrolling made the page jump on every
+        // nudge keypress.
         setTimeout(function() {
             const opts = {bubbles: true, cancelable: true, view: window};
             try {
@@ -1499,10 +1501,20 @@ def main() -> None:
             click = streamlit_image_coordinates(
                 annotated, key=f"crop_{cursor}_{context_m:.0f}_{epoch}",
             )
+            # Only act on a NEW click. The component re-reports its last
+            # click on every rerun, so comparing against the stored world
+            # position would treat a stale re-report as a fresh click and
+            # overwrite any keyboard nudge the moment it was made --
+            # silently undoing it. Track the raw pixel click instead and
+            # ignore repeats.
             if click is not None:
-                world = geom.display_to_world(click["x"], click["y"])
-                if st.session_state.pending.get(cursor) != world:
-                    st.session_state.pending[cursor] = world
+                raw = (click["x"], click["y"])
+                consumed = st.session_state.setdefault("last_click", {})
+                if consumed.get(cursor) != raw:
+                    consumed[cursor] = raw
+                    st.session_state.pending[cursor] = geom.display_to_world(
+                        *raw,
+                    )
                     st.session_state.pop("refusal", None)
                     st.rerun()
 
@@ -1770,6 +1782,7 @@ def main() -> None:
                 use_container_width=True,
             ):
                 st.session_state.pending[cursor] = None
+                st.session_state.setdefault("last_click", {}).pop(cursor, None)
                 st.session_state["click_epoch"] = (
                     st.session_state.get("click_epoch", 0) + 1
                 )
