@@ -185,7 +185,9 @@
    "disconfirmed_hypotheses": "NOT cross-sheet duplication (all points share source_map K-35-064-3_Dimitrovgrad; zero student-student pairs within 50 m are cross-sheet corpus-wide). NOT a no-data edge artefact (all sit on 69-76% real raster content).",
    "additional_concern": "#4744 may also be factually wrong: the PI reports one mound symbol at that position on this sheet, not two touching mounds. A second mound is visible on the ADJACENT sheet, the likely origin of the propagation.",
    "ruling_required": "PI ruling 2026-08-06: a detection may NEVER enter a student or gold-standard layer. Model-derived records belong in layer 4 (promoted phantoms). Removal from layer 2 changes a scoring reference and is therefore gated with the other reference work under ruling 21.",
-   "status": "OPEN \u2014 both points queued for adjudication as curator_addition items (queue indices 1289 and 1313 in the 2026-08-06 queue). Obs 395 records the finding."
+   "status": "OPEN \u2014 both points queued for adjudication as curator_addition items (queue indices 1289 and 1313 in the 2026-08-06 queue). Obs 395 records the finding.",
+   "pi_confirmation_2026-08-06": "PI confirmed from the map: there is NO second mound at #4744. The 'second of two-touching-mounds' justification is not merely unverifiable, it is contradicted by the imagery. A mound IS visible on the ADJACENT sheet, the likely origin of the T=0.7 recovery propagation. So #4744 is both a provenance breach AND factually wrong; #4745 still needs the same map check.",
+   "terminology_note": "'Phantom' is scoring jargon \u2014 a detection unmatched by student GT is scored a false positive. The 773 in layer 4 are the ones the PI then CONFIRMED as real mounds via the bullseye reviewer, so the label says the opposite of what they are. Layer 4's own key, '4_reviewer_promoted_extension', is accurate; prose and UI should follow it. The internal string 'promoted_phantom' is half of every mark's item_id and cannot be renamed without stranding recorded work."
   }
  ],
  "instrument_gaps": [

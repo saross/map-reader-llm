@@ -264,6 +264,28 @@ _SYMBOL_LABELS = {
 # Overlay layers drawn as context around the subject point. Each entry is
 # (colour, radius_px, stroke_px); the subject itself is drawn separately as
 # a cross so it is never confused with its neighbours.
+# Display names for the layers. "Phantom" is SCORING jargon -- a detection
+# with no student-GT match is scored a false positive, a "phantom" -- but
+# the 773 in layer 4 are the ones the reviewer then CONFIRMED as real
+# mounds the students missed. Calling them phantoms in the UI says the
+# opposite of what they are. The register keys the layer
+# "4_reviewer_promoted_extension", which is accurate.
+#
+# The internal value stays "promoted_phantom": it is half of every mark's
+# item_id, so renaming it would strand every mark recorded so far. Display
+# and identity are deliberately separated here.
+_LAYER_DISPLAY = {
+    "promoted_phantom": "promoted mound",
+    "corrected_student": "student GT",
+    "extra_point": "extra point",
+}
+
+
+def _layer_name(layer: str) -> str:
+    """Human-readable name for a layer key."""
+    return _LAYER_DISPLAY.get(layer, layer.replace("_", " "))
+
+
 _CONTEXT_STYLES = {
     "student": (_CYAN, 7, 3),
     "phantom": (_ORANGE, 9, 3),
@@ -1235,8 +1257,8 @@ def main() -> None:
         )
         st.caption(
             "Overlays: :violet[magenta] this point · :blue[cyan] student GT "
-            "· :orange[orange] other phantoms · :red[red] superseded "
-            "(pre-merge) positions",
+            "· :orange[orange] promoted mounds (your bullseye confirmations) "
+            "· :red[red] superseded (pre-merge) positions",
         )
         st.caption(f"Output: `{args.output}`")
 
@@ -1346,7 +1368,7 @@ def main() -> None:
     if nearest_m is None:
         nearest_label = ""
     elif nearest_phantom_m is not None and nearest_m == nearest_phantom_m:
-        nearest_label = "another phantom (orange)"
+        nearest_label = "another promoted mound (orange)"
     else:
         nearest_label = "a student GT point (cyan)"
     context = {
@@ -1448,7 +1470,7 @@ def main() -> None:
         return ""
 
     candidate_labels = [
-        f"{i + 1} · {colour} {layer.split('_')[-1]} — {dist:.1f} m "
+        f"{i + 1} · {colour} {_layer_name(layer)} — {dist:.1f} m "
         f"{_bearing(anchor, pos)}{_claim(pos)}"
         for i, (dist, layer, colour, pos) in enumerate(candidates)
     ]
@@ -1557,7 +1579,7 @@ def main() -> None:
         st.markdown("**Nearest neighbours**")
         for layer_label, distance in (
             ("student GT", nearest_student_m),
-            ("other phantom", nearest_phantom_m),
+            ("promoted mound", nearest_phantom_m),
         ):
             st.caption(
                 f"{layer_label}: "
