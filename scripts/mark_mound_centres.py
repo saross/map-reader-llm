@@ -1795,7 +1795,14 @@ def main() -> None:
             st.caption("nothing on record — your call sets it")
 
         st.divider()
+        # "Merge wrong" is meaningless off a merge site: there is no merge
+        # to contradict, and offering it invites recording a verdict that
+        # describes nothing. Hidden rather than disabled, since a disabled
+        # button swallows its keyboard shortcut silently.
+        is_merge_site = "merge_site" in str(row["item_type"])
         for key, (verdict, label) in _VERDICTS.items():
+            if verdict == "merge_incorrect" and not is_merge_site:
+                continue
             needs_click = verdict in _VERDICTS_NEEDING_A_CLICK
             # Deliberately NOT disabled when a click is still required.
             # A disabled button silently swallows the keyboard shortcut --
