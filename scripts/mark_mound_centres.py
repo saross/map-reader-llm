@@ -1646,6 +1646,18 @@ def main() -> None:
                 + "; ".join(explain.get(r, r) for r in str(reasons).split("+")),
             )
 
+        if "curator_addition" in str(row["item_type"]):
+            st.error(
+                "**W7-R2 — provenance breach.** This point was added to the "
+                "student GT from a MODEL DETECTION, which the student layer "
+                "must never contain. Check the map: is there actually a "
+                "mound here? #4744's 'second of two-touching-mounds' claim "
+                "was already found contradicted by the imagery. Mark **x** "
+                "if nothing is there; if it IS a real mound it still does "
+                "not belong in this layer, and the record needs relocating "
+                "to the promoted-mound layer rather than deleting.",
+            )
+
         if "strange_symbol" in str(row["item_type"]):
             st.error(
                 "**Unrecognised symbol** — this feature's MapSymbol is not "
