@@ -154,6 +154,14 @@ _CONTEXT_RINGS_M = (_DEDUP_TOLERANCE_M, _DISTINCT_FLOOR_M,
 # registers in the "nearest student point" readout.
 _STUDENT_SEARCH_M = 250.0
 
+# Radius of the alignment circle drawn at the marked point, in ground
+# metres. Sized to the inner edge of a mound symbol's ring so the reviewer
+# aligns a shape against a shape rather than judging a centre by eye on a
+# blurred, distorted blob. ~8 native px at ~5 m/px is a ~40 m diameter, so
+# 20 m radius is the starting estimate; it is adjustable because symbol
+# size varies and the right value wants trial and error.
+_DEFAULT_ALIGN_RADIUS_M = 20.0
+
 _MAGENTA = (255, 0, 255)
 _CYAN = (0, 255, 255)
 _YELLOW = (255, 255, 0)
@@ -488,6 +496,7 @@ def draw_overlays(
     marked: tuple[float, float] | None,
     rings_m: tuple[float, ...] = _CONTEXT_RINGS_M,
     numbering: dict[tuple[float, float], str] | None = None,
+    align_radius_m: float = 0.0,
 ) -> Image.Image:
     """Composite the review overlays onto a base crop.
 
@@ -511,6 +520,8 @@ def draw_overlays(
             styles do not yet cover.
         marked: The reviewer's clicked ``(x, y)``, or ``None`` if unmarked.
         rings_m: Reference-ring radii in ground metres.
+        align_radius_m: Radius in ground metres of an alignment circle
+            drawn at the marked point. Zero disables it.
         numbering: Optional ``(x, y) -> label`` map, drawn beside the
             matching marker. Two neighbours of the same layer at similar
             distances are otherwise indistinguishable between the map and
@@ -572,6 +583,13 @@ def draw_overlays(
     # displacement is visible as well as numeric.
     if marked is not None:
         mpx, mpy = geom.world_to_display(*marked)
+        # Alignment circle first, so the crosshair sits on top of it.
+        if align_radius_m > 0:
+            r_px = align_radius_m / geom.metres_per_display_px
+            draw.ellipse(
+                [(mpx - r_px, mpy - r_px), (mpx + r_px, mpy + r_px)],
+                outline=(*_YELLOW, 220), width=2,
+            )
         draw.line(
             [(rec_px, rec_py), (mpx, mpy)], fill=(*_YELLOW, 190), width=1,
         )
@@ -1228,6 +1246,27 @@ def main() -> None:
         st.session_state.nav_mode = nav_mode
         st.session_state.revisit_n = revisit_n
 
+        align_radius = st.slider(
+            "Alignment circle radius (m)", min_value=0.0, max_value=40.0,
+            value=st.session_state.get(
+                "align_radius", _DEFAULT_ALIGN_RADIUS_M,
+            ),
+            step=1.0,
+            help=(
+                "Drawn at your marked point, sized to a mound symbol's "
+                "ring. Click roughly, then nudge until the circle sits on "
+                "the symbol. 0 hides it."
+            ),
+        )
+        st.session_state.align_radius = align_radius
+        show_rings = st.checkbox(
+            "Show reference rings", value=st.session_state.get(
+                "show_rings", True,
+            ),
+            help="The 5 / 15 / 75 / 110 m rings around the recorded point.",
+        )
+        st.session_state.show_rings = show_rings
+
         jump = st.number_input(
             "Jump to item", min_value=0, max_value=max(0, n_total - 1),
             value=cursor, step=1,
@@ -1427,7 +1466,8 @@ def main() -> None:
         else:
             annotated = draw_overlays(
                 base, geom, (point_x, point_y), context, marked,
-                numbering=numbering,
+                rings_m=_CONTEXT_RINGS_M if show_rings else (),
+                numbering=numbering, align_radius_m=align_radius,
             )
             # The zoom level is part of the widget key: a click captured
             # at one window width must not be re-applied after the reviewer
