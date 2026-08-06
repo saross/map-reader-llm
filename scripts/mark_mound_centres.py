@@ -221,6 +221,12 @@ _OUTPUT_COLUMNS = [
     # downstream would re-do, less well, a judgement already made here.
     "resolved_partner_layer",
     "resolved_partner_m",
+    # The partner's own position. Layer and distance alone cannot identify
+    # WHICH neighbour was claimed, so without these a point can be used as
+    # the conflation partner of two different items with nothing to catch
+    # it.
+    "resolved_partner_x",
+    "resolved_partner_y",
     "symbol_type_prior",
     "symbol_type",
     "symbol_type_changed",
@@ -869,7 +875,7 @@ def build_record(
     nearest_neighbour_m: float | None,
     marked_by: str,
     symbol_type: str = "",
-    resolved_partner: tuple[str, float] | None = None,
+    resolved_partner: tuple[str, float, float, float] | None = None,
 ) -> dict:
     """Assemble one output row.
 
@@ -884,10 +890,9 @@ def build_record(
         nearest_neighbour_m: Distance to the closest point in any other
             layer, if one falls within the search radius.
         marked_by: Reviewer name recorded in the output.
-        resolved_partner: ``(layer, distance_m)`` of the neighbour closest
-            to the MARKED position, or ``None``. This is what disambiguates
-            a "same as a neighbour" verdict when several neighbours are in
-            range.
+        resolved_partner: ``(layer, distance_m, x, y)`` of the chosen
+            neighbour, or ``None``. The coordinates are what make a
+            double-claim detectable afterwards.
         symbol_type: The reviewer's symbol-type call. Recorded alongside
             ``symbol_type_prior`` (what the student layer already held) and
             a derived ``symbol_type_changed`` flag, so student
@@ -928,6 +933,12 @@ def build_record(
         ),
         "resolved_partner_m": (
             resolved_partner[1] if resolved_partner else None
+        ),
+        "resolved_partner_x": (
+            resolved_partner[2] if resolved_partner else None
+        ),
+        "resolved_partner_y": (
+            resolved_partner[3] if resolved_partner else None
         ),
         "symbol_type_prior": prior_symbol,
         "symbol_type": symbol_type,
@@ -1417,9 +1428,28 @@ def main() -> None:
     numbering = {
         pos: str(i + 1) for i, (_, _, _, pos) in enumerate(candidates)
     }
+    # Which candidate positions another item has already claimed as its
+    # conflation partner. Two items claiming one point means one of them is
+    # wrong, and without this the reviewer would have to remember every
+    # earlier decision to notice.
+    claimed: dict[tuple[float, float], str] = {}
+    for key, record in marks.items():
+        px, py = record.get("resolved_partner_x"), record.get(
+            "resolved_partner_y",
+        )
+        if px is None or py is None or pd.isna(px) or pd.isna(py):
+            continue
+        claimed[(round(float(px), 2), round(float(py), 2))] = str(key)
+
+    def _claim(pos) -> str:
+        owner = claimed.get((round(pos[0], 2), round(pos[1], 2)))
+        if owner and owner != _item_id(row):
+            return f"  ⚠ already used by {owner}"
+        return ""
+
     candidate_labels = [
         f"{i + 1} · {colour} {layer.split('_')[-1]} — {dist:.1f} m "
-        f"{_bearing(anchor, pos)}"
+        f"{_bearing(anchor, pos)}{_claim(pos)}"
         for i, (dist, layer, colour, pos) in enumerate(candidates)
     ]
 
@@ -1622,9 +1652,11 @@ def main() -> None:
         # this: a phantom pulled off THIS mound by a number attractor sits
         # further away than a correct, distinct student mound. Auto-
         # resolution would have recorded the wrong association silently.
-        partner_choice = (
-            (candidates[0][0], candidates[0][1]) if candidates else None
-        )
+        def _as_partner(entry):
+            dist, layer, _colour, pos = entry
+            return (layer, dist, pos[0], pos[1])
+
+        partner_choice = _as_partner(candidates[0]) if candidates else None
         if len(candidates) > 1:
             chosen = st.selectbox(
                 "If 'same as a neighbour', which one?",
@@ -1632,7 +1664,7 @@ def main() -> None:
                 format_func=lambda i: candidate_labels[i],
                 key=f"partner_{cursor}",
             )
-            partner_choice = (candidates[chosen][0], candidates[chosen][1])
+            partner_choice = _as_partner(candidates[chosen])
         else:
             st.info("Click the mound centre.")
 
@@ -1720,10 +1752,7 @@ def main() -> None:
                     # Resolve against the MARKED point, not the recorded
                     # one: the reviewer's click is what says which mound
                     # this actually is.
-                    resolved = (
-                        (partner_choice[1], partner_choice[0])
-                        if partner_choice else None
-                    )
+                    resolved = partner_choice
                     marks[_item_id(row)] = build_record(
                         row, marked, verdict, nearest_m, args.marked_by,
                         symbol_type, resolved,
