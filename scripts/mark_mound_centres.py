@@ -189,6 +189,12 @@ _VERDICTS = {
     "d": ("distinct", "Distinct mound"),
     "c": ("same_as_neighbour", "Same as a neighbour"),
     "x": ("not_a_mound", "Not a mound (FP)"),
+    # For merge sites where the two superseded points were NOT one mound.
+    # The other verdicts cannot express this: the point under review is a
+    # merged centroid that should never have existed, and both originals
+    # need restoring. 14 of the 26 merged pairs are separated by more than
+    # the 15 m distinct-mound floor, so this was always going to occur.
+    "m": ("merge_incorrect", "Merge wrong — 2 mounds"),
     "u": ("uncertain", "Uncertain"),
     "s": ("skipped", "Skip"),
 }
@@ -197,7 +203,9 @@ _VERDICTS = {
 # there is nothing to mark, and forcing a click would either fabricate a
 # position or push a definite judgement into "uncertain", making the
 # false-positive count unrecoverable afterwards.
-_VERDICTS_NEEDING_A_CLICK = {"distinct", "same_as_neighbour"}
+_VERDICTS_NEEDING_A_CLICK = {
+    "distinct", "same_as_neighbour", "merge_incorrect",
+}
 
 _OUTPUT_COLUMNS = [
     "queue_index",
@@ -1671,6 +1679,14 @@ def main() -> None:
                 "one of the four mapped forms, so nothing is pre-selected. "
                 "Suspected classification error rather than a mound; "
                 "confirm from the imagery.",
+            )
+
+        if "merge_site" in str(row["item_type"]):
+            st.caption(
+                "If the two red points are separate mounds, the merge was "
+                "wrong: press **m** and mark ONE of them. The other is "
+                "restored from its recorded pre-merge position, so it does "
+                "not need a second click here.",
             )
 
         if "jitter_sample" in str(row["item_type"]):
