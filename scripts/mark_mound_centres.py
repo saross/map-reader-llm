@@ -162,6 +162,20 @@ _STUDENT_SEARCH_M = 250.0
 # size varies and the right value wants trial and error.
 _DEFAULT_ALIGN_RADIUS_M = 20.0
 
+# Keyboard nudge for the marked point. Clicking to within a pixel of a
+# blurred symbol takes four or five attempts; nudging by a fixed step
+# converges in a few keypresses and needs no aiming at all, which is the
+# useful half of the drag-the-map-under-a-fixed-crosshair pattern.
+# Default 2.5 m is half a native pixel at ~5 m/px — one step below the
+# imagery's own quantisation floor, so it cannot be the limiting factor.
+_DEFAULT_NUDGE_M = 2.5
+_NUDGE_KEYS = {
+    "i": ("north", 0.0, 1.0),
+    "k": ("south", 0.0, -1.0),
+    "j": ("west", -1.0, 0.0),
+    "l": ("east", 1.0, 0.0),
+}
+
 _MAGENTA = (255, 0, 255)
 _CYAN = (0, 255, 255)
 _YELLOW = (255, 255, 0)
@@ -1266,6 +1280,11 @@ def main() -> None:
             help="The 5 / 15 / 75 / 110 m rings around the recorded point.",
         )
         st.session_state.show_rings = show_rings
+        st.session_state.nudge_step = st.select_slider(
+            "Nudge step (m)", options=[0.5, 1.0, 2.5, 5.0, 10.0],
+            value=st.session_state.get("nudge_step", _DEFAULT_NUDGE_M),
+            help="Step size for the i/j/k/l nudge keys.",
+        )
 
         jump = st.number_input(
             "Jump to item", min_value=0, max_value=max(0, n_total - 1),
@@ -1718,6 +1737,34 @@ def main() -> None:
                 st.rerun()
 
         if marked is not None:
+            st.caption("Nudge the mark")
+            nudge_step = st.session_state.get("nudge_step", _DEFAULT_NUDGE_M)
+            up_col = st.columns(3)
+            with up_col[1]:
+                nudged = st.button("i: ↑", key=f"n_i_{cursor}",
+                                   use_container_width=True)
+            mid = st.columns(3)
+            with mid[0]:
+                nudged_w = st.button("j: ←", key=f"n_j_{cursor}",
+                                     use_container_width=True)
+            with mid[1]:
+                nudged_d = st.button("k: ↓", key=f"n_k_{cursor}",
+                                     use_container_width=True)
+            with mid[2]:
+                nudged_e = st.button("l: →", key=f"n_l_{cursor}",
+                                     use_container_width=True)
+            pressed = {
+                "i": nudged, "k": nudged_d, "j": nudged_w, "l": nudged_e,
+            }
+            for key, was_pressed in pressed.items():
+                if was_pressed:
+                    _, dx, dy = _NUDGE_KEYS[key]
+                    st.session_state.pending[cursor] = (
+                        marked[0] + dx * nudge_step,
+                        marked[1] + dy * nudge_step,
+                    )
+                    st.rerun()
+
             if st.button(
                 "r: Clear mark", key=f"clear_{cursor}",
                 use_container_width=True,
