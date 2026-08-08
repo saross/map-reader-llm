@@ -1090,6 +1090,27 @@ _SHORTCUT_JS = """
         }
         if (matches.length === 0) return;
         const btn = matches[matches.length - 1];
+        // Verdict keys are gated while a rerun is in flight: a radio or
+        // dropdown change that triggered the rerun has not round-tripped
+        // yet, and a verdict click dispatched now would save the STALE
+        // value. Keep in sync with _VERDICTS. Nudge keys stay ungated —
+        // they rerun on every press and gating would drop rapid presses.
+        // Fail-open: if the status-widget selector ever goes stale the
+        // guard becomes a no-op, not a dead keyboard.
+        const VERDICT_KEYS = {d: 1, c: 1, x: 1, m: 1, u: 1, s: 1};
+        if (VERDICT_KEYS[key]) {
+            let running = null;
+            try {
+                running = mainDoc.querySelector(
+                    '[data-testid="stStatusWidget"]');
+            } catch (err) {}
+            if (running) {
+                LOG('verdict key ignored mid-rerun:', key);
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+        }
         try {
             const focused = mainDoc.activeElement;
             if (focused && focused.blur) focused.blur();
@@ -1757,7 +1778,14 @@ def main() -> None:
             )
 
         if existing is not None:
-            st.success(f"Saved: {existing['verdict']}")
+            # Name the saved symbol type too, so a radio showing something
+            # other than what was saved is visible at a glance.
+            saved_symbol = _text(existing.get("symbol_type"))
+            st.success(
+                f"Saved: {existing['verdict']}"
+                + (f" · {_SYMBOL_LABELS.get(saved_symbol, saved_symbol)}"
+                   if saved_symbol else ""),
+            )
 
         # Symbol type — offered on every item. Phantoms carry one too: the
         # reviews that promoted them recorded a symbol_type, which
@@ -1773,10 +1801,21 @@ def main() -> None:
             st.caption(
                 f"student: {recorded}" + (f" · {feature}" if feature else ""),
             )
+        # A revisit must seed the radio from what was SAVED, not from the
+        # queue's prior: seeding from prior_symbol_type displayed a saved
+        # reclassification as unchanged, and re-pressing a verdict key then
+        # overwrote the good save with the stale radio value. The
+        # changed-from warning below still compares against the student
+        # prior, so "changed" keeps meaning changed-from-student-layer.
+        saved_type = (
+            _text(existing.get("symbol_type")) if existing is not None else ""
+        )
+        seed = saved_type or prior
         options = list(_SYMBOL_TYPES)
-        if prior and prior not in options:
-            options.insert(0, prior)
-        default = options.index(prior) if prior in options else 0
+        for value in (prior, seed):
+            if value and value not in options:
+                options.insert(0, value)
+        default = options.index(seed) if seed in options else 0
         symbol_type = st.radio(
             "Confirm or correct",
             options=options,
