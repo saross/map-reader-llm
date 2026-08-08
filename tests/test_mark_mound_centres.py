@@ -680,3 +680,36 @@ def test_app_renders_against_real_inputs(tmp_path: Path) -> None:
     # and a literal here turns every scope decision into a test failure.
     expected = len(pd.read_csv(queue_path))
     assert any(f"0 / {expected}" in str(m.value) for m in app.metric)
+
+
+@pytest.mark.tier1
+def test_symbol_recovery_ignores_the_marking_apps_own_output(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The reviewer's saved verdicts must not feed the symbol-prior join.
+
+    marked-centres.csv matches the source glob and the column test, and a
+    phantom's saved verdict sits at its own coordinates — so without the
+    name exclusion every "not a mound" verdict flowed back on the next
+    launch as a conflict with the promoting review, blanking the prior
+    (24 phantoms affected when this was found, 2026-08-08).
+    """
+    import build_marking_queue as bmq
+
+    review_dir = tmp_path / "results" / "some-review"
+    review_dir.mkdir(parents=True)
+    pd.DataFrame(
+        {"x": [100.0], "y": [200.0], "symbol_type": ["burial_mound"]},
+    ).to_csv(review_dir / "human-review.csv", index=False)
+    # Same coordinates, contradicting value, in the app's own output file.
+    pd.DataFrame(
+        {"x": [100.0], "y": [200.0], "symbol_type": ["not_a_mound"]},
+    ).to_csv(review_dir / "marked-centres.csv", index=False)
+
+    monkeypatch.setattr(bmq, "_PROJECT_ROOT", tmp_path)
+    types, sources, conflicts = bmq.recover_phantom_symbol_types(
+        np.array([[100.0, 200.0]]),
+    )
+    assert types == ["burial_mound"]
+    assert sources[0].endswith("human-review.csv")
+    assert conflicts == [""]

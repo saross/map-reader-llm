@@ -252,6 +252,15 @@ def recover_phantom_symbol_types(
     for path in sorted(_PROJECT_ROOT.glob(_SYMBOL_SOURCE_GLOB)):
         if path.name == Path(_LAYER_PROMOTED).name:
             continue
+        # The marking app's own output also matches the glob and the
+        # column test, and a phantom's saved verdict sits at its own
+        # coordinates — so without this exclusion every "not a mound"
+        # verdict flows back on the next launch as a symbol-type conflict
+        # with the promoting review, blanking the prior. The prior must
+        # mean what the PROMOTING review recorded, never what this
+        # reviewer already decided.
+        if path.name == "marked-centres.csv":
+            continue
         try:
             frame = pd.read_csv(path, low_memory=False)
         except Exception:  # noqa: BLE001 — a malformed CSV is not fatal here
