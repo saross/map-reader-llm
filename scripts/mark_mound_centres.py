@@ -1712,10 +1712,14 @@ def main() -> None:
 
         if "merge_site" in str(row["item_type"]):
             st.caption(
-                "If the two red points are separate mounds, the merge was "
-                "wrong: press **m** and mark ONE of them. The other is "
-                "restored from its recorded pre-merge position, so it does "
-                "not need a second click here.",
+                "If the merge is RIGHT — one mound — mark the centre and "
+                "press **d**. Do NOT partner the red points: a red partner "
+                "records a contradicted merge, and 23 standing merges were "
+                "mis-recorded that way before this note existed. If the two "
+                "red points are separate mounds, the merge was wrong: press "
+                "**m** and mark ONE of them. The other is restored from its "
+                "recorded pre-merge position, so it does not need a second "
+                "click here.",
             )
 
         if "jitter_sample" in str(row["item_type"]):
