@@ -571,3 +571,15 @@ relaunch resumed at the first unmarked item because marks save per decision.
 The fix-while-hot cadence worked because the data layer made it safe — worth
 saying explicitly if it shaped how corrections felt from the marking chair.
 
+
+**Candidate 5 (in-the-moment reaction, relayed) — interactive edge-case
+adjudication beat documentation.** At session close, unprompted: "I
+appreciated your help working through the manual review. The ability to ask
+questions about edge or corner cases was better than documentation!" Distinct
+from Candidate 1 (source-grounded answers): this is about the *modality* — a
+responsive instrument-analyst answering the case in front of the reviewer
+outperformed any amount of up-front procedure writing. Consistent with the
+S129 finding that the spec anticipated none of the seven instrument changes;
+here, the same lesson on the guidance side: the corner cases could not have
+been enumerated in advance, only answered when hit.
+
