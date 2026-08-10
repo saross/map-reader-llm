@@ -1,10 +1,11 @@
 # Ruling-21 application — the instruction set for the standardised reference
 
-> **Status: DRAFT — awaiting PI sign-off.** No layer has been mutated.
-> This document and its computed artefacts
-> (`ruling21-instructions.csv`, `ruling21-summary.json`) are the
-> derivation; materialising the standardised reference is the next,
-> gated step. See [§ Changelog](#changelog).
+> **Status: DECISIONS 2–7 RATIFIED (PI, 2026-08-10); decision 1 pending
+> a six-item walk.** No layer has been mutated. The six cross-cluster
+> claimants are installed as the canonical re-review list
+> (`canonical-gt/re-review-list.csv`); materialisation proceeds once the
+> walk lands (regenerating the derivation first if any verdict moves).
+> See [§ Changelog](#changelog).
 
 **What this is.** Ruling 21 (`reports/verification/phase3-rulings-2026-07-31.md`
 § 21) requires the ground-truth reference to be standardised once, from a
@@ -129,41 +130,48 @@ displacement from the true centre.
    the true rate is a lower bound. This belongs in the reference
    header and in Methods as a stated limitation — it materially
    supports ruling 21(b)'s "best possible, NOT a gold standard".
+   The effect on measured F1 is a downward bias of ≈ 0.03 (range
+   ≈ 0.02–0.06) at a balanced ~0.85 operating point, rank-preserving
+   to first order but differentially subsidising attractor-susceptible
+   configs (a displaced detection can match a displaced ghost record).
+   The systematic fix is bounded: only 549 student records have a
+   same-layer neighbour in the 50–110 m band (297 unique pairs), so a
+   second marking pass over that band — ~40% of the completed
+   campaign — would clear essentially the whole residue. Logged as
+   priced future work; ruling 21 sequences it AFTER the standardisation
+   queue, not before.
 2. **Six superseded cross-cluster claims** (57.8–169.9 m): each is an
    attractor case where a record's claim points at a mound whose own
    mark settled elsewhere. All six sit in structures the S130
    re-review walks resolved; under rule 1 the marks win and both
    mounds survive.
 
-## Open decisions for the PI
+## Open decisions — PI outcomes (2026-08-10, Session 131)
 
-1. **The six cross-cluster claims are superseded by marks** — confirm,
-   or re-review the six on the map:
+1. **The six cross-cluster claims** —
    `624→ph:320` (63.7 m), `2087→ph:523` (73.9 m), `2474→ph:430`
    (114.1 m), `4197→4198` (57.8 m), `4547→4548` (85.4 m),
-   `4635→ph:699` (169.9 m). *Recommend: confirm — the counting rule
-   makes marks authoritative, and each was individually walked in
-   S130.*
-2. **24 mutual phantom pairs resolved by lowest index** — arbitrary
-   but deterministic; the pair's marks are co-located, so only the
-   surviving `candidate_id` differs. *Recommend: accept.*
+   `4635→ph:699` (169.9 m). **DECIDED: walk the six once more** before
+   accepting marks-win — the claim-versus-marks contradiction only
+   became visible through this derivation and has not been adjudicated
+   as such. The six claimants are installed as the canonical re-review
+   list; walk in the app's "Re-review list" mode. If any verdict
+   moves, re-run the derivation and update the gate battery's verdict
+   fingerprint in the same commit (a deliberate, visible re-pin).
+2. **24 mutual phantom pairs resolved by lowest index** — **ACCEPTED**
+   (marks co-located; only the surviving `candidate_id` differs).
 3. **Four multi-claimant proxies** (students #1266, #2667, #3165,
-   #3502 claimed by 2–3 co-located marks; lowest-indexed claimant's
-   mark used, spreads ≤ 3.9 m). *Recommend: accept.*
+   #3502; lowest-indexed claimant's mark, spreads ≤ 3.9 m) —
+   **ACCEPTED**.
 4. **The legacy-resolved five join the proxy grade** (113 rather than
-   the beacon's 108). *Recommend: yes — the claims are explicit, only
-   their coordinates were lost to the pre-fix app.*
-5. **The marking-pass extra enters the extension layer**, not the
-   student layer — consistent with W7-R2's provenance cleaning (the
-   student layer holds only student digitisation). *Recommend: yes.*
-6. **Settlement-mound records stay, carrying their symbol type**:
-   4 reclassified burial→settlement plus #3207's settlement call.
-   Evaluation can filter on `symbol_type`; silent removal would lose
-   the adjudication. *Recommend: keep with symbol type.*
-7. **Restored #47's grade is `directly_reviewed`** (the `m` verdict
-   adjudicated the site) though its position is as-recorded pre-merge
-   digitisation. *Recommend: accept, with the position caveat in the
-   artefact header.*
+   the beacon's 108) — **ACCEPTED**.
+5. **The marking-pass extra enters the extension layer**, provenance-
+   tagged `marking_pass_extra` — **ACCEPTED**.
+6. **Settlement-mound records stay, carrying their symbol type**
+   (4 reclassified burial→settlement plus #3207's settlement call;
+   evaluation filters on `symbol_type`) — **ACCEPTED**.
+7. **Restored #47's grade is `directly_reviewed`** with the
+   as-digitised position caveat in the artefact header — **ACCEPTED**.
 
 ## Materialisation plan (after sign-off)
 
@@ -187,6 +195,15 @@ displacement from the true centre.
    55-map figure in `results-draft.md`. All $0, no API.
 
 ## Changelog
+
+### 2026-08-10 (b) — Seven decisions walked with the PI
+
+Decisions 2–7 ratified as recommended; decision 1 resolved to a
+six-item re-review walk, installed as the canonical re-review list.
+Added to Finding 1: the measured-F1 effect of the residual duplicates
+(≈ −0.03 absolute, rank-preserving to first order, attractor-subsidy
+caveat) and the bounded second-pass sizing (549 records / 297 pairs
+in the 50–110 m band). Materialisation now waits only on the walk.
 
 ### 2026-08-10 — Original publication
 
