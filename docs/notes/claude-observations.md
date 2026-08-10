@@ -1067,3 +1067,24 @@ as the instrument.
 a gate accuses completed work, suspect the gate's re-derivations first and
 say so before presenting the alarm as a finding.
 
+
+## claude-obs 42 — 2026-08-10 (Session 130): he splits diagnosis and execution across sessions and writes the relay prompt like a preregistration
+
+**Pattern.** The symbol-radio bug was diagnosed in a parallel session, then
+delivered here as a written prompt with verified line anchors, an explicit
+"re-verify rather than re-derive" instruction, a data-state declaration
+("the CSV needs no repair"), and named acceptance criteria. Execution took
+one pass with zero re-litigation, and the anchors all checked out.
+
+**Lesson.** The relay prompt is a contract, not a summary: anchors let the
+executing session verify instead of trust, and the do-not-touch declaration
+(data needs no changes) pre-empted the most dangerous failure mode
+(helpfully "repairing" the CSV). His format carried exactly the fields a
+fresh context needs.
+
+**How to apply.** When work must cross a session boundary, draft the relay
+in his format: verified anchors, the decision already made, what must NOT
+change, and how to verify. When receiving one, honour its verification
+clause before its instruction clause — re-check anchors first, exactly as
+this one requested.
+

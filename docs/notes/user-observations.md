@@ -537,3 +537,37 @@ Shawn objected to "phantom" for his own confirmed mounds; the register already
 called the layer `4_reviewer_promoted_extension`, so the interface had been
 contradicting the data model. Claude had used the misleading term throughout
 without noticing the tension.
+
+## Candidates pending review (drafted 2026-08-10, Session 130) — accept / edit / discard
+
+*Drafted at handoff. Things Shawn observed about Claude this session. Silence
+holds these over to the next session or recap; it does not discard them.*
+
+**Candidate 1 — marking-semantics questions were answered from the code and
+spec, not from plausibility, and the difference was visible.** Every "should
+I 'c' this?" question came back with the instrument's actual rule cited to
+file and line (partner gating, cluster counting, red-partner legality) —
+including twice answering "the spec already decided this" against Claude's
+own earlier advice. The four-day pass proceeded without a single semantics
+reversal after the fact.
+
+**Candidate 2 — two gate false alarms accused finished work before the
+checker checked itself.** "0/27 re-marked" and "one item unmarked" both
+landed in Shawn's reading before being retracted as checker bugs (a timezone
+threshold; a re-derived identity key). The corrections were fast and
+self-attributed, but the alarm-first ordering cost attention at the exact
+moment a four-day effort was closing.
+
+**Candidate 3 — every "I think I did X wrong" was turned into a query before
+a re-review, and the walks shrank by an order of magnitude each time.**
+Suspected wrong phantom-partnering: 1 item (already flagged). Suspected
+double-resolutions: 2 conflicts of 35 shared points. Suspected middle-class
+re-review: 2 of 108. The screen time spent was on residues, never on
+candidate classes.
+
+**Candidate 4 — instrument fixes landed mid-campaign without ever costing
+marking state.** Five code changes shipped while the pass was live; each
+relaunch resumed at the first unmarked item because marks save per decision.
+The fix-while-hot cadence worked because the data layer made it safe — worth
+saying explicitly if it shaped how corrections felt from the marking chair.
+

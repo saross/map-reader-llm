@@ -26441,3 +26441,54 @@ Methods. Relevant because it is the same order as the imagery quantisation
 (±2.5 m), so neither dominates — and because the 96 jitter-sample marks made
 before nudging existed are the ones where that error propagates into a reported
 number. Would become Obs 398.
+
+## Candidates pending review (drafted 2026-08-10, Session 130) — accept / edit / discard
+
+*Drafted at handoff. Numbering assumes the S129 batch (396–398) lands first.
+Silence holds these over; it does not discard them.*
+
+**Candidate D — adjacent hachured mound symbols can bleed rays together and
+mint an illusory third symbol; a map-artefact FP mechanism distinct from
+attractor displacement.** At queue items 97–99 the student layer held three
+records where the map shows two mounds: the middle record (corrected_student:
+2601) digitised the zone where the two real symbols' rays merge. The PI: "the
+one in the middle is an illusion caused by the rays of the two others bleeding
+together". Resolved as two `d` + one `x`. Unlike attractor displacement (a
+real mound recorded in the wrong place), ray-bleed produces a record with no
+referent at all — it inflates the FP count, not the position error. Would
+become Obs 399.
+
+**Candidate E — the final reference carries three confidence grades of
+student record, and the middle grade is novel: adjudication by proxy.**
+Directly reviewed: 543 (queue items with verdicts). Proxy-confirmed: 108
+out-of-queue points claimed as `c` partners from reviewed marks — the
+reviewer looked at the mound and the record together when making the claim,
+so identity is confirmed although the record was never opened as an item;
+82 of 113 such claims sit within 15 m of the marked centre. Out-of-scope:
+4,095 never examined (ruling 21c boundary). Methods must state all three;
+the proxy grade exists only because the claim structure records WHICH
+neighbour was meant. Would become Obs 400.
+
+**Candidate F — re-review flag classes divide into clearable, static, and
+self-invalidating, and only the first supports "walk until empty".**
+Clearable: defined by a defect re-marking removes. Static: defined by a
+persistent item property (all marked jitter samples; all multi-candidate
+conflations) — flagged forever, needs a completion ledger. Self-invalidating:
+keyed on `marked_at`, so acting on the flag destroys the evidence and
+regeneration back-fills with innocent items (both the rule_consistency class
+and the app's "Revisit earliest" mode). A naive regeneration held 420 rows of
+which ~10 were actionable; the campaign closed only via computed residues
+(8 → 27 → 4 items). Instruments should declare each flag's class; termination
+arguments depend on it. Would become Obs 401.
+
+**Candidate G — PI-confirmed attractor displacements at 115.0 m and
+140.7 m extend the observed tail beyond the S129 coincidence envelope.**
+Items 858 (number attractor, partner 108.4 m from the recorded point) and
+1272 (large settlement mound; the true centre moved the mark 140.7 m from
+the claimed partner) were both adjudicated genuine conflations. The S129
+uniform-density model argued coincidence is weak out to ~126.5 m; both
+confirmed cases now sit at or beyond that envelope, still under rule 3's
+200 m ceiling. The claim distances are recorded in `marked-centres.csv`
+(`resolved_partner_m`), so the attractor-distance distribution the pass
+exists to measure now includes its own extreme tail. Would become Obs 402.
+
