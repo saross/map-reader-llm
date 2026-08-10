@@ -26410,6 +26410,181 @@ indices 1289 and 1313 as of this session's queue).
 
 ---
 
+## Observation 396: The measured 55-map F1 sits between two opposing, now both-quantified reference biases — residual duplicates deflate it ~0.03, joint false negatives inflate it ~0.013 — net modestly conservative, and Methods must present both (Session 131, 2026-08-11)
+
+*Source anchors — deflation side: `planning/ruling21-application-spec.md`
+§ "Findings to flag" item 1 (the F1-impact paragraph landed at commit
+`82d88211b`; the file currently sits at `40e0c1423`), derived by
+`scripts/derive_ruling21_instructions.py` (`7fc85b920`), census in
+`results/deployment-oracle-2026-06-06/canonical-gt/ruling21-summary.json`.
+Jitter statistics recomputed 2026-08-11 from
+`results/deployment-oracle-2026-06-06/canonical-gt/marked-centres.csv`
+(1,317 marks, `item_type == jitter_sample`). Inflation side:
+`results/working-precision/gs-miss-correlation.json` (2×2 double-miss
+analysis at three system radii), as reported in [[Obs 361]]. Oracle
+F1 @ 50 m = 0.848 per `planning/55maps-gt-consolidation-spec-2026-06-07.md`
+§ 4b row 4.*
+
+### The finding
+
+The 55-map reference carries **two biases that run in opposite
+directions**, and as of this session both are quantified. They partially
+cancel rather than compound, and the residue leaves the measured number
+**modestly conservative**.
+
+| Side | Mechanism | Effect on measured F1 |
+|---|---|---:|
+| Deflation | ~370 residual long-range student duplicates act as ghost reference records no detection can legitimately match | **≈ −0.03** (range −0.02 to −0.06) |
+| Inflation | Mounds missed by *both* the students and the system are absent from the reference denominator | **≈ +0.011 to +0.013** (1.3–1.4 % relative) |
+| **Net** | At the point estimates | **≈ −0.017** |
+
+**Deflation — the ghost records.** The point-marking campaign's jitter
+sample was drawn at random, seeded, and *conflation-free* at the queue's
+50 m cut, so nothing in its construction anticipated duplicates. Of the
+100 sampled records, 11 were adjudicated `same_as_neighbour`, and **9 of
+those name another student record as the partner, at 72.9–100.3 m** (the
+remaining two name promoted phantoms, at 67.9 m and 102.2 m). Extrapolated
+across the ~4,090–4,095 out-of-scope records that no reviewer ever opened,
+that is **roughly 370 undetected long-range duplicates** (Wilson 95 % CI
+on 9/100 = 4.8–16.2 % → ≈ 200–660). Against the ≈ 5,010-record
+standardised reference (4,731 student + 279 extension,
+`ruling21-summary.json`), ~370 unmatchable records **deflate measured
+recall by ≈ 7 %**, and measured F1 by **≈ 0.03** at a balanced ~0.85
+operating point.
+
+The fix is bounded and priced: only **549 student records have a
+same-layer neighbour in the 50–110 m band (297 unique pairs)**, so a
+second marking pass over that band — about **40 % of the completed
+campaign** — clears essentially the whole residue. Ruling 21 sequences it
+*after* the reference-standardisation queue, not before.
+
+**Inflation — the joint false negatives.** On the four GS sheets, 435
+in-bounds curator mounds give a clean 2×2 between the students' misses and
+the production system's. Students missed 20 of 435 (**4.6 %**); at the
+30 m and 50 m system radii the cells are both-found 367, students-only 48,
+system-only 16, **both-miss 4**. The two miss processes are *mildly*
+super-independent — observed double-miss 0.92 % against 0.55 % under
+independence, correlation ratio **1.67** (1.50 at 20 m), Fisher OR 1.91,
+**p = 0.281** (0.323 at 20 m) — a real hint on only 4 events, not a
+significant one. Transferred to the 55-map track using the whole-sheet
+student miss rate (9.1 %) and the oracle system's miss rate at 50 m
+(17.3 %): P(neither) ≈ **2.64 %**, recall inflated by **+2.4–2.7 %**, F1
+by **+1.3–1.4 %** relative. On the 0.848 oracle that is 0.848 → **~0.836**
+at a +3 % true population and **~0.829** at +5 %.
+
+### Why this matters
+
+This is the **load-bearing honesty paragraph of the generalisability
+assessment** — the place where Methods and Discussion state plainly what
+the student dataset can and cannot support. Both directions must travel
+together: cite the deflation alone and the work looks like special
+pleading for a better number; cite the inflation alone and the reference
+looks worse than it is. **Together they say something stronger than either
+does apart** — that the two known reference defects are of comparable
+magnitude and opposite sign, so the headline F1 is not resting on an
+unexamined bias in the flattering direction. At the point estimates it is
+resting on a small bias in the *unflattering* one.
+
+It also gives ruling 21(b)'s "best possible reference, NOT a gold
+standard" an actual number instead of a disclaimer, and it prices the only
+part of the problem that money and time can still fix.
+
+### The rule this yields
+
+**Quantify reference bias in both directions before quoting a corrected
+score, and report the pair.** A single-signed bias estimate is not a
+correction — it is an argument. The asymmetry is also methodological: the
+deflation was found by *sampling the reference* (a random, conflation-free
+draw that turned up duplicates nobody was looking for), while the
+inflation was found by *crossing two independent observers* on a subset
+where a third, better observer existed. Neither instrument could have
+found the other's defect. **A reference audit needs at least one of each:
+an internal consistency sample, and an external cross-observer set.**
+
+### Caveats / methodological notes
+
+- The deflation estimate rests on **9 events in a 100-item sample**. The
+  Wilson interval (≈ 200–660 records) is wide, and the F1 range
+  (−0.02 to −0.06) reflects it. The point estimate should never be quoted
+  without the interval.
+- The duplicate rate is a **lower bound**: the marking app only offered
+  partners within its 110 m flag radius, so any duplicate displaced
+  further than that could not be adjudicated as one.
+- The deflation is **rank-preserving to first order** — all configurations
+  are scored against the same reference, and the paired permutation tests
+  compare on identical references. The second-order exception is a real
+  one: ghost records **differentially subsidise attractor-susceptible
+  configurations**, because a detection displaced by the same numeral or
+  label attractor that displaced the ghost can land inside the ghost's
+  buffer and convert a would-be FP into a TP. The magnitude of that
+  subsidy is **unquantified** without a rescore against a de-ghosted
+  reference.
+- The inflation transfer is deliberately **conservative**: it uses the
+  whole-sheet student miss rate of 9.1 %, not the GS in-bounds 4.6 %.
+- The extrapolation base differs slightly between artefacts — the spec
+  says 4,095 out-of-scope records, `ruling21-summary.json` records
+  `out_of_scope_implicit = 4090`. At 9 % the two give 368 and 369; nothing
+  downstream moves.
+- The absolute inflation figure depends on which end of the relative band
+  is taken: 1.3–1.4 % of 0.848 is +0.011 to +0.012, and the +3 %
+  sensitivity row implies +0.012. The **+0.013** used in the net above is
+  the top of the range, so **−0.017 is the least-conservative net** on
+  offer; the more cautious reading is ≈ −0.018.
+- Both CIs comfortably span the net, so **"approximately cancelling, with
+  a small conservative residue" is the defensible claim** — not a
+  point-corrected F1.
+
+### Findable later
+
+reference bias both directions; ghost records; residual long-range
+duplicates; 9 of 100 jitter sample same_as_neighbour 72.9–100.3 m; Wilson
+95% CI 4.8–16.2% 200–660; ~370 duplicates in the out-of-scope grade; 549
+records 297 pairs 50–110 m band second marking pass ~40% of the campaign;
+F1 deflation −0.03 range −0.02 to −0.06; recall deflated ~7%; attractor
+subsidy displaced detection matches displaced ghost; double-miss 2×2
+435 in-bounds curator mounds both-miss 4; correlation ratio 1.67 Fisher
+p 0.281; recall inflation +2.4–2.7%; F1 inflation +1.3–1.4%; oracle 0.848
+→ 0.836 at +3% → 0.829 at +5%; net −0.017 modestly conservative; best
+possible reference not a gold standard; ruling 21(b); generalisability
+honesty; student dataset limitations; Methods must present both;
+gs-miss-correlation.json; ruling21-summary.json; marked-centres.csv
+jitter_sample; Session 131 2026-08-11.
+
+### Related observations and artefacts
+
+- **[[Obs 361]]** (generalisation-metric epistemics — precision is
+  review-verified, recall a measured upper bound) — the inflation half of
+  this entry, in full. This observation adds the opposing half and the
+  net, and does not revise any number in Obs 361.
+- **[[Obs 371]]** (rider to Obs 360 — "phantom" is mis-glossed and the
+  50 m buffer's bias runs the opposite way to what Obs 360 implies) — the
+  earlier instance of the same lesson: buffer- and reference-effect
+  directions are easy to state backwards, so each must be argued
+  explicitly rather than assumed.
+- **[[Obs 280]]** (pervasive F1 / MCC tier-leader divergence) — the
+  reason "rank-preserving to first order" needs its second-order caveat:
+  metric-dependent leader changes are already known on this corpus, so a
+  differential subsidy is not a hypothetical worry.
+- **[[Obs 395]]** (two model detections promoted into the student GT) —
+  the third known reference defect, also inflationary and also small, and
+  a reminder that reference-provenance integrity is audited separately
+  from reference-completeness bias.
+- `planning/ruling21-application-spec.md` § "Findings to flag" — the
+  deflation derivation and the priced second-pass sizing.
+- `results/working-precision/gs-miss-correlation.json` — the double-miss
+  2×2 and the implied 55-map inflation factors.
+- `results/deployment-oracle-2026-06-06/canonical-gt/ruling21-summary.json`
+  — the standardised-reference census (4,731 student + 279 extension).
+
+**Artefacts**: `planning/ruling21-application-spec.md` (`82d88211b`);
+`scripts/derive_ruling21_instructions.py` (`7fc85b920`);
+`results/deployment-oracle-2026-06-06/canonical-gt/ruling21-summary.json`;
+`results/deployment-oracle-2026-06-06/canonical-gt/marked-centres.csv`;
+`results/working-precision/gs-miss-correlation.json`;
+`planning/55maps-gt-consolidation-spec-2026-06-07.md` § 4b.
+
+---
+
 ## Candidates pending review (drafted 2026-08-06, Session 129) — accept / edit / discard
 
 *Obs 395 was written and accepted this session. These three are additional
