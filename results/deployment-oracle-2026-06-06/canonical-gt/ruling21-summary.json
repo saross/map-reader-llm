@@ -1,0 +1,267 @@
+{
+  "cross_cluster_claims": [
+    {
+      "claimant": "student:624",
+      "target": "phantom:320",
+      "marks_apart_m": 63.7
+    },
+    {
+      "claimant": "student:2087",
+      "target": "phantom:523",
+      "marks_apart_m": 73.9
+    },
+    {
+      "claimant": "student:2474",
+      "target": "phantom:430",
+      "marks_apart_m": 114.1
+    },
+    {
+      "claimant": "student:4197",
+      "target": "student:4198",
+      "marks_apart_m": 57.8
+    },
+    {
+      "claimant": "student:4547",
+      "target": "student:4548",
+      "marks_apart_m": 85.4
+    },
+    {
+      "claimant": "student:4635",
+      "target": "phantom:699",
+      "marks_apart_m": 169.9
+    }
+  ],
+  "inputs": {
+    "marks": 1317,
+    "student_features": 4746,
+    "phantom_records": 773,
+    "superseded_points": 52
+  },
+  "clusters": {
+    "total": 5010,
+    "multi_record": 419,
+    "index_tiebreaks": [
+      {
+        "cluster": 3,
+        "members": [
+          "phantom:10",
+          "phantom:476"
+        ],
+        "survivor": "phantom:10"
+      },
+      {
+        "cluster": 51,
+        "members": [
+          "phantom:164",
+          "phantom:718"
+        ],
+        "survivor": "phantom:164"
+      },
+      {
+        "cluster": 74,
+        "members": [
+          "phantom:195",
+          "phantom:558"
+        ],
+        "survivor": "phantom:195"
+      },
+      {
+        "cluster": 101,
+        "members": [
+          "phantom:229",
+          "phantom:739"
+        ],
+        "survivor": "phantom:229"
+      },
+      {
+        "cluster": 107,
+        "members": [
+          "phantom:234",
+          "phantom:625"
+        ],
+        "survivor": "phantom:234"
+      },
+      {
+        "cluster": 121,
+        "members": [
+          "phantom:248",
+          "phantom:576"
+        ],
+        "survivor": "phantom:248"
+      },
+      {
+        "cluster": 129,
+        "members": [
+          "phantom:255",
+          "phantom:317"
+        ],
+        "survivor": "phantom:255"
+      },
+      {
+        "cluster": 142,
+        "members": [
+          "phantom:27",
+          "phantom:30"
+        ],
+        "survivor": "phantom:27"
+      },
+      {
+        "cluster": 157,
+        "members": [
+          "phantom:283",
+          "phantom:585",
+          "phantom:669"
+        ],
+        "survivor": "phantom:283"
+      },
+      {
+        "cluster": 161,
+        "members": [
+          "phantom:287",
+          "phantom:293"
+        ],
+        "survivor": "phantom:287"
+      },
+      {
+        "cluster": 165,
+        "members": [
+          "phantom:290",
+          "phantom:291"
+        ],
+        "survivor": "phantom:290"
+      },
+      {
+        "cluster": 167,
+        "members": [
+          "phantom:294",
+          "phantom:586"
+        ],
+        "survivor": "phantom:294"
+      },
+      {
+        "cluster": 168,
+        "members": [
+          "phantom:295",
+          "phantom:399",
+          "phantom:671"
+        ],
+        "survivor": "phantom:295"
+      },
+      {
+        "cluster": 177,
+        "members": [
+          "phantom:304",
+          "phantom:587"
+        ],
+        "survivor": "phantom:304"
+      },
+      {
+        "cluster": 213,
+        "members": [
+          "phantom:388",
+          "phantom:754"
+        ],
+        "survivor": "phantom:388"
+      },
+      {
+        "cluster": 233,
+        "members": [
+          "phantom:43",
+          "phantom:596"
+        ],
+        "survivor": "phantom:43"
+      },
+      {
+        "cluster": 238,
+        "members": [
+          "phantom:438",
+          "phantom:674"
+        ],
+        "survivor": "phantom:438"
+      },
+      {
+        "cluster": 262,
+        "members": [
+          "phantom:512",
+          "phantom:642",
+          "phantom:737"
+        ],
+        "survivor": "phantom:512"
+      },
+      {
+        "cluster": 337,
+        "members": [
+          "phantom:697",
+          "phantom:729"
+        ],
+        "survivor": "phantom:697"
+      },
+      {
+        "cluster": 339,
+        "members": [
+          "phantom:7",
+          "phantom:714"
+        ],
+        "survivor": "phantom:7"
+      },
+      {
+        "cluster": 359,
+        "members": [
+          "phantom:77",
+          "phantom:717",
+          "phantom:738"
+        ],
+        "survivor": "phantom:77"
+      },
+      {
+        "cluster": 361,
+        "members": [
+          "phantom:78",
+          "phantom:721"
+        ],
+        "survivor": "phantom:78"
+      },
+      {
+        "cluster": 365,
+        "members": [
+          "phantom:82",
+          "phantom:354"
+        ],
+        "survivor": "phantom:82"
+      },
+      {
+        "cluster": 377,
+        "members": [
+          "phantom:93",
+          "phantom:107"
+        ],
+        "survivor": "phantom:93"
+      }
+    ]
+  },
+  "actions": {
+    "keep_student": 639,
+    "remove_duplicate": 466,
+    "keep_phantom_extension": 278,
+    "remove_fp": 45,
+    "restore_premerge": 2,
+    "remove_contradicted_merge": 1,
+    "add_marking_pass_extra": 1
+  },
+  "confidence_grades_assigned": {
+    "directly_reviewed": 806,
+    "proxy_confirmed": 114
+  },
+  "final_student_layer": {
+    "before": 4746,
+    "removed": 17,
+    "restored_premerge": 2,
+    "after": 4731,
+    "out_of_scope_implicit": 4090
+  },
+  "final_extension_layer": {
+    "phantom_survivors": 278,
+    "marking_pass_extras": 1
+  },
+  "implicit_default": "any student feature not named in the instructions is kept as digitised with confidence grade out_of_scope"
+}
