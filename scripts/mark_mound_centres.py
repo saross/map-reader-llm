@@ -1458,6 +1458,17 @@ def main() -> None:
         st.rerun()
     st.session_state.nav_scope = nav_mode
 
+    # End-of-scope feedback. Both notices exist because the fall-through
+    # they replace was invisible: the reviewer finished the re-review list
+    # and was fed the main queue with nothing marking the boundary.
+    if st.session_state.pop("scope_done", None) == nav_mode:
+        st.success(
+            f"**End of '{nav_mode}'** — every item in this scope has been "
+            "visited. Switch the Navigate scope to continue elsewhere.",
+        )
+    elif nav_mode != "All items" and allowed and cursor == max(allowed):
+        st.info(f"Last item in the '{nav_mode}' scope.")
+
     # Candidates are numbered before the crop is drawn so the markers on
     # the map and the entries in the partner dropdown carry the SAME label.
     # Distance alone does not disambiguate two neighbours of one layer that
@@ -1894,8 +1905,12 @@ def main() -> None:
                     )
                     if nxt is not None:
                         st.session_state.cursor = nxt
-                    elif cursor + 1 < n_total:
-                        st.session_state.cursor = cursor + 1
+                    else:
+                        # End of the scoped list: stay put and say so. The
+                        # old cursor+1 fall-through silently spilled into
+                        # the main queue, which read as the re-review list
+                        # "continuing" past its end.
+                        st.session_state.scope_done = nav_mode
                 st.rerun()
 
         if marked is not None:
@@ -1946,7 +1961,8 @@ def main() -> None:
                 "b: Back", disabled=cursor == 0, use_container_width=True,
             ):
                 prev = [i for i in sorted(allowed) if i < cursor]
-                st.session_state.cursor = prev[-1] if prev else max(0, cursor - 1)
+                if prev:
+                    st.session_state.cursor = prev[-1]
                 st.session_state.pending.pop(cursor, None)
                 st.session_state.pop("refusal", None)
                 st.rerun()
@@ -1956,8 +1972,10 @@ def main() -> None:
                 use_container_width=True,
             ):
                 fwd = [i for i in sorted(allowed) if i > cursor]
-                st.session_state.cursor = (
-                    fwd[0] if fwd else min(n_total - 1, cursor + 1))
+                if fwd:
+                    st.session_state.cursor = fwd[0]
+                else:
+                    st.session_state.scope_done = nav_mode
                 st.session_state.pending.pop(cursor, None)
                 st.session_state.pop("refusal", None)
                 st.rerun()
