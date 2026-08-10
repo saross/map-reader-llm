@@ -86,9 +86,10 @@ digitised, grade `out_of_scope`").
 | `remove_contradicted_merge` | 1 |
 | `add_marking_pass_extra` | 1 |
 
-**Student layer**: 4,746 − 17 (4 FP + 1 merge centroid + 12 duplicates)
-+ 2 restored = **4,731**. The 12 duplicate removals are the 9 jitter-
-sample attractor duplicates, `#1442`, and the two W7-R2 records.
+**Student layer**: 4,746 − 17 (4 FP + 1 merge centroid + 12
+duplicates) plus 2 restored = **4,731**. The 12 duplicate removals are
+the 9 jitter-sample attractor duplicates, `#1442`, and the two W7-R2
+records.
 
 **Extension layer**: **278 phantom survivors** (of 773: 41 FP, 454
 redundant with a student record or a co-located phantom) **+ 1
