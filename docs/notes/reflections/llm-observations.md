@@ -7127,3 +7127,51 @@ distance distribution. For pipeline guards, the empirical spread of
 the classes being separated is the only defensible source of a
 threshold, and it costs one probe script to obtain.
 
+
+## Session 130 — 2026-08-07/10 (verification that re-derives a definition checks a different system; an overshooting fix indicts the baseline; a procedure vacuum plus a helpful default yields one-directional error; only clearable flags let a walk terminate)
+
+**Verification code that re-implements the system's definitions is checking a
+subtly different system.** Two false alarms in one session, both from my own
+gate scripts: a "missed" queue item that was actually reviewed (I derived
+identity as `source_layer:source_index`; the app resolves a stored `item_id`
+first, and the two disagreed for exactly one item), and a "0/27 re-marked"
+walk that was actually 27/27 (I compared against noon UTC; the walk ran
+mid-morning AEST). Both alarms accused the reviewer's work; both defects were
+in the checker. This is the same failure family as the session's real bug —
+the queue builder sweeping the reviewer's output into its own prior — a
+second implementation of a definition is a second place for the definition to
+drift. The rule that survives: gate scripts import the instrument's
+resolvers; they never re-derive them.
+
+**A fix that changes more than the defect did is evidence about the
+baseline, not against the fix.** Excluding the reviewer's output from the
+symbol-prior join should have restored the committed queue; it diverged
+further (24 prior values vs the defect's 3). Every one of the 24 was the fix
+repairing pollution *already present in the commit* — the baseline had been
+generated after the contamination began. General form: when a correction
+overshoots your reference point, interrogate the reference before doubting
+the correction. "Committed" certifies provenance, not cleanliness.
+
+**An unstated procedure plus a helpful default produces systematic error
+with zero directional variance.** The merge-site caption documented only the
+merge-wrong case; the partner selector defaulted to nearest; the nearest
+candidate was structurally always the site's own pre-merge original. Result:
+23 of 26 standing merges recorded as "same as its own superseded point" —
+an 88% error rate, every error identical. The diagnostic value runs
+backwards: when review errors all point the same way, stop auditing the
+reviewer's judgement and look for the vacuum a default has been filling.
+Judgement noise scatters; defaults correlate.
+
+**"Walk until the list is empty" terminates only over clearable
+predicates.** The re-review classes divided three ways: *clearable* (defined
+by a defect that re-marking removes), *static* (defined by a property of the
+item — all marked jitter samples, all multi-candidate conflations — flagged
+forever), and *self-invalidating* (keyed on `marked_at`, so acting on the
+flag destroys the evidence it keys on and regeneration back-fills with
+innocent items). A naively regenerated list held 420 rows of which ~10 were
+actionable; the usable object was never the regeneration but the computed
+residue — three successive hand-derived lists of 8, 27, and 4 items, each
+produced by intersecting the static flags with the condition that actually
+discriminates. Instruments that flag should declare which kind of predicate
+each flag is; termination arguments depend on it.
+

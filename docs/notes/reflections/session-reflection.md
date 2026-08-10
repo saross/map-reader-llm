@@ -9970,3 +9970,70 @@ seeing riders land in one wave and queue in the next will look for a
 methodological rule where there was actually a judgement made once,
 under a specific finding's pressure, then generalised.
 
+
+## Session 130 — 2026-08-07/10 — the walk that kept shrinking: 276 → 27 → 4 → 0
+
+### Prompt: What surprised you about this session?
+
+The direction of a diff. The queue-builder fix — excluding the
+reviewer's own output file from the symbol-prior join — was supposed
+to restore the regenerated queue to its committed baseline, and
+instead it moved the queue *further* from it: 24 prior values
+changed against the baseline's 3. The resolution inverted the frame:
+the committed baseline was itself polluted, generated in Session 129
+with 901 reviewer verdicts already on disk and feeding the join. The
+success criterion had to be abandoned mid-verification — from
+"matches what we committed" to "matches what the join was designed
+to mean" — and could only be re-earned by auditing all 24 rows
+individually. Committed is not clean; a reference point is a claim
+like any other.
+
+The second surprise was distributional: 23 of 26 merge sites wrong
+in the *same direction*. Scattered judgement error does not look
+like that. An unstated procedure (the caption documented only the
+merge-wrong case) plus a helpful default (partner selector defaults
+to nearest; the nearest was structurally always the site's own red
+original, 1–19 m away) produced an 88% error rate with zero variance
+in direction. Noise scatters; a procedure vacuum filled by a default
+correlates.
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+Three times Shawn proposed a rule or a worry and three times the
+data sized it differently — and the pattern of who was right is the
+project's division of labour in miniature. "Each cyan or orange
+point should resolve only once": the invariant is actually
+per-cluster, and 33 of the 35 shared partner points were legitimate
+co-located multi-records; enforcing his rule would have deleted real
+records. "I probably mapped phantoms to phantoms wrongly and need to
+add records to the re-assessment": 20 of 21 were the only-possible-
+partner case and the single exception was already on the re-review
+list under `partner_ambiguity` — nothing needed adding. "The 108
+claimed-but-unreviewed cyan points may need re-review": two items
+did, and both were real (a fourth record of a benchmark mound; a
+numeral-spawned FP).
+
+So on magnitude I was right three times. But the deeper ledger runs
+the other way: the red-partner class — 23 systematically mis-recorded
+merge sites — existed only because Shawn kept scrolling past the end
+of his required walk as a spot-check and *felt* something wrong. My
+gates had no concept of it; the cross-tabulation that confirmed it in
+five lines could not have been written without his hunch naming what
+to cross. He supplies existence proofs; I supply exhaustiveness.
+Neither is sufficient, which by now is not a lesson but the method.
+
+### Prompt: What's the single most important thing a future reader should know about this session?
+
+"The marking campaign is closed" is a gate-defined state, not a
+mood: eight named invariants verified at `f753d2ac6` — completeness
+1,317/1,317 under the app's own identity rule, red-partner legality,
+zero non-co-located double-claims, zero claims of x-ed records, zero
+partner-less conflations, the merge-site verdict distribution, and
+the proxy-cyan proximity check. The verdict distribution is 762
+same-as-neighbour / 509 distinct / 45 not-a-mound / 1
+merge-incorrect. A future reader should re-run the gates rather than
+trust the label — and should know the gate scripts' own two false
+alarms this session (an identity re-derivation, a timezone
+threshold) were repaired by making them reuse the instrument's
+resolution functions, which is the condition for trusting them.
+

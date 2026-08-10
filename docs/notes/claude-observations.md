@@ -1008,3 +1008,62 @@ need and contradicted my own earlier guidance. He was right and I withdrew it.
 what the downstream analysis actually consumes. If the answer is positions
 rather than labels, the labels are a convenience and their inconsistency is not
 worth 700 re-decisions. State that explicitly rather than letting him infer it.
+
+## claude-obs 39 — 2026-08-10 (Session 130): the spot-check past the end of the list is where his half of the defect classes comes from
+
+**Pattern.** After finishing every required walk, Shawn kept going — "I went
+ahead and continued to the end as a spot-check" — and that unprompted
+continuation surfaced the largest defect class of the session: 23 of 26 merge
+sites systematically mis-partnered to their own pre-merge originals. My eight
+gates could not have found it; they had no concept of the class until his
+hunch named what to cross-tabulate. The same happened in Session 129 (four
+classes found by eye, none by check).
+
+**Lesson.** "I finished the list" marks the beginning of his close, not the
+end of it. The sampling he does beyond the requirement is not redundancy —
+it is the project's main source of new invariants.
+
+**How to apply.** When he reports a walk complete, ask what he noticed beyond
+it before running the closing gates — and treat any "I think I handled X
+wrong" as a candidate class, not a candidate item.
+
+## claude-obs 40 — 2026-08-10 (Session 130): his suspicions are right about existence and wrong about magnitude — mechanise before he re-reviews
+
+**Pattern.** Three suspicions this session: "I probably mapped phantoms to
+phantoms wrongly" (reality: 20/21 correct, the exception already flagged);
+"cyan/orange points should resolve once, I need to sort these out" (reality:
+33/35 shared points legitimate, 2 conflicts); "the 108 middle-class points
+may need re-review" (reality: 2 items). Each suspicion was directionally
+right — something real was there — and each overestimated the work by an
+order of magnitude.
+
+**Lesson.** The productive response to a suspicion is neither reassurance nor
+a full manual re-review: it is a query that sizes the class before his eyes
+get involved. Every mechanisation this session collapsed a candidate set of
+100+ to under 30, and twice to single digits.
+
+**How to apply.** When he says "I think I did X wrong, I may need to
+re-review", write the discriminating computation first and hand him only the
+residue. His time at the screen is the scarcest resource in the pipeline.
+
+## claude-obs 41 — 2026-08-10 (Session 130): self-critique — my gate scripts committed the same sin I had just fixed in the instrument
+
+**Pattern.** Hours after fixing the queue builder for re-deriving state it
+should have imported (the reviewer's output swept into its own prior), my
+own gate scripts did the structural twin twice: re-deriving item identity as
+`source_layer:source_index` when the app resolves a stored `item_id` first
+(false alarm: a "missed" item that was reviewed), and comparing timestamps
+against noon UTC when the walk ran on AEST mornings (false alarm: "0/27
+re-marked"). Both accusations pointed at his work; both defects were mine,
+and he had to read past them mid-session.
+
+**Lesson.** Verification that re-implements a definition checks a subtly
+different system — and a false alarm costs his attention exactly when he is
+closing a multi-day effort. The checker deserves the same reuse discipline
+as the instrument.
+
+**How to apply.** Gate and audit scripts import the system's own resolvers
+(`_item_id`, the app's timestamp fields) rather than re-deriving them; when
+a gate accuses completed work, suspect the gate's re-derivations first and
+say so before presenting the alarm as a finding.
+

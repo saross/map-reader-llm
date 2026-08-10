@@ -6764,3 +6764,57 @@ Not a claim that the reference is unreliable: the same audit showed zero
 survivors moved, zero attributes changed post-import, and every removal claimed
 by a merge, across both layers. The finding is narrow and the rest of the
 integrity check is a genuinely strong positive.
+
+## 2026-08-08 (Session 130, map-reader-llm): The exclusion that changed more rows than the defect it fixed
+
+**Session:** 28522ec9-c220-40f2-88eb-63e9c76365d3
+**Instance:** primary
+
+### Surprising fact
+
+A one-line fix to `build_marking_queue.py` — excluding the reviewer's own
+`marked-centres.csv` from the symbol-prior join, after discovering the glob
+swept it in and each "not a mound" verdict came back on the next launch as a
+conflict with the promoting review — was expected to restore the regenerated
+queue to its committed baseline. The defect had visibly touched 3 prior
+values. The fix changed **24** prior values against that baseline, moving
+the queue *further* from the committed state, not back to it.
+
+### Probe
+
+Row-level audit of all 24 divergences. Every one had the same shape: the
+committed baseline held a *blank* prior with a conflict annotation of the
+form `<review value> vs not_a_mound`, and the regenerated queue restored a
+concrete value (`burial_mound`, `bench_mark_on_mound`,
+`trig_point_on_mound`) sourced from a genuine review CSV. None showed
+value-to-value changes; none cited a source outside the review corpus. A
+check of the timeline confirmed the mechanism: the committed queue was
+generated during Session 129 with 901 reviewer verdicts already on disk —
+the contamination predates the baseline.
+
+### Belief revision
+
+Two revisions, one local and one methodological. Local: the committed
+baseline was itself polluted, so "diff against the commit" was measuring
+distance from a corrupted reference; the 24-row divergence *was* the repair.
+Methodological: a committed artefact certifies provenance, not cleanliness —
+the success criterion for a fix must be the intended semantics of the
+computation, audited directly, not identity with any stored prior state. The
+criterion was switched mid-verification and re-earned by the row audit.
+
+### What would change this belief
+
+Any of the 24 rows showing a value-to-value change rather than
+blank-to-value, or a restored source outside the review corpus, would have
+broken the pollution account and put the exclusion itself under suspicion.
+Likewise a baseline generation date preceding the first reviewer verdict —
+the timeline dependency is load-bearing.
+
+### Implications for practice
+
+When a repair overshoots its reference point, interrogate the reference
+before doubting the repair. And when a derived artefact is regenerated from
+"all files matching a pattern", the pattern's future matches are part of the
+system's behaviour: the reviewer's output did not exist when the glob was
+written, and the glob recruited it silently the day it appeared.
+

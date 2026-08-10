@@ -8234,3 +8234,74 @@ found by the PI hitting a case, not by a check; a fifth class would currently be
 invisible. Reference corrections are recorded as verdicts, not written back:
 un-merges, the W7-R2 removals and duplicate resolutions all land together under
 ruling 21.
+
+## Session 130 — 2026-08-07/10 — the marking campaign completed and gate-closed; five instrument fixes; ruling 21 unblocked
+
+Ran on zbook throughout (nothing compute-heavy; sapphire not needed).
+Repo `ddbe4424f` → `f753d2ac6`, ~17 commits, all pushed. **US$0.00 API.**
+The PI marked in-app across four days; Claude ran launch, semantics
+adjudication, defect analysis, instrument fixes, and closing gates.
+
+**Launch.** `scripts/launch_point_marking.sh` failed once on zbook —
+Streamlit's first-run email prompt blocks on stdin in a background
+process; seeded `~/.streamlit/credentials.toml` and relaunched clean.
+Queue rebuilt at 1,317 items, marking data intact at 901.
+
+**Marking-semantics adjudications** (each answered from code/spec, not
+opinion): phantom-phantom `c` pairs are legitimate and counting is
+position-cluster-based (spec § How to count); prefer the cyan partner
+when both cyan and orange sit on one mound; phantom→phantom partnering
+audit found 20/21 correct and the exception already flagged
+(`partner_ambiguity`); merge-right = `d`, merge-wrong = `m` + one click.
+
+**Instrument fixes** (all tier-1 tested, ruff clean):
+
+1. Symbol-radio seeding bug (diagnosed by a parallel session 2026-08-07,
+   executed here): radio now seeds from the saved record; banner echoes
+   the saved symbol type; verdict hotkeys gated while a rerun is in
+   flight. Verified in a real browser against `corrected_student:598`.
+2. Queue-builder self-reference: `marked-centres.csv` excluded from the
+   symbol-prior join; 24 polluted priors restored (21 already in the
+   committed baseline); regression test added.
+3. Merge-site caption now states the merge-right procedure (`d`, never
+   partner red).
+4. End-of-scope navigation: completion banner + last-item hint; no more
+   silent spill into the main queue (all three paths).
+5. Dual-anchor partner radius: candidates offered within 110 m of either
+   the mark or the recorded point (large-mound and extreme-attractor
+   claims — items 858, 1272 — previously unstorable).
+
+**Re-review campaign** (converging walks): the 276-item S129 list
+completed; "Revisit earliest marks" diagnosed as self-invalidating
+(timestamp-keyed) and abandoned; computed residues installed and walked —
+8 items (3 conflicting double-claim pairs + 2 partner-less `c`), then 27
+(23 merge-sites self-partnered to their own red original + 2 stuck
+pairs), then a final 4 (688 → c-student-2667; 255 and 762 claimed their
+distant phantom partners via fix 5; 742 confirmed FP by the PI — a
+numeral-spawned detection). The 2600/2601/2602 ray-bleed triple resolved
+as two mounds + one FP record.
+
+**Close.** Eight gates green at `1b9c308aa`: completeness 1,317/1,317
+(app identity rule), red partners = {promoted_phantom:389} only,
+0 non-co-located double-claims, 0 claims of x-ed records, 0 partner-less
+`c`, merge sites 24 d / 1 m / 1 legitimate c-to-phantom, 0 unreviewed
+cyan near a non-claimant mark. Verdicts: **762 same_as_neighbour, 509
+distinct, 45 not_a_mound, 1 merge_incorrect**. Walked lists archived to
+`archive/marking-pass/`; canonical re-review path is header-only.
+**Ruling 21 application is unblocked**, and behind it the
+reference-standardisation queue items 1–5.
+
+**Carry-forward findings for the ruling-21 spec**: survivors inherit the
+claimant's marked centre; student→student claims resolve with the
+claimant as duplicate; 108 cyan points are proxy-confirmed (82 claims
+within 15 m of the mark) — a third confidence grade between directly
+reviewed (543) and out-of-scope (4,095).
+
+**Contextual assumptions.** The symbol-radio diagnosis arrived as a
+prompt written by another session; anchors were re-verified here before
+editing. Gate scripts initially re-derived identity and time thresholds
+and produced two false alarms — corrected to reuse the app's own
+resolution rules. `outputs/h10/wbf/` (65 MB, 1,470 files, April WBF
+verifier outputs for pool_160_hp4hn4_variant_c) remains untracked —
+PI decision pending on gitignore/commit/archive.
+
