@@ -8,7 +8,87 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (130) — FINISH THE MARKING PASS ON ZBOOK, THEN THE GATED QUEUE [Session 129 CLOSED 2026-08-06; ran in Opus]
+## 🎯 NEXT SESSION (131) — RULING 21 APPLICATION, THEN THE GATED QUEUE [Session 130 CLOSED 2026-08-10; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged.
+> **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–21.
+>
+> **START HERE**: the marking campaign is **CLOSED — all eight gates green**
+> (`1b9c308aa`, final battery in that commit's message). The marking output
+> (`results/deployment-oracle-2026-06-06/canonical-gt/marked-centres.csv`,
+> 1,317 rows: 762 same_as_neighbour / 509 distinct / 45 not_a_mound /
+> 1 merge_incorrect) is the complete instruction set for **ruling 21
+> application** — that derivation is THE next task.
+
+**Session 130 (2026-08-07/10, zbook, US$0.00)** launched the app, adjudicated
+marking semantics from code/spec while the PI marked over four days, fixed
+five instrument defects, and closed the campaign through three converging
+re-review walks (276-item list → computed residues of 8 → 27 → 4 → 0).
+~20 commits `ddbe4424f`→`5b837205b`. Full narrative:
+`docs/notes/reflections/session-log.md` § Session 130.
+
+**Ruling-21 derivation decisions made this session (not yet in any spec):**
+
+- **Survivor position**: the surviving record of each cluster inherits the
+  claimant's marked centre (`x_marked`/`y_marked`), not its own original
+  position.
+- **Student→student tiebreak**: the *claimant* is the duplicate; the claimed
+  partner survives ("prefer student over phantom" cannot decide these; 9–10
+  such claims exist).
+- **Counting is position-cluster-based** (spec § How to count) — never count
+  `c` verdicts; 33+ shared partner points are legitimate co-located
+  multi-records.
+- **The one contradicted merge** is `corrected_student:4172` (verdict `m`):
+  centroid removed, both pre-merge originals restored;
+  `promoted_phantom:389`'s red partner claim attaches to one of them.
+- **W7-R2**: #4744 and #4745 both verdicted `same_as_neighbour` — the model
+  detections leave the student layer as duplicates under ruling 21.
+- **Proxy-confirmed class**: 108 out-of-queue cyan points were claimed as
+  partners from reviewed marks (82 of 113 claims within 15 m of the mark) —
+  a third confidence grade (directly reviewed 543 / proxy-confirmed 108 /
+  out-of-scope 4,095) that belongs in the reference artefact's header and
+  Methods.
+
+**Optional first task**: persist the eight-gate battery as
+`scripts/marking_campaign_gates.py` — this session ran it as ad-hoc scripts;
+the gate list survives in `1b9c308aa`'s commit message and the S130
+session-log entry. Cheap insurance before ruling-21 edits mutate the layers
+the gates read.
+
+**Then the gated queue**, unchanged: `reference-standardisation-queue.md`
+items 1–5 (four Dawid–Skene fits, the t0.3 evaluation, F1/MCC unification,
+Obs 280 re-measurement, re-tier both boards + re-verify every 55-map figure
+in `results-draft.md`). All $0, no API.
+
+**The verification programme was again untouched.** Still open: 78 of 178
+C4 batches (~4 waves); **W7-I2 the CI registry (HIGH, carries 11 W7-D1 dead
+paths — one edit)**; W7-D1's remaining 7 documents; the merge pass; W7-E1's
+95 lines; W7-I1/I3/I4; W7-U1/U2.
+
+**Carry-forward the docs do not hold:**
+
+- **Pending gates now TWO sessions deep — silence is not a decline.** S129:
+  three working-notes candidates (would-be Obs 396–398) + four user-obs
+  candidates. S130 added four more working-notes candidates (would-be Obs
+  399–402) + four user-obs candidates. All sit as "(pending review)"
+  sections in `docs/notes/working-notes.md` and
+  `docs/notes/user-observations.md`.
+- **`outputs/h10/wbf/` is untracked** (65 MB, 1,470 files — April WBF
+  verifier outputs for `pool_160_hp4hn4_variant_c`, retracted-H10/D26
+  context). PI decision needed: gitignore, commit lightweight artefacts per
+  the output standard, or archive.
+- The marking app's canonical re-review list is now **header-only** (walked
+  lists archived in `archive/marking-pass/`); any future launch shows an
+  empty re-review scope. Relaunch before any future marking — five code
+  fixes landed after the last launch.
+- PI-confirmed extreme attractor displacements at **115.0 m and 140.7 m**
+  (items 858/1272) — the observed tail now exceeds the 126.5 m envelope
+  used in the S129 coincidence model; rule 3's 200 m ceiling accommodates
+  both.
+
+---
+
+## NEXT SESSION (130) — FINISH THE MARKING PASS ON ZBOOK, THEN THE GATED QUEUE [Session 129 CLOSED 2026-08-06; ran in Opus]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–21.
