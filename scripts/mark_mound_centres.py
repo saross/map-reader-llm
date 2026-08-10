@@ -1497,7 +1497,14 @@ def main() -> None:
     ):
         for cx, cy in points:
             dist = math.hypot(cx - anchor[0], cy - anchor[1])
-            if dist <= _FLAG_RADIUS_M:
+            # Offer anything within radius of EITHER end of the
+            # displacement vector. A large mound can put the true centre
+            # beyond the flag radius from the record it conflates with —
+            # the partner sits near the RECORDED point but out of range of
+            # the moved mark, and the claim could not be stored (items
+            # 858 and 1272 of the 2026-08 marking pass).
+            dist_recorded = math.hypot(cx - point_x, cy - point_y)
+            if min(dist, dist_recorded) <= _FLAG_RADIUS_M:
                 candidates.append((dist, layer_name, colour, (cx, cy)))
     candidates.sort()
     numbering = {
