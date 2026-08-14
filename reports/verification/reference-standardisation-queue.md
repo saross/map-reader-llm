@@ -77,13 +77,27 @@ review (`/pre-run-review` protocol; see Obs 397):
    headline moving beyond the Obs 396 bias band, direction reversal);
    missing inputs (no near-enough substitution); sequencing
    violations; sapphire unavailable (check, never silently fall back).
-5. **Verification stack**: JSON-first outputs with anchored prose;
-   tests + `/audit` on new code; a blind fresh-context verifier pass
-   over each prose-bearing refresh (non-negotiable for item 4, the
-   highest synthesis-density item; brief it on directionality and
-   comparison tables), calibrated to the measured ~8% claim-mismatch
-   rate (C4: 619 of 7,894 decisively recomputed values); drift checks
-   and citation-site sweeps; PI sign-off gates last.
+5. **Verification stack**: JSON-first outputs with anchored prose —
+   the anchor discipline is the foundation layer and is protected
+   under time pressure, since without it the verifier has nothing to
+   re-derive against; tests + `/audit` on new code; a blind
+   fresh-context verifier pass over each prose-bearing refresh
+   (non-negotiable for item 4, the highest synthesis-density item),
+   calibrated to the measured ~8% claim-mismatch rate (C4: 619 of
+   7,894 decisively recomputed values); drift checks and
+   citation-site sweeps; PI sign-off gates last. Three verifier
+   conditions (added from the 2026-08-14 Opus review):
+   (a) **denominator reporting** — the verifier states claims
+   identified / re-derived and artefacts opened; an empty corrections
+   table without a denominator is treated as a non-run, not a pass;
+   (b) **corrections are claims, not verdicts** — a correction that
+   conflicts with the draft triggers a third re-derivation from the
+   data (PI adjudicates if still split); the verifier never wins by
+   default; (c) **answer-shaped claims are asked cold** —
+   directionality and winner claims are derived by the verifier as
+   questions from the metric files and diffed against the prose;
+   comparison tables are rebuilt independently, never checked
+   arithmetically.
 
 ## Queue — no API spend, runs automatically once the reference lands
 
@@ -112,6 +126,18 @@ cost — before anything is launched (ruling 21e).
   consumed is history and stays.
 
 ## Changelog
+
+### 2026-08-14 (b) — Verifier conditions hardened from the Opus review
+
+Three additions to contract item 5, from an external Opus review the
+PI relayed: verifier denominator reporting (a clean pass and a lazy
+pass are otherwise indistinguishable), the named disagreement rule
+(verifier corrections are claims, not verdicts — third re-derivation
+on conflict, PI adjudicates if split), and cold derivation for
+answer-shaped claims (directionality/winner questions asked, not
+handed over). Layer 0's anchor discipline named as the foundation to
+protect under time pressure. Same refinements versioned into the
+`/pre-run-review` skill.
 
 ### 2026-08-14 — Gate opened; execution contract added
 
