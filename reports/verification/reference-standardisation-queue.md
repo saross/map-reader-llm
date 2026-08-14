@@ -103,7 +103,7 @@ review (`/pre-run-review` protocol; see Obs 397):
 
 | # | Analysis | Why it is tainted | Register |
 |---|----------|-------------------|----------|
-| 1 | The four 55-map Dawid–Skene fits (`scripts/analyse_dawid_skene.py`) | The fits do not share a reference. `item-posteriors.csv` student rows: **4,770** for T=0.7, T=0.3 and text-MIN (the script default, `analyse_dawid_skene.py:57`); **4,745** for image. Every cross-run comparison in `results/55maps-ds-summary-v2/report.md` §§ 2.1, 2.2, 4.1, 4.2 mixes the two. | W7-D9 |
+| 1 | ✅ **DONE 2026-08-14** — The four 55-map Dawid–Skene fits (`scripts/analyse_dawid_skene.py`) | Was: the fits did not share a reference (4,770 ×3 / 4,745). Re-fit on the standardised reference with current canonical inputs (fits `b140f686a`, crosstabs `b31093e9f`, report refresh `13b386875` + blind-verified corrections `2d8a3dc83`). All four fits at 4,731 exactly; the W7-D9 withdrawal resolved; T=0.3 leads. One residue registered: the superseded T=0.3 fit's input provenance is unidentified (report § 6.3). | W7-D9 |
 | 2 | `outputs/55maps-text-high-t0.3-generalisation/evaluation/` | Evaluated against the unreviewed 4,770 base while sibling runs used the reviewed layer. t0.3 also lacks a full-buffer-eval, unlike the other three, and leads on F1 in several documents. | W7-D8, ruling 19(c) |
 | 3 | F1 / MCC reference unification | Corrected-F1 scores against the extended reference (student 4,746 + phantoms gated per buffer); tile-level MCC scores against the student layer alone. The two metrics must share a reference. | Ruling 20(a) |
 | 4 | Obs 280 — the F1-versus-MCC rank divergence (text wins F1, image wins MCC) | Currently measured across metrics that do not share a ground truth, so an unknown share of the divergence could be reference effect rather than metric behaviour. Re-measure after item 3. | Ruling 20(a) |
@@ -126,6 +126,21 @@ cost — before anything is launched (ruling 21e).
   consumed is history and stays.
 
 ## Changelog
+
+### 2026-08-14 (c) — Item 1 complete, blind-verified
+
+The four Dawid–Skene refits landed under the full contract: B/C
+vintage decomposition, all reproduction gates, crosstab re-runs, the
+report refresh in one commit, and a blind verifier pass (488 claims
+identified / 481 re-derived / 476 confirmed / 5 corrections applied —
+1 material: the § 2.3 reclassification mechanism; all three B fits
+independently re-derived CONFIRMED). Headline: T=0.3 takes the D-S
+and measured F1 lead on the common reference; the Obs 293
+cross-method disagreement narrows to the middle pair. The verifier's
+methodological gap is closed in code: `analyse_dawid_skene.py` now
+records `input_paths` in its own artefact. Registered residue: the
+superseded T=0.3 fit's inputs remain unidentified (two hypotheses
+exactly falsified; report § 6.3).
 
 ### 2026-08-14 (b) — Verifier conditions hardened from the Opus review
 
