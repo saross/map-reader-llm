@@ -1,8 +1,8 @@
 # Reference-standardisation queue — analyses waiting on a fixed reference
 
-> **Last revised**: 2026-08-14 (items 2–3 complete, blind-verified;
-> items 1–3 of 5 now done). See [§ Changelog](#changelog) for revision
-> history.
+> **Last revised**: 2026-08-14 (item 4 complete, blind-verified; items
+> 1–4 of 5 now done — only the item-5 re-tiering remains). See
+> [§ Changelog](#changelog) for revision history.
 
 **What this is.** Ruling 21 fixes the ground-truth reference *first*, then
 runs every reference-tainted analysis once against it. This file is the
@@ -106,7 +106,7 @@ review (`/pre-run-review` protocol; see Obs 397):
 | 1 | ✅ **DONE 2026-08-14** — The four 55-map Dawid–Skene fits (`scripts/analyse_dawid_skene.py`) | Was: the fits did not share a reference (4,770 ×3 / 4,745). Re-fit on the standardised reference with current canonical inputs (fits `b140f686a`, crosstabs `b31093e9f`, report refresh `13b386875` + blind-verified corrections `2d8a3dc83`). All four fits at 4,731 exactly; the W7-D9 withdrawal resolved; T=0.3 leads. One residue registered: the superseded T=0.3 fit's input provenance is unidentified (report § 6.3). | W7-D9 |
 | 2 | ✅ **DONE 2026-08-14** — `outputs/55maps-text-high-t0.3-generalisation/evaluation/` | Was: evaluated against the unreviewed 4,770 base; no full-buffer eval. The t0.3 cells were scored ONCE against the standardised reference (14 buffers, F1 + MCC) and registered under this item and item 3: conditions `verified-k4/k3-standardised-gt` under `55maps-text-high-t0-3-generalisation` (commit `fab017085`); scoring `6f7e7b651`, summary + blind-verifier corrections `cb3629e7f`/`0f19370cd`. The tainted run-level eval dirs remain as dated history. | W7-D8, ruling 19(c) |
 | 3 | ✅ **DONE 2026-08-14** — F1 / MCC reference unification | Was: corrected-F1 on the extended reference, MCC on the student layer alone. Completion gate met: 8/8 board cells carry F1 AND tile MCC against the standardised reference (drift check 0 fail; extension census 279/0-drops at every buffer). A0 gate reproduced every committed legacy value at delta 0.0 exactly; A1−A0 = the W6-E9 fix (+8.7e-05 uniform); full A0/A1/B/C decomposition in `results/55maps-standardised-ref-2026-08-14/`. MCC is buffer-invariant by construction under the shared reference. | Ruling 20(a) |
-| 4 | Obs 280 — the F1-versus-MCC rank divergence (text wins F1, image wins MCC) | Currently measured across metrics that do not share a ground truth, so an unknown share of the divergence could be reference effect rather than metric behaviour. Re-measure after item 3. | Ruling 20(a) |
+| 4 | ✅ **DONE 2026-08-14** — Obs 280 — the F1-versus-MCC rank divergence | Re-measured with both metrics on the standardised reference: the divergence SURVIVES (text T03-k4 leads F1 0.8303; image IM-k3 leads MCC 0.7120 from third place on F1) and is ≈90 % metric behaviour — the reference axis moves the MCC gap only +0.004 of ~0.043, in the widening direction, so the mixed-reference original had understated it. The Obs 292 R≥75 m F1 crossover was a per-run-vintage artefact and does not carry. Analysis `obs280-shared-reference` (22 analyses, ALL VALID); doc + JSON in `results/55maps-standardised-ref-2026-08-14/` (`bfaeb1c17`, verifier corrections `ddc559c78` — incl. a substantive mechanism correction: on this board text wins F1 on precision and image wins MCC on tile sensitivity, NOT Obs 280's high-TN framing). Blind verifier: 89/83/80/3. | Ruling 20(a) |
 | 5 | Re-tier both boards; re-verify every 55-map figure in `docs/paper/results-draft.md` | Downstream of items 1–4. The committed-future-work estimate is 8 cells × 14 buffers of re-scoring. | Ruling 20(d) step 4 |
 
 ## Queue — requires API spend, discussed case by case before launch
@@ -126,6 +126,26 @@ cost — before anything is launched (ruling 21e).
   consumed is history and stays.
 
 ## Changelog
+
+### 2026-08-14 (e) — Item 4 complete, blind-verified
+
+The Obs 280 re-measurement landed the same session, immediately
+after items 2–3 (the DAG's 3→4 edge). Verdict: the F1-vs-MCC
+divergence survives reference unification and is ≈90 % metric
+behaviour — the reference asymmetry ruling 20(a) worried about
+accounts for only +0.004 of the ~0.043 MCC gap, and in the
+WIDENING direction (the original understated image's lead). Image
+leads MCC from third place on F1; both headline gaps carry
+non-overlapping marginal CIs. The Obs 292 R≥75 m F1 crossover was
+traced to the per-run self-referential reference vintage and does
+not carry to any shared reference. The mandatory blind verifier
+(89/83/80/3) caught one substantive error the draft had imported
+from Obs 280's matrix-tree phrasing: on this board the mechanism is
+text-precision vs image-tile-sensitivity, NOT high-TN selectivity —
+corrected and third-re-derived. Item 5 (re-tier both boards,
+re-verify every 55-map figure in results-draft.md) is now the only
+open item; the narrowed T03-k3-vs-TH7-k3 margin (+0.0006) is its
+central question.
 
 ### 2026-08-14 (d) — Items 2–3 complete, blind-verified
 
