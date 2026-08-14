@@ -1088,3 +1088,92 @@ change, and how to verify. When receiving one, honour its verification
 clause before its instruction clause — re-check anchors first, exactly as
 this one requested.
 
+
+## claude-obs 43 — 2026-08-14 (Session 131): his audit questions target the seams, and each one converted to a rule
+
+**Pattern.** The pre-run audit ("what artefacts? what tripwires? are
+items 1–3 ordered? what happens on partial completion? what
+verifications?") was five questions, each aimed at a *seam* — a place
+where my plan's fluency could paper over an unstated assumption. Four
+of the five produced a hardening none of my planning documents
+contained (the 2→3 coherence ordering, the one-commit rule, the
+mixed-vintage gate, the verifier stack). He then named the mechanism
+himself via Opus's review: the questions worked because they came from
+deliberate naivety — someone who "knew" the pipeline would have nodded
+through the dependency section.
+
+**Lesson.** "Help me understand at this level of detail" is not a
+request for exposition; it is a hardening pass wearing a comprehension
+hat, and the comprehension is itself a deliverable (his words: it is
+what makes intermittent human audit of autonomous work possible).
+
+**How to apply.** Treat every operator question at a plan boundary as
+a candidate rule; write the answer into the controlling document, not
+just the chat. The `/pre-run-review` skill now institutionalises this,
+including the naive-reviewer stance — but the skill is the floor, not
+the ceiling: his live questions found what my six sections would have
+summarised.
+
+## claude-obs 44 — 2026-08-14 (Session 131): "do we need to follow up now?" is usually the answer, not a question
+
+**Pattern.** I had filed two findings (the t0.3 drift attribution, the
+identical-aggregate coincidence) as report-stage work with the verifier
+as backstop. His one line — "both sound like they need investigation,
+or is that for later?" — re-sequenced them to pre-drafting. Both
+investigations changed the record: one killed my pushed attribution
+outright (twice), the other converted a would-be caveat into a
+verified non-issue. The cost was minutes; drafting on either unchecked
+claim would have wasted a verifier cycle or, worse, survived it.
+
+**Lesson.** When he asks whether something should happen now or later,
+he has usually spotted deferred verification masquerading as
+sequencing. The deferral instinct is mine (keep momentum toward the
+deliverable); the correction is his (verification that gates prose
+happens before the prose).
+
+**How to apply.** Before classifying any anomaly as "for the
+write-up", ask: does any pending prose *assert* something this anomaly
+could falsify? If yes, it is now-work by definition.
+
+## claude-obs 45 — 2026-08-14 (Session 131): self-critique — I applied the anchor rule to numbers and exempted my because-clauses
+
+**Pattern.** In the same arc in which I built denominator-reporting
+verifiers and wrote the 1-in-10 rate into a contract, I pushed two
+untested causal attributions into a commit message ("inputs repaired
+after the fit — same class as the S110/S111 repairs") and a report
+draft. Both were falsified by single cheap commands I only ran after
+the PI's follow-up question. The verifier also caught a third: a
+mechanism sentence carried forward from the superseded report against
+tables that disproved it.
+
+**Lesson.** The write-side anti-confabulation rule — every checkable
+specific carries an anchor or gets reworded — applies with full force
+to mechanism claims, and commit messages are the most durable
+unreviewed prose in the repository. My numbers discipline is now
+decent; my *because* discipline lagged a full error-class behind.
+
+**How to apply.** Pre-commit, re-read the message for causal claims;
+each one either cites its test or gets hedged to what is actually
+established ("consistent with X; untested"). The same pass the
+verifier does for report prose, done by me, for free, at write time.
+
+## claude-obs 46 — 2026-08-14 (Session 131): one sentence of domain reasoning resolved what geometry called ambiguous
+
+**Pattern.** Walk item #4635 was the genuinely ambiguous case — the
+displaced detection sat 68 m from one mound and 98 m from the other,
+raw distance favouring the "wrong" one. His resolution took one
+sentence: the numeral is black, so it adheres to the black
+trig-on-mound symbol; had it adhered to this mound it would be
+orange-brown. A discriminating feature (ink-colour adhesion) that no
+geometric attribute in our data captures, applied in seconds, decisive.
+
+**Lesson.** His map-domain readings are not just verdicts to record —
+they are candidate *mechanisms* with testable implications (do
+displacement vectors sort by attractor colour? does the same adhesion
+bias VLM detections?). The marking data already contains the
+displacement vectors to test this.
+
+**How to apply.** When he articulates a why during adjudication,
+capture it as a mechanism hypothesis in the observation stream, not
+only as the item's rationale — this one is already flagged in the
+ruling-21 spec and the session reflection as an unpursued question.

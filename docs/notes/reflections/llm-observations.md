@@ -7175,3 +7175,51 @@ produced by intersecting the static flags with the condition that actually
 discriminates. Instruments that flag should declare which kind of predicate
 each flag is; termination arguments depend on it.
 
+## Session 131 — 2026-08-10/14 (claim chains are not equivalence relations; reproduce before you vary; mechanism claims need exact tests before they enter the record; refreshed numbers under carried-forward prose re-assert stale reasoning)
+
+**A chain of pairwise "same as" claims is not an equivalence relation, and
+transitive closure over it manufactures false identities.** The first
+ruling-21 derivation unioned conflation claims transitively and glued a
+170 m chain (student → phantom → student) into one mound — deleting a real
+mound from the reference had it shipped. The repair was not a better union
+but a layer decision: mark positions are the equivalence classes (the spec's
+own counting rule); claims only attach records that carry no mark of their
+own; a claim onto a marked record in another cluster is superseded evidence,
+listed for adjudication, never merged. General form: when two evidence
+layers can disagree, name which one defines identity *before* clustering —
+otherwise the weaker layer's noise propagates through closure as structure.
+
+**Reproduce before you vary, and decompose by controlled re-derivation.**
+The refit campaign's design — fit B (current inputs, old reference) beside
+fit C (current inputs, new reference) — turned "the numbers moved" into two
+attributable components: a reference effect proven uniform (+0.0028 to
++0.0035 D-S F1 across all four runs) and input-vintage effects of wildly
+different sizes (0.0000, +0.0004, +0.0284). The reproduction gate paid for
+itself twice before any refit ran: T=0.7's exact reproduction certified the
+invocation; T=0.3's failure to reproduce exposed that the committed fit's
+inputs match no known vintage. Without B, the T=0.3 leader change would
+have been attributed wholesale to the standardised reference — wrong by a
+factor of nine.
+
+**Causal attributions written at commit time are prose at the synthesis
+boundary, and they fail at the same ~1-in-10 rate as numbers.** Twice this
+session I wrote a mechanism into the record that a cheap exact test then
+falsified: "inputs repaired after the fit" (killed by commit order —
+`merge-base --is-ancestor`), then "fit computed pre-recovery, committed
+late" (killed by re-running on inputs extracted from the parent commit).
+Both felt explanatory; both were pattern-matched, not derived. The
+discipline that numbers already get — re-derive before asserting — applies
+with full force to *because*-clauses, and a commit message is not exempt:
+it is the most durable prose in the repository.
+
+**Refreshing a document's numbers while carrying its sentences forward
+re-asserts the old reasoning against new data.** The blind verifier's one
+material catch: the refreshed report stated the superseded version's
+mechanism for the +0.024 constancy ("scales with the VLM-only count") under
+tables whose own values disproved it — image and T=0.3 share 192.5
+reclassifications with VLM-only counts 1,022 versus 692; the true mechanism
+is matched × (0.05/0.95), VLM-independent. I had re-derived every number
+and re-derived none of the sentences. A refresh owes each *claim* the same
+recomputation as each value; carried-forward prose is where superseded
+mechanisms survive their own falsification.
+

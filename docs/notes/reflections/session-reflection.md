@@ -10037,3 +10037,61 @@ alarms this session (an identity re-derivation, a timezone
 threshold) were repaired by making them reuse the instrument's
 resolution functions, which is the condition for trusting them.
 
+
+## Session 131 — 2026-08-10/14 — the run that was reviewed before it ran
+
+### Prompt: What was different about this session compared to recent ones?
+
+The direction of scrutiny inverted. Recent sessions built instruments
+to check the data — gate batteries, re-review walks, drift checks.
+This one built instruments to check *me*: a pre-run review that
+interrogated my execution plan before it executed, a verifier
+required to report its denominator so its diligence is measurable, a
+named disagreement rule so its corrections cannot win by default, and
+an external Opus review that found three gaps in the verification
+stack I had just designed. The machinery worked on its designer
+twice: my commit-message attribution for the t0.3 drift ("inputs
+repaired after the fit") was falsified by a commit-order check I ran
+myself, and my fallback ("fit computed pre-recovery") by a
+reproduction test an hour later. Then the blind verifier caught a
+material mechanism error in prose I had just refreshed — a sentence I
+had copied forward from the superseded report without re-deriving it.
+The session's other novelty is that it closed an entire arc in one
+arc: walk → re-pin → materialised reference → contract → queue item 1
+verified and ticked, five days and three resumptions in one
+conversation.
+
+### Prompt: What question emerged that wasn't pursued?
+
+Two. First, the superseded T=0.3 fit's actual inputs — deliberately
+dropped after two exact falsifications, per the one-more-test rule;
+it is registered in the report's § 6.3 as "open and not guessed at",
+and the new `input_paths` provenance block makes the class
+unrepeatable, which mattered more than solving the instance. Second,
+and scientifically richer: Shawn's ink-colour adhesion observation on
+walk item #4635 — the black numeral binds the displaced detection to
+the black trig-on-mound symbol, not the nearer orange-brown mound.
+That is a testable mechanism for attractor displacement (adhesion
+follows ink colour, not proximity) that would apply to both human
+digitisers and VLM detections, and nobody has checked whether the
+recorded displacement vectors sort by attractor colour. It is one
+grep of the marking data away and remains unasked.
+
+### Prompt: What decision or trade-off made today will look arbitrary without this session's context?
+
+The B fits — current inputs against the legacy 4,770 reference — were
+computed, cited in § 6.3's decomposition table, and *deliberately not
+committed*. Without context that looks like sloppiness; it is the
+opposite. Ruling 19's spirit is that superseded references must not
+carry citable numbers, so the diagnostics that quantify the input-
+vintage component live as a table in the report (re-derivable, and
+independently re-derived by the blind verifier on sapphire) rather
+than as artefacts that could be quoted as performance. Similarly the
+15 m proximity-corroboration union in the derivation's clustering —
+a claim onto a marked record merges only when the marks sit inside
+the distinct-mound floor — will read as a magic constant; it exists
+because exactly one pair (student:861 / phantom:329, 5.03 m,
+mutual claims) straddled the 5 m tolerance, and the census showed the
+5–15 m band contained only it and one already-linked chain. The rule
+is data-shaped: one case wide, principled floor, measured before
+adopted.

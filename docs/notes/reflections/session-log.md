@@ -8305,3 +8305,75 @@ resolution rules. `outputs/h10/wbf/` (65 MB, 1,470 files, April WBF
 verifier outputs for pool_160_hp4hn4_variant_c) remains untracked —
 PI decision pending on gitignore/commit/archive.
 
+
+## Session 131 — 2026-08-10/14 — ruling-21 applied end to end; queue item 1 closed blind-verified; the pre-run review born
+
+One conversation across five days and three resumptions (amd-tower
+throughout; compute on sapphire; one SSH excursion to zbook).
+Repo `831da5db2` → `673f9abaa` + reflection commits, all pushed.
+**US$0.00 API.**
+
+**Gate battery persisted** (`55e14aa5b`): the eight S130 closing gates
+as `scripts/marking_campaign_gates.py`, thresholds imported from the
+app, 8/8 green; tier-1 defect tests + tier-2 committed-state test.
+
+**Ruling-21 instruction set derived** (`7fc85b920`): 1,432 instructions
+from the 1,317 verdicts. Load-bearing correction mid-derivation: mound
+identity from mark position clusters, never claim chains (a 170 m
+chain would have merged two real mounds). Census: student 4,746 − 17
++ 2 = 4,731; extension 278 + 1; grades 527/114/4,090 (after walk).
+Spec `planning/ruling21-application-spec.md`; all seven open decisions
+walked with the PI (2–7 ratified 2026-08-10; decision 1 became the
+six-item cross-cluster walk, installed as the canonical re-review
+list, `82d88211b`).
+
+**Interleaved (2026-08-10/11)**: Obs 396 minted (two opposing
+reference biases, both quantified; writer corrected the inflation
+figure to +0.011–0.012, `cccfad07c`); h10/wbf resolved via SSH to
+zbook (manifest + pre-cleanup backup into the archive, `1c9859b55`);
+jitter bottom line established (median 8.6 m, max 30.0 m, zero
+observations in the 30–72 m gap separating jitter from long-range
+duplicates; 549-record / 297-pair second-pass sizing).
+
+**The walk landed (2026-08-14)**: all six claimants `d` (live
+phantom-side checks during the walk: each retired claim leaves one
+pairing per mound; ink-colour adhesion rationale on #4635 recorded).
+Tally re-pinned 756/515/45/1 in the same commit (`b2692f188`).
+
+**Reference materialised** (`ecc00f31f`):
+`canonical-gt/standardised/` — student layer 4,731 (GeoJSON, per-record
+grade/position-source/provenance), extension 279 (CSV with exact
+`nearest_student_m` replacing ring-gated buffer_metres), README with
+the ruling-21b header. Build-time census checks; 28 tests.
+
+**Pre-run review + contract**: the PI's audit dialogue (artefacts,
+tripwires, DAG, partial-completion, verification) yielded four
+hardenings → bound into the queue register (`793c875d6`), templated
+as the global `/pre-run-review` skill (personal-assistant `09fa14e`),
+hardened from an external Opus review (verifier denominator,
+disagreement rule, cold derivation, naive-reviewer stance;
+`cea93d5e7` + skill `b82e48d`); Obs 397 minted (`58238ffc6`);
+automated clean-context review noted as future work (`9e9160c`).
+
+**Queue item 1 executed under the contract**: four D-S refits with B/C
+vintage decomposition (`b140f686a`) — reproduction gate caught the
+T=0.3 committed fit matching *neither* input vintage (two hypotheses
+exactly falsified; provenance registered open, report § 6.3);
+crosstabs re-run (`b31093e9f`); report refreshed in one commit
+(`13b386875`): T=0.3 takes the D-S/measured lead, W7-D9 withdrawal
+resolved (+0.0285), Obs 293 disagreement narrows to the middle pair,
+§ 5.5 anomaly dissolved, reference move uniform at +0.003. Blind
+verifier (488 identified / 481 re-derived / 476 confirmed / 5
+corrections, 1 material — the § 2.3 mechanism; all three B fits
+independently re-derived) → corrections + `input_paths` provenance in
+the script (`2d8a3dc83`), fits regenerated with provenance
+(`9107a0c4a`), item ticked (`673f9abaa`).
+
+**Contextual assumptions.** The B fits are cited in § 6.3 but
+deliberately uncommitted (superseded-reference diagnostics; verifier
+re-derived them). Corrected-F1-multi-buffer figures everywhere remain
+old-reference, flagged, pending queue items 2–5. zbook a few commits
+behind at close; syncs on next use. The five-day single conversation
+means "session 131" spans what the task-status hooks treated as three
+sittings; the marking app ran locally during the walk with commits
+sequenced around it.

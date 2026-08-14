@@ -6818,3 +6818,65 @@ before doubting the repair. And when a derived artefact is regenerated from
 system's behaviour: the reviewer's output did not exist when the glob was
 written, and the glob recruited it silently the day it appeared.
 
+
+## 2026-08-14 (Session 131, map-reader-llm): The fit that matched neither vintage — two mechanisms falsified, provenance left honestly open
+
+**Session:** d1c5e2fe-5e95-4b5b-86a2-1ef1619b6dd1
+**Instance:** primary
+
+### Surprising fact
+
+A reproduction gate — re-run the committed T=0.3 Dawid-Skene fit from its
+run's current canonical inputs before varying anything — failed by exactly
++128 matched / −128 student-only / −128 VLM-only / −128 total. The other
+gates behaved: T=0.7 reproduced byte-equal; text-MIN drifted by the +3/+1
+its documented recovery predicts. T=0.3's committed fit alone described a
+detection set nobody could point to.
+
+### Probe
+
+Hypothesis 1, written (prematurely) into the fits' commit message: the
+inputs were repaired after the fit, so the committed fit preserves a
+pre-repair vintage. Killed by commit topology: the recovery commit
+(`548604d95`, 01:19 Z) is an *ancestor* of the fit commit (`0b14e4fcd`,
+11:35 Z same day) — `git merge-base --is-ancestor` returns true; the
+repair predates the fit by 10 h 16 m. Hypothesis 2: the fit was computed
+before the recovery landed and committed late that evening. Killed by
+reconstruction: extracting consensus, probabilities, and manifest from
+`548604d95^` and re-fitting gives {3,658 / 1,112 / 691 / 5,461} — within
+one item of the *current*-input fit and nowhere near the committed
+{3,531 / 1,239 / 819 / 5,589}. The recovery was a near-no-op for
+matching; the committed fit consumed a larger, worse-matching detection
+set matching neither the pre-recovery nor the current vintage.
+
+### Belief revision
+
+From "the committed fit is stale relative to a known repair" (a dated,
+explicable defect) to "the committed fit's inputs are unidentified" (an
+open provenance question). The practical belief that changed underneath:
+that a committed artefact plus its run directory suffices to reconstruct
+what an analysis consumed. It does not — the fit recorded parameters but
+not paths, and the repository holds no candidate object with the right
+cardinality. Downstream, the revision propagated further than expected:
+the run's 64-row crosstab anomaly and most of its cross-method F1 gap —
+both previously explained with confident per-run narratives — dissolved
+as artefacts of the same unidentified input set. Two published
+explanations died with the fit.
+
+### What would change this belief
+
+Finding any artefact (in git history, any machine's working tree, or a
+backup) whose detection set yields {3,531 / 1,239 / 819 / 5,589} under
+the recorded parameters; or a session transcript recording the April
+invocation. The class-level fix is already in place either way:
+`analyse_dawid_skene.py` now writes `input_paths` into its own artefact,
+so a future fit cannot detach from its inputs.
+
+### Implications for practice
+
+Reproduce before you vary — the gate that failed here was the only thing
+standing between "attribute T=0.3's leader change to the new reference"
+and the truth that nine-tenths of the movement was input vintage. And
+mechanism claims made at commit time deserve the same exact tests as
+numbers: both falsifications were one cheap command each, run *after* the
+attribution had already been pushed.
