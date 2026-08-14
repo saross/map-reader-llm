@@ -1,6 +1,6 @@
 # 55-map board on the standardised reference — queue items 2–3
 
-> **Last revised**: 2026-08-14 (initial publication). See
+> **Last revised**: 2026-08-14 (blind-verifier corrections applied). See
 > [§ Changelog](#changelog) for revision history.
 
 **What this is.** The eight 55-map board cells re-scored ONCE against
@@ -45,16 +45,24 @@ Consequences, both verified in the artefacts:
   longer varies with R), so each cell carries ONE MCC against the same
   reference its F1 uses.
 - The extended reference is **5,010 records everywhere** (4,731 +
-  279; `n_ref_extended` in every row), versus 5,160 ring-admitted at
-  R = 50 m under the legacy pairing — the marking campaign removed
-  ~135 net phantom records at the 50 m shell that were duplicates of
-  student mounds or not mounds.
+  279; `n_ref_extended` in every row), versus a 5,160-record legacy
+  extended reference at R = 50 m (4,746 student + 414 ring-admitted
+  phantoms on the current engine; 5,161 with 415 phantoms in the
+  committed pre-W6-E9 summaries). Composition of the change
+  (candidate_id join of the extension layer to
+  `canonical-review.csv`, verifier-derived and third-re-derived): of
+  the 414 legacy 50 m-shell phantoms, **146 were removed** by the
+  marking campaign (duplicates of student mounds or not mounds) and
+  268 survive; **11 records were added** that the legacy 50 m
+  reference lacked (10 from the 75–125 m rings, 1 marking-pass
+  extra) — net −135.
 
 ## The board at 50 m (leg C — publication)
 
-Source: `consolidated-standardised.csv` (R_m = 50 rows); 95 %
-percentile bootstrap CIs, tile-level resampling, 10,000 iterations,
-seed 42.
+Source: `consolidated-standardised.csv` (R_m = 50 rows). 95 % CIs:
+percentile bootstrap for F1/P/R, BCa for MCC
+(`bootstrap_tile_classification_ci`); both tile-level resampling,
+10,000 iterations, seed 42.
 
 | cell | config | k | P | R | F1 [95 % CI] | MCC [95 % CI] |
 |------|--------|---|-----|-----|--------------|---------------|
@@ -108,15 +116,20 @@ Readings:
   channel-duplicate fix: the canonical review's one 0.98 m twin
   (ruling 20c) stops double-counting, removing exactly one spurious FN
   per cell (`a1_drops = 1` for all eight, `validation-gate.json`).
-- **The extension-layer overhaul (C−B) is the dominant mover and
-  runs against the k3 text cells** (T03-k3 −0.0074 … TM-k3 −0.0017)
-  while slightly favouring the k4 and image cells. Mechanism
-  (consistent with, not proven by, these data): the legacy layer
-  placed phantoms AT detection coordinates — a guaranteed 0 m match
-  for the generating detection — and admitted ~135 net records at the
-  50 m shell that the marking campaign adjudicated away as duplicates
-  or non-mounds. Higher-recall (k3) cells harvested more of those
-  free matches, so they lose more when the reference shrinks to 279
+- **The extension-layer overhaul (C−B) is the dominant mover on
+  seven of the eight cells** (on IM-k3 the student-layer move is
+  larger). Its direction patterns by config and threshold: within
+  each text config the k3 cell loses more than its k4 sibling
+  (TH7 −0.0035 vs +0.0016; T03 −0.0074 vs −0.0052; TM −0.0017 vs
+  +0.0002), the T0.3 config loses most at BOTH thresholds, and
+  TH7-k4, TM-k4, and IM-k3 gain slightly. Mechanism (consistent
+  with, not proven by, these data): the legacy layer placed phantoms
+  AT detection coordinates — a 0 m match wherever the generating
+  detection survives into a cell's verified set — and its 50 m shell
+  carried 146 records the marking campaign adjudicated away as
+  duplicates or non-mounds. Cells whose detection pools overlap that
+  removed set most (the high-recall k3 cells, and T0.3's pool in
+  particular) lose the most when the reference shrinks to 279
   distinct mounds at true centres.
 - **The student-layer standardisation (B−A1) is small and mostly
   slightly negative, except image (+0.0018)** — the marked/deduplicated
@@ -141,8 +154,15 @@ Readings:
 - **Code verification**: engine + driver under two fresh-context audit
   lenses plus a fix-round re-audit (commits `c951aa749` →
   `b34f90925` → `6e38c0e5f`); tier-1 suite 1,462 passing; the legacy
-  scoring path verified byte-identical against the pre-change engine.
-- **Blind verifier pass** over this document: see Changelog.
+  scoring path's artefact files (CSV/JSON/report) verified
+  byte-identical against the pre-change engine (stdout wording is not
+  byte-pinned).
+- **Blind verifier pass** over this document: 2026-08-14, fresh
+  context — 249 claims identified / 242 re-derived / 234 confirmed /
+  8 corrections (all prose characterisations, no figures; applied in
+  the same revision — see Changelog). Both tables rebuilt
+  independently, 144/144 cells matching; all eight cold-derived
+  directionality questions matched the text.
 
 ## Known reference biases (carried, not new)
 
@@ -158,8 +178,9 @@ properties from the reference
 
 Manifest conditions (`results/run-conditions.json`, commit
 `fab017085`): one `-standardised-gt` condition per cell under its run
-family (`verified-k4/k3-standardised-gt` × 4 text/image runs;
-`verified-5of10-standardised-gt` under `55maps-text-min-n10-uplift`),
+family — seven `verified-k4/k3-standardised-gt` conditions across the
+four generalisation runs (the image run has k3 only) plus
+`verified-5of10-standardised-gt` under `55maps-text-min-n10-uplift` —
 each pointing at the generator-shape `<cell>/evaluation.json` here.
 Manifest 330 conditions ALL VALID; drift check 0 fail (the uplift
 run's `n_passes=10 vs 5 run dirs` WARN is pre-existing on its
@@ -169,9 +190,32 @@ scoring registered under item 3.
 
 ## Changelog
 
+### 2026-08-14 (b) — Blind-verifier corrections applied
+
+Fresh-context blind verifier (contract § Execution contract item 5,
+conditions a–c): 249 claims identified / 242 re-derived / 234
+confirmed / 8 corrections — 4 CONFIRMED, 4 PLAUSIBLE, none numerical
+(both tables rebuilt independently, 144/144 cells matching; all
+eight cold-derived directionality answers matched). All eight
+applied in this revision:
+
+| Was | Now |
+|-----|-----|
+| "95 % percentile bootstrap CIs" (blanket) | F1/P/R percentile; MCC BCa |
+| C−B "the dominant mover" (all cells) | dominant on 7 of 8; IM-k3's student-layer move is larger |
+| C−B "favouring the k4 and image cells" | per-config pattern (k3 < k4 within each config; T0.3 loses most at both k); T03-k4 named as the k4 counterexample |
+| "5,160 ring-admitted at R = 50 m" | 5,160-record extended reference (4,746 + 414 admitted; 5,161 pre-W6-E9) |
+| "removed ~135 net … at the 50 m shell" | 146 removed + 11 added (net −135); composition third-re-derived from the candidate_id join |
+| "legacy path byte-identical" | scoped to artefact files (stdout not byte-pinned) |
+| "k4/k3 × 4 runs" (reads as 8) | 7 conditions across 4 runs (image k3-only) + uplift |
+| "guaranteed 0 m match" | 0 m wherever the generating detection survives into the cell's verified set |
+
+What did NOT change: every number in both tables, the board order,
+the headline observations, and the stop-state assessment. Landed
+with this revision's commit.
+
 ### 2026-08-14 — Original publication
 
 Session 132: queue items 2–3 executed under the reference-
-standardisation execution contract (PI go 2026-08-14, US$0.00).
-Blind fresh-context verifier pass applied before the queue tick;
-corrections (if any) recorded here.
+standardisation execution contract (PI go 2026-08-14, US$0.00),
+commit `cb3629e7f`.
