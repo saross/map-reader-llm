@@ -600,11 +600,7 @@ thank you for that clarification", and at session end, unprompted:
 re-opens; the S130 lesson (interactive adjudication beats documentation)
 extended from marking semantics to referential bookkeeping.
 
-## Candidates pending review (drafted 2026-08-15, Session 132) — accept / edit / discard
-
-*Drafted at handoff. Things Shawn observed (or would be positioned to
-observe) about Claude this session. Silence holds these over; it does not
-discard them.*
+## Session 132 — 2026-08-15 (approved 2026-08-15; candidate 3 dropped at review)
 
 **Candidate 1 — contract-scoped autonomy: four queue items, three blind
 verifier cycles, and zero mid-arc questions.** The session ran items 2–5
@@ -624,9 +620,3 @@ sessions of backlog cleared in minutes. If the pre-formed-candidate
 format (evidence in the text, counter-evidence included) is what made
 the discard as fast as the accepts, that is worth recording as the
 standard for future drafting.
-
-**Candidate 3 (in-the-moment reaction, relayed) — "great session with
-significant progress, thank you."** Offered unprompted at the close of
-the queue-closing arc, before the reflection rituals ran. Recorded per
-the standing exception (a Shawn reaction Claude relays); the referent is
-the full items-2–5 execution plus the cleared review backlog.
