@@ -584,10 +584,7 @@ here, the same lesson on the guidance side: the corner cases could not have
 been enumerated in advance, only answered when hit.
 
 
-## Candidates pending review (drafted 2026-08-14, Session 131) — accept / edit / discard
-
-*Drafted at handoff. Things Shawn observed about Claude this session.
-Silence holds these over; it does not discard them.*
+## Session 131 — 2026-08-14 (approved 2026-08-14; candidate 4 dropped at review)
 
 **Candidate 1 — the plan survived contact with five naive questions worse
 than it survived execution.** Shawn's pre-run audit ("what artefacts?
@@ -617,12 +614,3 @@ thank you for that clarification", and at session end, unprompted:
 "thanks for a productive session". The walk closed six-for-six with no
 re-opens; the S130 lesson (interactive adjudication beats documentation)
 extended from marking semantics to referential bookkeeping.
-
-**Candidate 4 — the wind-down question was asked by the human, answered
-honestly by the machine.** At 56 % context Shawn asked whether to push
-through or stop; Claude recommended stopping at the item-1 boundary and
-gave the real reason (the next leg's prose phase risked a mid-verifier
-compaction). Worth recording because the incentive runs the other way —
-momentum favours pushing — and the session-boundary discipline (reflect
-and hand off from the instance that did the work) only functions if the
-recommendation is honest about context economics.
