@@ -4,7 +4,9 @@
 > corrected-F1-multi-buffer figures in §§ 4.1, 4.3, 5.3 and 5.4 moved
 > onto the standardised reference now that queue items 2–5 are
 > complete; the Obs 293 middle-pair disagreement dissolves and all
-> three estimators agree on the full four-run ordering).
+> three estimators agree on the full four-run ordering. Blind-verified
+> same day, 125/123/119/4, zero numerical errors; four wording
+> corrections applied.)
 > See [§ Changelog](#changelog) for revision history.
 
 **Date**: 2026-04-28 (text-MIN added to the previous three-run summary
@@ -361,10 +363,13 @@ of how the 2-annotator latent-truth model performs on the same
 underlying data.
 
 With both columns on the standardised reference the two corrections
-**converge almost exactly**: every run agrees within 0.004, and the
-three text runs within 0.0001–0.0040 — against superseded gaps of
-+0.010 to +0.045 that were reference artefacts, layer by layer
-(T=0.3's stale D-S inputs, then image's per-run-vintage extension).
+**converge almost exactly**: every run agrees within 0.004, and
+three of the four (T=0.3, T=0.7, and image) within 0.001, with
+text-MIN the loosest at 0.0040 — the residual structure cuts across
+modality. The superseded gaps were reference artefacts peeled off
+layer by layer: +0.010…+0.031 on the 2026-08-14 table (image the
+outlier), and +0.045 for T=0.3 before its stale-input fix
+(2026-08-14 changelog entry).
 This is a striking cross-validation rather than a tautology: the two
 estimators reach their numbers by different routes — a fixed-prior
 2-annotator EM over candidate-grain votes versus Hungarian matching
@@ -372,7 +377,12 @@ against the extended reference at R=50 m — and were computed and
 blind-verified in independent sessions (S131 refits `b140f686a`;
 S132 board re-score, summary blind-verified 249/242/234/8). On a
 common reference they now measure the same quantity to within each
-method's own uncertainty. The earlier reading that image's +0.031
+method's own uncertainty — at the F1 level: the underlying
+components still differ materially (the D-S expectation shifts
+TP/FP by ±24–38 and FN by +51–82 against the board's counts, with
+different effective denominators), so the agreement is of the
+composite metric, arising partly from compensating precision/recall
+differences. The earlier reading that image's +0.031
 residual gap was "the substantive methodological difference" is
 **withdrawn**: it was the last reference artefact standing, not
 methodology (image's per-run-vintage extension was the furthest from
@@ -660,6 +670,25 @@ References:
 
 ## Changelog
 
+### 2026-08-15 (later) — Blind-verification corrections to the post-queue refresh
+
+Fresh-context verifier over the refreshed hunks (denominator: 125
+claims identified / 123 re-derived or source-checked / 119 confirmed
+/ 4 corrections; verdict pass-with-corrections; **zero numerical
+errors** — every figure, delta, spread, feature count, and ordering
+claim re-derived exactly, and the refresh landed inside the S133
+block plan's pre-registered expected band with no stop state). All
+four corrections were wording: (1) this entry's "not changed" list
+wrongly included § 1 (its estimator-agreement sentence was updated in
+step — now noted); (2) the gap-row label inverted the operand order
+("D-S − corrected" → "corrected − D-S"); (3) § 4.3's convergence
+subset clause restructured (three of four runs within 0.001, text-MIN
+loosest — the structure cuts across modality); (4) § 4.3's superseded
+gap range now names its two vintages explicitly. Two verifier
+nuances also added: the § 4.3 convergence qualified as F1-level
+(components still differ, with compensating precision/recall), and
+IM-k3's CI straddling 0.80 noted against the only-sub-0.80 claim.
+
 ### 2026-08-15 — Post-queue refresh: §§ 4.1/4.3/5.3/5.4 corrected-F1 figures onto the standardised reference
 
 **Trigger**: reference-standardisation queue items 2–5 complete
@@ -687,7 +716,7 @@ jump.
 | §§ 4.1/4.3/5.4 | T=0.7 corrected F1 @50 m | 0.8273 | 0.8169 |
 | §§ 4.1/4.3/5.4 | Image corrected F1 @50 m | 0.8333 | 0.8010 |
 | §§ 4.1/4.3/5.4 | text-MIN corrected F1 @50 m | 0.7968 | 0.7833 |
-| § 4.3 | D-S − corrected gaps | +0.010…+0.031 | −0.0001…−0.0040 |
+| § 4.3 | corrected − D-S gaps | +0.010…+0.031 | −0.0001…−0.0040 |
 | § 5.4 | Three-estimator spreads | 0.034–0.056 | 0.024–0.025 |
 
 **Findings the refresh produced**: (1) the Obs 293 middle-pair swap
@@ -702,10 +731,12 @@ independently. (3) § 5.4's "image is the loose one" reading
 **withdrawn**: all four spreads land at 0.024–0.025.
 
 **Not changed**: measured and D-S F1 columns (already standardised,
-2026-08-14); §§ 1–3, 4.2, 5.1, 5.2, 5.5, 6; all crosstab and
-calibration figures; text-MIN's only-sub-0.80 status (0.7833; Image
-clears at 0.8010). Historical changelog entries retain their
-old-reference wording as records of their own time.
+2026-08-14); §§ 2–3, 4.2, 5.1, 5.2, 5.5, 6 (§ 1's
+estimator-agreement sentence WAS updated in step with § 4.3); all
+crosstab and calibration figures; text-MIN's only-sub-0.80 status
+(0.7833; Image clears at 0.8010 on the point estimate — its 95 % CI
+[0.7911, 0.8105] straddles 0.80). Historical changelog entries
+retain their old-reference wording as records of their own time.
 
 ### 2026-08-14 — Ruling-21 refresh: all four fits on the standardised reference
 
