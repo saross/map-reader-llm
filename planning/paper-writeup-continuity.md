@@ -8,7 +8,89 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (131) — RULING 21 APPLICATION, THEN THE GATED QUEUE [Session 130 CLOSED 2026-08-10; ran in Fable]
+## 🎯 NEXT SESSION (132) — QUEUE ITEMS {2→3} UNDER THE EXECUTION CONTRACT [Session 131 CLOSED 2026-08-14; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged.
+> **The block controller is
+> `reports/verification/reference-standardisation-queue.md`** — its
+> § Execution contract (DAG, completion gates, one-commit rule, stop
+> states, verifier conditions) binds items 2–5. Item 1 is DONE and
+> blind-verified (changelog (c) there); its six-commit trail
+> (`b140f686a` → `673f9abaa`) is the template.
+>
+> **START HERE**: the {2→3} leg — t0.3's full-buffer evaluation (item
+> 2) and F1/MCC unification across the eight board cells (item 3),
+> the t0.3 cell scored ONCE and registered under both. **First step,
+> per the missing-inputs stop state: read the extended-GT gating
+> semantics at source** (`build_phantom_gdf` /
+> `compute_corrected_f1_multi_buffer.py`) before anything scores —
+> the standardised extension layer
+> (`canonical-gt/standardised/extension-mounds-standardised.csv`)
+> replaced ring-gated `buffer_metres` (the Obs 371 defect) with exact
+> `nearest_student_m`, and the scoring driver must consume it
+> correctly. Feature-count crosscheck per cell before scoring;
+> compute on sapphire; reproduce before you vary (the item-1 B/C
+> pattern). Then item 4 (blind verifier MANDATORY — highest synthesis
+> density) and item 5.
+
+**Session 131 (2026-08-10/14, amd-tower + sapphire, US$0.00)** closed
+the entire ruling-21 arc and queue item 1: gate battery persisted
+(`55e14aa5b`); instruction set derived + seven decisions walked
+(`7fc85b920`, `82d88211b`); the six-claim walk landed all-`d` with the
+tally re-pinned 756/515/45/1 (`b2692f188`); the standardised reference
+materialised — student 4,731 / extension 279 / grades 527+114+4,090
+(`ecc00f31f`); the pre-run review with the PI yielded the execution
+contract (`793c875d6`, hardened `cea93d5e7`) and the global
+`/pre-run-review` skill (personal-assistant `09fa14e`/`b82e48d`); Obs
+396 (two opposing reference biases, net ≈ −0.017) and Obs 397
+(pre-run review protocol) minted (`cccfad07c`, `58238ffc6`); h10/wbf
+resolved on zbook (`1c9859b55`); item 1 executed under the contract —
+refits `b140f686a`, crosstabs `b31093e9f`, report refresh
+`13b386875`, blind-verifier corrections + `input_paths` provenance
+`2d8a3dc83`, regen `9107a0c4a`, tick `673f9abaa`. Full narrative:
+`docs/notes/reflections/session-log.md` § Session 131.
+
+**Findings that bind the next work:**
+
+- **T=0.3 leads D-S and measured F1 on the common reference** (0.8304
+  / 0.8056); the Obs 293 cross-method disagreement narrows to the
+  middle pair (T=0.7 vs image). ~9/10 of T=0.3's movement was input
+  vintage, not reference (report § 6.3's B/C decomposition; the
+  reference move is uniform +0.003).
+- **Corrected-F1-multi-buffer figures are old-reference everywhere**,
+  flagged at each citation site — items 2–5 refresh them; §§ 4.1/4.3/
+  5.3/5.4 of the DS report then re-examine the middle-pair swap.
+- **Registered residue**: the superseded T=0.3 fit's inputs are
+  unidentified (two hypotheses exactly falsified; DS report § 6.3).
+  History, not a blocker; `input_paths` now recorded by the script.
+
+**Carry-forward the docs do not hold:**
+
+- **Pending observation batches now span three sessions** — S129
+  (candidates A–C) + S130 (D–G) in `docs/notes/working-notes.md`, plus
+  S131's new batch (H–J, drafted this handoff); user-obs candidates
+  S129 (4) + S130 (5) + S131 (4) in `docs/notes/user-observations.md`.
+  With Obs 396–397 minted, pending numbering shifts again (S129 A–C →
+  would-be 398–400, S130 D–G → 401–404, S131 H–J → 405–407). Silence
+  is not a decline — re-surface. If S130's candidate E (three
+  confidence grades) is accepted, draft with the corrected proxy
+  figures (113 records / 114 with restored #46, not 108).
+- **The queue's go is standing**: the PI said "go on this run"
+  (2026-08-14) for items 1–5 under the contract; no fresh approval
+  needed for the $0 legs. API spend remains a hard stop.
+- **zbook is behind** (synced to `cea93d5e7`); pull before any zbook
+  work. The 65 MB regenerable crops on zbook stay parked (S108
+  deletion precedent available on request).
+- **Unpursued question worth a cheap test**: ink-colour adhesion (the
+  PI's #4635 rationale — attractors bind displacements of matching
+  ink colour). The displacement vectors + symbol types in
+  `marked-centres.csv` could test it in one analysis; candidate J.
+- **The verification programme stays parked behind the queue**: 78/178
+  C4 batches, W7-I2 (HIGH, 11 W7-D1 dead paths) next when it resumes.
+
+---
+
+## NEXT SESSION (131) — RULING 21 APPLICATION, THEN THE GATED QUEUE [Session 130 CLOSED 2026-08-10; ran in Fable]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–21.
