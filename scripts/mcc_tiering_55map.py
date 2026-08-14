@@ -402,7 +402,7 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
             sys.exit(f"GATE FAIL: {name} rebuilt confusion != committed summary.json")
         cells.append({
             "name": name,
-            "condition_dir": str((TRACK2 / dirname).relative_to(BASE_DIR)),
+            "condition_dir": str((cell_base / dirname).relative_to(BASE_DIR)),
             "mcc": committed["mcc"],
             "mcc_ci": committed.get("mcc_CI"),
             "sensitivity": committed["sensitivity"],

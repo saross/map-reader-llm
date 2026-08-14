@@ -1,11 +1,11 @@
 # Results — working draft
 
-> **Last revised**: 2026-06-13 (Session 114: the three § R2/§ R7/§ R8
-> draft notes resolved; § R9 — GT-free selection — added; § R5 programme
-> cost corrected to the as-run ≈ $54; § R7 lesson (iii) strengthened with
-> the registered MCC tiering — IM-k3 sole Tier-1). Prior: 2026-06-12
-> (token-load audit: § R6 dollars rebuilt at audited flex rates; Obs 365
-> frontier decomposition added). See [§ Changelog](#changelog) for
+> **Last revised**: 2026-08-14 (Session 132, queue item 5: every 55-map
+> figure moved to the ruling-21 standardised reference; both boards
+> re-tiered with IDENTICAL tier structures, so no conclusion moved;
+> blind-verifier corrections applied). Prior: 2026-06-13 (Session 114:
+> draft notes resolved; § R9 added; § R7 lesson (iii) strengthened with
+> the registered MCC tiering). See [§ Changelog](#changelog) for
 > revision history.
 
 **Status**: first full-prose draft for collaborative revision. Every number
@@ -32,10 +32,13 @@ configuration can localise burial-mound symbols against known ground truth,
 at each configuration's own best operating point, per the preregistered
 H-series analysis plan. The **55-map instrument** — 8,541 tiles, the
 ruling-21 standardised extended reference: 4,731 standardised student
-digitisations plus 279 human-confirmed extension mounds at marked
-centres (±2.5 m), every reviewed record's position hand-marked and the
-773-candidate phantom pool adjudicated down to distinct real mounds —
-is the *deployment* instrument: it measures what a configuration
+digitisations plus 279 human-confirmed extension mounds, the
+773-candidate phantom pool adjudicated down to distinct real mounds.
+Positions are mixed-provenance by design: the 641 reviewed student
+records and all 279 extension mounds carry hand-marked centres
+(±2.5 m); the 4,090 out-of-scope student records keep as-digitised
+positions (median 8.6 m from the true centre). It is the *deployment*
+instrument: it measures what a configuration
 calibrated on the GS sheets actually delivers on a large, diverse,
 unseen corpus. Results on the first instrument are
 reported as characterisations, not in-sample claims to hedge; results on
@@ -270,9 +273,11 @@ standardised reference):
 | image HIGH T0.7 | 0.8771 | 0.8010 | −0.076 |
 | text MIN T0.7 | 0.8996 | 0.8109 | −0.089 |
 
-(`results/55map-leaderboard/gs-vs-55map-transfer.md`; the GS T0.3 cell —
+(GS side: `results/55map-leaderboard/gs-vs-55map-transfer.md` — note
+that document's 55-map column is the canonical-reference vintage; the
+55-map side of THIS table is the standardised board. The GS T0.3 cell —
 the deployment champion's proposer, characterised at $2.06 — completed
-this table.) The deployment champion *started higher on GS and degraded
+the table.) The deployment champion *started higher on GS and degraded
 more*; HIGH-T0.7 transfers best. GS clustering at 0.88–0.90 concealed
 differential deployment robustness.
 
@@ -288,11 +293,14 @@ the HIGH-thinking cell (−0.0108, BH p = 0.018) — converting the thinking
 choice at deployment into a priced cost/quality trade (~$58 for 0.828 vs
 ~$207 for 0.839 at audited production rates) rather than a tie (Obs 364;
 run `55maps-text-min-n10-uplift`). The confusion-matrix decomposition of
-the frontier steps (Obs 365, re-measured on the standardised reference)
-shows the two purchases differ in kind: the pass-count step is a strict
-improvement (+113 mounds *and* −31 false positives for ~$26), while the
-thinking-level step trades precision for recall (+229 mounds at +196
-false positives for ~$206).
+the frontier steps (Obs 365, re-measured on the standardised reference
+with Obs 365's own endpoints) shows the two purchases differ in kind:
+the pass-count step (min5 → min10) is a strict improvement (+113 mounds
+*and* −31 false positives for ~$26), while the step from the uplift
+cell to the board-leading HIGH configuration (T0.3 × 3-of-5, which
+moves thinking level, temperature, and threshold together) trades
+precision for recall (+282 mounds at +262 false positives for ~$203 at
+the audited production rate).
 
 ## R7. Deployment: the 55-map standardised board
 
@@ -343,8 +351,8 @@ statistically clear of all seven others including the F1 co-leaders
 `55map-standardised-leaderboard-mcc-50m`, 20/28 pairs significant, five
 tiers — tier structure and significant-pair set identical to the
 canonical-reference board). The MCC tier order inverts the F1 board's
-top while the text family keeps its F1 ordering, so the reversal is a
-modality effect rather than noise; the item-4 re-measurement
+top while the six text-only cells keep their F1 ordering, so the
+reversal is a modality effect rather than noise; the item-4 re-measurement
 (`results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md`)
 shows it is ≈90 % metric behaviour, not reference effect. For survey
 prioritisation, where tile-level discrimination matters more than exact
@@ -362,9 +370,10 @@ the reference data's own error structure rather than assuming it away
 (Obs 361, Obs 396). **Precision is review-verified and
 position-marked**: the standardised 55-map reference absorbed a human
 review of every cross-configuration detection cluster — the
-773-candidate phantom pool was adjudicated point by point (279
-confirmed as distinct real mounds the students missed, the rest
-resolved as duplicates of student records or non-mounds) and every
+773-candidate phantom pool was adjudicated point by point (278 of the
+773 confirmed as distinct real mounds the students missed, plus one
+marking-pass extra; the rest resolved as duplicates of student records
+or non-mounds) and every
 reviewed position hand-marked to the mound centre (±2.5 m) — so
 reported precision is robust to GT omissions. **Recall is a measured
 upper bound with quantified opposing biases**: on the GS sheets, where
@@ -454,6 +463,29 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-08-14 (b) — Blind-verifier corrections applied
+
+Fresh-context blind verifier over the item-5 refresh: 764 claims
+identified / 752 re-derived / 747 confirmed / 5 corrections. All
+applied: (1) SUBSTANTIVE — the Obs 365 thinking-step figures had
+silently switched comparator (uplift → TH7-k3, ≈ $149) while keeping
+Obs 365's T03-k3 price (~$206); restored Obs 365's own endpoint with
+the standardised numbers (+282 mounds / +262 false positives for
+~$203, third-re-derived from the CSV and the token-load audit) and
+named what the step moves (thinking + temperature + threshold);
+(2) the revision banner updated (it still read 2026-06-13); (3) an
+in-text vintage note added at the transfer-table pointer
+(`gs-vs-55map-transfer.md` remains canonical-vintage); (4) the R8
+phantom census corrected to 278-of-773 + 1 marking-pass extra;
+(5) the standardised MCC board's `condition_dir` provenance fixed in
+the harness and the board regenerated (values unchanged). Also: R0
+now states the reference's mixed positional provenance (641 + 279
+marked vs 4,090 as-digitised), and R7's "text family" tightened to
+"the six text-only cells". The previous entry's Obs 365 changelog
+row should be read with correction (1): its "now" column mixed a
+reference move with an endpoint change; the corrected step is
++282/+262. Prior entry landed at `a4dc67e3d`.
 
 ### 2026-08-14 — All 55-map figures moved to the standardised reference (queue item 5)
 
