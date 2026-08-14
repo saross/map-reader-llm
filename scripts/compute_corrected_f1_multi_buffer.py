@@ -141,6 +141,28 @@ config-agnostic. The additional k3-shell review pass covered the three text
 configurations only, so any residual enrichment asymmetry favours the text
 cells."""
 
+STANDARDISED_ATTRIBUTION_NOTE = """\
+**Attribution resolution (55-map deployment corpus, standardised
+reference).** The ruling-21 standardised reference replaces the legacy
+ring-censored pairing. Two positional-quality classes remain:
+
+1. *Student-digitised mounds* (n = 4,731 after standardisation): 641
+   reviewed records carry marked centres (±2.5 m); the 4,090
+   out-of-scope records keep as-digitised positions (median 8.6 m,
+   p90 18.3 m from the true centre on the jitter sample).
+2. *Extension mounds* (n = 279 — model-detected mounds the students
+   missed, human-confirmed): ALL at marked centres (±2.5 m).
+
+Because every extension record is exactly localised, the layer enters
+the extended ground truth WHOLE at every buffer radius — the legacy
+interval-censored ring gate (and its sub-50 m collapse onto the student
+layer) no longer applies, and sub-50 m Track-2 figures are genuine.
+Tile-level MCC is buffer-invariant by construction on this reference.
+The reference is best-possible, not gold-standard: residual long-range
+duplicates deflate F1 ≈ −0.03 and absent joint student+model misses
+inflate it ≈ +0.011–0.012 (net ≈ −0.017, rank-preserving to first
+order) — see the reference README and Obs 396."""
+
 PAIRED_CI_NOTE = """\
 **Confidence intervals vs significance.** The 95% intervals in the board table
 are *marginal* per-cell BCa bootstrap intervals; the significance tests are

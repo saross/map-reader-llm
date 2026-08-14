@@ -46,6 +46,9 @@ from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
     ATTRIBUTION_RESOLUTION_NOTE,
     PAIRED_CI_NOTE,
+    STANDARDISED_ATTRIBUTION_NOTE,
+    build_extended_gt,
+    load_standardised_extension,
 )
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
@@ -58,13 +61,18 @@ from scripts.pairwise_permutation_test import assign_source_tiles  # noqa: E402
 BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
 STUDENT_GT = BASE_DIR / "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
 PHANTOMS = BASE_DIR / "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv"
+STD_DIR = BASE_DIR / "results/deployment-oracle-2026-06-06/canonical-gt/standardised"
+STUDENT_STD = STD_DIR / "student-mounds-55maps-standardised.geojson"
+EXTENSION_STD = STD_DIR / "extension-mounds-standardised.csv"
 RUN_CONDS = BASE_DIR / "results/run-conditions.json"
 OUT_DIR = BASE_DIR / "results/55map-leaderboard"
 BUFFER_M = 50
 GATE_TOL = 0.003
 
-# Short display names for the seven canonical-GT cells, keyed by
-# (run_id, label). Matches the S105 findings-doc naming.
+# Short display names for the board cells, keyed by (run_id, label).
+# Matches the S105 findings-doc naming. The standardised board (Session
+# 132, queue item 5) uses the same display names with the
+# `-standardised-gt` condition labels.
 NAMES = {
     ("55maps-text-high-t0-3-generalisation", "verified-k3-canonical-gt"): "T03-k3 (oracle)",
     ("55maps-text-high-t0-3-generalisation", "verified-k4-canonical-gt"): "T03-k4",
@@ -74,6 +82,10 @@ NAMES = {
     ("55maps-text-min-generalisation", "verified-k4-canonical-gt"): "TM-k4",
     ("55maps-image-generalisation", "verified-k3-canonical-gt"): "IM-k3",
     ("55maps-text-min-n10-uplift", "verified-5of10-canonical-gt"): "TM-n10-k5 (uplift)",
+}
+NAMES_STANDARDISED = {
+    (run, label.replace("-canonical-gt", "-standardised-gt")): name
+    for (run, label), name in NAMES.items()
 }
 
 
@@ -92,6 +104,24 @@ def canonical_gt_at(r_m: float) -> gpd.GeoDataFrame:
                 pts.append(Point(float(row["x"]), float(row["y"])))
                 maps.append(row["map_name"])
     return gpd.GeoDataFrame({"geometry": pts, "source_map": maps}, crs="EPSG:32635")
+
+
+def standardised_gt() -> gpd.GeoDataFrame:
+    """The ruling-21 standardised reference (buffer-invariant).
+
+    Standardised student layer + the whole 279-record extension layer at
+    marked centres — no ring gate (queue items 2–3 semantics), built
+    through the engine's :func:`build_extended_gt` so the 5 m
+    channel-duplicate audit applies identically to the scoring runs
+    (expected drops: 0).
+    """
+    s = gpd.read_file(STUDENT_STD).to_crs("EPSG:32635")
+    ext = load_standardised_extension(EXTENSION_STD, crs="EPSG:32635")
+    gdf = build_extended_gt(s, ext)
+    if gdf.attrs.get("n_phantom_duplicates_dropped", 0) != 0:
+        sys.exit("GATE FAIL: standardised reference dropped extension "
+                 "records in de-duplication — layer drift")
+    return gdf
 
 
 def render_md(payload: dict) -> str:
@@ -117,7 +147,17 @@ def render_md(payload: dict) -> str:
     tier_of = {n: t for t, members in enumerate(payload["tiers"], 1) for n in members}
     pairs = payload["pairwise"]
     n_sig = sum(1 for p in pairs if p["significant"])
-    md = ["# 55-map generalisation leaderboard — canonical GT @ 50 m",
+    standardised = payload.get("reference") == "standardised"
+    title = (
+        "# 55-map generalisation leaderboard — standardised reference @ 50 m"
+        if standardised
+        else "# 55-map generalisation leaderboard — canonical GT @ 50 m"
+    )
+    ref_note = (
+        STANDARDISED_ATTRIBUTION_NOTE if standardised
+        else ATTRIBUTION_RESOLUTION_NOTE
+    )
+    md = [title,
           "",
           f"> Working buffer 50 m per the noise-floor derivation "
           f"(`results/working-precision/55maps-csr-noise-floor.json`). "
@@ -131,26 +171,33 @@ def render_md(payload: dict) -> str:
         md.append(f"| {i} | {c['name']} | {tier_of[c['name']]} | {c['f1_50']:.4f} "
                   f"| [{c['ci'][0]:.4f}, {c['ci'][1]:.4f}] | {c['precision_50']:.4f} "
                   f"| {c['recall_50']:.4f} | {mcc} | {c['n_detections']} |")
-    md += ["", "## Reading this board", "", PAIRED_CI_NOTE, "",
-           ATTRIBUTION_RESOLUTION_NOTE]
+    md += ["", "## Reading this board", "", PAIRED_CI_NOTE, "", ref_note]
     return "\n".join(md)
 
 
-def main(rebuild_md_only: bool = False) -> int:
-    """Build the 50 m canonical-GT board with round-robin tiers.
+def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
+    """Build the 50 m board with round-robin tiers.
 
     Args:
         rebuild_md_only: When True, skip all computation and re-render the
             markdown from the committed JSON. Used to refresh prose in the
             citable document without disturbing any number.
+        reference: ``canonical`` (legacy ring-gated pairing, default —
+            unchanged behaviour) or ``standardised`` (ruling-21 layers,
+            queue item 5; separate output files, `-standardised-gt`
+            conditions).
     """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    standardised = reference == "standardised"
+    suffix = "_standardised" if standardised else ""
+    md_name = f"55map-leaderboard-50m{suffix.replace('_', '-')}.md"
+    json_name = f"55map_leaderboard_50m{suffix}.json"
 
     if rebuild_md_only:
-        src = OUT_DIR / "55map_leaderboard_50m.json"
+        src = OUT_DIR / json_name
         payload = json.loads(src.read_text())
-        (OUT_DIR / "55map-leaderboard-50m.md").write_text(render_md(payload) + "\n")
-        print(f"rebuilt {OUT_DIR.relative_to(BASE_DIR)}/55map-leaderboard-50m.md "
+        (OUT_DIR / md_name).write_text(render_md(payload) + "\n")
+        print(f"rebuilt {OUT_DIR.relative_to(BASE_DIR)}/{md_name} "
               f"from {src.name} (no recomputation)", flush=True)
         return 0
 
@@ -160,13 +207,19 @@ def main(rebuild_md_only: bool = False) -> int:
     gdf_bounds = gdf_bounds.to_crs("EPSG:32635")
     tile_order = sorted(gdf_bounds["tile_name"].tolist())
     tile_index = {t: i for i, t in enumerate(tile_order)}
-    gdf_ref = canonical_gt_at(BUFFER_M)
-    print(f"canonical GT at {BUFFER_M} m: {len(gdf_ref)} points; "
-          f"{len(tile_order)} tiles", flush=True)
+    if standardised:
+        gdf_ref = standardised_gt()
+        print(f"standardised reference (buffer-invariant): {len(gdf_ref)} "
+              f"points; {len(tile_order)} tiles", flush=True)
+    else:
+        gdf_ref = canonical_gt_at(BUFFER_M)
+        print(f"canonical GT at {BUFFER_M} m: {len(gdf_ref)} points; "
+              f"{len(tile_order)} tiles", flush=True)
 
     dec = json.loads(RUN_CONDS.read_text())["decomposition"]
+    names = NAMES_STANDARDISED if standardised else NAMES
     cells = []
-    for (run_id, label), name in NAMES.items():
+    for (run_id, label), name in names.items():
         cond = next(c for c in dec[run_id]["conditions"] if c["label"] == label)
         det = gpd.read_file(BASE_DIR / cond["detections"])
         crs = "EPSG:32635" if abs(det.geometry.x.iloc[0]) > 180 else "EPSG:4326"
@@ -226,12 +279,12 @@ def main(rebuild_md_only: bool = False) -> int:
               f"MCC {mcc}", flush=True)
 
     payload = {
-        "buffer_m": BUFFER_M, "tiers": tiers,
+        "buffer_m": BUFFER_M, "reference": reference, "tiers": tiers,
         "cells": [{k: v for k, v in c.items() if k not in ("tp", "fp", "fn")}
                   for c in ordered],
         "pairwise": pairs}
-    (OUT_DIR / "55map-leaderboard-50m.md").write_text(render_md(payload) + "\n")
-    (OUT_DIR / "55map_leaderboard_50m.json").write_text(
+    (OUT_DIR / md_name).write_text(render_md(payload) + "\n")
+    (OUT_DIR / json_name).write_text(
         json.dumps(payload, indent=2, default=float) + "\n")
     print(f"\nWrote {OUT_DIR.relative_to(BASE_DIR)}/", flush=True)
     return 0
@@ -242,7 +295,17 @@ if __name__ == "__main__":
     parser.add_argument(
         "--rebuild-md",
         action="store_true",
-        help="Re-render 55map-leaderboard-50m.md from the committed JSON without "
+        help="Re-render the board markdown from the committed JSON without "
              "re-running the permutation tests (prose-only refresh).",
     )
-    raise SystemExit(main(rebuild_md_only=parser.parse_args().rebuild_md))
+    parser.add_argument(
+        "--reference",
+        choices=["canonical", "standardised"],
+        default="canonical",
+        help="Reference to tier against: canonical (legacy, default) or "
+             "standardised (ruling 21; writes *_standardised outputs).",
+    )
+    _args = parser.parse_args()
+    raise SystemExit(main(
+        rebuild_md_only=_args.rebuild_md, reference=_args.reference,
+    ))

@@ -57,18 +57,24 @@ from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
     ATTRIBUTION_RESOLUTION_NOTE,
     DEFAULT_CRS,
     PAIRED_CI_NOTE,
+    STANDARDISED_ATTRIBUTION_NOTE,
     build_extended_gt,
     build_phantom_gdf,
+    load_standardised_extension,
 )
 from scripts.n1_baseline_leaderboard_tiering import greedy_clique_tiers  # noqa: E402
 
 BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
 STUDENT_GT = BASE_DIR / "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
 TRACK2 = BASE_DIR / "results/55maps-extended-gt-2026-06-07"
+TRACK2_STD = BASE_DIR / "results/55maps-standardised-ref-2026-08-14"
 REVIEW_YESTERDAY = TRACK2 / "empty-yesterday-review.csv"
 CANONICAL_REVIEW = (
     BASE_DIR / "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv"
 )
+STD_DIR = BASE_DIR / "results/deployment-oracle-2026-06-06/canonical-gt/standardised"
+STUDENT_STD = STD_DIR / "student-mounds-55maps-standardised.geojson"
+EXTENSION_STD = STD_DIR / "extension-mounds-standardised.csv"
 OUT_DIR = BASE_DIR / "results/metric-leaderboards"
 BUFFER_M = 50
 N_PERMUTATIONS = 10_000
@@ -271,15 +277,26 @@ def render_md(out: dict) -> str:
         '# 55-map canonical board — tile-MCC permutation tiering @ 50 m'
     """
     n_sig, n_pairs = out["n_significant"], out["n_pairs"]
+    standardised = out.get("reference") == "standardised"
+    title = (
+        "# 55-map standardised board — tile-MCC permutation tiering"
+        if standardised else
+        "# 55-map canonical board — tile-MCC permutation tiering @ 50 m"
+    )
+    cells_desc = (
+        "standardised-reference cells (MCC is buffer-invariant on this "
+        "reference)" if standardised else "canonical-GT cells"
+    )
     md = [
-        "# 55-map canonical board — tile-MCC permutation tiering @ 50 m",
+        title,
         "",
-        "> Alternate-metric (tile-MCC) statistical tiering for the eight"
-        " canonical-GT cells: round-robin tile-swap permutation on the MCC"
+        f"> Alternate-metric (tile-MCC) statistical tiering for the eight"
+        f" {cells_desc}: round-robin tile-swap permutation on the MCC"
         f" statistic ({out['n_permutations'] // 1000}k, seed {out['seed']},"
         " two-sided) + BH-FDR q=0.05 + greedy-clique tiers — the same machinery"
         f" as the F1-led board. {n_sig}/{n_pairs} pairs significant ->"
-        f" {len(out['tiers'])} tier(s). 95% CIs are the Track-2 engine's BCa"
+        f" {len(out['tiers'])} tier(s). 95% CIs are the "
+        f"{'scoring' if standardised else 'Track-2'} engine's BCa"
         " bootstrap CIs, carried from `summary.json`. Gate: rebuilt"
         " per-tile confusion matrices reproduce the committed evaluations"
         " exactly (8/8).",
@@ -296,7 +313,8 @@ def render_md(out: dict) -> str:
             f"| {c['sensitivity']:.3f} | {c['specificity']:.3f} "
             f"| {cf['tp']}/{cf['fp']}/{cf['fn']}/{cf['tn']} |")
     md += ["", "## Reading this board", "", PAIRED_CI_NOTE, "",
-           ATTRIBUTION_RESOLUTION_NOTE, "",
+           (STANDARDISED_ATTRIBUTION_NOTE if standardised
+            else ATTRIBUTION_RESOLUTION_NOTE), "",
            "## Pairwise (BH-adjusted)", "",
            "| pair | ΔMCC | p | BH p | sig |", "|---|---:|---:|---:|---|"]
     for p in sorted(out["pairwise"], key=lambda x: x["bh_adjusted_p"]):
@@ -306,21 +324,28 @@ def render_md(out: dict) -> str:
     return "\n".join(md)
 
 
-def main(rebuild_md_only: bool = False) -> int:
+def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
     """Build the 55-map tile-MCC permutation tiering.
 
     Args:
         rebuild_md_only: When True, skip all computation and re-render the
             markdown from the committed JSON. Used to refresh prose in the
             citable document without disturbing any number.
+        reference: ``canonical`` (legacy ring-gated pairing, default —
+            unchanged behaviour) or ``standardised`` (ruling-21 layers,
+            queue item 5; separate ``-standardised`` output files, cells
+            read from ``results/55maps-standardised-ref-2026-08-14/``).
     """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    standardised = reference == "standardised"
+    stem = ("55map-mcc-tiering-standardised" if standardised
+            else "55map-mcc-tiering")
 
     if rebuild_md_only:
-        src = OUT_DIR / "55map-mcc-tiering.json"
+        src = OUT_DIR / f"{stem}.json"
         out = json.loads(src.read_text())
-        (OUT_DIR / "55map-mcc-tiering.md").write_text(render_md(out) + "\n")
-        print(f"rebuilt {OUT_DIR.relative_to(BASE_DIR)}/55map-mcc-tiering.md "
+        (OUT_DIR / f"{stem}.md").write_text(render_md(out) + "\n")
+        print(f"rebuilt {OUT_DIR.relative_to(BASE_DIR)}/{stem}.md "
               f"from {src.name} (no recomputation)", flush=True)
         return 0
 
@@ -329,19 +354,36 @@ def main(rebuild_md_only: bool = False) -> int:
         gdf_bounds = gdf_bounds.set_crs("EPSG:4326")
     gdf_bounds = gdf_bounds.to_crs(DEFAULT_CRS)
 
-    gdf_student = gpd.read_file(STUDENT_GT).to_crs(DEFAULT_CRS)
-    review_y = pd.read_csv(REVIEW_YESTERDAY)
-    review_t = pd.read_csv(CANONICAL_REVIEW)
-    gdf_phantoms = build_phantom_gdf(review_y, review_t, BUFFER_M, crs=DEFAULT_CRS)
-    gdf_ref = build_extended_gt(gdf_student, gdf_phantoms)
-    print(f"extended GT at {BUFFER_M} m: {len(gdf_ref)} points "
-          f"({len(gdf_student)} students + {len(gdf_phantoms)} phantoms); "
-          f"{len(gdf_bounds)} tiles", flush=True)
+    if standardised:
+        gdf_student = gpd.read_file(STUDENT_STD).to_crs(DEFAULT_CRS)
+        gdf_phantoms = load_standardised_extension(
+            EXTENSION_STD, crs=DEFAULT_CRS,
+        )
+        gdf_ref = build_extended_gt(gdf_student, gdf_phantoms)
+        if gdf_ref.attrs.get("n_phantom_duplicates_dropped", 0) != 0:
+            sys.exit("GATE FAIL: standardised reference dropped extension "
+                     "records in de-duplication — layer drift")
+        print(f"standardised reference (buffer-invariant): {len(gdf_ref)} "
+              f"points ({len(gdf_student)} students + "
+              f"{len(gdf_phantoms)} extension); "
+              f"{len(gdf_bounds)} tiles", flush=True)
+    else:
+        gdf_student = gpd.read_file(STUDENT_GT).to_crs(DEFAULT_CRS)
+        review_y = pd.read_csv(REVIEW_YESTERDAY)
+        review_t = pd.read_csv(CANONICAL_REVIEW)
+        gdf_phantoms = build_phantom_gdf(
+            review_y, review_t, BUFFER_M, crs=DEFAULT_CRS,
+        )
+        gdf_ref = build_extended_gt(gdf_student, gdf_phantoms)
+        print(f"extended GT at {BUFFER_M} m: {len(gdf_ref)} points "
+              f"({len(gdf_student)} students + {len(gdf_phantoms)} phantoms); "
+              f"{len(gdf_bounds)} tiles", flush=True)
 
+    cell_base = TRACK2_STD if standardised else TRACK2
     cells: list[dict] = []
     truth: np.ndarray | None = None
     for name, dirname in CELLS.items():
-        gdf_det, committed = _load_cell_inputs(TRACK2 / dirname)
+        gdf_det, committed = _load_cell_inputs(cell_base / dirname)
         tiles, cell_truth, pred = tile_vectors(gdf_det, gdf_ref, gdf_bounds)
         if truth is None:
             truth = cell_truth
@@ -391,22 +433,30 @@ def main(rebuild_md_only: bool = False) -> int:
     print(f"{n_sig}/{len(pairs)} pairs significant -> {len(tiers)} tier(s)", flush=True)
 
     out = {
-        "track": "55map-canonical", "metric": "tile_mcc", "buffer_m": BUFFER_M,
+        "track": ("55map-standardised" if standardised else "55map-canonical"),
+        "reference": reference,
+        "metric": "tile_mcc", "buffer_m": BUFFER_M,
         "n_tiles": int(len(truth)), "n_populated_tiles": int(truth.sum()),
         "n_permutations": N_PERMUTATIONS, "seed": SEED,
         "bh_q": 0.05, "n_significant": n_sig, "n_pairs": len(pairs),
-        "ci_source": "Track-2 summary.json tile_classification.mcc_CI "
-                     "(BCa, 10k bootstrap, seed 42 — computed by the engine at scoring time)",
+        "ci_source": (
+            ("standardised-scoring summary.json tile_classification.mcc_CI "
+             "(BCa, 10k bootstrap, seed 42 — computed by the engine at "
+             "scoring time)")
+            if standardised else
+            ("Track-2 summary.json tile_classification.mcc_CI "
+             "(BCa, 10k bootstrap, seed 42 — computed by the engine at scoring time)")
+        ),
         "gate": "rebuilt per-tile confusion == committed summary.json (exact), 8/8",
         "cells": [{k: v for k, v in c.items() if k != "pred"}
                   | {"tier": tier_of[c["name"]]} for c in ordered],
         "pairwise": pairs,
         "tiers": tiers,
     }
-    (OUT_DIR / "55map-mcc-tiering.json").write_text(json.dumps(out, indent=2) + "\n")
+    (OUT_DIR / f"{stem}.json").write_text(json.dumps(out, indent=2) + "\n")
 
-    (OUT_DIR / "55map-mcc-tiering.md").write_text(render_md(out) + "\n")
-    print(f"wrote {OUT_DIR.relative_to(BASE_DIR)}/55map-mcc-tiering.{{json,md}}",
+    (OUT_DIR / f"{stem}.md").write_text(render_md(out) + "\n")
+    print(f"wrote {OUT_DIR.relative_to(BASE_DIR)}/{stem}.{{json,md}}",
           flush=True)
     return 0
 
@@ -416,7 +466,17 @@ if __name__ == "__main__":
     parser.add_argument(
         "--rebuild-md",
         action="store_true",
-        help="Re-render 55map-mcc-tiering.md from the committed JSON without "
+        help="Re-render the board markdown from the committed JSON without "
              "re-running the permutation tests (prose-only refresh).",
     )
-    raise SystemExit(main(rebuild_md_only=parser.parse_args().rebuild_md))
+    parser.add_argument(
+        "--reference",
+        choices=["canonical", "standardised"],
+        default="canonical",
+        help="Reference to tier against: canonical (legacy, default) or "
+             "standardised (ruling 21; writes -standardised outputs).",
+    )
+    _args = parser.parse_args()
+    raise SystemExit(main(
+        rebuild_md_only=_args.rebuild_md, reference=_args.reference,
+    ))
