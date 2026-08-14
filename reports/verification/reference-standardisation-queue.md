@@ -1,8 +1,8 @@
 # Reference-standardisation queue — analyses waiting on a fixed reference
 
-> **Last revised**: 2026-08-14 (item 4 complete, blind-verified; items
-> 1–4 of 5 now done — only the item-5 re-tiering remains). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-14 (item 5 complete, blind-verified —
+> **THE QUEUE IS CLOSED**: all five no-API items done in Sessions
+> 131–132). See [§ Changelog](#changelog) for revision history.
 
 **What this is.** Ruling 21 fixes the ground-truth reference *first*, then
 runs every reference-tainted analysis once against it. This file is the
@@ -107,7 +107,7 @@ review (`/pre-run-review` protocol; see Obs 397):
 | 2 | ✅ **DONE 2026-08-14** — `outputs/55maps-text-high-t0.3-generalisation/evaluation/` | Was: evaluated against the unreviewed 4,770 base; no full-buffer eval. The t0.3 cells were scored ONCE against the standardised reference (14 buffers, F1 + MCC) and registered under this item and item 3: conditions `verified-k4/k3-standardised-gt` under `55maps-text-high-t0-3-generalisation` (commit `fab017085`); scoring `6f7e7b651`, summary + blind-verifier corrections `cb3629e7f`/`0f19370cd`. The tainted run-level eval dirs remain as dated history. | W7-D8, ruling 19(c) |
 | 3 | ✅ **DONE 2026-08-14** — F1 / MCC reference unification | Was: corrected-F1 on the extended reference, MCC on the student layer alone. Completion gate met: 8/8 board cells carry F1 AND tile MCC against the standardised reference (drift check 0 fail; extension census 279/0-drops at every buffer). A0 gate reproduced every committed legacy value at delta 0.0 exactly; A1−A0 = the W6-E9 fix (+8.7e-05 uniform); full A0/A1/B/C decomposition in `results/55maps-standardised-ref-2026-08-14/`. MCC is buffer-invariant by construction under the shared reference. | Ruling 20(a) |
 | 4 | ✅ **DONE 2026-08-14** — Obs 280 — the F1-versus-MCC rank divergence | Re-measured with both metrics on the standardised reference: the divergence SURVIVES (text T03-k4 leads F1 0.8303; image IM-k3 leads MCC 0.7120 from third place on F1) and is ≈90 % metric behaviour — the reference axis moves the MCC gap only +0.004 of ~0.043, in the widening direction, so the mixed-reference original had understated it. The Obs 292 R≥75 m F1 crossover was a per-run-vintage artefact and does not carry. Analysis `obs280-shared-reference` (22 analyses, ALL VALID); doc + JSON in `results/55maps-standardised-ref-2026-08-14/` (`bfaeb1c17`, verifier corrections `ddc559c78` — incl. a substantive mechanism correction: on this board text wins F1 on precision and image wins MCC on tile sensitivity, NOT Obs 280's high-TN framing). Blind verifier: 89/83/80/3. | Ruling 20(a) |
-| 5 | Re-tier both boards; re-verify every 55-map figure in `docs/paper/results-draft.md` | Downstream of items 1–4. The committed-future-work estimate is 8 cells × 14 buffers of re-scoring. | Ruling 20(d) step 4 |
+| 5 | ✅ **DONE 2026-08-14** — Re-tier both boards; re-verify every 55-map figure in `docs/paper/results-draft.md` | Both boards re-tiered on the standardised reference (`--reference standardised` on both harnesses, `0e4b157ec`; boards `02328d543`/`65ad40b7b`): **tier structures IDENTICAL to the legacy boards** on both metrics (F1 24/28 sig with one non-boundary significance swap; MCC 20/28 with identical significant-pair sets — IM-k3 stays sole Tier 1). Reproduction gate at the strongest level: both legacy boards re-ran byte-identically through all 28 seeded permutation tests each. Every 55-map figure in the results draft moved to the standardised reference in one commit (`a4dc67e3d`) with a was/now changelog table; blind verifier 764/752/747/5, corrections applied (`a5d13e279` — incl. restoring Obs 365's own step endpoint at +282/+262/~$203). Analyses `55map-standardised-leaderboard-50m` / `-mcc-50m` (24 total, ALL VALID, drift 0 fail). | Ruling 20(d) step 4 |
 
 ## Queue — requires API spend, discussed case by case before launch
 
@@ -126,6 +126,29 @@ cost — before anything is launched (ruling 21e).
   consumed is history and stays.
 
 ## Changelog
+
+### 2026-08-14 (f) — Item 5 complete; THE QUEUE IS CLOSED
+
+The re-tiering closed the queue the same session. Both harnesses
+gained a `--reference standardised` mode; the legacy boards re-ran
+byte-identically (the machinery reproduction gate at its strongest —
+every seeded p-value reproduced) before anything varied. Verdict:
+**the ruling-21 reference standardisation is fully tier-preserving
+on both metrics** — F1 T1 = {T03-k3, TH7-k3} (the pair's tie deepens
+to p = 0.857), MCC T1 = {IM-k3} sole, all five tiers identical on
+both boards, one non-boundary F1 significance swap the only
+pairwise-level change. Every 55-map figure in
+`docs/paper/results-draft.md` moved to the standardised reference
+under the one-commit rule with a was/now table; the mandatory blind
+verifier (764/752/747/5) caught one substantive prose defect (an
+undisclosed comparator switch in the Obs 365 step refresh) plus four
+provenance/policy items, all corrected and third-re-derived where
+they conflicted. Net of Sessions 131–132: all five reference-tainted
+analysis classes now stand on one reference, each leg
+blind-verified; every headline conclusion survived. Remaining
+reference debt is documentation-class only (the W7-E4 GT-count
+sweep, the canonical-vintage transfer artefact — flagged in place)
+plus PI sign-off gates (`manually_verified_at`) on the new analyses.
 
 ### 2026-08-14 (e) — Item 4 complete, blind-verified
 
