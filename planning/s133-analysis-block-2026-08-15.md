@@ -1,9 +1,12 @@
 # Session 133 analysis block — ink-colour adhesion test + D-S report refresh
 
-> **Status**: APPROVED — PI go given in-session 2026-08-15 AEST after a
-> `/pre-run-review` dialogue (the S131 protocol). US$0.00 API budget —
-> any spend is a hard stop. This document is the block's controlling
-> document per the pre-run-review exit requirements.
+> **Status**: ✅ COMPLETE 2026-08-15 — both items executed, blind-
+> verified (item 1: 70/69/66/3; item 2: 125/123/119/4, zero numerical
+> errors, landed inside hardening 8's expected band), corrections
+> applied, US$0.00 spent. PI go was given in-session 2026-08-15 AEST
+> after a `/pre-run-review` dialogue (the S131 protocol). This
+> document is the block's controlling document per the pre-run-review
+> exit requirements.
 
 ## Scope
 
@@ -98,6 +101,21 @@ Two independent, simultaneous-safe, $0 items:
   the settled F1 question. API-gated.
 
 ## Changelog
+
+### 2026-08-15 (later) — Block complete
+
+Item 1: script + tests `f3a329d7f`, results (sapphire) `8466f16a8`,
+findings `25393deff`, verifier corrections `023babd0d`. Item 2:
+one-commit refresh `87b828ab2`, verifier corrections `83ea4fad7`.
+L3 sweep: vintage flag on meta-findings-summary § 8 (`928f39ce0`);
+other hits adjudicated registries/history/coincidence, left alone.
+Both blind verifiers reported denominators and returned
+pass-with-corrections; all corrections wording-level, no number or
+conclusion moved. The cell↔run mapping gate (hardening 4) passed
+4/4 and discriminated k, not merely run. No stop state fired; $0
+spent. One disclosed refinement: the three-cohort split (item 1) was
+adopted at the data-semantics gate, not fixed in this plan's text —
+see the findings doc § 4 and its verifier correction 3.
 
 ### 2026-08-15 — Original publication
 
