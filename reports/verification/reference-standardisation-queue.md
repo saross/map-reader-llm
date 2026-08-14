@@ -1,8 +1,8 @@
 # Reference-standardisation queue — analyses waiting on a fixed reference
 
-> **Last revised**: 2026-08-14 (gate OPEN — standardised reference
-> materialised; execution contract added from the pre-run review). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-14 (items 2–3 complete, blind-verified;
+> items 1–3 of 5 now done). See [§ Changelog](#changelog) for revision
+> history.
 
 **What this is.** Ruling 21 fixes the ground-truth reference *first*, then
 runs every reference-tainted analysis once against it. This file is the
@@ -104,8 +104,8 @@ review (`/pre-run-review` protocol; see Obs 397):
 | # | Analysis | Why it is tainted | Register |
 |---|----------|-------------------|----------|
 | 1 | ✅ **DONE 2026-08-14** — The four 55-map Dawid–Skene fits (`scripts/analyse_dawid_skene.py`) | Was: the fits did not share a reference (4,770 ×3 / 4,745). Re-fit on the standardised reference with current canonical inputs (fits `b140f686a`, crosstabs `b31093e9f`, report refresh `13b386875` + blind-verified corrections `2d8a3dc83`). All four fits at 4,731 exactly; the W7-D9 withdrawal resolved; T=0.3 leads. One residue registered: the superseded T=0.3 fit's input provenance is unidentified (report § 6.3). | W7-D9 |
-| 2 | `outputs/55maps-text-high-t0.3-generalisation/evaluation/` | Evaluated against the unreviewed 4,770 base while sibling runs used the reviewed layer. t0.3 also lacks a full-buffer-eval, unlike the other three, and leads on F1 in several documents. | W7-D8, ruling 19(c) |
-| 3 | F1 / MCC reference unification | Corrected-F1 scores against the extended reference (student 4,746 + phantoms gated per buffer); tile-level MCC scores against the student layer alone. The two metrics must share a reference. | Ruling 20(a) |
+| 2 | ✅ **DONE 2026-08-14** — `outputs/55maps-text-high-t0.3-generalisation/evaluation/` | Was: evaluated against the unreviewed 4,770 base; no full-buffer eval. The t0.3 cells were scored ONCE against the standardised reference (14 buffers, F1 + MCC) and registered under this item and item 3: conditions `verified-k4/k3-standardised-gt` under `55maps-text-high-t0-3-generalisation` (commit `fab017085`); scoring `6f7e7b651`, summary + blind-verifier corrections `cb3629e7f`/`0f19370cd`. The tainted run-level eval dirs remain as dated history. | W7-D8, ruling 19(c) |
+| 3 | ✅ **DONE 2026-08-14** — F1 / MCC reference unification | Was: corrected-F1 on the extended reference, MCC on the student layer alone. Completion gate met: 8/8 board cells carry F1 AND tile MCC against the standardised reference (drift check 0 fail; extension census 279/0-drops at every buffer). A0 gate reproduced every committed legacy value at delta 0.0 exactly; A1−A0 = the W6-E9 fix (+8.7e-05 uniform); full A0/A1/B/C decomposition in `results/55maps-standardised-ref-2026-08-14/`. MCC is buffer-invariant by construction under the shared reference. | Ruling 20(a) |
 | 4 | Obs 280 — the F1-versus-MCC rank divergence (text wins F1, image wins MCC) | Currently measured across metrics that do not share a ground truth, so an unknown share of the divergence could be reference effect rather than metric behaviour. Re-measure after item 3. | Ruling 20(a) |
 | 5 | Re-tier both boards; re-verify every 55-map figure in `docs/paper/results-draft.md` | Downstream of items 1–4. The committed-future-work estimate is 8 cells × 14 buffers of re-scoring. | Ruling 20(d) step 4 |
 
@@ -126,6 +126,32 @@ cost — before anything is launched (ruling 21e).
   consumed is history and stays.
 
 ## Changelog
+
+### 2026-08-14 (d) — Items 2–3 complete, blind-verified
+
+The {2→3} leg landed under the full contract in Session 132. The
+t0.3 cell was scored ONCE and registered under both items. New
+engine mode (`--extension-csv`, commit `c951aa749` hardened through
+`6e38c0e5f` by a dual-lens audit + re-audit): the standardised
+extension layer's marked centres dissolve the Obs 371 ring gate, so
+all 279 records enter the extended GT at every buffer and tile MCC
+is buffer-invariant on the shared reference. Leg A0 reproduced all
+eight committed legacy values at delta 0.0 exactly (de-duplication
+disabled = the committed configuration); the audit caught that the
+committed anchors pre-date the W6-E9 fix, and A1 isolates that fix
+(+8.7e-05 uniform, exactly one twin drop per cell). Publication
+scoring (leg C, sapphire, $0): rank order preserved 8/8; T03-k3
+still leads but its margin over TH7-k3 narrows +0.0051 → +0.0006;
+all movements inside the Obs 396 band — no stop state. Registered
+as 8 `-standardised-gt` conditions (322→330, ALL VALID, drift 0
+fail). Blind verifier over the summary: 249 identified / 242
+re-derived / 234 confirmed / 8 corrections, none numerical, applied
+(`0f19370cd`); the 50 m-shell recomposition (146 removed / 11
+added) was third-re-derived per the disagreement rule. Item 4 (Obs
+280 re-measurement — F1-vs-MCC divergence pattern survives at point
+estimates: image tops MCC 0.712 while text tops F1) and item 5
+(re-tiering; the narrowed oracle margin is its central question)
+are now unblocked.
 
 ### 2026-08-14 (c) — Item 1 complete, blind-verified
 
