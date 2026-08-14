@@ -1,11 +1,11 @@
 # Dawid-Skene cross-run summary — four 55-map runs (T=0.3, T=0.7, image, text-MIN)
 
-> **Last revised**: 2026-08-04 (W7 repair queue — the four D-S fits found
-> not to share a ground-truth reference, so the Image-versus-T=0.3 ordering
-> is withdrawn pending re-analysis; three internal contradictions resolved
-> from artefacts). Earlier the same day: the image corrected-F1-multi-buffer
-> cell at R = 50 m refreshed to the W6-E9 de-duplication re-run, and the two
-> era-faithful 4,745-mound GT references adjudicated and left as history.
+> **Last revised**: 2026-08-14 (ruling-21 refresh — all four D-S fits
+> re-run once against the standardised reference, queue item 1; every
+> cross-run comparison now on a common ground truth; the W7-D9
+> withdrawal resolved; crosstabs re-run against the new posteriors).
+> Corrected-F1-multi-buffer figures quoted in §§ 4.1, 4.3, 5.3 and 5.4
+> remain old-reference pending queue items 2–5.
 > See [§ Changelog](#changelog) for revision history.
 
 **Date**: 2026-04-28 (text-MIN added to the previous three-run summary
@@ -48,98 +48,100 @@ diagnostic against multi-buffer human review).
 
 Four sibling Dawid-Skene (D-S) latent-truth fits on the 55-map
 generalisation set — one for each of the production runs that produced
-publishable corrected-F1 metrics — are now in place. text-MIN, the
-fourth run, was re-run this session with the canonical text-MIN paths
-(consensus + verifier probabilities from
-`outputs/55maps-text-min-generalisation/`) and cross-tabulated against
-the 585-row multi-buffer human review that landed earlier today. The
-re-run reproduced the existing text-MIN D-S artefacts byte-identically;
-the new contribution is the ds-human-crosstab.
+publishable corrected-F1 metrics — are in place, and as of 2026-08-14
+all four are **re-fit against the standardised reference** (4,731
+student records, `canonical-gt/standardised/`) using each run's
+current canonical consensus + verifier probabilities (ruling 21;
+queue item 1; artefacts under `dawid-skene-standardised/` per run,
+commit `b140f686a`). The W7-D9 defect — the fits not sharing a
+ground truth — is closed: every fit satisfies
+matched + student-only = 4,731 exactly. Crosstabs against the
+per-candidate human review are re-run against the new posteriors
+(`ds-human-crosstab-standardised/` per run).
 
-**Headline pattern across the four runs.** D-S aggregate F1 follows the
-**measured** F1 ranking (T=0.7 > image > T=0.3 > text-MIN), with the
-+0.024 D-S correction over measured F1 essentially constant across all
-four runs. The corrected-F1-multi-buffer ranking (T=0.3 > image > T=0.7
-> text-MIN) **disagrees** — see §4.3. The crosstabs against
-per-candidate human review extend Obs 293's headline finding: the
-**D-S calibration gap scales monotonically with the VLM-only / matched
-ratio**, and text-MIN sits at the conservative end of that scale,
-nearly indistinguishable from T=0.7 on every calibration metric.
+**Headline pattern across the four runs (standardised reference).**
+D-S aggregate F1 follows the **measured** F1 ranking — now
+**T=0.3 > T=0.7 > image > text-MIN** on both metrics. This is a
+leader change from the pre-refresh report (T=0.7 > image > T=0.3 >
+text-MIN): T=0.3's old fit consumed provenance-unresolved stale
+inputs (§ 6.3) that suppressed its matched count by ~128; on current
+inputs it leads. The +0.024 D-S correction over measured F1 remains
+essentially constant across all four runs. The disagreement with the
+corrected-F1-multi-buffer ranking (§ 4.3) **partially dissolves**:
+both methods now put T=0.3 first and text-MIN last, with only the
+middle pair (T=0.7 vs image) still swapped — though the corrected-F1
+side of that comparison is old-reference until queue items 2–5 land.
+The crosstabs extend Obs 293's headline finding on cleaner data: the
+**D-S calibration gap still scales monotonically with the VLM-only /
+matched ratio**, with T=0.3 moving toward the conservative text
+cluster (2.02×, was 2.53×) now its input artefact is gone; text-MIN
+remains the best calibrated, nearly indistinguishable from T=0.7.
 
 ## 2. Per-run × per-class D-S agreement metrics
 
 ### 2.1 Shared item set (matched / student-only / VLM-only)
 
-> **Reference caveat — the four fits are not on a common ground truth**
-> (W7-D9, 2026-08-04). The image run's D-S fit consumed the **reviewed
-> curator layer** (4,745 student points as it then stood); T=0.7, T=0.3
-> and text-MIN all consumed the **fixed 4,770-feature base**, which is the
-> script default. Verified two ways: `student_label == 1` rows in each
-> run's `dawid-skene/item-posteriors.csv` number 4,770 / 4,770 / 4,770
-> against image's 4,745; and the single feature commit `baf1497a7` added
-> to the reviewed layer — on `K-35-064-3_Dimitrovgrad_4326` — is a student
-> point *only* in the image item set, while T=0.7 carries
-> `student_label = 0` at that exact coordinate.
->
-> Image's student side is therefore drawn from a reference **25 points
-> smaller**, those 25 being merged-centroid replacements of student
-> double-marks. Cross-run differences in Matched and Student-only are not
-> purely detection effects, and because dropping student double-marks
-> removes false negatives it acts to **raise** image's recall. Every
-> cross-run comparison below (§ 2.1, § 2.2, § 4.1, § 4.2) inherits this.
-> No re-run happens here: under ruling 21 all four fits are re-run once,
-> together, against the standardised reference — see
-> `reports/verification/reference-standardisation-queue.md`, item 1.
+> **Reference caveat RESOLVED (2026-08-14).** The W7-D9 finding — the
+> four fits not sharing a ground truth (image on the 4,745 reviewed
+> layer, the three text runs on the fixed 4,770 base) — is closed by
+> the ruling-21 refresh: all four fits below consume the
+> **standardised reference** (4,731 student records) and each run's
+> current canonical consensus + verifier probabilities. Verified:
+> matched + student-only = 4,731 in every fit. The superseded fits
+> remain under each run's `dawid-skene/` directory as history; the
+> figures in this report are from `dawid-skene-standardised/`.
 
 | Run | Matched | Student-only | VLM-only | Total | VLM-only / matched |
 |-----|--------:|-------------:|---------:|------:|-------------------:|
-| text-MIN | 3,276 | 1,494 | 585 | 5,355 | 0.179 |
-| T=0.7 | 3,527 | 1,243 | 637 | 5,407 | 0.181 |
-| T=0.3 | 3,531 | 1,239 | 819 | 5,589 | 0.232 |
-| Image | 3,650 | 1,095 | 1,030 | 5,775 | 0.282 |
+| text-MIN | 3,279 | 1,452 | 586 | 5,317 | 0.179 |
+| T=0.7 | 3,524 | 1,207 | 640 | 5,371 | 0.182 |
+| T=0.3 | 3,658 | 1,073 | 692 | 5,423 | 0.189 |
+| Image | 3,658 | 1,073 | 1,022 | 5,753 | 0.279 |
 
-Sorted by VLM-only / matched ratio. text-MIN and T=0.7 produce nearly
-identical ratios (0.179 vs 0.181) — the conservative end. T=0.3 sits
-in the middle (0.232). Image is the most permissive on the VLM side
-(0.282). text-MIN has the smallest absolute matched count (3,276 — the
-smallest of the four) and the largest student-only count (1,494 —
-i.e. the largest count of references the VLM missed), reflecting that
-text-MIN is the lowest-recall of the four runs at the measured-F1
-stage.
+Sorted by VLM-only / matched ratio. text-MIN and T=0.7 keep the
+conservative end (0.179 vs 0.182). T=0.3 moves sharply toward them
+(0.189, was 0.232 in the superseded fit — the shrinkage is the
+input-vintage correction of § 6.3, not a reference effect). Image
+remains the most permissive on the VLM side (0.279). text-MIN still
+has the smallest matched count (3,279) and the largest student-only
+count (1,452), reflecting that it is the lowest-recall of the four
+runs at the measured-F1 stage.
 
-*Post-recovery 2026-05-03 — T=0.7 counts shifted by +14 matched, −14
-student-only, +7 VLM-only against the pre-recovery row
-(3,513 / 1,257 / 630); image counts shifted by +13 matched,
-−38 student-only, +2 VLM-only against the pre-recovery row
-(3,637 / 1,133 / 1,028) reflecting cand 2397's promotion plus the
-canonical-GT join cleaning out 38 student-only items previously
-double-counted; T=0.3 and text-MIN counts are unchanged. The two
-recovered runs' relative positions are preserved (T=0.7 second-most
-conservative; image still most permissive).*
+**T=0.3 and image share identical matched / student-only counts
+(3,658 / 1,073) — verified a coincidence of aggregates, not an
+artefact.** The matched student *sets* differ: intersection 3,207,
+with each run matching a different 451 students the other misses (a
+set-level check run 2026-08-14 on the two `item-posteriors.csv`
+files; same benign shape as the S114 identical-confusion-matrix
+case). Because the student-side counts coincide and the student
+parameters are fixed, the two runs' D-S recall and student-side
+expectations coincide arithmetically throughout §§ 2.2–2.4.
 
 ### 2.2 Worker accuracy (D-S confusion matrix estimates)
 
 | Run | Student sensitivity | Student specificity | VLM sensitivity | VLM specificity | Estimated prevalence |
 |-----|--------------------:|--------------------:|----------------:|----------------:|---------------------:|
-| T=0.3 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7500 | 0.0000 | 0.8867 |
-| T=0.7 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7492 | 0.0000 | 0.9165 |
-| Image | 0.9500 (fixed) | 1.0000 (fixed) | 0.7782 | 0.0000 | 0.8549 |
-| text-MIN | 0.9500 (fixed) | 1.0000 (fixed) | 0.6977 | 0.0000 | 0.9230 |
+| T=0.3 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7821 | 0.0000 | 0.9079 |
+| T=0.7 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7545 | 0.0000 | 0.9154 |
+| Image | 0.9500 (fixed) | 1.0000 (fixed) | 0.7821 | 0.0000 | 0.8558 |
+| text-MIN | 0.9500 (fixed) | 1.0000 (fixed) | 0.7039 | 0.0000 | 0.9222 |
 
 Student sensitivity / specificity are held fixed by the EM as required
 for identifiability with two binary annotators. The VLM-sensitivity
-estimates now sit in a 0.6977–0.7782 band — text-MIN returns the
-**lowest** VLM sensitivity (0.6977), consistent with text-MIN's
-lowest matched count: fewer student-known mounds were flagged by the
-VLM. Image's 0.7782 (post-recovery; up from the pre-recovery 0.7716)
-remains the highest, reflecting image's higher VLM-only count
-flagging more true positives the students missed. VLM specificity
-converges to 0 in every run; this is a known property of the
-2-annotator response pattern, not a meaningful per-class statistic.
+estimates sit in a 0.7039–0.7821 band — text-MIN returns the
+**lowest** VLM sensitivity (0.7039), consistent with its lowest
+matched count: fewer student-known mounds were flagged by the VLM.
+T=0.3 and image tie at the top (0.7821 each, to 4 d.p.) — the § 2.1
+count coincidence propagating: with matched / student-only equal and
+the student parameters fixed, VLM sensitivity is determined by the
+same student-side arithmetic. VLM specificity converges to 0 in every
+run; a known property of the 2-annotator response pattern, not a
+meaningful per-class statistic.
 
 The estimated prevalence of true mounds in the D-S item set is
-highest for text-MIN (0.92), narrowly above T=0.7 (0.92), well above
-T=0.3 (0.89) and image (0.85). Higher prevalence in text-MIN reflects
+highest for text-MIN (0.92), narrowly above T=0.7 (0.92), above
+T=0.3 (0.91, up from the superseded 0.89 with its input artefact
+removed) and image (0.86). Higher prevalence in text-MIN reflects
 that the threshold-0.15 detection set is the smallest of the four
 and proportionally the most concentrated on student-confirmed
 locations.
@@ -148,43 +150,45 @@ locations.
 
 | Run | Measured F1 | Measured P | Measured R | D-S F1 | D-S P | D-S R | Δ F1 (D-S − measured) |
 |-----|------------:|-----------:|-----------:|-------:|------:|------:|----------------------:|
-| T=0.3 | 0.7743 | 0.8117 | 0.7403 | 0.7988 | 0.8544 | 0.7500 | **+0.0245** |
-| T=0.7 | 0.7896 | 0.8470 | 0.7394 | 0.8142 | 0.8916 | 0.7492 | **+0.0246** |
-| Image | 0.7745 | 0.7799 | 0.7692 | 0.7990 | 0.8210 | 0.7782 | **+0.0245** |
-| text-MIN | 0.7591 | 0.8485 | 0.6868 | 0.7834 | 0.8931 | 0.6977 | **+0.0243** |
+| T=0.3 | 0.8056 | 0.8409 | 0.7732 | 0.8304 | 0.8852 | 0.7821 | **+0.0248** |
+| T=0.7 | 0.7924 | 0.8463 | 0.7449 | 0.8170 | 0.8908 | 0.7545 | **+0.0246** |
+| Image | 0.7774 | 0.7816 | 0.7732 | 0.8019 | 0.8228 | 0.7821 | **+0.0245** |
+| text-MIN | 0.7629 | 0.8484 | 0.6931 | 0.7873 | 0.8930 | 0.7039 | **+0.0244** |
 
-The +0.024 ± 0.0001 D-S correction is essentially identical across all
-four runs. This is consistent with the structural identifiability
-constraint of the 2-annotator fit: the correction magnitude is driven
-almost entirely by the fixed 5 % student-FN prior reclassifying
-~172–192 VLM-only items as soft true positives, and that
-reclassification scales with the absolute count of VLM-only items
-proportionally to (matched + student_only) (not their per-run
-distribution). Post-recovery image's δ-F1 sits at +0.0245, identical
-to T=0.3's; the cross-run constancy of the correction magnitude is
-preserved.
+The +0.024–0.025 D-S correction remains essentially identical across
+all four runs on the standardised reference. This is consistent with
+the structural identifiability constraint of the 2-annotator fit: the
+correction magnitude is driven almost entirely by the fixed 5 %
+student-FN prior reclassifying ~173–193 VLM-only items as soft true
+positives, and that reclassification scales with the absolute count
+of VLM-only items proportionally to (matched + student_only) (not
+their per-run distribution). The constancy survived both the input-
+vintage correction (T=0.3) and the reference move — the strongest
+evidence yet that the correction magnitude is a property of the
+fixed prior, not of any run's detection geometry.
 
 ### 2.4 VLM-only posterior — the headline aggregate
 
 | Run | VLM-only n | VLM-only posterior P(true=1) | Expected reclassified (soft) | Hard-threshold reclassified |
 |-----|-----------:|-----------------------------:|------------------------------:|----------------------------:|
-| T=0.3 | 819 | 0.2269 | 185.8 | 0 |
-| T=0.7 | 637 | 0.2914 | 185.6 | 0 |
-| Image | 1,030 | 0.1865 | 192.1 | 0 |
-| text-MIN | 585 | 0.2947 | 172.4 | 0 |
+| T=0.3 | 692 | 0.2782 | 192.5 | 0 |
+| T=0.7 | 640 | 0.2898 | 185.5 | 0 |
+| Image | 1,022 | 0.1884 | 192.5 | 0 |
+| text-MIN | 586 | 0.2945 | 172.6 | 0 |
 
 text-MIN produces the **highest** VLM-only posterior of the four
-(0.2947), narrowly above T=0.7 (0.2914) — both reflect that their
-VLM-only sets are smallest in proportion to the matched set, so D-S
-attributes a larger fraction of those items to true student false
-negatives. Image produces the **lowest** posterior (0.1865;
-post-recovery, up from the pre-recovery 0.1862) because its
-VLM-only set is largest in proportion to matched, so the fixed
-prior spreads thinner per item.
+(0.2945), narrowly above T=0.7 (0.2898), with T=0.3 now close behind
+(0.2782 — up sharply from the superseded 0.2269, the input-vintage
+correction having removed ~128 spurious VLM-only items). All three
+text runs now cluster; image remains the clear **lowest** (0.1884)
+because its VLM-only set is largest in proportion to matched, so the
+fixed prior spreads thinner per item.
 
-text-MIN is the run where the **fewest absolute soft reclassifications
-occur** (172.4 — the smallest of the four), reflecting its smallest
-absolute VLM-only count.
+text-MIN remains the run with the **fewest absolute soft
+reclassifications** (172.6 — the smallest of the four), reflecting
+its smallest absolute VLM-only count. T=0.3 and image tie at 192.5 —
+the § 2.1 student-side coincidence again, since expected
+reclassification is set by the student-side arithmetic.
 
 This is the slot in which the cross-run comparison gets interesting,
 because each run's VLM-only posterior is being matched against a
@@ -205,10 +209,10 @@ slice.
 
 | Run | Joined / unjoined | Empirical rate | D-S posterior | Gap (emp − D-S) | Ratio (emp / D-S) | ECE | Brier | AUC |
 |-----|------------------:|---------------:|--------------:|----------------:|------------------:|----:|------:|----:|
-| text-MIN | 585 / 0 | 0.5538 (324/585) | 0.2947 | +0.259 | 1.88× | 0.2591 | 0.3142 | 0.500 |
-| T=0.7 | 637 / 0 | 0.5589 (356/637) | 0.2914 | +0.267 | 1.92× | 0.2675 | 0.3181 | 0.500 |
-| T=0.3 | 628 / 64 | 0.5748 (361/628) | 0.2269 | +0.348 | 2.53× | 0.3479 | 0.3655 | 0.500 |
-| Image | 1,029 / 0 | 0.7250 (746/1,029) | 0.1865 | +0.538 | 3.89× | 0.5385 | 0.4893 | 0.500 |
+| text-MIN | 577 / 8 | 0.5477 (316/577) | 0.2945 | +0.253 | 1.86× | 0.2532 | 0.3118 | 0.500 |
+| T=0.7 | 631 / 6 | 0.5547 (350/631) | 0.2898 | +0.265 | 1.91× | 0.2649 | 0.3172 | 0.500 |
+| T=0.3 | 679 / 13 | 0.5626 (382/679) | 0.2782 | +0.284 | 2.02× | 0.2844 | 0.3270 | 0.500 |
+| Image | 1,013 / 17 | 0.7206 (730/1,013) | 0.1884 | +0.532 | 3.83× | 0.5322 | 0.4846 | 0.500 |
 
 Sorted by calibration gap. Notes:
 
@@ -220,19 +224,21 @@ Sorted by calibration gap. Notes:
   run's VLM-only posterior is below 0.5, so D-S `>` 0.5 is always 0
   and D-S `≤` 0.5 captures the entire joined set (TP=0, FP=0,
   FN=n_mound, TN=n_not_mound).
-- **Three runs now have zero unjoined rows** post-recovery
-  (text-MIN, T=0.7, image). Pre-recovery image had 1 unjoined row;
-  the cand 2397 promotion in cross-track-v2 closed that gap. T=0.3
-  retains 64 unjoined (a quantitative outlier explained in the
-  previous three-run summary §3, related to the corrected-f1 pipeline
-  using the *reviewed* student GT at multi-buffer rings while D-S
-  uses the legacy student GT at 50 m).
-- **text-MIN's empirical mound rate (0.5538) is the lowest** of the
-  four, just below T=0.7 (0.5589), well below T=0.3 (0.5748) and
-  image (0.7250). The four runs span 0.55–0.72 on this metric — both
-  band edges are rounded from the artefact values (text-MIN 0.5538462,
-  image 0.7249757), not from the 4 d.p. display forms above, which is
-  where the upper edge would otherwise double-round to 0.73.
+- **Unjoined rows are now small and uniform across all four runs**
+  (6–17, i.e. ~1–2 % of each review cohort), where the superseded
+  crosstabs had 0 / 0 / 64 / 0. The mechanism reversed: against the
+  standardised reference a few review-cohort candidates reclassify
+  from VLM-only to matched (proxy-confirmed student records and
+  marked-centre position corrections absorb them), so their review
+  rows no longer join the VLM-only slice. T=0.3's old 64-unjoined
+  anomaly — previously attributed to its recovery pattern — is gone:
+  it was an artefact of the superseded fit's provenance-unresolved
+  inputs (§ 6.3), and § 5.5 is retired accordingly.
+- **text-MIN's empirical mound rate (0.5477) is the lowest** of the
+  four, just below T=0.7 (0.5547) and T=0.3 (0.5626), well below
+  image (0.7206). The three text runs now sit inside a 0.015 band —
+  the wide text-run spread in the superseded table (0.5538–0.5748)
+  was largely the T=0.3 input artefact.
 
 ## 4. Cross-run comparison — extending Obs 293's headline
 
@@ -240,45 +246,45 @@ Sorted by calibration gap. Notes:
 
 | Metric | Best | 2nd | 3rd | Worst |
 |--------|------|-----|-----|-------|
-| Measured F1 | T=0.7 (0.7896) | Image (0.7745) | T=0.3 (0.7743) | text-MIN (0.7591) |
-| D-S corrected F1 | T=0.7 (0.8142) | Image (0.7990) | T=0.3 (0.7988) | text-MIN (0.7834) |
-| Corrected-F1-multi-buffer F1 (R=50 m) | T=0.3 (0.8437) | Image (0.8333) | T=0.7 (0.8273) | text-MIN (0.7968) |
-| D-S calibration ECE (lower = better) | text-MIN (0.259) | T=0.7 (0.267) | T=0.3 (0.348) | Image (0.538) |
-| D-S calibration Brier (lower = better) | text-MIN (0.314) | T=0.7 (0.318) | T=0.3 (0.365) | Image (0.489) |
+| Measured F1 | T=0.3 (0.8056) | T=0.7 (0.7924) | Image (0.7774) | text-MIN (0.7629) |
+| D-S corrected F1 | T=0.3 (0.8304) | T=0.7 (0.8170) | Image (0.8019) | text-MIN (0.7873) |
+| Corrected-F1-multi-buffer F1 (R=50 m; old reference, pending items 2–5) | T=0.3 (0.8437) | Image (0.8333) | T=0.7 (0.8273) | text-MIN (0.7968) |
+| D-S calibration ECE (lower = better) | text-MIN (0.253) | T=0.7 (0.265) | T=0.3 (0.284) | Image (0.532) |
+| D-S calibration Brier (lower = better) | text-MIN (0.312) | T=0.7 (0.317) | T=0.3 (0.327) | Image (0.485) |
 
 The D-S F1 ranking and the measured F1 ranking are **identical**
-across all four runs (T=0.7 > Image > T=0.3 > text-MIN; the
-post-recovery image refresh moves Image fractionally above T=0.3 by
-+0.0002 F1, well inside any sampling-noise envelope — the previous
-T=0.3 > Image ordering is preserved at 4 d.p. only as
-0.7745 ≈ 0.7743 within rounding).
+across all four runs — now **T=0.3 > T=0.7 > Image > text-MIN**.
+This is a leader change from the superseded report (T=0.7 first):
+T=0.3's superseded fit consumed provenance-unresolved inputs that
+suppressed its matched count by ~128 (§ 6.3); on its current
+canonical inputs and the common reference it leads decisively
+(+0.0134 D-S F1 over T=0.7 — no longer a rounding-scale gap).
 
-> **The Image-versus-T=0.3 ordering is WITHDRAWN pending re-analysis**
-> (W7-D9, 2026-08-04). The two runs are not on a common reference: Image's
-> fit consumed the reviewed curator layer, T=0.3's the fixed 4,770 base
-> (§ 2.1). The gap between them is 0.0002 F1, against a reference
-> difference of 25 student points acting in Image's favour, so their rank
-> order is **not established by these artefacts** — the sentence above
-> attributes to a "post-recovery image refresh" a movement that is at
-> least partly a ground-truth change. T=0.7 first and text-MIN last are
-> unaffected, as is the ranking's disagreement with corrected-F1. The
-> ordering is left in place rather than deleted because it is what the
-> artefacts said when written; it is resolved by re-running all four fits
-> against the standardised reference (ruling 21; queue item 1).
+> **The W7-D9 withdrawal is RESOLVED (2026-08-14).** The
+> Image-versus-T=0.3 ordering, withdrawn 2026-08-04 because the two
+> fits were not on a common reference, is now established on the
+> standardised reference: **T=0.3 clears Image by +0.0285 D-S F1**
+> (0.8304 vs 0.8019), far outside any reference-effect envelope. The
+> superseded near-tie (0.0002) was an artefact of comparing across
+> references.
 
-The corrected-F1-multi-buffer
-ranking (T=0.3 > Image > T=0.7 > text-MIN) is **different from both
-measured and D-S** — the rank-disagreement first noted in Obs 293
-across three runs **persists in the four-way comparison**. The two
-methods agree only that text-MIN is last.
+The corrected-F1-multi-buffer ranking (T=0.3 > Image > T=0.7 >
+text-MIN — old-reference figures, to be refreshed under queue items
+2–5) now **agrees with D-S and measured on first and last place**
+(T=0.3 first, text-MIN last). The rank-disagreement first noted in
+Obs 293 **narrows to the middle pair**: D-S and measured put T=0.7
+above Image; corrected-F1-multi-buffer puts Image above T=0.7. A
+substantial share of the original four-way disagreement was
+therefore the T=0.3 input artefact, not methodology. Whether the
+middle-pair swap survives the corrected-F1 refresh is an open
+question for queue items 3–5.
 
-The calibration ECE / Brier ranking puts **text-MIN narrowly first**,
-T=0.7 second, T=0.3 third, image last. This is consistent with §4.2 —
-calibration ranks by VLM-only / matched ratio, and text-MIN's ratio
-(0.179) remains marginally lower than T=0.7's (0.181) after the
-T=0.7 post-recovery refresh: text-MIN 0.1786 vs T=0.7 0.1806 (was
-T=0.7 0.1793 pre-recovery). text-MIN's narrow lead on the
-calibration ranking is preserved.
+The calibration ECE / Brier ranking is unchanged in order —
+**text-MIN narrowly first**, T=0.7 second, T=0.3 third, image last —
+but T=0.3 closes most of its gap to the leaders (ECE 0.284, was
+0.348). Consistent with §4.2: calibration ranks by VLM-only /
+matched ratio, and the three text runs now cluster (0.179 / 0.182 /
+0.189) with image far behind (0.279).
 
 ### 4.2 Calibration gap scales monotonically with VLM-only / matched ratio
 
@@ -289,24 +295,28 @@ the three-run pattern reported in Obs 293:
 
 | Run | VLM-only / matched ratio | Posterior:empirical ratio (= 1 / underestimate) |
 |-----|-------------------------:|-------------------------------------------------:|
-| text-MIN | 0.1786 (585 / 3,276) | 1.88× |
-| T=0.7 | 0.1806 (637 / 3,527) | 1.92× |
-| T=0.3 | 0.232 (819 / 3,531) | 2.53× |
-| Image | 0.282 (1,030 / 3,650) | 3.89× |
+| text-MIN | 0.1787 (586 / 3,279) | 1.86× |
+| T=0.7 | 0.1816 (640 / 3,524) | 1.91× |
+| T=0.3 | 0.1892 (692 / 3,658) | 2.02× |
+| Image | 0.2794 (1,022 / 3,658) | 3.83× |
 
 The pattern: as the VLM-only share grows, the fixed 5 % student-FN
-prior under-counts true positives more severely. text-MIN — narrowly
-the most conservative on VLM-only share — is the best calibrated.
-Image — the most permissive — is still by far the worst calibrated.
-**text-MIN extends Obs 293's pattern to a fourth run with the lowest
-ratio and the lowest gap**, exactly as predicted; there is no rank
-inversion at any point along the scale.
+prior under-counts true positives more severely. **The monotonic
+scaling survives both the reference move and the T=0.3 input
+correction** — the strongest test the pattern has had, since T=0.3's
+ratio moved substantially (0.232 → 0.189) and its calibration ratio
+moved with it (2.53× → 2.02×), staying exactly in rank order. There
+is still no rank inversion at any point along the scale. text-MIN —
+narrowly the most conservative on VLM-only share — remains the best
+calibrated; image — by far the most permissive — remains by far the
+worst.
 
-text-MIN is also a clean test of the pattern because it is one of the
-three runs with **zero unjoined rows** in the crosstab (with T=0.7 and
-image, post-recovery — see § 3; only T=0.3 retains any, at 64), so the
-calibration metrics are not noised by the methodology-divergence
-diagnostic that affected T=0.3.
+The three text runs now sit on a tight section of the curve (ratios
+0.179–0.189, calibration 1.86–2.02×) with image alone on the steep
+section — sharpening § 5.2's modality reading. The unjoined-row
+noise that previously singled out T=0.3 is gone (§ 3): all four runs
+carry a uniform ~1–2 % unjoined rate with a common, documented
+mechanism.
 
 ### 4.3 D-S corrected F1 vs corrected-F1-multi-buffer F1 — different methods, different answers
 
@@ -315,41 +325,39 @@ that lands in the per-run `corrected-f1-multi-buffer/` summaries. The
 two analyses use different correction methodologies and different
 ground truth:
 
-| Run | D-S corrected F1 | corrected-F1-multi-buffer F1 (R=50 m) | Δ |
-|-----|-----------------:|--------------------------------------:|---:|
-| T=0.3 | 0.7988 | 0.8437 | +0.045 |
-| T=0.7 | 0.8142 | 0.8273 | +0.013 |
-| Image | 0.7990 | 0.8333 | +0.034 |
-| text-MIN | 0.7834 | 0.7968 | +0.013 |
+| Run | D-S corrected F1 (standardised) | corrected-F1-multi-buffer F1 (R=50 m; old reference) | Δ |
+|-----|--------------------------------:|-----------------------------------------------------:|---:|
+| T=0.3 | 0.8304 | 0.8437 | +0.013 |
+| T=0.7 | 0.8170 | 0.8273 | +0.010 |
+| Image | 0.8019 | 0.8333 | +0.031 |
+| text-MIN | 0.7873 | 0.7968 | +0.010 |
 
 (The corrected-F1-multi-buffer numbers are read from each run's
-`corrected-f1-multi-buffer/summary.json` at R=50 m for the headline
-50 m buffer.)
+`corrected-f1-multi-buffer/summary.json` at R=50 m. **They predate
+the standardised reference** and will be refreshed under queue items
+2–5; the Δ column therefore compares across references and shrinks
+or grows accordingly when that lands.)
 
-The D-S correction uses the legacy `student-mounds-55maps.geojson`
-GT and applies a fixed 5 % student-FN prior to the 2-annotator EM.
-The corrected-F1-multi-buffer correction uses the **reviewed**
-student GT (`student-mounds-55maps-reviewed.geojson`) extended by
-the human-review mound calls at each buffer band, then runs Hungarian
-matching against that extended ground truth. The
+The D-S correction now uses the **standardised student layer**
+(`canonical-gt/standardised/student-mounds-55maps-standardised.geojson`)
+and applies a fixed 5 % student-FN prior to the 2-annotator EM. The
+corrected-F1-multi-buffer correction uses the reviewed student GT
+extended by the human-review mound calls at each buffer band, then
+runs Hungarian matching against that extended ground truth. The
 corrected-F1-multi-buffer correction is the headline reported
 elsewhere; the D-S correction reported here is a secondary diagnostic
 of how the 2-annotator latent-truth model performs on the same
 underlying data.
 
-text-MIN and T=0.7 share the **smallest D-S-vs-corrected-F1 gap**
-(+0.013 each); T=0.3 has the largest (+0.045). The gap reflects how
-much of the corrected-F1 pipeline's "extension" is doing work
-*beyond* the D-S fixed-prior reclassification. T=0.3 has the largest
-multi-buffer review cohort (692 rows vs 585 for text-MIN); text-MIN
-and T=0.7 have the fewest reviewer-promoted candidates at R=50 m
-(250 for text-MIN), so the corrected-F1 number lands much closer to
-the D-S number for those two.
-
-This gap is **not** evidence that one method is wrong; it reflects
-that the corrected-F1-multi-buffer pipeline incorporates **today's
-multi-buffer human-review evidence** as part of its extended ground
-truth, while D-S uses only the fixed Sobotkova-derived prior.
+The D-S-vs-corrected-F1 gaps **compress sharply** on the refreshed
+D-S side: three of the four runs now sit at +0.010–0.013 (the
+superseded table had T=0.3 at +0.045, an artefact of its stale
+inputs). Image alone keeps a large gap (+0.031) — consistent with
+its modality-specific calibration penalty (§ 5.2) and with the
+corrected-F1 pipeline's extension doing proportionally more work on
+image's larger VLM-only cohort. The two methods are converging as
+the reference defects are removed; the residual image gap is the
+substantive methodological difference, not T=0.3.
 
 ## 5. Surprising patterns — flagged
 
@@ -360,12 +368,12 @@ diagnostics:
 
 | Metric | text-MIN | T=0.7 | Difference |
 |--------|---------:|------:|-----------:|
-| VLM-only / matched | 0.1786 | 0.1806 | −0.0020 |
-| VLM-only posterior | 0.2947 | 0.2914 | +0.0033 |
-| Empirical rate | 0.5538 | 0.5589 | −0.0051 |
-| Calibration gap (emp − D-S) | 0.259 | 0.267 | −0.008 |
-| ECE | 0.2591 | 0.2675 | −0.0084 |
-| Brier | 0.3142 | 0.3181 | −0.0039 |
+| VLM-only / matched | 0.1787 | 0.1816 | −0.0029 |
+| VLM-only posterior | 0.2945 | 0.2898 | +0.0047 |
+| Empirical rate | 0.5477 | 0.5547 | −0.0070 |
+| Calibration gap (emp − D-S) | 0.253 | 0.265 | −0.012 |
+| ECE | 0.2532 | 0.2649 | −0.0117 |
+| Brier | 0.3118 | 0.3172 | −0.0054 |
 
 The two runs converge on essentially the same calibration metrics
 despite very different prompt configurations (text-MIN minimises
@@ -382,76 +390,71 @@ an independent confirmation in the calibration domain.
 
 ### 5.2 Image's image-vs-text calibration penalty is large — and now further isolated
 
-The image run's D-S calibration gap (3.89×) is roughly **double**
-T=0.7's (1.92×) and T=0.3's (2.53×), and *also* more than double
-text-MIN's (1.88×). All three text-prompt runs (text-MIN, T=0.7,
-T=0.3) sit on the same calibration curve; image is on a clearly
-steeper section. This isolates the image-modality calibration
-penalty as a **modality-specific** effect rather than a
+The image run's D-S calibration gap (3.83×) is roughly **double**
+T=0.3's (2.02×) and T=0.7's (1.91×), and more than double
+text-MIN's (1.86×) — and the refresh *sharpens* the contrast: the
+three text-prompt runs now sit on a tight section of the same
+calibration curve (1.86–2.02×, ratios 0.179–0.189), while image
+stands alone on the steep section. This isolates the image-modality
+calibration penalty as a **modality-specific** effect rather than a
 prompt-specific one — text prompts at three different configurations
 all calibrate consistently; the image prompt does not. This is
 consistent with Obs 273 (D-S structurally inadequate on the VLM-only
 slice for the image run) and with the v2 data-driven-prior diagnostic
 in `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/`.
 
-### 5.3 D-S F1 ranks text-MIN dead last; corrected-F1 also ranks it last — first non-disagreement of the four-way comparison
+### 5.3 D-S F1 and corrected-F1 now agree on first AND last place — the disagreement narrows to the middle pair
 
-Despite the rank-disagreement between D-S F1 and corrected-F1 across
-the other runs (Obs 293), **both rankings agree that text-MIN is
-last**:
+The superseded report could claim agreement only on text-MIN being
+last. On the standardised reference the agreement extends to the
+leader:
 
-- D-S F1 ranks: T=0.7 > Image > T=0.3 > text-MIN
-- Corrected-F1 ranks: T=0.3 > Image > T=0.7 > text-MIN
+- D-S F1 ranks: **T=0.3** > T=0.7 > Image > **text-MIN**
+- Corrected-F1 ranks (old reference, pending items 2–5): **T=0.3** >
+  Image > T=0.7 > **text-MIN**
 
-The agreement on text-MIN being last is robust because text-MIN's
-combination of (lowest matched, highest student-only, lowest VLM
-sensitivity) is consistent across the methodologies. Both
-methodologies penalise the same recall problem — the corrected-F1
-extension does not rescue text-MIN's recall enough to lift it above
-T=0.7, even though it lifts T=0.3 above image and T=0.7. This is
-quietly important: text-MIN's recall floor is below the threshold
-of what extension-based correction can bridge. **Note that text-MIN's
-absolute corrected F1 (0.7968) sits below 0.80**, the only run of
-the four to do so on the headline corrected metric.
+The residual disagreement is the middle pair (T=0.7 vs Image),
+swapped between the two methods. The agreement on text-MIN being
+last remains robust for the original reason — its combination of
+(lowest matched, highest student-only, lowest VLM sensitivity) is
+consistent across methodologies, and its recall floor is below what
+extension-based correction can bridge. **text-MIN's absolute
+corrected F1 (0.7968, old reference) remains the only sub-0.80 run
+on the headline corrected metric** — to be re-examined when queue
+items 2–5 refresh that column.
 
-### 5.4 T=0.7 is the only run where measured F1 ≈ D-S F1 ≈ corrected-F1-multi-buffer F1 — text-MIN is the second-tightest
+### 5.4 Three runs' F1 estimates now agree tightly; image is the loose one
 
-| Run | Measured | D-S | Corrected-F1-multi-buffer | Spread |
-|-----|---------:|----:|--------------------------:|-------:|
-| T=0.3 | 0.7743 | 0.7988 | 0.8437 | 0.069 |
-| T=0.7 | 0.7896 | 0.8142 | 0.8273 | 0.038 |
-| Image | 0.7745 | 0.7990 | 0.8333 | 0.059 |
-| text-MIN | 0.7591 | 0.7834 | 0.7968 | 0.038 |
+| Run | Measured | D-S | Corrected-F1-multi-buffer (old ref.) | Spread |
+|-----|---------:|----:|-------------------------------------:|-------:|
+| T=0.3 | 0.8056 | 0.8304 | 0.8437 | 0.038 |
+| T=0.7 | 0.7924 | 0.8170 | 0.8273 | 0.035 |
+| Image | 0.7774 | 0.8019 | 0.8333 | 0.056 |
+| text-MIN | 0.7629 | 0.7873 | 0.7968 | 0.034 |
 
-text-MIN's three F1 estimates sit within a 0.038 envelope, joint
-with T=0.7 as the **tightest** of the four runs. T=0.3 remains the
-loosest at 0.069 and image at 0.059 (post-recovery; down marginally
-from the pre-recovery 0.061). text-MIN's tight agreement is because
-its corrected-F1 extension is small (only 250 reviewer-promoted
-candidates at R=50 m vs the larger cohorts for the other runs), so
-the corrected number does not pull far from the D-S number. This is
-an artefact of text-MIN's lower review-cohort size rather than a
-confidence signal about the underlying F1.
+The superseded reading — "T=0.7 is the only run where the three
+estimates agree" — was another casualty of T=0.3's stale inputs: on
+the refreshed D-S side, **all three text runs sit in a 0.034–0.038
+envelope**, and image alone is loose (0.056). The tightness pattern
+now tracks modality, matching §§ 5.2 and 4.3: the corrected-F1
+extension does proportionally more work on image's large VLM-only
+cohort. Caveat as throughout: the corrected column is old-reference;
+the spreads recompute when queue items 2–5 land.
 
-### 5.5 64 unjoined T=0.3 review rows — a methodology-divergence diagnostic
+### 5.5 RESOLVED — the 64 unjoined T=0.3 review rows were an artefact of the superseded fit's inputs
 
-T=0.3 has 64 / 692 = 9.2 % unjoined review rows, vs **0 / 1,029 = 0 %
-for image (post-recovery; was 1 / 1,028 = 0.1 % pre-recovery — the
-single unjoined row was cand 2397, now matched in the canonical-GT
-join after its phantom promotion in cross-track-v2 commit `42ed1d32`)**,
-0 / 637 = 0 % for T=0.7, and 0 / 585 = 0 % for text-MIN. The cause
-is documented in §3 (legacy GT in D-S vs reviewed-extended-GT in
-corrected-F1) but the rate is substantially worse for T=0.3 than
-the other runs. T=0.3 was run with single-round recovery (proposer +
-verifier passes restored from the failed multi-round proposer, see
-commit `548604d9`); a plausible explanation is that the recovered
-single-round consensus populated more candidates close to existing
-student GT points, so a larger fraction of them landed in the D-S
-`matched` category against the legacy GT but were classed as VLM-only
-against the reviewed-extended GT. The other three runs' uniform 0 %
-unjoined rates post-recovery confirm that the methodology divergence
-is **specific to T=0.3's recovery pattern**, not a general issue with
-multi-buffer review CSVs.
+The superseded crosstab showed T=0.3 with 64 / 692 = 9.2 % unjoined
+review rows against 0 % for the other three runs, and this section
+previously attributed the divergence to T=0.3's single-round
+recovery pattern. **That attribution was wrong.** Against the
+refreshed fit — current canonical inputs, standardised reference —
+T=0.3's unjoined count drops to 13 / 692 (1.9 %), inside the uniform
+6–17-row band all four runs now show (§ 3), whose mechanism is the
+reference change, not any per-run property. The 64-row anomaly was
+produced by the superseded fit's provenance-unresolved input set
+(§ 6.3), whose ~128 surplus VLM-only items misaligned the D-S slice
+with the review cohort. The recovery-pattern explanation is
+withdrawn; nothing about T=0.3's recovery is implicated.
 
 ## 6. Provenance and inputs
 
@@ -462,8 +465,12 @@ All four D-S aggregations use the same canonical pattern:
 - Buffer: 50 m
 - Verifier: v1 (the production verifier, not the v2 family)
 - Student-FN prior: 0.05 (Sobotkova et al. 2023, fixed)
-- Student GT: `inputs/vectors/references/student-mounds-55maps.geojson`
-  (legacy; predates the reviewed GT used by corrected-F1-multi-buffer)
+- Student GT: `results/deployment-oracle-2026-06-06/canonical-gt/`
+  `standardised/student-mounds-55maps-standardised.geojson` (4,731;
+  the ruling-21 standardised reference — since 2026-08-14. The
+  superseded fits under `dawid-skene/` used the legacy
+  `student-mounds-55maps.geojson`, or for image the 4,745 reviewed
+  snapshot; see § 6.3)
 - Bounds: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
 
 Per-run consensus and verifier probabilities:
@@ -548,9 +555,55 @@ crosstab script treats the empty-yesterday case correctly — every
 multi-buffer row lands in the `today_only` source bucket with its
 multi-buffer label intact.
 
+### 6.3 The 2026-08-14 standardised refits — vintages, decomposition, and one open provenance question
+
+All four fits were re-run once (ruling 21; queue item 1; commit
+`b140f686a`) with each run's **current canonical** consensus +
+probabilities (§ 6's table) and the standardised reference. To
+attribute the movement, each text run was also fitted with current
+inputs against the legacy 4,770 GT (fit "B" — a diagnostic, not a
+citable performance number; not committed). D-S F1 decomposition:
+
+| Run | A: superseded fit | B: current inputs, legacy GT | C: standardised (this report) | B − A (input vintage) | C − B (reference) |
+|-----|------------------:|------------------------------:|-------------------------------:|----------------------:|-------------------:|
+| T=0.7 | 0.8142 | 0.8142 (exact reproduction) | 0.8170 | 0.0000 | +0.0028 |
+| T=0.3 | 0.7988 | 0.8272 | 0.8304 | **+0.0284** | +0.0032 |
+| text-MIN | 0.7834 | 0.7838 | 0.7873 | +0.0004 | +0.0035 |
+| Image | 0.7990 | — (4,745 base is record-only, ruling 19a) | 0.8019 | — | +0.0029 (joint) |
+
+**The reference move is uniform (+0.0028 to +0.0035 across all four
+runs)** — the standardised layer's duplicate removals and position
+corrections lift D-S F1 by ~+0.003 regardless of configuration.
+Everything larger is input vintage: text-MIN's +0.0004 is the
+documented `c1ea6df3c` recovery (+39 consensus features, +4
+verified); T=0.7's exact B-reproduction confirms its committed fit
+was already on current inputs.
+
+**Open and not guessed at — the superseded T=0.3 fit's inputs are
+unidentified.** Two hypotheses were tested exactly and falsified on
+2026-08-14: (i) "inputs repaired after the fit" — falsified by
+commit order (the `548604d95` recovery landed 01:19, the fit
+`0b14e4fcd` committed 21:35 the same day); (ii) "fit computed
+pre-recovery, committed late" — falsified by re-running the fit on
+the pre-recovery inputs extracted from `548604d95^`, which gives
+{3,658 / 1,112 / 691 / 5,461}, not the committed
+{3,531 / 1,239 / 819 / 5,589}. The committed fit consumed a larger,
+worse-matching detection set matching neither vintage. The earlier
+in-session attribution to the fit's inputs being "repaired after the
+fit" (commit `b140f686a`'s message) is withdrawn. The superseded fit
+is superseded wholesale either way; the provenance question is
+registered as a verification item, not a blocker.
+
 ## 7. References and sibling artefacts
 
-Per-run outputs:
+Per-run outputs (current — the standardised refits this report cites):
+
+- `results/<run>/dawid-skene-standardised/` — the four ruling-21 D-S
+  refits (commit `b140f686a`), one per run.
+- `results/<run>/ds-human-crosstab-standardised/` — the four
+  crosstabs against the refit posteriors.
+
+Superseded per-run outputs (history; pre-standardisation figures):
 
 - `results/55maps-text-high-t0.3-generalisation/dawid-skene/` — T=0.3 D-S aggregation.
 - `results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/` — T=0.3 D-S vs human review.
@@ -577,6 +630,34 @@ References:
   `docs/notes/reflections/working-notes.md`.
 
 ## Changelog
+
+### 2026-08-14 — Ruling-21 refresh: all four fits on the standardised reference
+
+Queue item 1 executed (commit `b140f686a` for the fits; this commit
+for the report). All four D-S fits re-run once against the
+standardised reference (4,731) with each run's current canonical
+inputs; crosstabs re-run against the new posteriors. Headline moves:
+
+| Claim | Before | After |
+|-------|--------|-------|
+| D-S / measured F1 leader | T=0.7 (0.8142 / 0.7896) | **T=0.3 (0.8304 / 0.8056)** |
+| D-S F1 ranking | T=0.7 > Image > T=0.3 > MIN | **T=0.3 > T=0.7 > Image > MIN** |
+| Image-vs-T=0.3 ordering | WITHDRAWN (W7-D9) | resolved: T=0.3 +0.0285 |
+| T=0.3 calibration ratio | 2.53× | 2.02× |
+| T=0.3 unjoined crosstab rows | 64 (9.2 %) | 13 (1.9 %) |
+| D-S-vs-corrected-F1 gap, T=0.3 | +0.045 | +0.013 |
+
+What did NOT change: the +0.024–0.025 D-S correction constancy; the
+§ 4.2 monotonic calibration scaling (now on its strongest evidence);
+text-MIN last on every F1 metric and first on calibration; image's
+modality-specific calibration penalty (sharpened). Most of the old
+cross-method disagreement (§ 4.3) and the T=0.3 crosstab anomaly
+(§ 5.5) resolve into artefacts of the superseded T=0.3 fit's inputs,
+whose provenance is unresolved after two falsified hypotheses —
+documented with the B/C decomposition in the new § 6.3. The § 2.1
+reference caveat and § 4.1 withdrawal are resolved in place.
+Corrected-F1-multi-buffer figures remain old-reference (flagged
+throughout) pending queue items 2–5.
 
 ### 2026-08-04 (later) — W7 repair queue: the reference split, and three internal contradictions
 
