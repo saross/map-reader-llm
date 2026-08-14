@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-03T02:32:37Z",
+  "generated_at": "2026-08-14T09:10:41Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -1060,6 +1060,42 @@
           "results/e43-matched-temperature/findings.md"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "obs280-shared-reference",
+      "type": "comparison",
+      "conditions_compared": [
+        "55maps-text-high-t0-3-generalisation::verified-k4-standardised-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt",
+        "55maps-text-high-generalisation::verified-k4-standardised-gt",
+        "55maps-text-high-generalisation::verified-k3-standardised-gt",
+        "55maps-text-min-generalisation::verified-k4-standardised-gt",
+        "55maps-text-min-generalisation::verified-k3-standardised-gt",
+        "55maps-image-generalisation::verified-k3-standardised-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-standardised-gt"
+      ],
+      "hypothesis_refs": [],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": null,
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "Divergence survives reference unification: text (T03-k4) leads F1 @50m 0.8303 while image (IM-k3) leads MCC 0.7120 from third place on F1; the MCC gap steps +0.0386 (student-only) -> +0.0393 (legacy extended) -> +0.0430 (standardised), so ~90% of the original divergence is metric behaviour and the reference asymmetry had slightly UNDERSTATED it. Text's F1 lead narrows +0.0372 -> +0.0293 but holds at every buffer (no R>=75m crossover on the shared reference). Both headline gaps have non-overlapping marginal 95% CIs.",
+      "paper_section": null,
+      "output_path": "results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md",
+      "working_notes_obs": [
+        "Obs 280 \u2014 the F1/MCC tier-leader divergence (confirmed and strengthened on the shared reference)",
+        "Obs 292 \u2014 the corrected-55-map reproduction (headline confirmed; the R>=75m F1 crossover sub-finding does not carry)"
+      ],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md"
+        ],
+        "last_extracted_at": "2026-08-14T09:10:41Z",
         "extractor_version": "0.7.1"
       }
     }
