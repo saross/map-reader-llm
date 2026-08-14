@@ -26825,3 +26825,45 @@ confirmed cases now sit at or beyond that envelope, still under rule 3's
 (`resolved_partner_m`), so the attractor-distance distribution the pass
 exists to measure now includes its own extreme tail. Would become Obs 402.
 
+
+## Candidates pending review (drafted 2026-08-14, Session 131) — accept / edit / discard
+
+*Drafted at handoff. With Obs 396–397 minted, numbering assumes the S129
+batch lands as 398–400 and S130 as 401–404. Silence holds these over; it
+does not discard them.*
+
+**Candidate H — on a common reference, T=0.3 takes the D-S and measured
+F1 lead, and the Obs 293 cross-method disagreement narrows to the middle
+pair.** The ruling-21 refits put all four 55-map D-S fits on the
+standardised reference for the first time: T=0.3 0.8304 > T=0.7 0.8170 >
+image 0.8019 > text-MIN 0.7873, identical order on measured F1, and now
+agreeing with corrected-F1-multi-buffer on first and last place. The B/C
+vintage decomposition shows the reference move itself is uniform (+0.0028
+to +0.0035 across all four runs); ~9/10 of T=0.3's movement was its
+superseded fit's provenance-unresolved inputs. Two prior explanations
+(the § 5.5 crosstab anomaly, most of the § 4.3 gap) dissolve as artefacts
+of that input set. Sources: `results/55maps-ds-summary-v2/report.md`
+§§ 1, 4.1, 6.3 (commits `13b386875`, `2d8a3dc83`); blind-verified.
+Would become Obs 405.
+
+**Candidate I — the hardened verifier stack's first full cycle caught a
+material error its own designer had just written, in prose both humans
+had confirmed.** Denominator 488 claims identified / 481 re-derived /
+476 confirmed / 5 corrections; the material one was a mechanism sentence
+carried forward from the superseded report against tables that disproved
+it (reclassification = matched × 0.05/0.95, VLM-independent). The three
+B fits and the pre-recovery falsification were independently re-derived
+on sapphire. Empirical follow-up to Obs 397's protocol claims: the
+denominator requirement, cold derivation, and corrections-as-claims all
+did observable work in one pass. Would become Obs 406.
+
+**Candidate J — attractor adhesion may follow ink colour, and the
+marking data can test it.** The PI's rationale on walk item #4635: the
+black numeral binds the displaced detection to the black trig-on-mound
+symbol, not the nearer orange-brown mound ("if it adhered to this one it
+would be orange-brown"). If adhesion is colour-matched, displacement
+vectors should sort by attractor ink colour for both student and model
+displacements — testable from `marked-centres.csv` displacement vectors
+plus symbol types, one analysis, $0. Extends the attractor-mechanism
+series (Obs 396's subsidy caveat; S129 candidate A; S130 candidate G).
+Would become Obs 407.

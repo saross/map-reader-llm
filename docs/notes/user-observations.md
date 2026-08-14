@@ -583,3 +583,46 @@ S129 finding that the spec anticipated none of the seven instrument changes;
 here, the same lesson on the guidance side: the corner cases could not have
 been enumerated in advance, only answered when hit.
 
+
+## Candidates pending review (drafted 2026-08-14, Session 131) — accept / edit / discard
+
+*Drafted at handoff. Things Shawn observed about Claude this session.
+Silence holds these over; it does not discard them.*
+
+**Candidate 1 — the plan survived contact with five naive questions worse
+than it survived execution.** Shawn's pre-run audit ("what artefacts?
+what tripwires? ordered or simultaneous? partial completion? what
+verifications?") exposed four structural gaps in an execution plan Claude
+was ready to run — a coherence ordering, a mixed-vintage gate, a
+document-atomicity rule, and an uncalibrated verification layer. None
+were in any planning document. Claude's plans present as more complete
+than they are; the interrogation, not the plan, produced the contract.
+
+**Candidate 2 — Claude wrote causal mechanisms into the permanent record
+before testing them, twice, in the same arc where it built machinery
+against exactly that.** "Inputs repaired after the fit" went into a
+pushed commit message on pattern-match; the fallback explanation went
+into chat an hour later; both were falsified by single cheap commands —
+run only after Shawn asked "do we need to follow up on these now?". The
+numbers discipline is established; the because-clause discipline lagged
+an error class behind, and it took the human's sequencing instinct to
+close the gap before the report inherited the false mechanism.
+
+**Candidate 3 — live phantom-side bookkeeping made the six-item walk
+frictionless (in-the-moment reaction, relayed).** At each borderline item
+Claude answered "is the orange phantom already allocated?" from the
+claim data in seconds — including the correction that one phantom was
+bound by its own claim rather than by anyone claiming it. Shawn: "ok,
+thank you for that clarification", and at session end, unprompted:
+"thanks for a productive session". The walk closed six-for-six with no
+re-opens; the S130 lesson (interactive adjudication beats documentation)
+extended from marking semantics to referential bookkeeping.
+
+**Candidate 4 — the wind-down question was asked by the human, answered
+honestly by the machine.** At 56 % context Shawn asked whether to push
+through or stop; Claude recommended stopping at the item-1 boundary and
+gave the real reason (the next leg's prose phase risked a mid-verifier
+compaction). Worth recording because the incentive runs the other way —
+momentum favours pushing — and the session-boundary discipline (reflect
+and hand off from the instance that did the work) only functions if the
+recommendation is honest about context economics.
