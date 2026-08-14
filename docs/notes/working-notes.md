@@ -26585,6 +26585,164 @@ jitter_sample; Session 131 2026-08-11.
 
 ---
 
+## Observation 397: A pre-run interactive review of an automated block yielded four hardenings in one sitting and is now a reusable protocol (/pre-run-review) (Session 131, 2026-08-14)
+
+*Source anchors: the protocol itself at
+`~/personal-assistant/skills/pre-run-review/SKILL.md` (personal-assistant
+repo, commit `09fa14e` — external to this repository). The four hardenings,
+bound to the live block, at
+`reports/verification/reference-standardisation-queue.md` § "Execution
+contract (pre-run review with the PI, 2026-08-14)" (line 56, commit
+`793c875d6`). The error-rate prior recomputed 2026-08-14 by tallying the
+`status` field of `reports/verification/c4-recompute-report.json` —
+16,238 rows: MATCH 7,263 / MISMATCH 619 / APPROX 12 / UNRESOLVED 2,738 /
+SKIPPED 5,606. The field-level precedent at
+`reports/verification/phase2-gate-package.md` § 1.*
+
+### The finding
+
+Before launching the five-item reference-standardisation queue, the PI ran
+an unprompted audit dialogue — *what artefacts will this produce? what are
+the tripwires, the finished states, and the stop states? are items 1–3
+ordered or simultaneous? what happens on partial completion? what
+verifications run at the synthesis boundary?* **One sitting of that
+dialogue produced four hardenings, none of which existed in any planning
+document beforehand.**
+
+| # | Hardening | What it fixes | Where it landed |
+|---|---|---|---|
+| 1 | The 2→3 **artefact-coherence ordering** | Items 2 and 3 overlap on the t0.3 cell; score it once, register under both, never compute it twice. Distinct from a data dependency — nothing in item 3 consumes item 2's output | Queue § Execution contract, clause 1 |
+| 2 | **One commit per document** | A refreshed document's numbers and its changelog entry land together, so no document straddles two references across a commit boundary | Clause 3 |
+| 3 | **Countable completion gates** against mixed-vintage artefacts | A dependent item starts only on an exact upstream count — e.g. "8/8 board cells carry F1 and MCC against the standardised reference, drift-check clean" | Clause 2 |
+| 4 | A **layered verification stack**, with a blind fresh-context verifier pass non-negotiable at the block's highest synthesis-density item (queue item 4), briefed explicitly on directionality claims and comparison tables | Calibrates review effort to where claims are actually made, rather than spreading it evenly | Clause 5 |
+
+The fourth hardening came from the PI's error-rate intuition — *"we've seen
+something like 1-in-10?"* — and **the intuition checked out against the
+project's own measurement**. The C4 recompute programme records **619
+MISMATCH of 7,894 decisively resolved claim-values (≈ 7.8 %, about 1 in
+13)**, where "decisively resolved" is MATCH + MISMATCH + APPROX out of
+16,238 extracted rows; the remainder are UNRESOLVED (2,738) or SKIPPED
+(5,606). The same shape has a field-level precedent: the C3 re-derivation
+surfaced **147 field-level mismatches, of which 127 vindicated the
+manifest, 17 were genuine defects, and 3 sided with the source**
+(`phase2-gate-package.md` § 1).
+
+Two live instances bracket the session. The **Obs 396 writer pass** — a
+blind re-derivation by a fresh context — flagged roughly 3 of about 20
+checked specifics in a draft the author had already confirmed twice, one of
+which was a genuine correction (session-recorded; the entry landed at
+`cccfad07c`). And the PI caught a draft claim that the inflation side of
+the reference bias was unquantified when **[[Obs 361]]** had already
+quantified it in Session 112.
+
+### Why this matters
+
+The dialogue's second product is **operator comprehension**. The PI's
+framing: it is *"very helpful for **me** to understand what is happening at
+this level of detail"*. For a block that will run largely unattended across
+sessions, **the operator's ability to state the stop conditions back is a
+deliverable, not a nicety** — it is precisely what makes intermittent human
+audit of largely-autonomous work possible. An operator who cannot say when
+the run should halt cannot supervise it, however good the checklist is.
+
+It is also another instance of the project's repeated finding that
+**interactive adjudication outperforms up-front specification**. The
+point-marking campaign's controlling spec
+(`planning/point-marking-app-spec.md`) was published 2026-08-04 and then
+revised three times on the single day it was built — changelog entries
+2026-08-05 (a) built, imagery pointer corrected, two constraints measured;
+(b) scope widened to all conflations at a 50 m cut; (c) jitter sample
+added, multi-marking considered and rejected. The campaign's substantive
+edge cases then surfaced *afterwards*, as the pending candidates D–G at the
+foot of this file, not in advance. The pre-run review does not abolish that
+pattern; it moves a useful slice of it earlier, where the fixes are cheap.
+
+### The rule this yields
+
+**Before any automated block expected to span more than one session, or
+more than about five chained items without human review between them, run
+the six-section pre-run review**: artefact inventory; countable finished
+states; stop states; a dependency DAG that distinguishes hard data
+dependencies from artefact-coherence orderings; partial-completion
+semantics; and a verification stack calibrated to measured error rates.
+
+Two conditions make it real. **Hardenings land in the block's controlling
+document, never in chat scrollback** — an unwritten ordering is not a
+hardening. And **the review ends with an explicit go / no-go plus the
+inverted comprehension check**: the operator states the stop conditions
+back, and if they cannot, the review is not finished whatever the checklist
+says. This operationalises ruling 11 ("systematise the
+independent-verification pattern wherever possible") at the *block* level,
+where ruling 11 had so far been applied per-artefact.
+
+### Caveats / methodological notes
+
+- **n = 1 block.** One sitting, one queue. The four-hardening yield may
+  reflect this block's unusual synthesis density — five chained items, each
+  refreshing prose documents that other documents cite — rather than a
+  general rate. Do not quote "four hardenings per review" as an expectation.
+- The **≈ 8 % C4 rate is an upper-bound prior, not a live rate**: it was
+  measured over historical documents written before the current
+  verification practices existed. New work drafted under Layer 0–2
+  discipline should mismatch less often; the figure calibrates how much
+  verification to buy, not how much error to expect today.
+- The denominator composition matters slightly. 7,894 includes the 12
+  APPROX rows; excluding them gives 619/7,882 = 7.85 %. Nothing downstream
+  moves, but quote the composition when the figure is cited.
+- The **3-of-20 Obs 396 writer figure is session-recorded and carries no
+  artefact anchor** (the verifier's corrections table was not committed).
+  Treat it as illustrative of the arc, not as a measurement; the C4 rate is
+  the citable number.
+- The protocol lives **outside this repository**, in the personal-assistant
+  skills tree, so it is not covered by this project's commit history. Cite
+  it by path and commit, and re-read before relying on its wording.
+
+### Findable later
+
+pre-run review; /pre-run-review; preflight; audit this block; automated
+block; tripwire; stop state; finished state; countable completion gate;
+dependency DAG; artefact-coherence ordering versus data dependency;
+mixed vintage; one-commit-per-document rule; verification stack; blind
+fresh-context verifier; synthesis boundary; operator comprehension;
+inverted comprehension check; go/no-go; 1-in-10; ~8 % claim-mismatch rate;
+619 of 7,894 decisively resolved; c4-recompute-report.json status tally
+16,238 rows; C3 147 mismatches 127 vindicated 17 genuine 3 sided with
+source; ruling 11 systematise independent verification;
+reference-standardisation queue execution contract; t0.3 cell scored once;
+8/8 board cells; SKILL.md 09fa14e; queue commit 793c875d6; Session 131
+2026-08-14.
+
+### Related observations and artefacts
+
+- **[[Obs 396]]** (the two reference biases, both quantified) — the entry
+  whose blind writer-verification pass demonstrated the value of the
+  verifier layer on live work, and which supplied the "surprising result"
+  tripwire's numeric band in clause 4 of the execution contract.
+- **[[Obs 353]]** (non-isolated background agents share the working tree —
+  concurrency discipline) — the prior lesson on caring for unattended
+  automation. Obs 353 hardened *where* agents may run concurrently; this
+  observation hardens *what must be settled before* they start.
+- **[[Obs 361]]** (generalisation-metric epistemics; the double-miss blind
+  spot quantified) — the observation the PI recalled when catching a draft
+  claim that the inflation side was unquantified; an instance of the human
+  layer of the verification stack doing work no automated check would have
+  done.
+- `reports/verification/phase3-rulings-2026-07-31.md` § 11 ("Independent
+  verification — systematise the pattern") — the ruling this protocol
+  operationalises at block scope.
+- `reports/verification/reference-standardisation-queue.md` § "Execution
+  contract" — the four hardenings as they bind the live queue.
+
+**Artefacts**: `~/personal-assistant/skills/pre-run-review/SKILL.md`
+(personal-assistant `09fa14e`, external repository);
+`reports/verification/reference-standardisation-queue.md` (`793c875d6`);
+`reports/verification/c4-recompute-report.json`;
+`reports/verification/phase2-gate-package.md` § 1;
+`reports/verification/phase3-rulings-2026-07-31.md` § 11;
+`planning/point-marking-app-spec.md` § Changelog.
+
+---
+
 ## Candidates pending review (drafted 2026-08-06, Session 129) — accept / edit / discard
 
 *Obs 395 was written and accepted this session. These three are additional
