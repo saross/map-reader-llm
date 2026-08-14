@@ -2,24 +2,31 @@
 
 # Conditions manifest
 
-> Generated 2026-08-03T02:32:37Z · 322 row(s) · schema v1.0.
+> Generated 2026-08-14T08:45:35Z · 330 row(s) · schema v1.0.
 >
-> **Coverage**: 322 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 330 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
 | 55maps-generalisation::verified-paired | proposer-verifier | verified | 4 | 5 | 0.6254 | 0.6509 | 4068 |
 | 55maps-image-generalisation::verified | proposer-verifier | verified | 3 | 5 | 0.5082 | 0.6927 | 4680 |
 | 55maps-image-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.5081688945469975 | 0.7104103204864493 | 4680 |
+| 55maps-image-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.5461300309597523 | 0.7119504066553468 | 4680 |
 | 55maps-text-high-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.626 | 0.648 | 4164 |
 | 55maps-text-high-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6260381593714928 | 0.6666252946918438 | 4164 |
 | 55maps-text-high-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6307175828787243 | 0.679608597108498 | 4786 |
+| 55maps-text-high-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.6657946370176586 | 0.6650417680321745 | 4164 |
+| 55maps-text-high-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6725193956717027 | 0.679608597108498 | 4786 |
 | 55maps-text-high-t0-3-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6308 | 0.6541 | 4350 |
 | 55maps-text-high-t0-3-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6308267370272647 | 0.6710705487171356 | 4350 |
 | 55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6295720650709771 | 0.6903302334580523 | 4905 |
+| 55maps-text-high-t0-3-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.6728632478632478 | 0.6689725848962402 | 4350 |
+| 55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6719112455874937 | 0.6887952828707767 | 4905 |
 | 55maps-text-min-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6201 | 0.6264 | 3865 |
 | 55maps-text-min-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6201370340262455 | 0.6411358134707998 | 3865 |
 | 55maps-text-min-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6335734072022161 | 0.6579582748365398 | 4279 |
+| 55maps-text-min-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.6548732394366197 | 0.6400648540183066 | 3865 |
+| 55maps-text-min-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.6709010657767251 | 0.6569092929260921 | 4279 |
 | gold-standard-v2::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5925 | 0.2964 | 868 |
 | gold-standard-v2::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6999 | 0.4557 | 608 |
 | gold-standard-v2::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7649 | 0.5791 | 420 |
@@ -330,3 +337,4 @@
 | flash35-pv-2x2::f35prop-f35vf-4of10 | proposer-verifier | verified | 4 | 10 | 0.8362 | 0.7369 | 371 |
 | flash35-pv-2x2::f3prop-f35vf-6of10 | proposer-verifier | verified | 6 | 10 | 0.8689 | 0.7666 | 389 |
 | 55maps-text-min-n10-uplift::verified-5of10-canonical-gt | proposer-verifier | verified | 5 | 10 | 0.647194465795542 | 0.6724579910368705 | 4361 |
+| 55maps-text-min-n10-uplift::verified-5of10-standardised-gt | proposer-verifier | verified | 5 | 10 | 0.6878668231778892 | 0.670886957725763 | 4361 |

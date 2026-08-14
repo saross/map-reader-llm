@@ -4249,7 +4249,7 @@
    ]
   },
   "55maps-image-generalisation": {
-   "_note": "Batch B. Image-track out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). Image proposer (library_plus-hp, detect_brief-text-image.md) x text adversarial verifier (cross-modal). 1 verified condition at the 14-buffer+MCC re-score (consensus operating point 3of5). Consensus-3of5 + non-canonical mcc/backfill/cleaned-gt sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score.",
+   "_note": "Batch B. Image-track out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). Image proposer (library_plus-hp, detect_brief-text-image.md) x text adversarial verifier (cross-modal). 1 verified condition at the 14-buffer+MCC re-score (consensus operating point 3of5). Consensus-3of5 + non-canonical mcc/backfill/cleaned-gt sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
    "proposer_pools": {
     "library_plus-hp": {
      "modality": "image",
@@ -4296,11 +4296,30 @@
      "eval_path": "results/55maps-extended-gt-2026-06-07/IM-k3/evaluation.json",
      "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
      "_note": "image, carried vote 3-of-5, vs canonical extended GT"
+    },
+    {
+     "label": "verified-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "library_plus-hp",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/IM-k3/evaluation.json",
+     "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+     "_note": "IM-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     }
    ]
   },
   "55maps-text-high-generalisation": {
-   "_note": "Batch B. text HIGH thinking, T=0.7 (the publishable recovered successor of 55maps-generalisation). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score.",
+   "_note": "Batch B. text HIGH thinking, T=0.7 (the publishable recovered successor of 55maps-generalisation). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
    "proposer_pools": {
     "detect_brief-text": {
      "modality": "text",
@@ -4366,11 +4385,49 @@
      "eval_path": "results/55maps-extended-gt-2026-06-07/TH7-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
      "_note": "text HIGH T0.7, vote 3-of-5 (Session-104 vote=3 shell, prob>=0.15)"
+    },
+    {
+     "label": "verified-k4-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/TH7-k4/evaluation.json",
+     "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+     "_note": "TH7-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
+    },
+    {
+     "label": "verified-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/TH7-k3/evaluation.json",
+     "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
+     "_note": "TH7-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     }
    ]
   },
   "55maps-text-high-t0-3-generalisation": {
-   "_note": "Batch B. text HIGH thinking, T=0.3 (re-scored vs the reviewed student GT 2026-06-01 to match the other four runs, per protocol-errata E56). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score.",
+   "_note": "Batch B. text HIGH thinking, T=0.3 (re-scored vs the reviewed student GT 2026-06-01 to match the other four runs, per protocol-errata E56). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
    "proposer_pools": {
     "detect_brief-text": {
      "modality": "text",
@@ -4436,11 +4493,49 @@
      "eval_path": "results/55maps-extended-gt-2026-06-07/T03-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
      "_note": "DEPLOYMENT ORACLE — text HIGH T0.3, vote 3-of-5 (vote=3 shell, prob>=0.15)"
+    },
+    {
+     "label": "verified-k4-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/T03-k4/evaluation.json",
+     "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+     "_note": "T03-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
+    },
+    {
+     "label": "verified-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/T03-k3/evaluation.json",
+     "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+     "_note": "T03-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     }
    ]
   },
   "55maps-text-min-generalisation": {
-   "_note": "Batch B. text MINIMAL thinking. Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score.",
+   "_note": "Batch B. text MINIMAL thinking. Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
    "proposer_pools": {
     "detect_brief-text": {
      "modality": "text",
@@ -4506,6 +4601,44 @@
      "eval_path": "results/55maps-extended-gt-2026-06-07/TM-k3/evaluation.json",
      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
      "_note": "text MINIMAL, vote 3-of-5 (vote=3 shell, prob>=0.15)"
+    },
+    {
+     "label": "verified-k4-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/TM-k4/evaluation.json",
+     "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+     "_note": "TM-k4 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
+    },
+    {
+     "label": "verified-k3-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text",
+     "n_passes": 5,
+     "vote_threshold": 3,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/TM-k3/evaluation.json",
+     "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
+     "_note": "TM-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     }
    ]
   },
@@ -7032,7 +7165,7 @@
    ]
   },
   "55maps-text-min-n10-uplift": {
-   "_note": "Run B uplift: one citable condition at the best deployment operating point (5of10/pt0.15) vs the canonical extended GT. MIXED-PROVENANCE POOL (the n-passes-over WARN is the honest by-design signal, per the S106 settled position): passes 1-5 are the 55maps-text-min-generalisation deployment passes; passes 6-10 are this run's (proposer/run_6..run_10; uplift-full.log Stage P). The k(3..10) x prob_t sweep lives in results/55map-leaderboard/min11-uplift-score.log and min11_uplift_cell.json.",
+   "_note": "Run B uplift: one citable condition at the best deployment operating point (5of10/pt0.15) vs the canonical extended GT. MIXED-PROVENANCE POOL (the n-passes-over WARN is the honest by-design signal, per the S106 settled position): passes 1-5 are the 55maps-text-min-generalisation deployment passes; passes 6-10 are this run's (proposer/run_6..run_10; uplift-full.log Stage P). The k(3..10) x prob_t sweep lives in results/55map-leaderboard/min11-uplift-score.log and min11_uplift_cell.json. Standardised-reference track (ruling 21, Session 132): the -standardised-gt conditions score the same detection sets against canonical-gt/standardised/ (student 4,731 + extension 279 at marked centres, no ring gate). They supersede the -canonical-gt cells as the paper reference; see results/55maps-standardised-ref-2026-08-14/.",
    "proposer_pools": {
     "detect_brief-text-min-n10": {
      "modality": "text",
@@ -7065,6 +7198,26 @@
      "eval_path": "results/55maps-extended-gt-2026-06-07/TM-n10-k5/evaluation.json",
      "detections": "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
      "_note": "min11 uplift, vote 5-of-10 (prob>=0.15), vs canonical extended GT; best deployment op sat looser than the GS-best 6of10 — the k3 lesson recurring at n=10 (Obs 364)"
+    },
+    {
+     "label": "verified-5of10-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "detect_brief-text-min-n10",
+     "n_passes": 10,
+     "vote_threshold": 5,
+     "prob_threshold": 0.15,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "iterations": 1
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/TM-n10-k5/evaluation.json",
+     "detections": "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
+     "_note": "TM-n10-k5 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     }
    ]
   }

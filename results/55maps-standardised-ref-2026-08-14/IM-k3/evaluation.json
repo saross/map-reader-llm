@@ -1,0 +1,189 @@
+{
+  "_metadata": {
+    "adapter": "scripts/register_standardised_gt_conditions.py",
+    "source_summary": "results/55maps-standardised-ref-2026-08-14/IM-k3/summary.json",
+    "gt_reference": "results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson (4,731) + extension-mounds-standardised.csv (279 marked centres, included whole at every R \u2014 ruling 21)",
+    "metric": "corrected-F1 @ R (extended-GT Hungarian, standardised reference), tile-MCC on the SAME reference",
+    "tile_classification_buffer_metres": 50,
+    "tile_classification_note": "Under the standardised reference the extended GT is identical at every R (marked centres, no ring gate), so tile MCC is buffer-invariant by construction \u2014 the single block is exact at every buffer, not a 50 m pin.",
+    "buffers": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      75,
+      100,
+      125,
+      150
+    ],
+    "input_files": {
+      "detections": [
+        "outputs/55maps-image-generalisation/verified/verified_detections.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "ground_truth": "results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson (4,731) + extension-mounds-standardised.csv (279 marked centres, included whole at every R \u2014 ruling 21)"
+    }
+  },
+  "summary": {
+    "n_detections": 4680,
+    "buffers": [
+      {
+        "buffer_metres": 5,
+        "f1": 0.0672858617131063,
+        "precision": 0.06965811965811966,
+        "recall": 0.06506986027944112,
+        "f1_ci_lower": 0.06010648762789248,
+        "f1_ci_upper": 0.07462220066887158,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 10,
+        "f1": 0.22786377708978328,
+        "precision": 0.2358974358974359,
+        "recall": 0.22035928143712574,
+        "f1_ci_lower": 0.21553923671084252,
+        "f1_ci_upper": 0.24022070479783694,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 15,
+        "f1": 0.4024767801857585,
+        "precision": 0.4166666666666667,
+        "recall": 0.38922155688622756,
+        "f1_ci_lower": 0.3880877694153574,
+        "f1_ci_upper": 0.4163385190967082,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 20,
+        "f1": 0.5461300309597523,
+        "precision": 0.5653846153846154,
+        "recall": 0.5281437125748503,
+        "f1_ci_lower": 0.531759738668256,
+        "f1_ci_upper": 0.5597934007010746,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 25,
+        "f1": 0.6534571723426212,
+        "precision": 0.6764957264957265,
+        "recall": 0.631936127744511,
+        "f1_ci_lower": 0.6400161217145558,
+        "f1_ci_upper": 0.6663172786379478,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 30,
+        "f1": 0.7178534571723427,
+        "precision": 0.7431623931623932,
+        "recall": 0.6942115768463074,
+        "f1_ci_lower": 0.7052021643188935,
+        "f1_ci_upper": 0.7294682439127209,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 35,
+        "f1": 0.7566563467492261,
+        "precision": 0.7833333333333333,
+        "recall": 0.7317365269461078,
+        "f1_ci_lower": 0.7452911663334214,
+        "f1_ci_upper": 0.7674372630566401,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 40,
+        "f1": 0.7795665634674923,
+        "precision": 0.8070512820512821,
+        "recall": 0.7538922155688623,
+        "f1_ci_lower": 0.7688537191973113,
+        "f1_ci_upper": 0.7896998880093923,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 45,
+        "f1": 0.7919504643962848,
+        "precision": 0.8198717948717948,
+        "recall": 0.7658682634730539,
+        "f1_ci_lower": 0.7817895372577089,
+        "f1_ci_upper": 0.801733984978459,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 50,
+        "f1": 0.8010319917440661,
+        "precision": 0.8292735042735043,
+        "recall": 0.7746506986027945,
+        "f1_ci_lower": 0.7911378085774979,
+        "f1_ci_upper": 0.810535986806861,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 75,
+        "f1": 0.8165118679050567,
+        "precision": 0.8452991452991453,
+        "recall": 0.7896207584830339,
+        "f1_ci_lower": 0.8068855726954318,
+        "f1_ci_upper": 0.8256323543758689,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 100,
+        "f1": 0.8200206398348814,
+        "precision": 0.8489316239316239,
+        "recall": 0.7930139720558882,
+        "f1_ci_lower": 0.8105608466876105,
+        "f1_ci_upper": 0.8290082078324871,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 125,
+        "f1": 0.822703818369453,
+        "precision": 0.8517094017094017,
+        "recall": 0.7956087824351298,
+        "f1_ci_lower": 0.8133315201295092,
+        "f1_ci_upper": 0.8315627234629983,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 150,
+        "f1": 0.8239422084623322,
+        "precision": 0.852991452991453,
+        "recall": 0.7968063872255489,
+        "f1_ci_lower": 0.8146508828250402,
+        "f1_ci_upper": 0.8327351255337964,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      }
+    ],
+    "tile_classification": {
+      "mcc": 0.7119504066553468,
+      "sensitivity": 0.7054483541430193,
+      "specificity": 0.9645206298584812,
+      "confusion": {
+        "tp": 2486,
+        "tn": 4839,
+        "fp": 178,
+        "fn": 1038
+      }
+    }
+  }
+}
