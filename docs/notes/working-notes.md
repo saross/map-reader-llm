@@ -26743,175 +26743,178 @@ reference-standardisation queue execution contract; t0.3 cell scored once;
 
 ---
 
-## Candidates pending review (drafted 2026-08-06, Session 129) — accept / edit / discard
+## Observation 398: The attractor effect inverts proximity ordering, so nearest-neighbour pairing gets these backwards (Session 129, 2026-08-06)
 
-*Obs 395 was written and accepted this session. These three are additional
-candidates from the same session, held pending a verdict. Silence holds them
-over; it does not discard them.*
+*Drafted at the Session-129 handoff; approved wholesale 2026-08-14
+(Session 132 review, all thirteen pending candidates accepted).*
 
-**Candidate A — the attractor effect inverts proximity ordering, so
-nearest-neighbour pairing gets these backwards.** At queue item 541 a promoted
-mound displaced off *this* mound by a numeral sat further away (44 m) than a
-genuinely distinct student mound (31 m). Any pipeline step that pairs records by
-nearest neighbour will therefore mis-pair exactly the cases the attractor
-produces — the ones that matter most. Measured context: 108 of 773 promoted
-mounds have a student point within 50 m, 296 within 75 m, 399 within 110 m.
-Would become Obs 396.
+At queue item 541 a promoted mound displaced off *this* mound by a numeral
+sat further away (44 m) than a genuinely distinct student mound (31 m). Any
+pipeline step that pairs records by nearest neighbour will therefore
+mis-pair exactly the cases the attractor produces — the ones that matter
+most. Measured context: 108 of 773 promoted mounds have a student point
+within 50 m, 296 within 75 m, 399 within 110 m.
 
-**Candidate B — mound density makes coincidence a weak explanation out to
-~130 m, which is further than symbol geometry suggests.** Density 0.22/km² over
-21,902 km², mean spacing ~2.1 km, so a random point has ~1.1% chance of a mound
-within 126.5 m — against 55.9% of promoted mounds having one. Observed
-phantom-to-student distances are bimodal (p50 102 m, p75 719 m), which is the
-signature of an associated population and an independent one. The caveat that
-must travel with it: uniform density understates coincidence where mounds
-cluster. Would become Obs 397.
+## Observation 399: Mound density makes coincidence a weak explanation out to ~130 m, which is further than symbol geometry suggests (Session 129, 2026-08-06)
 
-**Candidate C — unaided click placement on 5 m/px imagery is ~2.5–5 m off in
-about two thirds of cases; a keyboard nudge closes it to ~1 px.** The PI's own
-estimate over ~750 trials, which is a usable instrument-precision figure for the
-Methods. Relevant because it is the same order as the imagery quantisation
-(±2.5 m), so neither dominates — and because the 96 jitter-sample marks made
-before nudging existed are the ones where that error propagates into a reported
-number. Would become Obs 398.
+*Drafted at the Session-129 handoff; approved wholesale 2026-08-14.*
 
-## Candidates pending review (drafted 2026-08-10, Session 130) — accept / edit / discard
+Density 0.22/km² over 21,902 km², mean spacing ~2.1 km, so a random point
+has ~1.1% chance of a mound within 126.5 m — against 55.9% of promoted
+mounds having one. Observed phantom-to-student distances are bimodal
+(p50 102 m, p75 719 m), which is the signature of an associated population
+and an independent one. The caveat that must travel with it: uniform
+density understates coincidence where mounds cluster.
 
-*Drafted at handoff. Numbering assumes the S129 batch (396–398) lands first.
-Silence holds these over; it does not discard them.*
+## Observation 400: Unaided click placement on 5 m/px imagery is ~2.5–5 m off in about two thirds of cases; a keyboard nudge closes it to ~1 px (Session 129, 2026-08-06)
 
-**Candidate D — adjacent hachured mound symbols can bleed rays together and
-mint an illusory third symbol; a map-artefact FP mechanism distinct from
-attractor displacement.** At queue items 97–99 the student layer held three
-records where the map shows two mounds: the middle record (corrected_student:
-2601) digitised the zone where the two real symbols' rays merge. The PI: "the
-one in the middle is an illusion caused by the rays of the two others bleeding
+*Drafted at the Session-129 handoff; approved wholesale 2026-08-14.*
+
+The PI's own estimate over ~750 trials, which is a usable
+instrument-precision figure for the Methods. Relevant because it is the
+same order as the imagery quantisation (±2.5 m), so neither dominates —
+and because the 96 jitter-sample marks made before nudging existed are the
+ones where that error propagates into a reported number.
+
+## Observation 401: Adjacent hachured mound symbols can bleed rays together and mint an illusory third symbol — a map-artefact FP mechanism distinct from attractor displacement (Session 130, 2026-08-10)
+
+*Drafted at the Session-130 handoff; approved wholesale 2026-08-14.*
+
+At queue items 97–99 the student layer held three records where the map
+shows two mounds: the middle record (corrected_student:2601) digitised the
+zone where the two real symbols' rays merge. The PI: "the one in the
+middle is an illusion caused by the rays of the two others bleeding
 together". Resolved as two `d` + one `x`. Unlike attractor displacement (a
-real mound recorded in the wrong place), ray-bleed produces a record with no
-referent at all — it inflates the FP count, not the position error. Would
-become Obs 399.
+real mound recorded in the wrong place), ray-bleed produces a record with
+no referent at all — it inflates the FP count, not the position error.
 
-**Candidate E — the final reference carries three confidence grades of
-student record, and the middle grade is novel: adjudication by proxy.**
+## Observation 402: The final reference carries three confidence grades of student record, and the middle grade is novel: adjudication by proxy (Session 130, 2026-08-10)
+
+*Drafted at the Session-130 handoff; approved wholesale 2026-08-14. The
+counts below are the as-drafted figures; the materialised layer's final
+census is 527 directly reviewed / 114 proxy-confirmed / 4,090
+out-of-scope (`canonical-gt/standardised/README.md`), the proxy count
+having gained restored record #46 at the ruling-21 walk.*
+
 Directly reviewed: 543 (queue items with verdicts). Proxy-confirmed: 108
 out-of-queue points claimed as `c` partners from reviewed marks — the
-reviewer looked at the mound and the record together when making the claim,
-so identity is confirmed although the record was never opened as an item;
-82 of 113 such claims sit within 15 m of the marked centre. Out-of-scope:
-4,095 never examined (ruling 21c boundary). Methods must state all three;
-the proxy grade exists only because the claim structure records WHICH
-neighbour was meant. Would become Obs 400.
+reviewer looked at the mound and the record together when making the
+claim, so identity is confirmed although the record was never opened as an
+item; 82 of 113 such claims sit within 15 m of the marked centre.
+Out-of-scope: 4,095 never examined (ruling 21c boundary). Methods must
+state all three; the proxy grade exists only because the claim structure
+records WHICH neighbour was meant.
 
-**Candidate F — re-review flag classes divide into clearable, static, and
-self-invalidating, and only the first supports "walk until empty".**
+## Observation 403: Re-review flag classes divide into clearable, static, and self-invalidating, and only the first supports "walk until empty" (Session 130, 2026-08-10)
+
+*Drafted at the Session-130 handoff; approved wholesale 2026-08-14.*
+
 Clearable: defined by a defect re-marking removes. Static: defined by a
 persistent item property (all marked jitter samples; all multi-candidate
-conflations) — flagged forever, needs a completion ledger. Self-invalidating:
-keyed on `marked_at`, so acting on the flag destroys the evidence and
-regeneration back-fills with innocent items (both the rule_consistency class
-and the app's "Revisit earliest" mode). A naive regeneration held 420 rows of
-which ~10 were actionable; the campaign closed only via computed residues
-(8 → 27 → 4 items). Instruments should declare each flag's class; termination
-arguments depend on it. Would become Obs 401.
+conflations) — flagged forever, needs a completion ledger.
+Self-invalidating: keyed on `marked_at`, so acting on the flag destroys
+the evidence and regeneration back-fills with innocent items (both the
+rule_consistency class and the app's "Revisit earliest" mode). A naive
+regeneration held 420 rows of which ~10 were actionable; the campaign
+closed only via computed residues (8 → 27 → 4 items). Instruments should
+declare each flag's class; termination arguments depend on it.
 
-**Candidate G — PI-confirmed attractor displacements at 115.0 m and
-140.7 m extend the observed tail beyond the S129 coincidence envelope.**
+## Observation 404: PI-confirmed attractor displacements at 115.0 m and 140.7 m extend the observed tail beyond the S129 coincidence envelope (Session 130, 2026-08-10)
+
+*Drafted at the Session-130 handoff; approved wholesale 2026-08-14.*
+
 Items 858 (number attractor, partner 108.4 m from the recorded point) and
 1272 (large settlement mound; the true centre moved the mark 140.7 m from
 the claimed partner) were both adjudicated genuine conflations. The S129
-uniform-density model argued coincidence is weak out to ~126.5 m; both
-confirmed cases now sit at or beyond that envelope, still under rule 3's
-200 m ceiling. The claim distances are recorded in `marked-centres.csv`
-(`resolved_partner_m`), so the attractor-distance distribution the pass
-exists to measure now includes its own extreme tail. Would become Obs 402.
+uniform-density model (Obs 399) argued coincidence is weak out to
+~126.5 m; both confirmed cases now sit at or beyond that envelope, still
+under rule 3's 200 m ceiling. The claim distances are recorded in
+`marked-centres.csv` (`resolved_partner_m`), so the attractor-distance
+distribution the pass exists to measure now includes its own extreme tail.
 
-## Candidates pending review (drafted 2026-08-14, Session 131) — accept / edit / discard
+## Observation 405: On a common reference, T=0.3 takes the D-S and measured F1 lead, and the Obs 293 cross-method disagreement narrows to the middle pair (Session 131, 2026-08-14)
 
-*Drafted at handoff. With Obs 396–397 minted, numbering assumes the S129
-batch lands as 398–400 and S130 as 401–404. Silence holds these over; it
-does not discard them.*
+*Drafted at the Session-131 handoff; approved wholesale 2026-08-14.*
 
-**Candidate H — on a common reference, T=0.3 takes the D-S and measured
-F1 lead, and the Obs 293 cross-method disagreement narrows to the middle
-pair.** The ruling-21 refits put all four 55-map D-S fits on the
-standardised reference for the first time: T=0.3 0.8304 > T=0.7 0.8170 >
-image 0.8019 > text-MIN 0.7873, identical order on measured F1, and now
-agreeing with corrected-F1-multi-buffer on first and last place. The B/C
-vintage decomposition shows the reference move itself is uniform (+0.0028
-to +0.0035 across all four runs); ~9/10 of T=0.3's movement was its
+The ruling-21 refits put all four 55-map D-S fits on the standardised
+reference for the first time: T=0.3 0.8304 > T=0.7 0.8170 > image 0.8019
+> text-MIN 0.7873, identical order on measured F1, and now agreeing with
+corrected-F1-multi-buffer on first and last place. The B/C vintage
+decomposition shows the reference move itself is uniform (+0.0028 to
++0.0035 across all four runs); ~9/10 of T=0.3's movement was its
 superseded fit's provenance-unresolved inputs. Two prior explanations
 (the § 5.5 crosstab anomaly, most of the § 4.3 gap) dissolve as artefacts
 of that input set. Sources: `results/55maps-ds-summary-v2/report.md`
 §§ 1, 4.1, 6.3 (commits `13b386875`, `2d8a3dc83`); blind-verified.
-Would become Obs 405.
 
-**Candidate I — the hardened verifier stack's first full cycle caught a
-material error its own designer had just written, in prose both humans
-had confirmed.** Denominator 488 claims identified / 481 re-derived /
-476 confirmed / 5 corrections; the material one was a mechanism sentence
-carried forward from the superseded report against tables that disproved
-it (reclassification = matched × 0.05/0.95, VLM-independent). The three
-B fits and the pre-recovery falsification were independently re-derived
-on sapphire. Empirical follow-up to Obs 397's protocol claims: the
+## Observation 406: The hardened verifier stack's first full cycle caught a material error its own designer had just written, in prose both humans had confirmed (Session 131, 2026-08-14)
+
+*Drafted at the Session-131 handoff; approved wholesale 2026-08-14.*
+
+Denominator 488 claims identified / 481 re-derived / 476 confirmed / 5
+corrections; the material one was a mechanism sentence carried forward
+from the superseded report against tables that disproved it
+(reclassification = matched × 0.05/0.95, VLM-independent). The three B
+fits and the pre-recovery falsification were independently re-derived on
+sapphire. Empirical follow-up to Obs 397's protocol claims: the
 denominator requirement, cold derivation, and corrections-as-claims all
-did observable work in one pass. Would become Obs 406.
+did observable work in one pass.
 
-**Candidate J — attractor adhesion may follow ink colour, and the
-marking data can test it.** The PI's rationale on walk item #4635: the
-black numeral binds the displaced detection to the black trig-on-mound
-symbol, not the nearer orange-brown mound ("if it adhered to this one it
-would be orange-brown"). If adhesion is colour-matched, displacement
-vectors should sort by attractor ink colour for both student and model
-displacements — testable from `marked-centres.csv` displacement vectors
-plus symbol types, one analysis, $0. Extends the attractor-mechanism
-series (Obs 396's subsidy caveat; S129 candidate A; S130 candidate G).
-Would become Obs 407.
+## Observation 407: Attractor adhesion may follow ink colour, and the marking data can test it (Session 131, 2026-08-14)
 
-## Candidates pending review (drafted 2026-08-14, Session 132) — accept / edit / discard
+*Drafted at the Session-131 handoff; approved wholesale 2026-08-14.*
 
-*Drafted at handoff. Numbering assumes the S129 batch lands as 398–400,
-S130 as 401–404, and S131 as 405–407. Silence holds these over; it does
-not discard them.*
+The PI's rationale on walk item #4635: the black numeral binds the
+displaced detection to the black trig-on-mound symbol, not the nearer
+orange-brown mound ("if it adhered to this one it would be orange-brown").
+If adhesion is colour-matched, displacement vectors should sort by
+attractor ink colour for both student and model displacements — testable
+from `marked-centres.csv` displacement vectors plus symbol types, one
+analysis, $0. Extends the attractor-mechanism series (Obs 396's subsidy
+caveat; Obs 398; Obs 404).
 
-**Candidate K — a tolerance-based reproduction gate silently absorbed a
-real engine change; the A0/A1 split is the durable pattern.** The
-items-2/3 driver's first gate "reproduced" the committed Track-2 values
-within 1e-4 — but a fresh-context audit showed every cell sat a uniform
-+8.7e-05 above its anchor because the anchors pre-date the W6-E9
+## Observation 408: A tolerance-based reproduction gate silently absorbed a real engine change; the A0/A1 split is the durable pattern (Session 132, 2026-08-14)
+
+*Drafted at the Session-132 handoff; approved wholesale 2026-08-14.*
+
+The items-2/3 driver's first gate "reproduced" the committed Track-2
+values within 1e-4 — but a fresh-context audit showed every cell sat a
+uniform +8.7e-05 above its anchor because the anchors pre-date the W6-E9
 de-duplication fix (`1de559119`): the gate was green while absorbing a
 known engine change, exactly the failure class "reproduce before you
 vary" exists to catch. The repair: gate A0 re-runs the committed
 configuration exactly (de-duplication disabled, tolerance 1e-6 — all
 eight cells then reproduce at delta 0.0 precisely) and A1 re-runs the
-current engine, with A1−A0 attributed by name to the fix (one
-ruling-20c twin, one spurious FN, per cell). A reproduction gate should
-reproduce the anchor under the anchor's own configuration and carry
-engine evolution as a separate, named term — tolerance is for float
-noise, never for change absorption. Sources:
+current engine, with A1−A0 attributed by name to the fix (one ruling-20c
+twin, one spurious FN, per cell). A reproduction gate should reproduce
+the anchor under the anchor's own configuration and carry engine
+evolution as a separate, named term — tolerance is for float noise,
+never for change absorption. Sources:
 `results/55maps-standardised-ref-2026-08-14/validation-gate.json`,
 `abc-decomposition-50m.json` (commits `b34f90925`, `6f7e7b651`).
-Would become Obs 408.
 
-**Candidate L — the ruling-21 reference standardisation is fully
-tier-preserving on both metrics: Obs 396's "rank-preserving to first
-order" prediction, now measured.** All eight board cells re-scored and
-both boards re-tiered on the standardised reference: every tier
-assignment identical on F1 (24/28 significant, one non-boundary
-significance swap) and on MCC (identical significant-pair sets, IM-k3
-sole Tier 1); the full A0→A1→B→C decomposition bounds every net move
-inside ±0.009, well under the Obs 396 ±0.017 band, with the
-extension-layer overhaul the dominant term and running hardest against
-high-recall k3 text cells (the old detection-positioned phantoms had
-granted them the most self-matches). The oracle's point lead over
-TH7-k3 collapsed +0.0051 → +0.0006 (p 0.127 → 0.857) — but it was
-never significant, so no conclusion moved. Sources:
+## Observation 409: The ruling-21 reference standardisation is fully tier-preserving on both metrics — Obs 396's "rank-preserving to first order" prediction, now measured (Session 132, 2026-08-14)
+
+*Drafted at the Session-132 handoff; approved wholesale 2026-08-14.*
+
+All eight board cells re-scored and both boards re-tiered on the
+standardised reference: every tier assignment identical on F1 (24/28
+significant, one non-boundary significance swap) and on MCC (identical
+significant-pair sets, IM-k3 sole Tier 1); the full A0→A1→B→C
+decomposition bounds every net move inside ±0.009, well under the
+Obs 396 ±0.017 band, with the extension-layer overhaul the dominant term
+and running hardest against high-recall k3 text cells (the old
+detection-positioned phantoms had granted them the most self-matches).
+The oracle's point lead over TH7-k3 collapsed +0.0051 → +0.0006
+(p 0.127 → 0.857) — but it was never significant, so no conclusion
+moved. Sources:
 `results/55maps-standardised-ref-2026-08-14/standardised-ref-summary.md`;
 boards `02328d543`/`65ad40b7b`; blind-verified (249/242/234/8).
-Would become Obs 409.
 
-**Candidate M — across three blind-verifier passes in one session, every
-numerical claim survived and every substantive correction was imported
-or stale FRAMING; verifier value concentrates on answer-shaped prose.**
+## Observation 410: Across three blind-verifier passes in one session, every numerical claim survived and every substantive correction was imported or stale framing — verifier value concentrates on answer-shaped prose (Session 132, 2026-08-14)
+
+*Drafted at the Session-132 handoff; approved wholesale 2026-08-14.*
+
 Denominators 249/242/234/8, 89/83/80/3, 764/752/747/5 — zero of ~380
 re-derived numbers wrong, but each pass caught exactly one substantive
 prose defect: Obs 280's matrix-tree mechanism asserted "unchanged" on a
@@ -26921,7 +26924,16 @@ the Obs 365 step refresh silently switching comparator while keeping the
 old endpoint's price. The author's error class in synthesis documents is
 carrying forward a source's framing past its scope, not arithmetic —
 which is precisely what condition (c) (cold derivation of answer-shaped
-claims) targets, and twice what it caught. Extends Obs 397 and S131
-candidate I with a three-pass base rate. Sources: the three verifier
-reports (commits `0f19370cd`, `ddc559c78`, `a5d13e279`).
-Would become Obs 410.
+claims) targets, and twice what it caught. Extends Obs 397 and Obs 406
+with a three-pass base rate. Sources: the three verifier reports
+(commits `0f19370cd`, `ddc559c78`, `a5d13e279`).
+
+## Candidates pending review — none outstanding
+
+All thirteen candidates drafted across Sessions 129–132 (S129 A–C, S130
+D–G, S131 H–J, S132 K–M) were approved wholesale by the PI on 2026-08-14
+(Session 132 review) and minted above as Observations 398–410. Two
+as-drafted details were annotated at minting rather than silently
+corrected: Obs 402 carries the final materialised census alongside its
+as-drafted counts, and stale "would become" numbering from the drafting
+dates was dropped throughout.
