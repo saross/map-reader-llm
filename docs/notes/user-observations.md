@@ -504,10 +504,7 @@ not silently take the narrower one because it matches a prior commitment.
 
 ---
 
-## Candidates pending review (drafted 2026-08-06, Session 129) — accept / edit / discard
-
-*Drafted at handoff. Things Shawn observed about Claude this session. Silence
-holds these over to the next session or recap; it does not discard them.*
+## Session 129 — 2026-08-06 (approved 2026-08-14, all candidates kept)
 
 **Candidate 1 — reporting a fix as done twice on evidence that could not have
 failed.** The keyboard nudge was declared working on an AppTest run that cannot
@@ -538,10 +535,7 @@ called the layer `4_reviewer_promoted_extension`, so the interface had been
 contradicting the data model. Claude had used the misleading term throughout
 without noticing the tension.
 
-## Candidates pending review (drafted 2026-08-10, Session 130) — accept / edit / discard
-
-*Drafted at handoff. Things Shawn observed about Claude this session. Silence
-holds these over to the next session or recap; it does not discard them.*
+## Session 130 — 2026-08-10 (approved 2026-08-14; candidate 2 dropped at review)
 
 **Candidate 1 — marking-semantics questions were answered from the code and
 spec, not from plausibility, and the difference was visible.** Every "should
@@ -550,13 +544,6 @@ file and line (partner gating, cluster counting, red-partner legality) —
 including twice answering "the spec already decided this" against Claude's
 own earlier advice. The four-day pass proceeded without a single semantics
 reversal after the fact.
-
-**Candidate 2 — two gate false alarms accused finished work before the
-checker checked itself.** "0/27 re-marked" and "one item unmarked" both
-landed in Shawn's reading before being retracted as checker bugs (a timezone
-threshold; a re-derived identity key). The corrections were fast and
-self-attributed, but the alarm-first ordering cost attention at the exact
-moment a four-day effort was closing.
 
 **Candidate 3 — every "I think I did X wrong" was turned into a query before
 a re-review, and the walks shrank by an order of magnitude each time.**
@@ -571,7 +558,6 @@ relaunch resumed at the first unmarked item because marks save per decision.
 The fix-while-hot cadence worked because the data layer made it safe — worth
 saying explicitly if it shaped how corrections felt from the marking chair.
 
-
 **Candidate 5 (in-the-moment reaction, relayed) — interactive edge-case
 adjudication beat documentation.** At session close, unprompted: "I
 appreciated your help working through the manual review. The ability to ask
@@ -582,7 +568,6 @@ outperformed any amount of up-front procedure writing. Consistent with the
 S129 finding that the spec anticipated none of the seven instrument changes;
 here, the same lesson on the guidance side: the corner cases could not have
 been enumerated in advance, only answered when hit.
-
 
 ## Session 131 — 2026-08-14 (approved 2026-08-14; candidate 4 dropped at review)
 
