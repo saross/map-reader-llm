@@ -1,0 +1,51 @@
+{
+  "parameters": {
+    "threshold": 0.15,
+    "buffer_metres": 50,
+    "verifier": "v1",
+    "student_fn_rate_prior": 0.050000000000000044
+  },
+  "item_counts": {
+    "matched": 3524,
+    "student_only": 1207,
+    "vlm_only": 640,
+    "total": 5371
+  },
+  "measured": {
+    "precision": 0.8463,
+    "recall": 0.7449,
+    "f1": 0.7924
+  },
+  "simple_correction": {
+    "precision": 0.8907,
+    "recall": 0.7448,
+    "f1": 0.8112,
+    "estimated_true_mounds": 4980,
+    "reclassified_fp_to_tp": 185,
+    "vlm_sensitivity_from_confirmed": 0.7449
+  },
+  "dawid_skene": {
+    "corrected_metrics": {
+      "precision": 0.8908,
+      "recall": 0.7545,
+      "f1": 0.817,
+      "tp_expected": 3709.5,
+      "fp_expected": 454.5,
+      "fn_expected": 1207.0,
+      "total_latent_positives_expected": 4916.5,
+      "expected_reclassified": 185.5,
+      "hard_threshold_reclassified": 0,
+      "vlm_only_posterior": 0.2898,
+      "total_vlm_only": 640
+    },
+    "model_estimates": {
+      "prevalence": 0.9153740287320224,
+      "student_sensitivity": 0.95,
+      "student_specificity": 1.0,
+      "vlm_sensitivity": 0.7544988496821868,
+      "vlm_specificity": 0.0,
+      "n_iterations": 14,
+      "converged": true
+    }
+  }
+}
