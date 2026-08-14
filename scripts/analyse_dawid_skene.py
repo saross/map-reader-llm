@@ -1174,6 +1174,19 @@ def main(argv: list[str] | None = None) -> None:
             "verifier": args.verifier,
             "student_fn_rate_prior": 1 - STUDENT_SENSITIVITY_DEFAULT,
         },
+        # Provenance: the exact inputs this fit consumed. Added
+        # 2026-08-14 after a blind verification pass could confirm a
+        # fit's input paths only indirectly; a fit whose inputs are
+        # not recorded in its own artefact cannot be re-verified
+        # against them (cf. the superseded T=0.3 fit, whose input
+        # set remains unidentified — 55maps-ds-summary-v2 § 6.3).
+        "input_paths": {
+            "consensus": str(consensus_path),
+            "probabilities": str(probs_path),
+            "ground_truth": str(gt_path),
+            "bounds": str(bounds_path),
+            "manifest": str(args.manifest) if args.manifest else None,
+        },
         "item_counts": item_counts,
         "measured": measured,
         "simple_correction": simple,

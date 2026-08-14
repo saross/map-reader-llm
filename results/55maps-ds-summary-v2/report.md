@@ -156,16 +156,18 @@ locations.
 | text-MIN | 0.7629 | 0.8484 | 0.6931 | 0.7873 | 0.8930 | 0.7039 | **+0.0244** |
 
 The +0.024–0.025 D-S correction remains essentially identical across
-all four runs on the standardised reference. This is consistent with
-the structural identifiability constraint of the 2-annotator fit: the
-correction magnitude is driven almost entirely by the fixed 5 %
-student-FN prior reclassifying ~173–193 VLM-only items as soft true
-positives, and that reclassification scales with the absolute count
-of VLM-only items proportionally to (matched + student_only) (not
-their per-run distribution). The constancy survived both the input-
-vintage correction (T=0.3) and the reference move — the strongest
-evidence yet that the correction magnitude is a property of the
-fixed prior, not of any run's detection geometry.
+all four runs on the standardised reference. The mechanism is purer
+than this report previously stated (a wording inherited from the
+superseded version and corrected 2026-08-14 after blind
+verification): the expected reclassification is
+**matched × (0.05 / 0.95) exactly — independent of the VLM-only
+count entirely**. The report's own § 2.4 shows it directly: image
+carries 1,022 VLM-only items against T=0.3's 692, yet both
+reclassify 192.5, because their matched counts coincide. The
+correction magnitude is therefore a property of the fixed prior and
+the matched count alone, not of any run's detection geometry — and
+the constancy survived both the input-vintage correction (T=0.3)
+and the reference move.
 
 ### 2.4 VLM-only posterior — the headline aggregate
 
@@ -228,9 +230,14 @@ Sorted by calibration gap. Notes:
   (6–17, i.e. ~1–2 % of each review cohort), where the superseded
   crosstabs had 0 / 0 / 64 / 0. The mechanism reversed: against the
   standardised reference a few review-cohort candidates reclassify
-  from VLM-only to matched (proxy-confirmed student records and
-  marked-centre position corrections absorb them), so their review
-  rows no longer join the VLM-only slice. T=0.3's old 64-unjoined
+  from VLM-only to matched — verified per item for T=0.7, text-MIN
+  and image (each dropped row sits within 50 m of a `matched` item
+  in the new fit; the reclassification to specific GT edits —
+  proxy-confirmed records vs marked-centre moves — is plausible but
+  not itemised). T=0.3's 13 is additionally confounded by its
+  input-vintage change, so it is not a clean reference-only effect.
+  Their review rows no longer join the VLM-only slice either way.
+  T=0.3's old 64-unjoined
   anomaly — previously attributed to its recovery pattern — is gone:
   it was an artefact of the superseded fit's provenance-unresolved
   inputs (§ 6.3), and § 5.5 is retired accordingly.
@@ -350,7 +357,7 @@ of how the 2-annotator latent-truth model performs on the same
 underlying data.
 
 The D-S-vs-corrected-F1 gaps **compress sharply** on the refreshed
-D-S side: three of the four runs now sit at +0.010–0.013 (the
+D-S side: three of the four runs now sit at +0.009–0.013 (the
 superseded table had T=0.3 at +0.045, an artefact of its stale
 inputs). Image alone keeps a large gap (+0.031) — consistent with
 its modality-specific calibration penalty (§ 5.2) and with the
@@ -582,8 +589,9 @@ was already on current inputs.
 **Open and not guessed at — the superseded T=0.3 fit's inputs are
 unidentified.** Two hypotheses were tested exactly and falsified on
 2026-08-14: (i) "inputs repaired after the fit" — falsified by
-commit order (the `548604d95` recovery landed 01:19, the fit
-`0b14e4fcd` committed 21:35 the same day); (ii) "fit computed
+commit order (the `548604d95` recovery landed 01:19 Z, the fit
+`0b14e4fcd` committed 11:35 Z — 21:35 AEST — the same day, 10 h 16 m
+later; `git merge-base --is-ancestor` confirms); (ii) "fit computed
 pre-recovery, committed late" — falsified by re-running the fit on
 the pre-recovery inputs extracted from `548604d95^`, which gives
 {3,658 / 1,112 / 691 / 5,461}, not the committed
@@ -612,8 +620,8 @@ Superseded per-run outputs (history; pre-standardisation figures):
 - `results/55maps-image-generalisation/dawid-skene/` — image D-S aggregation (preserved from Apr 18).
 - `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/` — image v2 data-driven prior sensitivity sweep (preserved from Apr 21–23).
 - `results/55maps-image-generalisation/ds-human-crosstab/` — image D-S vs human review (preserved from Apr 21–23, hand-levelled-up Apr 23).
-- `results/55maps-text-min-generalisation/dawid-skene/` — text-MIN D-S aggregation (re-run this session against canonical text-MIN paths; reproduced byte-identically).
-- `results/55maps-text-min-generalisation/ds-human-crosstab/` — text-MIN D-S vs human review (new this session).
+- `results/55maps-text-min-generalisation/dawid-skene/` — text-MIN D-S aggregation (re-run 2026-04-28 against canonical text-MIN paths; reproduced byte-identically).
+- `results/55maps-text-min-generalisation/ds-human-crosstab/` — text-MIN D-S vs human review (new 2026-04-28).
 
 References:
 
@@ -627,7 +635,9 @@ References:
   VLM-only slice for the image run), Obs 293 (D-S calibration gap
   scales with VLM-only share — three-run finding now extended to
   four-run with text-MIN at the conservative end) — all in
-  `docs/notes/reflections/working-notes.md`.
+  `docs/notes/working-notes.md` (path corrected 2026-08-14; the
+  `reflections/` form propagated from older artefacts and never
+  existed).
 
 ## Changelog
 
