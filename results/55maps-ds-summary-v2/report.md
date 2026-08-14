@@ -1,11 +1,10 @@
 # Dawid-Skene cross-run summary — four 55-map runs (T=0.3, T=0.7, image, text-MIN)
 
-> **Last revised**: 2026-08-14 (ruling-21 refresh — all four D-S fits
-> re-run once against the standardised reference, queue item 1; every
-> cross-run comparison now on a common ground truth; the W7-D9
-> withdrawal resolved; crosstabs re-run against the new posteriors).
-> Corrected-F1-multi-buffer figures quoted in §§ 4.1, 4.3, 5.3 and 5.4
-> remain old-reference pending queue items 2–5.
+> **Last revised**: 2026-08-15 (post-queue refresh — the
+> corrected-F1-multi-buffer figures in §§ 4.1, 4.3, 5.3 and 5.4 moved
+> onto the standardised reference now that queue items 2–5 are
+> complete; the Obs 293 middle-pair disagreement dissolves and all
+> three estimators agree on the full four-run ordering).
 > See [§ Changelog](#changelog) for revision history.
 
 **Date**: 2026-04-28 (text-MIN added to the previous three-run summary
@@ -67,10 +66,11 @@ text-MIN): T=0.3's old fit consumed provenance-unresolved stale
 inputs (§ 6.3) that suppressed its matched count by ~128; on current
 inputs it leads. The +0.024 D-S correction over measured F1 remains
 essentially constant across all four runs. The disagreement with the
-corrected-F1-multi-buffer ranking (§ 4.3) **partially dissolves**:
-both methods now put T=0.3 first and text-MIN last, with only the
-middle pair (T=0.7 vs image) still swapped — though the corrected-F1
-side of that comparison is old-reference until queue items 2–5 land.
+corrected-F1-multi-buffer ranking (§ 4.3) **fully dissolves**: with
+items 2–5 complete, all three estimators — measured, D-S, and
+corrected-F1-multi-buffer — agree on the full ordering, and the two
+corrections agree within 0.004 on every run (the middle-pair swap
+was a per-run-vintage artefact; §§ 4.3, 5.3).
 The crosstabs extend Obs 293's headline finding on cleaner data: the
 **D-S calibration gap still scales monotonically with the VLM-only /
 matched ratio**, with T=0.3 moving toward the conservative text
@@ -255,7 +255,7 @@ Sorted by calibration gap. Notes:
 |--------|------|-----|-----|-------|
 | Measured F1 | T=0.3 (0.8056) | T=0.7 (0.7924) | Image (0.7774) | text-MIN (0.7629) |
 | D-S corrected F1 | T=0.3 (0.8304) | T=0.7 (0.8170) | Image (0.8019) | text-MIN (0.7873) |
-| Corrected-F1-multi-buffer F1 (R=50 m; old reference, pending items 2–5) | T=0.3 (0.8437) | Image (0.8333) | T=0.7 (0.8273) | text-MIN (0.7968) |
+| Corrected-F1-multi-buffer F1 (R=50 m; standardised reference) | T=0.3 (0.8303) | T=0.7 (0.8169) | Image (0.8010) | text-MIN (0.7833) |
 | D-S calibration ECE (lower = better) | text-MIN (0.253) | T=0.7 (0.265) | T=0.3 (0.284) | Image (0.532) |
 | D-S calibration Brier (lower = better) | text-MIN (0.312) | T=0.7 (0.317) | T=0.3 (0.327) | Image (0.485) |
 
@@ -275,16 +275,19 @@ canonical inputs and the common reference it leads decisively
 > superseded near-tie (0.0002) was an artefact of comparing across
 > references.
 
-The corrected-F1-multi-buffer ranking (T=0.3 > Image > T=0.7 >
-text-MIN — old-reference figures, to be refreshed under queue items
-2–5) now **agrees with D-S and measured on first and last place**
-(T=0.3 first, text-MIN last). The rank-disagreement first noted in
-Obs 293 **narrows to the middle pair**: D-S and measured put T=0.7
-above Image; corrected-F1-multi-buffer puts Image above T=0.7. A
-substantial share of the original four-way disagreement was
-therefore the T=0.3 input artefact, not methodology. Whether the
-middle-pair swap survives the corrected-F1 refresh is an open
-question for queue items 3–5.
+The corrected-F1-multi-buffer ranking on the standardised reference
+is **T=0.3 > T=0.7 > Image > text-MIN — identical to the D-S and
+measured rankings**. The rank-disagreement first noted in Obs 293 is
+now fully resolved: the residual middle-pair swap (Image above T=0.7
+on the old corrected-F1 column) was a per-run-vintage artefact — it
+was already absent on the legacy *common* reference (the canonical
+board scores T=0.7 0.8153 > Image 0.7988 at R=50 m,
+`results/55maps-standardised-ref-2026-08-14/legacy-baseline/`), and
+standardisation preserves that (0.8169 > 0.8010). The original
+four-way disagreement therefore decomposes entirely into reference
+artefacts: T=0.3's stale D-S inputs (§ 6.3) plus the per-run-vintage
+extension references the old per-run summaries scored against
+(cf. Obs 292's R≥75 m crossover, the same artefact class).
 
 The calibration ECE / Brier ranking is unchanged in order —
 **text-MIN narrowly first**, T=0.7 second, T=0.3 third, image last —
@@ -332,18 +335,19 @@ that lands in the per-run `corrected-f1-multi-buffer/` summaries. The
 two analyses use different correction methodologies and different
 ground truth:
 
-| Run | D-S corrected F1 (standardised) | corrected-F1-multi-buffer F1 (R=50 m; old reference) | Δ |
-|-----|--------------------------------:|-----------------------------------------------------:|---:|
-| T=0.3 | 0.8304 | 0.8437 | +0.013 |
-| T=0.7 | 0.8170 | 0.8273 | +0.010 |
-| Image | 0.8019 | 0.8333 | +0.031 |
-| text-MIN | 0.7873 | 0.7968 | +0.010 |
+| Run | D-S corrected F1 (standardised) | corrected-F1-multi-buffer F1 (R=50 m; standardised) | Δ |
+|-----|--------------------------------:|----------------------------------------------------:|---:|
+| T=0.3 | 0.8304 | 0.8303 | −0.0001 |
+| T=0.7 | 0.8170 | 0.8169 | −0.0001 |
+| Image | 0.8019 | 0.8010 | −0.0009 |
+| text-MIN | 0.7873 | 0.7833 | −0.0040 |
 
-(The corrected-F1-multi-buffer numbers are read from each run's
-`corrected-f1-multi-buffer/summary.json` at R=50 m. **They predate
-the standardised reference** and will be refreshed under queue items
-2–5; the Δ column therefore compares across references and shrinks
-or grows accordingly when that lands.)
+(The corrected-F1-multi-buffer numbers are the standardised-reference
+board cells {T03-k4, TH7-k4, IM-k3, TM-k4} at R=50 m,
+`results/55maps-standardised-ref-2026-08-14/consolidated-standardised.csv`;
+the cell↔run identity was gated by feature-count crosscheck — each
+cell scored the same `verified/verified_detections.geojson` the
+per-run summaries scored, counts 4,350 / 4,164 / 4,680 / 3,865.)
 
 The D-S correction now uses the **standardised student layer**
 (`canonical-gt/standardised/student-mounds-55maps-standardised.geojson`)
@@ -356,15 +360,23 @@ elsewhere; the D-S correction reported here is a secondary diagnostic
 of how the 2-annotator latent-truth model performs on the same
 underlying data.
 
-The D-S-vs-corrected-F1 gaps **compress sharply** on the refreshed
-D-S side: three of the four runs now sit at +0.009–0.013 (the
-superseded table had T=0.3 at +0.045, an artefact of its stale
-inputs). Image alone keeps a large gap (+0.031) — consistent with
-its modality-specific calibration penalty (§ 5.2) and with the
-corrected-F1 pipeline's extension doing proportionally more work on
-image's larger VLM-only cohort. The two methods are converging as
-the reference defects are removed; the residual image gap is the
-substantive methodological difference, not T=0.3.
+With both columns on the standardised reference the two corrections
+**converge almost exactly**: every run agrees within 0.004, and the
+three text runs within 0.0001–0.0040 — against superseded gaps of
++0.010 to +0.045 that were reference artefacts, layer by layer
+(T=0.3's stale D-S inputs, then image's per-run-vintage extension).
+This is a striking cross-validation rather than a tautology: the two
+estimators reach their numbers by different routes — a fixed-prior
+2-annotator EM over candidate-grain votes versus Hungarian matching
+against the extended reference at R=50 m — and were computed and
+blind-verified in independent sessions (S131 refits `b140f686a`;
+S132 board re-score, summary blind-verified 249/242/234/8). On a
+common reference they now measure the same quantity to within each
+method's own uncertainty. The earlier reading that image's +0.031
+residual gap was "the substantive methodological difference" is
+**withdrawn**: it was the last reference artefact standing, not
+methodology (image's per-run-vintage extension was the furthest from
+the standardised layer, cf. § 5.4).
 
 ## 5. Surprising patterns — flagged
 
@@ -410,43 +422,50 @@ consistent with Obs 273 (D-S structurally inadequate on the VLM-only
 slice for the image run) and with the v2 data-driven-prior diagnostic
 in `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/`.
 
-### 5.3 D-S F1 and corrected-F1 now agree on first AND last place — the disagreement narrows to the middle pair
+### 5.3 D-S F1 and corrected-F1 now agree on the FULL ordering — the middle-pair disagreement is resolved
 
 The superseded report could claim agreement only on text-MIN being
-last. On the standardised reference the agreement extends to the
-leader:
+last; the 2026-08-14 refresh extended it to the leader with the
+middle pair still swapped. With the corrected-F1 column now on the
+standardised reference, the agreement is **complete**:
 
 - D-S F1 ranks: **T=0.3** > T=0.7 > Image > **text-MIN**
-- Corrected-F1 ranks (old reference, pending items 2–5): **T=0.3** >
-  Image > T=0.7 > **text-MIN**
+- Corrected-F1 ranks (standardised): **T=0.3** > T=0.7 > Image >
+  **text-MIN**
 
-The residual disagreement is the middle pair (T=0.7 vs Image),
-swapped between the two methods. The agreement on text-MIN being
-last remains robust for the original reason — its combination of
-(lowest matched, highest student-only, lowest VLM sensitivity) is
-consistent across methodologies, and its recall floor is below what
-extension-based correction can bridge. **text-MIN's absolute
-corrected F1 (0.7968, old reference) remains the only sub-0.80 run
-on the headline corrected metric** — to be re-examined when queue
-items 2–5 refresh that column.
+The middle-pair swap was a per-run-vintage artefact of the old
+corrected-F1 column (§ 4.1): on any common reference — legacy
+canonical or standardised — T=0.7 sits above Image on corrected-F1
+as well. Obs 293's cross-method disagreement is thereby fully
+dissolved. The agreement on text-MIN being last remains robust for
+the original reason — its combination of (lowest matched, highest
+student-only, lowest VLM sensitivity) is consistent across
+methodologies, and its recall floor is below what extension-based
+correction can bridge. **text-MIN's corrected F1 (0.7833,
+standardised) remains the only sub-0.80 run on the headline
+corrected metric** (Image clears it at 0.8010).
 
-### 5.4 Three runs' F1 estimates now agree tightly; image is the loose one
+### 5.4 All four runs' F1 estimates now agree tightly — the "loose image" reading dissolves
 
-| Run | Measured | D-S | Corrected-F1-multi-buffer (old ref.) | Spread |
-|-----|---------:|----:|-------------------------------------:|-------:|
-| T=0.3 | 0.8056 | 0.8304 | 0.8437 | 0.038 |
-| T=0.7 | 0.7924 | 0.8170 | 0.8273 | 0.035 |
-| Image | 0.7774 | 0.8019 | 0.8333 | 0.056 |
-| text-MIN | 0.7629 | 0.7873 | 0.7968 | 0.034 |
+| Run | Measured | D-S | Corrected-F1-multi-buffer (standardised) | Spread |
+|-----|---------:|----:|------------------------------------------:|-------:|
+| T=0.3 | 0.8056 | 0.8304 | 0.8303 | 0.025 |
+| T=0.7 | 0.7924 | 0.8170 | 0.8169 | 0.025 |
+| Image | 0.7774 | 0.8019 | 0.8010 | 0.025 |
+| text-MIN | 0.7629 | 0.7873 | 0.7833 | 0.024 |
 
-The superseded reading — "T=0.7 is the only run where the three
-estimates agree" — was another casualty of T=0.3's stale inputs: on
-the refreshed D-S side, **all three text runs sit in a 0.034–0.038
-envelope**, and image alone is loose (0.056). The tightness pattern
-now tracks modality, matching §§ 5.2 and 4.3: the corrected-F1
-extension does proportionally more work on image's large VLM-only
-cohort. Caveat as throughout: the corrected column is old-reference;
-the spreads recompute when queue items 2–5 land.
+Two successive artefacts have now been peeled off this table. The
+original reading — "T=0.7 is the only run where the three estimates
+agree" — fell with T=0.3's stale D-S inputs (2026-08-14). The
+intermediate reading — "the three text runs agree in a 0.034–0.038
+envelope and image alone is loose (0.056)" — falls with the
+corrected column's per-run-vintage references: on the standardised
+reference **all four spreads land at 0.024–0.025**, and the spread
+is simply the D-S/extension correction itself, since the two
+corrected estimators agree within 0.004 everywhere (§ 4.3). No
+modality effect on estimator agreement survives; image's apparent
+looseness was its extension reference sitting furthest from the
+standardised layer.
 
 ### 5.5 RESOLVED — the 64 unjoined T=0.3 review rows were an artefact of the superseded fit's inputs
 
@@ -640,6 +659,53 @@ References:
   existed).
 
 ## Changelog
+
+### 2026-08-15 — Post-queue refresh: §§ 4.1/4.3/5.3/5.4 corrected-F1 figures onto the standardised reference
+
+**Trigger**: reference-standardisation queue items 2–5 complete
+(S132); this discharges the S131 carry-forward ("§§ 4.1/4.3/5.3/5.4
+… then re-examine the middle-pair swap") and the banner's stale
+"pending items 2–5" flag. Executed under the S133 block plan
+(`planning/s133-analysis-block-2026-08-15.md`, hardenings 4–5).
+
+**Source**: standardised board cells {T03-k4, TH7-k4, IM-k3, TM-k4}
+at R=50 m
+(`results/55maps-standardised-ref-2026-08-14/consolidated-standardised.csv`,
+S132, blind-verified). Cell↔run identity gated by feature-count
+crosscheck: each cell scored the same
+`outputs/<run>/verified/verified_detections.geojson` the superseded
+per-run summaries scored (4,350 / 4,164 / 4,680 / 3,865). The
+superseded figures were **per-run-vintage** (each run's
+`corrected-f1-multi-buffer/summary.json`, scored against its own
+extension vintage) — they matched neither the legacy canonical board
+nor the standardised one, so this is a documented two-step vintage
+jump.
+
+| Site | Quantity | Was (per-run vintage) | Now (standardised) |
+|---|---|---:|---:|
+| §§ 4.1/4.3/5.4 | T=0.3 corrected F1 @50 m | 0.8437 | 0.8303 |
+| §§ 4.1/4.3/5.4 | T=0.7 corrected F1 @50 m | 0.8273 | 0.8169 |
+| §§ 4.1/4.3/5.4 | Image corrected F1 @50 m | 0.8333 | 0.8010 |
+| §§ 4.1/4.3/5.4 | text-MIN corrected F1 @50 m | 0.7968 | 0.7833 |
+| § 4.3 | D-S − corrected gaps | +0.010…+0.031 | −0.0001…−0.0040 |
+| § 5.4 | Three-estimator spreads | 0.034–0.056 | 0.024–0.025 |
+
+**Findings the refresh produced**: (1) the Obs 293 middle-pair swap
+(Image above T=0.7 on corrected-F1) **dissolves** — it was a
+per-run-vintage artefact, already absent on the legacy common
+reference (T=0.7 0.8153 > Image 0.7988); all three estimators now
+agree on the full ordering T=0.3 > T=0.7 > Image > text-MIN. (2) The
+two correction methodologies **converge to within 0.004 on every
+run** — a cross-validation, since the D-S refits (S131) and the
+board re-score (S132) were computed and blind-verified
+independently. (3) § 5.4's "image is the loose one" reading
+**withdrawn**: all four spreads land at 0.024–0.025.
+
+**Not changed**: measured and D-S F1 columns (already standardised,
+2026-08-14); §§ 1–3, 4.2, 5.1, 5.2, 5.5, 6; all crosstab and
+calibration figures; text-MIN's only-sub-0.80 status (0.7833; Image
+clears at 0.8010). Historical changelog entries retain their
+old-reference wording as records of their own time.
 
 ### 2026-08-14 — Ruling-21 refresh: all four fits on the standardised reference
 
