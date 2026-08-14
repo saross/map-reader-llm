@@ -32,6 +32,11 @@ project state.
 >    every 55-map figure in `docs/paper/results-draft.md` is
 >    standardised-reference, tier structures unchanged. Obs 407's
 >    ink-colour adhesion test remains one cheap $0 analysis away.
+>    **New agenda item for that review**: the "oracle" label — T03-k3
+>    keeps rank 1 by +0.0006 at p = 0.857, the board's deepest tie;
+>    whether § R7 names a single oracle, the pair, or frames the
+>    deployment gap against the Tier-1 set is a framing decision the
+>    standardisation sharpened but did not settle (S132 reflection).
 >
 > **Registered residue (documentation-class, not blockers)**:
 > `results/55map-leaderboard/gs-vs-55map-transfer.{md,json}` remain
