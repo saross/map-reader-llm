@@ -242,6 +242,70 @@ def build_phantom_gdf(
     return gdf
 
 
+STANDARDISED_EXTENSION_COLUMNS = (
+    "candidate_id", "x", "y", "map_name", "symbol_type",
+    "confidence_grade", "position_source", "provenance", "nearest_student_m",
+)
+
+
+def load_standardised_extension(
+    path: Path,
+    crs: str = DEFAULT_CRS,
+) -> gpd.GeoDataFrame:
+    """Load the ruling-21 standardised extension layer as a phantom GDF.
+
+    The standardised extension layer
+    (``results/deployment-oracle-2026-06-06/canonical-gt/standardised/
+    extension-mounds-standardised.csv``) replaces the legacy ring-gated
+    review CSVs. Its records are confirmed mounds the students missed,
+    positioned at **marked centres** (±2.5 m, ruling 21c) rather than at
+    detection coordinates with an interval-censored 25 m match ring (the
+    Obs 371 defect).
+
+    **Gating semantics.** :func:`build_phantom_gdf`'s ``buffer_metres <= R``
+    gate exists because ring-censored phantoms are only localised to within
+    their recorded ring — a mound that cannot be localised at the scoring
+    radius must not be credited. Marked centres dissolve that constraint:
+    every extension record is exactly localised (±2.5 m ≪ any scoring
+    buffer), so the whole layer enters the extended ground truth at EVERY
+    buffer radius, sub-50 m included. Per-buffer variation in the extended
+    GT therefore disappears; the Hungarian matching radius alone decides
+    matches. The ``nearest_student_m`` column (exact distance to the
+    nearest standardised student record) is retained for the
+    :func:`build_extended_gt` de-duplication audit — its observed minimum
+    (10.32 m) sits above the 5 m channel-duplicate tolerance, so the
+    expected drop count on the standardised layers is 0.
+
+    Args:
+        path: Path to ``extension-mounds-standardised.csv``.
+        crs: CRS of the ``x``/``y`` columns (EPSG:32635 as materialised).
+
+    Returns:
+        GeoDataFrame with ``candidate_id``, ``source_map``,
+        ``nearest_student_m``, and point ``geometry`` — the schema
+        :func:`build_extended_gt` consumes.
+
+    Raises:
+        ValueError: If required columns are missing or the layer is empty.
+    """
+    df = pd.read_csv(path)
+    missing = [c for c in STANDARDISED_EXTENSION_COLUMNS if c not in df.columns]
+    if missing:
+        raise ValueError(
+            f"standardised extension layer {path} is missing expected "
+            f"column(s) {missing} — refusing to guess at schema"
+        )
+    if df.empty:
+        raise ValueError(f"standardised extension layer {path} is empty")
+    df = df.rename(columns={"map_name": REF_MAP_COL})
+    geometry = [Point(x, y) for x, y in zip(df["x"], df["y"])]
+    return gpd.GeoDataFrame(
+        df[["candidate_id", REF_MAP_COL, "nearest_student_m"]],
+        geometry=geometry,
+        crs=crs,
+    )
+
+
 def build_extended_gt(
     gdf_student: gpd.GeoDataFrame,
     gdf_phantoms: gpd.GeoDataFrame,
@@ -473,12 +537,13 @@ def compute_at_buffer(
     gdf_det: gpd.GeoDataFrame,
     gdf_student: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
-    review_yesterday: pd.DataFrame,
-    review_today: pd.DataFrame,
+    review_yesterday: pd.DataFrame | None,
+    review_today: pd.DataFrame | None,
     buffer_r: int,
     n_bootstrap: int,
     seed: int,
     compute_mcc: bool = False,
+    extension_gdf: gpd.GeoDataFrame | None = None,
 ) -> BufferResult:
     """Compute corrected-F1 point estimate and CIs at a single buffer R.
 
@@ -486,8 +551,10 @@ def compute_at_buffer(
         gdf_det: Accepted detections (already verifier-thresholded).
         gdf_student: Student ground truth (original, un-extended).
         gdf_bounds: Tile boundary polygons.
-        review_yesterday: Yesterday's review DataFrame.
-        review_today: Today's multi-buffer review DataFrame.
+        review_yesterday: Yesterday's review DataFrame (legacy ring-gated
+            mode; ``None`` in standardised-extension mode).
+        review_today: Today's multi-buffer review DataFrame (legacy mode;
+            ``None`` in standardised-extension mode).
         buffer_r: Buffer radius in metres.
         n_bootstrap: Number of bootstrap iterations for CIs.
         seed: Random seed for bootstrap reproducibility.
@@ -495,6 +562,11 @@ def compute_at_buffer(
             specificity (with BCa bootstrap CIs) against the same per-buffer
             gated extended GT, via the shared ``calculate_tile_classification``
             engine that Track 1 uses — so only the GT differs between tracks.
+        extension_gdf: Standardised extension layer from
+            :func:`load_standardised_extension`. When given, it is used as
+            the phantom set WHOLE at every R (marked centres are exactly
+            localised, so no per-buffer gate applies) and the review
+            DataFrames must be ``None``.
 
     Returns:
         :class:`BufferResult` with point estimates, counts, and 95 % CIs.
@@ -502,9 +574,16 @@ def compute_at_buffer(
     print(f"\n--- Buffer R = {buffer_r} m ---")
 
     # 1. Phantom GT at R and scoped student GT baseline count
-    gdf_phantoms = build_phantom_gdf(
-        review_yesterday, review_today, buffer_r, crs=gdf_det.crs,
-    )
+    if extension_gdf is not None:
+        if review_yesterday is not None or review_today is not None:
+            raise ValueError(
+                "extension_gdf and review DataFrames are mutually exclusive"
+            )
+        gdf_phantoms = extension_gdf
+    else:
+        gdf_phantoms = build_phantom_gdf(
+            review_yesterday, review_today, buffer_r, crs=gdf_det.crs,
+        )
 
     gdf_ext_gt = build_extended_gt(gdf_student, gdf_phantoms)
     n_dup_dropped = int(gdf_ext_gt.attrs.get("n_phantom_duplicates_dropped", 0))
@@ -659,19 +738,32 @@ def write_summary_json(
     n_bootstrap: int,
     input_paths: dict[str, str],
     excluded_sentinel_count: int,
+    extension_mode: bool = False,
 ) -> None:
-    """Serialise the full multi-buffer summary to JSON."""
-    payload = {
-        "version": "1.0.0",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "methodology": "Approach B — extended-GT-at-R Hungarian matching",
-        "metadata": {
-            "seed": seed,
-            "bootstrap_n": n_bootstrap,
-            "git_commit": git_commit_hash(),
-            "input_paths": input_paths,
-        },
-        "exclusions": {
+    """Serialise the full multi-buffer summary to JSON.
+
+    ``extension_mode`` swaps the ring-review exclusions block for a
+    standardised-extension note; legacy output is byte-identical when the
+    flag is absent.
+    """
+    if extension_mode:
+        exclusions = {
+            "sentinel_buffer_metres": None,
+            "n_excluded_candidates": 0,
+            "note": (
+                "Standardised-extension mode: the ruling-21 extension layer "
+                "carries marked centres (±2.5 m), so no ring sentinels exist "
+                "and the whole layer enters the extended GT at every buffer "
+                "radius. Legacy ring gating (Obs 371) does not apply."
+            ),
+        }
+        methodology = (
+            "Approach B — extended-GT Hungarian matching, standardised "
+            "reference (ruling 21): extension layer at marked centres, "
+            "included whole at every R"
+        )
+    else:
+        exclusions = {
             "sentinel_buffer_metres": SENTINEL_BUFFER_EXCLUDED,
             "n_excluded_candidates": excluded_sentinel_count,
             "note": (
@@ -683,7 +775,19 @@ def write_summary_json(
                 "their detections appear as FP at every R ≤ 150 m, which is "
                 "the correct behaviour under the 150 m practitioner cap."
             ),
+        }
+        methodology = "Approach B — extended-GT-at-R Hungarian matching"
+    payload = {
+        "version": "1.0.0",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "methodology": methodology,
+        "metadata": {
+            "seed": seed,
+            "bootstrap_n": n_bootstrap,
+            "git_commit": git_commit_hash(),
+            "input_paths": input_paths,
         },
+        "exclusions": exclusions,
         "obs_272_reference": (
             "Obs 272 in docs/notes/reflections/working-notes.md shows the "
             "attractor-pull effect is statistically significant only through "
@@ -873,20 +977,135 @@ the task brief and Obs 272.
     out_path.write_text(md)
 
 
+def write_markdown_report_standardised(
+    results: list[BufferResult],
+    out_path: Path,
+    *,
+    seed: int,
+    n_bootstrap: int,
+    input_paths: dict[str, str],
+) -> None:
+    """Write the Markdown report for a standardised-reference run.
+
+    The legacy report's prose is ring-review-specific (sentinel shells,
+    per-shell accumulation, yesterday/today provenance), none of which
+    applies to the ruling-21 standardised reference — hence a separate
+    writer rather than a parameterised legacy one.
+    """
+    ts = datetime.now(timezone.utc).isoformat()
+    has_mcc = any(r.mcc is not None for r in results)
+    header_mcc = " MCC [95 % CI] |" if has_mcc else ""
+    sep_mcc = ":------------:|" if has_mcc else ""
+    row_lines = []
+    for r in results:
+        mcc_cell = ""
+        if has_mcc:
+            if r.mcc is not None and r.mcc_ci:
+                mcc_cell = (
+                    f" {r.mcc:.4f} [{r.mcc_ci[0]:.4f}, {r.mcc_ci[1]:.4f}] |"
+                )
+            else:
+                mcc_cell = " n/a |"
+        row_lines.append(
+            f"| {r.buffer_metres} | {r.tp} | {r.fp} | {r.fn} | "
+            f"{r.n_ref_student_only} | {r.n_reviewer_promoted} | "
+            f"{r.n_ref_extended} | "
+            f"{r.precision:.4f} [{r.precision_ci[0]:.4f}, "
+            f"{r.precision_ci[1]:.4f}] | "
+            f"{r.recall:.4f} [{r.recall_ci[0]:.4f}, "
+            f"{r.recall_ci[1]:.4f}] | "
+            f"**{r.f1:.4f}** [{r.f1_ci[0]:.4f}, {r.f1_ci[1]:.4f}] |"
+            f"{mcc_cell}"
+        )
+    rows_md = "\n".join(row_lines)
+    n_dropped = results[0].n_phantom_duplicates_dropped if results else 0
+
+    md = f"""# Corrected F1 / P / R on the 55-map set — standardised reference
+
+**Timestamp**: {ts}
+**Methodology**: Approach B — extended-GT Hungarian matching against the
+ruling-21 **standardised reference** (student layer standardised; extension
+layer at marked centres, included whole at every R)
+**Bootstrap**: {n_bootstrap:,} iterations, seed {seed}, tile-level resampling
+**Git commit**: `{git_commit_hash()}`
+
+## Result table
+
+| R (m) | TP | FP | FN | n_ref_student | n_extension | n_ref_extended \
+| P [95 % CI] | R [95 % CI] | F1 [95 % CI] |{header_mcc}
+|------:|---:|---:|---:|--------------:|------------:|---------------:\
+|:-----------:|:-----------:|:------------:|{sep_mcc}
+{rows_md}
+
+## How to read this table
+
+- **Reference**: the ruling-21 standardised layers — the standardised
+  student ground truth plus the standardised extension layer (confirmed
+  mounds the students missed, at marked centres ±2.5 m). Because marked
+  centres are exactly localised, the extension layer enters the extended
+  ground truth **whole at every R**: the legacy ring gate (Obs 371) is
+  dissolved, `n_extension` is constant across rows, and only the Hungarian
+  matching radius varies with R. Sub-50 m rows are therefore genuine
+  Track-2 figures, not a collapse to the student layer.
+- **n_ref_student**: standardised student records scoped to the evaluation
+  tile bounds.
+- **n_extension**: extension records admitted to the extended GT
+  ({n_dropped} dropped by the 5 m channel-duplicate audit — expected 0 on
+  the standardised layers, whose minimum `nearest_student_m` is 10.32 m).
+- **n_ref_extended**: scoped extended-GT count — the recall denominator.
+- **Tile MCC** (when present) is computed against the SAME extended GT.
+  Tile classification does not use the matching radius, and the extended
+  GT no longer varies with R, so MCC is constant across rows by
+  construction.
+- **Known reference biases** (Obs 396, artefact README): residual
+  long-range duplicates deflate F1 ≈ −0.03 at a balanced operating point;
+  absent joint student+model misses inflate it ≈ +0.011–0.012; net at
+  point estimates ≈ −0.017, rank-preserving to first order.
+
+## Reproducibility
+
+- **Inputs**:
+  - Detections: `{input_paths['detections']}`
+  - Student GT (standardised): `{input_paths['student_gt']}`
+  - Bounds: `{input_paths['bounds']}`
+  - Extension layer (standardised): `{input_paths['extension_csv']}`
+- **Bootstrap**: {n_bootstrap:,} iterations, seed {seed}, tile-level resampling
+- **Git commit**: `{git_commit_hash()}`
+- **Script**: `scripts/compute_corrected_f1_multi_buffer.py`
+  (standardised-extension mode)
+"""
+
+    out_path.write_text(md)
+
+
 def run(
     *,
     verified_detections: Path,
     student_gt: Path,
     bounds: Path,
-    review_yesterday: Path,
-    review_today: Path,
+    review_yesterday: Path | None = None,
+    review_today: Path | None = None,
     output_dir: Path,
     buffers: Iterable[int],
     n_bootstrap: int,
     seed: int,
     compute_mcc: bool = False,
+    extension_csv: Path | None = None,
 ) -> None:
-    """End-to-end driver: load data, compute per-R, write outputs."""
+    """End-to-end driver: load data, compute per-R, write outputs.
+
+    Exactly one phantom source must be supplied: either BOTH review CSVs
+    (legacy ring-gated mode, unchanged behaviour) or ``extension_csv``
+    (ruling-21 standardised mode — the extension layer enters the extended
+    GT whole at every R; see :func:`load_standardised_extension`).
+    """
+    review_mode = review_yesterday is not None and review_today is not None
+    if review_mode == (extension_csv is not None):
+        raise ValueError(
+            "supply either BOTH review CSVs (legacy ring-gated mode) or "
+            "extension_csv (standardised mode), not both and not neither"
+        )
+
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("Loading inputs...")
@@ -910,21 +1129,34 @@ def run(
     print(f"  student GT: {len(gdf_student):,}")
     print(f"  bounds tiles: {len(gdf_bounds):,}")
 
-    review_y = pd.read_csv(review_yesterday)
-    review_t = pd.read_csv(review_today)
-    print(f"  review (yesterday): {len(review_y):,}")
-    print(f"  review (today):     {len(review_t):,}")
+    review_y = review_t = None
+    extension_gdf = None
+    excluded = 0
+    if review_mode:
+        review_y = pd.read_csv(review_yesterday)
+        review_t = pd.read_csv(review_today)
+        print(f"  review (yesterday): {len(review_y):,}")
+        print(f"  review (today):     {len(review_t):,}")
 
-    # Excluded sentinel count (for report/JSON)
-    excluded = int(
-        (
-            (review_t["human_label"] == "mound")
-            & (review_t["buffer_metres"] == SENTINEL_BUFFER_EXCLUDED)
-        ).sum()
-    )
-    print(
-        f"  excluded sentinels (>150 m shell, buffer_metres=200): {excluded}"
-    )
+        # Excluded sentinel count (for report/JSON)
+        excluded = int(
+            (
+                (review_t["human_label"] == "mound")
+                & (review_t["buffer_metres"] == SENTINEL_BUFFER_EXCLUDED)
+            ).sum()
+        )
+        print(
+            f"  excluded sentinels (>150 m shell, buffer_metres=200): "
+            f"{excluded}"
+        )
+    else:
+        extension_gdf = load_standardised_extension(
+            extension_csv, crs=DEFAULT_CRS,
+        )
+        print(
+            f"  standardised extension layer: {len(extension_gdf):,} "
+            "(included whole at every R)"
+        )
 
     results: list[BufferResult] = []
     for r in buffers:
@@ -939,6 +1171,7 @@ def run(
                 n_bootstrap=n_bootstrap,
                 seed=seed,
                 compute_mcc=compute_mcc,
+                extension_gdf=extension_gdf,
             )
         )
 
@@ -947,9 +1180,12 @@ def run(
         "detections": str(verified_detections),
         "student_gt": str(student_gt),
         "bounds": str(bounds),
-        "review_yesterday": str(review_yesterday),
-        "review_today": str(review_today),
     }
+    if review_mode:
+        input_paths["review_yesterday"] = str(review_yesterday)
+        input_paths["review_today"] = str(review_today)
+    else:
+        input_paths["extension_csv"] = str(extension_csv)
 
     csv_path = output_dir / "corrected-f1.csv"
     json_path = output_dir / "summary.json"
@@ -964,14 +1200,22 @@ def run(
         results, json_path,
         seed=seed, n_bootstrap=n_bootstrap,
         input_paths=input_paths, excluded_sentinel_count=excluded,
+        extension_mode=not review_mode,
     )
     print(f"Wrote {json_path}")
 
-    write_markdown_report(
-        results, md_path,
-        seed=seed, n_bootstrap=n_bootstrap,
-        input_paths=input_paths, excluded_sentinel_count=excluded,
-    )
+    if review_mode:
+        write_markdown_report(
+            results, md_path,
+            seed=seed, n_bootstrap=n_bootstrap,
+            input_paths=input_paths, excluded_sentinel_count=excluded,
+        )
+    else:
+        write_markdown_report_standardised(
+            results, md_path,
+            seed=seed, n_bootstrap=n_bootstrap,
+            input_paths=input_paths,
+        )
     print(f"Wrote {md_path}")
 
 
@@ -981,8 +1225,25 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--verified-detections", type=Path, required=True)
     p.add_argument("--student-gt", type=Path, required=True)
     p.add_argument("--bounds", type=Path, required=True)
-    p.add_argument("--review-yesterday", type=Path, required=True)
-    p.add_argument("--review-today", type=Path, required=True)
+    p.add_argument(
+        "--review-yesterday", type=Path, default=None,
+        help=(
+            "Legacy ring-gated mode: yesterday's review CSV. Required "
+            "together with --review-today unless --extension-csv is given."
+        ),
+    )
+    p.add_argument(
+        "--review-today", type=Path, default=None,
+        help="Legacy ring-gated mode: today's multi-buffer review CSV.",
+    )
+    p.add_argument(
+        "--extension-csv", type=Path, default=None,
+        help=(
+            "Ruling-21 standardised mode: the standardised extension layer "
+            "(marked centres). Mutually exclusive with the review CSVs; the "
+            "layer enters the extended GT whole at every R."
+        ),
+    )
     p.add_argument("--output-dir", type=Path, required=True)
     p.add_argument(
         "--buffers", nargs="+", type=int, default=list(DEFAULT_BUFFERS),
@@ -1022,6 +1283,7 @@ def main() -> None:
         n_bootstrap=args.n_bootstrap,
         seed=args.seed,
         compute_mcc=args.compute_mcc,
+        extension_csv=args.extension_csv,
     )
 
 
