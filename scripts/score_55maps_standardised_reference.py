@@ -431,12 +431,15 @@ def evaluate_gate(
 
 def check_c_leg(
     cells: list[dict], results: dict[tuple[str, str], dict],
+    expected_buffers: list[int],
 ) -> list[dict]:
     """Post-C hard checks: whole extension layer admitted, zero drops.
 
     Guards against silent truncation of the reference between load and
-    scoring (audit finding S1): every row of every C summary must show
-    all N_EXTENSION_STD records admitted and 0 duplicate drops.
+    scoring (audit finding S1) AND against a buffer-truncated sweep
+    (re-audit M2): every C summary must carry exactly the expected
+    buffer rows, each showing all N_EXTENSION_STD records admitted and
+    0 duplicate drops. An empty result list can never pass.
     """
     rows = []
     failures = []
@@ -445,20 +448,32 @@ def check_c_leg(
         if summary is None:
             failures.append(f"{cell['label']}: no C summary")
             continue
-        for row in summary.get("results", []):
+        result_rows = summary.get("results", [])
+        got_buffers = sorted(r.get("R_m") for r in result_rows)
+        if got_buffers != sorted(expected_buffers):
+            failures.append(
+                f"{cell['label']}: buffers {got_buffers} != expected "
+                f"{sorted(expected_buffers)}"
+            )
+            continue
+        cell_ok = True
+        for row in result_rows:
             if (row.get("n_reviewer_promoted_at_R") != N_EXTENSION_STD
                     or row.get("n_phantom_duplicates_dropped") != 0):
+                cell_ok = False
                 failures.append(
                     f"{cell['label']} R={row.get('R_m')}: "
                     f"admitted={row.get('n_reviewer_promoted_at_R')} "
                     f"drops={row.get('n_phantom_duplicates_dropped')}"
                 )
-        rows.append({
-            "label": cell["label"],
-            "n_extension_admitted": N_EXTENSION_STD,
-            "n_drops": 0,
-            "verdict": "OK",
-        })
+        if cell_ok:
+            rows.append({
+                "label": cell["label"],
+                "n_extension_admitted": N_EXTENSION_STD,
+                "n_drops": 0,
+                "n_buffers": len(got_buffers),
+                "verdict": "OK",
+            })
     if failures:
         raise SystemExit(
             "C-leg extension census FAILED — stop state:\n  "
@@ -484,9 +499,32 @@ def require_prior_gate(cells: list[dict], gate_path: Path) -> dict:
         )
     with open(gate_path, encoding="utf-8") as fh:
         gate = json.load(fh)
+    # Freshness binding (re-audit C1): a prior gate certifies THIS engine
+    # only if it was produced at the current commit with the current
+    # tolerance and carries the A0/A1 schema. Anything else — an older
+    # engine, a looser tolerance, a pre-A0-redesign gate — must be
+    # re-earned by re-running leg A, never inherited.
+    current_commit = engine.git_commit_hash()
+    stale = []
+    if gate.get("git_commit") != current_commit:
+        stale.append(
+            f"git_commit {gate.get('git_commit')} != current "
+            f"{current_commit}"
+        )
+    if gate.get("gate_tolerance") != GATE_TOL:
+        stale.append(
+            f"gate_tolerance {gate.get('gate_tolerance')} != {GATE_TOL}"
+        )
+    if stale:
+        raise SystemExit(
+            f"prior gate at {gate_path} is STALE ({'; '.join(stale)}) — "
+            "re-run leg A against the current engine"
+        )
     passed_labels = {
         r["label"] for r in gate.get("gate_rows", [])
         if r.get("verdict") == "PASS"
+        and r.get("a1_drops") is not None
+        and r.get("a1_drops") == r.get("a1_expected_drops")
     }
     missing = [c["label"] for c in cells if c["label"] not in passed_labels]
     if gate.get("gate_passed") is not True or missing:
@@ -552,6 +590,34 @@ def write_consolidated(
             entry["C_minus_B_extension_layer"] = entry["C"] - entry["B"]
         decomp.append(entry)
     path = output_base / "abc-decomposition-50m.json"
+    # Merge-on-write (re-audit M1): a partial invocation must refresh
+    # only the cells and legs it computed, never null out fields an
+    # earlier fuller run established.
+    if path.exists():
+        with open(path, encoding="utf-8") as fh:
+            existing = {
+                e["cell"]: e
+                for e in json.load(fh).get("cells", [])
+            }
+        for entry in decomp:
+            prior_entry = existing.get(entry["cell"], {})
+            for key, value in prior_entry.items():
+                if entry.get(key) is None and value is not None:
+                    entry[key] = value
+        for cell_label, prior_entry in existing.items():
+            if cell_label not in {e["cell"] for e in decomp}:
+                decomp.append(prior_entry)
+    # Recompute derived deltas after the merge — a partial run may have
+    # supplied the missing half of a pair (idempotent on full runs).
+    for entry in decomp:
+        pairs = [
+            ("A1_minus_A0_dedup_fix", "A1", "A0"),
+            ("B_minus_A1_student_layer", "B", "A1"),
+            ("C_minus_B_extension_layer", "C", "B"),
+        ]
+        for key, hi, lo in pairs:
+            if entry.get(hi) is not None and entry.get(lo) is not None:
+                entry[key] = entry[hi] - entry[lo]
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "git_commit": engine.git_commit_hash(),
@@ -632,6 +698,11 @@ def main() -> None:
         raise SystemExit("--smoke and --cells are mutually exclusive")
 
     output_base = args.output_base
+    if args.smoke:
+        # Smoke runs are pre-flight throwaways: quarantine them in their
+        # own subdirectory so they can never clobber a full run's gate,
+        # decomposition, or consolidated CSV (re-audit M1).
+        output_base = output_base / "smoke"
     output_base.mkdir(parents=True, exist_ok=True)
 
     cells = CELLS
@@ -711,9 +782,15 @@ def main() -> None:
     else:
         prior = require_prior_gate(cells, gate_path)
         # Carry the prior certification forward so the end-of-run gate
-        # rewrite preserves it rather than clobbering PASS with null.
+        # rewrite preserves it rather than clobbering PASS with null —
+        # including the C-leg census when C is not re-run this
+        # invocation (re-audit M1).
         gate_passed = prior.get("gate_passed")
         gate_rows = prior.get("gate_rows", [])
+        c_rows = prior.get("c_leg_extension_census", [])
+        crosscheck_rows = prior.get(
+            "feature_count_crosscheck", crosscheck_rows,
+        )
 
     bc_legs = [leg for leg in legs if leg in ("B", "C")]
     if bc_legs:
@@ -724,9 +801,12 @@ def main() -> None:
         print(f"\nLegs {bc_legs}: {len(bc_jobs)} job(s), jobs={args.jobs}...")
         run_jobs(bc_jobs, results)
         if "C" in bc_legs:
-            c_rows = check_c_leg(cells, results)
-
-    if "A" in legs or bc_legs:
+            fresh_c = check_c_leg(cells, results, expected_buffers=buffers_c)
+            # Merge by label so a subset re-run refreshes its own cells
+            # without discarding other cells' carried census rows.
+            merged = {r["label"]: r for r in c_rows}
+            merged.update({r["label"]: r for r in fresh_c})
+            c_rows = list(merged.values())
         write_gate()
     write_consolidated(output_base, cells, results, legs)
     print("\nAll requested legs complete.")

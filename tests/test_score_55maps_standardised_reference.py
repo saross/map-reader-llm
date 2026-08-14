@@ -81,7 +81,6 @@ def test_crosscheck_passes_on_match(tmp_path):
     """A matching count yields an OK row and no stop."""
     cell = _tmp_cell(tmp_path, 3, 3)
     cell["det"] = str(tmp_path / "det.geojson")
-    driver.REPO  # crosscheck joins REPO / det; absolute path also works
     rows = driver.crosscheck_feature_counts([cell])
     assert rows[0]["verdict"] == "OK"
 
@@ -167,7 +166,9 @@ def test_check_c_leg_passes_on_full_layer():
     results = {("TH7-k4", "C"): _summary(
         0.83, drops=0, promoted=driver.N_EXTENSION_STD, r_values=(20, 50),
     )}
-    rows = driver.check_c_leg(_one_cell(), results)
+    rows = driver.check_c_leg(
+        _one_cell(), results, expected_buffers=[20, 50],
+    )
     assert rows[0]["verdict"] == "OK"
 
 
@@ -180,25 +181,59 @@ def test_check_c_leg_stops_on_truncated_layer():
     bad["n_reviewer_promoted_at_R"] = driver.N_EXTENSION_STD - 1
     results = {("TH7-k4", "C"): {"results": [bad, good]}}
     with pytest.raises(SystemExit, match="extension census FAILED"):
-        driver.check_c_leg(_one_cell(), results)
+        driver.check_c_leg(_one_cell(), results, expected_buffers=[20, 50])
 
 
 @pytest.mark.tier1
 def test_check_c_leg_stops_on_missing_summary():
     with pytest.raises(SystemExit, match="no C summary"):
-        driver.check_c_leg(_one_cell(), {})
+        driver.check_c_leg(_one_cell(), {}, expected_buffers=[50])
+
+
+@pytest.mark.tier1
+def test_check_c_leg_stops_on_empty_or_short_sweep():
+    """An empty result list or a buffer-truncated sweep can never pass
+    the census (re-audit M2)."""
+    with pytest.raises(SystemExit, match="buffers"):
+        driver.check_c_leg(
+            _one_cell(), {("TH7-k4", "C"): {"results": []}},
+            expected_buffers=[20, 50],
+        )
+    only_50 = _summary(
+        0.83, drops=0, promoted=driver.N_EXTENSION_STD, r_values=(50,),
+    )
+    with pytest.raises(SystemExit, match="buffers"):
+        driver.check_c_leg(
+            _one_cell(), {("TH7-k4", "C"): only_50},
+            expected_buffers=[20, 50],
+        )
 
 
 # --------------------------------------------------------------------------- #
 # Prior-gate requirement for B/C-only invocations
 # --------------------------------------------------------------------------- #
 
-def _write_gate(path, gate_passed, labels):
+def _write_gate(path, gate_passed, labels, *, git_commit=None,
+                tolerance=None, a1_fields=True):
+    """Write a gate file; defaults mimic a CURRENT full A-leg gate."""
+    rows = []
+    for lb in labels:
+        row = {"label": lb, "verdict": "PASS"}
+        if a1_fields:
+            row["a1_drops"] = driver.A1_EXPECTED_DROPS
+            row["a1_expected_drops"] = driver.A1_EXPECTED_DROPS
+        rows.append(row)
     path.write_text(json.dumps({
         "gate_passed": gate_passed,
-        "gate_rows": [
-            {"label": lb, "verdict": "PASS"} for lb in labels
-        ],
+        "git_commit": (
+            git_commit if git_commit is not None
+            else driver.engine.git_commit_hash()
+        ),
+        "gate_tolerance": (
+            tolerance if tolerance is not None else driver.GATE_TOL
+        ),
+        "gate_rows": rows,
+        "c_leg_extension_census": [],
     }))
 
 
@@ -222,6 +257,36 @@ def test_prior_gate_accepts_full_pass(tmp_path):
     _write_gate(gate, True, ["TH7-k4"])
     prior = driver.require_prior_gate(_one_cell(), gate)
     assert prior["gate_passed"] is True
+
+
+@pytest.mark.tier1
+def test_prior_gate_rejects_stale_commit(tmp_path):
+    """A gate minted at a different engine commit certifies nothing —
+    the re-audit C1 failure class (stale gate inherited silently)."""
+    gate = tmp_path / "validation-gate.json"
+    _write_gate(gate, True, ["TH7-k4"], git_commit="c951aa749deadbeef")
+    with pytest.raises(SystemExit, match="STALE"):
+        driver.require_prior_gate(_one_cell(), gate)
+
+
+@pytest.mark.tier1
+def test_prior_gate_rejects_looser_tolerance(tmp_path):
+    """A gate earned under a looser tolerance (the pre-fix 1e-4) is not
+    a certification under the current 1e-6 contract."""
+    gate = tmp_path / "validation-gate.json"
+    _write_gate(gate, True, ["TH7-k4"], tolerance=1e-4)
+    with pytest.raises(SystemExit, match="STALE"):
+        driver.require_prior_gate(_one_cell(), gate)
+
+
+@pytest.mark.tier1
+def test_prior_gate_rejects_pre_a0_schema(tmp_path):
+    """A gate row without the A0/A1 fields predates the gate redesign
+    and must be re-earned, not inherited."""
+    gate = tmp_path / "validation-gate.json"
+    _write_gate(gate, True, ["TH7-k4"], a1_fields=False)
+    with pytest.raises(SystemExit, match="does not certify"):
+        driver.require_prior_gate(_one_cell(), gate)
 
 
 # --------------------------------------------------------------------------- #
@@ -277,8 +342,13 @@ def test_green_gate_runs_all_legs_in_order(monkeypatch, tmp_path):
         promoted = (
             driver.N_EXTENSION_STD if job["leg"] == "C" else 414
         )
+        r_values = (
+            tuple(driver.BUFFERS) if job["leg"] == "C" else (50,)
+        )
         return {"label": job["label"], "leg": job["leg"],
-                "summary": _summary(f1, drops=drops, promoted=promoted)}
+                "summary": _summary(
+                    f1, drops=drops, promoted=promoted, r_values=r_values,
+                )}
 
     calls = _run_main(
         monkeypatch, tmp_path, scripted, ["--legs", "A", "B", "C"],
@@ -308,6 +378,52 @@ def test_bc_without_a_demands_prior_gate(monkeypatch, tmp_path):
     with pytest.raises(SystemExit, match="no prior"):
         driver.main()
     assert calls == []
+
+
+@pytest.mark.tier1
+def test_smoke_conflicts_with_cells(monkeypatch, tmp_path):
+    """--smoke and --cells together are refused before any work."""
+    calls = _run_main(
+        monkeypatch, tmp_path, lambda job: None, ["--smoke"],
+    )
+    with pytest.raises(SystemExit, match="mutually exclusive"):
+        driver.main()
+    assert calls == []
+
+
+@pytest.mark.tier1
+def test_smoke_is_quarantined_from_production_output(monkeypatch, tmp_path):
+    """A smoke run writes under <output-base>/smoke/, never over the
+    production gate/decomposition/CSV (re-audit M1)."""
+    def scripted(job):
+        f1 = {"A0": ANCHOR, "A1": ANCHOR + 8.7e-05, "C": ANCHOR + 5e-04}
+        drops = {"A0": 0, "A1": 1, "C": 0}
+        promoted = (
+            driver.N_EXTENSION_STD if job["leg"] == "C" else 414
+        )
+        return {
+            "label": job["label"], "leg": job["leg"],
+            "summary": _summary(
+                f1[job["leg"]], drops=drops[job["leg"]],
+                promoted=promoted, r_values=(20, 50),
+            ),
+        }
+
+    calls = []
+
+    def recording_score(job):
+        calls.append((job["label"], job["leg"]))
+        return scripted(job)
+
+    monkeypatch.setattr(driver, "_score_cell", recording_score)
+    monkeypatch.setattr(sys, "argv", [
+        "score_55maps_standardised_reference.py",
+        "--output-base", str(tmp_path / "out"),
+        "--smoke",
+    ])
+    driver.main()
+    assert (tmp_path / "out" / "smoke" / "validation-gate.json").exists()
+    assert not (tmp_path / "out" / "validation-gate.json").exists()
 
 
 # --------------------------------------------------------------------------- #

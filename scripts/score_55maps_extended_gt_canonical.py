@@ -4,6 +4,15 @@ Track-2 driver: score the 55-map generalisation cells against the CANONICAL
 extended ground truth (Session 105).
 ==========================================================================
 
+**SUPERSEDED for new scoring (Session 132).** The ruling-21 standardised
+reference replaced this driver's canonical-review pairing; new scoring
+goes through ``score_55maps_standardised_reference.py``. This driver is
+retained to reproduce the committed Session-105 artefacts — note that its
+``--gate-tol`` default (1e-4) silently absorbs the post-hoc W6-E9
+de-duplication fix (a uniform ≈ +8.7e-05 vs the committed anchors); the
+successor driver's A0 sub-leg (``--dedup-tolerance-m 0``, tol 1e-6)
+reproduces the committed numbers exactly.
+
 Companion to the historical (Track-1) record, which scores the same cells
 against the bare reviewed student GT (``results/rescore-2026-05-31/``). This
 driver produces the *paper-reportable* reference: each cell scored against the
@@ -84,7 +93,8 @@ CELLS = [
     },
     {
         "label": "TH7-k3", "config": "text-high-T0.7", "k": 3, "role": "threshold (new)",
-        "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
+        "det": ("results/deployment-oracle-2026-06-06/k3-scoring/"
+                "55maps-text-high-generalisation/k3_verified.geojson"),
         "gate_50m": None, "sanity_per_run": 0.850,
     },
     {
@@ -94,7 +104,8 @@ CELLS = [
     },
     {
         "label": "T03-k3", "config": "text-high-T0.3", "k": 3, "role": "ORACLE",
-        "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+        "det": ("results/deployment-oracle-2026-06-06/k3-scoring/"
+                "55maps-text-high-t0.3-generalisation/k3_verified.geojson"),
         "gate_50m": 0.847606, "sanity_per_run": None,
     },
     {
@@ -104,7 +115,8 @@ CELLS = [
     },
     {
         "label": "TM-k3", "config": "text-min", "k": 3, "role": "threshold (new)",
-        "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
+        "det": ("results/deployment-oracle-2026-06-06/k3-scoring/"
+                "55maps-text-min-generalisation/k3_verified.geojson"),
         "gate_50m": None, "sanity_per_run": 0.822,
     },
     {
