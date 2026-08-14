@@ -1,14 +1,14 @@
 {
  "_meta": {
-  "generated_at": "2026-07-31T00:57:34.723047+00:00",
+  "generated_at": "2026-08-14T23:05:19.609907+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "76c2b0b1b",
+  "git_head": "4e77683fa",
   "counts": {
-   "total": 2334,
-   "generated": 2192,
+   "total": 2393,
+   "generated": 2229,
    "generated_unattributed": 0,
-   "hand_written": 142
+   "hand_written": 164
   }
  },
  "files": [
@@ -313,6 +313,16 @@
    "hand_edited": false
   },
   {
+   "path": "reports/e43-coverage-confound-remediation-2026-08-02.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "reports/experimental-progression.md",
    "stratum": "hand-written",
    "rule_id": null,
@@ -493,7 +503,87 @@
    "hand_edited": false
   },
   {
+   "path": "reports/verification/apparatus/regen-manifests/README.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/verification/apparatus/tracking-gap-audit-2026-08-03.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/verification/c4-triage/spot-audit/sonnet-gate-verdict-protocol-errata-2026-08-02.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/verification/c4-triage/spot-audit/spot-audit-verdict-2026-07-31.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/verification/c4-triage/wave5-draft-stories-2026-08-03.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/verification/c4-triage/wave6-draft-stories-2026-08-03.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/verification/c4-triage/wave7-draft-stories-2026-08-04.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "reports/verification/drafts/errata-drafts-2026-07-29.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/verification/drafts/obs-candidate-era-check-banner-interaction-2026-08-03.md",
    "stratum": "hand-written",
    "rule_id": null,
    "generator": null,
@@ -553,6 +643,16 @@
    "hand_edited": false
   },
   {
+   "path": "reports/verification/phase3-rulings-2026-07-31.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "reports/verification/recovery-rerun-registration.md",
    "stratum": "hand-written",
    "rule_id": null,
@@ -563,7 +663,27 @@
    "hand_edited": false
   },
   {
+   "path": "reports/verification/reference-standardisation-queue.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "reports/verifier-silent-drop-root-cause-2026-05-03.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55map-leaderboard/55map-leaderboard-50m-standardised.md",
    "stratum": "hand-written",
    "rule_id": null,
    "generator": null,
@@ -823,6 +943,18 @@
    "hand_edited": true
   },
   {
+   "path": "results/55maps-image-generalisation/dawid-skene-standardised/dawid-skene-results.md",
+   "stratum": "generated",
+   "rule_id": "gen-ds-results",
+   "generator": "scripts/analyse_dawid_skene.py",
+   "source_rule": "sibling:dawid-skene-results.json",
+   "sources": [
+    "results/55maps-image-generalisation/dawid-skene-standardised/dawid-skene-results.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/comparison.md",
    "stratum": "generated",
    "rule_id": "gen-ds-comparison",
@@ -889,6 +1021,18 @@
    ],
    "marker": null,
    "hand_edited": true
+  },
+  {
+   "path": "results/55maps-image-generalisation/ds-human-crosstab-standardised/report.md",
+   "stratum": "generated",
+   "rule_id": "gen-report-ds-crosstab",
+   "generator": "scripts/analyse_ds_vs_human_review.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-image-generalisation/ds-human-crosstab-standardised/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
   },
   {
    "path": "results/55maps-image-generalisation/k35-075-3-diagnostic.md",
@@ -985,6 +1129,314 @@
    "hand_edited": false
   },
   {
+   "path": "results/55maps-standardised-ref-2026-08-14/IM-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/IM-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/T03-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/T03-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/T03-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/T03-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/TH7-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/TH7-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/TH7-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/TH7-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/TM-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/TM-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/TM-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/TM-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/TM-n10-k5/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/TM-n10-k5/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/legacy-baseline/IM-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/legacy-baseline/IM-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/legacy-baseline/T03-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/legacy-baseline/T03-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/legacy-baseline/T03-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/legacy-baseline/T03-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TH7-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TH7-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TH7-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TH7-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TM-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TM-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TM-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TM-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TM-n10-k5/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/legacy-baseline/TM-n10-k5/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/repro-gate/IM-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/repro-gate/IM-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/repro-gate/T03-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/repro-gate/T03-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/repro-gate/T03-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/repro-gate/T03-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/repro-gate/TH7-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/repro-gate/TH7-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/repro-gate/TH7-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/repro-gate/TH7-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/repro-gate/TM-k3/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/repro-gate/TM-k3/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/repro-gate/TM-k4/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/repro-gate/TM-k4/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/repro-gate/TM-n10-k5/report_autogen.md",
+   "stratum": "generated",
+   "rule_id": "gen-autogen-corrected-f1",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-standardised-ref-2026-08-14/repro-gate/TM-n10-k5/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-standardised-ref-2026-08-14/standardised-ref-summary.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/55maps-text-high-generalisation/corrected-f1-multi-buffer/report_autogen.md",
    "stratum": "generated",
    "rule_id": "gen-autogen-corrected-f1",
@@ -1009,6 +1461,18 @@
    "hand_edited": false
   },
   {
+   "path": "results/55maps-text-high-generalisation/dawid-skene-standardised/dawid-skene-results.md",
+   "stratum": "generated",
+   "rule_id": "gen-ds-results",
+   "generator": "scripts/analyse_dawid_skene.py",
+   "source_rule": "sibling:dawid-skene-results.json",
+   "sources": [
+    "results/55maps-text-high-generalisation/dawid-skene-standardised/dawid-skene-results.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/55maps-text-high-generalisation/dawid-skene.pre-rerun-20260503T010627.backup/dawid-skene-results.md",
    "stratum": "generated",
    "rule_id": "gen-ds-results",
@@ -1028,6 +1492,18 @@
    "source_rule": "sibling:summary.json",
    "sources": [
     "results/55maps-text-high-generalisation/ds-human-crosstab/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-text-high-generalisation/ds-human-crosstab-standardised/report.md",
+   "stratum": "generated",
+   "rule_id": "gen-report-ds-crosstab",
+   "generator": "scripts/analyse_ds_vs_human_review.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-text-high-generalisation/ds-human-crosstab-standardised/summary.json"
    ],
    "marker": null,
    "hand_edited": false
@@ -1081,6 +1557,18 @@
    "hand_edited": false
   },
   {
+   "path": "results/55maps-text-high-t0.3-generalisation/dawid-skene-standardised/dawid-skene-results.md",
+   "stratum": "generated",
+   "rule_id": "gen-ds-results",
+   "generator": "scripts/analyse_dawid_skene.py",
+   "source_rule": "sibling:dawid-skene-results.json",
+   "sources": [
+    "results/55maps-text-high-t0.3-generalisation/dawid-skene-standardised/dawid-skene-results.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/report.md",
    "stratum": "generated",
    "rule_id": "gen-report-ds-crosstab",
@@ -1088,6 +1576,18 @@
    "source_rule": "sibling:summary.json",
    "sources": [
     "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab-standardised/report.md",
+   "stratum": "generated",
+   "rule_id": "gen-report-ds-crosstab",
+   "generator": "scripts/analyse_ds_vs_human_review.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-text-high-t0.3-generalisation/ds-human-crosstab-standardised/summary.json"
    ],
    "marker": null,
    "hand_edited": false
@@ -1129,6 +1629,18 @@
    "hand_edited": true
   },
   {
+   "path": "results/55maps-text-min-generalisation/dawid-skene-standardised/dawid-skene-results.md",
+   "stratum": "generated",
+   "rule_id": "gen-ds-results",
+   "generator": "scripts/analyse_dawid_skene.py",
+   "source_rule": "sibling:dawid-skene-results.json",
+   "sources": [
+    "results/55maps-text-min-generalisation/dawid-skene-standardised/dawid-skene-results.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/55maps-text-min-generalisation/ds-human-crosstab/report.md",
    "stratum": "generated",
    "rule_id": "gen-ds-crosstab-handedit",
@@ -1139,6 +1651,18 @@
    ],
    "marker": null,
    "hand_edited": true
+  },
+  {
+   "path": "results/55maps-text-min-generalisation/ds-human-crosstab-standardised/report.md",
+   "stratum": "generated",
+   "rule_id": "gen-report-ds-crosstab",
+   "generator": "scripts/analyse_ds_vs_human_review.py",
+   "source_rule": "sibling:summary.json",
+   "sources": [
+    "results/55maps-text-min-generalisation/ds-human-crosstab-standardised/summary.json"
+   ],
+   "marker": null,
+   "hand_edited": false
   },
   {
    "path": "results/55maps-text-min-generalisation/verifier-calibration-crosstab/calibration_autogen.md",
@@ -1183,7 +1707,7 @@
    "sources": [
     "results/analyses-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.6.0. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
    "hand_edited": false
   },
   {
@@ -1325,7 +1849,7 @@
    "sources": [
     "results/conditions-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.6.0. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
    "hand_edited": false
   },
   {
@@ -1337,6 +1861,16 @@
    "sources": [
     "results/dawid-skene/dawid-skene-results.json"
    ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/deployment-oracle-2026-06-06/canonical-gt/standardised/README.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
    "marker": null,
    "hand_edited": false
   },
@@ -1888,6 +2422,124 @@
    "source_rule": null,
    "sources": [],
    "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-board-regen/bh-families/families_recomputed.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-board-regen/leaderboard-20m/leaderboard.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-board-regen/leaderboard-20m/tiers.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-board-regen/leaderboard-30m/leaderboard.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-board-regen/leaderboard-30m/tiers.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-board-regen/summary.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-matched-temperature/findings.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-matched-temperature/paper-eval/t07-n10-10of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/e43-matched-temperature/paper-eval/t07-n10-10of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-08-02T12:21:24.361678+00:00",
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-matched-temperature/paper-eval/t07-n5-5of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/e43-matched-temperature/paper-eval/t07-n5-5of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-08-02T12:21:25.630084+00:00",
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-matched-temperature/paper-eval/t10-n10-9of10/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/e43-matched-temperature/paper-eval/t10-n10-9of10/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-08-02T12:21:23.716577+00:00",
+   "hand_edited": false
+  },
+  {
+   "path": "results/e43-matched-temperature/paper-eval/t10-n5-5of5/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/e43-matched-temperature/paper-eval/t10-n5-5of5/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-08-02T12:21:23.323101+00:00",
    "hand_edited": false
   },
   {
@@ -8129,6 +8781,18 @@
    "hand_edited": false
   },
   {
+   "path": "results/metric-leaderboards/55map-mcc-tiering-standardised.md",
+   "stratum": "generated",
+   "rule_id": "gen-metric-leaderboards",
+   "generator": "scripts/build_metric_leaderboards.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/metric-leaderboards/55map-mcc-tiering-standardised.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/metric-leaderboards/55map-mcc-tiering.md",
    "stratum": "generated",
    "rule_id": "gen-metric-leaderboards",
@@ -11307,7 +11971,7 @@
    "sources": [
     "results/paper-tables/metrics_master.json"
    ],
-   "marker": "**Generated**: 2026-03-26T20:39:40.449698+00:00",
+   "marker": null,
    "hand_edited": false
   },
   {
@@ -11329,7 +11993,7 @@
    "sources": [
     "results/passes-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.6.0. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
    "hand_edited": false
   },
   {
@@ -26167,7 +26831,7 @@
    "sources": [
     "results/run-registry.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.6.0. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
    "hand_edited": false
   },
   {
@@ -26179,7 +26843,7 @@
    "sources": [
     "results/runs-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.6.0. Edit the source-of-truth files and regenerate. -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate. -->",
    "hand_edited": false
   },
   {
