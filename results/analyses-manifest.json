@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T09:10:41Z",
+  "generated_at": "2026-08-14T09:33:24Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -1096,6 +1096,84 @@
           "results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md"
         ],
         "last_extracted_at": "2026-08-14T09:10:41Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "55map-standardised-leaderboard-50m",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-standardised-gt",
+        "55maps-text-high-generalisation::verified-k3-standardised-gt",
+        "55maps-text-high-generalisation::verified-k4-standardised-gt",
+        "55maps-text-min-generalisation::verified-k3-standardised-gt",
+        "55maps-text-min-generalisation::verified-k4-standardised-gt",
+        "55maps-image-generalisation::verified-k3-standardised-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-standardised-gt"
+      ],
+      "hypothesis_refs": [],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "S113 continuity: tiers likely become 6 with the uplift cell inserted between TM-k3 and TH7-k3 (Obs 364: both pairwise steps resolve, so the uplift should occupy its own tier on the instrument that resolves).",
+      "predicted_outcome_amended": null,
+      "tie_set": [
+        "55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt",
+        "55maps-text-high-generalisation::verified-k3-canonical-gt"
+      ],
+      "outcome": "Tier structure IDENTICAL to the legacy board: T1={T03-k3, TH7-k3}, T2={T03-k4, TM-n10-k5}, T3={TH7-k4, TM-k3}, T4={IM-k3}, T5={TM-k4}; 24/28 pairs significant on both references, with one pair swapping significance (IM-k3/TM-k3 out, T03-k4/TH7-k3 in) without touching any tier boundary. The T03-k3-vs-TH7-k3 pair stays non-significant and the tie deepens: delta 0.0051 p=0.127 (legacy) -> delta 0.0006 p=0.857 (standardised). The reference standardisation is fully rank- and tier-preserving on F1.",
+      "paper_section": "Results",
+      "output_path": "results/55map-leaderboard",
+      "working_notes_obs": [
+        "Obs 358 \u2014 the 55-map 50 m board (threshold-transfer failure)",
+        "Obs 362 \u2014 the deployment reversal (scope-qualifies the cost meta-rule)",
+        "Obs 364 \u2014 the min11 uplift (pass count closes half the thinking gap)"
+      ],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/55map-leaderboard"
+        ],
+        "last_extracted_at": "2026-08-14T09:33:24Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "55map-standardised-leaderboard-mcc-50m",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-standardised-gt",
+        "55maps-text-high-generalisation::verified-k3-standardised-gt",
+        "55maps-text-high-generalisation::verified-k4-standardised-gt",
+        "55maps-text-min-generalisation::verified-k3-standardised-gt",
+        "55maps-text-min-generalisation::verified-k4-standardised-gt",
+        "55maps-image-generalisation::verified-k3-standardised-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-standardised-gt"
+      ],
+      "hypothesis_refs": [],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "Obs 369 (written pre-tiering): the image cell IM-k3 leads tile-MCC despite ranking 7th of 8 on F1 (the F1-vs-MCC counter-board, replicated across all three instruments). Open question this analysis resolves: is that lead a statistically resolved tier, or only a numerical ordering on the 8,541-tile instrument?",
+      "predicted_outcome_amended": null,
+      "tie_set": [
+        "55maps-image-generalisation::verified-k3-canonical-gt"
+      ],
+      "outcome": "Tier structure AND significant-pair set IDENTICAL to the legacy MCC board (20/28 significant, 5 tiers): IM-k3 stays SOLE Tier 1 on tile-MCC (0.7120) while sitting Tier 4 on F1 \u2014 the Obs 280 divergence at tier grain, now on the shared reference; T2={T03-k3, TH7-k3}, T3={TM-n10-k5, T03-k4, TH7-k4}, T4={TM-k3}, T5={TM-k4}.",
+      "paper_section": "Results",
+      "output_path": "results/metric-leaderboards",
+      "working_notes_obs": [
+        "Obs 369 \u2014 the tile-MCC counter-board replicates across all three instruments",
+        "Obs 370 \u2014 rider: IM-k3 is the SOLE Tier-1 cell on the MCC axis (this analysis)"
+      ],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/metric-leaderboards"
+        ],
+        "last_extracted_at": "2026-08-14T09:33:24Z",
         "extractor_version": "0.7.1"
       }
     }
