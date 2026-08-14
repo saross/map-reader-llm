@@ -599,3 +599,34 @@ thank you for that clarification", and at session end, unprompted:
 "thanks for a productive session". The walk closed six-for-six with no
 re-opens; the S130 lesson (interactive adjudication beats documentation)
 extended from marking semantics to referential bookkeeping.
+
+## Candidates pending review (drafted 2026-08-15, Session 132) — accept / edit / discard
+
+*Drafted at handoff. Things Shawn observed (or would be positioned to
+observe) about Claude this session. Silence holds these over; it does not
+discard them.*
+
+**Candidate 1 — contract-scoped autonomy: four queue items, three blind
+verifier cycles, and zero mid-arc questions.** The session ran items 2–5
+end to end under the S131 execution contract without once returning for a
+go/no-go — every would-be question (gating semantics, the gate redesign,
+proceeding to items 4 and 5) resolved against a contract clause instead.
+The one genuine anomaly (the anchor-vintage discovery) was handled inside
+the contract's own "reproduce before you vary" stop state. Worth Shawn's
+verdict on whether reviewing a finished arc beat steering a live one —
+and whether this autonomy level generalises beyond $0 legs.
+
+**Candidate 2 — the batched candidate walk worked from the reviewing
+chair.** Thirteen working-notes candidates accepted in one word;
+nine user-obs candidates judged in three structured batches with exactly
+one discard, no rework, and no context reconstruction needed — four
+sessions of backlog cleared in minutes. If the pre-formed-candidate
+format (evidence in the text, counter-evidence included) is what made
+the discard as fast as the accepts, that is worth recording as the
+standard for future drafting.
+
+**Candidate 3 (in-the-moment reaction, relayed) — "great session with
+significant progress, thank you."** Offered unprompted at the close of
+the queue-closing arc, before the reflection rituals ran. Recorded per
+the standing exception (a Shawn reaction Claude relays); the referent is
+the full items-2–5 execution plus the cleared review backlog.
