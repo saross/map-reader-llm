@@ -1,0 +1,16 @@
+Loading inputs...
+  detections: 4,164
+  student GT: 4,746
+  bounds tiles: 8,541
+  review (yesterday): 0
+  review (today):     773
+  excluded sentinels (>150 m shell, buffer_metres=200): 10
+
+--- Buffer R = 50 m ---
+R=50m  TP=3801  FP=363  FN=1360  n_ref_student=4746  n_reviewer_promoted=415  n_ref_ext_scoped=5161
+  P=0.9128  R=0.7365  F1=0.8152
+  95% CIs — P=[0.9043, 0.9206] R=[0.7220, 0.7501] F1=[0.8042, 0.8238]
+
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/repro-gate/TH7-k4/corrected-f1.csv
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/repro-gate/TH7-k4/summary.json
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/repro-gate/TH7-k4/report_autogen.md

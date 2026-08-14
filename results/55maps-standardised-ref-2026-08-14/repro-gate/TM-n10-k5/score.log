@@ -1,0 +1,17 @@
+Loading inputs...
+  Reprojecting detections from EPSG:4326 to EPSG:32635
+  detections: 4,361
+  student GT: 4,746
+  bounds tiles: 8,541
+  review (yesterday): 0
+  review (today):     773
+  excluded sentinels (>150 m shell, buffer_metres=200): 10
+
+--- Buffer R = 50 m ---
+R=50m  TP=3947  FP=414  FN=1214  n_ref_student=4746  n_reviewer_promoted=415  n_ref_ext_scoped=5161
+  P=0.9051  R=0.7648  F1=0.8290
+  95% CIs — P=[0.8931, 0.9141] R=[0.7520, 0.7789] F1=[0.8192, 0.8385]
+
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/repro-gate/TM-n10-k5/corrected-f1.csv
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/repro-gate/TM-n10-k5/summary.json
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/repro-gate/TM-n10-k5/report_autogen.md

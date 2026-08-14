@@ -1,0 +1,220 @@
+{
+  "generated_at": "2026-08-14T08:41:36.371203+00:00",
+  "git_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+  "feature_count_crosscheck": [
+    {
+      "label": "TH7-k4",
+      "det": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+      "n_documented": 4164,
+      "n_actual": 4164,
+      "verdict": "OK"
+    },
+    {
+      "label": "TH7-k3",
+      "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
+      "n_documented": 4786,
+      "n_actual": 4786,
+      "verdict": "OK"
+    },
+    {
+      "label": "T03-k4",
+      "det": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+      "n_documented": 4350,
+      "n_actual": 4350,
+      "verdict": "OK"
+    },
+    {
+      "label": "T03-k3",
+      "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+      "n_documented": 4905,
+      "n_actual": 4905,
+      "verdict": "OK"
+    },
+    {
+      "label": "TM-k4",
+      "det": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+      "n_documented": 3865,
+      "n_actual": 3865,
+      "verdict": "OK"
+    },
+    {
+      "label": "TM-k3",
+      "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
+      "n_documented": 4279,
+      "n_actual": 4279,
+      "verdict": "OK"
+    },
+    {
+      "label": "IM-k3",
+      "det": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+      "n_documented": 4680,
+      "n_actual": 4680,
+      "verdict": "OK"
+    },
+    {
+      "label": "TM-n10-k5",
+      "det": "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
+      "n_documented": 4361,
+      "n_actual": 4361,
+      "verdict": "OK"
+    }
+  ],
+  "gate_tolerance": 1e-06,
+  "gate_passed": true,
+  "gate_rows": [
+    {
+      "label": "TH7-k4",
+      "target": 0.8152278820375335,
+      "got": 0.8152278820375335,
+      "delta": 0.0,
+      "tol": 1e-06,
+      "a1_f1": 0.8153153153153153,
+      "a1_minus_a0_dedup_fix": 8.743327778182319e-05,
+      "a1_drops": 1,
+      "a1_expected_drops": 1,
+      "verdict": "PASS"
+    },
+    {
+      "label": "TH7-k3",
+      "target": 0.8424650648436715,
+      "got": 0.8424650648436715,
+      "delta": 0.0,
+      "tol": 1e-06,
+      "a1_f1": 0.8425497687512566,
+      "a1_minus_a0_dedup_fix": 8.470390758519297e-05,
+      "a1_drops": 1,
+      "a1_expected_drops": 1,
+      "verdict": "PASS"
+    },
+    {
+      "label": "T03-k4",
+      "target": 0.8358742508674167,
+      "got": 0.8358742508674167,
+      "delta": 0.0,
+      "tol": 1e-06,
+      "a1_f1": 0.83596214511041,
+      "a1_minus_a0_dedup_fix": 8.789424299326942e-05,
+      "a1_drops": 1,
+      "a1_expected_drops": 1,
+      "verdict": "PASS"
+    },
+    {
+      "label": "T03-k3",
+      "target": 0.8476058017087225,
+      "got": 0.8476058017087225,
+      "delta": 0.0,
+      "tol": 1e-06,
+      "a1_f1": 0.8476900149031298,
+      "a1_minus_a0_dedup_fix": 8.421319440732322e-05,
+      "a1_drops": 1,
+      "a1_expected_drops": 1,
+      "verdict": "PASS"
+    },
+    {
+      "label": "TM-k4",
+      "target": 0.7830711278528694,
+      "got": 0.7830711278528694,
+      "delta": 0.0,
+      "tol": 1e-06,
+      "a1_f1": 0.7831578947368422,
+      "a1_minus_a0_dedup_fix": 8.676688397279975e-05,
+      "a1_drops": 1,
+      "a1_expected_drops": 1,
+      "verdict": "PASS"
+    },
+    {
+      "label": "TM-k3",
+      "target": 0.8127118644067797,
+      "got": 0.8127118644067797,
+      "delta": 0.0,
+      "tol": 1e-06,
+      "a1_f1": 0.8127979658862168,
+      "a1_minus_a0_dedup_fix": 8.610147943710622e-05,
+      "a1_drops": 1,
+      "a1_expected_drops": 1,
+      "verdict": "PASS"
+    },
+    {
+      "label": "IM-k3",
+      "target": 0.7986993191748807,
+      "got": 0.7986993191748807,
+      "delta": 0.0,
+      "tol": 1e-06,
+      "a1_f1": 0.7987804878048781,
+      "a1_minus_a0_dedup_fix": 8.116862999740793e-05,
+      "a1_drops": 1,
+      "a1_expected_drops": 1,
+      "verdict": "PASS"
+    },
+    {
+      "label": "TM-n10-k5",
+      "target": 0.8290275152278933,
+      "got": 0.8290275152278933,
+      "delta": 0.0,
+      "tol": 1e-06,
+      "a1_f1": 0.829114588803697,
+      "a1_minus_a0_dedup_fix": 8.70735758037311e-05,
+      "a1_drops": 1,
+      "a1_expected_drops": 1,
+      "verdict": "PASS"
+    }
+  ],
+  "c_leg_extension_census": [
+    {
+      "label": "TH7-k4",
+      "n_extension_admitted": 279,
+      "n_drops": 0,
+      "n_buffers": 14,
+      "verdict": "OK"
+    },
+    {
+      "label": "TH7-k3",
+      "n_extension_admitted": 279,
+      "n_drops": 0,
+      "n_buffers": 14,
+      "verdict": "OK"
+    },
+    {
+      "label": "T03-k4",
+      "n_extension_admitted": 279,
+      "n_drops": 0,
+      "n_buffers": 14,
+      "verdict": "OK"
+    },
+    {
+      "label": "T03-k3",
+      "n_extension_admitted": 279,
+      "n_drops": 0,
+      "n_buffers": 14,
+      "verdict": "OK"
+    },
+    {
+      "label": "TM-k4",
+      "n_extension_admitted": 279,
+      "n_drops": 0,
+      "n_buffers": 14,
+      "verdict": "OK"
+    },
+    {
+      "label": "TM-k3",
+      "n_extension_admitted": 279,
+      "n_drops": 0,
+      "n_buffers": 14,
+      "verdict": "OK"
+    },
+    {
+      "label": "IM-k3",
+      "n_extension_admitted": 279,
+      "n_drops": 0,
+      "n_buffers": 14,
+      "verdict": "OK"
+    },
+    {
+      "label": "TM-n10-k5",
+      "n_extension_admitted": 279,
+      "n_drops": 0,
+      "n_buffers": 14,
+      "verdict": "OK"
+    }
+  ]
+}

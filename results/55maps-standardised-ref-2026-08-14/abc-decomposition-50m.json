@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-08-14T08:41:36.373402+00:00",
+  "git_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+  "note": "F1 @ 50 m. A0 = exact reproduction of the committed (pre-W6-E9) legacy numbers with de-duplication disabled \u2014 the gate. A1 = legacy reference on the current engine (5 m de-dup); A1-A0 is the W6-E9 fix (the canonical review's one 0.98 m twin, ruling 20c). B = standardised student + legacy ring-gated phantoms (diagnostic, NOT citable); B-A1 isolates the student-layer move, and absorbs the layer's knock-on de-dup changes (the marked student positions sit closer to some phantom records). C = standardised reference (publication); C-B isolates the extension-layer move.",
+  "cells": [
+    {
+      "cell": "TH7-k4",
+      "A0_committed": 0.8152278820375335,
+      "A0": 0.8152278820375335,
+      "A1": 0.8153153153153153,
+      "B": 0.8153003115934243,
+      "C": 0.816873773708306,
+      "mcc_C": 0.6650417680321745,
+      "A1_minus_A0_dedup_fix": 8.743327778182319e-05,
+      "B_minus_A1_student_layer": -1.5003721891004851e-05,
+      "C_minus_B_extension_layer": 0.0015734621148817407
+    },
+    {
+      "cell": "TH7-k3",
+      "A0_committed": 0.8424650648436715,
+      "A0": 0.8424650648436715,
+      "A1": 0.8425497687512566,
+      "B": 0.8421794742672979,
+      "C": 0.8387096774193548,
+      "mcc_C": 0.679608597108498,
+      "A1_minus_A0_dedup_fix": 8.470390758519297e-05,
+      "B_minus_A1_student_layer": -0.0003702944839587552,
+      "C_minus_B_extension_layer": -0.0034697968479431296
+    },
+    {
+      "cell": "T03-k4",
+      "A0_committed": 0.8358742508674167,
+      "A0": 0.8358742508674167,
+      "A1": 0.83596214511041,
+      "B": 0.8355630464552829,
+      "C": 0.8303418803418802,
+      "mcc_C": 0.6689725848962402,
+      "A1_minus_A0_dedup_fix": 8.789424299326942e-05,
+      "B_minus_A1_student_layer": -0.00039909865512710585,
+      "C_minus_B_extension_layer": -0.005221166113402731
+    },
+    {
+      "cell": "T03-k3",
+      "A0_committed": 0.8476058017087225,
+      "A0": 0.8476058017087225,
+      "A1": 0.8476900149031298,
+      "B": 0.8467356687898089,
+      "C": 0.8393343419062027,
+      "mcc_C": 0.6887952828707767,
+      "A1_minus_A0_dedup_fix": 8.421319440732322e-05,
+      "B_minus_A1_student_layer": -0.000954346113320903,
+      "C_minus_B_extension_layer": -0.007401326883606174
+    },
+    {
+      "cell": "TM-k4",
+      "A0_committed": 0.7830711278528694,
+      "A0": 0.7830711278528694,
+      "A1": 0.7831578947368422,
+      "B": 0.783081705150977,
+      "C": 0.7833239436619718,
+      "mcc_C": 0.6400648540183066,
+      "A1_minus_A0_dedup_fix": 8.676688397279975e-05,
+      "B_minus_A1_student_layer": -7.618958586519398e-05,
+      "C_minus_B_extension_layer": 0.00024223851099480775
+    },
+    {
+      "cell": "TM-k3",
+      "A0_committed": 0.8127118644067797,
+      "A0": 0.8127118644067797,
+      "A1": 0.8127979658862168,
+      "B": 0.8125663341116535,
+      "C": 0.8108515448379804,
+      "mcc_C": 0.6569092929260921,
+      "A1_minus_A0_dedup_fix": 8.610147943710622e-05,
+      "B_minus_A1_student_layer": -0.0002316317745633123,
+      "C_minus_B_extension_layer": -0.0017147892736730785
+    },
+    {
+      "cell": "IM-k3",
+      "A0_committed": 0.7986993191748807,
+      "A0": 0.7986993191748807,
+      "A1": 0.7987804878048781,
+      "B": 0.8005700906036853,
+      "C": 0.8010319917440661,
+      "mcc_C": 0.7119504066553468,
+      "A1_minus_A0_dedup_fix": 8.116862999740793e-05,
+      "B_minus_A1_student_layer": 0.0017896027988072438,
+      "C_minus_B_extension_layer": 0.0004619011403808049
+    },
+    {
+      "cell": "TM-n10-k5",
+      "A0_committed": 0.8290275152278933,
+      "A0": 0.8290275152278933,
+      "A1": 0.829114588803697,
+      "B": 0.8287037037037037,
+      "C": 0.8278732259097216,
+      "mcc_C": 0.670886957725763,
+      "A1_minus_A0_dedup_fix": 8.70735758037311e-05,
+      "B_minus_A1_student_layer": -0.0004108850999933189,
+      "C_minus_B_extension_layer": -0.0008304777939821539
+    }
+  ]
+}

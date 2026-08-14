@@ -1,0 +1,95 @@
+Loading inputs...
+  Reprojecting detections from EPSG:4326 to EPSG:32635
+  detections: 4,361
+  student GT: 4,731
+  bounds tiles: 8,541
+  standardised extension layer: 279 (included whole at every R)
+  pre-computing buffer-invariant MCC block (extension mode)...
+
+--- Buffer R = 5 m ---
+R=5m  TP=689  FP=3672  FN=4321  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.1580  R=0.1375  F1=0.1470
+  95% CIs — P=[0.1463, 0.1694] R=[0.1270, 0.1480] F1=[0.1360, 0.1579]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 10 m ---
+R=10m  TP=1755  FP=2606  FN=3255  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.4024  R=0.3503  F1=0.3746
+  95% CIs — P=[0.3866, 0.4185] R=[0.3350, 0.3654] F1=[0.3596, 0.3897]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 15 m ---
+R=15m  TP=2626  FP=1735  FN=2384  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.6022  R=0.5242  F1=0.5605
+  95% CIs — P=[0.5860, 0.6181] R=[0.5081, 0.5399] F1=[0.5453, 0.5754]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 20 m ---
+R=20m  TP=3223  FP=1138  FN=1787  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.7391  R=0.6433  F1=0.6879
+  95% CIs — P=[0.7244, 0.7534] R=[0.6273, 0.6591] F1=[0.6738, 0.7016]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 25 m ---
+R=25m  TP=3578  FP=783  FN=1432  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8205  R=0.7142  F1=0.7636
+  95% CIs — P=[0.8078, 0.8327] R=[0.6991, 0.7290] F1=[0.7512, 0.7755]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 30 m ---
+R=30m  TP=3744  FP=617  FN=1266  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8585  R=0.7473  F1=0.7991
+  95% CIs — P=[0.8469, 0.8697] R=[0.7328, 0.7615] F1=[0.7877, 0.8099]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 35 m ---
+R=35m  TP=3822  FP=539  FN=1188  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8764  R=0.7629  F1=0.8157
+  95% CIs — P=[0.8658, 0.8868] R=[0.7489, 0.7764] F1=[0.8052, 0.8257]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 40 m ---
+R=40m  TP=3856  FP=505  FN=1154  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8842  R=0.7697  F1=0.8230
+  95% CIs — P=[0.8737, 0.8943] R=[0.7560, 0.7829] F1=[0.8129, 0.8326]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 45 m ---
+R=45m  TP=3871  FP=490  FN=1139  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8876  R=0.7727  F1=0.8262
+  95% CIs — P=[0.8773, 0.8977] R=[0.7590, 0.7859] F1=[0.8163, 0.8358]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 50 m ---
+R=50m  TP=3879  FP=482  FN=1131  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8895  R=0.7743  F1=0.8279
+  95% CIs — P=[0.8792, 0.8994] R=[0.7607, 0.7875] F1=[0.8181, 0.8374]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 75 m ---
+R=75m  TP=3885  FP=476  FN=1125  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8909  R=0.7754  F1=0.8292
+  95% CIs — P=[0.8807, 0.9007] R=[0.7619, 0.7887] F1=[0.8194, 0.8387]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 100 m ---
+R=100m  TP=3889  FP=472  FN=1121  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8918  R=0.7762  F1=0.8300
+  95% CIs — P=[0.8816, 0.9016] R=[0.7627, 0.7894] F1=[0.8204, 0.8394]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 125 m ---
+R=125m  TP=3891  FP=470  FN=1119  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8922  R=0.7766  F1=0.8304
+  95% CIs — P=[0.8821, 0.9020] R=[0.7632, 0.7898] F1=[0.8208, 0.8398]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+--- Buffer R = 150 m ---
+R=150m  TP=3897  FP=464  FN=1113  n_ref_student=4731  n_reviewer_promoted=279  n_ref_ext_scoped=5010
+  P=0.8936  R=0.7778  F1=0.8317
+  95% CIs — P=[0.8835, 0.9033] R=[0.7643, 0.7911] F1=[0.8221, 0.8411]
+  MCC=0.6709  tiles TP/TN/FP/FN=2306/4839/178/1218
+
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/TM-n10-k5/corrected-f1.csv
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/TM-n10-k5/summary.json
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/TM-n10-k5/report_autogen.md

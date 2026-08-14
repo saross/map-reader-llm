@@ -1,0 +1,17 @@
+Loading inputs...
+  detections: 4,350
+  student GT: 4,746
+  bounds tiles: 8,541
+  review (yesterday): 0
+  review (today):     773
+  excluded sentinels (>150 m shell, buffer_metres=200): 10
+
+--- Buffer R = 50 m ---
+  build_extended_gt: dropped 1 phantom(s) within 5.0 m of a same-map student-GT point (channel-duplicated rescue de-duplication)
+R=50m  TP=3975  FP=375  FN=1185  n_ref_student=4746  n_reviewer_promoted=414  n_ref_ext_scoped=5160
+  P=0.9138  R=0.7703  F1=0.8360
+  95% CIs — P=[0.9054, 0.9222] R=[0.7546, 0.7837] F1=[0.8252, 0.8445]
+
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/legacy-baseline/T03-k4/corrected-f1.csv
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/legacy-baseline/T03-k4/summary.json
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-standardised-ref-2026-08-14/legacy-baseline/T03-k4/report_autogen.md
