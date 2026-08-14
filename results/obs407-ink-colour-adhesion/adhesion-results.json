@@ -1,0 +1,123 @@
+{
+ "cohorts": {
+  "model": {
+   "black": {
+    "n": 152,
+    "mean_m": 35.01,
+    "median_m": 13.71,
+    "q1_m": 6.15,
+    "q3_m": 56.42,
+    "p90_m": 101.79
+   },
+   "plain": {
+    "n": 580,
+    "mean_m": 44.24,
+    "median_m": 44.89,
+    "q1_m": 10.21,
+    "q3_m": 66.65,
+    "p90_m": 91.15
+   },
+   "tests": [
+    {
+     "statistic": "mean",
+     "observed_black_minus_plain_m": -9.231,
+     "p_two_sided": 0.0049,
+     "n_permutations": 10000,
+     "seed": 42
+    },
+    {
+     "statistic": "median",
+     "observed_black_minus_plain_m": -31.181,
+     "p_two_sided": 0.0001,
+     "n_permutations": 10000,
+     "seed": 42
+    }
+   ]
+  },
+  "student_hard": {
+   "black": {
+    "n": 52,
+    "mean_m": 10.45,
+    "median_m": 8.96,
+    "q1_m": 5.27,
+    "q3_m": 13.1,
+    "p90_m": 19.72
+   },
+   "plain": {
+    "n": 387,
+    "mean_m": 9.99,
+    "median_m": 8.25,
+    "q1_m": 4.96,
+    "q3_m": 14.27,
+    "p90_m": 19.41
+   },
+   "tests": [
+    {
+     "statistic": "mean",
+     "observed_black_minus_plain_m": 0.453,
+     "p_two_sided": 0.64694,
+     "n_permutations": 10000,
+     "seed": 42
+    },
+    {
+     "statistic": "median",
+     "observed_black_minus_plain_m": 0.711,
+     "p_two_sided": 0.49505,
+     "n_permutations": 10000,
+     "seed": 42
+    }
+   ]
+  },
+  "student_random": {
+   "black": {
+    "n": 25,
+    "mean_m": 8.99,
+    "median_m": 8.34,
+    "q1_m": 5.19,
+    "q3_m": 11.76,
+    "p90_m": 15.65
+   },
+   "plain": {
+    "n": 75,
+    "mean_m": 10.21,
+    "median_m": 8.85,
+    "q1_m": 5.42,
+    "q3_m": 13.62,
+    "p90_m": 19.1
+   },
+   "tests": [
+    {
+     "statistic": "mean",
+     "observed_black_minus_plain_m": -1.223,
+     "p_two_sided": 0.41776,
+     "n_permutations": 10000,
+     "seed": 42
+    },
+    {
+     "statistic": "median",
+     "observed_black_minus_plain_m": -0.503,
+     "p_two_sided": 0.71843,
+     "n_permutations": 10000,
+     "seed": 42
+    }
+   ]
+  }
+ },
+ "census": {
+  "records_retained": 1271,
+  "records_in_cohorts": 1271
+ },
+ "inputs": {
+  "marked_centres_csv": "results/deployment-oracle-2026-06-06/canonical-gt/marked-centres.csv",
+  "colour_classes": {
+   "black": [
+    "bench_mark_on_mound",
+    "trig_point_on_mound"
+   ],
+   "plain": [
+    "burial_mound",
+    "settlement_mound"
+   ]
+  }
+ }
+}
