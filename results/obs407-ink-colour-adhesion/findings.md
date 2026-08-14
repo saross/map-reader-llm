@@ -1,6 +1,7 @@
 # Obs 407 ink-colour adhesion test — the model adheres to black-element symbols; students do not
 
-> **Last revised**: 2026-08-15 (original publication).
+> **Last revised**: 2026-08-15 (blind-verification corrections applied
+> — three minor prose-precision fixes, no number or conclusion moved).
 > See [§ Changelog](#changelog) for revision history.
 
 **Question** (Obs 407, from the PI's ruling-21 walk item #4635): do
@@ -37,9 +38,9 @@ only.
 (All figures: `adhesion-results.json`; the median p for the model
 cohort is the add-one floor at 10,000 permutations.)
 
-**Model detections sit 3× closer to the true centre on black-element
-mounds than on plain mounds; human placement shows no colour-class
-effect at all.** Both student cohorts — the unbiased random jitter
+**Model detections sit 3× closer to the true centre (on the median;
+1.3× on the mean) on black-element mounds than on plain mounds; human
+placement shows no colour-class effect at all.** Both student cohorts — the unbiased random jitter
 sample and the condition-selected hard cases — put marks a median
 ~8–9 m from the true centre regardless of symbol class.
 
@@ -49,9 +50,9 @@ The named confound (block plan hardening 2) was that black-element
 mounds are surveyed geodetic points — plausibly larger and better
 mapped — so smaller displacements could reflect mapping quality, not
 ink colour. If that were the mechanism it should compress *human*
-placement error on black-element mounds too. It does not (student
-deltas +0.7 m / −0.5 m, p ≥ 0.42). The effect is specific to the
-model pipeline.
+placement error on black-element mounds too. It does not (median
+deltas +0.7 m / −0.5 m; all four student tests p ≥ 0.418). The
+effect is specific to the model pipeline.
 
 ## 3. Interpretation — consistent-with, not proof-of
 
@@ -90,9 +91,18 @@ bimodal in this way (median 44.89 ≈ mean 44.24).
   data-semantics gate (hardening 3) profiled per-class descriptive
   medians while establishing `item_type` semantics, so the direction
   of the model contrast was visible before the permutation tests
-  executed. The contrasts, statistics, exclusions, and cohort
-  definitions were fixed in the committed plan (`22227508a`) *before*
-  that profiling; nothing was selected on the outcome.
+  executed. The contrasts, statistics (10,000 permutations, seed 42),
+  and exclusions were fixed in the committed plan (`22227508a`,
+  hardenings 1 and 3) *before* that profiling. One refinement was
+  made *at* the gate and is disclosed here: the plan specified
+  per-source-layer tests with the jitter sample reported as a noise
+  floor; the executed design instead splits `corrected_student` into
+  the random (jitter) and condition-selected cohorts and tests all
+  three — a finer grain of the same contrast, adopted for the
+  selection-bias reason in the next bullet, not on any outcome. Of
+  the four a-priori exclusion filters, only two bind on this file
+  (`skipped` matches zero rows; every displacement-free row is
+  already `not_a_mound`), so the census is 1,317 − 45 − 1 = 1,271.
 - **Cohort semantics**: the jitter sample is random and
   conflation-free by construction
   (`planning/point-marking-app-spec.md`); student_hard rows were
@@ -100,9 +110,27 @@ bimodal in this way (median 44.89 ≈ mean 44.24).
   sites), so their agreement with the random sample (medians 8.25–8.96
   vs 8.34–8.85) is itself reassuring about human placement stability.
 - **Status**: exploratory, $0, not preregistered; extends the
-  attractor-mechanism series (Obs 396, 398, 404, 407).
+  attractor-mechanism series (Obs 396's subsidy caveat; Obs 398, 404,
+  407).
 
 ## Changelog
+
+### 2026-08-15 (later) — Blind-verification corrections
+
+Fresh-context verifier (denominator: 70 claims identified / 69
+re-derived or source-checked / 66 confirmed / 3 corrections, all
+minor; verdict pass-with-corrections). Every headline statistic,
+census figure, commit hash, and external attribution reproduced
+exactly from the raw CSV. Corrections applied: (1) "p ≥ 0.42" →
+"p ≥ 0.418" (the minimum student p is 0.41776 at the pinned seed;
+triple-derived); (2) the headline "3× closer" qualified as a median
+ratio (3.27×; the mean ratio is 1.26×); (3) the § 4 pre-specification
+claim narrowed — the three-cohort split was a disclosed refinement at
+the data-semantics gate, not fixed in the plan text (the plan
+specified per-source-layer tests with the jitter sample as a noise
+floor). Two verifier-suggested strengtheners also applied: the
+only-two-filters-bind census note and Obs 396's "subsidy caveat"
+qualifier. No number, direction, or conclusion moved.
 
 ### 2026-08-15 — Original publication
 
