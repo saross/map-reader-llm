@@ -5,6 +5,13 @@
     "verifier": "v1",
     "student_fn_rate_prior": 0.050000000000000044
   },
+  "input_paths": {
+    "consensus": "outputs/55maps-image-generalisation/consensus/consensus-3of5.geojson",
+    "probabilities": "outputs/55maps-image-generalisation/verified/probabilities.json",
+    "ground_truth": "results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "manifest": "outputs/55maps-image-generalisation/crops/candidate_manifest.json"
+  },
   "item_counts": {
     "matched": 3658,
     "student_only": 1073,
