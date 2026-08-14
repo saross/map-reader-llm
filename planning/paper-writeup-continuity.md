@@ -8,7 +8,75 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (132) — QUEUE ITEMS {2→3} UNDER THE EXECUTION CONTRACT [Session 131 CLOSED 2026-08-14; ran in Fable]
+## 🎯 NEXT SESSION (133) — PI REVIEW GATES, THEN BACK TO THE WRITE-UP [Session 132 CLOSED 2026-08-14; ran in Fable]
+
+> **THE REFERENCE-STANDARDISATION QUEUE IS CLOSED** — all five no-API
+> items done across S131–132, each leg blind-verified, US$0.00 total.
+> The controller (`planning/audit-charter.md` § 9) and the queue
+> register's changelog (f) carry the full trail.
+>
+> **START HERE — the PI review backlog, oldest first:**
+>
+> 1. **Pending observation batches now FOUR sessions deep** — S129 A–C
+>    (would-be 398–400) + S130 D–G (401–404) + S131 H–J (405–407) +
+>    S132 K–M (408–410, drafted this handoff) in
+>    `docs/notes/working-notes.md`; user-obs candidates S129 (4) +
+>    S130 (5) in `docs/notes/user-observations.md` (S131's were
+>    approved 2026-08-14). Re-surface at session start — silence is
+>    not a decline.
+> 2. **PI sign-off gates** (`manually_verified_at`) on the five new
+>    analyses: `obs280-shared-reference`,
+>    `55map-standardised-leaderboard-50m` / `-mcc-50m`, plus the
+>    S131 D-S refit trail if not yet walked.
+> 3. **Then the write-up resumes** where S117 left it: the
+>    outline-first pivot (`docs/paper/results-outline.md`, decisions
+>    D1–D15, Shawn mid-review) — now on a fully standardised footing:
+>    every 55-map figure in `docs/paper/results-draft.md` is
+>    standardised-reference, tier structures unchanged.
+>
+> **Registered residue (documentation-class, not blockers)**:
+> `results/55map-leaderboard/gs-vs-55map-transfer.{md,json}` remain
+> canonical-vintage (flagged in-text in the draft § R6); the W7-E4
+> GT-count sweep; the superseded T=0.3 fit's inputs (DS report § 6.3);
+> the verification programme (78/178 C4 batches, W7-I2 next) stays
+> parked. zbook is many commits behind (last synced `cea93d5e7`) —
+> pull before any zbook work.
+
+**Session 132 (2026-08-14, amd-tower + sapphire, US$0.00)** closed the
+entire standardisation queue, items {2→5}. (1) **Engine**: additive
+`--extension-csv` standardised mode on
+`compute_corrected_f1_multi_buffer.py` (marked centres dissolve the
+Obs 371 ring gate; whole 279-record extension at every R; MCC
+buffer-invariant, computed once per cell) — hardened through a
+dual-lens Opus audit + re-audit (`c951aa749`→`b34f90925`→`6e38c0e5f`;
+legacy path artefact-byte-identical, tier-1 1,462 passing). The audit
+caught the committed Track-2 anchors pre-dating the W6-E9 fix — the
+A0 (exact, dedup-off, tol 1e-6) / A1 (current engine) gate split is
+the repair; A0 reproduced all 8 cells at delta 0.0 exactly.
+(2) **Items 2+3**: 8 cells × 14 buffers × {F1, MCC} on the
+standardised reference (sapphire, `--jobs 8`), extension census
+279/0-drops everywhere; t0.3 scored ONCE, registered under both
+(conditions `-standardised-gt` ×8, manifest 322→330 ALL VALID, drift
+0 fail); A0/A1/B/C decomposition — rank order preserved 8/8, oracle
+margin over TH7-k3 +0.0051→+0.0006, movements all inside the Obs 396
+band; summary doc blind-verified (249/242/234/8, corrections applied).
+(3) **Item 4**: Obs 280 re-measured on the shared reference — the
+F1-vs-MCC divergence SURVIVES and is ≈90 % metric behaviour (the
+reference axis moves the MCC gap +0.004 of ~0.043, WIDENING it);
+image leads MCC from third on F1; the Obs 292 R≥75 m crossover was a
+per-run-vintage artefact; verifier (89/83/80/3) caught the draft
+importing Obs 280's matrix mechanism wrongly (this board: text wins
+F1 on PRECISION, image wins MCC on SENSITIVITY with the lowest
+tile-TN) — corrected, third-re-derived. (4) **Item 5**: both boards
+re-tiered (`--reference standardised` harness modes; legacy boards
+re-ran BYTE-IDENTICALLY first) — **tier structures identical on both
+metrics**; every 55-map figure in `results-draft.md` moved in one
+commit with a was/now changelog table; verifier (764/752/747/5)
+caught the Obs 365 step's silent comparator switch (restored at
++282/+262/~$203) + 4 provenance items. Analyses 22→24. Commits
+`c951aa749`→`7dde8dbf2` + this handoff, all pushed; sapphire synced;
+B-leg diagnostics deliberately uncommitted on sapphire (item-1
+precedent).
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **The block controller is

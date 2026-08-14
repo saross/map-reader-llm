@@ -26825,7 +26825,6 @@ confirmed cases now sit at or beyond that envelope, still under rule 3's
 (`resolved_partner_m`), so the attractor-distance distribution the pass
 exists to measure now includes its own extreme tail. Would become Obs 402.
 
-
 ## Candidates pending review (drafted 2026-08-14, Session 131) — accept / edit / discard
 
 *Drafted at handoff. With Obs 396–397 minted, numbering assumes the S129
@@ -26867,3 +26866,62 @@ displacements — testable from `marked-centres.csv` displacement vectors
 plus symbol types, one analysis, $0. Extends the attractor-mechanism
 series (Obs 396's subsidy caveat; S129 candidate A; S130 candidate G).
 Would become Obs 407.
+
+## Candidates pending review (drafted 2026-08-14, Session 132) — accept / edit / discard
+
+*Drafted at handoff. Numbering assumes the S129 batch lands as 398–400,
+S130 as 401–404, and S131 as 405–407. Silence holds these over; it does
+not discard them.*
+
+**Candidate K — a tolerance-based reproduction gate silently absorbed a
+real engine change; the A0/A1 split is the durable pattern.** The
+items-2/3 driver's first gate "reproduced" the committed Track-2 values
+within 1e-4 — but a fresh-context audit showed every cell sat a uniform
++8.7e-05 above its anchor because the anchors pre-date the W6-E9
+de-duplication fix (`1de559119`): the gate was green while absorbing a
+known engine change, exactly the failure class "reproduce before you
+vary" exists to catch. The repair: gate A0 re-runs the committed
+configuration exactly (de-duplication disabled, tolerance 1e-6 — all
+eight cells then reproduce at delta 0.0 precisely) and A1 re-runs the
+current engine, with A1−A0 attributed by name to the fix (one
+ruling-20c twin, one spurious FN, per cell). A reproduction gate should
+reproduce the anchor under the anchor's own configuration and carry
+engine evolution as a separate, named term — tolerance is for float
+noise, never for change absorption. Sources:
+`results/55maps-standardised-ref-2026-08-14/validation-gate.json`,
+`abc-decomposition-50m.json` (commits `b34f90925`, `6f7e7b651`).
+Would become Obs 408.
+
+**Candidate L — the ruling-21 reference standardisation is fully
+tier-preserving on both metrics: Obs 396's "rank-preserving to first
+order" prediction, now measured.** All eight board cells re-scored and
+both boards re-tiered on the standardised reference: every tier
+assignment identical on F1 (24/28 significant, one non-boundary
+significance swap) and on MCC (identical significant-pair sets, IM-k3
+sole Tier 1); the full A0→A1→B→C decomposition bounds every net move
+inside ±0.009, well under the Obs 396 ±0.017 band, with the
+extension-layer overhaul the dominant term and running hardest against
+high-recall k3 text cells (the old detection-positioned phantoms had
+granted them the most self-matches). The oracle's point lead over
+TH7-k3 collapsed +0.0051 → +0.0006 (p 0.127 → 0.857) — but it was
+never significant, so no conclusion moved. Sources:
+`results/55maps-standardised-ref-2026-08-14/standardised-ref-summary.md`;
+boards `02328d543`/`65ad40b7b`; blind-verified (249/242/234/8).
+Would become Obs 409.
+
+**Candidate M — across three blind-verifier passes in one session, every
+numerical claim survived and every substantive correction was imported
+or stale FRAMING; verifier value concentrates on answer-shaped prose.**
+Denominators 249/242/234/8, 89/83/80/3, 764/752/747/5 — zero of ~380
+re-derived numbers wrong, but each pass caught exactly one substantive
+prose defect: Obs 280's matrix-tree mechanism asserted "unchanged" on a
+board whose confusion matrices say the opposite (text wins F1 on
+precision, image wins MCC on sensitivity with the LOWEST tile-TN); and
+the Obs 365 step refresh silently switching comparator while keeping the
+old endpoint's price. The author's error class in synthesis documents is
+carrying forward a source's framing past its scope, not arithmetic —
+which is precisely what condition (c) (cold derivation of answer-shaped
+claims) targets, and twice what it caught. Extends Obs 397 and S131
+candidate I with a three-pass base rate. Sources: the three verifier
+reports (commits `0f19370cd`, `ddc559c78`, `a5d13e279`).
+Would become Obs 410.
