@@ -1,6 +1,8 @@
 # Meta-findings summary — synthesis of Observations 262–273
 
-> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-15 (vintage flag added to § 8's corrected-F1
+> ranking — figures are per-run-vintage, superseded by the standardised
+> reference). See [§ Changelog](#changelog) for revision history.
 
 **Created**: 2026-04-23
 **Purpose**: Paper-Discussion-shaped synthesis of the 2026-04-20/21
@@ -304,6 +306,16 @@ AUC = 0.500.
   - T=0.3 vs T=MIN: ΔF1 = +0.0467, p_BH < 0.001 (sig)
   - T=0.7 vs T=MIN: ΔF1 = +0.0305, p_BH < 0.001 (sig)
   - image vs T=MIN: ΔF1 = +0.0365, p_BH < 0.001 (sig)
+
+  > **Vintage flag (2026-08-15)**: the figures and ordering below are
+  > **per-run-vintage** (each run's own extension reference) and are
+  > superseded by the standardised reference, on which the ranking is
+  > T=0.3 (0.8303) > T=0.7 (0.8169) > image (0.8010) > T=MIN (0.7833)
+  > and the image-above-T=0.7 middle-pair order does not hold
+  > (`results/55maps-standardised-ref-2026-08-14/consolidated-standardised.csv`;
+  > `results/55maps-ds-summary-v2/report.md` §§ 4.1, 5.3). The n.s.
+  > verdict on T=0.7-vs-image below is consistent with that
+  > supersession; the point ordering is not.
 
   **Headline ranking at R = 50 m corrected**: T=0.3 (0.8436) > image (0.8333)
   > T=0.7 (0.8273) > T=MIN (0.7968). T=0.7 vs image is statistically
@@ -1263,6 +1275,20 @@ Step 5 SUPERSEDED marking are complete, per the scorecard at
 `planning/interim-docs-review.md` §6 Step 4 sequencing.
 
 ## Changelog
+
+### 2026-08-15 — Vintage flag on § 8's corrected-F1 ranking
+
+**Trigger**: the S133 citation-site sweep after
+`results/55maps-ds-summary-v2/report.md` §§ 4.1/4.3/5.3/5.4 moved
+onto the standardised reference. § 8's headline corrected-F1 ranking
+(T=0.3 0.8436 > image 0.8333 > T=0.7 0.8273 > T=MIN 0.7968) is
+per-run-vintage and its image-above-T=0.7 middle-pair order does not
+hold on the standardised reference (T=0.7 0.8169 > image 0.8010). An
+in-text flag was added rather than a body refresh — the
+gs-vs-55map-transfer registered-residue precedent; a full refresh
+back-fills on next substantive touch. **Not changed**: everything
+else, including the pairwise significance verdicts (the T=0.7-vs-image
+n.s. verdict is consistent with the supersession).
 
 ### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
 
