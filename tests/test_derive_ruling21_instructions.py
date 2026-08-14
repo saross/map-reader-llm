@@ -213,5 +213,7 @@ def test_derivation_reproduces_the_census() -> None:
     assert summary["confidence_grades_assigned"] == {
         "directly_reviewed": 806, "proxy_confirmed": 114,
     }
-    assert len(summary["cross_cluster_claims"]) == 6
+    # Zero since the 2026-08-14 walk resolved all six cross-cluster
+    # claimants to `distinct`, retiring their contradictory claims.
+    assert len(summary["cross_cluster_claims"]) == 0
     assert len(summary["clusters"]["index_tiebreaks"]) == 24

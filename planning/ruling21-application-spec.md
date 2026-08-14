@@ -1,10 +1,10 @@
 # Ruling-21 application — the instruction set for the standardised reference
 
-> **Status: DECISIONS 2–7 RATIFIED (PI, 2026-08-10); decision 1 pending
-> a six-item walk.** No layer has been mutated. The six cross-cluster
-> claimants are installed as the canonical re-review list
-> (`canonical-gt/re-review-list.csv`); materialisation proceeds once the
-> walk lands (regenerating the derivation first if any verdict moves).
+> **Status: ALL SEVEN DECISIONS RESOLVED — MATERIALISATION UNBLOCKED.**
+> Decisions 2–7 ratified 2026-08-10; decision 1's six-item walk landed
+> 2026-08-14 with all six claimants resolved `distinct`, retiring the
+> contradictory claims. Derivation regenerated (census unchanged);
+> gate fingerprint re-pinned at 756 c / 515 d / 45 x / 1 m.
 > See [§ Changelog](#changelog).
 
 **What this is.** Ruling 21 (`reports/verification/phase3-rulings-2026-07-31.md`
@@ -141,11 +141,15 @@ displacement from the true centre.
    campaign — would clear essentially the whole residue. Logged as
    priced future work; ruling 21 sequences it AFTER the standardisation
    queue, not before.
-2. **Six superseded cross-cluster claims** (57.8–169.9 m): each is an
-   attractor case where a record's claim points at a mound whose own
-   mark settled elsewhere. All six sit in structures the S130
-   re-review walks resolved; under rule 1 the marks win and both
-   mounds survive.
+2. **Six cross-cluster claims** (57.8–169.9 m): each was an attractor
+   case where a record's claim pointed at a mound whose own mark
+   settled elsewhere. **Resolved by PI walk, 2026-08-14: all six
+   claimants re-verdicted `distinct`**, so the claims are retired by
+   adjudication rather than superseded by rule; both mounds survive in
+   every case, as the marks said. The #4635 call carried a mechanism
+   worth keeping: attractor adhesion follows ink colour — the black
+   numeral binds the displaced detection to the black trig-on-mound
+   symbol, not the orange-brown mound symbol nearer by.
 
 ## Open decisions — PI outcomes (2026-08-10, Session 131)
 
@@ -196,6 +200,22 @@ displacement from the true centre.
    55-map figure in `results-draft.md`. All $0, no API.
 
 ## Changelog
+
+### 2026-08-14 — The six-claim walk landed; materialisation unblocked
+
+All six cross-cluster claimants (records 624, 2087, 2474, 4197, 4547,
+and 4635) re-verdicted `distinct` by the PI in the app; verdict tally
+moves 762 c / 509 d → **756 c / 515 d** and the gate battery's
+fingerprint is re-pinned in the same commit. Derivation regenerated:
+census byte-identical (4,731 / 278 + 1 / 806 + 114), cross-cluster
+claim list now empty; the sole instruction change is record 4547's
+mark nudged 3 m during re-centring. Walked list archived to
+`archive/marking-pass/re-review-list-2026-08-14-completed.csv`;
+canonical list is header-only again. During the walk the phantom-side
+bindings were verified live from the data (phantom:589 already claims
+record 624's mound; phantom:430 and phantom:699 already bind to
+records 2475 and 4634 respectively), so every retirement leaves
+exactly one pairing per mound.
 
 ### 2026-08-10 (b) — Seven decisions walked with the PI
 

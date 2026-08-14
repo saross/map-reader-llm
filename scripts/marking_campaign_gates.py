@@ -14,7 +14,8 @@ The eight gates:
 1. **Completeness** — every queue item has exactly one decisive mark
    (``d``/``c``/``x``/``m``; never ``uncertain``/``skipped``), resolved
    through the app's own identity rule, and the verdict tally matches
-   the campaign-close fingerprint (762 c / 509 d / 45 x / 1 m).
+   the pinned fingerprint (756 c / 515 d / 45 x / 1 m since the
+   2026-08-14 six-claim walk; 762 c / 509 d at campaign close).
 2. **Final four landed** — the last four adjudications of the campaign,
    anchored on stable item ids: ``promoted_phantom:688`` (c → student
    #2667), ``promoted_phantom:255`` (c → phantom at 115.0 m) and
@@ -90,11 +91,13 @@ from mark_mound_centres import (  # noqa: E402
     _item_id,
 )
 
-# Campaign-close fingerprint (commit 1b9c308aa): verdict tallies at the
-# moment all eight gates first went green.
+# Campaign-close fingerprint. Originally 762/509/45/1 (commit
+# 1b9c308aa); re-pinned 2026-08-14 after the PI's six-item
+# cross-cluster walk (ruling-21 spec, decision 1) resolved all six
+# claimants to `distinct`, retiring their contradictory claims.
 _EXPECTED_TALLY = {
-    "same_as_neighbour": 762,
-    "distinct": 509,
+    "same_as_neighbour": 756,
+    "distinct": 515,
     "not_a_mound": 45,
     "merge_incorrect": 1,
 }
