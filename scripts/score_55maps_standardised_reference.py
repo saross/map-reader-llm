@@ -8,24 +8,39 @@ full-buffer evaluation (item 2) and unify F1 and tile-level MCC onto a
 single shared reference across the eight board cells (item 3). The T=0.3
 cells are scored ONCE here and registered under both items.
 
-Three legs, following the item-1 A/B/C vintage-decomposition template
+Legs, following the item-1 A/B/C vintage-decomposition template
 (Dawid–Skene report § 6.3):
 
-- **Leg A — reproduction gate.** Re-score every cell with the LEGACY
-  reference (reviewed student GT 4,746 + ring-gated
-  ``canonical-review.csv`` phantoms) at R = 50 m and require the committed
-  Track-2 F1 values (``results/55maps-extended-gt-2026-06-07/``) to
-  reproduce within 1e-4. "Reproduce before you vary" — a red gate is a
-  contract stop state, never absorbed.
+- **Leg A — reproduction gate + corrected legacy baseline.** Two
+  sub-legs per cell, both against the LEGACY reference (reviewed student
+  GT 4,746 + ring-gated ``canonical-review.csv`` phantoms) at R = 50 m:
+
+  - **A0** runs with ``dedup_tolerance_m = 0`` — the exact configuration
+    that produced the committed Track-2 values
+    (``results/55maps-extended-gt-2026-06-07/``, 2026-06-07, which
+    PRE-DATE the W6-E9 channel-duplicate fix ``1de559119``). A0 must
+    reproduce the committed F1 within 1e-6. "Reproduce before you vary"
+    — a red gate is a contract stop state, never absorbed.
+  - **A1** runs with the current default (5 m de-duplication) and is the
+    corrected legacy baseline for the decomposition. A1 − A0 is the
+    W6-E9 fix itself: the canonical review's one true twin (0.98 m,
+    ruling 20c) stops double-counting, removing one spurious FN —
+    a uniform ≈ +8.7e-05 across all cells. The driver asserts exactly
+    one drop per cell.
+
 - **Leg B — diagnostic decomposition.** Standardised STUDENT layer +
-  legacy ring-gated phantoms at R = 50 m. B − A isolates the student-layer
-  standardisation; C − B isolates the extension-layer overhaul (ring-gated
+  legacy ring-gated phantoms at R = 50 m. B − A1 isolates the
+  student-layer standardisation (including its knock-on de-duplication
+  changes); C − B isolates the extension-layer overhaul (ring-gated
   detection positions → 279 marked centres, included whole at every R).
   Diagnostic only, not citable (item-1 precedent: B fits uncommitted).
+
 - **Leg C — publication scoring.** Standardised student layer +
-  standardised extension layer, full 14-buffer sweep, ``--compute-mcc``,
-  10,000-iteration bootstrap. F1 and MCC now share one reference —
-  item 3's completion gate.
+  standardised extension layer, full 14-buffer sweep, tile MCC on the
+  SAME reference, 10,000-iteration bootstrap. F1 and MCC now share one
+  reference — item 3's completion gate. Post-run hard checks: every row
+  of every cell must show 0 duplicate drops and all 279 extension
+  records admitted.
 
 Reference-consumption semantics (read at source per the S132 start
 instruction): the standardised extension layer carries marked centres
@@ -34,22 +49,30 @@ instruction): the standardised extension layer carries marked centres
 extended GT whole at every buffer — see
 ``compute_corrected_f1_multi_buffer.load_standardised_extension``.
 
-Feature-count crosscheck: each cell's detection GeoJSON is counted and
-compared against the documented n_detections BEFORE any scoring
-(Session 77 wrong-source class); mismatch is a hard stop.
+Contract mechanics enforced here:
+
+- Feature-count crosscheck of each cell's detection GeoJSON against the
+  documented n_detections BEFORE any scoring (Session 77 wrong-source
+  class); mismatch is a hard stop.
+- The A0 gate runs and passes BEFORE legs B/C execute. Running B or C
+  without leg A in the same invocation requires a prior
+  ``validation-gate.json`` in the output base showing a PASS for every
+  requested cell.
+- ``validation-gate.json`` is written immediately after the gate is
+  evaluated, so a later crash cannot destroy the gate evidence.
 
 Pure deterministic re-scoring of committed artefacts; NO API, US$0.
-Compute on sapphire (project rule); use ``--jobs 8`` there for cell-level
-parallelism (the engine itself is single-threaded per buffer).
+Compute on sapphire (project rule); use ``--jobs 8`` there for
+cell-level parallelism (the engine itself is single-threaded).
 
 Usage::
 
-    # Pre-flight smoke (local, fast): crosscheck + A gate on one cell
+    # Pre-flight smoke (fast): checks + leg A + C at R=[20,50], one cell
     python scripts/score_55maps_standardised_reference.py --smoke
 
     # Full run (sapphire):
-    python scripts/score_55maps_standardised_reference.py --legs A B C \
-        --jobs 8
+    python scripts/score_55maps_standardised_reference.py \\
+        --legs A B C --jobs 8
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -58,6 +81,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import csv
 import json
 import sys
 from concurrent.futures import ProcessPoolExecutor
@@ -75,7 +99,9 @@ REPO = SCRIPT_DIR.parent
 STD_DIR = REPO / "results/deployment-oracle-2026-06-06/canonical-gt/standardised"
 STUDENT_STD = STD_DIR / "student-mounds-55maps-standardised.geojson"
 EXTENSION_STD = STD_DIR / "extension-mounds-standardised.csv"
-STUDENT_LEGACY = REPO / "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
+STUDENT_LEGACY = (
+    REPO / "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
+)
 CANONICAL_REVIEW = (
     REPO / "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv"
 )
@@ -93,45 +119,53 @@ BUFFERS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150]
 # n_det = documented feature count (crosschecked against the GeoJSON before
 # scoring). gate_legacy_50m = committed Track-2 F1 @ 50 m against the LEGACY
 # canonical extended GT (results/55maps-extended-gt-2026-06-07/<cell>/
-# summary.json), the leg-A reproduction target.
+# summary.json, PRE-W6-E9 — reproduced by sub-leg A0 with dedup disabled).
 CELLS = [
     {
         "label": "TH7-k4", "config": "text-high-T0.7", "k": 4,
         "role": "carry-forward",
-        "det": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+        "det": ("outputs/55maps-text-high-generalisation/"
+                "verified/verified_detections.geojson"),
         "n_det": 4164, "gate_legacy_50m": 0.8152278820375335,
     },
     {
         "label": "TH7-k3", "config": "text-high-T0.7", "k": 3,
         "role": "threshold",
-        "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
+        "det": ("results/deployment-oracle-2026-06-06/k3-scoring/"
+                "55maps-text-high-generalisation/k3_verified.geojson"),
         "n_det": 4786, "gate_legacy_50m": 0.8424650648436715,
     },
     {
         "label": "T03-k4", "config": "text-high-T0.3", "k": 4,
         "role": "config (item 2: the t0.3 run)",
-        "det": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+        "det": ("outputs/55maps-text-high-t0.3-generalisation/"
+                "verified/verified_detections.geojson"),
         "n_det": 4350, "gate_legacy_50m": 0.8358742508674167,
     },
     {
         "label": "T03-k3", "config": "text-high-T0.3", "k": 3,
         "role": "ORACLE (item 2: the t0.3 run)",
-        "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+        "det": ("results/deployment-oracle-2026-06-06/k3-scoring/"
+                "55maps-text-high-t0.3-generalisation/k3_verified.geojson"),
         "n_det": 4905, "gate_legacy_50m": 0.8476058017087225,
     },
     {
         "label": "TM-k4", "config": "text-min", "k": 4, "role": "config",
-        "det": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+        "det": ("outputs/55maps-text-min-generalisation/"
+                "verified/verified_detections.geojson"),
         "n_det": 3865, "gate_legacy_50m": 0.7830711278528694,
     },
     {
         "label": "TM-k3", "config": "text-min", "k": 3, "role": "threshold",
-        "det": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
+        "det": ("results/deployment-oracle-2026-06-06/k3-scoring/"
+                "55maps-text-min-generalisation/k3_verified.geojson"),
         "n_det": 4279, "gate_legacy_50m": 0.8127118644067797,
     },
     {
-        "label": "IM-k3", "config": "image", "k": 3, "role": "config (carried)",
-        "det": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "label": "IM-k3", "config": "image", "k": 3,
+        "role": "config (carried)",
+        "det": ("outputs/55maps-image-generalisation/"
+                "verified/verified_detections.geojson"),
         "n_det": 4680, "gate_legacy_50m": 0.7986993191748807,
     },
     {
@@ -142,7 +176,35 @@ CELLS = [
     },
 ]
 
-GATE_TOL = 1e-4  # matches the S105 validation-gate tolerance
+# A0 reproduces the committed numbers under their own configuration, so the
+# tolerance is float-path noise only (S105 observed ~2e-7), not a band that
+# could absorb a real engine change.
+GATE_TOL = 1e-6
+# Expected channel-duplicate drops in A1: the canonical review's single true
+# twin vs the legacy student layer (0.98 m, ruling 20c).
+A1_EXPECTED_DROPS = 1
+SMOKE_CELL = "TH7-k4"
+SMOKE_BUFFERS = [20, 50]
+
+
+def preflight_paths(cells: list[dict]) -> None:
+    """Hard-stop if any fixed input or detection file is missing."""
+    fixed = {
+        "standardised student layer": STUDENT_STD,
+        "standardised extension layer": EXTENSION_STD,
+        "legacy student layer": STUDENT_LEGACY,
+        "canonical review": CANONICAL_REVIEW,
+        "bounds": BOUNDS,
+    }
+    missing = [f"{name}: {path}" for name, path in fixed.items()
+               if not path.exists()]
+    missing += [f"{c['label']} detections: {c['det']}" for c in cells
+                if not (REPO / c["det"]).exists()]
+    if missing:
+        raise SystemExit(
+            "missing input file(s) — stop state:\n  " + "\n  ".join(missing)
+        )
+    print(f"  paths OK: {len(fixed)} fixed inputs, {len(cells)} cell inputs")
 
 
 def crosscheck_feature_counts(cells: list[dict]) -> list[dict]:
@@ -200,7 +262,7 @@ def census_checks() -> None:
         )
     print(
         f"  census OK: student {n_student}, extension {len(ext)}, "
-        f"min nearest_student_m {min_d} m (> 5 m dedup tolerance)"
+        f"min nearest_student_m pinned at {min_d} m"
     )
 
 
@@ -208,9 +270,7 @@ def ensure_empty_yesterday(output_base: Path) -> Path:
     """Header-only review CSV for legacy-mode legs (single-source pattern)."""
     output_base.mkdir(parents=True, exist_ok=True)
     path = output_base / "empty-yesterday-review.csv"
-    path.write_text(
-        "candidate_id,human_label,buffer_metres,x,y,map_name\n"
-    )
+    path.write_text("candidate_id,human_label,buffer_metres,x,y,map_name\n")
     return path
 
 
@@ -241,55 +301,75 @@ def _score_cell(job: dict) -> dict:
             n_bootstrap=job["n_bootstrap"],
             seed=job["seed"],
             compute_mcc=job["compute_mcc"],
+            dedup_tolerance_m=job["dedup_tolerance_m"],
         )
     with open(out_dir / "summary.json", encoding="utf-8") as fh:
         summary = json.load(fh)
     return {"label": job["label"], "leg": job["leg"], "summary": summary}
 
 
-def f1_at(summary: dict, r_m: int) -> float | None:
-    """Corrected-F1 point estimate at buffer R from a cell summary."""
-    for row in summary["results"]:
-        if row["R_m"] == r_m:
-            return row["F1"]
+def row_at(summary: dict | None, r_m: int) -> dict | None:
+    """The result row at buffer R from a cell summary (None if absent)."""
+    if summary is None:
+        return None
+    for row in summary.get("results", []):
+        if row.get("R_m") == r_m:
+            return row
     return None
 
 
-def mcc_at(summary: dict, r_m: int) -> float | None:
-    """Tile MCC at buffer R from a cell summary (None if absent)."""
-    for row in summary["results"]:
-        if row["R_m"] == r_m:
-            return (row.get("tile_classification") or {}).get("mcc")
-    return None
+def f1_at(summary: dict | None, r_m: int) -> float | None:
+    """Corrected-F1 point estimate at buffer R (None if absent)."""
+    row = row_at(summary, r_m)
+    return row.get("F1") if row else None
+
+
+def mcc_at(summary: dict | None, r_m: int) -> float | None:
+    """Tile MCC at buffer R (None if absent)."""
+    row = row_at(summary, r_m)
+    return (row.get("tile_classification") or {}).get("mcc") if row else None
 
 
 def build_jobs(
     cells: list[dict], legs: list[str], output_base: Path,
     n_bootstrap: int, seed: int, empty_yesterday: Path,
+    buffers_c: list[int],
 ) -> list[dict]:
-    """Expand cells × legs into worker job dicts."""
+    """Expand cells × legs into worker job dicts.
+
+    Leg "A" expands into sub-legs A0 (dedup disabled — the exact
+    reproduction of the pre-W6-E9 committed numbers) and A1 (current
+    engine — the corrected legacy baseline).
+    """
     jobs = []
     for cell in cells:
         det = str(REPO / cell["det"])
+        legacy = {
+            "det": det, "student_gt": str(STUDENT_LEGACY),
+            "review_yesterday": str(empty_yesterday),
+            "review_today": str(CANONICAL_REVIEW),
+            "buffers": [50], "n_bootstrap": 200, "seed": seed,
+            "compute_mcc": False,
+        }
         if "A" in legs:
             jobs.append({
-                "label": cell["label"], "leg": "A", "det": det,
-                "student_gt": str(STUDENT_LEGACY),
-                "review_yesterday": str(empty_yesterday),
-                "review_today": str(CANONICAL_REVIEW),
+                **legacy, "label": cell["label"], "leg": "A0",
                 "out_dir": str(output_base / "repro-gate" / cell["label"]),
-                "buffers": [50], "n_bootstrap": 200, "seed": seed,
-                "compute_mcc": False,
+                "dedup_tolerance_m": 0.0,
+            })
+            jobs.append({
+                **legacy, "label": cell["label"], "leg": "A1",
+                "out_dir": str(
+                    output_base / "legacy-baseline" / cell["label"]
+                ),
+                "dedup_tolerance_m": 5.0,
             })
         if "B" in legs:
             jobs.append({
-                "label": cell["label"], "leg": "B", "det": det,
+                **legacy, "label": cell["label"], "leg": "B",
                 "student_gt": str(STUDENT_STD),
-                "review_yesterday": str(empty_yesterday),
-                "review_today": str(CANONICAL_REVIEW),
                 "out_dir": str(output_base / "b-diagnostic" / cell["label"]),
-                "buffers": [50], "n_bootstrap": 200, "seed": seed,
-                "compute_mcc": False,
+                "dedup_tolerance_m": 5.0,
             })
         if "C" in legs:
             jobs.append({
@@ -297,8 +377,9 @@ def build_jobs(
                 "student_gt": str(STUDENT_STD),
                 "extension_csv": str(EXTENSION_STD),
                 "out_dir": str(output_base / cell["label"]),
-                "buffers": BUFFERS, "n_bootstrap": n_bootstrap, "seed": seed,
-                "compute_mcc": True,
+                "buffers": buffers_c, "n_bootstrap": n_bootstrap,
+                "seed": seed, "compute_mcc": True,
+                "dedup_tolerance_m": 5.0,
             })
     return jobs
 
@@ -306,42 +387,127 @@ def build_jobs(
 def evaluate_gate(
     cells: list[dict], results: dict[tuple[str, str], dict],
 ) -> tuple[bool, list[dict]]:
-    """Leg-A reproduction gate: committed legacy F1 @ 50 m within GATE_TOL."""
+    """A0 reproduction gate plus A1 baseline checks.
+
+    Every cell must carry an A0 summary whose F1 @ 50 m matches the
+    committed value within GATE_TOL, and an A1 summary whose duplicate
+    drop count is exactly A1_EXPECTED_DROPS. A missing summary is a
+    FAIL, never a skip; an empty cell list cannot pass.
+    """
     rows = []
-    all_pass = True
+    all_pass = bool(cells)
     for cell in cells:
-        summary = results.get((cell["label"], "A"))
-        if summary is None:
+        a0 = row_at(results.get((cell["label"], "A0")), 50)
+        a1 = row_at(results.get((cell["label"], "A1")), 50)
+        if a0 is None or a1 is None:
+            all_pass = False
+            rows.append({
+                "label": cell["label"], "target": cell["gate_legacy_50m"],
+                "got": None, "delta": None, "tol": GATE_TOL,
+                "verdict": "FAIL (missing A0/A1 summary)",
+            })
+            print(f"  gate {cell['label']:10s} FAIL — missing A0/A1 summary")
             continue
-        got = f1_at(summary, 50)
+        got = a0["F1"]
         delta = got - cell["gate_legacy_50m"]
-        ok = abs(delta) <= GATE_TOL
+        drops = a1.get("n_phantom_duplicates_dropped")
+        ok = abs(delta) <= GATE_TOL and drops == A1_EXPECTED_DROPS
         all_pass &= ok
         rows.append({
             "label": cell["label"], "target": cell["gate_legacy_50m"],
             "got": got, "delta": delta, "tol": GATE_TOL,
+            "a1_f1": a1["F1"], "a1_minus_a0_dedup_fix": a1["F1"] - got,
+            "a1_drops": drops, "a1_expected_drops": A1_EXPECTED_DROPS,
             "verdict": "PASS" if ok else "FAIL",
         })
         print(
-            f"  gate {cell['label']:10s} target={cell['gate_legacy_50m']:.6f} "
-            f"got={got:.6f} delta={delta:+.2e}  "
-            f"{'PASS' if ok else 'FAIL'}"
+            f"  gate {cell['label']:10s} "
+            f"target={cell['gate_legacy_50m']:.7f} got={got:.7f} "
+            f"delta={delta:+.2e}  A1-A0={a1['F1'] - got:+.2e} "
+            f"drops={drops}  {'PASS' if ok else 'FAIL'}"
         )
     return all_pass, rows
+
+
+def check_c_leg(
+    cells: list[dict], results: dict[tuple[str, str], dict],
+) -> list[dict]:
+    """Post-C hard checks: whole extension layer admitted, zero drops.
+
+    Guards against silent truncation of the reference between load and
+    scoring (audit finding S1): every row of every C summary must show
+    all N_EXTENSION_STD records admitted and 0 duplicate drops.
+    """
+    rows = []
+    failures = []
+    for cell in cells:
+        summary = results.get((cell["label"], "C"))
+        if summary is None:
+            failures.append(f"{cell['label']}: no C summary")
+            continue
+        for row in summary.get("results", []):
+            if (row.get("n_reviewer_promoted_at_R") != N_EXTENSION_STD
+                    or row.get("n_phantom_duplicates_dropped") != 0):
+                failures.append(
+                    f"{cell['label']} R={row.get('R_m')}: "
+                    f"admitted={row.get('n_reviewer_promoted_at_R')} "
+                    f"drops={row.get('n_phantom_duplicates_dropped')}"
+                )
+        rows.append({
+            "label": cell["label"],
+            "n_extension_admitted": N_EXTENSION_STD,
+            "n_drops": 0,
+            "verdict": "OK",
+        })
+    if failures:
+        raise SystemExit(
+            "C-leg extension census FAILED — stop state:\n  "
+            + "\n  ".join(failures)
+        )
+    print(f"  C-leg extension census OK for {len(rows)} cell(s): "
+          f"{N_EXTENSION_STD} admitted, 0 drops, every buffer")
+    return rows
+
+
+def require_prior_gate(cells: list[dict], gate_path: Path) -> dict:
+    """B/C without leg A: demand a prior PASS gate covering these cells.
+
+    Returns the prior gate payload so the caller can carry its
+    certification forward into any rewritten gate file (never clobber a
+    PASS with ``null``).
+    """
+    if not gate_path.exists():
+        raise SystemExit(
+            "legs B/C requested without leg A, and no prior "
+            f"validation-gate.json at {gate_path} — the reproduction gate "
+            "must pass before anything varies (contract stop state)"
+        )
+    with open(gate_path, encoding="utf-8") as fh:
+        gate = json.load(fh)
+    passed_labels = {
+        r["label"] for r in gate.get("gate_rows", [])
+        if r.get("verdict") == "PASS"
+    }
+    missing = [c["label"] for c in cells if c["label"] not in passed_labels]
+    if gate.get("gate_passed") is not True or missing:
+        raise SystemExit(
+            f"prior gate at {gate_path} does not certify cell(s) "
+            f"{missing or '(gate not passed)'} — re-run leg A first"
+        )
+    print(f"  prior gate OK: {gate_path} certifies "
+          f"{len(cells)} requested cell(s)")
+    return gate
 
 
 def write_consolidated(
     output_base: Path, cells: list[dict],
     results: dict[tuple[str, str], dict], legs: list[str],
 ) -> None:
-    """Consolidated per-cell CSV + A/B/C decomposition table at 50 m."""
-    import csv as csv_mod
-
-    # Full C-leg sweep table
+    """Consolidated per-cell CSV + decomposition table at 50 m."""
     if "C" in legs:
         path = output_base / "consolidated-standardised.csv"
         with open(path, "w", newline="", encoding="utf-8") as fh:
-            writer = csv_mod.writer(fh)
+            writer = csv.writer(fh)
             writer.writerow([
                 "cell", "config", "k", "R_m", "TP", "FP", "FN",
                 "n_ref_student", "n_extension", "n_ref_extended",
@@ -352,7 +518,7 @@ def write_consolidated(
                 summary = results.get((cell["label"], "C"))
                 if summary is None:
                     continue
-                for row in summary["results"]:
+                for row in summary.get("results", []):
                     tc = row.get("tile_classification") or {}
                     mcc_ci = tc.get("mcc_CI") or [None, None]
                     writer.writerow([
@@ -367,17 +533,21 @@ def write_consolidated(
                     ])
         print(f"Wrote {path}")
 
-    # A/B/C decomposition at the 50 m headline
+    # A0/A1/B/C decomposition at the 50 m headline
     decomp = []
     for cell in cells:
-        entry = {"cell": cell["label"], "A_committed": cell["gate_legacy_50m"]}
-        for leg in ("A", "B", "C"):
-            summary = results.get((cell["label"], leg))
-            entry[leg] = f1_at(summary, 50) if summary else None
+        entry = {
+            "cell": cell["label"],
+            "A0_committed": cell["gate_legacy_50m"],
+        }
+        for leg in ("A0", "A1", "B", "C"):
+            entry[leg] = f1_at(results.get((cell["label"], leg)), 50)
         if entry.get("C") is not None:
-            entry["mcc_C"] = mcc_at(results[(cell["label"], "C")], 50)
-        if entry.get("A") is not None and entry.get("B") is not None:
-            entry["B_minus_A_student_layer"] = entry["B"] - entry["A"]
+            entry["mcc_C"] = mcc_at(results.get((cell["label"], "C")), 50)
+        if entry.get("A0") is not None and entry.get("A1") is not None:
+            entry["A1_minus_A0_dedup_fix"] = entry["A1"] - entry["A0"]
+        if entry.get("A1") is not None and entry.get("B") is not None:
+            entry["B_minus_A1_student_layer"] = entry["B"] - entry["A1"]
         if entry.get("B") is not None and entry.get("C") is not None:
             entry["C_minus_B_extension_layer"] = entry["C"] - entry["B"]
         decomp.append(entry)
@@ -386,11 +556,17 @@ def write_consolidated(
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "git_commit": engine.git_commit_hash(),
         "note": (
-            "F1 @ 50 m. A = legacy reference reproduction (gate); "
-            "B = standardised student + legacy ring-gated phantoms "
-            "(diagnostic, NOT citable); C = standardised reference "
-            "(publication). B-A isolates the student-layer move; "
-            "C-B isolates the extension-layer move."
+            "F1 @ 50 m. A0 = exact reproduction of the committed "
+            "(pre-W6-E9) legacy numbers with de-duplication disabled — "
+            "the gate. A1 = legacy reference on the current engine "
+            "(5 m de-dup); A1-A0 is the W6-E9 fix (the canonical "
+            "review's one 0.98 m twin, ruling 20c). B = standardised "
+            "student + legacy ring-gated phantoms (diagnostic, NOT "
+            "citable); B-A1 isolates the student-layer move, and "
+            "absorbs the layer's knock-on de-dup changes (the marked "
+            "student positions sit closer to some phantom records). "
+            "C = standardised reference (publication); C-B isolates "
+            "the extension-layer move."
         ),
         "cells": decomp,
     }
@@ -400,22 +576,37 @@ def write_consolidated(
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
-    p = argparse.ArgumentParser(description=__doc__)
+    p = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     p.add_argument(
         "--legs", nargs="+", choices=["A", "B", "C"],
         default=["A", "B", "C"],
-        help="Which legs to run (default: all three).",
+        help=(
+            "Which legs to run (default: all). B/C without A require a "
+            "prior PASS validation-gate.json in the output base. "
+            "--smoke overrides this to A + C."
+        ),
     )
     p.add_argument(
         "--cells", nargs="+", default=None,
-        help="Subset of cell labels (default: all 8).",
+        help="Subset of cell labels (default: all 8). "
+             "Not combinable with --smoke.",
     )
     p.add_argument(
         "--output-base", type=Path,
         default=REPO / "results/55maps-standardised-ref-2026-08-14",
+        help="Output directory root (default: the dated results dir).",
     )
-    p.add_argument("--n-bootstrap", type=int, default=10_000)
-    p.add_argument("--seed", type=int, default=42)
+    p.add_argument(
+        "--n-bootstrap", type=int, default=10_000,
+        help="Bootstrap iterations for leg C (default: 10000).",
+    )
+    p.add_argument(
+        "--seed", type=int, default=42,
+        help="Random seed for bootstrap reproducibility (default: 42).",
+    )
     p.add_argument(
         "--jobs", type=int, default=1,
         help=(
@@ -426,8 +617,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--smoke", action="store_true",
         help=(
-            "Fast pre-flight: crosscheck + census + leg A and C on the "
-            "TH7-k4 cell only, C at R=[20, 50] with 200 bootstrap."
+            f"Fast pre-flight: checks + legs A and C on the {SMOKE_CELL} "
+            f"cell only, C at R={SMOKE_BUFFERS} with 200 bootstrap. "
+            "Not combinable with --cells."
         ),
     )
     return p.parse_args()
@@ -436,25 +628,34 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     """CLI entry point."""
     args = parse_args()
+    if args.smoke and args.cells:
+        raise SystemExit("--smoke and --cells are mutually exclusive")
+
     output_base = args.output_base
     output_base.mkdir(parents=True, exist_ok=True)
 
     cells = CELLS
-    if args.cells:
+    if args.smoke:
+        cells = [c for c in CELLS if c["label"] == SMOKE_CELL]
+    elif args.cells:
         cells = [c for c in CELLS if c["label"] in args.cells]
         missing = set(args.cells) - {c["label"] for c in cells}
         if missing:
             raise SystemExit(f"unknown cell label(s): {sorted(missing)}")
+    if not cells:
+        raise SystemExit("cell selection is empty — nothing to score")
+
+    legs = ["A", "C"] if args.smoke else args.legs
+    n_bootstrap = 200 if args.smoke else args.n_bootstrap
+    buffers_c = SMOKE_BUFFERS if args.smoke else BUFFERS
 
     print("Pre-flight checks...")
+    preflight_paths(cells)
     census_checks()
     crosscheck_rows = crosscheck_feature_counts(cells)
 
     empty_yesterday = ensure_empty_yesterday(output_base)
-
-    legs = ["A", "C"] if args.smoke else args.legs
-    if args.smoke:
-        cells = [c for c in cells if c["label"] == "TH7-k4"]
+    gate_path = output_base / "validation-gate.json"
 
     def run_jobs(jobs: list[dict], results: dict) -> None:
         """Execute jobs (parallel when --jobs > 1) and collect summaries."""
@@ -469,26 +670,13 @@ def main() -> None:
                 results[(res["label"], res["leg"])] = res["summary"]
                 print(f"  done {res['label']} leg {res['leg']}")
 
-    n_bootstrap = 200 if args.smoke else args.n_bootstrap
-
     results: dict[tuple[str, str], dict] = {}
 
     # Leg A runs — and gates — BEFORE anything varies (contract:
     # "reproduce before you vary"). A red gate halts here; B/C never run.
     gate_passed = None
     gate_rows: list[dict] = []
-    if "A" in legs:
-        a_jobs = build_jobs(
-            cells, ["A"], output_base, n_bootstrap, args.seed,
-            empty_yesterday,
-        )
-        print(f"\nLeg A (reproduction gate): {len(a_jobs)} job(s), "
-              f"jobs={args.jobs}...")
-        run_jobs(a_jobs, results)
-        print("\nLeg-A reproduction gate:")
-        gate_passed, gate_rows = evaluate_gate(cells, results)
-
-    gate_path = output_base / "validation-gate.json"
+    c_rows: list[dict] = []
 
     def write_gate() -> None:
         gate_path.write_text(json.dumps({
@@ -498,29 +686,48 @@ def main() -> None:
             "gate_tolerance": GATE_TOL,
             "gate_passed": gate_passed,
             "gate_rows": gate_rows,
+            "c_leg_extension_census": c_rows,
         }, indent=2))
         print(f"Wrote {gate_path}")
 
-    if gate_passed is False:
-        write_gate()
-        raise SystemExit(
-            "leg-A reproduction gate FAILED — contract stop state: halt "
-            "and escalate; legs B/C were NOT run"
+    if "A" in legs:
+        a_jobs = build_jobs(
+            cells, ["A"], output_base, n_bootstrap, args.seed,
+            empty_yesterday, buffers_c,
         )
+        print(f"\nLeg A (A0 reproduction gate + A1 baseline): "
+              f"{len(a_jobs)} job(s), jobs={args.jobs}...")
+        run_jobs(a_jobs, results)
+        print("\nLeg-A reproduction gate:")
+        gate_passed, gate_rows = evaluate_gate(cells, results)
+        # Persist the gate evidence IMMEDIATELY — a later B/C crash must
+        # not destroy it (audit finding 5).
+        write_gate()
+        if not gate_passed:
+            raise SystemExit(
+                "leg-A reproduction gate FAILED — contract stop state: "
+                "halt and escalate; legs B/C were NOT run"
+            )
+    else:
+        prior = require_prior_gate(cells, gate_path)
+        # Carry the prior certification forward so the end-of-run gate
+        # rewrite preserves it rather than clobbering PASS with null.
+        gate_passed = prior.get("gate_passed")
+        gate_rows = prior.get("gate_rows", [])
 
     bc_legs = [leg for leg in legs if leg in ("B", "C")]
     if bc_legs:
         bc_jobs = build_jobs(
-            cells, bc_legs, output_base, n_bootstrap,
-            args.seed, empty_yesterday,
+            cells, bc_legs, output_base, n_bootstrap, args.seed,
+            empty_yesterday, buffers_c,
         )
-        if args.smoke:
-            for j in bc_jobs:
-                j["buffers"] = [20, 50]
         print(f"\nLegs {bc_legs}: {len(bc_jobs)} job(s), jobs={args.jobs}...")
         run_jobs(bc_jobs, results)
+        if "C" in bc_legs:
+            c_rows = check_c_leg(cells, results)
 
-    write_gate()
+    if "A" in legs or bc_legs:
+        write_gate()
     write_consolidated(output_base, cells, results, legs)
     print("\nAll requested legs complete.")
 

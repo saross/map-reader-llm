@@ -35,7 +35,18 @@ Context:
   the 150 m row should therefore be reported as an upper bound, not as a
   practitioner-useful recall claim.
 
+Two phantom-source modes (mutually exclusive):
+
+- **Legacy ring-gated mode** (``--review-yesterday`` + ``--review-today``):
+  behaviour and output byte-identical to the original script — phantoms
+  gate in at ``buffer_metres <= R`` per :func:`build_phantom_gdf`.
+- **Standardised mode** (``--extension-csv``, Session 132 / ruling 21):
+  the standardised extension layer (marked centres, ±2.5 m) enters the
+  extended GT whole at EVERY buffer radius — the ring-censoring gate is
+  dissolved; see :func:`load_standardised_extension`.
+
 Usage:
+    # Legacy ring-gated mode
     python scripts/compute_corrected_f1_multi_buffer.py \\
         --verified-detections outputs/.../verified_detections.geojson \\
         --student-gt inputs/.../student-mounds-55maps-reviewed.geojson \\
@@ -45,6 +56,15 @@ Usage:
         --output-dir results/.../corrected-f1-multi-buffer \\
         [--buffers 50 75 100 125 150] \\
         [--n-bootstrap 10000] [--seed 42]
+
+    # Standardised mode (ruling 21)
+    python scripts/compute_corrected_f1_multi_buffer.py \\
+        --verified-detections outputs/.../verified_detections.geojson \\
+        --student-gt results/.../standardised/student-mounds-55maps-standardised.geojson \\
+        --bounds inputs/.../55maps_evaluation_bounds.geojson \\
+        --extension-csv results/.../standardised/extension-mounds-standardised.csv \\
+        --output-dir results/.../standardised-scoring \\
+        --compute-mcc
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -271,10 +291,11 @@ def load_standardised_extension(
     buffer radius, sub-50 m included. Per-buffer variation in the extended
     GT therefore disappears; the Hungarian matching radius alone decides
     matches. The ``nearest_student_m`` column (exact distance to the
-    nearest standardised student record) is retained for the
-    :func:`build_extended_gt` de-duplication audit — its observed minimum
-    (10.32 m) sits above the 5 m channel-duplicate tolerance, so the
-    expected drop count on the standardised layers is 0.
+    nearest standardised student record) is retained for caller-side
+    census checks (:func:`build_extended_gt` computes its own distances
+    via a KD-tree, never this column) — its observed minimum (10.32 m)
+    sits above the 5 m channel-duplicate tolerance, so the expected drop
+    count on the standardised layers is 0.
 
     Args:
         path: Path to ``extension-mounds-standardised.csv``.
@@ -533,6 +554,45 @@ def bootstrap_tile_level_ci(
     }
 
 
+def compute_mcc_block(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ext_gt: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    *,
+    n_bootstrap: int,
+    seed: int,
+) -> dict:
+    """Tile-classification MCC block (point estimates + BCa CI) for one GT.
+
+    Tile classification never uses the matching radius, so this block
+    depends only on (detections, extended GT, bounds). Extracted from
+    :func:`compute_at_buffer` so extension-mode callers — whose extended
+    GT is identical at every R — can compute it once per cell instead of
+    once per buffer.
+    """
+    tile_class = calculate_tile_classification(gdf_det, gdf_ext_gt, gdf_bounds)
+    tile_ci = bootstrap_tile_classification_ci(
+        gdf_det, gdf_ext_gt, gdf_bounds,
+        n_iterations=n_bootstrap, random_seed=seed,
+    )
+    mcc_block = tile_ci.get("mcc", {}) if isinstance(tile_ci, dict) else {}
+    mcc_ci = (
+        (mcc_block.get("ci_lower"), mcc_block.get("ci_upper"))
+        if mcc_block.get("ci_lower") is not None
+        else None
+    )
+    return {
+        "mcc": tile_class.get("mcc"),
+        "mcc_ci": mcc_ci,
+        "tile_tp": tile_class.get("tp"),
+        "tile_tn": tile_class.get("tn"),
+        "tile_fp": tile_class.get("fp"),
+        "tile_fn": tile_class.get("fn"),
+        "sensitivity": tile_class.get("sensitivity"),
+        "specificity": tile_class.get("specificity"),
+    }
+
+
 def compute_at_buffer(
     gdf_det: gpd.GeoDataFrame,
     gdf_student: gpd.GeoDataFrame,
@@ -544,6 +604,8 @@ def compute_at_buffer(
     seed: int,
     compute_mcc: bool = False,
     extension_gdf: gpd.GeoDataFrame | None = None,
+    dedup_tolerance_m: float = 5.0,
+    precomputed_mcc: dict | None = None,
 ) -> BufferResult:
     """Compute corrected-F1 point estimate and CIs at a single buffer R.
 
@@ -567,6 +629,16 @@ def compute_at_buffer(
             the phantom set WHOLE at every R (marked centres are exactly
             localised, so no per-buffer gate applies) and the review
             DataFrames must be ``None``.
+        dedup_tolerance_m: Channel-duplicate tolerance forwarded to
+            :func:`build_extended_gt`. The default (5.0) is current
+            behaviour; 0 disables de-duplication for exact reproduction
+            of pre-W6-E9 committed numbers.
+        precomputed_mcc: Pre-computed MCC keyword block (as built by
+            :func:`compute_mcc_block`). In extension mode the extended GT
+            is identical at every R, so tile classification — which never
+            uses the matching radius — is buffer-invariant; callers
+            sweeping many buffers compute it once and pass it here
+            instead of re-bootstrapping it 14×.
 
     Returns:
         :class:`BufferResult` with point estimates, counts, and 95 % CIs.
@@ -579,13 +651,20 @@ def compute_at_buffer(
             raise ValueError(
                 "extension_gdf and review DataFrames are mutually exclusive"
             )
+        if extension_gdf.crs != gdf_det.crs:
+            raise ValueError(
+                f"extension_gdf CRS ({extension_gdf.crs}) does not match "
+                f"detections CRS ({gdf_det.crs}) — reproject before calling"
+            )
         gdf_phantoms = extension_gdf
     else:
         gdf_phantoms = build_phantom_gdf(
             review_yesterday, review_today, buffer_r, crs=gdf_det.crs,
         )
 
-    gdf_ext_gt = build_extended_gt(gdf_student, gdf_phantoms)
+    gdf_ext_gt = build_extended_gt(
+        gdf_student, gdf_phantoms, dedup_tolerance_m=dedup_tolerance_m,
+    )
     n_dup_dropped = int(gdf_ext_gt.attrs.get("n_phantom_duplicates_dropped", 0))
     # The EFFECTIVE promoted count: phantoms that actually entered the
     # extended GT (channel-duplicated rescues counted once, on the
@@ -626,34 +705,20 @@ def compute_at_buffer(
     # 6. Optional tile-level MCC against the SAME gated extended GT.
     mcc_kwargs: dict = {}
     if compute_mcc:
-        tile_class = calculate_tile_classification(gdf_det, gdf_ext_gt, gdf_bounds)
-        tile_ci = bootstrap_tile_classification_ci(
-            gdf_det, gdf_ext_gt, gdf_bounds,
-            n_iterations=n_bootstrap, random_seed=seed,
-        )
-        mcc_block = tile_ci.get("mcc", {}) if isinstance(tile_ci, dict) else {}
-        mcc_ci = (
-            (mcc_block.get("ci_lower"), mcc_block.get("ci_upper"))
-            if mcc_block.get("ci_lower") is not None
-            else None
-        )
-        mcc_kwargs = {
-            "mcc": tile_class.get("mcc"),
-            "mcc_ci": mcc_ci,
-            "tile_tp": tile_class.get("tp"),
-            "tile_tn": tile_class.get("tn"),
-            "tile_fp": tile_class.get("fp"),
-            "tile_fn": tile_class.get("fn"),
-            "sensitivity": tile_class.get("sensitivity"),
-            "specificity": tile_class.get("specificity"),
-        }
-        mcc_disp = tile_class.get("mcc")
+        if precomputed_mcc is not None:
+            mcc_kwargs = precomputed_mcc
+        else:
+            mcc_kwargs = compute_mcc_block(
+                gdf_det, gdf_ext_gt, gdf_bounds,
+                n_bootstrap=n_bootstrap, seed=seed,
+            )
+        mcc_disp = mcc_kwargs.get("mcc")
         mcc_str = f"{mcc_disp:.4f}" if mcc_disp is not None else "n/a"
         print(
             f"  MCC={mcc_str}  "
             f"tiles TP/TN/FP/FN="
-            f"{tile_class.get('tp')}/{tile_class.get('tn')}/"
-            f"{tile_class.get('fp')}/{tile_class.get('fn')}"
+            f"{mcc_kwargs.get('tile_tp')}/{mcc_kwargs.get('tile_tn')}/"
+            f"{mcc_kwargs.get('tile_fp')}/{mcc_kwargs.get('tile_fn')}"
         )
 
     return BufferResult(
@@ -1049,9 +1114,10 @@ layer at marked centres, included whole at every R)
   Track-2 figures, not a collapse to the student layer.
 - **n_ref_student**: standardised student records scoped to the evaluation
   tile bounds.
-- **n_extension**: extension records admitted to the extended GT
-  ({n_dropped} dropped by the 5 m channel-duplicate audit — expected 0 on
-  the standardised layers, whose minimum `nearest_student_m` is 10.32 m).
+- **n_extension**: extension records admitted to the extended GT before
+  tile scoping ({n_dropped} dropped by the 5 m channel-duplicate audit —
+  expected 0 on the standardised layers, whose minimum
+  `nearest_student_m` is 10.32 m).
 - **n_ref_extended**: scoped extended-GT count — the recall denominator.
 - **Tile MCC** (when present) is computed against the SAME extended GT.
   Tile classification does not use the matching radius, and the extended
@@ -1091,6 +1157,7 @@ def run(
     seed: int,
     compute_mcc: bool = False,
     extension_csv: Path | None = None,
+    dedup_tolerance_m: float = 5.0,
 ) -> None:
     """End-to-end driver: load data, compute per-R, write outputs.
 
@@ -1098,12 +1165,21 @@ def run(
     (legacy ring-gated mode, unchanged behaviour) or ``extension_csv``
     (ruling-21 standardised mode — the extension layer enters the extended
     GT whole at every R; see :func:`load_standardised_extension`).
+    ``dedup_tolerance_m`` is forwarded to :func:`build_extended_gt`
+    (default 5.0 = current behaviour; 0 reproduces pre-W6-E9 numbers).
     """
+    review_given = review_yesterday is not None or review_today is not None
     review_mode = review_yesterday is not None and review_today is not None
-    if review_mode == (extension_csv is not None):
+    if extension_csv is not None and review_given:
+        raise ValueError(
+            "extension_csv and review CSVs are mutually exclusive — a "
+            "mixed-reference invocation must never happen silently"
+        )
+    if extension_csv is None and not review_mode:
         raise ValueError(
             "supply either BOTH review CSVs (legacy ring-gated mode) or "
-            "extension_csv (standardised mode), not both and not neither"
+            "extension_csv (standardised mode); a lone review CSV is not "
+            "a valid phantom source"
         )
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -1158,6 +1234,22 @@ def run(
             "(included whole at every R)"
         )
 
+    # In extension mode the extended GT is identical at every R, and tile
+    # classification never uses the matching radius — so the (expensive,
+    # bootstrapped) MCC block is buffer-invariant. Compute it once per
+    # cell rather than once per buffer (≈ 22 s × 13 redundant buffers
+    # saved per cell at 10k iterations on the 55-map corpus).
+    precomputed_mcc = None
+    if compute_mcc and extension_gdf is not None:
+        gdf_ext_gt_static = build_extended_gt(
+            gdf_student, extension_gdf, dedup_tolerance_m=dedup_tolerance_m,
+        )
+        print("  pre-computing buffer-invariant MCC block (extension mode)...")
+        precomputed_mcc = compute_mcc_block(
+            gdf_det, gdf_ext_gt_static, gdf_bounds,
+            n_bootstrap=n_bootstrap, seed=seed,
+        )
+
     results: list[BufferResult] = []
     for r in buffers:
         results.append(
@@ -1172,6 +1264,8 @@ def run(
                 seed=seed,
                 compute_mcc=compute_mcc,
                 extension_gdf=extension_gdf,
+                dedup_tolerance_m=dedup_tolerance_m,
+                precomputed_mcc=precomputed_mcc,
             )
         )
 
@@ -1266,6 +1360,14 @@ def parse_args() -> argparse.Namespace:
             "default so legacy F1-only output is byte-identical."
         ),
     )
+    p.add_argument(
+        "--dedup-tolerance-m", type=float, default=5.0,
+        help=(
+            "Channel-duplicate tolerance forwarded to build_extended_gt "
+            "(default 5.0 = current W6-E9 behaviour; 0 disables "
+            "de-duplication for exact reproduction of pre-fix numbers)."
+        ),
+    )
     return p.parse_args()
 
 
@@ -1284,6 +1386,7 @@ def main() -> None:
         seed=args.seed,
         compute_mcc=args.compute_mcc,
         extension_csv=args.extension_csv,
+        dedup_tolerance_m=args.dedup_tolerance_m,
     )
 
 

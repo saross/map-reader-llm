@@ -69,21 +69,16 @@ def _scene() -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame, gpd.GeoDataFrame]:
     return det, student, bounds
 
 
-def _extension_gdf_at(x: float, y: float, nearest: float) -> gpd.GeoDataFrame:
-    """One-mound extension layer at (x, y) via the real loader."""
-    df = pd.DataFrame([{
-        "candidate_id": "7", "x": x, "y": y, "map_name": "K-1",
-        "symbol_type": "burial_mound", "confidence_grade": "directly_reviewed",
-        "position_source": "own_mark", "provenance": "model_detection",
-        "nearest_student_m": nearest,
-    }])
-    geometry = [Point(x, y)]
-    return gpd.GeoDataFrame(
-        df.rename(columns={"map_name": "source_map"})[
-            ["candidate_id", "source_map", "nearest_student_m"]
-        ],
-        geometry=geometry, crs=CRS,
-    )
+def _extension_gdf_at(
+    tmp_path, x: float, y: float, nearest: float,
+) -> gpd.GeoDataFrame:
+    """One-mound extension layer at (x, y), built through the REAL loader
+    so every behaviour test also exercises the loader's output schema."""
+    path = _extension_csv(tmp_path, [
+        f"7,{x},{y},K-1,burial_mound,directly_reviewed,"
+        f"own_mark,model_detection,{nearest}\n",
+    ])
+    return load_standardised_extension(path, crs=CRS)
 
 
 # --------------------------------------------------------------------------- #
@@ -126,7 +121,7 @@ def test_loader_rejects_empty_layer(tmp_path):
 # --------------------------------------------------------------------------- #
 
 @pytest.mark.tier1
-def test_extension_enters_at_every_buffer():
+def test_extension_enters_at_every_buffer(tmp_path):
     """The extension phantom set is constant across R — no per-buffer gate.
 
     Legacy ring gating would exclude the phantom below its ring; in
@@ -134,7 +129,9 @@ def test_extension_enters_at_every_buffer():
     R = 150.
     """
     det, student, bounds = _scene()
-    ext = _extension_gdf_at(ORIGIN_X + 1.5 * TILE, ORIGIN_Y + TILE / 2, 141.4)
+    ext = _extension_gdf_at(
+        tmp_path, ORIGIN_X + 1.5 * TILE, ORIGIN_Y + TILE / 2, 100.0,
+    )
     results = {}
     for r_m in (5, 150):
         results[r_m] = compute_at_buffer(
@@ -148,11 +145,13 @@ def test_extension_enters_at_every_buffer():
 
 
 @pytest.mark.tier1
-def test_sub50_detection_of_extension_mound_is_credited():
+def test_sub50_detection_of_extension_mound_is_credited(tmp_path):
     """The Obs 371 cure: at R = 5 m a detection ON an extension mound is a
     TP (legacy ring gating booked it FP below the mound's 50 m ring)."""
     det, student, bounds = _scene()
-    ext = _extension_gdf_at(ORIGIN_X + 1.5 * TILE, ORIGIN_Y + TILE / 2, 141.4)
+    ext = _extension_gdf_at(
+        tmp_path, ORIGIN_X + 1.5 * TILE, ORIGIN_Y + TILE / 2, 100.0,
+    )
     res = compute_at_buffer(
         gdf_det=det, gdf_student=student, gdf_bounds=bounds,
         review_yesterday=None, review_today=None,
@@ -166,13 +165,13 @@ def test_sub50_detection_of_extension_mound_is_credited():
 
 
 @pytest.mark.tier1
-def test_dedup_still_drops_extension_twin_of_student_point():
+def test_dedup_still_drops_extension_twin_of_student_point(tmp_path):
     """An extension record within 5 m of a same-map student point is still
     dropped by build_extended_gt's channel-duplicate audit (expected count
     on the real standardised layers: 0, min nearest_student_m 10.32 m)."""
     det, student, bounds = _scene()
     centre_a = (ORIGIN_X + TILE / 2, ORIGIN_Y + TILE / 2)
-    ext = _extension_gdf_at(centre_a[0] + 1.0, centre_a[1], 1.0)
+    ext = _extension_gdf_at(tmp_path, centre_a[0] + 1.0, centre_a[1], 1.0)
     res = compute_at_buffer(
         gdf_det=det, gdf_student=student, gdf_bounds=bounds,
         review_yesterday=None, review_today=None,
@@ -188,10 +187,12 @@ def test_dedup_still_drops_extension_twin_of_student_point():
 # --------------------------------------------------------------------------- #
 
 @pytest.mark.tier1
-def test_compute_at_buffer_rejects_mixed_modes():
+def test_compute_at_buffer_rejects_mixed_modes(tmp_path):
     """Extension GDF plus review DataFrames must raise, never mix."""
     det, student, bounds = _scene()
-    ext = _extension_gdf_at(ORIGIN_X + 1.5 * TILE, ORIGIN_Y + TILE / 2, 141.4)
+    ext = _extension_gdf_at(
+        tmp_path, ORIGIN_X + 1.5 * TILE, ORIGIN_Y + TILE / 2, 100.0,
+    )
     empty_review = pd.DataFrame(
         columns=["candidate_id", "human_label", "buffer_metres",
                  "x", "y", "map_name"],
@@ -206,8 +207,13 @@ def test_compute_at_buffer_rejects_mixed_modes():
 
 
 @pytest.mark.tier1
-def test_run_rejects_neither_and_both_modes(tmp_path):
-    """run() must refuse a phantom-source-less or double-sourced call."""
+def test_run_rejects_invalid_mode_combinations(tmp_path):
+    """run() must refuse every invalid phantom-source combination.
+
+    Neither source; both complete sources; and — the audit-found hole —
+    a LONE review CSV alongside the extension CSV (either side), which
+    the original XOR check accepted silently.
+    """
     common = {
         "verified_detections": tmp_path / "det.geojson",
         "student_gt": tmp_path / "gt.geojson",
@@ -217,10 +223,155 @@ def test_run_rejects_neither_and_both_modes(tmp_path):
     }
     with pytest.raises(ValueError, match="supply either"):
         run(**common)  # neither
-    with pytest.raises(ValueError, match="supply either"):
+    with pytest.raises(ValueError, match="mutually exclusive"):
         run(
             **common,
             review_yesterday=tmp_path / "y.csv",
             review_today=tmp_path / "t.csv",
             extension_csv=tmp_path / "ext.csv",
-        )  # both
+        )  # both complete
+    with pytest.raises(ValueError, match="mutually exclusive"):
+        run(
+            **common,
+            review_yesterday=tmp_path / "y.csv",
+            extension_csv=tmp_path / "ext.csv",
+        )  # lone yesterday + extension
+    with pytest.raises(ValueError, match="mutually exclusive"):
+        run(
+            **common,
+            review_today=tmp_path / "t.csv",
+            extension_csv=tmp_path / "ext.csv",
+        )  # lone today + extension
+    with pytest.raises(ValueError, match="lone review CSV"):
+        run(**common, review_yesterday=tmp_path / "y.csv")  # half a pair
+
+
+# --------------------------------------------------------------------------- #
+# De-duplication tolerance override (A0 reproduction support)
+# --------------------------------------------------------------------------- #
+
+@pytest.mark.tier1
+def test_dedup_tolerance_zero_reproduces_prefix_behaviour(tmp_path):
+    """dedup_tolerance_m=0 keeps a 1 m twin (pre-W6-E9 reproduction);
+    the default 5 m tolerance drops it."""
+    det, student, bounds = _scene()
+    centre_a = (ORIGIN_X + TILE / 2, ORIGIN_Y + TILE / 2)
+    ext = _extension_gdf_at(tmp_path, centre_a[0] + 1.0, centre_a[1], 1.0)
+    res_off = compute_at_buffer(
+        gdf_det=det, gdf_student=student, gdf_bounds=bounds,
+        review_yesterday=None, review_today=None,
+        buffer_r=50, n_bootstrap=10, seed=42,
+        extension_gdf=ext, dedup_tolerance_m=0.0,
+    )
+    assert res_off.n_phantom_duplicates_dropped == 0
+    assert res_off.n_reviewer_promoted == 1
+    res_on = compute_at_buffer(
+        gdf_det=det, gdf_student=student, gdf_bounds=bounds,
+        review_yesterday=None, review_today=None,
+        buffer_r=50, n_bootstrap=10, seed=42,
+        extension_gdf=ext,
+    )
+    assert res_on.n_phantom_duplicates_dropped == 1
+
+
+# --------------------------------------------------------------------------- #
+# End-to-end run() — the wiring, not just the functions
+# --------------------------------------------------------------------------- #
+
+def _scene_on_disk(tmp_path):
+    """Write the synthetic scene to disk for end-to-end run() tests."""
+    det, student, bounds = _scene()
+    paths = {
+        "det": tmp_path / "det.geojson",
+        "student": tmp_path / "student.geojson",
+        "bounds": tmp_path / "bounds.geojson",
+    }
+    det.to_file(paths["det"], driver="GeoJSON")
+    student.to_file(paths["student"], driver="GeoJSON")
+    bounds.to_file(paths["bounds"], driver="GeoJSON")
+    return paths
+
+
+@pytest.mark.tier1
+def test_run_end_to_end_extension_mode(tmp_path):
+    """run() in extension mode: real CSV in, correct artefacts out.
+
+    Pins the wiring the unit tests cannot see: the loaded layer reaches
+    the scoring (n_reviewer_promoted_at_R), the summary carries the
+    standardised exclusions block and input_paths (extension_csv present,
+    review keys absent), and the report table is written.
+    """
+    import json as json_mod
+
+    paths = _scene_on_disk(tmp_path)
+    # TWO extension records (vs ONE student mound) so a transposition of
+    # the n_ref_student / n_extension report columns is detectable.
+    ext_csv = _extension_csv(tmp_path, [
+        f"7,{ORIGIN_X + 1.5 * TILE},{ORIGIN_Y + TILE / 2},K-1,burial_mound,"
+        "directly_reviewed,own_mark,model_detection,100.0\n",
+        f"8,{ORIGIN_X + 1.75 * TILE},{ORIGIN_Y + TILE / 2},K-1,burial_mound,"
+        "directly_reviewed,own_mark,model_detection,125.0\n",
+    ])
+    out_dir = tmp_path / "out"
+    run(
+        verified_detections=paths["det"], student_gt=paths["student"],
+        bounds=paths["bounds"], extension_csv=ext_csv,
+        output_dir=out_dir, buffers=[5, 50], n_bootstrap=10, seed=42,
+        compute_mcc=True,
+    )
+    with open(out_dir / "summary.json", encoding="utf-8") as fh:
+        summary = json_mod.load(fh)
+    # The extension layer reached the scoring, whole, at BOTH buffers.
+    for row in summary["results"]:
+        assert row["n_reviewer_promoted_at_R"] == 2
+        assert row["n_phantom_duplicates_dropped"] == 0
+    # MCC present and buffer-invariant.
+    mccs = {row["tile_classification"]["mcc"] for row in summary["results"]}
+    assert len(mccs) == 1
+    # Standardised exclusions block, not the ring-review one.
+    assert summary["exclusions"]["sentinel_buffer_metres"] is None
+    assert "standardised" in summary["methodology"].lower()
+    # Provenance: extension_csv recorded, review keys absent.
+    ip = summary["metadata"]["input_paths"]
+    assert "extension_csv" in ip
+    assert "review_yesterday" not in ip and "review_today" not in ip
+    # Report written with the standardised header, and the data row keeps
+    # the n_ref_student (1) / n_extension (2) column ORDER.
+    report = (out_dir / "report_autogen.md").read_text()
+    assert "standardised reference" in report
+    assert "n_ref_student | n_extension | n_ref_extended" in report
+    # n_ref_student=1, n_extension=2, n_ref_extended=3 in exactly this
+    # order; a transposed row would read "| 2 | 1 | 3 |".
+    assert "| 1 | 2 | 3 |" in report
+    assert (out_dir / "corrected-f1.csv").exists()
+
+
+@pytest.mark.tier1
+def test_run_end_to_end_legacy_mode_shape(tmp_path):
+    """run() in legacy review mode: the exclusions block, methodology
+    string, and input_paths keys keep their historical shape (the
+    byte-identity contract's checkable core)."""
+    import json as json_mod
+
+    paths = _scene_on_disk(tmp_path)
+    empty = tmp_path / "empty.csv"
+    empty.write_text("candidate_id,human_label,buffer_metres,x,y,map_name\n")
+    out_dir = tmp_path / "out-legacy"
+    run(
+        verified_detections=paths["det"], student_gt=paths["student"],
+        bounds=paths["bounds"], review_yesterday=empty, review_today=empty,
+        output_dir=out_dir, buffers=[50], n_bootstrap=10, seed=42,
+    )
+    with open(out_dir / "summary.json", encoding="utf-8") as fh:
+        summary = json_mod.load(fh)
+    assert summary["methodology"] == (
+        "Approach B — extended-GT-at-R Hungarian matching"
+    )
+    assert summary["exclusions"]["sentinel_buffer_metres"] == 200
+    ip = summary["metadata"]["input_paths"]
+    assert list(ip.keys()) == [
+        "detections", "student_gt", "bounds",
+        "review_yesterday", "review_today",
+    ]
+    report = (out_dir / "report_autogen.md").read_text()
+    assert "buffer-stratified" in report
