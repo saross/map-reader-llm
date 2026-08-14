@@ -6880,3 +6880,65 @@ and the truth that nine-tenths of the movement was input vintage. And
 mechanism claims made at commit time deserve the same exact tests as
 numbers: both falsifications were one cheap command each, run *after* the
 attribution had already been pushed.
+
+## 2026-08-14 (Session 132, map-reader-llm): The gate that was green by exactly one false negative
+
+**Session:** 0e9a5e43-c51d-4c47-9422-157559dc0585
+**Instance:** primary
+
+### Surprising fact
+
+A fresh-context audit of the new standardised-reference scoring driver
+reported that its reproduction gate — current engine vs the committed
+Track-2 F1 values, tolerance 1e-4 — passed all eight cells with a delta
+that was not noise: every cell sat *high* by +8.1e-05 to +8.8e-05, the
+same sign and nearly the same magnitude everywhere. A gate built to
+certify "nothing changed" was green over a systematic, uniform shift.
+
+### Probe
+
+The auditor cross-sectioned one cell's confusion counts: committed
+TH7-k4 read TP 3801 / FP 363 / FN 1360; the re-run read TP 3801 /
+FP 363 / FN 1359 — one false negative fewer, nothing else moved. One FN
+uniformly across cells pointed at the reference, not the detections;
+the committed summaries carry no `n_phantom_duplicates_dropped` key and
+record 415 promoted phantoms where the re-run records 414. That dated
+the anchors: they pre-date the W6-E9 channel-duplicate fix
+(`1de559119`, 2026-08-04), which drops the canonical review's one true
+twin (0.98 m from its student partner, ruling 20c) and thereby removes
+exactly one spurious FN from every cell's ledger — F1 +8.7e-05, uniform
+by construction because the twin is a property of the reference, not of
+any cell's detections.
+
+### Belief revision
+
+Before: "the gate passes, therefore the current engine reproduces the
+committed numbers, therefore the machinery is certified." After: the
+gate had conflated two claims — machinery equivalence and engine-state
+equivalence — and its tolerance was wide enough to let a real,
+documented engine change ride through as if it were float noise. The
+redesign splits the claims: A0 re-runs the anchors' own configuration
+(de-duplication disabled) at tolerance 1e-6 and reproduced all eight
+cells at delta exactly 0.0; A1 runs the current engine, and its
+uniform +8.7e-05 is asserted against a predicted signature (one drop,
+one FN, per cell) rather than absorbed. The revised general belief:
+a reproduction anchor has a vintage, and the gate must either match
+that vintage exactly or name every term separating it from now.
+
+### What would change this belief
+
+If the A0 leg had *not* reproduced exactly with de-duplication disabled
+— say, residual deltas of 1e-5 — the vintage explanation would have
+been incomplete and something else in the engine path would have moved
+since June, reopening the machinery-equivalence question the gate
+exists to close. The delta-0.0 result on all eight cells is what
+licenses attributing the whole discrepancy to W6-E9.
+
+### Implications for practice
+
+Before building a gate over committed anchors, date the anchors: one
+pass over the anchor artefacts' schema (a missing key is a vintage
+marker) and the engine's fix history since their commit. Where an
+engine has evolved deliberately, encode the evolution as a named,
+signed, predicted term in the gate rather than widening tolerance —
+tolerance should cover only what cannot be named.

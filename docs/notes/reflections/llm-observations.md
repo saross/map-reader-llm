@@ -7223,3 +7223,59 @@ and re-derived none of the sentences. A refresh owes each *claim* the same
 recomputation as each value; carried-forward prose is where superseded
 mechanisms survive their own falsification.
 
+
+## Session 132 — 2026-08-14/15 (a reproduction gate must date its anchors; the synthesis error class is imported framing, not arithmetic; mismatched references can understate as easily as inflate; tier-preservation is the strongest robustness statement a reference change can earn)
+
+**A tolerance-based reproduction gate must date its anchors, or the
+tolerance becomes a smuggling channel for engine evolution.** The first
+gate design compared current-engine output against committed values at
+1e-4 and went green with every cell sitting a systematic +8.7e-05 high —
+the committed anchors pre-date the W6-E9 de-duplication fix, so the gate
+was certifying "reproduced" while silently absorbing a known behaviour
+change. The durable form separates the two claims the single gate had
+conflated: A0 re-runs the anchor's *own* configuration (fix disabled,
+tolerance 1e-6 — float noise only) and must reproduce exactly; A1 runs
+the current engine and its delta from A0 is attributed to the named fix,
+with a predicted signature (exactly one twin drop, exactly one FN, per
+cell) that is itself asserted. Tolerance is for numerical noise; every
+other discrepancy needs a name.
+
+**Across three blind-verifier passes, ~380 re-derived numbers produced
+zero corrections and the three substantive catches were all imported
+framing — the synthesis error class is scope-transfer, not arithmetic.**
+Obs 280's matrix-tree mechanism asserted "unchanged" on a board whose
+confusion matrices invert it; Obs 365's step refreshed with a silently
+switched comparator that kept the old endpoint's price; S131's
+equivalent was a mechanism sentence carried under tables that disproved
+it. All three defects entered by the same door: a source's framing
+carried past the data it was derived on. This is precisely what the
+verifier protocol's cold-derivation condition targets — the verifier
+derives directionality and mechanism claims from the artefacts before
+reading the prose — and it is the condition that caught all three. The
+practice implication: in a refresh, prose sentences inherit no trust
+from the numbers beneath them, and the highest-risk sentences are the
+ones that survived the previous revision unchanged.
+
+**Measuring a comparison across two references does not merely add
+noise — it can bias the comparison in either direction, and the
+direction is unknowable until unified.** Ruling 20(a) worried the
+F1-vs-MCC divergence might be reference artefact; on the shared
+reference the divergence *widened* (the MCC gap steps +0.0386 →
++0.0430 across the reference ladder), so the mixed-reference original
+had understated the very effect it was suspected of manufacturing. The
+decomposition (~10 % reference axis, ~90 % metric behaviour) was only
+computable because intermediate references survived as committed
+artefacts — three rungs of a ladder nobody planned as a ladder.
+
+**When a reference overhaul moves every magnitude and no tier, the tier
+structure is the result — and it is only claimable because the
+machinery was made a controlled variable first.** Both boards re-ran on
+the legacy reference and reproduced byte-identically through 28 seeded
+permutation tests each before the reference moved; then the standardised
+re-tiering returned identical tier partitions on both metrics, with one
+non-boundary significance swap on F1 as the entire pairwise-level
+change. The strongest available robustness statement for a reference
+migration is not "the headline barely moved" (it moved up to 0.008) but
+"no decision any document ever made on these boards would have differed"
+— and that statement is worthless unless the re-run's machinery is
+provably the machinery that produced the originals.

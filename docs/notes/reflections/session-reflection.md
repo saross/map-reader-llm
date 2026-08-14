@@ -10095,3 +10095,59 @@ mutual claims) straddled the 5 m tolerance, and the census showed the
 5–15 m band contained only it and one already-linked chain. The rule
 is data-shaped: one case wide, principled floor, measured before
 adopted.
+
+## Session 132 — 2026-08-14/15 — the queue that closed without moving a conclusion
+
+### Prompt: What would you do differently if you replayed this session?
+
+I would check the anchors' vintage before building the gate around
+them. The reproduction gate I first shipped compared the current
+engine against committed values within 1e-4 — and every cell passed
+while sitting a uniform +8.7e-05 off, because the committed numbers
+pre-date the W6-E9 de-duplication fix. The gate was structurally
+incapable of noticing that it was absorbing a real engine change; a
+fresh-context auditor noticed within an hour. The replay lesson is
+not "use a tighter tolerance" but "date the anchor": one `git log`
+over the anchor artefacts against the engine's fix history would have
+surfaced the vintage split before I wrote a line of gate code, and
+the A0/A1 design would have been the first draft rather than the
+repair. The same replay applies to the Obs 365 refresh, where I
+silently substituted the comparator that the surrounding prose used
+for the comparator the observation actually defines — deriving each
+refreshed figure from its source's own definition, rather than from
+what sits nearby in the paragraph, would have prevented the one
+substantive error in the draft refresh.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+Three deliberate-looking-accidental things. First, the two-line diff
+on the committed legacy boards (`"reference": "canonical"` added to
+each JSON) *is* the reproduction evidence: both boards re-ran end to
+end through 28 seeded permutation tests each and reproduced
+byte-identically except for that provenance key. The smallness of the
+diff is the finding. Second, the B-leg diagnostics exist on sapphire
+but are deliberately uncommitted — the item-1 precedent (superseded-
+reference numbers must not become citable artefacts) carried forward;
+their values live only in the committed decomposition JSON. Third,
+MCC being a single number per cell on the standardised boards is a
+structural consequence, not a simplification choice: tile
+classification never uses the matching radius, and the ring gate that
+made the extended GT vary with R is gone, so buffer-invariance falls
+out of the reference semantics. A reader comparing old (per-buffer
+MCC) and new (one MCC) artefacts without this will suspect a lost
+computation.
+
+### Prompt: What felt uncertain or unresolved at the end?
+
+The word "oracle". T03-k3 keeps rank 1 on points, but its margin over
+TH7-k3 is now +0.0006 at p = 0.857 — the deepest tie on the board.
+Every document faithfully reports the tie, yet the label "oracle"
+still travels with T03-k3 through the draft, the board names, and the
+condition roles, and it now denotes a coin-flip winner. Whether § R7
+should keep naming a single oracle, name the pair, or re-frame the
+deployment gap against the Tier-1 *set* is a framing decision the
+standardisation has sharpened but not settled — it belongs to the
+outline-first review with Shawn, not to a session that was explicitly
+forbidden surprises. Related and smaller: the GS-vs-55-map transfer
+artefact still carries canonical-vintage numbers behind an in-text
+flag, one regeneration away from consistency.

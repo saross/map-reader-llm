@@ -1088,7 +1088,6 @@ change, and how to verify. When receiving one, honour its verification
 clause before its instruction clause — re-check anchors first, exactly as
 this one requested.
 
-
 ## claude-obs 43 — 2026-08-14 (Session 131): his audit questions target the seams, and each one converted to a rule
 
 **Pattern.** The pre-run audit ("what artefacts? what tripwires? are
@@ -1177,3 +1176,79 @@ displacement vectors to test this.
 capture it as a mechanism hypothesis in the observation stream, not
 only as the item's rationale — this one is already flagged in the
 ruling-21 spec and the session reflection as an unpursued question.
+
+## claude-obs 47 — 2026-08-15 (Session 132): the standing go turned five sessions of gated legs into one closed queue
+
+**Pattern.** The pre-run review's product — "the PI said go for items
+1–5 under the contract; API spend is the only hard stop" — let this
+session run items 2, 3, 4, and 5 end to end, including three blind
+verifier cycles and two board re-tierings, without a single mid-arc
+approval pause. Every place a question could have gone to Shawn (the
+gating semantics, the A0/A1 redesign, whether to proceed to item 4,
+then 5), the contract had already answered it: countable gates, stop
+states, and $0 scope substituted for interactive permission. The
+contrast with earlier arcs is stark — comparable work had previously
+spread across sessions largely waiting on go/no-go moments.
+
+**Lesson.** Shawn's investment in the pre-run review was not (mainly)
+about catching plan defects — it was about making his own absence
+cheap. A contract with exact finished-states and named stop conditions
+is a delegation instrument: it converts "ask me" into "check the
+clause". The autonomy it bought was spent safely because the stop
+states were behavioural, not aspirational — the one time evidence
+pointed at a would-be surprise (the anchor vintage), the contract's
+"reproduce before you vary" clause forced the halt-and-redesign
+without him present.
+
+**How to apply.** When a multi-leg block is coming, invest the
+interactive time in the contract, not the legs. In-flight, treat every
+impulse to ask as a lookup: if the contract answers it, proceed and
+record; only genuinely uncovered decisions go back to him.
+
+## claude-obs 48 — 2026-08-15 (Session 132): self-critique — I wrote the gate before dating its anchors, and the audit had to do my archaeology
+
+**Pattern.** I hardcoded eight committed values as reproduction
+anchors at full float precision — diligent-looking — without asking
+when they were minted relative to the engine's fix history. The
+fresh-context auditor did that archaeology (missing JSON key →
+pre-W6-E9 vintage) within its first hour and showed my green gate was
+absorbing a real change. Everything needed to catch this myself was in
+the repo: the anchors' schema lacked the dedup key, and the W6-E9 fix
+commit was in the same file's history I had been editing all session.
+
+**Lesson.** My verification instinct treats committed numbers as
+timeless constants; this project's history says they are stratigraphy.
+The same instinct that makes me re-read a file before citing it should
+extend one step: before *anchoring* on a value, establish its horizon
+— what engine state produced it, and what has changed since.
+
+**How to apply.** Any new gate or crosscheck built on committed
+artefacts gets a vintage pass first: diff the artefact's schema
+against the current writer's output, and `git log` the engine between
+the artefact's commit and HEAD. If anything landed, the gate must
+name it, not tolerate it.
+
+## claude-obs 49 — 2026-08-15 (Session 132): the nine-candidate walk took minutes because every candidate arrived pre-formed
+
+**Pattern.** The user-obs review — nine candidates spanning three
+sessions — closed in three question batches with eight accepts and one
+crisp discard. What made it fast was not the tooling but the drafting
+discipline inherited from earlier sessions: each candidate had been
+written at its own session's close by the instance that experienced
+it, with the evidence in the text. Shawn never had to reconstruct
+context to judge one; the S130 candidate he dropped (the gate false
+alarms) he could drop confidently because the candidate itself
+contained the mitigating facts ("corrections were fast and
+self-attributed").
+
+**Lesson.** The pending-candidate pattern works precisely because
+review is decoupled from drafting: capture is done hot by whoever
+holds the context, judgement is done cold in batch by Shawn, and
+"silence is not a decline" means nothing is lost in between. Four
+sessions of backlog cleared in one sitting with zero rework is the
+pattern's strongest evidence yet.
+
+**How to apply.** Keep drafting candidates at the close of the session
+that produced them, complete enough to be judged without archaeology —
+including the facts that argue *against* the candidate, since those
+are what make a discard decision as fast as an accept.

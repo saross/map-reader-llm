@@ -8377,3 +8377,81 @@ behind at close; syncs on next use. The five-day single conversation
 means "session 131" spans what the task-status hooks treated as three
 sittings; the marking app ran locally during the walk with commits
 sequenced around it.
+
+## Session 132 — 2026-08-14/15 — the standardisation queue closed: items 2–5 executed, blind-verified, every conclusion preserved
+
+One conversation (amd-tower; compute on sapphire), resuming on the
+{2→3} leg under the S131 execution contract and closing the entire
+queue. Repo `fdbb1a528` → `f2ec83131` + reflection commits, all
+pushed. **US$0.00 API.**
+
+**Engine + driver** (`c951aa749`): additive `--extension-csv`
+standardised mode on `compute_corrected_f1_multi_buffer.py` — the
+marked centres dissolve the Obs 371 ring gate, the 279-record
+extension layer enters the extended GT whole at every buffer, tile MCC
+becomes buffer-invariant (computed once per cell); new 8-cell driver
+`score_55maps_standardised_reference.py` with feature-count
+crosscheck, census checks, and legs A/B/C. **Dual-lens Opus audit +
+re-audit** (`b34f90925`, `6e38c0e5f`): the critical catch was the
+committed Track-2 anchors pre-dating the W6-E9 fix — repaired as the
+A0 (dedup-off, tol 1e-6, exact) / A1 (current engine, fix attributed)
+gate split; also the stale-gate freshness binding, evidence
+carry-forward, mode-validation hole, and a 13/14-redundant MCC
+compute hoisted. Legacy path verified artefact-byte-identical; tier-1
+suite 1,437 → 1,462 passing.
+
+**Items 2+3** (`6f7e7b651`, registration `fab017085`): A0 reproduced
+all eight committed values at delta 0.0 exactly; C-leg scored 8 cells
+× 14 buffers × {F1, MCC} on the standardised reference (sapphire,
+`--jobs 8`), extension census 279/0-drops everywhere; the t0.3 cell
+scored once and registered under both items (8 `-standardised-gt`
+conditions; manifest 322→330 ALL VALID, drift 0 fail). A0/A1/B/C
+decomposition: rank order preserved 8/8; oracle margin over TH7-k3
++0.0051 → +0.0006; every move inside the Obs 396 band. Summary doc
+(`cb3629e7f`) blind-verified 249/242/234/8, corrections applied
+(`0f19370cd`); queue tick `6a8b28099`.
+
+**Item 4** (`bfaeb1c17`): Obs 280 re-measured with both metrics on
+one reference — the divergence survives and is ≈90 % metric
+behaviour (the reference ladder +0.0386 → +0.0393 → +0.0430 WIDENS
+image's MCC lead; the mixed-reference original had understated it);
+image leads MCC from third on F1; the Obs 292 R≥75 m F1 crossover
+does not carry (per-run-vintage artefact). Analysis
+`obs280-shared-reference` registered (22 analyses). Blind verifier
+89/83/80/3 caught the draft asserting Obs 280's matrix-tree mechanism
+"unchanged" where this board inverts it (text wins F1 on precision at
+dead-heat recall; image wins MCC on sensitivity with the lowest
+tile-TN) — corrected, third-re-derived (`ddc559c78`); tick
+`08884e4b3`.
+
+**Item 5** (`0e4b157ec` harnesses; boards `02328d543`/`65ad40b7b`):
+`--reference standardised` modes on both tiering harnesses; the
+legacy boards re-ran BYTE-IDENTICALLY through all 28 seeded
+permutation tests each (the only diff: a `reference: canonical`
+provenance key), then the standardised boards returned **identical
+tier structures on both metrics** — F1 T1 = {T03-k3, TH7-k3} (tie
+deepens to p = 0.857), MCC T1 = {IM-k3} sole, one non-boundary F1
+significance swap the entire pairwise change. Every 55-map figure in
+`docs/paper/results-draft.md` moved in one commit (`a4dc67e3d`) with
+a was/now changelog table. Blind verifier 764/752/747/5 caught the
+Obs 365 step's silent comparator switch (restored at +282/+262/~$203)
+plus four provenance items (`a5d13e279`); the standardised MCC board
+regenerated with corrected `condition_dir`; tick `7dde8dbf2` — **the
+queue closed**. Analyses 22 → 24 (`a0032447d`, `aa2c42fc2`).
+
+**Review backlog cleared (2026-08-14/15, PI interactive)**: all
+thirteen pending working-notes candidates approved wholesale and
+minted as **Obs 398–410** (`bc7301fac`); the nine user-obs candidates
+walked — eight kept, S130 candidate 2 dropped (`5ef314a01`);
+continuity updated (`a3a7e1f72`, `f2ec83131`).
+
+**Contextual assumptions.** The B-leg diagnostics exist only on
+sapphire, deliberately uncommitted (item-1 precedent); their values
+are in the committed `abc-decomposition-50m.json`. The
+`gs-vs-55map-transfer.{md,json}` artefacts remain canonical-vintage
+behind an in-text flag in § R6 — regeneration is registered residue,
+not an oversight. The three PI sign-off gates (`manually_verified_at`
+on `obs280-shared-reference` and the two standardised boards) were
+open at close. zbook untouched and many commits behind. The "oracle"
+label now denotes a p = 0.857 coin-flip winner — a framing question
+deferred to the outline-first review, not a data question.
