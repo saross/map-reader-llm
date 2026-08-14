@@ -1,6 +1,7 @@
 # Reference-standardisation queue — analyses waiting on a fixed reference
 
-> **Last revised**: 2026-08-04 (created under ruling 21). See
+> **Last revised**: 2026-08-14 (gate OPEN — standardised reference
+> materialised; execution contract added from the pre-run review). See
 > [§ Changelog](#changelog) for revision history.
 
 **What this is.** Ruling 21 fixes the ground-truth reference *first*, then
@@ -52,6 +53,38 @@ These do not wait for the reference — the marking pass *is* their fix.
 | 4–6 borderline conflations | Promoted-phantom pairs sitting between 7.3 m and 15 m from a student point — closer than the pipeline's ≳15–20 m "genuinely distinct mounds" floor, further than the 5 m de-duplication catches. Cannot be settled from coordinates; must be seen on a map. | Ruling 20(c) |
 | `canonical-review.csv` row sort | Rows re-sorted on the exact-position result once centres are marked. | Ruling 20(d) step 3 |
 
+## Execution contract (pre-run review with the PI, 2026-08-14)
+
+The gate is OPEN: the standardised reference landed at `ecc00f31f`
+(`results/deployment-oracle-2026-06-06/canonical-gt/standardised/`).
+Items 1–5 run under the following contract, agreed in the pre-run
+review (`/pre-run-review` protocol; see Obs 397):
+
+1. **Dependency order**: items 1 and {2→3} may run in parallel; 4 only
+   after 3; 5 only after 1–4. The 2→3 edge is an artefact-coherence
+   ordering, not a data dependency — the t0.3 cell is scored ONCE and
+   registered under both items, never computed twice.
+2. **Countable completion gates**: a dependent item starts only when
+   the upstream item's finished state is exact (e.g. item 3 = "8/8
+   board cells carry F1 and MCC against the standardised reference,
+   drift-check clean"). No mixed-vintage artefacts: item 5 never
+   re-tiers a board whose cells straddle references.
+3. **One-commit-per-document rule**: a refreshed document's numbers
+   and its changelog entry land in a single commit; no document ever
+   straddles two references across a commit boundary.
+4. **Stop states** (halt and escalate, never absorb): any API spend;
+   gate battery or census test red; a surprising result (tier flip,
+   headline moving beyond the Obs 396 bias band, direction reversal);
+   missing inputs (no near-enough substitution); sequencing
+   violations; sapphire unavailable (check, never silently fall back).
+5. **Verification stack**: JSON-first outputs with anchored prose;
+   tests + `/audit` on new code; a blind fresh-context verifier pass
+   over each prose-bearing refresh (non-negotiable for item 4, the
+   highest synthesis-density item; brief it on directionality and
+   comparison tables), calibrated to the measured ~8% claim-mismatch
+   rate (C4: 619 of 7,894 decisively recomputed values); drift checks
+   and citation-site sweeps; PI sign-off gates last.
+
 ## Queue — no API spend, runs automatically once the reference lands
 
 | # | Analysis | Why it is tainted | Register |
@@ -79,6 +112,16 @@ cost — before anything is launched (ruling 21e).
   consumed is history and stays.
 
 ## Changelog
+
+### 2026-08-14 — Gate opened; execution contract added
+
+Ruling-21 application completed: marking campaign closed (S130), the
+instruction set derived and PI-ratified (S131), the six-claim walk
+landed (`b2692f188`), and the standardised reference materialised
+(`ecc00f31f`). Added the § Execution contract from the pre-run review
+dialogue with the PI — dependency DAG, countable completion gates,
+the one-commit-per-document rule, stop states, and the layered
+verification stack. Queue items 1–5 are unchanged and now runnable.
 
 ### 2026-08-04 — Original publication
 
