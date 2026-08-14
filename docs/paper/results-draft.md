@@ -30,11 +30,14 @@ instrument** — four Soviet 1:50,000 sheets, curator-adjudicated ground
 truth — is the *characterisation* instrument: it measures how well a
 configuration can localise burial-mound symbols against known ground truth,
 at each configuration's own best operating point, per the preregistered
-H-series analysis plan. The **55-map instrument** — 8,541 tiles, a
-canonical extended ground truth of 4,746 reviewed student digitisations
-plus 773 adjudicated phantom mounds — is the *deployment* instrument: it
-measures what a configuration calibrated on the GS sheets actually delivers
-on a large, diverse, unseen corpus. Results on the first instrument are
+H-series analysis plan. The **55-map instrument** — 8,541 tiles, the
+ruling-21 standardised extended reference: 4,731 standardised student
+digitisations plus 279 human-confirmed extension mounds at marked
+centres (±2.5 m), every reviewed record's position hand-marked and the
+773-candidate phantom pool adjudicated down to distinct real mounds —
+is the *deployment* instrument: it measures what a configuration
+calibrated on the GS sheets actually delivers on a large, diverse,
+unseen corpus. Results on the first instrument are
 reported as characterisations, not in-sample claims to hedge; results on
 the second carry the calibrate-then-deploy interpretation, including its
 failures (§ R6).
@@ -251,20 +254,21 @@ audit, 2026-06-12) collapses the frontier onto four rungs (analysis
 Read naively, the table says: buy minimal thinking; the entire HIGH ladder
 is dominated. **Deployment says otherwise, and this is one of the study's
 central findings.** The min6 recipe had already run at production scale as
-the 55-map text-minimal deployment: on the 55-map canonical board it
-scores 0.8127 (Tier 3), two tiers below the HIGH-thinking equivalent at
-the matched threshold (TH7-k3, 0.8425, Tier 1) — the GS tie, where minimal
-was numerically *ahead*, reverses by −0.030 on the instrument with the
+the 55-map text-minimal deployment: on the 55-map standardised board it
+scores 0.8109 (Tier 3), two tiers below the HIGH-thinking equivalent at
+the matched threshold (TH7-k3, 0.8387, Tier 1) — the GS tie, where minimal
+was numerically *ahead*, reverses by −0.028 on the instrument with the
 statistical power to resolve it (Obs 362). The transfer table makes the
 pattern systematic — every configuration degrades from GS to deployment,
-and they do not degrade equally (GS F1@50 m → 55-map F1@50 m):
+and they do not degrade equally (GS F1@50 m → 55-map F1@50 m,
+standardised reference):
 
 | config | GS @50 m | 55-map @50 m | transfer delta |
 |---|---:|---:|---:|
-| text HIGH T0.7 | 0.8908 | 0.8425 | −0.048 |
-| text HIGH T0.3 | 0.9045 | 0.8476 | −0.057 |
-| image HIGH T0.7 | 0.8771 | 0.7987 | −0.078 |
-| text MIN T0.7 | 0.8996 | 0.8127 | −0.087 |
+| text HIGH T0.7 | 0.8908 | 0.8387 | −0.052 |
+| text HIGH T0.3 | 0.9045 | 0.8393 | −0.065 |
+| image HIGH T0.7 | 0.8771 | 0.8010 | −0.076 |
+| text MIN T0.7 | 0.8996 | 0.8109 | −0.089 |
 
 (`results/55map-leaderboard/gs-vs-55map-transfer.md`; the GS T0.3 cell —
 the deployment champion's proposer, characterised at $2.06 — completed
@@ -278,67 +282,74 @@ detected a difference of consequence — the 487-tile GS instrument cannot
 resolve ±0.03, and deployment evidence overrides characterisation ties.
 Second, the gap is partly *buyable*: doubling the minimal pass count
 (Run B; as-run ≈ $35 at audited flex rates) closes about half of it. The
-10-minimal-pass uplift cell scores 0.8290 at 50 m — significantly above
-the 5-pass minimal deployment (+0.0163, p < 10⁻⁴) and significantly below
-the HIGH-thinking cell (−0.0134, p = 0.0026) — converting the thinking
-choice at deployment into a priced cost/quality trade (~$58 for 0.829 vs
-~$207 for 0.843 at audited production rates) rather than a tie (Obs 364;
+10-minimal-pass uplift cell scores 0.8279 at 50 m — significantly above
+the 5-pass minimal deployment (+0.0170, p < 10⁻⁴) and significantly below
+the HIGH-thinking cell (−0.0108, BH p = 0.018) — converting the thinking
+choice at deployment into a priced cost/quality trade (~$58 for 0.828 vs
+~$207 for 0.839 at audited production rates) rather than a tie (Obs 364;
 run `55maps-text-min-n10-uplift`). The confusion-matrix decomposition of
-the frontier steps (Obs 365) shows the two purchases differ in kind: the
-pass-count step is a strict improvement (+111 mounds *and* −29 false
-positives for ~$26), while the thinking-level step trades precision for
-recall (+319 mounds at +225 false positives for ~$206).
+the frontier steps (Obs 365, re-measured on the standardised reference)
+shows the two purchases differ in kind: the pass-count step is a strict
+improvement (+113 mounds *and* −31 false positives for ~$26), while the
+thinking-level step trades precision for recall (+229 mounds at +196
+false positives for ~$206).
 
-## R7. Deployment: the 55-map canonical board
+## R7. Deployment: the 55-map standardised board
 
-The deployment board (canonical extended GT, 50 m, eight cells, 24/28
-pairs significant, five tiers; analysis `55map-canonical-leaderboard-50m`)
-is ordered by F1 because it is the board; **the study's primary
-deployment claim is the carry-forward row** (0.8152) — the operating
-point actually committed to before deployment, per the
-calibrate-then-deploy protocol. Every row above it relaxes at least one
-carried-forward setting (vote threshold, temperature, or pass count)
-after seeing deployment results; those rows are reported not as achieved
-performance but as the measured deployment gap — what better calibration
-transfer would have bought (lesson i below), with the joint oracle
-(+0.032) as its upper bound:
+The deployment board (ruling-21 standardised reference, 50 m, eight
+cells, 24/28 pairs significant, five tiers; analysis
+`55map-standardised-leaderboard-50m` — tier structure identical to its
+canonical-reference predecessor, so the reference standardisation moved
+magnitudes, never conclusions) is ordered by F1 because it is the board;
+**the study's primary deployment claim is the carry-forward row**
+(0.8169) — the operating point actually committed to before deployment,
+per the calibrate-then-deploy protocol. Every row above it relaxes at
+least one carried-forward setting (vote threshold, temperature, or pass
+count) after seeing deployment results; those rows are reported not as
+achieved performance but as the measured deployment gap — what better
+calibration transfer would have bought (lesson i below), with the joint
+oracle (+0.022) as its upper bound:
 
 | rank | cell | tier | F1@50 | tile-MCC |
 |---:|---|---:|---:|---:|
-| 1 | text HIGH T0.3, vote 3-of-5 (oracle) | 1 | 0.8476 | 0.690 |
-| 2 | text HIGH T0.7, vote 3-of-5 | 1 | 0.8425 | 0.680 |
-| 3 | text HIGH T0.3, vote 4-of-5 | 2 | 0.8359 | 0.671 |
-| 4 | text MIN, 10 passes, vote 5-of-10 (uplift) | 2 | 0.8290 | 0.672 |
-| 5 | text HIGH T0.7, vote 4-of-5 (carry-forward) | 3 | 0.8152 | 0.667 |
-| 6 | text MIN, vote 3-of-5 | 3 | 0.8127 | 0.658 |
-| 7 | image, vote 3-of-5 | 4 | 0.7987 | **0.710** |
-| 8 | text MIN, vote 4-of-5 | 5 | 0.7831 | 0.641 |
+| 1 | text HIGH T0.3, vote 3-of-5 (oracle) | 1 | 0.8393 | 0.689 |
+| 2 | text HIGH T0.7, vote 3-of-5 | 1 | 0.8387 | 0.680 |
+| 3 | text HIGH T0.3, vote 4-of-5 | 2 | 0.8303 | 0.669 |
+| 4 | text MIN, 10 passes, vote 5-of-10 (uplift) | 2 | 0.8279 | 0.671 |
+| 5 | text HIGH T0.7, vote 4-of-5 (carry-forward) | 3 | 0.8169 | 0.665 |
+| 6 | text MIN, vote 3-of-5 | 3 | 0.8109 | 0.657 |
+| 7 | image, vote 3-of-5 | 4 | 0.8010 | **0.712** |
+| 8 | text MIN, vote 4-of-5 | 5 | 0.7833 | 0.640 |
 
 Three deployment lessons sit in this table. **(i) The calibrate→deploy gap
 is a threshold-transfer failure, not a model failure** (Obs 358): the
 configuration carried forward from GS calibration (T0.7 × 4-of-5) left
-+0.032 F1 on the table against the joint oracle (T0.3 × 3-of-5, 0.8476,
++0.022 F1 on the table against the joint oracle (T0.3 × 3-of-5, 0.8393,
 p < 0.001), and the threshold axis alone accounts for most of it — vote
 3-of-5 beats the carried 4-of-5 for all three text configurations
-(+0.012 to +0.030, all p < 0.001). On the GS sheets those thresholds had
-sat on a statistical plateau; at deployment scale the plateau resolves,
-and it resolves *looser* — a pattern that recurred when the uplift cell's
-best deployment threshold (5-of-10) again sat looser than its GS optimum
-(6-of-10). **(ii) Thinking level is a priced trade** (§ R6). **(iii) The
-F1/MCC trade-off recurs at deployment, and it is statistically
-resolved**: the image configuration ranks seventh on F1 but carries the
-board's best tile-MCC (0.710), and re-tiering the same eight cells on
-the MCC statistic — the identical permutation machinery, applied to the
-present/not-present tile signal rather than coordinate F1 — makes the
-image cell the **sole Tier-1 cell** on that axis, statistically clear of
-all seven others including the F1 oracle (ΔMCC +0.020, BH p = 0.006;
-analysis `55map-canonical-leaderboard-mcc-50m`, 20/28 pairs significant,
-five tiers). The MCC tier order inverts the F1 board's top while the text
-family keeps its F1 ordering, so the reversal is a modality effect rather
-than noise. For survey prioritisation, where tile-level discrimination
-matters more than exact counts, the image pipeline is not the loser the
-F1 column suggests — it is the resolved best instrument, at two calls per
-tile.
+(+0.009 to +0.028, all BH p ≤ 0.001). On the GS sheets those thresholds
+had sat on a statistical plateau; at deployment scale the plateau
+resolves, and it resolves *looser* — a pattern that recurred when the
+uplift cell's best deployment threshold (5-of-10) again sat looser than
+its GS optimum (6-of-10). **(ii) Thinking level is a priced trade**
+(§ R6). **(iii) The F1/MCC trade-off recurs at deployment, and it is
+statistically resolved**: the image configuration ranks seventh on F1
+but carries the board's best tile-MCC (0.712), and re-tiering the same
+eight cells on the MCC statistic — the identical permutation machinery,
+applied to the present/not-present tile signal rather than coordinate
+F1 — makes the image cell the **sole Tier-1 cell** on that axis,
+statistically clear of all seven others including the F1 co-leaders
+(ΔMCC +0.023 vs the MCC runner-up, BH p = 0.0014; analysis
+`55map-standardised-leaderboard-mcc-50m`, 20/28 pairs significant, five
+tiers — tier structure and significant-pair set identical to the
+canonical-reference board). The MCC tier order inverts the F1 board's
+top while the text family keeps its F1 ordering, so the reversal is a
+modality effect rather than noise; the item-4 re-measurement
+(`results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md`)
+shows it is ≈90 % metric behaviour, not reference effect. For survey
+prioritisation, where tile-level discrimination matters more than exact
+counts, the image pipeline is not the loser the F1 column suggests — it
+is the resolved best instrument, at two calls per tile.
 
 [Resolved 2026-06-13: carry-forward primary, oracle as the measured
 deployment gap, table F1-ordered as the board — implemented in the
@@ -348,19 +359,28 @@ subsection lead; see Changelog.]
 
 Because every metric above is bounded by the reference data, we measured
 the reference data's own error structure rather than assuming it away
-(Obs 361). **Precision is review-verified**: the canonical 55-map GT
-absorbed a human review of every cross-configuration detection cluster,
-including 773 adjudicated phantom mounds absent from the student
-digitisation, so reported precision is robust to GT omissions.
-**Recall is a measured upper bound**: on the GS sheets, where a curator
-reference exists, configurations miss mounds the GT contains at a rate
-implying reported 55-map recall is inflated by ~2.4–2.7 %; because the
-double-miss correlation between independent configurations is only
-1.5–1.7× (4/435 GS double-misses), mounds missed by *every* configuration
-— invisible to detection-led review — are rare but non-zero. We therefore
-present deployment recall with a +3 %/+5 % sensitivity band rather than a
-point correction, the band chosen wide because the correlation estimate
-rests on four events (`results/working-precision/gs-miss-correlation.*`).
+(Obs 361, Obs 396). **Precision is review-verified and
+position-marked**: the standardised 55-map reference absorbed a human
+review of every cross-configuration detection cluster — the
+773-candidate phantom pool was adjudicated point by point (279
+confirmed as distinct real mounds the students missed, the rest
+resolved as duplicates of student records or non-mounds) and every
+reviewed position hand-marked to the mound centre (±2.5 m) — so
+reported precision is robust to GT omissions. **Recall is a measured
+upper bound with quantified opposing biases**: on the GS sheets, where
+a curator reference exists, configurations miss mounds the GT contains
+at a rate implying reported 55-map recall is inflated by ~2.4–2.7 %;
+because the double-miss correlation between independent configurations
+is only 1.5–1.7× (4/435 GS double-misses), mounds missed by *every*
+configuration — invisible to detection-led review — are rare but
+non-zero. In the opposite direction, an estimated ~370 residual
+long-range duplicate records among the unreviewed student majority
+deflate measured F1 by ≈ 0.03 at a balanced operating point; the net
+reference bias at point estimates is ≈ −0.017, rank-preserving to
+first order (Obs 396). We therefore present deployment recall with a
++3 %/+5 % sensitivity band rather than a point correction, the band
+chosen wide because the correlation estimate rests on four events
+(`results/working-precision/gs-miss-correlation.*`).
 
 [Resolved 2026-06-13: stays in Results as a results-of-validation
 subsection — everything above is a measured quantity (review-verified
@@ -408,9 +428,13 @@ runs alone**. A leave-one-family-out (LOFO) consensus pseudo-ground-truth
 single-linkage cluster at 50 m, keep clusters supported by ≥ 2 distinct
 families, score each cell against its own family's held-out reference —
 ranks the eight deployment cells at **Spearman ρ = +0.881** against the
-true canonical board, with no cell ever evaluated against a reference
-containing its own family's detections. The GT-free top pick (TH7-k3) is
-statistically tied with the true winner on the real board (p = 0.127):
+true board (measured against the canonical-reference board; the
+standardised re-tiering preserved the full rank order, so ρ is
+unchanged), with no cell ever evaluated against a reference
+containing its own family's detections. The GT-free top pick (TH7-k3)
+is statistically tied with the true winner on the real board (p = 0.127
+on the canonical reference; the tie deepens to p = 0.857 on the
+standardised one):
 the "miss" sits inside a tie the 8,541-tile instrument itself cannot
 resolve, and the cost meta-rule then breaks the residual tie at exactly
 the scope § R6 qualified it to. Two boundary conditions frame the
@@ -430,6 +454,41 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-08-14 — All 55-map figures moved to the standardised reference (queue item 5)
+
+**Refresh trigger**: the reference-standardisation queue's items 2–5
+(ruling 21) — the eight board cells re-scored against the standardised
+reference (`results/55maps-standardised-ref-2026-08-14/`), both boards
+re-tiered (analyses `55map-standardised-leaderboard-50m` /
+`-mcc-50m`), and every 55-map figure in this draft re-verified.
+**Tier structures are IDENTICAL on both boards**, so no conclusion
+moved; magnitudes did:
+
+| figure | was (canonical ref) | now (standardised) |
+|---|---|---|
+| carry-forward TH7-k4 | 0.8152 | 0.8169 |
+| oracle T03-k3 | 0.8476 | 0.8393 |
+| joint oracle gap | +0.032 | +0.022 |
+| threshold axis (k3 over k4) | +0.012…+0.030 | +0.009…+0.028 |
+| TH7-k3 | 0.8425 | 0.8387 |
+| TM-k3 / min-vs-HIGH reversal | 0.8127 / −0.030 | 0.8109 / −0.028 |
+| uplift cell | 0.8290 (+0.0163/−0.0134) | 0.8279 (+0.0170/−0.0108) |
+| Obs 365 steps | +111/−29; +319/+225 | +113/−31; +229/+196 |
+| image IM-k3 | 0.7987 / MCC 0.710 | 0.8010 / MCC 0.712 |
+| image MCC sole-T1 margin | +0.020, BH p=0.006 | +0.023, BH p=0.0014 |
+| transfer deltas (T0.7/T0.3/img/MIN) | −0.048/−0.057/−0.078/−0.087 | −0.052/−0.065/−0.076/−0.089 |
+
+What did NOT change: every tier assignment on both boards, the F1/MCC
+divergence lesson (now backed by the item-4 re-measurement — ≈90 %
+metric behaviour), the carry-forward-primary framing, the R9 GT-free ρ
+(rank order preserved), and all GS-instrument figures (curator GT,
+out of ruling-21 scope). § R0's instrument description and § R8's
+reference-epistemics paragraph now describe the standardised layers
+(4,731 + 279 at marked centres) and carry Obs 396's opposing-bias
+band. The T03-k3-vs-TH7-k3 top pair remains statistically tied (p
+0.127 → 0.857); T03-k3 keeps rank 1 on points. Landed with this
+revision's commit.
 
 ### 2026-06-13 (later) — § R7 lesson (iii) given statistical backing
 
