@@ -15,16 +15,14 @@ project state.
 > The controller (`planning/audit-charter.md` § 9) and the queue
 > register's changelog (f) carry the full trail.
 >
-> **START HERE — the PI review backlog, oldest first:**
+> **START HERE — the PI review backlog:**
 >
-> 1. **Pending observation batches now FOUR sessions deep** — S129 A–C
->    (would-be 398–400) + S130 D–G (401–404) + S131 H–J (405–407) +
->    S132 K–M (408–410, drafted this handoff) in
->    `docs/notes/working-notes.md`; user-obs candidates S129 (4) +
->    S130 (5) in `docs/notes/user-observations.md` (S131's were
->    approved 2026-08-14). Re-surface at session start — silence is
->    not a decline.
-> 2. **PI sign-off gates** (`manually_verified_at`) on the five new
+> 1. ~~Pending observation batches~~ **CLEARED 2026-08-14/15** — the
+>    PI approved all thirteen working-notes candidates (minted as Obs
+>    398–410, `bc7301fac`) and walked the nine user-obs candidates
+>    (eight kept, S130 candidate 2 dropped, `5ef314a01`). Nothing
+>    pends in either notes file.
+> 2. **PI sign-off gates** (`manually_verified_at`) on the three new
 >    analyses: `obs280-shared-reference`,
 >    `55map-standardised-leaderboard-50m` / `-mcc-50m`, plus the
 >    S131 D-S refit trail if not yet walked.
@@ -32,7 +30,8 @@ project state.
 >    outline-first pivot (`docs/paper/results-outline.md`, decisions
 >    D1–D15, Shawn mid-review) — now on a fully standardised footing:
 >    every 55-map figure in `docs/paper/results-draft.md` is
->    standardised-reference, tier structures unchanged.
+>    standardised-reference, tier structures unchanged. Obs 407's
+>    ink-colour adhesion test remains one cheap $0 analysis away.
 >
 > **Registered residue (documentation-class, not blockers)**:
 > `results/55map-leaderboard/gs-vs-55map-transfer.{md,json}` remain
