@@ -26928,13 +26928,10 @@ claims) targets, and twice what it caught. Extends Obs 397 and Obs 406
 with a three-pass base rate. Sources: the three verifier reports
 (commits `0f19370cd`, `ddc559c78`, `a5d13e279`).
 
-## Candidates pending review — Session 133 (two drafted)
+## Observation 411: The ink-colour adhesion prediction survives its first test — with a model-only signature (Session 133, 2026-08-15)
 
-*The thirteen candidates from Sessions 129–132 were approved wholesale
-on 2026-08-14 and minted as Observations 398–410. The two below were
-drafted in-session on 2026-08-15 and await the PI's walk.*
-
-### Candidate A (S133): The ink-colour adhesion prediction survives its first test — with a model-only signature
+*Drafted and approved in-session 2026-08-15 (both S133 candidates
+approved together).*
 
 Obs 407 predicted that displacement should sort by attractor ink
 colour. The first test ($0, pre-specified in
@@ -26959,7 +26956,10 @@ mounds — the vector-extension project, parked. Blind-verified
 `results/obs407-ink-colour-adhesion/{findings.md,adhesion-results.json}`
 (commits `8466f16a8`, `25393deff`, `023babd0d`; plan `22227508a`).
 
-### Candidate B (S133): On the standardised reference the three F1 estimators fully agree — and the two independent corrections converge within 0.004
+## Observation 412: On the standardised reference the three F1 estimators fully agree — and the two independent corrections converge within 0.004 (Session 133, 2026-08-15)
+
+*Drafted and approved in-session 2026-08-15 (both S133 candidates
+approved together).*
 
 After the D-S report's §§ 4.1/4.3/5.3/5.4 moved onto the standardised
 reference, measured F1, D-S corrected F1, and
@@ -26982,3 +26982,8 @@ methodology, explained virtually all prior estimator disagreement.
 Blind-verified (125/123/119/4, zero numerical errors). Sources:
 `results/55maps-ds-summary-v2/report.md` §§ 4.1/4.3/5.3/5.4 +
 2026-08-15 changelog entries (commits `87b828ab2`, `83ea4fad7`).
+
+## Candidates pending review — none outstanding
+
+The two Session-133 candidates were approved in-session on 2026-08-15
+and minted above as Observations 411–412.
