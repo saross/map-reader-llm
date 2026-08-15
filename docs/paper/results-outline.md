@@ -1,8 +1,9 @@
 # Results — structural outline (spine AGREED; section calls still open)
 
-> **Status**: collaborative structure document. Part A's spine calls (D1–D4)
-> and the R0/R1 boundary calls (**D5–D6**, Session 133) are **settled**;
-> D7–D15 remain **OPEN** with recommendations marked `(REC)`;
+> **Status**: collaborative structure document. Part A's spine calls (D1–D4),
+> the R0/R1 boundary calls (**D5–D6**), and the Part 1 structure calls
+> (**D7–D10**) are **settled** (Session 133); D11–D15 remain **OPEN** with
+> recommendations marked `(REC)`;
 > D16–D17 are **open** (preregistration handling; D17 blocking). This is a
 > decision-forward outline, **not** prose. Prose drafting for a section waits
 > until that section's structure is agreed. `docs/paper/results-draft.md`
@@ -16,6 +17,7 @@
 | v0 | 2026-06-14 | Strawman; 15 decisions D1–D15 raised, all OPEN (Session 114). |
 | v1 | 2026-07-27 | **D1–D4 settled** (Session 118). Spine reorganised into two explicit parts with a named seam; anti-double-telling convention added as a standing rule; D16–D17 raised on preregistration handling; decision register updated. |
 | v2 | 2026-08-15 | **D5–D6 settled = A** (Session 133, PI in-session). D6 carries a supplement rider (full sweeps in supplementary material; data-derived headlines in the body). E60 note added to the prereg section (the "no erratum covers it" line at D17's inventory was written the day before E60 landed). |
+| v3 | 2026-08-15 | **D7–D10 settled per REC** (Session 133, PI in-session): factor split yes; both boards with the temperature-qualifier drafting note; dividend retirement forward-referenced; tile size folded into R4. |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -198,16 +200,16 @@ The known repeat-offenders, with their assigned homes:
     example-library (H8) — all inside the tie.
   - Signpost: thinking level is inert-to-harmful at single pass; its effect
     arrives under consensus (→ R3).
-- **▸ D7 — the factor split.** Group the four inert factors in one sentence;
-  pull out modality (as a trade) and temperature (T=0 best); route thinking
-  level forward to R3. **(REC: yes — this version.)**
-- **▸ D8 — board basis.** The floor lives on the Flash 512 px board; the
-  temperature signal lives on the Pro 384 px matrix.
-  - **A (REC)**: lead with the Flash board (the floor), bring in the Pro
-    matrix for the temperature result and the genuine-Pro context.
-  - **B**: one board only (drop the temperature claim or relocate it).
-  - *Lean A*: temperature is a real single-pass signal worth keeping; it just
-    needs its correct (Pro) home named.
+- **✅ D7 SETTLED = yes** (PI, Session 133, 2026-08-15): one sentence
+  for the four inert factors; modality pulled out as the F1↔MCC
+  trade; temperature pulled out; thinking level routed to R3.
+- **✅ D8 SETTLED = A** (PI, Session 133, 2026-08-15): lead with the
+  Flash 512 px board (the floor), bring in the Pro 384 px matrix for
+  the temperature result with the genuine-Pro context named.
+  **Drafting note (S133)**: the temperature sentence must carry its
+  instrument/corpus/metric qualifiers ("single-pass, Pro 384 px, F1")
+  — the E43/E72 lesson is that temperature claims do not generalise
+  across metric or corpus (Obs 274; `e43-matched-temperature`).
 
 ### R3 — Consensus voting buys performance; the mechanism is pass diversity
 
@@ -217,10 +219,10 @@ The known repeat-offenders, with their assigned homes:
   matched N (`diversity-dividend-384`); engineered diversity adds nothing
   (H9 rejected); permissive thresholds win, unanimity hurts; the consensus-era
   "buy HIGH thinking" reading is revised by R5. Anchor: §R3.
-- **▸ D9 — the dividend's "retirement" under PV** is asserted here but only
-  demonstrated at R5. Keep the forward-reference, or move the retirement next
-  to the dividend? **(REC: keep forward-ref + a one-line signpost)** — the
-  retirement needs the verifier machinery R4/R5 build.
+- **✅ D9 SETTLED = forward-ref** (PI, Session 133, 2026-08-15): the
+  retirement stays at R5 with a one-line signpost here — it needs the
+  verifier machinery R4/R5 build, and co-locating would violate
+  anti-double-telling.
 
 ### R4 — Proposer–verifier is the best architecture on every tile size
 
@@ -234,8 +236,9 @@ The known repeat-offenders, with their assigned homes:
     *rescues* 256 px (0.460→0.856) (`tile-size-sweep`).
   - **GS headline**: F1@20 m 0.890 / MCC 0.790, global optimum confirmed
     (`unswept-pools-completeness`). **Load-bearing.**
-- **▸ D10 — tile size (H11)**: keep folded into R4 (it's a PV story), or give
-  it its own subsection? **(REC: keep folded.)**
+- **✅ D10 SETTLED = folded** (PI, Session 133, 2026-08-15): tile size
+  stays inside R4 — the optimum is architecture-dependent *because of*
+  the verifier (the 256 px rescue), so it is a PV story.
 - (Headline *placement* settled at D2; this remains its derivation home.)
 
 ### R5 — Verifier robustness: every cheaper option ties, so the cheap stack wins
@@ -535,10 +538,10 @@ favourable and should not be given away.
 | D4 | R6/R7 | split GS-cost from deployment, or keep fused | ✅ **A** — split, both levels, told once |
 | D5 | R0 | trim reading guide (convention → Methods) vs keep | ✅ **A** — trim (S133) |
 | D6 | R1 | working precisions: Methods+recap vs all-Results | ✅ **A** — Methods+recap; supplement carries full sweeps (S133 rider) |
-| D7 | R2 | factor split (inert group + pull out modality/temp; thinking → R3) | OPEN — *lean A* yes |
-| D8 | R2 | Flash board lead + Pro matrix for temperature, vs one board | OPEN — *lean A* both |
-| D9 | R3 | dividend-retirement: forward-ref vs co-locate | OPEN — *lean A* forward-ref |
-| D10 | R4 | tile size folded into R4 vs own subsection | OPEN — *lean A* folded |
+| D7 | R2 | factor split (inert group + pull out modality/temp; thinking → R3) | ✅ **yes** (S133) |
+| D8 | R2 | Flash board lead + Pro matrix for temperature, vs one board | ✅ **A** — both boards; temperature sentence carries qualifiers (S133) |
+| D9 | R3 | dividend-retirement: forward-ref vs co-locate | ✅ **forward-ref** (S133) |
+| D10 | R4 | tile size folded into R4 vs own subsection | ✅ **folded** (S133) |
 | D11 | R5 | compress six robustness axes to meta-rule + table | OPEN — *lean A* compress |
 | D12 | R5 | elevate the recall-ceiling mechanism to its own hub subsection | OPEN — *lean A* elevate |
 | D13 | R7 | carry-forward primary vs oracle-led | OPEN — *lean A* carry-forward (E56 supports) |
@@ -548,7 +551,7 @@ favourable and should not be given away.
 | D16 | prereg | where prereg material and the hypothesis-outcome table live | OPEN — *lean A* |
 | D17 | prereg | confirmatory/exploratory reconciliation | OPEN — *lean A* — **blocking** |
 
-**Settled**: D1–D4 (spine), D5–D6 (R0/R1 boundary, Session 133).
+**Settled**: D1–D4 (spine), D5–D10 (R0–R4, Session 133).
 **Next most valuable**: D17 (blocking for final Results claims), then
 D15 (least settled), D13 (has new support from E56, plus the S132
-oracle-label question). D7–D12, D14/D14b are clear-lean quick waves.
+oracle-label question). D11–D12, D14/D14b are clear-lean quick waves.
