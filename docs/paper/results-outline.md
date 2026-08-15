@@ -1,8 +1,9 @@
 # Results — structural outline (spine AGREED; section calls still open)
 
 > **Status**: collaborative structure document. Part A's spine calls (D1–D4)
-> are **settled**; D5–D15 remain **OPEN** with recommendations marked `(REC)`;
-> D16–D17 are **new and open** (preregistration handling). This is a
+> and the R0/R1 boundary calls (**D5–D6**, Session 133) are **settled**;
+> D7–D15 remain **OPEN** with recommendations marked `(REC)`;
+> D16–D17 are **open** (preregistration handling; D17 blocking). This is a
 > decision-forward outline, **not** prose. Prose drafting for a section waits
 > until that section's structure is agreed. `docs/paper/results-draft.md`
 > remains the **zero-draft** reference (claims and anchors live there) and is
@@ -14,6 +15,7 @@
 |---|---|---|
 | v0 | 2026-06-14 | Strawman; 15 decisions D1–D15 raised, all OPEN (Session 114). |
 | v1 | 2026-07-27 | **D1–D4 settled** (Session 118). Spine reorganised into two explicit parts with a named seam; anti-double-telling convention added as a standing rule; D16–D17 raised on preregistration handling; decision register updated. |
+| v2 | 2026-08-15 | **D5–D6 settled = A** (Session 133, PI in-session). D6 carries a supplement rider (full sweeps in supplementary material; data-derived headlines in the body). E60 note added to the prereg section (the "no erratum covers it" line at D17's inventory was written the day before E60 landed). |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -147,10 +149,9 @@ The known repeat-offenders, with their assigned homes:
   greedy-clique tiering throughout. Anchor: §R0 of the zero-draft.
 - **Now also carries** the two-headline stub (per D2) and a pointer to the
   preregistration status statement (per D16).
-- **▸ D5**: keep R0 as a Results subsection, or fold the stats-convention
-  detail into Methods and leave only a 2–3 line orientation here?
-  **(REC: trim — orientation stays, convention detail → Methods)** to avoid
-  duplicating Methods.
+- **✅ D5 SETTLED = A** (PI, Session 133, 2026-08-15): trim —
+  orientation (2–3 lines) stays in R0, stats-convention detail moves
+  to Methods.
 
 ### R1 — Working precisions are empirical, not free parameters
 
@@ -169,13 +170,17 @@ The known repeat-offenders, with their assigned homes:
 - **Straddle note (D1)**: this subsection covers both instruments, so it sits
   in Part 1 but forward-references the seam. If D6 resolves to Methods, the
   straddle disappears and only a recap line remains here.
-- **▸ D6 — Results or Methods?** Deriving the buffer is data-driven but reads
-  as methodology.
-  - **A (REC)**: Methods (the derivation) + a one-line Results recap of the
-    chosen radii.
-  - **B**: keep wholly in Results (current).
-  - *Lean A*: it's a calibration decision; Results should consume it, not
-    derive it. But it's a genuine empirical result, so the call is real.
+- **✅ D6 SETTLED = A** (PI, Session 133, 2026-08-15): Methods carries
+  the derivation; Results keeps a one-line recap of the chosen radii,
+  written so the reader sees they were derived, not chosen. The
+  straddle dissolves (only the recap line remains in R1).
+  **PI rider**: a supplement/appendix reports the **full sweeps for
+  all results at the previously-agreed threshold grid** (the 14-buffer
+  5–150 m standard); the paper body emphasises the data-derived
+  headline precisions (30 m text / 75 m image / 50 m 55-map). PI
+  wording: "in a supplement or appendix we should report full sweeps
+  for all results using the thresholds we previously agreed on, then
+  in the paper we should emphasise the data-derived headlines."
 
 ### R2 — Single-pass baselines: a floor, and which factors moved it
 
@@ -509,7 +514,12 @@ decision to take**, because it determines the shape of everything else.
 
 **Also newly surfaced**: the H7 escalation trigger fired (text T=1.3 0.5442 >
 T=1.0 0.5335, `osf/preregistration.md:731`) and was not honoured — no
-T=1.6/T=2.0 runs exist and no erratum covers it. And **E56** rules H3's
+T=1.6/T=2.0 runs exist. **[Resolved next day — noted 2026-08-15]**:
+erratum **E60** (2026-07-28) discloses the conditional, both
+evaluations of its firing (never fired on the registered 60-tile
+corpus; fired only on the unregistered expanded corpus, text track,
+within noise), and the not-run disposition
+(`docs/methodology/preregistration/protocol-errata.md` § E60). And **E56** rules H3's
 swept-optimal reporting *preregistered* rather than in-sample, which is
 favourable and should not be given away.
 
@@ -523,8 +533,8 @@ favourable and should not be given away.
 | D2 | spine | state headline early vs only at R4 | ✅ **A** — early, **both** headlines |
 | D3 | spine | F1-vs-MCC theme: threaded vs own subsection vs distributed | ✅ **A** — threaded, home at R2 |
 | D4 | R6/R7 | split GS-cost from deployment, or keep fused | ✅ **A** — split, both levels, told once |
-| D5 | R0 | trim reading guide (convention → Methods) vs keep | OPEN — *lean A* trim |
-| D6 | R1 | working precisions: Methods+recap vs all-Results | OPEN — *lean A* Methods+recap |
+| D5 | R0 | trim reading guide (convention → Methods) vs keep | ✅ **A** — trim (S133) |
+| D6 | R1 | working precisions: Methods+recap vs all-Results | ✅ **A** — Methods+recap; supplement carries full sweeps (S133 rider) |
 | D7 | R2 | factor split (inert group + pull out modality/temp; thinking → R3) | OPEN — *lean A* yes |
 | D8 | R2 | Flash board lead + Pro matrix for temperature, vs one board | OPEN — *lean A* both |
 | D9 | R3 | dividend-retirement: forward-ref vs co-locate | OPEN — *lean A* forward-ref |
@@ -538,6 +548,7 @@ favourable and should not be given away.
 | D16 | prereg | where prereg material and the hypothesis-outcome table live | OPEN — *lean A* |
 | D17 | prereg | confirmatory/exploratory reconciliation | OPEN — *lean A* — **blocking** |
 
-**Settled**: D1–D4 (spine). **Next most valuable**: D17 (blocking for final
-Results claims), then D15 (least settled), D6 (straddle removal), D13 (has new
-support from E56). D5, D7–D12, D14/D14b are clear-lean quick waves.
+**Settled**: D1–D4 (spine), D5–D6 (R0/R1 boundary, Session 133).
+**Next most valuable**: D17 (blocking for final Results claims), then
+D15 (least settled), D13 (has new support from E56, plus the S132
+oracle-label question). D7–D12, D14/D14b are clear-lean quick waves.
