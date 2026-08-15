@@ -26928,12 +26928,57 @@ claims) targets, and twice what it caught. Extends Obs 397 and Obs 406
 with a three-pass base rate. Sources: the three verifier reports
 (commits `0f19370cd`, `ddc559c78`, `a5d13e279`).
 
-## Candidates pending review — none outstanding
+## Candidates pending review — Session 133 (two drafted)
 
-All thirteen candidates drafted across Sessions 129–132 (S129 A–C, S130
-D–G, S131 H–J, S132 K–M) were approved wholesale by the PI on 2026-08-14
-(Session 132 review) and minted above as Observations 398–410. Two
-as-drafted details were annotated at minting rather than silently
-corrected: Obs 402 carries the final materialised census alongside its
-as-drafted counts, and stale "would become" numbering from the drafting
-dates was dropped throughout.
+*The thirteen candidates from Sessions 129–132 were approved wholesale
+on 2026-08-14 and minted as Observations 398–410. The two below were
+drafted in-session on 2026-08-15 and await the PI's walk.*
+
+### Candidate A (S133): The ink-colour adhesion prediction survives its first test — with a model-only signature
+
+Obs 407 predicted that displacement should sort by attractor ink
+colour. The first test ($0, pre-specified in
+`planning/s133-analysis-block-2026-08-15.md` before compute): a
+symbol-class contrast on `marked-centres.csv` displacement magnitudes —
+black-element mounds ({bench_mark, trig_point}_on_mound, where a black
+geodetic overprint sits at the true centre) versus plain orange-brown
+mounds. **Model phantoms: median 13.71 m (black, n=152) vs 44.89 m
+(plain, n=580), permutation p=0.0001 — a 3× median gap. Both student
+cohorts are null** (random jitter sample 8.34 vs 8.85 m, p=0.718;
+condition-selected 8.96 vs 8.25 m, p=0.495), so the
+"geodetic mounds are better mapped" confound is excluded for human
+placement and the effect is specific to the model pipeline. The
+black-element class is bimodal: ~60 % of phantoms pin within 20 m of
+the symbol, the rest behave like plain-mound phantoms. Held honestly
+at consistent-with: ink-colour adhesion and labelled-point
+locatability (printed elevation numerals at trig points) are
+confounded at this grain; separating them needs displacement
+*bearings* toward same- vs different-colour attractors on plain
+mounds — the vector-extension project, parked. Blind-verified
+(70/69/66/3). Sources:
+`results/obs407-ink-colour-adhesion/{findings.md,adhesion-results.json}`
+(commits `8466f16a8`, `25393deff`, `023babd0d`; plan `22227508a`).
+
+### Candidate B (S133): On the standardised reference the three F1 estimators fully agree — and the two independent corrections converge within 0.004
+
+After the D-S report's §§ 4.1/4.3/5.3/5.4 moved onto the standardised
+reference, measured F1, D-S corrected F1, and
+corrected-F1-multi-buffer agree on the complete four-run ordering
+(T=0.3 > T=0.7 > image > text-MIN). The Obs 293 middle-pair swap
+(image above T=0.7 on corrected-F1) was a per-run-vintage artefact —
+already absent on the legacy common reference (TH7-k4 0.8153 >
+IM-k3 0.7988 at R=50 m). The corrected-minus-D-S gaps collapse to
+−0.0001 / −0.0001 / −0.0009 / −0.0040: two methodologically distinct
+corrections — a fixed-prior 2-annotator EM versus extended-GT
+Hungarian matching at R=50 m, computed and blind-verified in
+independent sessions (S131/S132) — now land on the same F1 to within
+each method's uncertainty. The agreement is of the composite metric
+(TP/FP/FN components still differ, with compensating
+precision/recall), which is what makes it a cross-validation rather
+than a tautology. All four three-estimator spreads sit at
+0.024–0.025; the earlier "image is the loose one" reading is
+withdrawn. Net lesson: reference vintage, not correction
+methodology, explained virtually all prior estimator disagreement.
+Blind-verified (125/123/119/4, zero numerical errors). Sources:
+`results/55maps-ds-summary-v2/report.md` §§ 4.1/4.3/5.3/5.4 +
+2026-08-15 changelog entries (commits `87b828ab2`, `83ea4fad7`).
