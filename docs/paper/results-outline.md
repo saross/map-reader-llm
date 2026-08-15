@@ -1,9 +1,8 @@
 # Results — structural outline (spine AGREED; section calls still open)
 
-> **Status**: collaborative structure document. Part A's spine calls (D1–D4),
-> the R0/R1 boundary calls (**D5–D6**), and the Part 1 structure calls
-> (**D7–D10**) are **settled** (Session 133); D11–D15 remain **OPEN** with
-> recommendations marked `(REC)`;
+> **Status**: collaborative structure document. Part A's spine calls (D1–D4)
+> and the Part 1 calls (**D5–D12**) are **settled** (D5–D12 in Session 133);
+> D13–D15 remain **OPEN** with recommendations marked `(REC)`;
 > D16–D17 are **open** (preregistration handling; D17 blocking). This is a
 > decision-forward outline, **not** prose. Prose drafting for a section waits
 > until that section's structure is agreed. `docs/paper/results-draft.md`
@@ -18,6 +17,7 @@
 | v1 | 2026-07-27 | **D1–D4 settled** (Session 118). Spine reorganised into two explicit parts with a named seam; anti-double-telling convention added as a standing rule; D16–D17 raised on preregistration handling; decision register updated. |
 | v2 | 2026-08-15 | **D5–D6 settled = A** (Session 133, PI in-session). D6 carries a supplement rider (full sweeps in supplementary material; data-derived headlines in the body). E60 note added to the prereg section (the "no erratum covers it" line at D17's inventory was written the day before E60 landed). |
 | v3 | 2026-08-15 | **D7–D10 settled per REC** (Session 133, PI in-session): factor split yes; both boards with the temperature-qualifier drafting note; dividend retirement forward-referenced; tile size folded into R4. |
+| v4 | 2026-08-15 | **D11–D12 settled per REC** (Session 133, PI in-session): six robustness axes compressed to meta-rule + table (detail → supplement, Obs 362 scope-qualification stays in body); recall-ceiling mechanism elevated to its own hub subsection within R5. |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -253,15 +253,16 @@ The known repeat-offenders, with their assigned homes:
 - **Scope-qualification (must appear here, not only at R7)**: the meta-rule
   holds only where the instrument can resolve the difference (Obs 362). One
   clause, forward-referencing R7 where it is priced.
-- **▸ D11 — compress the six axes** into the meta-rule + a summary table
-  (per-axis detail → supplement)? **(REC: yes — meta-rule + table;** the six
-  bullets are dense and individually minor.)
-- **▸ D12 — elevate the recall-ceiling mechanism.** It explains R3 (why
-  diversity helps), R4 (why the verifier wins) *and* R6 (why minimal ties HIGH
-  on GS). Keep it as R5's closing paragraph, or pull it into its own short
-  mechanism subsection the others point back to? **(REC: elevate)** — it is
-  the conceptual hub of the pipeline story, and elevating it is what makes the
-  anti-double-telling rule enforceable for this mechanism.
+- **✅ D11 SETTLED = compress** (PI, Session 133, 2026-08-15):
+  meta-rule + summary table in the body; per-axis detail to the
+  supplement (harmonises with the D6 rider). The Obs 362
+  scope-qualification stays in the body regardless — one clause,
+  forward-referencing R7.
+- **✅ D12 SETTLED = elevate** (PI, Session 133, 2026-08-15): the
+  recall-ceiling mechanism gets its own short subsection that R3, R4,
+  and R6 point back to — the pipeline story's conceptual hub, and the
+  single home that makes anti-double-telling enforceable. Placement:
+  within R5, after the verifier machinery exists on the page.
 
 ### R6 — The cost frontier (gold standard)
 
@@ -542,8 +543,8 @@ favourable and should not be given away.
 | D8 | R2 | Flash board lead + Pro matrix for temperature, vs one board | ✅ **A** — both boards; temperature sentence carries qualifiers (S133) |
 | D9 | R3 | dividend-retirement: forward-ref vs co-locate | ✅ **forward-ref** (S133) |
 | D10 | R4 | tile size folded into R4 vs own subsection | ✅ **folded** (S133) |
-| D11 | R5 | compress six robustness axes to meta-rule + table | OPEN — *lean A* compress |
-| D12 | R5 | elevate the recall-ceiling mechanism to its own hub subsection | OPEN — *lean A* elevate |
+| D11 | R5 | compress six robustness axes to meta-rule + table | ✅ **compress** (S133) |
+| D12 | R5 | elevate the recall-ceiling mechanism to its own hub subsection | ✅ **elevate** (S133) |
 | D13 | R7 | carry-forward primary vs oracle-led | OPEN — *lean A* carry-forward (E56 supports) |
 | D14 | R8 | Results (validation) vs Discussion | OPEN — *lean A* Results |
 | D14b | R8 | GT epistemics whole vs split across the two parts | OPEN — *lean A* keep whole |
@@ -551,7 +552,7 @@ favourable and should not be given away.
 | D16 | prereg | where prereg material and the hypothesis-outcome table live | OPEN — *lean A* |
 | D17 | prereg | confirmatory/exploratory reconciliation | OPEN — *lean A* — **blocking** |
 
-**Settled**: D1–D4 (spine), D5–D10 (R0–R4, Session 133).
+**Settled**: D1–D4 (spine), D5–D12 (Part 1, Session 133).
 **Next most valuable**: D17 (blocking for final Results claims), then
 D15 (least settled), D13 (has new support from E56, plus the S132
-oracle-label question). D11–D12, D14/D14b are clear-lean quick waves.
+oracle-label question). D14/D14b are clear-lean quick waves.
