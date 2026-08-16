@@ -1,8 +1,9 @@
 # Results — structural outline (spine AGREED; section calls still open)
 
-> **Status**: collaborative structure document. Part A's spine calls (D1–D4)
-> and the Part 1 calls (**D5–D12**) are **settled** (D5–D12 in Session 133);
-> D13–D15 remain **OPEN** with recommendations marked `(REC)`;
+> **Status**: collaborative structure document. Part A's spine calls (D1–D4),
+> the Part 1 calls (**D5–D12**), and the deployment framing (**D13**) are
+> **settled** (D5–D13 in Session 133);
+> D14–D15 remain **OPEN** with recommendations marked `(REC)`;
 > D16–D17 are **open** (preregistration handling; D17 blocking). This is a
 > decision-forward outline, **not** prose. Prose drafting for a section waits
 > until that section's structure is agreed. `docs/paper/results-draft.md`
@@ -18,6 +19,7 @@
 | v2 | 2026-08-15 | **D5–D6 settled = A** (Session 133, PI in-session). D6 carries a supplement rider (full sweeps in supplementary material; data-derived headlines in the body). E60 note added to the prereg section (the "no erratum covers it" line at D17's inventory was written the day before E60 landed). |
 | v3 | 2026-08-15 | **D7–D10 settled per REC** (Session 133, PI in-session): factor split yes; both boards with the temperature-qualifier drafting note; dividend retirement forward-referenced; tile size folded into R4. |
 | v4 | 2026-08-15 | **D11–D12 settled per REC** (Session 133, PI in-session): six robustness axes compressed to meta-rule + table (detail → supplement, Obs 362 scope-qualification stays in body); recall-ceiling mechanism elevated to its own hub subsection within R5. |
+| v5 | 2026-08-16 | **D13 settled = A + merged (b)/(c)** (Session 133, PI in-session): carry-forward primary; deployment gap framed against the Tier-1 set with no single-oracle crown; E56 cited at the relaxed rows. D13 block figures refreshed to standardised vintage; the threshold-axis decomposition punchline recorded. |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -329,17 +331,23 @@ The known repeat-offenders, with their assigned homes:
   resolution. The IM-k3 provenance point belongs here too — the phantom pool
   was reviewed config-agnostically and the residual asymmetry favours *text*,
   so the image cell's MCC lead is conservative (Obs 371).
-- **▸ D13 — carry-forward vs oracle ordering** (original decision).
-  - **A (REC)**: carry-forward (0.8152) is the primary deployment claim;
-    oracle + relaxed rows = the measured deployment gap (+0.032 upper bound);
-    table F1-ordered.
-  - **B**: oracle-led (0.8476 as best-achievable; carry-forward as a
-    sensitivity row).
-  - *Lean A*: preregistration honesty — the oracle is post-hoc threshold
-    selection; lead with what the protocol committed to. **Note (2026-07-27)**:
-    errata **E56** already declares the verifier probability-threshold
-    operating points to be in-sample rather than calibrated, which
-    independently supports A and should be cited where the oracle is reported.
+- **✅ D13 SETTLED = A + merged (b)/(c) oracle framing** (PI, Session
+  133, 2026-08-15): carry-forward is the primary deployment claim;
+  the relaxed/post-hoc rows are reported as **the measured deployment
+  gap against the Tier-1 set**, without crowning a single "oracle"
+  cell; table F1-ordered; **E56** cited wherever the relaxed rows
+  appear (the verifier probability thresholds are in-sample).
+  **Figures refreshed to the standardised reference** (S132 boards;
+  `results/55maps-standardised-ref-2026-08-14/consolidated-standardised.csv`
+  @ R=50 m): carry-forward TH7-k4 **0.8169**; Tier-1 pair {T03-k3
+  0.8393, TH7-k3 0.8387}, indistinguishable (Δ +0.0006, p = 0.857);
+  deployment gap **≈ +0.022** (was +0.032 canonical-vintage).
+  **Decomposition punchline (S133)**: fixing only the vote threshold
+  on the carried config (TH7 k4→k3) recovers +0.0218 of the +0.0224
+  gap; post-hoc temperature selection at k3 buys +0.0006 — the gap is
+  essentially pure threshold-transfer failure, which sharpens lesson
+  (i) (Obs 358) and licenses retiring the single-cell "oracle" label
+  (Obs 409 measured the collapse).
 
 ### R8 — What the ground truth can and cannot support
 
@@ -545,14 +553,13 @@ favourable and should not be given away.
 | D10 | R4 | tile size folded into R4 vs own subsection | ✅ **folded** (S133) |
 | D11 | R5 | compress six robustness axes to meta-rule + table | ✅ **compress** (S133) |
 | D12 | R5 | elevate the recall-ceiling mechanism to its own hub subsection | ✅ **elevate** (S133) |
-| D13 | R7 | carry-forward primary vs oracle-led | OPEN — *lean A* carry-forward (E56 supports) |
+| D13 | R7 | carry-forward primary vs oracle-led | ✅ **A** + Tier-1-set gap framing, no single-oracle crown (S133) |
 | D14 | R8 | Results (validation) vs Discussion | OPEN — *lean A* Results |
 | D14b | R8 | GT epistemics whole vs split across the two parts | OPEN — *lean A* keep whole |
 | D15 | R9 | Results vs Discussion vs split | OPEN — *lean C?* split — least sure |
 | D16 | prereg | where prereg material and the hypothesis-outcome table live | OPEN — *lean A* |
 | D17 | prereg | confirmatory/exploratory reconciliation | OPEN — *lean A* — **blocking** |
 
-**Settled**: D1–D4 (spine), D5–D12 (Part 1, Session 133).
+**Settled**: D1–D4 (spine), D5–D13 (Session 133).
 **Next most valuable**: D17 (blocking for final Results claims), then
-D15 (least settled), D13 (has new support from E56, plus the S132
-oracle-label question). D14/D14b are clear-lean quick waves.
+D15 (least settled). D14/D14b are clear-lean quick waves.
