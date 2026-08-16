@@ -1,9 +1,8 @@
 # Discussion — seed paragraphs
 
-> **Last revised**: 2026-06-13 (Seed 4 statistical upgrade: the
-> tile-MCC permutation tiering lands IM-k3 as the sole Tier-1 cell;
-> same-day original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-16 (Seed 6 added — the plateau rule and
+> the calibrate-small/deploy-large decision tree, from the S133 D13
+> settlement). See [§ Changelog](#changelog) for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
 section, capturing the three argument lines that fell out of Session
@@ -154,7 +153,90 @@ E72-remediation matched-temperature analysis,
    temperature-vs-pool-size trade made explicit, not just the
    per-configuration Pareto frontier.
 
+## Seed 6 (S133 addendum). The plateau rule: what transfers from a small calibration corpus, what does not, and the decision tree that falls out
+
+Drafted from the Session-133 D13 settlement dialogue (PI-endorsed
+framing, 2026-08-16); complements Seed 1 (representativeness before
+size) with the post-standardisation decomposition and a practitioner
+recipe. Anchors: the S132 standardised boards
+(`results/55maps-standardised-ref-2026-08-14/consolidated-standardised.csv`),
+Obs 347 (GS-plateau heuristics), Obs 358 (threshold-transfer
+failure), Obs 362 (resolving power / the reversal), Obs 368 + Seed 3
+(GT-free selection), Obs 409 (the oracle-margin collapse), E56.
+
+**The optimistic half, stated precisely.** Everything *structural*
+that the calibration corpus resolved with significance transferred to
+deployment intact: architecture, model, modality, thinking level at
+single pass, and — sharpest of all — temperature, where post-hoc
+re-selection on the deployment board buys +0.0006 at p = 0.857. On
+the standardised reference the entire measured deployment gap
+(carry-forward TH7-k4 0.8169 → Tier-1 set ≈ 0.839, +0.0224) is
+recovered almost wholly by moving one scalar dial on the *carried*
+configuration: relaxing the vote threshold from 4-of-5 to 3-of-5
+recovers +0.0218 of it. The gap is threshold-transfer failure, not a
+better configuration the calibration missed.
+
+**Why the dial moves.** The F1-optimal vote threshold is not a
+property of the configuration; it is a property of the encounter
+between pipeline and corpus — specifically the prevalence of marginal
+mounds that only a minority of passes propose. A single-region
+calibration corpus has one difficulty mix; 55 diverse sheets have a
+longer marginal tail, so the permissive setting wins more, and the
+verifier (which exists to absorb precision costs) was being under-fed
+at 4-of-5.
+
+**The failure was flagged in advance by its own instrument.** The GS
+did not confidently choose 4-of-5 and get overturned; it reported a
+3-of-5 ≈ 4-of-5 plateau — i.e. it announced that it could not resolve
+the choice — and the carried value was a peak-pick on noise. Both
+deployment surprises this project recorded are instances of one rule:
+**nothing the calibration corpus confidently concluded was
+overturned; its ties and plateaus are the entire risk surface** (the
+threshold plateau, reversed at +0.022; the min-vs-HIGH tie inside
+±0.03, reversed at −0.030, Obs 362).
+
+**The decision tree (preliminary).** For calibrate-small,
+deploy-large workflows:
+
+1. **Where the calibration corpus resolves a choice with
+   significance → carry it.** Nothing in this project's record
+   contradicts that move.
+2. **Where it shows a tie or plateau → treat the choice as
+   unresolved.** Do not peak-pick. Tie-break toward the **cheaper**
+   option (the Obs 357 meta-rule) or the **more permissive** one
+   (which keeps recall available for the verifier to refine) — PI
+   tie-breakers, 2026-08-16.
+3. **Budget a dial re-tune at deployment — it is cheap by
+   construction.** Re-thresholding needs no new proposer passes: the
+   existing passes re-merge at the new threshold (a $0 recalculation)
+   and only the changed candidate pool needs a single verifier run.
+   The expensive layer (proposer passes) is untouched.
+4. **Where no reference data exists at deployment → the GT-free
+   protocol is the preliminary branch.** LOFO permissive-consensus
+   ranking reproduced the true board at ρ = +0.881 over cells that
+   mix thresholds (Obs 368), so GT-free dial re-selection is at least
+   demonstrated in retrodiction — advanced here as a falsifiable
+   proposal per Seed 3's framing, not a validated method.
+
+**The caution that keeps the optimism honest.** Relative choices
+transfer; absolute performance does not — every configuration's F1
+degrades on transfer, unequally (the R6/R7 transfer table). The
+calibration corpus predicts *which* configuration, not *how well* it
+will do. And per Seed 1, a larger sample of the same unrepresentative
+sheets would have converged confidently on the wrong dial setting —
+the plateau rule is about resolving power, which representativeness
+gates before size does.
+
 ## Changelog
+
+### 2026-08-16 — Seed 6 added (S133 D13-settlement addendum)
+
+Seed 6 externalises the threshold-transfer explanation from the
+Session-133 D13 dialogue: the plateau rule, the standardised-reference
+decomposition (gap ≈ pure threshold axis; temperature +0.0006), and
+the four-step decision tree with the PI's tie-breakers (cheaper /
+more permissive), the cheap-re-tune cost argument (recalculation +
+one verifier run), and the GT-free protocol as a preliminary branch.
 
 ### 2026-08-03 — Seed 5 added (S125 E72-remediation addendum)
 
