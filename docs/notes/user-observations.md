@@ -620,3 +620,48 @@ sessions of backlog cleared in minutes. If the pre-formed-candidate
 format (evidence in the text, counter-evidence included) is what made
 the discard as fast as the accepts, that is worth recording as the
 standard for future drafting.
+
+## Candidates pending review — Session 133 (2026-08-16, three drafted)
+
+*Drafted at the S133 handoff; accept / edit / discard / replace.
+Silence holds them over — it never discards.*
+
+**Candidate 1 — the deep-dive explanations converted straight into
+paper prose, and Shawn said so in the moment.** Two explanation
+requests ("explain D-S to a non-statistician archaeologist"; "explain
+the threshold-transfer failure") drew explicit in-the-moment
+reactions — "This is an excellent explanation, can you externalise
+it?" and "you have articulated the granularity problem with the
+preregistration well" — and both externalised into discussion-seeds
+Seeds 6–7 within minutes of landing. The register that worked:
+load-bearing structure first, jargon shed, the honest caveat kept
+(the optimism's boundary; the counterweights to the over-bake
+thesis). If the pattern holds, "explain it to me" requests are the
+cheapest route to Discussion-quality prose and should be treated as
+drafting opportunities, not detours.
+
+**Candidate 2 — currency notes on every decision meant no ruling
+landed on stale premises.** The D5–D17 review settled thirteen
+decisions in one sitting, and part of what made each ruling safe was
+that every presentation carried a what-changed-since-drafting audit:
+E60 had already resolved the "no erratum covers it" line; D17's
+heavy lifts (family FDR, CMT-0106, E45) had already landed and been
+signed; D13's block figures were stale-vintage and were refreshed at
+settlement. The same verify-before-presenting move opened the
+session (the handoff prompt's "three pending user-obs" had already
+been resolved in `eb6efa621`). Worth recording if Shawn agrees the
+currency audits were load-bearing for the review's speed — the
+alternative (ruling on July-vintage premises) would have produced
+rulings needing re-litigation.
+
+**Candidate 3 — the verification loop ran end-to-end twice with no
+PI arbitration needed.** Both blind verifiers returned
+pass-with-corrections; all seven corrections were wording-level; the
+disagreement rule (conflict → third derivation) never fired; and the
+corrections were applied autonomously with changelog trails, Shawn
+seeing only the summaries. On $0 documentation work the full stack —
+pre-run review, execution, blind verify, corrections, registry — now
+runs without a human in the loop between go and report. Worth
+Shawn's verdict on whether that autonomy envelope is right, and
+whether it extends to the D17 reconciliation block (which touches
+the manifest and schema — higher stakes than prose).
