@@ -1,8 +1,8 @@
 # Discussion — seed paragraphs
 
-> **Last revised**: 2026-08-16 (Seed 6 added — the plateau rule and
-> the calibrate-small/deploy-large decision tree, from the S133 D13
-> settlement). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-16 (Seeds 6–7 added — the plateau rule
+> and its decision tree; the preregistration retrospective from the
+> D16 rider). See [§ Changelog](#changelog) for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
 section, capturing the three argument lines that fell out of Session
@@ -227,7 +227,74 @@ sheets would have converged confidently on the wrong dial setting —
 the plateau rule is about resolving power, which representativeness
 gates before size does.
 
+## Seed 7 (S133 addendum). Preregistration retrospective: what worked, what over-baked, and the micro-registration alternative
+
+Planned Discussion space per the D16 settlement rider (PI,
+2026-08-16). The PI's thesis: LLM support makes routine
+preregistration feasible, but may also invite
+over-planning/over-registration — and this project somewhat
+over-baked its prereg, requiring many amendments. The S133 dialogue's
+assessment, for drafting:
+
+**The over-bake is real, with receipts.** Fifteen registered
+hypotheses, of which roughly a third never executed (H6, H13, H14,
+H15, plus H2 Condition C) — each now a disclosure obligation a
+reviewer checking the OSF record will look for; an errata register
+in the seventies; conditional escalation triggers registered at an
+operational specificity the project outgrew (E60: the trigger fired
+only on an unregistered corpus, within noise); a registered
+inference recipe that did not survive contact with the analysis
+(E45: the permutation machinery used everywhere was never
+registered).
+
+**Two counterweights keep the retrospective honest.** First, the
+amendment count is a biased measure of over-registration: an
+unregistered project would have drifted identically, invisibly. The
+counterfactual is not "fewer deviations" but "the same deviations,
+unrecorded" — much of the errata volume is the honesty discipline
+*working*, and the register is itself a contribution. Second, the
+registration delivered exactly the goods it promises: {H2, H3, H7}
+survive the registered family FDR as confirmatory claims; H2's
+*falsified directional prediction* is more credible because it was
+registered; CMT-0106's outcome-blind execution resolved an
+outcome-material fork to the conservative branch.
+
+**The sharper diagnosis is grain, not volume.** What aged badly was
+registration of specific operational bindings — fixed corpora,
+enumerated escalation temperatures, fifteen hypotheses including
+speculative strands, a specific bootstrap recipe. What aged well was
+design-level and procedural commitment — the factorial structure,
+hypothesis directions, the FDR family rule. The transferable lesson:
+register decision *rules* and *procedures* plus a handful of sharp
+confirmatory hypotheses; leave operational parameters to disclosed,
+rule-governed selection (cf. Seed 6's plateau rule, which is such a
+rule).
+
+**The LLM-support point cuts both ways — and that is the Discussion
+claim.** LLM assistance collapsed the drafting cost of registration,
+which is precisely what enabled the fifteen-hypothesis over-bake
+(ambition became cheap to enumerate). But it equally collapsed the
+cost of the compensating machinery: the errata register, drift
+audits, blind verification, and above all **just-in-time
+micro-registration** — the family-FDR registration was authored,
+PI-ruled, and computed within days, with CMT-0106 run outcome-blind
+under it. The forward-looking recipe the project backed into in its
+second half: a leaner upfront registration (design + few
+confirmatory hypotheses + procedural rules) combined with
+LLM-supported micro-registrations at each analysis boundary —
+shrinking the unit of preregistration from *the project* to *the
+analysis*. The retrospective can present this as the resolution of
+its own first-half over-bake, evidenced from the paper's own record.
+
 ## Changelog
+
+### 2026-08-16 — Seed 7 added (S133 D16-settlement addendum)
+
+Seed 7 drafts the preregistration retrospective planned under the
+D16 rider: the PI's over-registration thesis with receipts, the two
+counterweights (amendment count as biased measure; the confirmatory
+payoff delivered), the grain-not-volume diagnosis, and the
+micro-registration recipe as the both-ways LLM-support claim.
 
 ### 2026-08-16 — Seed 6 added (S133 D13-settlement addendum)
 

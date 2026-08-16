@@ -1,8 +1,10 @@
 # Results — structural outline (spine AGREED; section calls still open)
 
-> **Status**: collaborative structure document. **D1–D14b are settled**
-> (D5–D14b in Session 133); **D15** remains **OPEN**;
-> D16–D17 are **open** (preregistration handling; D17 blocking). This is a
+> **Status**: collaborative structure document. **ALL SEVENTEEN
+> DECISIONS ARE SETTLED** (D1–D4 in Session 118; D5–D17 in Session
+> 133). Prose drafting can begin per the agreed structure, gated only
+> by the D17 reconciliation block (its own pre-run-reviewed pass,
+> before final Results prose). This is a
 > decision-forward outline, **not** prose. Prose drafting for a section waits
 > until that section's structure is agreed. `docs/paper/results-draft.md`
 > remains the **zero-draft** reference (claims and anchors live there) and is
@@ -19,6 +21,7 @@
 | v4 | 2026-08-15 | **D11–D12 settled per REC** (Session 133, PI in-session): six robustness axes compressed to meta-rule + table (detail → supplement, Obs 362 scope-qualification stays in body); recall-ceiling mechanism elevated to its own hub subsection within R5. |
 | v5 | 2026-08-16 | **D13 settled = A + merged (b)/(c)** (Session 133, PI in-session): carry-forward primary; deployment gap framed against the Tier-1 set with no single-oracle crown; E56 cited at the relaxed rows. D13 block figures refreshed to standardised vintage; the threshold-axis decomposition punchline recorded. |
 | v6 | 2026-08-16 | **D14/D14b settled = A/A** (Session 133, PI in-session): R8 stays in Results as results-of-validation, whole at the head of the validity block. PI framing note recorded (GS = test set for configuration selection, 55-map = production with the luxury of GT to audit generalisation) + the standardised-reference drafting note for R8's error-structure description. |
+| v7 | 2026-08-16 | **D15 settled = C; D16 settled = A + Discussion prereg-retrospective rider; D17 settled = A + schema amendment** (Session 133, PI in-session). **All seventeen decisions settled.** D17 currency note added (family FDR, CMT-0106, E45 correction, E60 all landed since the block was drafted); the reconciliation block queued as the gate before final Results prose. |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -418,22 +421,41 @@ plan. That is a weaker instrument than a Registered Report, and the correct
 move is to say so plainly. The failure mode is not a loose registration — it
 is claiming tighter binding than was actually in place.
 
-**▸ D16 — where the preregistration material lives, and where the
-hypothesis-outcome table goes.**
+**✅ D16 SETTLED = A** (PI, Session 133, 2026-08-16): Methods carries
+a "Preregistration, amendments, and analysis status" subsection
+(registration + errata summarised by class, not enumerated); Results
+carries the hypothesis-outcome table at its head, immediately after
+R0, plus per-subsection status markers; Discussion carries the
+interpretation of deviations.
+**PI rider (2026-08-16)**: plan Discussion space for a
+**preregistration retrospective** — what worked and what didn't, on
+the thesis that LLM support makes routine preregistration feasible
+but may also invite over-planning/over-registration (the PI's read:
+this project somewhat over-baked its prereg, requiring many
+amendments). Zero-draft: `docs/paper/discussion-seeds.md` Seed 7
+(S133 dialogue).
 
-- **A (REC)**: Methods carries a "Preregistration, amendments, and analysis
-  status" subsection (registration + the E1–E57 errata summarised by class,
-  not enumerated); Results carries the hypothesis-outcome table plus a
-  per-subsection status marker; Discussion carries the interpretation of
-  deviations. Table lives at the head of Results, immediately after R0.
-- **B**: table in Methods, Results carries markers only.
-- **C**: table in a supplement, summarised in Results.
-- *Lean A*: the table is a Results object — it is the map from what was
-  promised to what was found. In Methods it reads as bookkeeping; in a
-  supplement it stops doing the work it exists to do.
+**✅ D17 SETTLED = A** (PI, Session 133, 2026-08-16): the
+per-hypothesis reconciliation pass runs before Results prose is
+drafted. **Schema sub-decision also settled: amend the schema** —
+add `not-executed` and split "registered-as-exploratory" from
+"post-hoc" — rather than carry a parallel hand-maintained table,
+which would reintroduce the drift class the standardisation arc
+eliminated; the hypothesis-outcome table generates from the manifest.
+**Currency note (S133)**: A's cost has collapsed since this block was
+drafted — the family BH-FDR has now been run as one family
+(registration-before-compute, rejection set {H2, H3, H7}, PI-signed),
+CMT-0106 executed (NULL, outcome-blind, PI-signed), E45 corrected
+(permutation disclosed as unregistered; pair registered
+bootstrap+BH with permutation wherever confirmatory claims appear),
+E60 landed. **Remaining scope**: schema amendment; the relabelling
+pass (preserve the argued `n1-baseline-matrix-384` exception);
+analysis rows for H10 and H12-v2 (both ran, both null, both
+invisible); erratum coverage check for the unexecuted set (H6, H13,
+H14, H15, H2-C); generate the table. To run as its own
+pre-run-reviewed block.
 
-**▸ D17 — the confirmatory/exploratory reconciliation (BLOCKING for final
-Results prose).**
+**The original decision text (for the record):**
 
 A three-way discrepancy needs resolving before the Results claims are fixed:
 
@@ -559,9 +581,10 @@ favourable and should not be given away.
 | D14 | R8 | Results (validation) vs Discussion | ✅ **A** — Results (S133) |
 | D14b | R8 | GT epistemics whole vs split across the two parts | ✅ **A** — whole; test-set→production framing note (S133) |
 | D15 | R9 | Results vs Discussion vs split | ✅ **C** — split; protocol → Discussion via Seeds 3/6 (S133) |
-| D16 | prereg | where prereg material and the hypothesis-outcome table live | OPEN — *lean A* |
-| D17 | prereg | confirmatory/exploratory reconciliation | OPEN — *lean A* — **blocking** |
+| D16 | prereg | where prereg material and the hypothesis-outcome table live | ✅ **A** + Discussion prereg-retrospective rider (S133) |
+| D17 | prereg | confirmatory/exploratory reconciliation | ✅ **A** + schema amendment; reconciliation block queued (S133) |
 
-**Settled**: D1–D4 (spine), D5–D14b (Session 133).
-**Remaining**: D15 (least settled), then D16–D17 (preregistration
-handling; D17 blocking for final Results claims).
+**Settled**: ALL — D1–D4 (Session 118), D5–D17 (Session 133).
+**Gate before final Results prose**: the D17 reconciliation block
+(schema amendment → relabelling → H10/H12-v2 rows → unexecuted-set
+erratum check → generate the hypothesis-outcome table).
