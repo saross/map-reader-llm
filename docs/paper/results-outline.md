@@ -1,9 +1,7 @@
 # Results — structural outline (spine AGREED; section calls still open)
 
-> **Status**: collaborative structure document. Part A's spine calls (D1–D4),
-> the Part 1 calls (**D5–D12**), and the deployment framing (**D13**) are
-> **settled** (D5–D13 in Session 133);
-> D14–D15 remain **OPEN** with recommendations marked `(REC)`;
+> **Status**: collaborative structure document. **D1–D14b are settled**
+> (D5–D14b in Session 133); **D15** remains **OPEN**;
 > D16–D17 are **open** (preregistration handling; D17 blocking). This is a
 > decision-forward outline, **not** prose. Prose drafting for a section waits
 > until that section's structure is agreed. `docs/paper/results-draft.md`
@@ -20,6 +18,7 @@
 | v3 | 2026-08-15 | **D7–D10 settled per REC** (Session 133, PI in-session): factor split yes; both boards with the temperature-qualifier drafting note; dividend retirement forward-referenced; tile size folded into R4. |
 | v4 | 2026-08-15 | **D11–D12 settled per REC** (Session 133, PI in-session): six robustness axes compressed to meta-rule + table (detail → supplement, Obs 362 scope-qualification stays in body); recall-ceiling mechanism elevated to its own hub subsection within R5. |
 | v5 | 2026-08-16 | **D13 settled = A + merged (b)/(c)** (Session 133, PI in-session): carry-forward primary; deployment gap framed against the Tier-1 set with no single-oracle crown; E56 cited at the relaxed rows. D13 block figures refreshed to standardised vintage; the threshold-axis decomposition punchline recorded. |
+| v6 | 2026-08-16 | **D14/D14b settled = A/A** (Session 133, PI in-session): R8 stays in Results as results-of-validation, whole at the head of the validity block. PI framing note recorded (GS = test set for configuration selection, 55-map = production with the luxury of GT to audit generalisation) + the standardised-reference drafting note for R8's error-structure description. |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -357,21 +356,26 @@ The known repeat-offenders, with their assigned homes:
   (+2.4–2.7 %); double-miss correlation 1.5–1.7×; present a +3 %/+5 % band
   (Obs 361). Anchor: §R8. **Plus (new, Obs 371)**: the 55-map reference's two
   error structures and the R ≥ 50 m validity floor.
-- **▸ D14 — Results or Discussion** (original decision).
-  - **A (REC)**: Results as results-of-validation (measured quantities R9 and
-    the deployment claims depend on); implications → Discussion.
-  - **B**: move the whole subsection to Discussion as a validity passage.
-  - *Lean A*: it reports measurements, not interpretation.
-- **▸ D14b — placement under the two-part structure (new, 2026-07-27).** R8
-  now covers *both* references (GS curator GT and the 55-map canonical GT), so
-  it straddles the seam.
-  - **A (REC)**: keep it whole here, at the head of the validity block, and
-    let it speak to both instruments — the GS and 55-map GT stories are
-    genuinely different in kind and read better contrasted than separated.
-  - **B**: split — GS GT epistemics into Part 1, 55-map GT epistemics into
-    Part 2.
-  - *Lean A*: splitting would double-tell the shared framing (what a reference
-    standard can support) for a modest gain in instrument purity.
+- **✅ D14 SETTLED = A** (PI, Session 133, 2026-08-16): Results, as
+  results-of-validation — measured quantities R9 and the deployment
+  claims consume; implications → Discussion. The GT-error
+  measurement is also a contribution in its own right for the
+  survey-archaeology audience.
+- **✅ D14b SETTLED = A** (PI, Session 133, 2026-08-16): keep R8 whole
+  at the head of the validity block, speaking to both instruments —
+  the two GT stories are different in kind and read better
+  contrasted; splitting would double-tell the shared framing.
+  **PI framing note (2026-08-16)**: the bigger picture is that the GS
+  set functioned as a *test set for configuration selection* which
+  was then applied to the 55-map *production* set — exactly as a real
+  research project would proceed — with the one difference that
+  production here also has ground truth, so generalisation can be
+  assessed. Not a contradiction of A; the framing to keep in mind
+  when R8 (and the seam) are drafted.
+  **Drafting note (S133)**: R8's description of the 55-map reference
+  must reflect the ruling-21 *standardised* reference — the extension
+  layer now carries exact marked-centre distances, so the "25 m
+  interval-censored rings" characterisation is historical.
 
 ### R9 — Selecting a configuration without ground truth
 
@@ -554,12 +558,12 @@ favourable and should not be given away.
 | D11 | R5 | compress six robustness axes to meta-rule + table | ✅ **compress** (S133) |
 | D12 | R5 | elevate the recall-ceiling mechanism to its own hub subsection | ✅ **elevate** (S133) |
 | D13 | R7 | carry-forward primary vs oracle-led | ✅ **A** + Tier-1-set gap framing, no single-oracle crown (S133) |
-| D14 | R8 | Results (validation) vs Discussion | OPEN — *lean A* Results |
-| D14b | R8 | GT epistemics whole vs split across the two parts | OPEN — *lean A* keep whole |
+| D14 | R8 | Results (validation) vs Discussion | ✅ **A** — Results (S133) |
+| D14b | R8 | GT epistemics whole vs split across the two parts | ✅ **A** — whole; test-set→production framing note (S133) |
 | D15 | R9 | Results vs Discussion vs split | OPEN — *lean C?* split — least sure |
 | D16 | prereg | where prereg material and the hypothesis-outcome table live | OPEN — *lean A* |
 | D17 | prereg | confirmatory/exploratory reconciliation | OPEN — *lean A* — **blocking** |
 
-**Settled**: D1–D4 (spine), D5–D13 (Session 133).
-**Next most valuable**: D17 (blocking for final Results claims), then
-D15 (least settled). D14/D14b are clear-lean quick waves.
+**Settled**: D1–D4 (spine), D5–D14b (Session 133).
+**Remaining**: D15 (least settled), then D16–D17 (preregistration
+handling; D17 blocking for final Results claims).
