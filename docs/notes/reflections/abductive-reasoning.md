@@ -6942,3 +6942,70 @@ marker) and the engine's fix history since their commit. Where an
 engine has evolved deliberately, encode the evolution as a named,
 signed, predicted term in the gate rather than widening tolerance —
 tolerance should cover only what cannot be named.
+
+## 2026-08-16 (Session 133, map-reader-llm): The gaps that were never methodology — two corrections converge to 0.004 the moment they share a reference
+
+**Session:** d28cbb94-c788-4f02-9637-7e9d455ccd0d
+**Instance:** primary
+
+### Surprising fact
+
+Refreshing the D-S report's corrected-F1-multi-buffer column onto the
+standardised reference collapsed the corrected-vs-D-S gaps from
++0.010…+0.045 to −0.0001…−0.0040. Two correction methodologies with
+nothing procedural in common — a fixed-prior 2-annotator EM over
+candidate-grain votes, and Hungarian matching against an extended
+reference at R = 50 m — agreed within 0.004 on every run and within
+0.001 on three of four. The report's standing reading ("image alone
+keeps a large gap (+0.031) … the substantive methodological
+difference") had attributed the residual to methodology one day
+earlier.
+
+### Probe
+
+Three layers before believing it. The cell↔run mapping gate:
+each standardised board cell scored the *identical*
+`verified_detections.geojson` the per-run summaries scored
+(feature counts 4,350/4,164/4,680/3,865 matched 4/4, and the gate
+discriminates k — the k3 files carry different counts). A blind
+fresh-context verifier re-derived the deltas by two rounding routes
+(rounded-JSON F1 vs exact recomputation from `tp/fp/fn_expected`)
+and confirmed all four, denominator 125/123/119/4, zero numerical
+errors. The component-level check: the verifier's N1 note showed the
+underlying TP/FP/FN still differ materially (ΔTP ±24–38, ΔFN
++51–82, different effective denominators) — the agreement is of the
+composite F1, arising partly from compensating precision/recall
+differences.
+
+### Belief revision
+
+Withdrawn: "the residual image gap is the substantive methodological
+difference". Revised to: reference vintage, not correction
+methodology, explained virtually all estimator disagreement in this
+project's record — the per-run summaries had each been scored against
+their own extension vintage (image's sat furthest from the
+standardised layer, |5220 − 5010| = 210 reference features), and the
+"loose image" spread pattern in § 5.4 was the same artefact wearing a
+different hat. The positive belief gained: on a common reference the
+empirical (human-review extension) and model-based (D-S) corrections
+cross-validate — computed and blind-verified in independent sessions,
+they now measure the same quantity at F1 level. Minted as Obs 412.
+
+### What would change this belief
+
+A future reference migration that re-opens the gaps *differentially*
+(one run's gap growing while others hold) would reinstate a
+methodological component. And the belief is explicitly F1-level: any
+claim that the two corrections agree at component level is already
+false (the compensating-P/R structure), so if a downstream document
+ever cites Obs 412 as component agreement, that is the imported-
+framing error class (Obs 410), not a new finding.
+
+### Implications for practice
+
+Before attributing an inter-method residual to methodology, exhaust
+the reference axis — "same detections, same reference, same radius"
+is a checkable precondition, and this project has now produced three
+generations of "methodological" disagreements (Obs 293's ranking
+swap, Obs 292's crossover, § 5.4's spread pattern) that dissolved
+under reference unification.

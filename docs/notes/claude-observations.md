@@ -1252,3 +1252,73 @@ pattern's strongest evidence yet.
 that produced them, complete enough to be judged without archaeology —
 including the facts that argue *against* the candidate, since those
 are what make a discard decision as fast as an accept.
+
+## claude-obs 50 — 2026-08-16 (Session 133): Shawn's rulings arrive with riders, not disputes — and the riders are the real guidance
+
+**Pattern.** Thirteen outline decisions settled in one sitting, none
+against the recommendation — but five rulings carried riders that
+*added* scope: full sweeps to a supplement (D6), the test-set→
+production framing (D14b), the Discussion prereg-retrospective (D16),
+the cheaper/more-permissive tie-breakers and the cheap-re-tune cost
+argument (Seed 6). Shawn's PI attention did not go into re-deriving
+recommendations; it went into what the recommendation had not
+covered — audience-facing supplements, bigger-picture framings,
+future-facing subsections.
+
+**Lesson.** When decisions are presented as {options, firm
+recommendation, what changed since drafting}, Shawn's marginal
+contribution concentrates in riders — and those riders are drafting
+guidance that exists nowhere else. The riders are not decoration;
+they are the highest-value output of the review.
+
+**How to apply.** Record every rider verbatim (or near-verbatim,
+attributed) in the controlling document at settlement time, and treat
+the rider list as a first-class input when prose drafting begins —
+they encode what the PI wants that the structure alone does not say.
+
+## claude-obs 51 — 2026-08-16 (Session 133): "explain this to me" is where Discussion prose comes from
+
+**Pattern.** Both deep-dive requests this session — Dawid-Skene for a
+non-statistician archaeologist, and the threshold-transfer mechanism
+with its optimism check — converted into durable paper artefacts
+within the hour (Seed 6 with a PI-endorsed decision tree; Seed 7 from
+the prereg-granularity exchange). Shawn explicitly asked for the
+first externalisation himself ("can you externalise it for future
+reference?"); the second followed the same route unprompted.
+
+**Lesson.** An explanation pitched at an intelligent non-specialist
+is forced to expose load-bearing structure and shed jargon — which is
+exactly the register the paper's Discussion needs. Shawn's deep-dive
+questions are not detours from the write-up; they are the write-up
+arriving by another door.
+
+**How to apply.** When a deep-dive explanation lands well, offer the
+externalisation immediately (a seed, a wiki note) while the phrasing
+is hot — the marginal cost is minutes and the alternative is
+re-deriving the explanation at drafting time from a chat transcript
+that may be gone.
+
+## claude-obs 52 — 2026-08-16 (Session 133): self-critique — my block plan pinned everything except the one boundary that moved
+
+**Pattern.** The S133 block plan fixed contrasts, statistics, seeds,
+and exclusions before compute — but specified cohorts only as "per
+source layer, jitter sample as noise floor". At the data-semantics
+gate I refined that into a three-cohort design (splitting the random
+jitter sample from the condition-selected student rows) for good
+reasons, but the plan's text had not pinned that boundary, and the
+findings doc initially claimed cohort definitions were "fixed in the
+committed plan". The blind verifier flagged it as the one claim a
+hostile reader would test; the fix was a disclosure, not a retraction.
+
+**Lesson.** Pre-specification fails at its loosest joint, and the
+loosest joint is usually a boundary I did not think of as a degree of
+freedom. This is the paper's own grain lesson (Seed 7) operating at
+single-analysis scale, in my own work, on the same day I drafted the
+seed about it.
+
+**How to apply.** When writing a block plan's design hardening, ask
+"which boundaries could a reasonable analyst draw differently?" and
+pin each one or explicitly mark it gate-time-decidable. And keep the
+transparency-note pattern: a refinement disclosed at the moment it is
+made costs one sentence; the same refinement discovered by a verifier
+costs a correction cycle.

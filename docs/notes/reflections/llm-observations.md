@@ -7279,3 +7279,52 @@ migration is not "the headline barely moved" (it moved up to 0.008) but
 "no decision any document ever made on these boards would have differed"
 — and that statement is worthless unless the re-run's machinery is
 provably the machinery that produced the originals.
+
+## Session 133 — 2026-08-15/16 (blind-verifier value stays concentrated in prose, now including the revision trail itself; a pre-run review scales down to a two-item block and still catches the pre-specification seam; explanation requests are drafting engines; decision-forward outlines make rulings cheap and riders natural)
+
+**The blind-verifier base rate extends, and a new defect sub-class
+appears.** Two fresh-context verifiers re-derived ~195 claims across
+the session's two findings artefacts and found zero numerical errors;
+all seven corrections were wording-level. This extends S132's
+three-pass base rate (verifier value concentrates on answer-shaped
+prose, not arithmetic) to five consecutive passes. The new sub-class:
+one verifier caught the *changelog's own "not changed" list*
+contradicting the diff it described (§ 1 was changed; the list said
+§§ 1–3 were not). Revision-trail self-consistency is now a named
+thing verifiers should check — under the document-revision policy the
+"what did not change" list is load-bearing, and it is exactly the
+kind of claim an author writes from intention rather than from the
+diff.
+
+**A pre-run review scales down without losing its teeth.** The S131
+protocol was built for a five-item multi-session queue; this session
+ran it over a two-item, $0, same-day block and it still produced
+eight recorded hardenings and caught real things — most notably via
+the verifier's correction 3: the three-cohort split was adopted at
+the data-semantics gate rather than fixed in the committed plan, a
+pre-specification seam the findings doc then had to disclose. The
+miniature version of the paper's own preregistration lesson (Seed 7:
+grain, not volume) played out inside a single analysis: the plan
+fixed contrasts, statistics, and exclusions, but the cohort boundary
+— the one degree of freedom that moved — was the one the plan's text
+had not pinned. Registration grain matters at every scale.
+
+**"Explain it to me" is a drafting engine.** Both of Shawn's
+deep-dive requests this session (Dawid-Skene for a non-statistician;
+the threshold-transfer mechanism) turned into durable paper artefacts
+within the hour — the threshold explanation became Seed 6 with a
+PI-endorsed decision tree, and the prereg-granularity exchange became
+Seed 7. The pattern: an explanation aimed at an intelligent
+non-specialist is forced to find the load-bearing structure and shed
+jargon, which is precisely what Discussion prose needs; when the
+audience-of-one explanation lands, externalising it is nearly free.
+
+**Decision-forward outlines make rulings cheap and riders natural.**
+Fifteen decisions settled in one sitting, none against the
+recommendation — but the interesting texture is that five rulings
+arrived with riders that added scope (supplement sweeps, a test-set
+framing note, a retrospective subsection) rather than disputes. A
+decision presented as {options, recommendation, what changed since
+drafting} invites the human to spend their attention on what the
+recommendation *missed* rather than on re-deriving it — which is
+where PI attention is actually worth the most.

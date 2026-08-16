@@ -8455,3 +8455,81 @@ on `obs280-shared-reference` and the two standardised boards) were
 open at close. zbook untouched and many commits behind. The "oracle"
 label now denotes a p = 0.857 coin-flip winner — a framing question
 deferred to the outline-first review, not a data question.
+
+## Session 133 — 2026-08-15/16 — PI gates cleared, a two-item $0 block, and all seventeen outline decisions settled
+
+One interactive conversation (amd-tower; one compute step on
+sapphire). Repo `eb6efa621` → `8282df90b` + reflection commits, all
+pushed. **US$0.00 API.**
+
+**PI sign-off backlog cleared.** The three standardised-reference
+analyses stamped after an in-session walk (`4e77683fa`); the walk
+extended at the PI's direction to the D-S refit trail and the three
+late-July stragglers (CMT-0106, family-FDR, E43), stamped
+`3e9c8f913`. Register now 23/24 signed; the calibration analysis
+stays unsigned by design. The handoff's "three pending S132
+user-obs" was already resolved pre-session (`eb6efa621`).
+
+**Housekeeping**: generated-file registry rebuilt three times as
+artefacts landed (`042178cfc`, folded into `3e9c8f913`, `1dbc5cd5d`);
+`--check` green at close.
+
+**Two-item analysis block under `/pre-run-review`** (controlling doc
+`planning/s133-analysis-block-2026-08-15.md`, eight hardenings, PI
+go; ticked COMPLETE `1dbc5cd5d`). Item 1 — the Obs 407 ink-colour
+test: `scripts/analyse_ink_colour_adhesion.py` + 8 tier-1 tests
+(`f3a329d7f`), run on sapphire (`8466f16a8`), findings `25393deff`.
+Model phantoms: median displacement 13.71 m (black-element, n=152)
+vs 44.89 m (plain, n=580), p=0.0001; both student cohorts null —
+the mapping-quality confound excluded for human placement.
+Colour-adhesion vs labelled-point locatability held as confounded;
+vector-extension project parked. Item 2 — D-S report §§ 4.1/4.3/
+5.3/5.4 onto the standardised reference in one commit (`87b828ab2`)
+after the cell↔run feature-count gate passed 4/4: the Obs 293
+middle-pair swap dissolved (per-run-vintage artefact); the two
+corrections converge within 0.004; § 5.4's "loose image" withdrawn.
+Blind verifiers on both (70/69/66/3 and 125/123/119/4, zero
+numerical errors); all seven wording corrections applied
+(`023babd0d`, `83ea4fad7`). L3 sweep: vintage flag on
+`meta-findings-summary.md` § 8 (`928f39ce0`).
+
+**Obs 411–412 minted** (`4993b0f45` pending → `363da218f` approved):
+the ink-colour model-only signature; the three-estimator
+convergence.
+
+**The outline review closed entirely.** D5–D17 settled in one
+sitting, each recorded with rulings and riders (`95343f3a0`,
+`b1f72b327`, `0602c9c5c`, `35a0b9824`, `277d2b558`, `9b7479c08`,
+`8282df90b`): D5/D6 = A (+ supplement-sweeps rider); D7–D10 per REC
+(+ temperature-qualifier drafting note); D11/D12 compress/elevate;
+D13 = carry-forward primary + Tier-1-set gap framing, no
+single-oracle crown (figures refreshed to standardised vintage; gap
+decomposition: k4→k3 recovers +0.0218 of +0.0224, temperature
++0.0006); D14/D14b = A/A (+ the PI's test-set→production framing
+note; R8 standardised-reference drafting note); D15 = C (split via
+Seeds 3/6); D16 = A (+ Discussion prereg-retrospective rider);
+D17 = A + schema amendment, reconciliation block queued as the gate
+before final Results prose. E60 staleness in the prereg section
+fixed.
+
+**Discussion seeds**: Seed 6 (the plateau rule + the
+calibrate-small/deploy-large decision tree, with the PI's
+tie-breakers and the cheap-re-tune cost argument) `f9990ffe7`;
+Seed 7 (preregistration retrospective — over-bake with receipts,
+amendment count as biased measure, grain-not-volume diagnosis,
+micro-registration recipe) in `8282df90b`.
+
+**PI deep dives answered in-session**: Dawid-Skene for a
+non-statistician archaeologist; the threshold-transfer mechanism and
+its optimism reading; the higher-temperature history (E60 closed the
+F1 escalation; Obs 356 closed the verifier axis; the T>1.3 MCC upper
+bound noted as the one open door, parked with design cautions in the
+block plan).
+
+**Contextual assumptions.** The PI was present throughout — every
+gate, ruling, and rider is an in-session decision, not an inferred
+one; the review's velocity (13 rulings in one sitting) rests on
+that. The date rolled 2026-08-15 → 08-16 mid-conversation; commits
+span both. zbook remains many commits behind (untouched). The D17
+reconciliation block is scoped in the outline's D17 entry but
+deliberately not started — it expects its own pre-run review.

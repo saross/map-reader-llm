@@ -10151,3 +10151,65 @@ outline-first review with Shawn, not to a session that was explicitly
 forbidden surprises. Related and smaller: the GS-vs-55-map transfer
 artefact still carries canonical-vintage numbers behind an in-text
 flag, one regeneration away from consistency.
+
+## Session 133 — 2026-08-15/16 — the session the outline closed: fifteen rulings, two findings, zero dollars
+
+### Prompt: What surprised you about this session?
+
+Two things, one statistical and one social. The statistical surprise
+was the three-estimator convergence: when the D-S report's
+corrected-F1 column moved onto the standardised reference, the two
+independent corrections — a fixed-prior EM and extended-GT Hungarian
+matching, built in different sessions by different machinery — landed
+within 0.004 of each other on every run, three of the four within
+0.001. The previous vintage had shown gaps up to +0.045 and a "loose
+image" pattern we had attributed to methodology; all of it was
+reference vintage. I went in expecting the middle-pair swap to
+dissolve (the committed numbers already said it would) and came out
+with something stronger: the two corrections are measuring the same
+quantity, and every prior disagreement between them was an artefact
+of feeding them different references. The social surprise was the
+review velocity. S117 left fifteen decisions open and the register
+predicted "quick waves" for maybe eight of them; all fifteen settled
+in a single sitting, none against the recommendation, every ruling
+arriving with a rider that *added* scope (the D6 supplement
+sweeps, the D14b test-set framing, the D16 retrospective) rather
+than reopening the analysis. The outline-first pivot's bet — agree
+structure before prose and the decisions become cheap — paid out in
+one afternoon.
+
+### Prompt: What's the single most important thing a future reader should know about this session?
+
+That the write-up's decision phase is *over*, and what remains is
+gated work, not open questions. All seventeen outline decisions are
+settled; the only gate before final Results prose is the D17
+reconciliation block (schema amendment → relabelling → two missing
+analysis rows → unexecuted-set erratum check → generate the
+hypothesis-outcome table), which this session scoped and queued but
+deliberately did not start. Everything else that looked open at
+S133's start — the sign-off backlog, the observation candidates, the
+oracle label, the D-S report's stale sections — closed inside the
+session. A future reader picking up the drafting should not
+re-litigate any Dn: the register carries the ruling, the rider, and
+the currency note for each, and the riders are where Shawn's actual
+drafting guidance lives (full sweeps to the supplement; temperature
+sentences carry their qualifiers; the deployment gap is framed
+against the Tier-1 set with no single-oracle crown).
+
+### Prompt: What question emerged that wasn't pursued?
+
+Whether the micro-registration claim in Seed 7 survives contact with
+the literature. The seed argues this project backed into a novel
+practice — LLM-supported just-in-time registration at the analysis
+boundary, shrinking the unit of preregistration from the project to
+the analysis — and presents it as the resolution of the project's
+own over-baked upfront registration. That is an attractive arc, but
+nobody checked whether the meta-science literature already names
+this practice (incremental registration, registered analysis plans,
+living preregistrations all exist as terms). Before the Discussion
+section leans on novelty, a lit-scout pass over registration-practice
+literature is due. Related but smaller: the vector-extension project
+(displacement bearings toward colour-classified attractors) was
+parked with its design sketch in the block plan, and the ink-colour
+finding's two confounded mechanisms will stay confounded until
+someone runs it.
