@@ -8,7 +8,94 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (133) — PI REVIEW GATES, THEN BACK TO THE WRITE-UP [Session 132 CLOSED 2026-08-14; ran in Fable]
+## 🎯 NEXT SESSION (134) — THE D17 RECONCILIATION BLOCK, THEN PROSE DRAFTING [Session 133 CLOSED 2026-08-16; ran in Fable]
+
+> **ALL SEVENTEEN OUTLINE DECISIONS ARE SETTLED** — D1–D4 (S118) +
+> D5–D17 (S133, every ruling made by the PI in-session). The register
+> in `docs/paper/results-outline.md` carries each ruling, its rider,
+> and a currency note. **The riders are first-class drafting
+> inputs**: D6 (full sweeps at the 14-buffer grid → supplement;
+> data-derived headlines in the body), D8 (temperature sentences
+> carry instrument/corpus/metric qualifiers), D13 (deployment gap
+> framed against the Tier-1 set, no single-oracle crown; E56 cited at
+> the relaxed rows), D14b (GS = test set for configuration selection,
+> 55-map = production with GT to audit generalisation), D16
+> (Discussion prereg-retrospective — zero-draft at
+> `docs/paper/discussion-seeds.md` Seed 7).
+>
+> **START HERE**:
+>
+> 1. **The D17 reconciliation block** — the one gate before final
+>    Results prose; run it as its own pre-run-reviewed pass (S133
+>    precedent: `planning/s133-analysis-block-2026-08-15.md`). Scope,
+>    per the outline's D17 entry: schema amendment (add
+>    `not-executed`; split "registered-as-exploratory" from
+>    "post-hoc"); the manifest relabelling pass (preserve the argued
+>    `n1-baseline-matrix-384` exception); analysis rows for H10 and
+>    H12-v2 (both ran, both null, both currently invisible in the
+>    analyses register); erratum-coverage check for the unexecuted
+>    set (H6, H13, H14, H15, H2 Condition C); then generate the
+>    hypothesis-outcome table from the manifest. Currency: the family
+>    BH-FDR, CMT-0106, the E45 correction, and E60 all landed in late
+>    July — D17-A's heavy lifts are already done and PI-signed.
+> 2. **Then prose drafting begins** per the settled structure —
+>    outline (`docs/paper/results-outline.md`), zero-draft claims
+>    (`docs/paper/results-draft.md`, standardised-reference
+>    throughout), Discussion zero-drafts (Seeds 1–7).
+>
+> **Carry-forward (S133)**: Seed 7's micro-registration claim needs a
+> **lit-check before Discussion leans on novelty** (incremental /
+> living / just-in-time registration may already be named in the
+> meta-science literature — a `/lit-scout` pass). The E45 obligation
+> (pair registered bootstrap+BH results with permutation wherever
+> confirmatory claims appear) lands at Methods drafting. Sign-off
+> register: 23/24 (calibration analysis unsigned by design). Parked
+> doors, both in the S133 block plan § Parked: the vector-extension
+> project (displacement bearings vs colour-classified attractors) and
+> the higher-T MCC upper bound (T>1.3; design cautions recorded).
+> Standing residue unchanged: `gs-vs-55map-transfer.{md,json}`
+> canonical-vintage behind an in-text flag; B-leg diagnostics
+> deliberately uncommitted on sapphire; **zbook many commits behind —
+> pull before any zbook work**.
+
+**Session 133 (2026-08-15/16, amd-tower + sapphire, US$0.00)** cleared
+every PI gate and closed the outline. (1) **Sign-offs**: the three
+standardised analyses stamped (`4e77683fa`), then the D-S refit walk
+plus the three late-July stragglers (`3e9c8f913`) — 23/24 signed.
+(2) **Two-item $0 block under `/pre-run-review`**
+(`planning/s133-analysis-block-2026-08-15.md`, eight hardenings):
+the **Obs 407 ink-colour test** (script + 8 tests `f3a329d7f`,
+sapphire run `8466f16a8`, findings `25393deff`) — **model phantoms
+median 13.71 m on black-element vs 44.89 m on plain mounds, p=0.0001;
+both student cohorts null** (confound excluded; adhesion vs
+labelled-point locatability held confounded); and the **D-S report
+§§ 4.1/4.3/5.3/5.4 refresh** onto the standardised reference
+(`87b828ab2`, cell↔run feature-count gate 4/4) — the Obs 293
+middle-pair swap dissolved (per-run-vintage artefact), the two
+corrections **converge within 0.004 on every run** (a
+cross-validation; components still differ with compensating P/R),
+"image is the loose one" withdrawn. Blind verifiers on both:
+70/69/66/3 and 125/123/119/4, **zero numerical errors**, seven
+wording corrections applied (`023babd0d`, `83ea4fad7`); L3 vintage
+flag on `meta-findings-summary.md` § 8 (`928f39ce0`); registry green
+(`1dbc5cd5d`). (3) **Obs 411–412 minted** (`363da218f`).
+(4) **The outline review closed D5–D17 in one sitting** (commits
+`95343f3a0` → `8282df90b`), including the oracle-label question
+(retired: T03-k3's margin +0.0006 p=0.857; gap framed to the Tier-1
+set) and the D13 decomposition sharpening (k4→k3 on the carried
+config recovers +0.0218 of the +0.0224 gap — the deployment gap is
+essentially pure threshold-transfer failure). (5) **Seeds 6–7
+drafted** (`f9990ffe7`, `8282df90b`): the plateau rule + decision
+tree (PI tie-breakers: cheaper / more permissive; re-tune is a
+recalculation + one verifier run); the preregistration retrospective
+(grain-not-volume diagnosis; micro-registration recipe). (6) PI deep
+dives answered (D-S for a non-statistician; threshold transfer +
+the optimism reading; temperature history — E60/Obs 356 closed, the
+T>1.3 MCC door parked). Reflection set + claude-obs 50–52
+(`9f54abca2`). Commits `4e77683fa` → `9f54abca2` + this handoff, all
+pushed.
+
+## NEXT SESSION (133) — PI REVIEW GATES, THEN BACK TO THE WRITE-UP [Session 132 CLOSED 2026-08-14; ran in Fable]
 
 > **THE REFERENCE-STANDARDISATION QUEUE IS CLOSED** — all five no-API
 > items done across S131–132, each leg blind-verified, US$0.00 total.
