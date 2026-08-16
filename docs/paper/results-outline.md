@@ -385,16 +385,14 @@ The known repeat-offenders, with their assigned homes:
   covering design ≈ $722 as-run (Obs 367); LOFO consensus ranks at ρ = +0.881,
   permissive-only, retrodiction caveat (Obs 368). Anchor: §R9,
   `gtfree-selection-findings.md`.
-- **▸ D15 — Results or Discussion?** It carries a measured result (ρ = +0.881)
-  but is framed as a falsifiable *proposal*.
-  - **A**: Results (it has a result).
-  - **B**: Discussion (it's a proposed method / future-facing).
-  - **C (REC?)**: split — the validation result stays in Results, the protocol
-    + prospective-test framing go to Discussion.
-  - *Genuinely undecided* — still the call I'd most want your read on. Note
-    that the two-part structure makes C slightly more attractive: R9's
-    validation result is a Part 2 deployment finding, while the protocol is a
-    forward-facing proposal that sits naturally in Discussion.
+- **✅ D15 SETTLED = C** (PI, Session 133, 2026-08-16): split. R9
+  (Results) reports the measured items as results-of-validation — the
+  power analysis, the covering-design cost identity, and the LOFO
+  retrodiction with the vote≥3 inversion and the retrodiction caveat
+  prominent. The protocol-as-recipe, its decision-tree placement, and
+  the prospective-test proposal go to Discussion (zero-draft already
+  exists: Seeds 3 and 6). One pointing sentence each way; no
+  double-telling. Mirrors the D14 results-of-validation logic.
 
 ---
 
@@ -560,7 +558,7 @@ favourable and should not be given away.
 | D13 | R7 | carry-forward primary vs oracle-led | ✅ **A** + Tier-1-set gap framing, no single-oracle crown (S133) |
 | D14 | R8 | Results (validation) vs Discussion | ✅ **A** — Results (S133) |
 | D14b | R8 | GT epistemics whole vs split across the two parts | ✅ **A** — whole; test-set→production framing note (S133) |
-| D15 | R9 | Results vs Discussion vs split | OPEN — *lean C?* split — least sure |
+| D15 | R9 | Results vs Discussion vs split | ✅ **C** — split; protocol → Discussion via Seeds 3/6 (S133) |
 | D16 | prereg | where prereg material and the hypothesis-outcome table live | OPEN — *lean A* |
 | D17 | prereg | confirmatory/exploratory reconciliation | OPEN — *lean A* — **blocking** |
 
