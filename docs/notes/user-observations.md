@@ -621,10 +621,7 @@ format (evidence in the text, counter-evidence included) is what made
 the discard as fast as the accepts, that is worth recording as the
 standard for future drafting.
 
-## Candidates pending review — Session 133 (2026-08-16, three drafted)
-
-*Drafted at the S133 handoff; accept / edit / discard / replace.
-Silence holds them over — it never discards.*
+## Session 133 — 2026-08-16 (approved 2026-08-17; all three kept)
 
 **Candidate 1 — the deep-dive explanations converted straight into
 paper prose, and Shawn said so in the moment.** Two explanation

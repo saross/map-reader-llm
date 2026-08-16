@@ -1322,3 +1322,31 @@ pin each one or explicitly mark it gate-time-decidable. And keep the
 transparency-note pattern: a refinement disclosed at the moment it is
 made costs one sentence; the same refinement discovered by a verifier
 costs a correction cycle.
+
+## claude-obs 53 — 2026-08-17 (Session 133 close): Shawn audited his own contribution — the answer refines claude-obs 50
+
+**Pattern.** At session close Shawn asked whether the riders he
+attached to the D5–D17 rulings were useful or "things you already
+knew / superfluous". The honest audit: none were superfluous, but
+their value was mostly not *information* — the underlying facts were
+already in the record. The riders supplied three things only the PI
+can: **authority** (the D6 full-sweeps commitment is a
+reporting-transparency policy I could not set unilaterally),
+**audience framing** (the D14b test-set→production frame is the
+sentence that tells an outside reader why the study generalises;
+my framings were internal-facing), and **elevation** (the
+"more permissive" tie-breaker generalised scattered findings into a
+rule nobody had stated).
+
+**Lesson.** "Did the human add information?" is the wrong test for
+PI contributions in a record-rich project — the record already holds
+the facts. The right test is whether the contribution exercised
+authority, audience knowledge, or rule-elevation: the PI's
+comparative advantages precisely because they are not derivable from
+the repo.
+
+**How to apply.** Present decisions with firm recommendations but do
+not optimise them to be "complete" — a recommendation that pre-empts
+policy, framing, and elevation invites rubber-stamping instead of
+the riders that carry the real drafting guidance. Cross-references
+claude-obs 50.
