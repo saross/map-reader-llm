@@ -57,6 +57,15 @@ project state.
 > canonical-vintage behind an in-text flag; B-leg diagnostics
 > deliberately uncommitted on sapphire; **zbook many commits behind —
 > pull before any zbook work**.
+>
+> **Back-burner project idea (PI, 2026-08-17, not for now)**: mine
+> this project's transcripts, reflections, and observation registers
+> for an **AI-in-research deep-dive methods paper**. The corpus
+> practice is already in place and feeding it — session archives
+> (`archive/cc-sessions/` per the transparency spec), the reflections
+> set, working-notes Obs 1–412, and the claude-/user-observations
+> registers. No action needed now beyond continuing the discipline;
+> revisit after the current paper submits.
 
 **Session 133 (2026-08-15/16, amd-tower + sapphire, US$0.00)** cleared
 every PI gate and closed the outline. (1) **Sign-offs**: the three

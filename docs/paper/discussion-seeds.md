@@ -233,8 +233,29 @@ Planned Discussion space per the D16 settlement rider (PI,
 2026-08-16). The PI's thesis: LLM support makes routine
 preregistration feasible, but may also invite
 over-planning/over-registration — and this project somewhat
-over-baked its prereg, requiring many amendments. The S133 dialogue's
-assessment, for drafting:
+over-baked its prereg, requiring many amendments.
+
+**The PI's fuller articulation (2026-08-17, session close)** — this
+was his first AI-assisted preregistration *and*, because of that
+assistance, his first **comprehensive** one: the comprehensiveness
+that enabled the over-bake was itself an affordance of the tooling.
+Two claims to keep distinct in drafting: (i) **the process was
+valuable even where the artefact failed** — going through the
+registration and articulating the plan in detail genuinely clarified
+his thinking about the project ("plans are worthless, planning is
+everything"); (ii) **the artefact was too prescriptive, front-loaded,
+'waterfall'-like, and complex** — it (a) contained omissions,
+contradictions, and errors (receipts in the D17 inventory: the
+exploratory-label propagation, the unregistered inference method,
+the unexecuted strands), and (b) did not survive contact with
+reality. Overall verdict: preregistration was worth it, and the
+paper should say both halves plainly. The waterfall framing also
+gives the micro-registration recipe below its natural name: it is
+the *iterative/incremental* counterpart — register less up front,
+register better at each analysis boundary — so the retrospective's
+arc is waterfall → agile, told from the project's own record.
+
+The S133 dialogue's assessment, for drafting:
 
 **The over-bake is real, with receipts.** Fifteen registered
 hypotheses, of which roughly a third never executed (H6, H13, H14,
@@ -287,6 +308,14 @@ analysis*. The retrospective can present this as the resolution of
 its own first-half over-bake, evidenced from the paper's own record.
 
 ## Changelog
+
+### 2026-08-17 — Seed 7 augmented with the PI's fuller articulation
+
+Session-close addendum: first-comprehensive-because-AI-assisted; the
+process-vs-artefact distinction (planning clarified thinking; the
+waterfall artefact did not survive contact with reality, with
+omissions/contradictions/errors receipted in the D17 inventory);
+the waterfall → agile arc naming the micro-registration recipe.
 
 ### 2026-08-16 — Seed 7 added (S133 D16-settlement addendum)
 
