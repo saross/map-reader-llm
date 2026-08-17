@@ -137,9 +137,13 @@ digitisations and hardened by targeted human review, and we report
 its provenance structure because every deployment metric is bounded
 by it. The base layer is 4,731 student mound records across the 55
 sheets, positionally standardised under a fixed adjudication ruling
-[PENDING: one-sentence description of the Dawid–Skene
-standardisation step and ruling 21, drafted at S135 with the D-S
-report open]. Two human-review layers were added. First, 641 student
+(ruling 21) that froze the reference before any dependent analysis
+re-ran. Applying the ruling's single PI-ratified instruction set,
+derived from the centre-marking campaign, removed four false
+positives, twelve duplicates, and one contradicted merge and
+restored two pre-merge originals, taking 4,746 records to 4,731
+without mutating any source layer. Two human-review layers were
+added. First, 641 student
 records received individual review with hand-marked symbol centres
 (±2.5 m marking precision). The remaining 4,090 out-of-scope records
 keep their as-digitised positions, whose median offset from the true
@@ -150,9 +154,18 @@ extension mounds the students had missed. These carry hand-marked
 centres and enter the reference as first-class records. The resulting
 standardised reference is therefore mixed-provenance by design, and
 deployment scoring uses a corrected-F1 estimator that accounts for
-residual student-layer incompleteness [PENDING: estimator sentence +
-the two-corrections convergence result (within 0.004 on every run),
-S135 with the D-S report § 4]. What the reference can and cannot
+residual student-layer incompleteness. The estimator extends the
+reference with the adjudicated human-review mound calls at each
+buffer radius and Hungarian-matches detections against that extended
+reference, so a correct detection of a student-missed mound scores
+as a true positive rather than a false positive. An independent
+correction from a two-annotator Dawid–Skene latent-truth model (a
+fixed-prior expectation-maximisation over candidate-grain votes)
+converges with this estimator to within 0.004 F1 on every deployment
+run once both are computed on the standardised reference, and to
+within 0.001 on three of the four. The agreement holds at the
+composite-metric level only, because the two methods reach it with
+compensating precision and recall differences. What the reference can and cannot
 support (its precision and recall epistemics) is characterised in
 Results § R8 rather than assumed here.
 
@@ -260,6 +273,23 @@ reference, not of the detector: the derived radii do not transfer to
 other map series or reference constructions without re-derivation.
 
 ## Changelog
+
+### 2026-08-17 (S135) — M.3 [PENDING] slots filled from the D-S report
+
+The two M.3 slots drafted with the D-S report open, per the in-file
+notes: the ruling-21 standardisation sentences (instruction-set
+arithmetic 4,746 → 4,731, no source layer mutated; anchored to
+`scripts/materialise_standardised_reference.py` and
+`reports/verification/reference-standardisation-queue.md`) and the
+corrected-F1 estimator + Dawid–Skene convergence passage (within
+0.004 on every run, 0.001 on three of four; compensating
+precision/recall boundary; anchored to
+`results/55maps-ds-summary-v2/report.md` § 4.3). One wording note:
+the slot's phrase "Dawid–Skene standardisation" was a misnomer — the
+standardisation is the ruling-21 marking/adjudication campaign; the
+D-S model is the independent latent-truth diagnostic, and the fill
+reflects that division. The M.4 [PENDING × 2] and M.x [unverified]
+slots remain, awaiting the S135 analysis block.
 
 ### 2026-08-17 (later still) — M.7 working-precision derivation
 
