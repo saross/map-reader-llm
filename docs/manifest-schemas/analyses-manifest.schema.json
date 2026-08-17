@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/analyses-manifest.schema.json",
   "title": "Analyses manifest",
-  "description": "One row per analysis. An analysis is a comparison/finding OVER CONDITIONS (studies compare conditions, so the target is conditions_compared, not runs). This is where study findings live, and where preregistration linkage is recorded ('we did what we said, modulo errata'). Hybrid: the generator machine-fills analysis_id, output_path, working_notes_obs; humans author outcome, paper_section, and the prereg linkage. The generator never overwrites human-authored fields.",
+  "description": "One row per analysis OR registered obligation. An analysis is a comparison/finding OVER CONDITIONS (studies compare conditions, so the target is conditions_compared, not runs). This is where study findings live, and where preregistration linkage is recorded ('we did what we said, modulo errata'). Since vocabulary v2 (S134/D17, 2026-08-17) the register's semantics widened from 'analyses performed' to 'registered obligations and their dispositions': a registered-but-never-executed hypothesis carries a disposition row (preregistered: not-executed) so the manifest is the single source of truth for hypothesis disposition and the hypothesis-outcome table generates from it alone. Hybrid: the generator machine-fills analysis_id, output_path, working_notes_obs; humans author outcome, paper_section, and the prereg linkage. The generator never overwrites human-authored fields.",
   "type": "object",
   "properties": {
     "schema_version": { "const": "1.0" },
@@ -26,16 +26,16 @@
         },
         "type": {
           "type": "string",
-          "enum": ["comparison", "leaderboard", "sweep", "diagnostic", "classification", "gt-audit"]
+          "enum": ["comparison", "leaderboard", "sweep", "diagnostic", "classification", "gt-audit", "disposition"],
+          "description": "'disposition' (vocabulary v2) marks a registered-obligation row that records non-execution rather than a performed analysis; it pairs with preregistered: not-executed."
         },
         "conditions_compared": {
           "type": "array",
-          "description": "Foreign keys to condition_id. CHANGED from the brief's runs_compared — studies compare conditions; the run/study are derivable from the conditions.",
+          "description": "Foreign keys to condition_id. CHANGED from the brief's runs_compared — studies compare conditions; the run/study are derivable from the conditions. Must be non-empty except on a not-executed disposition row, where it must be empty (enforced by the conditional below).",
           "items": {
             "type": "string",
             "pattern": "^[a-z0-9-]+::[a-z0-9._-]+$"
-          },
-          "minItems": 1
+          }
         },
         "hypothesis_refs": {
           "type": "array",
@@ -45,8 +45,8 @@
         },
         "preregistered": {
           "type": ["string", "null"],
-          "enum": ["preregistered", "exploratory", "preregistered-with-deviation", null],
-          "description": "HUMAN-authored preregistration status."
+          "enum": ["confirmatory", "confirmatory-with-deviation", "registered-exploratory", "post-hoc", "not-executed", null],
+          "description": "HUMAN-authored preregistration status, vocabulary v2 (S134/D17 reconciliation, 2026-08-17). 'confirmatory': implements a registered confirmatory test (H1–H8) as registered, no material deviation. 'confirmatory-with-deviation': registered confirmatory test executed with disclosed deviations — cite the E-numbers in deviations. 'registered-exploratory': implements an analysis the preregistration registered as exploratory (H9–H15) or a registered characterisation/calibration step that carries no confirmatory claim. 'post-hoc': not in the registered analysis plan (post-hoc analyses are exploratory by definition). 'not-executed': a registered obligation never executed — a disposition row (type 'disposition', empty conditions_compared, deviations citing the disclosure erratum). null = not yet adjudicated. The v1 values ('preregistered', 'exploratory', 'preregistered-with-deviation') are retired and fail validation BY DESIGN, so no half-migrated register can ever be written."
         },
         "deviations": {
           "type": "array",
@@ -89,7 +89,7 @@
         },
         "output_path": {
           "type": "string",
-          "description": "results/<analysis_id>/ for a subdir analysis, or the path to a top-level .md file."
+          "description": "results/<analysis_id>/ for a subdir analysis, or the path to a top-level .md file. A not-executed disposition row points at the document that discloses the non-execution (the unexecuted register or the erratum file) — there is no results artefact to point at."
         },
         "working_notes_obs": {
           "type": "array",
@@ -113,7 +113,24 @@
         "provenance"
       ],
       "additionalProperties": false,
-      "$comment": "Lenient back-fill policy: the machine-fillable fields (analysis_id, type, conditions_compared, output_path, provenance) are required; all human-authored fields are nullable so a generator-created stub validates before a human authors it."
+      "allOf": [
+        {
+          "if": {
+            "required": ["preregistered"],
+            "properties": { "preregistered": { "const": "not-executed" } }
+          },
+          "then": {
+            "properties": {
+              "conditions_compared": { "maxItems": 0 },
+              "type": { "const": "disposition" }
+            }
+          },
+          "else": {
+            "properties": { "conditions_compared": { "minItems": 1 } }
+          }
+        }
+      ],
+      "$comment": "Lenient back-fill policy: the machine-fillable fields (analysis_id, type, conditions_compared, output_path, provenance) are required; all human-authored fields are nullable so a generator-created stub validates before a human authors it. The allOf conditional pairs not-executed with type 'disposition' and an empty conditions_compared; every other row (including preregistered: null stubs) must compare at least one condition."
     }
   }
 }

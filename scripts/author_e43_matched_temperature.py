@@ -372,7 +372,7 @@ def build_analysis_spec() -> dict:
         "_note": ANALYSIS_NOTE,
         "conditions_compared": condition_ids(),
         "hypothesis_refs": ["H7"],
-        "preregistered": "exploratory",
+        "preregistered": "post-hoc",
         "deviations": ["E43", "E72"],
         "predicted_outcome": None,
         "tie_set": [],

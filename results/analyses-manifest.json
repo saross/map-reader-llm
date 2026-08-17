@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T23:33:21Z",
+  "generated_at": "2026-08-17T00:20:30Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -31,7 +31,7 @@
         "H6",
         "H7"
       ],
-      "preregistered": "exploratory",
+      "preregistered": "post-hoc",
       "deviations": [
         "E57"
       ],
@@ -51,7 +51,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -92,7 +92,7 @@
       "hypothesis_refs": [
         "H3"
       ],
-      "preregistered": "exploratory",
+      "preregistered": "post-hoc",
       "deviations": [],
       "predicted_outcome": "H3: consensus voting over K proposer passes improves localisation F1 over single-pass; the diversity dividend predicts HIGH-thinking (more diverse) pools recover or exceed minimal-thinking under consensus. Vote threshold trades precision (high k) for recall (low k); the best-F1 threshold is config-dependent.",
       "predicted_outcome_amended": null,
@@ -107,7 +107,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-05/pv-diag-384/consensus-sweep"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -141,7 +141,7 @@
       "hypothesis_refs": [
         "H3"
       ],
-      "preregistered": "exploratory",
+      "preregistered": "confirmatory-with-deviation",
       "deviations": [
         "None for the operating-point selection: the registered H3 analysis plan (osf/preregistration.md:519-521) specifies 'Generate threshold sweep curves', 'Identify optimal (N, threshold)', and 'Compare single-pass mean F1 vs voted F1' against the test tiles, so the best-operating- point characterisation is the preregistered method (not in-sample/E56 -- that rule governs the verifier prob_t diagnostics, a distinct case; see E56 Update 2026-06-06).",
         "E49/E51 (T=0.7 production carry-forward temperature; HIGH thinking) -- the characterised configurations, carried forward from Phase 2b.",
@@ -164,7 +164,7 @@
           "results/run-analyses.json",
           "results/diversity-dividend-384"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -194,8 +194,12 @@
       "hypothesis_refs": [
         "H3"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "registered-exploratory",
+      "deviations": [
+        "E32",
+        "E36",
+        "E53"
+      ],
       "predicted_outcome": "H3: consensus voting over K proposer passes improves localisation F1 over single-pass; vote threshold trades precision (high k) for recall (low k); the best-F1 threshold is config-dependent and rises with N.",
       "predicted_outcome_amended": null,
       "tie_set": [],
@@ -209,7 +213,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -230,8 +234,12 @@
       "hypothesis_refs": [
         "H3"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E32",
+        "E36",
+        "E53"
+      ],
       "predicted_outcome": "H3 + diversity dividend: HIGH-thinking proposer pools are more diverse, so a high vote threshold prunes their false positives and consensus recovers or exceeds minimal-thinking consensus.",
       "predicted_outcome_amended": null,
       "tie_set": [],
@@ -245,7 +253,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -263,8 +271,12 @@
       "hypothesis_refs": [
         "H3"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E32",
+        "E36",
+        "E53"
+      ],
       "predicted_outcome": "Diversity dividend: at matched temperature (T=0.7) and modality (text), HIGH-thinking consensus exceeds MINIMAL-thinking consensus because higher-thinking pools are more diverse.",
       "predicted_outcome_amended": null,
       "tie_set": [],
@@ -278,7 +290,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -299,8 +311,12 @@
       "hypothesis_refs": [
         "H9"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "registered-exploratory",
+      "deviations": [
+        "E12",
+        "E32",
+        "E63"
+      ],
       "predicted_outcome": "H9: introducing diversity across the K consensus passes (instruction, image, temperature, or combined) improves accuracy over K identical passes.",
       "predicted_outcome_amended": null,
       "tie_set": [],
@@ -314,7 +330,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3c"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -366,8 +382,16 @@
         "H7",
         "H8"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E25",
+        "E27",
+        "E28",
+        "E29",
+        "E30",
+        "E31",
+        "E36"
+      ],
       "predicted_outcome": "Single-pass baseline characterisation on the Gold-Standard 4-map test tiles. H1 (phase2a) contrasts text-only vs image-using prompts without a committed directional winner; H7 (phase2b) expects T=0.0 optimal; H8 (phase2c) hint/scale variants; H5 (phase2d) verbosity; H4 (phase2e) few-shot ordering. No single config is preregistered to win; the deliverable is the tiered board + the best-achievable single-pass F1@20m as the baseline the consensus (H3) and PV (H2) architectures are measured against.",
       "predicted_outcome_amended": null,
       "tie_set": [
@@ -402,7 +426,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/512px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -494,6 +518,7 @@
         "retest-phase2b::verified-adv-image-t0.0"
       ],
       "hypothesis_refs": [
+        "H2",
         "H1",
         "H3",
         "H4",
@@ -502,8 +527,18 @@
         "H8",
         "H9"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E25",
+        "E27",
+        "E28",
+        "E29",
+        "E30",
+        "E31",
+        "E36",
+        "E37",
+        "E58"
+      ],
       "predicted_outcome": "Definitive Era-1 board (H1-H9 cross-cut). H3: consensus voting over K proposer passes beats single-pass on localisation F1; the diversity dividend predicts HIGH-thinking (more diverse) pools recover or exceed minimal-thinking under consensus. H9: cross-pass diversity beats identical passes. Expected shape: HIGH-thinking text consensus tops F1 (~0.77); consensus >> single-pass; image trails on F1 but leads MCC.",
       "predicted_outcome_amended": null,
       "tie_set": [
@@ -519,7 +554,7 @@
           "results/run-analyses.json",
           "results/era1-leaderboard"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -566,8 +601,14 @@
       "hypothesis_refs": [
         "H11"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "registered-exploratory",
+      "deviations": [
+        "E36",
+        "E41",
+        "E43",
+        "E44",
+        "E57"
+      ],
       "predicted_outcome": "H11 (tile size): the prior expectation was non-monotonic with a 384px sweet spot. The refined hypothesis (Obs 351): the optimal tile size shifts with FP-filtering strength \u2014 single-pass (no filter) prefers larger tiles; strong filters (HIGH-thinking consensus, consensus+verifier) shift the optimum to 384; 256 falls under every architecture.",
       "predicted_outcome_amended": null,
       "tie_set": [],
@@ -584,7 +625,7 @@
           "results/run-analyses.json",
           "results/tile-size-sweep"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -602,8 +643,11 @@
       "hypothesis_refs": [
         "H2"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E56",
+        "E62"
+      ],
       "predicted_outcome": "Open robustness question (S109 carry-forward): does verifier temperature or thinking level matter once the verifier runs at N=5? The proposer-side diversity dividend (Obs 141) suggests higher temperature/thinking might add useful diversity; the Stage-2 snowball stall suggested not.",
       "predicted_outcome_amended": null,
       "tie_set": [
@@ -627,7 +671,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -645,8 +689,10 @@
         "H2",
         "H3"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E56"
+      ],
       "predicted_outcome": "S110 continuity: adjacent pass-budget rungs are 'almost certainly NOT' significantly separated; the opmax +0.005 over the headline sits at ~1.15x the single-run SD and was flagged for a targeted permutation test rather than pre-judged.",
       "predicted_outcome_amended": null,
       "tie_set": [
@@ -669,7 +715,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness/pareto"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -689,8 +735,10 @@
         "H2",
         "H3"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E56"
+      ],
       "predicted_outcome": "The consensus-era diversity dividend (Obs 141: HIGH-thinking pass diversity lifts consensus F1; confirmed for consensus-only architectures in the phase3a decomposition) predicts HIGH > MINIMAL at equal pass count under the proposer-verifier architecture too.",
       "predicted_outcome_amended": null,
       "tie_set": [
@@ -715,7 +763,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -735,8 +783,10 @@
         "H2",
         "H3"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E56"
+      ],
       "predicted_outcome": "S111's v1 found the five-rung passes ladder one statistical tier; the cost recast (Shawn, S111: a HIGH pass costs ~3x a minimal one, so v1's 'cheap6' is not the cheap end in dollars) asks whether the dollar-axis frontier collapses onto the minimal-thinking rungs.",
       "predicted_outcome_amended": null,
       "tie_set": [
@@ -762,7 +812,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness/pareto"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -779,8 +829,11 @@
       "hypothesis_refs": [
         "H2"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E56",
+        "E62"
+      ],
       "predicted_outcome": "S110 parking note: a bare-proposer comparison is the ONLY angle a stronger model might win, since the PV architecture disadvantages precise proposers (findings SS 9, the Pro pattern).",
       "predicted_outcome_amended": null,
       "tie_set": [
@@ -800,7 +853,7 @@
           "results/run-analyses.json",
           "results/flash35-2x2"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -831,8 +884,10 @@
         "H2",
         "H11"
       ],
-      "preregistered": "exploratory",
-      "deviations": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E56"
+      ],
       "predicted_outcome": "A completeness check on the registered headline: no never-swept pool should beat 0.8902 at its own best operating point; the 30-pass union's global optimum should be the registered 16of30 cell.",
       "predicted_outcome_amended": null,
       "tie_set": [],
@@ -849,7 +904,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -867,7 +922,7 @@
         "55maps-text-min-generalisation::verified-k4-canonical-gt"
       ],
       "hypothesis_refs": [],
-      "preregistered": "exploratory",
+      "preregistered": "post-hoc",
       "deviations": [],
       "predicted_outcome": "S113 continuity: tiers likely become 6 with the uplift cell inserted between TM-k3 and TH7-k3 (Obs 364: both pairwise steps resolve, so the uplift should occupy its own tier on the instrument that resolves).",
       "predicted_outcome_amended": null,
@@ -889,7 +944,7 @@
           "results/run-analyses.json",
           "results/55map-leaderboard"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -907,7 +962,7 @@
         "55maps-text-min-generalisation::verified-k4-canonical-gt"
       ],
       "hypothesis_refs": [],
-      "preregistered": "exploratory",
+      "preregistered": "post-hoc",
       "deviations": [],
       "predicted_outcome": "Obs 369 (written pre-tiering): the image cell IM-k3 leads tile-MCC despite ranking 7th of 8 on F1 (the F1-vs-MCC counter-board, replicated across all three instruments). Open question this analysis resolves: is that lead a statistically resolved tier, or only a numerical ordering on the 8,541-tile instrument?",
       "predicted_outcome_amended": null,
@@ -927,7 +982,7 @@
           "results/run-analyses.json",
           "results/metric-leaderboards"
         ],
-        "last_extracted_at": "2026-08-03T02:32:37Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -944,7 +999,7 @@
       "hypothesis_refs": [
         "H1"
       ],
-      "preregistered": "preregistered",
+      "preregistered": "confirmatory-with-deviation",
       "deviations": [
         "E36",
         "E45",
@@ -964,7 +1019,7 @@
           "results/run-analyses.json",
           "results/family-fdr/h1_cmt0106_pooled_modality.json"
         ],
-        "last_extracted_at": "2026-08-14T23:33:21Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -994,7 +1049,7 @@
         "H7",
         "H8"
       ],
-      "preregistered": "preregistered",
+      "preregistered": "confirmatory-with-deviation",
       "deviations": [
         "E28",
         "E30",
@@ -1022,7 +1077,7 @@
           "results/run-analyses.json",
           "results/family-fdr/family_fdr.json"
         ],
-        "last_extracted_at": "2026-08-14T23:33:21Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1041,7 +1096,7 @@
       "hypothesis_refs": [
         "H7"
       ],
-      "preregistered": "exploratory",
+      "preregistered": "post-hoc",
       "deviations": [
         "E43",
         "E72"
@@ -1059,7 +1114,7 @@
           "results/run-analyses.json",
           "results/e43-matched-temperature/findings.md"
         ],
-        "last_extracted_at": "2026-08-14T23:33:21Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1077,7 +1132,7 @@
         "55maps-text-min-n10-uplift::verified-5of10-standardised-gt"
       ],
       "hypothesis_refs": [],
-      "preregistered": "exploratory",
+      "preregistered": "post-hoc",
       "deviations": [],
       "predicted_outcome": null,
       "predicted_outcome_amended": null,
@@ -1095,7 +1150,7 @@
           "results/run-analyses.json",
           "results/55maps-standardised-ref-2026-08-14/obs280-remeasurement.md"
         ],
-        "last_extracted_at": "2026-08-14T22:45:59Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1113,7 +1168,7 @@
         "55maps-text-min-n10-uplift::verified-5of10-standardised-gt"
       ],
       "hypothesis_refs": [],
-      "preregistered": "exploratory",
+      "preregistered": "post-hoc",
       "deviations": [],
       "predicted_outcome": "S113 continuity: tiers likely become 6 with the uplift cell inserted between TM-k3 and TH7-k3 (Obs 364: both pairwise steps resolve, so the uplift should occupy its own tier on the instrument that resolves).",
       "predicted_outcome_amended": null,
@@ -1135,7 +1190,7 @@
           "results/run-analyses.json",
           "results/55map-leaderboard"
         ],
-        "last_extracted_at": "2026-08-14T22:45:59Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1153,7 +1208,7 @@
         "55maps-text-min-n10-uplift::verified-5of10-standardised-gt"
       ],
       "hypothesis_refs": [],
-      "preregistered": "exploratory",
+      "preregistered": "post-hoc",
       "deviations": [],
       "predicted_outcome": "Obs 369 (written pre-tiering): the image cell IM-k3 leads tile-MCC despite ranking 7th of 8 on F1 (the F1-vs-MCC counter-board, replicated across all three instruments). Open question this analysis resolves: is that lead a statistically resolved tier, or only a numerical ordering on the 8,541-tile instrument?",
       "predicted_outcome_amended": null,
@@ -1173,7 +1228,7 @@
           "results/run-analyses.json",
           "results/metric-leaderboards"
         ],
-        "last_extracted_at": "2026-08-14T22:45:59Z",
+        "last_extracted_at": "2026-08-17T00:20:30Z",
         "extractor_version": "0.7.1"
       }
     }

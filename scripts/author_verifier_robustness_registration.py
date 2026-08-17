@@ -194,7 +194,7 @@ MATRIX_ANALYSIS = {
         "pv-diag-384::verified-adv-text-high-vf-4of5",
     ],
     "hypothesis_refs": ["H2"],
-    "preregistered": "exploratory",
+    "preregistered": "post-hoc",
     "deviations": [],
     "predicted_outcome": (
         "Open robustness question (S109 carry-forward): does verifier temperature or "
@@ -249,7 +249,7 @@ PARETO_ANALYSIS = {
         "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
     ],
     "hypothesis_refs": ["H2", "H3"],
-    "preregistered": "exploratory",
+    "preregistered": "post-hoc",
     "deviations": [],
     "predicted_outcome": (
         "S110 continuity: adjacent pass-budget rungs are 'almost certainly NOT' "

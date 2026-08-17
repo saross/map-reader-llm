@@ -329,7 +329,7 @@ MIN_VS_HIGH_ANALYSIS = {
         "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
     ],
     "hypothesis_refs": ["H2", "H3"],
-    "preregistered": "exploratory",
+    "preregistered": "post-hoc",
     "deviations": [],
     "predicted_outcome": (
         "The consensus-era diversity dividend (Obs 141: HIGH-thinking pass "
@@ -397,7 +397,7 @@ PARETO_V2_ANALYSIS = {
         "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
     ],
     "hypothesis_refs": ["H2", "H3"],
-    "preregistered": "exploratory",
+    "preregistered": "post-hoc",
     "deviations": [],
     "predicted_outcome": (
         "S111's v1 found the five-rung passes ladder one statistical tier; the "
@@ -461,7 +461,7 @@ FLASH35_ANALYSIS = {
         "pv-diag-384::verified-adv-text-min-6of10",
     ],
     "hypothesis_refs": ["H2"],
-    "preregistered": "exploratory",
+    "preregistered": "post-hoc",
     "deviations": [],
     "predicted_outcome": (
         "S110 parking note: a bare-proposer comparison is the ONLY angle a "
@@ -516,7 +516,7 @@ UNSWEPT_ANALYSIS = {
         "pv-diag-384::verified-adv-image-3of5",
     ],
     "hypothesis_refs": ["H2", "H11"],
-    "preregistered": "exploratory",
+    "preregistered": "post-hoc",
     "deviations": [],
     "predicted_outcome": (
         "A completeness check on the registered headline: no never-swept pool "
@@ -643,7 +643,7 @@ def author_board_analysis(analyses: dict, execute: bool) -> int:
                   "+ gs-vs-55map-transfer.md; findings SS 16."),
         "conditions_compared": cids,
         "hypothesis_refs": [],
-        "preregistered": "exploratory",
+        "preregistered": "post-hoc",
         "deviations": [],
         "predicted_outcome": (
             "S113 continuity: tiers likely become 6 with the uplift cell "

@@ -565,7 +565,9 @@ def test_analyses_leaderboard_finding(registry):
     """The N=1 baseline-matrix leaderboard builds, validates, and reflects the E57 replace.
 
     Machine fields are populated (18 baseline condition_ids, type=leaderboard,
-    preregistered=exploratory). The four anti-diagonal Pro cells are sourced from the
+    preregistered=post-hoc under vocabulary v2 — the argued exception,
+    docs/methodology/n1-baseline-matrix.md:412-424, preserved through the S134
+    relabelling). The four anti-diagonal Pro cells are sourced from the
     genuine-Pro re-run (n1-pro-rerun-384), REPLACING the Flash-misdispatched
     n1-outstanding cells of the same corners (E57). The interpretive finding
     (outcome / tie_set) is authored/revised separately and is not pinned here, so this
@@ -577,7 +579,7 @@ def test_analyses_leaderboard_finding(registry):
     assert lb["type"] == "leaderboard"
     assert len(lb["conditions_compared"]) == 18
     assert all(cid.split("::")[1].startswith("baseline-") for cid in lb["conditions_compared"])
-    assert lb["preregistered"] == "exploratory"
+    assert lb["preregistered"] == "post-hoc"
     # E57 replace: the genuine-Pro re-run cells are IN; the Flash-misdispatched
     # n1-outstanding "pro" cells of the same four corners are OUT.
     corners = (
