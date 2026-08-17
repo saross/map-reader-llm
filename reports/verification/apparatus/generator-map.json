@@ -743,6 +743,15 @@
    "generator": "scripts/analyse_pv_buffer_sensitivity.py",
    "source_rule": "sibling:buffer_sensitivity_summary.csv",
    "write_site": "scripts/analyse_pv_buffer_sensitivity.py:40-41 (docstring; md written beside csv at :248)"
+  },
+  {
+   "rule_id": "gen-hypothesis-outcome-table",
+   "match": "^results/hypothesis-outcome-table/hypothesis-outcome-table\\.(md|json)$",
+   "scope": "results/hypothesis-outcome-table/",
+   "generator": "scripts/generate_hypothesis_outcome_table.py",
+   "source_rule": "regenerate",
+   "stratum": "generated",
+   "notes": "S134 D17 reconciliation: pure projection of results/analyses-manifest.json (15 hypotheses); verify by re-running the generator with --check"
   }
  ]
 }

@@ -1,0 +1,354 @@
+{
+ "hypotheses": [
+  {
+   "hypothesis": "H1",
+   "title": "Modality and elaboration level (osf:400)",
+   "registered_as": "confirmatory",
+   "disposition": "executed",
+   "family_fdr": "not rejected",
+   "analyses": [
+    "family-bh-fdr-confirmatory [confirmatory-with-deviation]",
+    "h1-cmt0106-pooled-modality [confirmatory-with-deviation]"
+   ],
+   "related_post_hoc": [
+    "era1-leaderboard [post-hoc]",
+    "era1-single-pass-baseline-matrix [post-hoc]",
+    "n1-baseline-matrix-384 [post-hoc]"
+   ],
+   "deviations": [
+    "E28",
+    "E30",
+    "E36",
+    "E41",
+    "E45",
+    "E51",
+    "E53",
+    "E54",
+    "E58",
+    "E59",
+    "E60",
+    "E64"
+   ]
+  },
+  {
+   "hypothesis": "H2",
+   "title": "Two-stage pipelines do not improve detection (osf:451)",
+   "registered_as": "confirmatory",
+   "disposition": "partially executed",
+   "family_fdr": "rejected (q=0.05)",
+   "analyses": [
+    "family-bh-fdr-confirmatory [confirmatory-with-deviation]",
+    "h2-condition-c-fine-to-coarse [not-executed]"
+   ],
+   "related_post_hoc": [
+    "era1-leaderboard [post-hoc]",
+    "flash35-model-roles [post-hoc]",
+    "min-vs-high-thinking-pv [post-hoc]",
+    "pass-budget-pareto [post-hoc]",
+    "pass-budget-pareto-v2 [post-hoc]",
+    "unswept-pools-completeness [post-hoc]",
+    "verifier-robustness-matrix [post-hoc]"
+   ],
+   "deviations": [
+    "E28",
+    "E30",
+    "E36",
+    "E41",
+    "E45",
+    "E51",
+    "E53",
+    "E54",
+    "E58",
+    "E59",
+    "E60",
+    "E64"
+   ]
+  },
+  {
+   "hypothesis": "H3",
+   "title": "Consensus voting improves F1 (osf:497)",
+   "registered_as": "confirmatory",
+   "disposition": "executed",
+   "family_fdr": "rejected (q=0.05)",
+   "analyses": [
+    "diversity-dividend-384 [confirmatory-with-deviation]",
+    "family-bh-fdr-confirmatory [confirmatory-with-deviation]",
+    "phase3a-consensus-calibration [registered-exploratory]"
+   ],
+   "related_post_hoc": [
+    "era1-leaderboard [post-hoc]",
+    "min-vs-high-thinking-pv [post-hoc]",
+    "pass-budget-pareto [post-hoc]",
+    "pass-budget-pareto-v2 [post-hoc]",
+    "phase3a-high-consensus-calibration [post-hoc]",
+    "phase3a-replication-thinking-calibration [post-hoc]",
+    "pv-diag-384-consensus-calibration [post-hoc]"
+   ],
+   "deviations": [
+    "E28",
+    "E30",
+    "E32",
+    "E36",
+    "E41",
+    "E45",
+    "E51",
+    "E53",
+    "E54",
+    "E58",
+    "E59",
+    "E60",
+    "E64"
+   ]
+  },
+  {
+   "hypothesis": "H4",
+   "title": "Example ordering / canonical placement (osf:534)",
+   "registered_as": "confirmatory",
+   "disposition": "executed",
+   "family_fdr": "not rejected",
+   "analyses": [
+    "family-bh-fdr-confirmatory [confirmatory-with-deviation]"
+   ],
+   "related_post_hoc": [
+    "era1-leaderboard [post-hoc]",
+    "era1-single-pass-baseline-matrix [post-hoc]"
+   ],
+   "deviations": [
+    "E28",
+    "E30",
+    "E36",
+    "E41",
+    "E45",
+    "E51",
+    "E53",
+    "E54",
+    "E58",
+    "E59",
+    "E60",
+    "E64"
+   ]
+  },
+  {
+   "hypothesis": "H5",
+   "title": "Negative text treatment (osf:578)",
+   "registered_as": "confirmatory",
+   "disposition": "executed",
+   "family_fdr": "not rejected",
+   "analyses": [
+    "family-bh-fdr-confirmatory [confirmatory-with-deviation]"
+   ],
+   "related_post_hoc": [
+    "era1-leaderboard [post-hoc]",
+    "era1-single-pass-baseline-matrix [post-hoc]"
+   ],
+   "deviations": [
+    "E28",
+    "E30",
+    "E36",
+    "E41",
+    "E45",
+    "E51",
+    "E53",
+    "E54",
+    "E58",
+    "E59",
+    "E60",
+    "E64"
+   ]
+  },
+  {
+   "hypothesis": "H6",
+   "title": "Flash-to-Pro transfer (osf:651)",
+   "registered_as": "confirmatory",
+   "disposition": "not executed",
+   "family_fdr": "— (excluded: never run)",
+   "analyses": [
+    "h6-phase4-transfer [not-executed]"
+   ],
+   "related_post_hoc": [
+    "n1-baseline-matrix-384 [post-hoc]"
+   ],
+   "deviations": [
+    "E40",
+    "E41",
+    "E74"
+   ]
+  },
+  {
+   "hypothesis": "H7",
+   "title": "Temperature affects detection (osf:705)",
+   "registered_as": "confirmatory",
+   "disposition": "executed",
+   "family_fdr": "rejected (q=0.05)",
+   "analyses": [
+    "family-bh-fdr-confirmatory [confirmatory-with-deviation]"
+   ],
+   "related_post_hoc": [
+    "e43-matched-temperature [post-hoc]",
+    "era1-leaderboard [post-hoc]",
+    "era1-single-pass-baseline-matrix [post-hoc]",
+    "n1-baseline-matrix-384 [post-hoc]"
+   ],
+   "deviations": [
+    "E28",
+    "E30",
+    "E36",
+    "E41",
+    "E45",
+    "E51",
+    "E53",
+    "E54",
+    "E58",
+    "E59",
+    "E60",
+    "E64"
+   ]
+  },
+  {
+   "hypothesis": "H8",
+   "title": "Library composition and scaling (osf:737)",
+   "registered_as": "confirmatory",
+   "disposition": "executed",
+   "family_fdr": "not rejected",
+   "analyses": [
+    "family-bh-fdr-confirmatory [confirmatory-with-deviation]"
+   ],
+   "related_post_hoc": [
+    "era1-leaderboard [post-hoc]",
+    "era1-single-pass-baseline-matrix [post-hoc]"
+   ],
+   "deviations": [
+    "E28",
+    "E30",
+    "E36",
+    "E41",
+    "E45",
+    "E51",
+    "E53",
+    "E54",
+    "E58",
+    "E59",
+    "E60",
+    "E64"
+   ]
+  },
+  {
+   "hypothesis": "H9",
+   "title": "Diversity mechanisms in consensus voting (osf:841)",
+   "registered_as": "exploratory (Tier A)",
+   "disposition": "executed",
+   "family_fdr": "— (exploratory: not in family)",
+   "analyses": [
+    "phase3c-diversity-calibration [registered-exploratory]"
+   ],
+   "related_post_hoc": [
+    "era1-leaderboard [post-hoc]"
+   ],
+   "deviations": [
+    "E12",
+    "E32",
+    "E63"
+   ]
+  },
+  {
+   "hypothesis": "H10",
+   "title": "Training-pool size effects (osf:904)",
+   "registered_as": "exploratory (Tier B)",
+   "disposition": "executed",
+   "family_fdr": "— (exploratory: not in family)",
+   "analyses": [
+    "h10-pool-size [registered-exploratory]"
+   ],
+   "related_post_hoc": [],
+   "deviations": [
+    "E13",
+    "E37",
+    "E45",
+    "E49",
+    "E50"
+   ]
+  },
+  {
+   "hypothesis": "H11",
+   "title": "Tile size effects (osf:944)",
+   "registered_as": "exploratory (Tier B)",
+   "disposition": "executed",
+   "family_fdr": "— (exploratory: not in family)",
+   "analyses": [
+    "tile-size-sweep [registered-exploratory]"
+   ],
+   "related_post_hoc": [
+    "unswept-pools-completeness [post-hoc]"
+   ],
+   "deviations": [
+    "E36",
+    "E41",
+    "E43",
+    "E44",
+    "E57"
+   ]
+  },
+  {
+   "hypothesis": "H12",
+   "title": "Hard-positive to hard-negative ratio (osf:980)",
+   "registered_as": "exploratory (Tier B)",
+   "disposition": "executed",
+   "family_fdr": "— (exploratory: not in family)",
+   "analyses": [
+    "h12-v2-hp-hn-ratio [registered-exploratory]"
+   ],
+   "related_post_hoc": [],
+   "deviations": [
+    "E13",
+    "E45",
+    "E49",
+    "E50",
+    "E51",
+    "E52"
+   ]
+  },
+  {
+   "hypothesis": "H13",
+   "title": "Overlap/stride effects (osf:1014)",
+   "registered_as": "exploratory (Tier B)",
+   "disposition": "not executed",
+   "family_fdr": "— (exploratory: not in family)",
+   "analyses": [
+    "h13-overlap-stride [not-executed]"
+   ],
+   "related_post_hoc": [],
+   "deviations": [
+    "E64",
+    "E75"
+   ]
+  },
+  {
+   "hypothesis": "H14",
+   "title": "Cross-model consistency (osf:1056)",
+   "registered_as": "exploratory (Tier C, deferred)",
+   "disposition": "not executed",
+   "family_fdr": "— (exploratory: not in family)",
+   "analyses": [
+    "h14-cross-model-consistency [not-executed]"
+   ],
+   "related_post_hoc": [],
+   "deviations": [
+    "E76"
+   ]
+  },
+  {
+   "hypothesis": "H15",
+   "title": "Cross-model consensus voting (osf:1074)",
+   "registered_as": "exploratory (Tier C, deferred)",
+   "disposition": "not executed",
+   "family_fdr": "— (exploratory: not in family)",
+   "analyses": [
+    "h15-cross-model-voting [not-executed]"
+   ],
+   "related_post_hoc": [],
+   "deviations": [
+    "E77"
+   ]
+  }
+ ]
+}
