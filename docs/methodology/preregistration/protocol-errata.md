@@ -2178,6 +2178,33 @@ both 1024 px at `osf:482` and 896 px at appendix `:1144`). Whether to run
 it or disclose it as unexecuted is an open PI decision
 (`planning/audit-and-completion-plan.md` § 8).
 
+**Update (2026-08-17 — residual disclosure facts, S134 reconciliation).**
+Five facts supplement the original entry. (1) The registered
+implementation artefacts were never created: the configuration mapping
+(`osf/preregistration.md:2015`) requires `detect_*.json` + `expand_*.json`
+for fine-to-coarse; no `expand_*` config or system instruction exists in
+`prompts/`, and `git log --all --diff-filter=A` shows neither was ever
+added — the drafted verification prompt survives only as prose at
+`preregistration-appendix-prompts.md:1136-1160`. (2) Condition C's absence
+makes the registered one-tailed test (`osf:486-489`), the ≥0.05 stopping
+rule (`osf:491`), and the advance criterion (`osf:493`) unevaluable for
+that architecture, so H2 conclusions must be phrased over coarse-to-fine,
+never over "two-stage architectures" generally. (3) A fine-to-coarse
+*approximation* did run — "Strategy 10" in the archived multi-scale pilot
+(`archive/pilot-tile-size/scripts/analyze_multiscale_voting.py`, 7
+configurations, best F1 0.533) — using fixed grid tiles and a detection
+prompt rather than candidate-centred crops with a verification prompt; it
+does not discharge Condition C and must not be mistaken for it. (4) The
+pilot premise in the registration ("37% recall at 1024 px", `osf:484`) is
+stale under model drift, so it cannot serve as a reason C would be
+uninformative without re-measurement — an argument for running C, and a
+caveat on any "we did not need it" framing. (5) The omission dates
+precisely: the last moment C was treated as live is the 2026-01-17
+"correctly TBD" ruling on the missing verification prompt. The open
+disposition decision this entry records is scheduled for closure at the
+S134 unexecuted-set adjudication
+(`planning/s134-d17-reconciliation-block-2026-08-17.md`).
+
 ---
 
 ### E60: H7 escalation trigger — fired as written on the expanded corpus; escalation judged uninformative and not run
@@ -3334,3 +3361,207 @@ behavioural fix, PI-approved 2026-08-02; the selection logic and seeds
 are untouched). The methodology doc itself was corrected the same day
 (holdout figures 20/5 → 60/15 — see its Revised note and
 `reports/verification/c4-triage/mismatch-triage-2026-08-02-wave4.json`).
+
+---
+
+### E74: H6 (Flash→Pro transfer, Phase 4) — registered confirmatory hypothesis never executed; deferral never ratified
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-17 (omission spans 2026-03 → present) |
+| Type | Deviation (records an omission, not a change) |
+| Commit | — (records an omission, not a change) |
+| Files | `osf/preregistration.md:651-701`; `studies/phase4-transfer.yaml` |
+| Impact | High — the only registered confirmatory hypothesis with no result; excluded (and disclosed as excluded) from the family BH-FDR, which ran over m=7 |
+
+**Description**: the registration specifies H6 as a four-phase
+transfer protocol (`osf/preregistration.md:651-701`): Phase 1
+baseline (K=10 runs on a 20-tile stratified holdout at 512 px),
+Phase 2 one-factor-at-a-time (OFAT) sensitivity over four named
+factors (M/E, H5, T, ordering), Phase 3 voting-threshold comparison
+("no additional API calls"), and Phase 4 conditional refinement,
+closing with a three-way transfer verdict (full / partial / poor,
+`:695-699`). None of it was executed. The concrete evidence:
+`studies/phase4-transfer.yaml` still carries 13 literal
+`PLACEHOLDER` strings (lines 28, 31, 32, 35, 38, 41, 44, 47, 48,
+103–106); `inputs/tiles/phase4_validation_manifest.json` and
+`inputs/vectors/bounds/phase4_validation_bounds.geojson` were never
+created (`git log --all` shows zero commits for either); the
+analysis driver was never written; and the execution checklist's
+Phase 4 row (`execution-checklist.md:118`) is blank. Of the four
+registered OFAT factors, only temperature was ever varied on Pro
+(T=0.0 vs T=0.7, and at the substitute 487-tile/384 px scope rather
+than the registered holdout — E41); M/E was varied only as
+text-vs-image, not as two adjacent levels of the registered
+five-level ladder; H5 and ordering were never varied on Pro at all.
+The registered analyses were never computed, including three that
+cost nothing: the ≥0.03 F1 decision rule (`:677`), the Phase 3
+voting-threshold comparison (`:679-683`), and the cost-effectiveness
+scope gate (`:691`). The registered advance criterion (`:701`) is
+therefore unevaluable, and no "transfer" claim may be made. The
+decision trail is a single dated deferral (2026-03-11, for a
+competing paper deadline) that was never revisited; no decision to
+abandon H6 exists in any committed artefact.
+
+**Protocol impact**: the Pro work that exists is an exploratory
+extension, not H6 (E41), and its results were corrected under E57;
+any faithful re-run would still inherit the E40 thinking-level
+confound (Gemini 3.1 Pro cannot run `thinking_level=minimal`, so the
+registered "matched configuration" baseline is unattainable). The
+family BH-FDR (2026-07-30) ran with H6 excluded and disclosed as
+never run. The scaffolding (selection script, decision-logic
+library, tests) is intact and re-execution remains available at the
+registered maximum of ~US$48 (`studies/phase4-transfer.yaml:161-165`),
+subject to the E40 caveat. Whether to execute the registered protocol
+or formally close H6 as not-executed is scheduled for the S134
+unexecuted-set adjudication
+(`planning/s134-d17-reconciliation-block-2026-08-17.md`).
+
+---
+
+### E75: H13 (overlap/stride) — registered in-scope exploratory contrast silently dropped; arms B and C never executed
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-17 (omission spans 2026-02 → present) |
+| Type | Deviation (records an omission, not a change) |
+| Commit | — (records an omission, not a change) |
+| Files | `osf/preregistration.md:1014-1048`; `config.py:66-68` |
+| Impact | Medium — a registered three-arm contrast has no result and no decision trail; tile overlap was a fixed parameter throughout, never a manipulated factor |
+
+**Description**: the registration specifies H13 as a three-arm
+overlap contrast (`osf/preregistration.md:1024-1028`: A = 64 px /
+stride 448 / 12.5 %, B = 128 px / 384 / 25 %, C = 256 px / 256 /
+50 %) with three registered analyses (`:1042-1046`: F1 as a function
+of overlap; cost-efficiency per additional API dollar; edge-detection
+analysis) and a disjunctive trigger (`:1048`). Only the study's fixed
+baseline tiling ever ran; arms B and C were never executed. Nor can
+the study claim "arm A ran": every registered H13 analysis is
+comparative and needs at least two arms, and arm A is specified in
+pixels, so only the 512 px corpus coincides with it — the 384 px and
+256 px corpora run 48 px and 32 px overlap (the 12.5 % ratio
+preserved) and match neither arm A's overlap nor its stride. The
+defensible statement is that overlap was a fixed parameter (12.5 % at
+every tile size, `config.py:66-68`), not a manipulated factor. No
+edge-effect assessment exists anywhere in `results/`. The trigger's
+two clauses had different fates: clause 1 (edge-effect errors in the
+Stage 2 holdout evaluation) was never evaluated — Stage 2 as
+registered never happened; clause 2 (disappointing F1 warranting
+multiple perspectives on the same location) was arguably satisfied
+(single-stage baseline F1 0.660) and was answered by different
+mechanisms (H3 consensus voting, H2 proposer-verifier), not by
+overlap. Provenance note: clause 2 was added on 2026-01-09
+(`ce17da492`) with no changelog entry, three weeks before lodgement —
+it is nonetheless part of the registered trigger. No dated,
+attributed decision to defer or drop H13 exists in any committed
+artefact; the status assertions that do exist are undated,
+unattributed, and mutually inconsistent, and the two recorded
+reasons are undercut by the drafters' own ~$6 costing
+(pre-lodgement estimate) and by the three independently generated
+tile trees already in the repository.
+
+**Protocol impact**: H13 does not shelter under the Tier C
+"registered as deferred" framing that covers H14/H15 — it was
+registered fully in scope and dropped silently. The paper must
+disclose it as unexecuted and must not characterise overlap/stride
+effects. E64 sub-item (iv) fixes the operative overlap reading for
+H11's tiling (constant 12.5 % fraction) without addressing the
+missing H13 contrast; the two disclosures are complementary, not
+redundant. Re-execution is feasible (three tile trees exist; spatial
+deduplication machinery exists) at an indicative ~$6-8, but that
+figure is a pre-lodgement drafting estimate and must be re-priced
+before it is relied on. Disposition is scheduled for the S134
+unexecuted-set adjudication.
+
+---
+
+### E76: H14 (cross-model consistency) — registered as deferred and honoured; three qualifications recorded
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-17 |
+| Type | Clarification (registered deferral honoured; qualifications recorded) |
+| Commit | — (records qualifications, not a change) |
+| Files | `osf/preregistration.md:1052-1070`; `docs/methodology/preregistration/execution-plan.md:691`; `osf/preregistration-coverage.md:163` |
+| Impact | Low-medium — no omission to remedy; constrains every generalisation claim to Gemini |
+
+**Description**: H14 (cross-model consistency across Claude and GPT)
+was registered as Tier C, deferred to future work, with its reasons
+stated in the registration itself (`osf/preregistration.md:1064-1068`)
+— the honest case, needing no remedy. Non-execution is positively
+verified: of 1,132 pass records, the 1,131 model-labelled ones are
+all Gemini (784 `gemini-3-flash`, 305 `gemini-3-flash-preview`, 30
+`gemini-3.1-pro-preview`, 12 `gemini-3.5-flash`); the strings
+`claude`/`gpt`/`anthropic`/`openai` occur zero times across the six
+results manifests; and no Anthropic or OpenAI client appears in any
+dependency file. Three qualifications are recorded so the deferral is
+not overstated. (A) The deferral is not original to the hypothesis:
+it was introduced during the v4.0 restructure (2026-01-07/08) —
+pre-v4.0 the same hypothesis (then numbered H12) was "Exploratory but
+important for generalisability claims" with a four-phase protocol —
+and the deferral target changed from "Paper 2" to "future work" in
+`ce17da492` (2026-01-09) without a changelog note. The paper should
+not imply the hypothesis was always out of scope. (B) The operational
+execution plan still lists H14 as the first Phase 5 priority at
+~$40-60 (`execution-plan.md:691`), contradicting the registered
+deferral; the preregistration governs. (C) The coverage companion
+document counts Claude and GPT as realised levels of the model-tier
+factor (`osf/preregistration-coverage.md:163`); only Flash and Pro
+were realised — that line must be corrected before the document is
+published as a supplement.
+
+**Protocol impact**: every generalisation claim in the paper is
+scoped to Gemini. The within-Google comparisons (H6-adjacent Pro
+work; `flash35-model-roles`) speak to model capability, not to
+architecture- or provider-independence, and must never be cited as
+H14 evidence.
+
+---
+
+### E77: H15 (cross-model consensus voting) — registered as deferred; gated on H14, which never ran
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-17 |
+| Type | Clarification (registered deferral honoured; gated precondition) |
+| Commit | — (records qualifications, not a change) |
+| Files | `osf/preregistration.md:1074-1088`; `docs/methodology/preregistration/execution-plan.md:696` |
+| Impact | Low — no omission to remedy; blocks any cross-architecture ensemble claim |
+
+**Description**: H15 (consensus voting across heterogeneous models)
+was registered as Tier C, deferred, with three numbered grounds, the
+first being a dependency on H14 results
+(`osf/preregistration.md:1082-1086`). H14 never ran (E76), so the
+registered precondition was never satisfied: H15 was gated, not
+skipped. Non-execution is positively verified: no scored condition
+aggregates votes across models — the 322 conditions span 123
+distinct proposer pools, all single-model by name, and a model-level
+join over the 1,132 pass records yields 265 distinct
+`(run_id, proposer_pool)` pairs of which exactly one spans two
+models. What exists instead is cross-model *cascading*: four
+`flash35-pv-2x2` conditions and seven `pv-diag-384` conditions pair
+a single-model proposer pool with a different-model verifier,
+including the `unswept-pools-completeness` result (Pro verifier over
+the Flash-HIGH union, +0.015, raw p=0.019, post-hoc, not
+multiplicity-controlled). These test cross-model verification, not
+the heterogeneous-vote averaging H15 specifies, and must not be
+cited as H15. One mixed-model pool exists unaggregated
+(`pv-diag-384::pro-high-text-n5-text-t0.7`: `config.model` records
+Flash for runs 1–5 and Pro for runs 6–10); the fields E57 designates
+authoritative for model attribution are absent from its batch
+metadata while E57 separately asserts the pool is genuinely Pro —
+that provenance must be settled before any analysis of the pool is
+published, and no reported number in the study is the output of a
+cross-model vote either way. The execution plan lists H15 as a
+Phase 5 priority at ~$15-25 (`execution-plan.md:696`), contradicting
+the registered deferral; the preregistration governs. Search hazard:
+before the v4.0 renumbering, "H15" designated the few-shot library
+hypothesis (now H8), so the changelog line "H15 promoted to
+confirmatory" (`osf/preregistration.md:2403`) is not evidence about
+cross-model voting.
+
+**Protocol impact**: no claim about cross-architecture ensemble
+diversity may be made. A within-Gemini voting analogue over the
+mixed pool would cost $0 in API terms but is provenance-gated as
+above. Disposition (with H14's) is recorded as disclose-only unless
+the S134 unexecuted-set adjudication rules otherwise.
