@@ -27040,7 +27040,67 @@ the source document, not the ID index. The register's
 single-source-of-truth claim was H-scoped until this fix and did not
 know it.
 
+## Observation 415: Temperature, not thinking level, drives the genuine-Pro corner gap — and the optimal vote threshold reverses between models at matched N (Session 135, 2026-08-17)
+
+*Drafted and approved in-session 2026-08-17 (S135 L4 walk ruling:
+"accept + mint an Obs").*
+
+The S135 blind-verification round falsified the drafting session's
+premise that the Pro temperature contrast was inseparably confounded
+with thinking level: the full genuine-Pro thinking × temperature
+2 × 2 exists per modality in committed data (the `n1-pro-rerun-384`
+corners plus the `pv-diag-384` Pro baselines — all
+`gemini-3.1-pro-preview` under the extended provenance gate, same
+Era-2 487-tile corpus, matched instruction and library hashes). On
+it, **the registered A-06 decision rule (ΔF1 ≥ 0.03,
+`osf/preregistration.md:677`) fires for the temperature factor in all
+four cells — text +0.0595 at HIGH thinking (Δ CI95 [+0.0340,
++0.0846]) and +0.0366 at MEDIUM ([+0.0113, +0.0620]); image +0.0750
+at HIGH ([+0.0421, +0.1076]) and +0.0605 at MEDIUM ([+0.0299,
++0.0888]), every paired tile-bootstrap delta CI (B = 1,000, seed 42)
+excluding zero — while the thinking contrast at matched temperature
+reaches 0.03 in no cell (+0.0124, −0.0105, +0.0103, −0.0042; every
+CI straddles zero)**. Pro prefers T = 0.0 to the carried
+Flash-optimal T = 0.7, consistent with the `n1-baseline-matrix-384`
+single-pass temperature split, so the "which factor?" question the
+confounded framing left open is answered at $0. Caveats to carry:
+replicate counts are unequal at HIGH thinking (the T = 0.7 corners
+hold 10 text and 5 image passes against 3 elsewhere; both MEDIUM
+cells are 3 vs 3); the H6 rows are analysis-class post-hoc as
+proposed, per the discharge principle (Obs 413); scope is
+384 px / 487 tiles (Era 2), not the registered Phase-4 scope.
+
+A-07 carries a second lesson from the same block. On matched-N = 3
+voting curves at matched configuration and corpus, **the optimal vote
+threshold reverses between models**: genuine Pro text peaks at k = 1
+(union — 0.8602 / 0.8558 / 0.8494 F1@20 m) while the Flash
+comparator peaks at k = 3 (intersection — 0.4726 / 0.5199 / 0.5665),
+a 67 % relative difference against the registered 10 % rule. Image
+transfers (both k = 3) but fragilely: the Flash image curve is
+almost flat and its winner leads the runner-up by 0.0015 F1, so a
+k = 1 win there would have flipped the verdict to flagged at 200 %.
+The comparator is the E57 mis-dispatch pool set — Flash executing the
+Pro-corner configuration, `status: partial` at 485–486 of 487
+tiles — so preserve-and-compare pays a second dividend after
+Obs 337/338. The vote threshold again behaves as a property of the
+pipeline–corpus–model encounter rather than of the configuration,
+extending Obs 358's corpus-transfer lesson along a model axis.
+
+Process note: the finding exists only because a fresh-context blind
+verifier refuted the drafting session's "the confound cannot be
+resolved at $0" premise (HIGH-1) — preserve-and-compare and blind
+verification paying off together, and a case where the verifier's
+value lay in overturning a premise rather than a number (cf.
+Obs 410). Sources:
+`results/h6-registered-analyses/{findings.md,a06_decision_rule.json,a07_voting_thresholds.json}`
+(commits `896878fe2` original, `1dd68f1ee` + `a2e86a95f`
+verification round; script `scripts/h6_registered_analyses.py`,
+`750449f89`); block plan
+`planning/s135-analysis-block-2026-08-17.md`.
+
 ## Candidates pending review — none outstanding
 
-The two Session-134 candidates were approved in-session on 2026-08-17
-and minted above as Observations 413–414.
+The Session-135 candidate was approved in-session on 2026-08-17 at
+the L4 walk and minted above as Observation 415; the two
+Session-134 candidates were approved on the same date and minted as
+Observations 413–414.
