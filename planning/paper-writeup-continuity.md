@@ -8,7 +8,90 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (135) — PROSE DRAFTING BEGINS [Session 134 CLOSED 2026-08-17; ran in Fable]
+## 🎯 NEXT SESSION (136) — H13 SCORING CHAIN, THEN THE DISCUSSION WALK [Session 135 CLOSED 2026-08-18; ran in Fable — SESSION 136 RUNS ON A DIFFERENT MODEL (Fable credits exhausted); all queued work is $0 or PI-gated and model-agnostic]
+
+> **THE S135 $0 ANALYSIS BLOCK IS COMPLETE AND H13 ARMS B+C HAVE
+> RUN.** All five queued analyses executed, blind-verified, and
+> PI-ratified (register 36 rows, four new, all stamped); every
+> methods-draft [PENDING]/[unverified] slot is closed; **Obs 415**
+> minted (temperature drives the Pro corner gap; threshold reversal
+> at matched N). H13 arms B+C (E75's silently-dropped contrast) ran
+> to completion on 2026-08-17/18: 6 passes + a 1-tile recovery,
+> committed (`3b4ec3f38`). **Cost note the PI has seen: $5.74
+> actual vs the $4.37 gate (+31 %)** — the smoke priced T=0.0
+> output volumes before the audit corrected the run to T=1.0
+> (matching arm A); lesson recorded (re-pin the smoke after any
+> audit-stage parameter change).
+>
+> **START HERE (S136)**: (1) **the H13 $0 scoring chain** —
+> fully specified in `planning/h13-arms-bc-plan-2026-08-17.md` § 7
+> (per-arm bounds; UNIFORM 20 m dedup across all arms with arm A
+> re-scored from committed detections — committed arm-A F1s are not
+> comparable, V1 measured the dedup artefact at +0.020 F1 even at
+> 12.5 % overlap; F1-vs-overlap + cost-efficiency + edge-detection;
+> findings; register row post-hoc-proposed + E75 disposition;
+> verification stack). Sapphire holds the untracked regenerable
+> tile trees (`inputs/tiles_512_ov128/`, `_ov256/`) — do not clean.
+> (2) **The Discussion outline walk** — `docs/paper/
+> discussion-outline.md`, **DD1–DD10 ALL STILL OPEN** (strawman
+> committed `2604a5e7d`; the walk never ran — S135 pivoted to
+> analyses at the PI's direction). Seeds→prose stays gated on it;
+> Seed 7 additionally on its `/lit-scout` check. (3) Remaining
+> Methods scaffold conversions (§§ 1–4 detail, § 6) — still
+> context-independent, still undone.
+>
+> **PI decisions open**: H6 ~$48 re-run (inputs updated — temperature
+> now settled at $0, A-09 CLOSED; Claude's lean: disclose-only);
+> H2-C 1024 px pricing probe (ruled "probe first" S134, not yet
+> run); DD5's second lit pass question (detection baselines before
+> D.4); the deviations counting rule is ADOPTED (cite-individually,
+> S135 L4).
+>
+> **Carry-forward**: Seed 7 `/lit-scout` before Discussion leans on
+> novelty; parked doors (vector-extension; higher-T MCC bound);
+> `gs-vs-55map-transfer.{md,json}` canonical-vintage behind an
+> in-text flag; B-leg diagnostics deliberately uncommitted on
+> sapphire; **zbook many commits behind — pull before any zbook
+> work**; back-burner AI-in-research methods-paper corpus (no action
+> until submission). Step-2 working-notes candidates from the S135
+> handoff (smoke-repricing lesson; quadratic overlap tile-count
+> lesson; the dedup-gap catch) were surfaced at close — if
+> unanswered, they hold over per the no-silent-discard rule.
+
+**Session 135 (2026-08-17/18, amd-tower + sapphire, ~US$5.75 API)**
+ran the full arc from prose-gating to a completed registered
+experiment. (1) **Discussion outline strawman** (`2604a5e7d`):
+DD1–DD10 raised per the outline-first contract, walk pending.
+(2) **The five-item $0 block** under a solo pre-run review (PI AFK,
+directed start; clean-context Opus audit substituted for the
+dialogue — 15 findings, headline: the plan's "H6 Pro data" was the
+E57 Flash mis-dispatch; inputs re-anchored to genuine-Pro
+`n1-pro-rerun-384` with the mis-dispatch pools as matched-N Flash
+comparator). Executed: errata census refreshed to E78 (two-vintage
+recount, blind-verified exact); E45 bootstrap pairings (H2 +0.076
+CI [+0.052,+0.105]; H3 +0.427 CI [+0.390,+0.468]; both corroborate
+the family rejections; verifier reproduced both legs bit-for-bit);
+H6 A-06/A-07/A-09 (verification round falsified the confound
+premise — the full Pro 2×2 exists; **temperature is the driver**,
+fires all four cells, thinking null; A-07 text threshold reverses
+between models at matched N; A-09 CLOSED against the Flash
+frontier); three blind verifiers + adversarial code audit, all
+findings adjudicated; four register rows (36 total), outcome table
+drift-green; all methods-draft slots closed incl. the M.3 D-S
+fills. (3) **L4 walk**: E45 row confirmatory-with-deviation, H6
+rows post-hoc (PI ruled "in full" after a requested rationale),
+counting rule cite-individually, A-06 upgrade accepted → **Obs
+415** (`b250a1259`) + precision sweep. (4) **H13 arms B+C**
+(S134-ruled, E75): phase gate caught the missing scorer dedup and
+the 2.99×-not-2× arm-C tile count; carried config resolved
+(brief-text); tilings generated (B 430 / C 999 manifests); smoke
+pinned $0.00102/tile; `/audit-config` READY after catching the
+T=0.0→T=1.0 mismatch vs arm A; PI-gated launch ran 6 passes + 1
+recovery; **actual $5.74 vs $4.37 gate (+31 %), flagged**. Commits
+`2604a5e7d` → `3b4ec3f38` (25) + this handoff, all pushed; local =
+sapphire = origin.
+
+## NEXT SESSION (135) — PROSE DRAFTING BEGINS [Session 134 CLOSED 2026-08-17; ran in Fable]
 
 > **THE D17 RECONCILIATION BLOCK IS COMPLETE AND THE PI WALK IS
 > CLOSED** — the last gate before Results prose is discharged.
