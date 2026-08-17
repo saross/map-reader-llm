@@ -230,7 +230,43 @@ and found no cheaper-or-dearer variant that measurably improves on
 it, including the single-pass choice (five-fold replication puts
 single-run SD at 0.0025–0.0072 F1).
 
+## M.7 Working-precision derivation (outline target: new § 5.x; D6 rider)
+
+The spatial matching buffer is the evaluation's largest free
+parameter, so both instruments derive it empirically rather than
+asserting it (the derived values and their consequences are recapped
+in Results § R1 per the settled D6 convention). On the gold-standard
+instrument, plateau-onset analysis over all 259 conditions with full
+buffer curves identifies the radius beyond which further widening
+buys ≤ 0.005 F1 per step: text-pipeline localisation plateaus at
+30 m (about 6 px at map scale, with proposer–verifier architectures
+at 30 m, consensus at 35 m, and single-pass at 40 m), while
+image-modality localisation plateaus at 75 m, roughly 2.5× looser,
+making modality rather than architecture the dominant factor in
+localisation precision
+(`results/working-precision/gs-plateau-characterisation.{json,md}`).
+On the 55-map instrument three independent derivations converge on a
+50 m operational buffer: a complete-spatial-randomness null shows
+chance matching is negligible at every canonical radius (null
+F1 ≤ 0.015 even at 150 m), observed marginal gains die at 50 m while
+chance creep continues, and the attribution-ambiguity bound bites
+first, since the reference's 10th-percentile nearest-neighbour
+spacing is 65 m and 21 % of mounds are already at cross-match risk
+at 50 m (`results/working-precision/55maps-csr-noise-floor.{json,log}`).
+Gold-standard results are therefore quoted at the registered 20 m or
+the derived 30 m plateau, and all deployment results at 50 m. The
+boundary is that a buffer is a property of the instrument and
+reference, not of the detector: the derived radii do not transfer to
+other map series or reference constructions without re-derivation.
+
 ## Changelog
+
+### 2026-08-17 (later still) — M.7 working-precision derivation
+
+Added per the settled D6 rider (Methods carries the derivation, R1
+recaps values). Anchored to the two committed derivation artefacts
+and R1's blind-verified passage; closes the D6 implementation note
+from the MD mechanical-fix list.
 
 ### 2026-08-17 (later) — M.2–M.6 drafted under the MD rulings
 
