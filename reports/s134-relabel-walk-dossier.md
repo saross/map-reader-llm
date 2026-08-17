@@ -1,7 +1,8 @@
 # S134 D17 reconciliation — PI walk dossier
 
-> **Last revised**: 2026-08-17 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-17 (verification reports landed; § 7
+> added; corrections applied). See [§ Changelog](#changelog) for
+> revision history.
 
 **Purpose**: the L4 operator gate for the S134 D17 reconciliation
 block (`planning/s134-d17-reconciliation-block-2026-08-17.md`). All
@@ -135,7 +136,110 @@ phase-gate/audit-config — nothing executes in this $0 block.
   keep their original stamps; this walk is the ratification record
   for the label changes (re-stamping optional — your call).
 
+## 7. Verification reports (blind verifier + code audit)
+
+Both ran as fresh-context Opus agents after the block's five items
+were committed; denominators reported by both.
+
+### 7.1 Blind classification verifier
+
+Cold-derived all 31 row labels and all 15 hypothesis dispositions
+from the prereg/errata/inventories before reading the committed
+values (denominator: 166/166 claims re-derived; 105/105 table cells
+confirmed by an independent script; all 15 `osf:` anchors and all 28
+cited E-numbers resolve). Result: **26 AGREE, 3 DISAGREE — two
+conceded to the committed (stricter) labels, one upheld**:
+
+- **Upheld disagreement — `diversity-dividend-384`** (walk item 2.1
+  gains an adversarial position): the verifier derives `post-hoc` on
+  the grounds that two of its three headline claims are unregistered
+  (thinking contrast; cross-architecture tie), its corpus is the
+  Era-2 487-tile/384 px substitution E41 itself calls "an exploratory
+  extension", and the register's own seam (pv-diag-384-calibration =
+  post-hoc on the same pools) sits on the other side. The
+  counter-position (mine, which the verifier could not dismiss): its
+  claim 2 IS the registered H3 confirmatory contrast, and the family
+  BH-FDR sources its H3 headline p-value from this row's tiering
+  output — demoting it without demoting the family row creates the
+  opposite inconsistency. **Downstream impact of either ruling: zero
+  table cells.** Your adjudication under the disagreement rule.
+- The two conceded disagreements (era1 boards: verifier initially
+  derived registered-exploratory, conceded to post-hoc under the
+  strictness rule) surface one consequence to see plainly: **H4, H5,
+  H7, and H8 each rest on exactly one registered-analysis row — the
+  family BH-FDR — with no per-hypothesis analysis row.** The table
+  displays this honestly.
+
+Further verifier findings, dispositioned:
+
+- **H11 under-disclosure (corrected)**: `tile-size-sweep` compares
+  `pv-diag-256` conditions (E62 names that run) at best-prob_t
+  operating points (E56) — both now added to its deviations; E62
+  likewise added to the three post-hoc rows analysing
+  `verifier-robustness` conditions.
+- **§ 8.9 post-experiment verification** (`osf:2139-2145`): a
+  registered obligation with no H-number — full-Hungarian
+  confirmatory comparison of F1/latency/tokens at the optimal
+  configuration — has no register row; its closest execution
+  (`min-vs-high-thinking-pv`, post-hoc) lacks the latency limb. The
+  register's single-source-of-truth claim is currently **H-scoped**.
+  **Walk item: mint a named-programme disposition/analysis row, or
+  record the H-scope limitation explicitly.**
+- **Family row hygiene**: `family-bh-fdr-confirmatory`'s
+  `conditions_compared` (12 conditions ≈ 6 pairs) carries no pair for
+  H3's input (sourced from diversity-dividend-384's tiering artefact)
+  and H1's input is the CMT-0106 artefact — the row cannot be audited
+  to its inputs from the manifest alone. Walk item: curate the list
+  or note the artefact-sourced inputs in the row.
+- Could-not-verify (inherited limits, no action this block): the
+  family's five "registered artefact (re-read and asserted)" input
+  p-values; whether H5's family input used the registered
+  precision-primary; statistics inside outcome free text.
+
+### 7.2 Code audit
+
+Independently re-implemented the projection and confirmed **all 15
+rows × 5 projected fields, 0 mismatches**; verified the schema
+conditional across 10 probe cases; confirmed all 8 author-script
+literal placements. Findings and dispositions:
+
+- **Fixed (2 high)**: exclusion verdict now derived structurally from
+  the family row's `hypothesis_refs` with the prose as a cross-check
+  (a rewording can no longer silently convert "never run" into "not
+  rejected"); the deviations union now extracts E-numbers from within
+  prose entries (E49 — previously silently dropped from H3's cell —
+  now surfaces from diversity-dividend-384's prose array).
+- **Fixed (7 medium)**: `--check` false-STALE when git is absent;
+  unadjudicated (null) rows now abort loudly instead of vanishing;
+  the uncovered-hypothesis error message no longer misdiagnoses the
+  null case; the near-vacuous live test replaced with real MD/JSON
+  equality assertions; the post-hoc-only failure mode now genuinely
+  pinned; single-rejection-clause and confirmatory-membership guards
+  added to the family parse; `n1-baseline-matrix.md:414` updated to
+  the v2 label with a dated note.
+- **Fixed (4 low)**: reverse schema conditional (`type: disposition`
+  now forces `not-executed` — fault-injection verified); git call
+  timeout; hard-coded count in `--check` output; a "register rows
+  outside the hypothesis frame" section added to the table (the five
+  no-hypothesis rows are no longer invisible).
+- **Not corrected (reported per the audit gate)**: L-2 nested-brace
+  truncation in the rejection-set regex (fails loudly already — the
+  audit itself recommends no fix); L-3's second half (the generation
+  stamp records HEAD but not dirty-tree state — accepted; the
+  `--check` guard covers the practical risk); L-5 (the generator-map
+  rule's regex covers `.json` but the registry only indexes `.md` by
+  design — cosmetic; and `--check` is exercised by the strengthened
+  tier-1 test rather than a separate CI hook).
+
 ## Changelog
+
+### 2026-08-17 (later) — Verification landed, corrections applied
+
+Blind verifier: 26/31 AGREE, 2 conceded, 1 upheld
+(diversity-dividend-384 → walk item 2.1); 105/105 table cells
+confirmed. Audit: 2 high + 7 medium + 4 low corrected, 3 lows
+accepted with reasons (§ 7.2). Register deviations completed on four
+rows (E56/E62); table regenerated; full battery green.
 
 ### 2026-08-17 — Original publication
 

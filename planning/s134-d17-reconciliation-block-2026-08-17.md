@@ -1,6 +1,13 @@
 # Session 134 — D17 reconciliation block
 
-> **Status**: IN PROGRESS 2026-08-17 — PI go given in-session
+> **Status**: ✅ EXECUTED 2026-08-17 — all five items landed and
+> verified (blind verifier 26/31 AGREE with 1 upheld disagreement to
+> the PI walk; code audit 2 high + 7 medium + 4 low corrected, 3 lows
+> accepted; 105/105 table cells independently confirmed), US$0.00
+> spent, no stop state fired. **PI walk pending** — the L4 gates
+> (classification walk, sign-offs, erratum wording, unexecuted-set
+> adjudication) are consolidated in
+> `reports/s134-relabel-walk-dossier.md`. PI go was given in-session
 > 2026-08-17 AEST after a `/pre-run-review` dialogue (the S131
 > protocol; S133 precedent). This document is the block's controlling
 > document per the pre-run-review exit requirements. Budget:
@@ -151,6 +158,25 @@ ambiguous results requiring investigation or PI input; tripwires
 passed.
 
 ## Changelog
+
+### 2026-08-17 (later) — Block executed; PI walk pending
+
+All five items landed (commits `67627978a` errata E74-E77 + E59
+update → `f54dc6787` schema v2 + 24-row relabel, atomic →
+`b2af86948` H10/H12-v2 rows → `5b34ec643` five disposition rows →
+`ac9eb88b1` table generator; then verification-driven corrections).
+Finished states: 31/31 rows valid, 0 retired values, 0 nulls, drift
+warnings 208 = pre-block baseline, table 15/15, registry green,
+tier-1 suite green. Both new analysis outcomes landed inside the
+expected null band (no stop state). One disclosed refinement to
+hardening 9: Items 1+2 landed as ONE atomic commit — a tier-1 test
+validates the live sidecar against the live schema, so a
+schema-only commit cannot stay green (the designed
+uncommittable-half-migration property, doing its job). Verification:
+blind verifier 26/31 AGREE / 2 conceded / 1 upheld
+(diversity-dividend-384, zero-cell impact, to the PI walk); audit
+2H+7M corrected + 4L fixed + 3L accepted with reasons. L4 gates
+pend in `reports/s134-relabel-walk-dossier.md`.
 
 ### 2026-08-17 — Original publication
 

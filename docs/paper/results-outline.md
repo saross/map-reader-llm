@@ -22,6 +22,7 @@
 | v5 | 2026-08-16 | **D13 settled = A + merged (b)/(c)** (Session 133, PI in-session): carry-forward primary; deployment gap framed against the Tier-1 set with no single-oracle crown; E56 cited at the relaxed rows. D13 block figures refreshed to standardised vintage; the threshold-axis decomposition punchline recorded. |
 | v6 | 2026-08-16 | **D14/D14b settled = A/A** (Session 133, PI in-session): R8 stays in Results as results-of-validation, whole at the head of the validity block. PI framing note recorded (GS = test set for configuration selection, 55-map = production with the luxury of GT to audit generalisation) + the standardised-reference drafting note for R8's error-structure description. |
 | v7 | 2026-08-16 | **D15 settled = C; D16 settled = A + Discussion prereg-retrospective rider; D17 settled = A + schema amendment** (Session 133, PI in-session). **All seventeen decisions settled.** D17 currency note added (family FDR, CMT-0106, E45 correction, E60 all landed since the block was drafted); the reconciliation block queued as the gate before final Results prose. |
+| v8 | 2026-08-17 | **D17 reconciliation block EXECUTED** (S134, `planning/s134-d17-reconciliation-block-2026-08-17.md`): vocabulary v2 + 31-row register + errata E74–E77/E59-update + the generated hypothesis-outcome table (`results/hypothesis-outcome-table/`). Gate-status note added at the decision register. PI walk pending (`reports/s134-relabel-walk-dossier.md`); prose drafting begins after the walk. |
 
 *Brief by design — consult `git log docs/paper/results-outline.md` for the
 full history and diffs.*
@@ -588,3 +589,11 @@ favourable and should not be given away.
 **Gate before final Results prose**: the D17 reconciliation block
 (schema amendment → relabelling → H10/H12-v2 rows → unexecuted-set
 erratum check → generate the hypothesis-outcome table).
+**Gate status (S134, 2026-08-17)**: ✅ EXECUTED — vocabulary v2
+landed (31-row register: 3 confirmatory-with-deviation, 5
+registered-exploratory, 18 post-hoc, 5 not-executed), errata
+E74–E77 + the E59 update filed, and the table generates at
+`results/hypothesis-outcome-table/` (15/15, pure projection,
+verifier-confirmed 105/105 cells). **PI walk pending**
+(`reports/s134-relabel-walk-dossier.md`) — prose drafting may begin
+once the walk closes.
