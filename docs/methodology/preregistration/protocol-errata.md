@@ -3565,3 +3565,43 @@ diversity may be made. A within-Gemini voting analogue over the
 mixed pool would cost $0 in API terms but is provenance-gated as
 above. Disposition (with H14's) is recorded as disclose-only unless
 the S134 unexecuted-set adjudication rules otherwise.
+
+---
+
+### E78: Section 8.9 post-experiment thinking-level verification — registered confirmatory comparison never executed
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-17 (surfaced by the S134 blind verification pass) |
+| Type | Deviation (records an omission, not a change) |
+| Commit | — (records an omission, not a change) |
+| Files | `osf/preregistration.md:2139-2145` |
+| Impact | Low-medium — a registered verification of the minimal-thinking decision has no result; the latency limb has no coverage at all |
+
+**Description**: the registration's § 8.9 closes its thinking-level
+pilot with a registered commitment (`osf/preregistration.md:2139-2145`):
+"A confirmatory analysis with full Hungarian matching at the optimal
+configuration will compare: Detection accuracy (F1, precision,
+recall); Latency per tile; Token usage and API costs", verifying the
+§ 8.9 decision to run the main experiment at
+`thinking_level=minimal` (`osf:2135`). It carries no hypothesis
+number, so it fell outside every per-hypothesis reconciliation until
+the S134 blind verification pass surfaced it. It was never executed
+as registered. The closest coverage is the post-hoc analysis
+`min-vs-high-thinking-pv`, which compares F1 and cost at the optimal
+proposer-verifier configuration and finds MINIMAL at statistical
+parity with HIGH on the gold-standard instrument — the direction
+§ 8.9 anticipated — but it does not report latency per tile, is not
+the registered full-Hungarian construction, and its scope note
+records that the parity REVERSED at 55-map deployment.
+
+**Protocol impact**: the practical claim § 8.9 licenses ("minimal is
+truly equivalent at 1/3 the latency") may not be asserted; the paper
+may cite the post-hoc F1/cost parity with its scope caveat, and must
+not cite a latency result, which does not exist. The obligation is
+recorded in the analyses register as a named-programme disposition
+row (`s8-9-post-experiment-verification`, `not-executed`). Whether
+to execute the registered comparison (a $0 recomputation for
+F1/tokens over committed outputs; latency would need timing metadata
+already recorded in run sidecars, or a small re-measurement) is a PI
+decision not yet taken.

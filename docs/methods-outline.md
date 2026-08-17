@@ -342,14 +342,24 @@ AI-assisted research methodology is planned as a separate contribution.
 
 ### What the Preregistration Planned but Was Not Executed
 
-| Hypothesis | Reason Deferred |
-|-----------|----------------|
-| H6 (Flash → Pro transfer) | Not executed as registered (20-tile holdout at 512 px, K=10, OFAT factors); deliberately deferred 2026-03-11 for a competing paper deadline, then superseded by the exploratory 487-tile/384 px genuine-Pro comparison (E41, E57 Update) |
-| H10 (Training pool size) | Hard positive pool exhausted at 4 examples |
-| H12 (HP:HN ratio) | Depends on H10 (larger HP pool) |
-| H13 (Overlap/stride) | Low priority; would require re-tiling |
-| H14 (Cross-model consistency) | Deferred to future work |
-| H15 (Cross-model voting) | Deferred to future work |
+**Refreshed 2026-08-17 (S134 D17 reconciliation)** against the
+generated register
+(`results/hypothesis-outcome-table/hypothesis-outcome-table.md` — the
+authoritative account; disposition rows + errata cited per line). Two
+framings that must not be flattened: *registered in scope but not
+executed* vs *registered as deferred at lodgement*. H10 and H12,
+previously listed here, in fact **ran to completion** (register rows
+`h10-pool-size`, `h12-v2-hp-hn-ratio`, both null) and have been
+removed from this table.
+
+| Obligation | Status | Disclosure |
+|-----------|--------|------------|
+| H6 (Flash → Pro transfer) | Registered confirmatory, in scope — not executed (13 PLACEHOLDERs; deferral 2026-03-11 never ratified); the 487-tile/384 px genuine-Pro comparison is an exploratory extension, not H6 | E40, E41, E74 |
+| H13 (Overlap/stride) | Registered exploratory Tier B, in scope — silently dropped; overlap was a fixed parameter, never a manipulated factor; earlier "low priority / would require re-tiling" reasons are undercut by the drafters' ~$6 costing and three existing tile trees | E64(iv), E75 |
+| H2 Condition C (fine-to-coarse) | Registered confirmatory condition — never built (no `expand_*` artefacts); H2 conclusions phrased over coarse-to-fine only | E59 (+ 2026-08-17 update) |
+| § 8.9 post-experiment verification | Registered named-programme commitment (F1/latency/tokens at optimal config) — not executed; latency limb has no coverage | E78 |
+| H14 (Cross-model consistency) | **Registered as deferred at lodgement** — honoured; generalisation claims scoped to Gemini | E76 |
+| H15 (Cross-model voting) | **Registered as deferred** — gated on H14, which never ran | E77 |
 
 ### Key Surprises Worth Foregrounding in Discussion (Not Methods)
 

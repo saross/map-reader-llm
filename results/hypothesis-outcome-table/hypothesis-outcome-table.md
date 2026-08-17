@@ -2,7 +2,7 @@
 
 > **GENERATED FILE — do not hand-edit.** Produced by
 > `scripts/generate_hypothesis_outcome_table.py` from
-> `results/analyses-manifest.json` at commit `bf45e2acf`; re-run the
+> `results/analyses-manifest.json` at commit `df1725345`; re-run the
 > script after any manifest regeneration. Pure projection per the
 > D17 ruling (`docs/paper/results-outline.md` § D17): no cell is
 > hand-maintained.
@@ -46,7 +46,7 @@ themselves.
 | H3 | era1-leaderboard [post-hoc]; min-vs-high-thinking-pv [post-hoc]; pass-budget-pareto [post-hoc]; pass-budget-pareto-v2 [post-hoc]; phase3a-high-consensus-calibration [post-hoc]; phase3a-replication-thinking-calibration [post-hoc]; pv-diag-384-consensus-calibration [post-hoc] |
 | H4 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
 | H5 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
-| H6 | n1-baseline-matrix-384 [post-hoc] |
+| H6 | — |
 | H7 | e43-matched-temperature [post-hoc]; era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc]; n1-baseline-matrix-384 [post-hoc] |
 | H8 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
 | H9 | era1-leaderboard [post-hoc] |
@@ -59,12 +59,14 @@ themselves.
 
 ## Register rows outside the hypothesis frame
 
-Rows with no `hypothesis_refs` (deployment boards and
-methodological re-measurements) — part of the register but
-outside the H1–H15 reconciliation:
+Rows with no H-numbered refs (deployment boards,
+methodological re-measurements, and named-programme
+dispositions) — part of the register but outside the
+H1–H15 reconciliation:
 
 - `55map-canonical-leaderboard-50m`
 - `55map-canonical-leaderboard-mcc-50m`
 - `55map-standardised-leaderboard-50m`
 - `55map-standardised-leaderboard-mcc-50m`
 - `obs280-shared-reference`
+- `s8-9-post-experiment-verification`

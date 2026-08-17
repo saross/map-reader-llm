@@ -206,9 +206,16 @@ def _git_head() -> str:
 
 
 def no_hypothesis_rows(analyses: list[dict]) -> list[str]:
-    """Register rows carrying no hypothesis_refs (outside the H frame)."""
-    return sorted(a["analysis_id"] for a in analyses
-                  if not (a.get("hypothesis_refs") or []))
+    """Register rows with no H-NUMBERED refs (outside the H1-H15 frame).
+
+    Catches both empty hypothesis_refs (deployment boards) and
+    named-programme-only refs (e.g. the section-8.9 verification row),
+    so no register row is invisible to the table.
+    """
+    return sorted(
+        a["analysis_id"] for a in analyses
+        if not any(re.fullmatch(r"H\d+", h)
+                   for h in (a.get("hypothesis_refs") or [])))
 
 
 def render_md(records: list[dict], no_hyp: list[str]) -> str:
@@ -253,9 +260,10 @@ def render_md(records: list[dict], no_hyp: list[str]) -> str:
         ph = "; ".join(r["related_post_hoc"]) or "—"
         lines.append(f"| {r['hypothesis']} | {ph} |")
     lines += ["", "## Register rows outside the hypothesis frame", ""]
-    lines.append("Rows with no `hypothesis_refs` (deployment boards and")
-    lines.append("methodological re-measurements) — part of the register but")
-    lines.append("outside the H1–H15 reconciliation:")
+    lines.append("Rows with no H-numbered refs (deployment boards,")
+    lines.append("methodological re-measurements, and named-programme")
+    lines.append("dispositions) — part of the register but outside the")
+    lines.append("H1–H15 reconciliation:")
     lines.append("")
     for aid in no_hyp:
         lines.append(f"- `{aid}`")

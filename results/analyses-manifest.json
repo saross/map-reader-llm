@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T00:42:43Z",
+  "generated_at": "2026-08-17T03:50:52Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -28,7 +28,6 @@
       ],
       "hypothesis_refs": [
         "H1",
-        "H6",
         "H7"
       ],
       "preregistered": "post-hoc",
@@ -51,7 +50,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -154,7 +153,7 @@
         "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
         "pv-diag-384::baseline-pro-text-medium-t-0-0"
       ],
-      "outcome": "Both named claims of the diversity-dividend test are confirmed at the preregistered 20m buffer. Per the registered H3 analysis plan (osf/preregistration.md:519-521: 'Compare single-pass mean F1 vs voted F1 at each (N, threshold) combination' + 'Generate threshold sweep curves' + 'Identify optimal (N, threshold)'), the headline is each configuration's BEST (N, threshold) operating point against the known test-tile ground truth -- the study's purpose is to characterise how well VLM symbol extraction localises mounds, so best-achievable performance is the deliverable, not a confound. Method: round-robin tile-swap permutation (10k perms, seed 42, two-sided; BH-FDR q=0.05) + greedy-clique tiering over a 22-cell board (4 consensus champions + 18 single-pass cells); 197/231 pairs significant -> 7 tiers. (1) DIVERSITY DIVIDEND -- HIGH-thinking consensus significantly exceeds minimal-thinking consensus at matched modality: text +0.153 F1 (BH-p<0.001; MCC +0.239) and image +0.070 F1 (BH-p<0.001; MCC +0.272). The HIGH-thinking pools take the larger consensus gain -- more varied proposals let a high vote threshold prune their false positives. (2) CONSENSUS vs SINGLE-PASS -- every consensus champion significantly beats its matched within-pool single-pass baseline (+0.13 to +0.43 F1, all BH-p<0.001), and the lift persists at the production N=5 operating point (text 4-of-5, image 3-of-5; +0.09 to +0.33 F1). (3) CROSS-ARCHITECTURE HEADLINE -- Tier 1 (the tie_set) is a THREE-member statistical tie: the best Flash HIGH-text consensus (F1 0.814) and the two genuine-Gemini-3-Pro single-pass text leaders (pro-text-high-t-0-0 0.804, pro-text-medium-t-0-0 0.792); the permutation cannot separate Flash-consensus from the Pro leader (p=0.616, BH-p=0.66). Cheap Flash consensus reaches the expensive Pro single-pass tier on localisation F1. OPERATING-POINT SENSITIVITY (characterised, co-headlined): the Tier-1 parity is at the best (N, threshold) point (26-of-30); at the production N=5 carry-forward point (text 4-of-5) the same pool reaches TIER 2 (0.720), tying genuine Pro text at T=0.7 -- a best-minus-N5 delta of ~0.094 F1 (the within-test cousin of the carry-forward-vs-best delta the 55-map generalisation reports). F1-parity is NOT MCC-parity: the Pro text leaders are more tile-precise (MCC 0.790, 11 tile FPs) than the Flash consensus champion (MCC 0.620, 41 tile FPs) -- the metric-dependent-winner pattern of the n1 board persists. Deployment generalisation to unseen maps is the separate question answered by the 55-map runs. Era-2 487-tile test scope, 384px, gemini-3-flash. Artefacts: results/diversity-dividend-384/{tiering-champions,tiering-with-deployable}/tiering_20m.{json,md}; script scripts/consensus_vs_baseline_tiering.py; cell spec planning/diversity-dividend-cells-2026-06-06.json.",
+      "outcome": "Both named claims of the diversity-dividend test hold at the preregistered 20m buffer \u2014 claim (2), consensus vs single-pass, is the registered H3 comparison (confirmed); claim (1), the thinking-level diversity dividend, is a POST-REGISTRATION (post-hoc) discovery: the registration fixes thinking_level=minimal (osf:1211-1212, 2135) and no erratum makes it a registered factor (D17 sweep U5; fence applied at the S134 PI walk). Per the registered H3 analysis plan (osf/preregistration.md:519-521: 'Compare single-pass mean F1 vs voted F1 at each (N, threshold) combination' + 'Generate threshold sweep curves' + 'Identify optimal (N, threshold)'), the headline is each configuration's BEST (N, threshold) operating point against the known test-tile ground truth -- the study's purpose is to characterise how well VLM symbol extraction localises mounds, so best-achievable performance is the deliverable, not a confound. Method: round-robin tile-swap permutation (10k perms, seed 42, two-sided; BH-FDR q=0.05) + greedy-clique tiering over a 22-cell board (4 consensus champions + 18 single-pass cells); 197/231 pairs significant -> 7 tiers. (1) DIVERSITY DIVIDEND (post-hoc; unregistered thinking factor) -- HIGH-thinking consensus significantly exceeds minimal-thinking consensus at matched modality: text +0.153 F1 (BH-p<0.001; MCC +0.239) and image +0.070 F1 (BH-p<0.001; MCC +0.272). The HIGH-thinking pools take the larger consensus gain -- more varied proposals let a high vote threshold prune their false positives. (2) CONSENSUS vs SINGLE-PASS -- every consensus champion significantly beats its matched within-pool single-pass baseline (+0.13 to +0.43 F1, all BH-p<0.001), and the lift persists at the production N=5 operating point (text 4-of-5, image 3-of-5; +0.09 to +0.33 F1). (3) CROSS-ARCHITECTURE HEADLINE -- Tier 1 (the tie_set) is a THREE-member statistical tie: the best Flash HIGH-text consensus (F1 0.814) and the two genuine-Gemini-3-Pro single-pass text leaders (pro-text-high-t-0-0 0.804, pro-text-medium-t-0-0 0.792); the permutation cannot separate Flash-consensus from the Pro leader (p=0.616, BH-p=0.66). Cheap Flash consensus reaches the expensive Pro single-pass tier on localisation F1. OPERATING-POINT SENSITIVITY (characterised, co-headlined): the Tier-1 parity is at the best (N, threshold) point (26-of-30); at the production N=5 carry-forward point (text 4-of-5) the same pool reaches TIER 2 (0.720), tying genuine Pro text at T=0.7 -- a best-minus-N5 delta of ~0.094 F1 (the within-test cousin of the carry-forward-vs-best delta the 55-map generalisation reports). F1-parity is NOT MCC-parity: the Pro text leaders are more tile-precise (MCC 0.790, 11 tile FPs) than the Flash consensus champion (MCC 0.620, 41 tile FPs) -- the metric-dependent-winner pattern of the n1 board persists. Deployment generalisation to unseen maps is the separate question answered by the 55-map runs. Era-2 487-tile test scope, 384px, gemini-3-flash. Artefacts: results/diversity-dividend-384/{tiering-champions,tiering-with-deployable}/tiering_20m.{json,md}; script scripts/consensus_vs_baseline_tiering.py; cell spec planning/diversity-dividend-cells-2026-06-06.json.",
       "paper_section": "Results",
       "output_path": "results/diversity-dividend-384",
       "working_notes_obs": [],
@@ -164,7 +163,7 @@
           "results/run-analyses.json",
           "results/diversity-dividend-384"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -320,7 +319,7 @@
       "predicted_outcome": "H9: introducing diversity across the K consensus passes (instruction, image, temperature, or combined) improves accuracy over K identical passes.",
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "H9 diversity calibration over 9 cross-variant diversity pools (replicate-mean over 5 replications), 14-buffer + MCC, Era-1 340-tile, HIGH thinking. H9 is REJECTED: at the best-F1@20m operating point each diverse condition is statistically indistinguishable from the identical-pass baseline A. Image (vote 3-of-5): baseline A F1=0.6640 (MCC 0.6603) vs diverse B 0.6682 / C 0.6713 / D 0.6688 / E 0.6705 (MCC 0.648-0.664) \u2014 all within ~0.007 F1 of baseline (original paired-permutation p>0.37 for every comparison). Text (vote 4-of-5): baseline A F1=0.7171 (MCC 0.4420) vs B 0.6862 / D 0.7301 / E 0.6943 (MCC 0.44-0.48); only temperature-diversity D edges baseline (+0.013) and even that was not significant (p~0.06). No diversity mechanism delivers a significant gain. Note image diversity pools carry notably high tile-discrimination MCC (~0.66), well above text (~0.45). Registers the calibration material; the preregistered permutation tests are in results/phase3c-diversity/.",
+      "outcome": "H9 diversity calibration over 9 cross-variant diversity pools (replicate-mean over 5 replications), 14-buffer + MCC, Era-1 340-tile, HIGH thinking. H9 is REJECTED: at the best-F1@20m operating point each diverse condition is statistically indistinguishable from the identical-pass baseline A. Image (vote 3-of-5): baseline A F1=0.6640 (MCC 0.6603) vs diverse B 0.6682 / C 0.6713 / D 0.6688 / E 0.6705 (MCC 0.648-0.664) \u2014 all within ~0.007 F1 of baseline (original paired-permutation p>0.37 for every comparison). Text (vote 4-of-5): baseline A F1=0.7171 (MCC 0.4420) vs B 0.6862 / D 0.7301 / E 0.6943 (MCC 0.44-0.48); only temperature-diversity D edges baseline (+0.014) and even that was not significant (D vs A p=0.1812; corrected S134 PI walk \u2014 the p=0.0610 values belong to B vs A and E vs A, track2-text/diversity-analysis-summary.md:35-37). No diversity mechanism delivers a significant gain. Note image diversity pools carry notably high tile-discrimination MCC (~0.66), well above text (~0.45). Registers the calibration material; the preregistered permutation tests are in results/phase3c-diversity/.",
       "paper_section": "Results",
       "output_path": "results/rescore-2026-06-07/phase3c",
       "working_notes_obs": [],
@@ -330,7 +329,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3c"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1268,13 +1267,13 @@
         "Obs 236 \u2014 H10 pool size is a null: 20-tile calibration matches 160-tile under PV",
         "Obs 235 \u2014 formal retraction of the v1 H10/H12 probe findings (config-intent mismatch)"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-08-17T03:50:21Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/h10/analysis_summary.md"
         ],
-        "last_extracted_at": "2026-08-17T00:25:36Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1315,13 +1314,13 @@
         "Obs 239 \u2014 H12 v2 HP:HN ratio is a null: all three pairwise contrasts fail after BH-FDR",
         "Obs 240 \u2014 library-design axis definitively null: 45-pair cross-hypothesis matrix, zero significant"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-08-17T03:50:21Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/h12-v2/analysis_summary.md"
         ],
-        "last_extracted_at": "2026-08-17T00:25:36Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1345,13 +1344,13 @@
       "paper_section": "Methods",
       "output_path": "reports/d17-inventory/unexecuted-register.md",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-08-17T03:50:21Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "reports/d17-inventory/unexecuted-register.md"
         ],
-        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1374,13 +1373,13 @@
       "paper_section": "Methods",
       "output_path": "reports/d17-inventory/unexecuted-register.md",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-08-17T03:50:21Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "reports/d17-inventory/unexecuted-register.md"
         ],
-        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1402,13 +1401,13 @@
       "paper_section": "Methods",
       "output_path": "reports/d17-inventory/unexecuted-register.md",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-08-17T03:50:21Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "reports/d17-inventory/unexecuted-register.md"
         ],
-        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1430,13 +1429,13 @@
       "paper_section": "Methods",
       "output_path": "reports/d17-inventory/unexecuted-register.md",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-08-17T03:50:21Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "reports/d17-inventory/unexecuted-register.md"
         ],
-        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1458,13 +1457,41 @@
       "paper_section": "Methods",
       "output_path": "reports/d17-inventory/unexecuted-register.md",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-08-17T03:50:21Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "reports/d17-inventory/unexecuted-register.md"
         ],
-        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "last_extracted_at": "2026-08-17T03:50:52Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "s8-9-post-experiment-verification",
+      "type": "disposition",
+      "conditions_compared": [],
+      "hypothesis_refs": [
+        "S8.9-verification"
+      ],
+      "preregistered": "not-executed",
+      "deviations": [
+        "E78"
+      ],
+      "predicted_outcome": "The registration states no directional prediction; section 8.9 anticipates 'if minimal is truly equivalent at 1/3 the latency, this is a practical finding for practitioners' (osf/preregistration.md:2145).",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "NOT EXECUTED \u2014 the registered section-8.9 post-experiment verification (osf/preregistration.md:2139-2145): a confirmatory full-Hungarian comparison at the optimal configuration of detection accuracy (F1/precision/recall), latency per tile, and token usage/API costs. Never run as registered; the latency limb has no coverage anywhere. Closest coverage: min-vs-high-thinking-pv (post-hoc) finds MINIMAL at F1/cost parity with HIGH on the GS instrument (parity REVERSED at 55-map deployment \u2014 see that row's scope note). Full disclosure: E78.",
+      "paper_section": "Methods",
+      "output_path": "docs/methodology/preregistration/protocol-errata.md",
+      "working_notes_obs": [],
+      "manually_verified_at": "2026-08-17T03:50:21Z",
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "docs/methodology/preregistration/protocol-errata.md"
+        ],
+        "last_extracted_at": "2026-08-17T03:50:52Z",
         "extractor_version": "0.7.1"
       }
     }
