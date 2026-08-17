@@ -291,6 +291,34 @@ the counting rule, sign-offs, and the ~$48 H6 decision.
 
 ## Changelog
 
+### 2026-08-17 (final) — BLOCK COMPLETE; verification stack discharged
+
+All five items executed and committed; every finished state in § 2
+met. Census: two-vintage recount, blind-verified exact (zero
+counting errors across three independent derivations), six
+citation-hygiene corrections applied (`14eb57848`, `3b9091559`).
+E45 pairings: gates 7/7 + 4/4, both CIs exclude zero at both B;
+blind verifier reproduced both legs bit-for-bit from independently
+written code (`0f5c7ff9b`, `29144d0e3`, revisions `a2e86a95f`). H6:
+model-provenance gate 12 pools; **A-06 upgraded at the verification
+round** — the full genuine-Pro 2×2 exists, temperature is the
+driver (fires in all four cells, CIs exclude zero; thinking reaches
+0.03 nowhere); A-07 split verdict with fragility flags; A-09 CLOSED
+with the verdict now in the artefact itself (`896878fe2`,
+`1dd68f1ee`). Register: 36 rows, 4 PROPOSED, schema 0 errors,
+outcome-table `--check` green, H6 disposition unmoved. L1: 15 new
+tier1 tests (incl. the mutant-killing pairing guard); full battery
+1438 passed on sapphire + 52 streamlit-dependent locally; ruff
+clean; adversarial code audit (3 HIGH / 9 MEDIUM / 10 LOW) fully
+adjudicated — H-1 (JSON/prose verdict divergence), H-2 (silent
+materialisation no-op), H-3 (pairing-blind tests) all fixed and
+regression-tested. Methods-draft slots closed (`95bd7758c`); the
+document carries no live markers. L4 queue for the PI: four row
+ratifications (E45 class, three H6 post-hoc classes), the
+counting-rule adoption (cite-individually vs 18/27/30), the ~$48 H6
+re-run decision (inputs updated: temperature settled at $0), and
+review of the A-06 upgrade. $0 API spent; no stop state fired.
+
 ### 2026-08-17 (later) — Audit adjudicated; go issued; scope amended
 
 15/15 findings confirmed. Material amendments: H6 inputs move to
