@@ -1273,6 +1273,120 @@
    "output_path": "docs/methodology/preregistration/protocol-errata.md",
    "working_notes_obs": [],
    "manually_verified_at": "2026-08-17T03:50:21Z"
+  },
+  {
+   "analysis_id": "e45-bootstrap-pairings",
+   "type": "comparison",
+   "_note": "S135 block items 1-2 (planning/s135-analysis-block-2026-08-17.md). Division of labour preserved: the confirmatory H2/H3 adjudication remains solely at family-bh-fdr-confirmatory (S134 walk ruling, Group B item 4); this row is the E45 paired disclosure of the registered instrument, not a new adjudication. Classification PROPOSED S135 (PI AFK, directed start); ratification queued.",
+   "_prereg_rationale": "confirmatory-with-deviation: discharges the registered-inference obligation (95% bootstrap CIs, osf/preregistration.md:293; tile-level resampling, percentile, B=1,000 fixed pre-lodgement in Decision 10, decisions-log.md:337) for the two family-FDR primary contrasts that entered the family on permutation p-values. Registered instrument applied to the registered confirmatory contrasts on their adjudicated material - the discharge principle is satisfied. Deviations: E45 (permutation disclosed unregistered; pairing obligation), E54 (the B=10,000 sensitivity convention).",
+   "conditions_compared": [
+    "pv-diag-384::verified-adv-text-consensus-16of30",
+    "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+    "pv-diag-384::baseline-flash-text-high-t-0-7"
+   ],
+   "hypothesis_refs": [
+    "H2",
+    "H3"
+   ],
+   "preregistered": "confirmatory-with-deviation",
+   "deviations": [
+    "E45",
+    "E54"
+   ],
+   "predicted_outcome": "Both contrasts' bootstrap CI95 excludes 0 in the direction of the committed permutation results (H2: PV 16-of-30 > consensus 26-of-30, the falsified-direction improvement, dF1 +0.076083; H3: consensus 26-of-30 > matched single-pass, dF1 +0.427). Registered-parameter (B=1,000, Decision 10) and E54 (B=10,000) runs agree on exclusion. [Authored before computation - outcome-blind discipline, block hardening 6.]",
+   "predicted_outcome_amended": null,
+   "tie_set": [],
+   "outcome": "AS PREDICTED - both registered-instrument CIs exclude zero in the permutation direction. H2 (PV 16-of-30 vs consensus 26-of-30): dF1 +0.076083, B=1,000 CI95 [+0.051787, +0.104642]; E54 B=10,000 [+0.050771, +0.103945]. H3 (consensus 26-of-30 vs matched single-pass): dF1 +0.427340, CI95 [+0.389640, +0.468082]; B=10,000 [+0.385608, +0.469544]. Reproduction gates passed 5/5 (H2, vs the committed quiet artefact through the same code path) and 4/4 (H3, vs the tiering pairwise micro-F1 vintage) at 1e-6 before any bootstrap. The permutation p-values remain the family inputs; this artefact is the E45 paired disclosure. Artefact: results/e45-bootstrap-pairings/e45_bootstrap_pairings.json (sapphire, seed 42, $0).",
+   "paper_section": "Methods",
+   "output_path": "results/e45-bootstrap-pairings",
+   "working_notes_obs": [],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "h6-a06-decision-rule",
+   "type": "comparison",
+   "_note": "S135 block item 4 (walk ruling Group E: the three $0 registered H6 analyses run first on existing Pro data; the ~US$48 re-run decision waits on them). Inputs re-anchored by the S135 clean-context audit (BLOCKER-1): genuine Pro = n1-pro-rerun-384; the n1-outstanding-384 'pro' pools are the E57 Flash mis-dispatch. Classification PROPOSED S135; the walk's phrase 'registered analyses' pulls toward registered-class, the discharge principle (Obs 413) toward post-hoc - flagged as the block's least-certain call; PI adjudicates.",
+   "_prereg_rationale": "post-hoc per the discharge principle: A-06 is registered (osf/preregistration.md:677) but its registered material is the Phase-4 OFAT runs, which never executed (E74). Applying the registered rule to substitute material (n1-pro-rerun-384 corners, 384px/487 tiles) is the E41-class extension pattern. The registered obligation itself remains recorded as not-executed at h6-phase4-transfer.",
+   "conditions_compared": [
+    "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+    "n1-pro-rerun-384::baseline-pro-text-medium-t-0-7",
+    "n1-pro-rerun-384::baseline-pro-image-high-t-0-0",
+    "n1-pro-rerun-384::baseline-pro-image-medium-t-0-7"
+   ],
+   "hypothesis_refs": [
+    "H6"
+   ],
+   "preregistered": "post-hoc",
+   "deviations": [
+    "E74",
+    "E40"
+   ],
+   "predicted_outcome": "Registered rule: 'If alternative outperforms Flash-optimal by >=0.03 F1, flag factor for adjustment' (preregistration.md:677, no CI condition). H6's registered prediction is transfer with at most minor factor adjustments. Scope: no registered factor is cleanly evaluable; the available contrast confounds temperature with thinking (E40-class). [Authored before computation.]",
+   "predicted_outcome_amended": null,
+   "tie_set": [],
+   "outcome": "RULE FIRES BOTH MODALITIES on the confounded contrast: on Pro, T=0.0+HIGH beats the carried T=0.7+MEDIUM by +0.0490 (text; paired-bootstrap delta CI95 [+0.0267, +0.0703]) and +0.0708 (image; [+0.0369, +0.1016]), both >= the registered 0.03. Direction consistent with the Pro single-pass temperature preference (n1-baseline-matrix-384). Because temperature and thinking move together, this flags 'a factor' without identifying which - consistent with H6's 'minor factor adjustments' prediction, but not a clean registered Phase-2 verdict for any single factor. A-08 explicitly not computed (see findings.md). Artefact: results/h6-registered-analyses/a06_decision_rule.json.",
+   "paper_section": "Methods",
+   "output_path": "results/h6-registered-analyses",
+   "working_notes_obs": [],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "h6-a07-voting-thresholds",
+   "type": "sweep",
+   "_note": "S135 block item 5. The genuine-Pro N=3 consensus sets (outputs/h11/n1-pro-rerun-384/*/consensus/) are analysis artefacts materialised for this row, not first-class conditions - promotable via the generated-manifest flow if the PI wants them citable. Matched-N Flash comparator = the E57 mis-dispatch pools (preserve-and-compare). Classification PROPOSED S135 as for h6-a06.",
+   "_prereg_rationale": "post-hoc per the discharge principle: A-07 is registered (osf/preregistration.md:679-683) over Phase 1-2 runs that never executed (E74); this computation substitutes existing N=3 pools at 384px/487 tiles. The REGISTERED comparison form (Pro optimum vs the Flash production 26-of-30, N=30) is additionally not-computable-as-registered: a raw vote-count comparison across N=3 and N=30 pools is data-independent (relative difference >88% for any k in 1..3).",
+   "conditions_compared": [
+    "n1-outstanding-384::pro-text-high-t0-consensus-1of3",
+    "n1-outstanding-384::pro-text-high-t0-consensus-2of3",
+    "n1-outstanding-384::pro-text-high-t0-consensus-3of3",
+    "n1-outstanding-384::pro-image-high-t0-consensus-1of3",
+    "n1-outstanding-384::pro-image-high-t0-consensus-2of3",
+    "n1-outstanding-384::pro-image-high-t0-consensus-3of3"
+   ],
+   "hypothesis_refs": [
+    "H6"
+   ],
+   "preregistered": "post-hoc",
+   "deviations": [
+    "E74",
+    "E57"
+   ],
+   "predicted_outcome": "Registered: 'Compare Pro optimal threshold to Flash optimal threshold; Note any differences >10% relative'. Under the registered transfer prediction the relative difference is <=10%. The registered >20% extended-test trigger (preregistration.md:689) cannot fire an N=30 Pro run in a $0 block. [Authored before computation.]",
+   "predicted_outcome_amended": null,
+   "tie_set": [],
+   "outcome": "SPLIT VERDICT at matched N=3. Text: Pro optimal k=1 (F1@20 0.8602 > 0.8558 > 0.8494) vs Flash-comparator optimal k=3 (0.5665 > 0.5199 > 0.4726) - 67% relative, FLAGGED, and >20% indicates the registered extended N=30 test (cannot execute here). Image: both optimal at k=3 (Pro 0.7223; Flash 0.5525), 0% relative - transfers. The text-track optimum REVERSES between models at matched N (Pro prefers the union, Flash the intersection) - the vote threshold again behaves as a property of the pipeline-corpus-model encounter (cf. Obs 358). Also notable: Pro text N=3 union 0.8602 beats Pro single-pass 0.8045 (+0.056). Gates: model provenance 8 pools; comparator 6/6 at 5e-5. Artefact: results/h6-registered-analyses/a07_voting_thresholds.json.",
+   "paper_section": "Methods",
+   "output_path": "results/h6-registered-analyses",
+   "working_notes_obs": [],
+   "manually_verified_at": null
+  },
+  {
+   "analysis_id": "h6-a09-cost-gate",
+   "type": "diagnostic",
+   "_note": "S135 block item 6. Cost basis per audit HIGH-7: audited per-pass cost_usd from results/passes-manifest.json on both sides for the matched-configuration comparison; the audited all-Flash pareto_v2 frontier as the Flash-optimal yardstick. Comparability windows operational, stated in the artefact. Classification PROPOSED S135 as for h6-a06.",
+   "_prereg_rationale": "post-hoc per the discharge principle: A-09 is registered (osf/preregistration.md:691) as the Phase-4 scope-limitation gate; Phase 4 never executed (E74). This computation evaluates the registered criterion on existing audited costs and F1s.",
+   "conditions_compared": [
+    "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+    "n1-pro-rerun-384::baseline-pro-image-high-t-0-0",
+    "n1-outstanding-384::baseline-pro-text-high-t-0-0",
+    "n1-outstanding-384::baseline-pro-image-high-t-0-0"
+   ],
+   "hypothesis_refs": [
+    "H6"
+   ],
+   "preregistered": "post-hoc",
+   "deviations": [
+    "E74",
+    "E57"
+   ],
+   "predicted_outcome": "Registered gate: 'Full per-model optimisation only if Pro demonstrates substantially superior cost-effectiveness (>=20% higher F1 at comparable cost, OR comparable F1 at <=50% cost)'. Expectation from the standing record (all-Flash-3 conclusion; Pro competitive on F1 but dearer per call): gate CLOSED against the Flash frontier. An OPEN verdict is a flagged surprise feeding the PI's ~US$48 re-run decision. [Authored before computation.]",
+   "predicted_outcome_amended": null,
+   "tie_set": [],
+   "outcome": "GATE CLOSED on the Flash-optimal basis, AS PREDICTED. Against the audited frontier (min6 F1 0.8784 at $2.43; min11 0.8835 at $4.00), Pro's best available cell (text N=3 union, 0.8602 at $5.56 = 3x$1.8533) and Pro single-pass (0.8045 at $1.85) offer lower F1 at higher cost at every operating point - neither registered limb fires. On the matched-configuration basis (model swap at the Pro corners, Flash never optimised there), limb 1 fires both modalities (F1 ratios 1.42 text / 1.21 image at ~equal spend) - reported as the pure model effect, not as the gate's verdict (E57's own narrative anticipated this). Artefact: results/h6-registered-analyses/a09_cost_gate.json.",
+   "paper_section": "Methods",
+   "output_path": "results/h6-registered-analyses",
+   "working_notes_obs": [],
+   "manually_verified_at": null
   }
  ]
 }

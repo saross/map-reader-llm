@@ -37,6 +37,7 @@
    "disposition": "partially executed",
    "family_fdr": "rejected (q=0.05)",
    "analyses": [
+    "e45-bootstrap-pairings [confirmatory-with-deviation]",
     "family-bh-fdr-confirmatory [confirmatory-with-deviation]",
     "h2-condition-c-fine-to-coarse [not-executed]"
    ],
@@ -72,6 +73,7 @@
    "family_fdr": "rejected (q=0.05)",
    "analyses": [
     "diversity-dividend-384 [confirmatory-with-deviation]",
+    "e45-bootstrap-pairings [confirmatory-with-deviation]",
     "family-bh-fdr-confirmatory [confirmatory-with-deviation]",
     "phase3a-consensus-calibration [registered-exploratory]"
    ],
@@ -167,7 +169,11 @@
    "analyses": [
     "h6-phase4-transfer [not-executed]"
    ],
-   "related_post_hoc": [],
+   "related_post_hoc": [
+    "h6-a06-decision-rule [post-hoc]",
+    "h6-a07-voting-thresholds [post-hoc]",
+    "h6-a09-cost-gate [post-hoc]"
+   ],
    "deviations": [
     "E40",
     "E41",

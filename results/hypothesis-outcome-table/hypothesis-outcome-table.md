@@ -2,7 +2,7 @@
 
 > **GENERATED FILE — do not hand-edit.** Produced by
 > `scripts/generate_hypothesis_outcome_table.py` from
-> `results/analyses-manifest.json` at commit `df1725345`; re-run the
+> `results/analyses-manifest.json` at commit `896878fe2`; re-run the
 > script after any manifest regeneration. Pure projection per the
 > D17 ruling (`docs/paper/results-outline.md` § D17): no cell is
 > hand-maintained.
@@ -22,8 +22,8 @@ themselves.
 | Hyp | Registered hypothesis | Registered as | Disposition | Family BH-FDR | Registered-analysis rows | Deviations |
 |-----|----------------------|---------------|-------------|---------------|--------------------------|------------|
 | H1 | Modality and elaboration level (osf:400) | confirmatory | executed | not rejected | family-bh-fdr-confirmatory [confirmatory-with-deviation]; h1-cmt0106-pooled-modality [confirmatory-with-deviation] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
-| H2 | Two-stage pipelines do not improve detection (osf:451) | confirmatory | partially executed | rejected (q=0.05) | family-bh-fdr-confirmatory [confirmatory-with-deviation]; h2-condition-c-fine-to-coarse [not-executed] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
-| H3 | Consensus voting improves F1 (osf:497) | confirmatory | executed | rejected (q=0.05) | diversity-dividend-384 [confirmatory-with-deviation]; family-bh-fdr-confirmatory [confirmatory-with-deviation]; phase3a-consensus-calibration [registered-exploratory] | E28, E30, E32, E36, E41, E45, E49, E51, E53, E54, E56, E58, E59, E60, E64 |
+| H2 | Two-stage pipelines do not improve detection (osf:451) | confirmatory | partially executed | rejected (q=0.05) | e45-bootstrap-pairings [confirmatory-with-deviation]; family-bh-fdr-confirmatory [confirmatory-with-deviation]; h2-condition-c-fine-to-coarse [not-executed] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
+| H3 | Consensus voting improves F1 (osf:497) | confirmatory | executed | rejected (q=0.05) | diversity-dividend-384 [confirmatory-with-deviation]; e45-bootstrap-pairings [confirmatory-with-deviation]; family-bh-fdr-confirmatory [confirmatory-with-deviation]; phase3a-consensus-calibration [registered-exploratory] | E28, E30, E32, E36, E41, E45, E49, E51, E53, E54, E56, E58, E59, E60, E64 |
 | H4 | Example ordering / canonical placement (osf:534) | confirmatory | executed | not rejected | family-bh-fdr-confirmatory [confirmatory-with-deviation] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
 | H5 | Negative text treatment (osf:578) | confirmatory | executed | not rejected | family-bh-fdr-confirmatory [confirmatory-with-deviation] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
 | H6 | Flash-to-Pro transfer (osf:651) | confirmatory | not executed | — (excluded: never run) | h6-phase4-transfer [not-executed] | E40, E41, E74 |
@@ -46,7 +46,7 @@ themselves.
 | H3 | era1-leaderboard [post-hoc]; min-vs-high-thinking-pv [post-hoc]; pass-budget-pareto [post-hoc]; pass-budget-pareto-v2 [post-hoc]; phase3a-high-consensus-calibration [post-hoc]; phase3a-replication-thinking-calibration [post-hoc]; pv-diag-384-consensus-calibration [post-hoc] |
 | H4 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
 | H5 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
-| H6 | — |
+| H6 | h6-a06-decision-rule [post-hoc]; h6-a07-voting-thresholds [post-hoc]; h6-a09-cost-gate [post-hoc] |
 | H7 | e43-matched-temperature [post-hoc]; era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc]; n1-baseline-matrix-384 [post-hoc] |
 | H8 | era1-leaderboard [post-hoc]; era1-single-pass-baseline-matrix [post-hoc] |
 | H9 | era1-leaderboard [post-hoc] |
