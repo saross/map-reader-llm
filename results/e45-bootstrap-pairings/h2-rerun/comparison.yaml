@@ -1,0 +1,36 @@
+# E45 pairing — H2 primary-contrast re-run (non-quiet)
+# =====================================================
+# Single-comparison config for scripts/run_pairwise_tests.py, copied
+# verbatim from configs/pairwise-comparisons.yaml group 1 entry 1 (the
+# family-FDR H2 primary contrast). Purpose: the committed artefact
+# (results/pairwise/20m/group_1_architecture/) was written with
+# --quiet, so it carries no per_tile block; re-running the identical
+# comparison WITHOUT --quiet emits the per-tile TP/FP/FN tables the
+# paired bootstrap consumes, through the same code path, seed, and
+# inputs — which makes the reproduction gate exact by construction
+# (S135 block plan, audit adjudication item 14).
+#
+# Created: 2026-08-17 (S135 analysis block, items 1-2)
+
+metadata:
+  description: "E45 pairing: H2 primary contrast, per-tile emission re-run"
+  n_permutations: 10000
+  seed: 42
+
+defaults:
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+
+comparisons:
+  - group: 1
+    question: "PV vs consensus"
+    label_a: "Flash HIGH text 16-of-30 + PV"
+    type_a: pv
+    probabilities_a: outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json
+    manifest_a: outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json
+    threshold_a: 0.20
+    label_b: "Flash HIGH text 26-of-30"
+    type_b: consensus
+    study_dir_b: outputs/h11/pv-diag-384/flash-high-text-n5
+    config_b: "text-t0.7,30,26"
+    family: confirmatory
