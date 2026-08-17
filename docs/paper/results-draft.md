@@ -248,6 +248,8 @@ swept (analysis `unswept-pools-completeness`, Obs 363).
 
 ## R5. Verifier robustness: every cheaper option ties, so the cheap stack wins
 
+*Registration status: post-hoc throughout. The robustness programme extends the registered proposer–verifier contingency beyond its registered parameters (E56, E62); no registered hypothesis is adjudicated in this subsection.*
+
 A dedicated robustness programme (≈ $54 flex as-run, recorded at run
 time) stress-tested every parameter
 of the production verifier (gemini-3-flash, adversarial text, minimal
@@ -307,6 +309,8 @@ vs the 31-pass headline, p = 0.56; analysis `min-vs-high-thinking-pv`) —
 on the GS instrument. The same comparison reverses at deployment (§ R6).
 
 ## R6. The cost frontier, and what deployment does to it
+
+*Registration status: post-hoc. The registered H3 cost-efficiency analysis is the nearest registered antecedent; the boards here extend it to the proposer–verifier architecture and to measured-token dollar costing, neither of which is registered.*
 
 Re-pricing the pass ladder in dollars (per-item token metadata at June
 2026 flex rates, thinking tokens billed at the output rate; a
@@ -375,6 +379,8 @@ the audited production rate).
 
 ## R7. Deployment: the 55-map standardised board
 
+*Registration status: post-hoc. The 55-map corpus appears nowhere in the registration. The registration anticipated transfer testing on out-of-sample maps as Stage 2 future work but registered no analysis plan for it, so deployment results are reported as pre-planned characterisation, not registered claims.*
+
 The deployment board (ruling-21 standardised reference, 50 m, eight
 cells, 24/28 pairs significant, five tiers; analysis
 `55map-standardised-leaderboard-50m` — tier structure identical to its
@@ -436,6 +442,8 @@ subsection lead; see Changelog.]
 
 ## R8. What the ground truth can and cannot support
 
+*Registration status: post-hoc methodological validation of the reference data; no registered analysis covers ground-truth error structure.*
+
 Because every metric above is bounded by the reference data, we measured
 the reference data's own error structure rather than assuming it away
 (Obs 361, Obs 396). **Precision is review-verified and
@@ -469,6 +477,8 @@ precision, the measured recall bound, the double-miss correlation), and
 scarcity means for survey practice) move to Discussion; see Changelog.]
 
 ## R9. Selecting a configuration without ground truth
+
+*Registration status: post-hoc protocol development, anchored to its committed findings document rather than a register row.*
 
 Production discovery runs — the use case this pipeline exists for — land
 on map corpora with no reference data at all. The study's closing
