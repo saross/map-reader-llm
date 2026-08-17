@@ -11,12 +11,17 @@ estimation with 95 % confidence intervals (registered § 3.5 at
 `docs/methodology/preregistration/osf/preregistration.md:293`;
 tile-level resampling, percentile method, and the 1,000-iteration
 count fixed pre-lodgement in Decision 10,
-`docs/methodology/preregistration/decisions-log.md:337`; E54 records
-the 10,000-iteration post-hoc convention). This analysis computes the
-registered construction for exactly the two family primary contrasts,
-so every confirmatory claim resting on a permutation input can carry
-the registered instrument alongside it (the E45 pairing obligation,
-Methods § M.4).
+`docs/methodology/preregistration/decisions-log.md:335-345`, parameter
+row `:345`; E54 records the 10,000-iteration post-hoc convention).
+This analysis computes the registered construction for **the two
+family contrasts that entered the correction on permutation floors
+(H2 and H3)** — the E45 pairing obligation, Methods § M.4. Scoping
+note (blind-verification finding, 2026-08-17): H8's family input is
+also permutation-sourced, but as a Simes/BH-minimum over seven
+tile-swap contrasts, for which a single paired bootstrap delta is
+not defined — H8's null therefore remains permutation-based and is
+disclosed as such under E45 rather than paired here. H1, H4, H5, and
+H7 entered the family on bootstrap inputs already.
 
 **What this is not.** A replacement for the family inputs. The
 permutation p-values remain what the family correction consumed
@@ -45,12 +50,16 @@ Paired tile-resampling bootstrap of the micro-F1 difference: the same
 resampled 487-tile index set is applied to both arms, micro-F1 is
 recomputed per arm from summed per-tile TP/FP/FN, and the difference
 distribution yields the percentile CI95 and two-sided
-p = max(2 · min tail, 1/B), seed 42 — conventions copied from the
-family-FDR H1 leg (`scripts/compute_family_fdr.py`) for
-cross-artefact comparability. B = 1,000 is the registered-convention
-primary (Decision 10); B = 10,000 is the E54 narrow-effect
-sensitivity. Script: `scripts/e45_bootstrap_pairings.py` (six tier1
-tests).
+p = max(2 · min tail, 1/B), seed 42. The registered quantities are
+the CI95 and the CI-excludes-zero significance reading (Decision 10
+registers "if the 95 % CI for a difference excludes zero, we treat
+this as significant"); the 2 · min-tail p is **not** registered — it
+is carried for comparability with the family-FDR H1 leg's
+convention (`scripts/compute_family_fdr.py`) only. B = 1,000 is the
+registered-convention primary (Decision 10); B = 10,000 is the E54
+narrow-effect sensitivity. Script:
+`scripts/e45_bootstrap_pairings.py` (eight tier1 tests, including a
+pairing guard that fails any unpaired-resampler mutant).
 
 **Inputs and reproduction gates** (run before any bootstrap; all
 passed at tolerance 1e-6):
@@ -87,6 +96,23 @@ passed at tolerance 1e-6):
   queued).
 
 ## Changelog
+
+### 2026-08-17 (later) — Verification round
+
+Blind fresh-context verifier (~45 claims re-derived; both bootstrap
+legs reproduced bit-for-bit from independently written code; a full
+leaf-field diff of the H2 re-run against the committed artefact
+showed only `timestamp` and the `per_tile` block differing) +
+adversarial code audit. Corrections applied: the "every confirmatory
+claim resting on a permutation input" scoping narrowed (H8's family
+input is also permutation-sourced — a Simes minimum, not pairable;
+now stated); Decision-10 anchor corrected to
+`decisions-log.md:335-345` (parameter row `:345`); the registered
+(CI + CI-excludes-zero) vs convention-borrowed (2 · min-tail p)
+distinction made explicit; H2 gate extended with the
+wins/losses permutation fingerprint; pairing guard, length guard,
+and rounded-bound-consistent CI flag added to the script. All
+numbers unchanged; the artefact regenerated deterministically.
 
 ### 2026-08-17 — Original publication
 
