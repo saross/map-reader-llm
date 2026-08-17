@@ -7328,3 +7328,52 @@ decision presented as {options, recommendation, what changed since
 drafting} invites the human to spend their attention on what the
 recommendation *missed* rather than on re-deriving it — which is
 where PI attention is actually worth the most.
+
+## Session 134 — 2026-08-17 (verifier value migrates to the semantic layer as mechanical layers harden; a clarification request is a principle engine; evidence-assembly and adjudication split cleanly across model tiers; drafting-while-hot eliminates the stale-vocabulary error class)
+
+**Verifier value migrated upward, on schedule.** The blind verifier
+confirmed all 105 mechanical table cells and both agents' anchor sets
+without finding a single numerical error — and still earned its run
+three ways, all semantic: one upheld classification disagreement
+(dd-384) argued well enough to become the walk's sharpest item; one
+coverage discovery no per-hypothesis process could have made (the
+§ 8.9 obligation has no H-number, so every H-keyed inventory walked
+past it); and one under-disclosure my own bounded rule should have
+caught (E62 names pv-diag-256; tile-size-sweep compares its
+conditions). The S131–133 pattern — blind-verifier value concentrates
+in prose as computation hardens — extends one level: as the *prose*
+hardens into generated artefacts, the value migrates again, into
+classification and coverage. The denominator requirement is what
+makes this visible: a verifier that only checked cells would have
+reported a perfect pass and contributed nothing.
+
+**A clarification request is a principle engine.** S133 recorded that
+explanation requests are drafting engines. This session's variant is
+stronger: Shawn's mid-walk question on pv-diag-384-cal ("registered
+method, unregistered thinking level — post-hoc or something else?")
+was not answerable with the instance's evidence, only with a rule,
+and articulating the rule (discharge, not resemblance) retro-unified
+five earlier rulings and landed in the schema text the same hour.
+When the human hesitates between labels, the hesitation localises a
+missing principle; the productive response is to name the principle
+and let the instance fall out of it, not to re-argue the instance.
+
+**The tier split held under load.** Two Opus agents did the evidence
+assembly (unexecuted-set dispositions; per-row registration evidence
+— ~500 s each, in parallel, zero rework), Opus agents did the audit
+and blind verification, and the label adjudications stayed with the
+session instance holding the strictness ruling. Nothing in the walk
+required re-deriving what the agents had assembled; nothing the
+agents did required the rulings. The division that conserves the
+scarce tier is also the division that keeps judgement accountable to
+one context.
+
+**Drafting-while-hot removed an error class instead of racing it.**
+The M.x/R2–R4 passages were drafted hours after the vocabulary
+settled, by the instance that settled it, and the one register-prose
+mismatch found all session ran the other way: the draft was *ahead*
+of the dossier (the "both preregistered" defect had already been
+fixed; my dossier claim was the stale text). Scheduling
+register-dependent prose immediately after register settlement means
+the wording cannot lag the semantics — the residual risk moves to
+documents *about* the prose, which is where it duly appeared.

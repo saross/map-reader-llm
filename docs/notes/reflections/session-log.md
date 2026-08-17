@@ -8533,3 +8533,48 @@ that. The date rolled 2026-08-15 → 08-16 mid-conversation; commits
 span both. zbook remains many commits behind (untouched). The D17
 reconciliation block is scoped in the outline's D17 entry but
 deliberately not started — it expects its own pre-run review.
+
+## Session 134 — 2026-08-17 — the D17 reconciliation block executed, walked, and closed; prose drafting opened the same day
+
+**Machines**: amd-tower. **Spend**: US$0.00. **Commits**:
+`dfb0eb4ad` → `887741ca2` (+ reflection/handoff commits), all pushed.
+
+**The D17 reconciliation block** (the last gate before Results
+prose) ran end to end under a `/pre-run-review` dialogue (block plan
+`planning/s134-d17-reconciliation-block-2026-08-17.md`, ten
+hardenings, PI go in-session). Items: (1) errata E74–E77 + a dated
+E59 update (`67627978a`); (2) schema vocabulary v2 + the 24-row
+relabel, one atomic commit by design (`f54dc6787`); (3) the H10 and
+H12-v2 analysis rows, both null as the inventory predicted
+(`b2af86948`); (4) five not-executed disposition rows (`5b34ec643`);
+(5) the hypothesis-outcome table generator + first generation
+(`ac9eb88b1`). Verification: two Opus evidence agents, an Opus code
+audit (2 high + 7 medium + 4 low corrected; 3 lows accepted with
+reasons), and a blind Opus verifier (cold derivation: 26/31 AGREE,
+2 conceded, 1 upheld; 105/105 table cells confirmed; the § 8.9
+coverage gap discovered). Corrections landed (`6ed5ed9dc`).
+
+**The PI walk closed same-day** (three question rounds, rulings in
+`reports/s134-relabel-walk-dossier.md` § 8): sort ratified; the
+discharge principle articulated and adopted; dd-384 stays
+confirmatory-with-deviation with an outcome fence; n1's H6 ref
+removed; the phase3c p-value corrected at source; E78 + the
+named-programme disposition row minted (register final: 32 rows);
+the unexecuted set adjudicated (H6 → $0 analyses first; H13 → run
+B+C after re-pricing; H14/H15 → disclose-only closed; H2-C →
+pricing run first); eight rows stamped, 22 relabels ratified.
+
+**Prose drafting opened**: Methods M.x (the D16 preregistration
+subsection) plus, after a six-decision Methods outline walk (MD1–MD6
+all settled = A), M.2–M.7; the Results draft gained the Table [N]
+framing, R2–R9 registration-status markers, and the R2–R4
+confirmatory passages (H2's falsified-prediction passage; H7's
+direction reversal). Four [PENDING] slots + one [unverified] mark
+the analysis-dependent sentences.
+
+**Contextual assumptions**: prose order (prereg-linked passages
+first) was chosen because only this instance held the hours-old
+vocabulary; board-descriptive sections were deferred as
+context-independent. The Discussion outline walk was deliberately
+left as S135's opener. All subagents ran on the Opus tier per the
+standing conservation policy; the session ran in Fable.

@@ -7009,3 +7009,66 @@ is a checkable precondition, and this project has now produced three
 generations of "methodological" disagreements (Obs 293's ranking
 swap, Obs 292's crossover, § 5.4's spread pattern) that dissolved
 under reference unification.
+
+## 2026-08-17 (Session 134, map-reader-llm): The defect that had already been fixed — inventory claims about mutable files decay at the speed of the repo
+
+**Session:** cc9e2744-2dcf-4cbe-8410-f5aa8eb91ed4
+**Instance:** primary
+
+### Surprising fact
+
+The S134 walk dossier listed three factual defects for PI
+adjudication, sourced from the July D17 evidence pass. When the
+approved fix for the second — `results-draft.md:121` citing the
+diversity dividend as "both preregistered" (D17 sweep finding U5) —
+came due, a pre-edit grep found the string gone: the draft already
+read "consensus-beats-single-pass is preregistered H3, confirmed;
+the thinking-level diversity claim is a post-registration discovery
+… D17 audit U5". The correction had landed weeks earlier, citing the
+very finding I was about to "fix" the file against. The defect I had
+put in front of the PI, in a document whose other claims were all
+freshly re-verified, did not exist.
+
+### Probe
+
+Grep for the offending phrase across `docs/paper/` (zero hits), then
+a read of the surrounding passage confirming the U5 fence was
+already in place and properly attributed. Contrast case run in the
+same session: the erratum anchors from the same July inventory were
+re-verified before drafting E74–E77, and several *had* drifted
+(E41's cited line number was inside a different erratum's block by
+August) — so the same source exhibited both decay modes: claims gone
+stale because the target was fixed, and anchors gone stale because
+the target file grew.
+
+### Belief revision
+
+Prior working belief: a verified inventory finding stays citable
+until the cited file is deliberately revised, so re-verification is
+for anchors (line numbers), not for existence claims. Revised
+belief: in a repository under continuous correction, *negative*
+findings ("this defect exists", "this disclosure is missing") decay
+faster than anchors, because every intervening session is an
+opportunity for someone to have fixed the defect without updating
+the inventory. Existence claims about mutable files must be
+re-verified at citation time — including, and especially, when they
+are being cited into a PI-facing adjudication document, where a
+stale defect claim spends the reviewer's attention on a non-problem.
+
+### What would change this belief
+
+A survey of the D17 inventory's other defect claims showing high
+survival (most still-live at citation time) would downgrade this
+from a decay law to a one-off; conversely, finding a *fix* that had
+itself been reverted would add a third decay mode (oscillation) and
+strengthen the case for citation-time verification.
+
+### Implications for practice
+
+The dossier convention should be: defect lists carry the same
+re-verify-at-write obligation as numeric anchors, and each defect
+entry should state its verification date, not its discovery date.
+This session's dossier recorded the outcome honestly
+("no change needed — found already fixed on re-verification"), which
+is the right disposition record; the improvement is to catch it
+before the PI reads the item, not after approval.

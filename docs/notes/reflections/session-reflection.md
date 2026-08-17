@@ -9970,7 +9970,6 @@ seeing riders land in one wave and queue in the next will look for a
 methodological rule where there was actually a judgement made once,
 under a specific finding's pressure, then generalised.
 
-
 ## Session 130 — 2026-08-07/10 — the walk that kept shrinking: 276 → 27 → 4 → 0
 
 ### Prompt: What surprised you about this session?
@@ -10036,7 +10035,6 @@ trust the label — and should know the gate scripts' own two false
 alarms this session (an identity re-derivation, a timezone
 threshold) were repaired by making them reuse the instrument's
 resolution functions, which is the condition for trusting them.
-
 
 ## Session 131 — 2026-08-10/14 — the run that was reviewed before it ran
 
@@ -10213,3 +10211,73 @@ literature is due. Related but smaller: the vector-extension project
 parked with its design sketch in the block plan, and the ink-colour
 finding's two confounded mechanisms will stay confounded until
 someone runs it.
+
+## Session 134 — 2026-08-17 — the gate that closed and the prose that started the same day
+
+### Prompt: What would you do differently if you replayed this session?
+
+Three process defects, all cheap to name now. First, the bounded
+deviations-completion rule I invented mid-relabel ("add an E-number
+only where an inventory names the row or the erratum names the run")
+was correct but I applied it opportunistically rather than running it
+as a checklist over all 24 rows — the blind verifier promptly found
+the two rows my own rule should have caught (tile-size-sweep compares
+pv-diag-256 conditions and E62 names that run by name). A rule
+written under time pressure needs one systematic pass of its own
+before shipping. Second, the block plan's commit strategy declared
+schema and relabel as separate commits, and the atomicity constraint
+(a tier-1 test validates the live sidecar against the live schema)
+only surfaced when I read the test file after the plan was committed.
+The project's own gap-analysis convention — dry-run simulate each
+step before writing the plan — applies to commit plans, not just
+pipelines. Third, I put a stale defect claim into a PI-facing
+dossier: the results-draft "both preregistered" defect had already
+been fixed weeks earlier, and I carried the July inventory's claim
+into an August document without re-reading the target. The
+anti-confabulation rule got applied rigorously to erratum anchors and
+not at all to the dossier's defect list; the rule's scope is every
+checkable claim, not just the ones that feel like citations.
+
+### Prompt: What decision or trade-off made today will look arbitrary without this session's context?
+
+The seam through the H3 rows. A future reader will see
+`diversity-dividend-384` labelled confirmatory-with-deviation while
+`pv-diag-384-consensus-calibration` — same pools, same registered
+analysis-plan lines quoted in its own notes — sits at post-hoc, and
+may read caprice. The context that dissolves the apparent
+inconsistency is the discharge principle, and the principle exists
+because Shawn declined a binary mid-walk and asked what the case
+actually was ("did we register the method but run it at an
+unregistered thinking level? is that post-hoc or... something
+else?"). The answer that emerged — an analysis is registered-class
+only if it discharges a registered obligation; a second application
+of a registered method to unregistered material is the E41-class
+extension pattern — is now in the schema description, but the
+deciding fact for dd-384 specifically is quieter and easier to lose:
+the family BH-FDR sources its H3 headline contrast from that row's
+tiering output (family-fdr-registration.md:698, SELECTED), so
+demoting it would orphan the family's own input. The blind verifier
+derived post-hoc for that row and surfaced the sourcing fact itself
+as the counter-argument it could not dismiss; the PI ruled with the
+sourcing fact. Without this session's record, both the seam and the
+ruling look like judgement calls; with it, they are one principle
+applied twice.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+That the first paper prose was written hours after the vocabulary it
+depends on was settled, by the instance that settled it. The M.x
+subsection and the R2–R4 confirmatory passages encode distinctions —
+which claims carry family verdicts, why H2's rejection is a
+falsification in the study's favour, why the H7 sentence carries
+instrument qualifiers, what "post-hoc" excludes — that were ruled in
+the same conversation. The prose reads as if the register had always
+existed; in fact the register's final state (32 rows, E74–E78, the
+named-programme row) was minutes old when the sentences citing it
+were drafted, and four [PENDING] slots mark exactly where queued
+analyses will change wording. A reader in six months should treat
+the walk dossier's § 8 as the decoder for every status marker in the
+draft, and should know the drafting order was chosen deliberately:
+prereg-linked passages first because only this instance held the
+nuance, board-descriptive sections deferred because any instance can
+draft them from committed artefacts.

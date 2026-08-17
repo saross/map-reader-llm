@@ -1067,7 +1067,6 @@ as the instrument.
 a gate accuses completed work, suspect the gate's re-derivations first and
 say so before presenting the alarm as a finding.
 
-
 ## claude-obs 42 — 2026-08-10 (Session 130): he splits diagnosis and execution across sessions and writes the relay prompt like a preregistration
 
 **Pattern.** The symbol-radio bug was diagnosed in a parallel session, then
@@ -1350,3 +1349,70 @@ not optimise them to be "complete" — a recommendation that pre-empts
 policy, framing, and elevation invites rubber-stamping instead of
 the riders that carry the real drafting guidance. Cross-references
 claude-obs 50.
+
+## claude-obs 54 — 2026-08-17 (Session 134): a classification hesitation marks a missing principle, not indecision
+
+**Pattern.** Mid-walk, Shawn declined the pv-diag-384-calibration
+binary and asked instead whether "registered method, unregistered
+thinking level" is post-hoc "or... something else". Answering the
+question required articulating a rule that had been implicit across
+five earlier rulings (registered-class status follows discharge of a
+registered obligation, not resemblance to a registered method). The
+rule resolved his case, retro-unified the earlier ones, dissolved the
+blind verifier's strongest objection, and landed in the schema text
+the same hour.
+
+**Lesson.** When Shawn hesitates between offered labels, the
+hesitation localises a principle the framework has not yet named.
+Re-arguing the instance wastes the signal; naming the principle and
+letting the instance fall out of it converts one question into a
+reusable rule.
+
+**How to apply.** Treat "can we discuss whether it's X or...
+something else?" as a request for the classification criterion, not
+for more evidence. Answer with the rule, show the instance under it,
+and record the rule somewhere durable (schema, spec, dossier) in the
+same session.
+
+## claude-obs 55 — 2026-08-17 (Session 134): Shawn allocates instance context as a budget — report it honestly and let him spend it
+
+**Pattern.** At the drafting decision he corrected my conservative
+context estimate ("you are just over 50% and doing very well"),
+directed maximum drafting, and pre-committed the tail to reflection
+("if not, we can reflect to ensure it's done in this session"). The
+session's shape — block, walk, prose, reflect — was his allocation,
+made against my reported numbers.
+
+**Lesson.** Context is a resource Shawn actively manages, and he
+manages it better with accurate reports than with my precautionary
+padding. My job is honest measurement and a clear statement of what
+each remaining unit costs; the spend decision is his.
+
+**How to apply.** At natural boundaries, report remaining context
+with what-fits-what framing (this unit fits, that one does not, the
+reflection needs X). Do not unilaterally reserve margin by
+understating; do flag the one non-negotiable (reflection by the
+working instance) and let him sequence around it.
+
+## claude-obs 56 — 2026-08-17 (Session 134): outline-first is a per-section contract, not a per-paper one
+
+**Pattern.** Shawn welcomed the drafted Methods prereg subsection
+("happy you've drafted methods") and in the same sentence flagged
+process: "I'd be more comfortable reviewing an outline with you
+first before we start drafting too much text." The Results sections
+were fair game because their outline was decision-gated and settled;
+Methods was not, even though a scaffold outline existed. The remedy
+(a six-decision register walked in two rounds) took minutes and
+licensed five subsections.
+
+**Lesson.** The outline-first preference re-arms at every major
+section boundary. An existing scaffold outline does not count as
+agreement; what counts is a decision-gated structure he has ruled
+on. Momentum from approved drafting in one section does not carry
+licence into the next.
+
+**How to apply.** Before extending prose into any section whose
+structure Shawn has not explicitly settled, stop and run the
+decision-register pattern (strawman with MDn/Dn choices, walk,
+then draft). Budget it as cheap — this session's cost was two
+question rounds — and treat it as the entry fee, not an obstacle.
