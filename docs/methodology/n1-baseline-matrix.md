@@ -411,7 +411,9 @@ Two cross-cutting reads:
 
 **Manifest linkage and preregistration.** The finding is recorded in the
 analyses manifest row `n1-baseline-matrix-384` (`tie_set`, `outcome`,
-`predicted_outcome`). It is framed **`exploratory`** (`hypothesis_refs`
+`predicted_outcome`). It is framed **`post-hoc`** (vocabulary v2, S134
+relabelling 2026-08-17; previously `exploratory` under the v1 enum — the
+argument below is unchanged) (`hypothesis_refs`
 H1 / H6 / H7): the within-board contrasts recapitulate preregistered directions
 as convergent evidence, but the 18-cell ranked board was not itself in the
 preregistered analysis plan — it operationalises the **single-pass baseline

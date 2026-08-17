@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T00:26:59Z",
+  "generated_at": "2026-08-17T00:42:43Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -607,7 +607,9 @@
         "E41",
         "E43",
         "E44",
-        "E57"
+        "E56",
+        "E57",
+        "E62"
       ],
       "predicted_outcome": "H11 (tile size): the prior expectation was non-monotonic with a 384px sweet spot. The refined hypothesis (Obs 351): the optimal tile size shifts with FP-filtering strength \u2014 single-pass (no filter) prefers larger tiles; strong filters (HIGH-thinking consensus, consensus+verifier) shift the optimum to 384; 256 falls under every architecture.",
       "predicted_outcome_amended": null,
@@ -625,7 +627,7 @@
           "results/run-analyses.json",
           "results/tile-size-sweep"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-17T00:42:43Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -691,7 +693,8 @@
       ],
       "preregistered": "post-hoc",
       "deviations": [
-        "E56"
+        "E56",
+        "E62"
       ],
       "predicted_outcome": "S110 continuity: adjacent pass-budget rungs are 'almost certainly NOT' significantly separated; the opmax +0.005 over the headline sits at ~1.15x the single-run SD and was flagged for a targeted permutation test rather than pre-judged.",
       "predicted_outcome_amended": null,
@@ -715,7 +718,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness/pareto"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-17T00:42:43Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -737,7 +740,8 @@
       ],
       "preregistered": "post-hoc",
       "deviations": [
-        "E56"
+        "E56",
+        "E62"
       ],
       "predicted_outcome": "The consensus-era diversity dividend (Obs 141: HIGH-thinking pass diversity lifts consensus F1; confirmed for consensus-only architectures in the phase3a decomposition) predicts HIGH > MINIMAL at equal pass count under the proposer-verifier architecture too.",
       "predicted_outcome_amended": null,
@@ -763,7 +767,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-17T00:42:43Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -785,7 +789,8 @@
       ],
       "preregistered": "post-hoc",
       "deviations": [
-        "E56"
+        "E56",
+        "E62"
       ],
       "predicted_outcome": "S111's v1 found the five-rung passes ladder one statistical tier; the cost recast (Shawn, S111: a HIGH pass costs ~3x a minimal one, so v1's 'cheap6' is not the cheap end in dollars) asks whether the dollar-axis frontier collapses onto the minimal-thinking rungs.",
       "predicted_outcome_amended": null,
@@ -812,7 +817,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness/pareto"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-17T00:42:43Z",
         "extractor_version": "0.7.1"
       }
     },

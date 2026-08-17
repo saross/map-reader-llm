@@ -2,7 +2,7 @@
 
 > **GENERATED FILE — do not hand-edit.** Produced by
 > `scripts/generate_hypothesis_outcome_table.py` from
-> `results/analyses-manifest.json` at commit `5b34ec643`; re-run the
+> `results/analyses-manifest.json` at commit `bf45e2acf`; re-run the
 > script after any manifest regeneration. Pure projection per the
 > D17 ruling (`docs/paper/results-outline.md` § D17): no cell is
 > hand-maintained.
@@ -23,7 +23,7 @@ themselves.
 |-----|----------------------|---------------|-------------|---------------|--------------------------|------------|
 | H1 | Modality and elaboration level (osf:400) | confirmatory | executed | not rejected | family-bh-fdr-confirmatory [confirmatory-with-deviation]; h1-cmt0106-pooled-modality [confirmatory-with-deviation] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
 | H2 | Two-stage pipelines do not improve detection (osf:451) | confirmatory | partially executed | rejected (q=0.05) | family-bh-fdr-confirmatory [confirmatory-with-deviation]; h2-condition-c-fine-to-coarse [not-executed] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
-| H3 | Consensus voting improves F1 (osf:497) | confirmatory | executed | rejected (q=0.05) | diversity-dividend-384 [confirmatory-with-deviation]; family-bh-fdr-confirmatory [confirmatory-with-deviation]; phase3a-consensus-calibration [registered-exploratory] | E28, E30, E32, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
+| H3 | Consensus voting improves F1 (osf:497) | confirmatory | executed | rejected (q=0.05) | diversity-dividend-384 [confirmatory-with-deviation]; family-bh-fdr-confirmatory [confirmatory-with-deviation]; phase3a-consensus-calibration [registered-exploratory] | E28, E30, E32, E36, E41, E45, E49, E51, E53, E54, E56, E58, E59, E60, E64 |
 | H4 | Example ordering / canonical placement (osf:534) | confirmatory | executed | not rejected | family-bh-fdr-confirmatory [confirmatory-with-deviation] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
 | H5 | Negative text treatment (osf:578) | confirmatory | executed | not rejected | family-bh-fdr-confirmatory [confirmatory-with-deviation] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
 | H6 | Flash-to-Pro transfer (osf:651) | confirmatory | not executed | — (excluded: never run) | h6-phase4-transfer [not-executed] | E40, E41, E74 |
@@ -31,7 +31,7 @@ themselves.
 | H8 | Library composition and scaling (osf:737) | confirmatory | executed | not rejected | family-bh-fdr-confirmatory [confirmatory-with-deviation] | E28, E30, E36, E41, E45, E51, E53, E54, E58, E59, E60, E64 |
 | H9 | Diversity mechanisms in consensus voting (osf:841) | exploratory (Tier A) | executed | — (exploratory: not in family) | phase3c-diversity-calibration [registered-exploratory] | E12, E32, E63 |
 | H10 | Training-pool size effects (osf:904) | exploratory (Tier B) | executed | — (exploratory: not in family) | h10-pool-size [registered-exploratory] | E13, E37, E45, E49, E50 |
-| H11 | Tile size effects (osf:944) | exploratory (Tier B) | executed | — (exploratory: not in family) | tile-size-sweep [registered-exploratory] | E36, E41, E43, E44, E57 |
+| H11 | Tile size effects (osf:944) | exploratory (Tier B) | executed | — (exploratory: not in family) | tile-size-sweep [registered-exploratory] | E36, E41, E43, E44, E56, E57, E62 |
 | H12 | Hard-positive to hard-negative ratio (osf:980) | exploratory (Tier B) | executed | — (exploratory: not in family) | h12-v2-hp-hn-ratio [registered-exploratory] | E13, E45, E49, E50, E51, E52 |
 | H13 | Overlap/stride effects (osf:1014) | exploratory (Tier B) | not executed | — (exploratory: not in family) | h13-overlap-stride [not-executed] | E64, E75 |
 | H14 | Cross-model consistency (osf:1056) | exploratory (Tier C, deferred) | not executed | — (exploratory: not in family) | h14-cross-model-consistency [not-executed] | E76 |
@@ -56,3 +56,15 @@ themselves.
 | H13 | — |
 | H14 | — |
 | H15 | — |
+
+## Register rows outside the hypothesis frame
+
+Rows with no `hypothesis_refs` (deployment boards and
+methodological re-measurements) — part of the register but
+outside the H1–H15 reconciliation:
+
+- `55map-canonical-leaderboard-50m`
+- `55map-canonical-leaderboard-mcc-50m`
+- `55map-standardised-leaderboard-50m`
+- `55map-standardised-leaderboard-mcc-50m`
+- `obs280-shared-reference`

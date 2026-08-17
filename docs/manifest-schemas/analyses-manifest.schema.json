@@ -46,7 +46,7 @@
         "preregistered": {
           "type": ["string", "null"],
           "enum": ["confirmatory", "confirmatory-with-deviation", "registered-exploratory", "post-hoc", "not-executed", null],
-          "description": "HUMAN-authored preregistration status, vocabulary v2 (S134/D17 reconciliation, 2026-08-17). 'confirmatory': implements a registered confirmatory test (H1–H8) as registered, no material deviation. 'confirmatory-with-deviation': registered confirmatory test executed with disclosed deviations — cite the E-numbers in deviations. 'registered-exploratory': implements an analysis the preregistration registered as exploratory (H9–H15) or a registered characterisation/calibration step that carries no confirmatory claim. 'post-hoc': not in the registered analysis plan (post-hoc analyses are exploratory by definition). 'not-executed': a registered obligation never executed — a disposition row (type 'disposition', empty conditions_compared, deviations citing the disclosure erratum). null = not yet adjudicated. The v1 values ('preregistered', 'exploratory', 'preregistered-with-deviation') are retired and fail validation BY DESIGN, so no half-migrated register can ever be written."
+          "description": "HUMAN-authored preregistration status, vocabulary v2 (S134/D17 reconciliation, 2026-08-17). 'confirmatory': implements a registered confirmatory test (H1–H8) as registered, no material deviation. 'confirmatory-with-deviation': registered confirmatory test executed with disclosed deviations — cite the E-numbers in deviations. 'registered-exploratory': implements an analysis the preregistration registered as exploratory (H9–H15) or a registered characterisation/calibration step that carries no confirmatory claim. 'post-hoc': not in the registered analysis plan (post-hoc analyses are exploratory by definition; extending a registered method to an unregistered factor, corpus, or pool is post-hoc — the S134 sorting rule). 'not-executed': a registered obligation never executed — a disposition row (type 'disposition', empty conditions_compared, deviations citing the disclosure erratum). null = not yet adjudicated. The v1 values ('preregistered', 'exploratory', 'preregistered-with-deviation') are retired and fail validation BY DESIGN, so no half-migrated register can ever be written."
         },
         "deviations": {
           "type": "array",
@@ -127,6 +127,16 @@
           },
           "else": {
             "properties": { "conditions_compared": { "minItems": 1 } }
+          }
+        },
+        {
+          "if": {
+            "required": ["type"],
+            "properties": { "type": { "const": "disposition" } }
+          },
+          "then": {
+            "properties": { "preregistered": { "const": "not-executed" } },
+            "required": ["preregistered"]
           }
         }
       ],

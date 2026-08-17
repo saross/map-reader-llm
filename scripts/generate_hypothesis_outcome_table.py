@@ -88,26 +88,40 @@ def load_analyses(path: Path = MANIFEST) -> list[dict]:
 
 
 def parse_rejection_set(analyses: list[dict]) -> tuple[set[str], set[str]]:
-    """Parse the family BH-FDR rejection set and exclusion set.
+    """Derive the family BH-FDR rejection set and exclusion set.
 
-    Returns ``(rejected, excluded)`` where ``rejected`` is the set of
-    hypothesis ids inside "Rejection set {…}" and ``excluded`` is any
-    hypothesis the outcome declares excluded (e.g. "H6 excluded").
-    Raises ``ValueError`` if the family row or the pattern is missing —
-    the table must never silently omit the confirmatory verdict.
+    Returns ``(rejected, excluded)``. ``rejected`` is parsed from the one
+    "Rejection set {…}" clause in the family row's outcome (loud failure
+    on zero or multiple clauses). ``excluded`` is derived STRUCTURALLY:
+    a confirmatory hypothesis absent from the family row's own
+    ``hypothesis_refs`` never entered the family — the prose ("H6
+    excluded") is used only as a cross-check, so a rewording can never
+    silently convert "never run" into "not rejected" (S134 audit
+    finding H-1).
     """
     row = next((a for a in analyses if a["analysis_id"] == FAMILY_ROW_ID), None)
     if row is None:
         raise ValueError(f"family row '{FAMILY_ROW_ID}' missing from manifest")
     outcome = row.get("outcome") or ""
-    m = re.search(r"[Rr]ejection set \{([^}]*)\}", outcome)
-    if not m:
-        raise ValueError("family outcome carries no 'Rejection set {…}' clause")
-    rejected = {h.strip() for h in m.group(1).split(",") if h.strip()}
-    excluded = set(re.findall(r"(H\d+) excluded", outcome))
-    unknown = (rejected | excluded) - set(HYPOTHESES)
-    if unknown:
-        raise ValueError(f"family outcome names unknown hypotheses: {unknown}")
+    clauses = re.findall(r"[Rr]ejection set \{([^}]*)\}", outcome)
+    if len(clauses) != 1:
+        raise ValueError(
+            f"family outcome must carry exactly one 'Rejection set {{…}}' "
+            f"clause; found {len(clauses)}")
+    rejected = {h.strip() for h in clauses[0].split(",") if h.strip()}
+    if not rejected <= CONFIRMATORY_SET:
+        raise ValueError(
+            f"rejection set names non-confirmatory hypotheses: "
+            f"{sorted(rejected - CONFIRMATORY_SET)}")
+    excluded = CONFIRMATORY_SET - set(row.get("hypothesis_refs") or [])
+    prose_excluded = set(re.findall(r"(H\d+)\s+(?:was\s+)?excluded", outcome))
+    if prose_excluded and prose_excluded != excluded:
+        raise ValueError(
+            f"family outcome prose declares excluded={sorted(prose_excluded)} "
+            f"but hypothesis_refs imply excluded={sorted(excluded)}")
+    if rejected & excluded:
+        raise ValueError(
+            f"hypotheses both rejected and excluded: {sorted(rejected & excluded)}")
     return rejected, excluded
 
 
@@ -120,6 +134,13 @@ def project(analyses: list[dict]) -> list[dict]:
         executed = [a for a in refs if a.get("preregistered") in EXECUTED_LABELS]
         posthoc = [a for a in refs if a.get("preregistered") == "post-hoc"]
         dispo_rows = [a for a in refs if a.get("preregistered") == "not-executed"]
+        unadjudicated = [a for a in refs if a.get("preregistered") is None]
+
+        if unadjudicated:
+            raise ValueError(
+                f"{hyp}: unadjudicated rows (preregistered null) reference "
+                f"it: {sorted(a['analysis_id'] for a in unadjudicated)} — "
+                f"adjudicate before generating the table")
 
         if executed and dispo_rows:
             disposition = "partially executed"
@@ -129,22 +150,32 @@ def project(analyses: list[dict]) -> list[dict]:
             disposition = "not executed"
         else:
             raise ValueError(
-                f"{hyp}: no executed, registered-exploratory, or "
-                f"not-executed row references it — the register no longer "
-                f"covers every obligation")
+                f"{hyp}: only post-hoc rows (or none at all) reference it — "
+                f"the register carries no registered-execution or "
+                f"not-executed disposition row for this obligation")
 
         if hyp not in CONFIRMATORY_SET:
             family = "— (exploratory: not in family)"
         elif hyp in excluded:
+            if disposition == "executed":
+                raise ValueError(
+                    f"{hyp}: excluded from the family but the register "
+                    f"shows it executed — verdict/disposition inconsistency")
             family = "— (excluded: never run)"
         elif hyp in rejected:
             family = "rejected (q=0.05)"
         else:
             family = "not rejected"
 
+        # E-numbers are extracted from WITHIN each deviations entry, so a
+        # prose entry like "E49/E51 (carry-forward)" still contributes
+        # both disclosures (S134 audit finding H-2). Entries carrying no
+        # E-number (e.g. an argued no-deviation note) contribute nothing,
+        # by design — the rationale lives on the row itself.
         deviations = sorted(
-            {d for a in executed + dispo_rows for d in (a.get("deviations") or [])
-             if re.fullmatch(r"E\d+", d)},
+            {e for a in executed + dispo_rows
+             for d in (a.get("deviations") or [])
+             for e in re.findall(r"\bE\d+\b", d)},
             key=lambda e: int(e[1:]))
 
         def _ids(rows: list[dict]) -> list[str]:
@@ -168,12 +199,19 @@ def _git_head() -> str:
     try:
         return subprocess.run(
             ["git", "rev-parse", "--short", "HEAD"], cwd=REPO_ROOT,
-            capture_output=True, text=True, check=True).stdout.strip()
-    except (subprocess.CalledProcessError, OSError):
+            capture_output=True, text=True, check=True,
+            timeout=10).stdout.strip()
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError):
         return "unknown"
 
 
-def render_md(records: list[dict]) -> str:
+def no_hypothesis_rows(analyses: list[dict]) -> list[str]:
+    """Register rows carrying no hypothesis_refs (outside the H frame)."""
+    return sorted(a["analysis_id"] for a in analyses
+                  if not (a.get("hypothesis_refs") or []))
+
+
+def render_md(records: list[dict], no_hyp: list[str]) -> str:
     """Render the Markdown view of the table."""
     head = _git_head()
     lines = [
@@ -214,6 +252,13 @@ def render_md(records: list[dict]) -> str:
     for r in records:
         ph = "; ".join(r["related_post_hoc"]) or "—"
         lines.append(f"| {r['hypothesis']} | {ph} |")
+    lines += ["", "## Register rows outside the hypothesis frame", ""]
+    lines.append("Rows with no `hypothesis_refs` (deployment boards and")
+    lines.append("methodological re-measurements) — part of the register but")
+    lines.append("outside the H1–H15 reconciliation:")
+    lines.append("")
+    for aid in no_hyp:
+        lines.append(f"- `{aid}`")
     lines.append("")
     return "\n".join(lines)
 
@@ -225,8 +270,9 @@ def main() -> int:
                     help="verify committed outputs match a regeneration")
     args = ap.parse_args()
 
-    records = project(load_analyses())
-    md = render_md(records)
+    analyses = load_analyses()
+    records = project(analyses)
+    md = render_md(records, no_hypothesis_rows(analyses))
     js = json.dumps({"hypotheses": records}, indent=1, ensure_ascii=False) + "\n"
 
     if args.check:
@@ -237,14 +283,14 @@ def main() -> int:
         # neutralised on both sides (regeneration at a new commit must not
         # count as drift when the projection is unchanged).
         def strip(text: str) -> str:
-            return re.sub(r"commit `[0-9a-f]+`", "commit `X`", text)
+            return re.sub(r"commit `[^`]+`", "commit `X`", text)
 
         if not OUT_MD.exists() or strip(OUT_MD.read_text()) != strip(md):
             stale.append(str(OUT_MD))
         if stale:
             print("STALE:", ", ".join(stale))
             return 1
-        print("hypothesis-outcome table up to date (15 hypotheses)")
+        print(f"hypothesis-outcome table up to date ({len(records)} hypotheses)")
         return 0
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)

@@ -48,7 +48,7 @@ def _synthetic_manifest() -> list[dict]:
              "(never run)."),
         _row("h6-dispo", ["H6"], "not-executed", ["E74"]),
         _row("h2-c-dispo", ["H2"], "not-executed", ["E59"]),
-        _row("board", ["H1"], "post-hoc", ["E25"]),
+        _row("board", ["H1", "H13"], "post-hoc", ["E25"]),
     ]
     for i in (9, 10, 11, 12):
         rows.append(_row(f"h{i}-analysis", [f"H{i}"], "registered-exploratory"))
@@ -88,11 +88,82 @@ def test_post_hoc_rows_never_count_as_execution():
 
 @pytest.mark.tier1
 def test_uncovered_hypothesis_fails_loudly():
-    """A hypothesis with only post-hoc coverage aborts the projection."""
+    """A hypothesis with only post-hoc coverage aborts the projection.
+
+    The fixture's post-hoc board row references H13, so removing the
+    disposition row leaves H13 with post-hoc-only coverage — the named
+    failure mode, not the zero-rows path (S134 audit finding M-5).
+    """
     rows = _synthetic_manifest()
     rows = [r for r in rows if r["analysis_id"] != "h13-dispo"]
-    with pytest.raises(ValueError, match="H13"):
+    with pytest.raises(ValueError, match="H13.*only post-hoc"):
         ghot.project(rows)
+
+
+@pytest.mark.tier1
+def test_unadjudicated_null_row_fails_loudly():
+    """A preregistered-null row referencing a hypothesis aborts loudly.
+
+    Null stubs are schema-legal mid-authoring, but the table must never
+    silently render an incomplete register (S134 audit finding M-2).
+    """
+    rows = _synthetic_manifest()
+    rows.append(_row("stub", ["H11"], None, ["E99"]))
+    with pytest.raises(ValueError, match="H11.*unadjudicated.*stub"):
+        ghot.project(rows)
+
+
+@pytest.mark.tier1
+def test_deviations_extracted_from_prose_entries():
+    """E-numbers embedded in prose deviations entries are not dropped.
+
+    diversity-dividend-384's real array carries "E49/E51 (…)" as one
+    prose string; the union must surface both (S134 audit finding H-2).
+    """
+    rows = _synthetic_manifest()
+    rows.append(_row("dd", ["H9"], "confirmatory-with-deviation",
+                     ["E49/E51 (carry-forward context)",
+                      "None for the operating-point selection."]))
+    records = {r["hypothesis"]: r for r in ghot.project(rows)}
+    assert "E49" in records["H9"]["deviations"]
+    assert "E51" in records["H9"]["deviations"]
+
+
+@pytest.mark.tier1
+def test_exclusion_is_structural_not_prose():
+    """Exclusion derives from the family row's hypothesis_refs.
+
+    Rewording the outcome's exclusion prose must not flip H6 to
+    'not rejected' (S134 audit finding H-1); an outright prose/refs
+    contradiction must abort.
+    """
+    rows = _synthetic_manifest()
+    family = next(r for r in rows
+                  if r["analysis_id"] == "family-bh-fdr-confirmatory")
+    # Reworded prose with no "H6 excluded" phrase at all: still excluded.
+    family["outcome"] = "Rejection set {H2, H3, H7} at q=0.05 over m=7."
+    records = {r["hypothesis"]: r for r in ghot.project(rows)}
+    assert records["H6"]["family_fdr"] == "— (excluded: never run)"
+    # A prose claim contradicting the refs aborts.
+    family["outcome"] = ("Rejection set {H2, H3, H7} at q=0.05. "
+                         "H5 excluded (never run).")
+    with pytest.raises(ValueError, match="prose declares"):
+        ghot.project(rows)
+
+
+@pytest.mark.tier1
+def test_family_parse_guards():
+    """Multiple rejection clauses and non-confirmatory members abort."""
+    rows = _synthetic_manifest()
+    family = next(r for r in rows
+                  if r["analysis_id"] == "family-bh-fdr-confirmatory")
+    family["outcome"] = ("Rejection set {H2} primary; corrected "
+                         "Rejection set {H2, H3} alongside.")
+    with pytest.raises(ValueError, match="exactly one"):
+        ghot.parse_rejection_set(rows)
+    family["outcome"] = "Rejection set {H2, H10} at q=0.05."
+    with pytest.raises(ValueError, match="non-confirmatory"):
+        ghot.parse_rejection_set(rows)
 
 
 @pytest.mark.tier1
@@ -118,7 +189,17 @@ def test_live_register_projects_and_matches_committed_output():
     assert records["H12"]["analyses"] == ["h12-v2-hp-hn-ratio [registered-exploratory]"]
     for h in ("H13", "H14", "H15"):
         assert records[h]["disposition"] == "not executed"
-    # The committed outputs are current (same check the CLI --check runs).
-    md = ghot.OUT_MD.read_text()
-    for h in records:
-        assert f"| {h} |" in md
+    # The committed outputs equal a regeneration (the --check contract,
+    # asserted for real — S134 audit finding M-4): MD compared with the
+    # commit-hash stamp neutralised on both sides, JSON compared exactly.
+    def _neutralise(text: str) -> str:
+        import re
+        return re.sub(r"commit `[^`]+`", "commit `X`", text)
+
+    analyses = ghot.load_analyses()
+    ordered = ghot.project(analyses)
+    assert _neutralise(ghot.OUT_MD.read_text()) == _neutralise(
+        ghot.render_md(ordered, ghot.no_hypothesis_rows(analyses)))
+    committed = ghot.OUT_JSON.read_text()
+    import json
+    assert json.loads(committed) == {"hypotheses": ordered}

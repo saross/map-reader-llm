@@ -544,7 +544,9 @@
     "E41",
     "E43",
     "E44",
-    "E57"
+    "E56",
+    "E57",
+    "E62"
    ],
    "predicted_outcome": "H11 (tile size): the prior expectation was non-monotonic with a 384px sweet spot. The refined hypothesis (Obs 351): the optimal tile size shifts with FP-filtering strength — single-pass (no filter) prefers larger tiles; strong filters (HIGH-thinking consensus, consensus+verifier) shift the optimum to 384; 256 falls under every architecture.",
    "tie_set": [],
@@ -556,7 +558,7 @@
     "Obs 352 — the verifier rescues 256px consensus (0.460->0.856, +0.396), leapfrogging 512 to 2nd; 384 retains the consensus+PV lead (0.890), so 256 does not overwhelm the verifier"
    ],
    "manually_verified_at": "2026-06-09T01:52:52Z",
-   "_prereg_rationale": "registered-exploratory: H11 is registered exploratory Tier B (osf:946); trigger met (osf:948 — every 512 px cell < 0.85); the registered 512-vs-384 core executed (osf:954-976); the 256 px arm and the architecture-interaction framing are post-hoc extensions (D17 inventory h9-h12:749-784); deviations per inventory recommendation (h9-h12:781) plus E36."
+   "_prereg_rationale": "registered-exploratory: H11 is registered exploratory Tier B (osf:946); trigger met (osf:948 — every 512 px cell < 0.85); the registered 512-vs-384 core executed (osf:954-976); the 256 px arm and the architecture-interaction framing are post-hoc extensions (D17 inventory h9-h12:749-784); deviations per inventory recommendation (h9-h12:781) plus E36. Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points)."
   },
   {
    "analysis_id": "verifier-robustness-matrix",
@@ -614,7 +616,8 @@
    ],
    "preregistered": "post-hoc",
    "deviations": [
-    "E56"
+    "E56",
+    "E62"
    ],
    "predicted_outcome": "S110 continuity: adjacent pass-budget rungs are 'almost certainly NOT' significantly separated; the opmax +0.005 over the headline sits at ~1.15x the single-run SD and was flagged for a targeted permutation test rather than pre-judged.",
    "tie_set": [
@@ -632,7 +635,7 @@
     "Obs 347 — GS-plateau resolving-power heuristics (invoked by the span caveat)"
    ],
    "manually_verified_at": "2026-06-12T06:59:01Z",
-   "_prereg_rationale": "post-hoc: PV-ladder cost board; the nearest registered text is the H3 cost-efficiency bullet (osf:524-528) but the priced object is the unregistered PV ladder; tiering apparatus unregistered (D17 sweep FALSE-9)."
+   "_prereg_rationale": "post-hoc: PV-ladder cost board; the nearest registered text is the H3 cost-efficiency bullet (osf:524-528) but the priced object is the unregistered PV ladder; tiering apparatus unregistered (D17 sweep FALSE-9). Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points)."
   },
   {
    "analysis_id": "min-vs-high-thinking-pv",
@@ -653,7 +656,8 @@
    ],
    "preregistered": "post-hoc",
    "deviations": [
-    "E56"
+    "E56",
+    "E62"
    ],
    "predicted_outcome": "The consensus-era diversity dividend (Obs 141: HIGH-thinking pass diversity lifts consensus F1; confirmed for consensus-only architectures in the phase3a decomposition) predicts HIGH > MINIMAL at equal pass count under the proposer-verifier architecture too.",
    "tie_set": [
@@ -673,7 +677,7 @@
     "Obs 141 — the consensus-era diversity dividend (the prior this rejects under PV)"
    ],
    "manually_verified_at": "2026-06-12T06:59:01Z",
-   "_prereg_rationale": "post-hoc: MINIMAL-vs-HIGH thinking is an unregistered factor (osf:1211-1212, osf:2135); rejects an internal expectation (Obs 141), not a registered hypothesis."
+   "_prereg_rationale": "post-hoc: MINIMAL-vs-HIGH thinking is an unregistered factor (osf:1211-1212, osf:2135); rejects an internal expectation (Obs 141), not a registered hypothesis. Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points)."
   },
   {
    "analysis_id": "pass-budget-pareto-v2",
@@ -694,7 +698,8 @@
    ],
    "preregistered": "post-hoc",
    "deviations": [
-    "E56"
+    "E56",
+    "E62"
    ],
    "predicted_outcome": "S111's v1 found the five-rung passes ladder one statistical tier; the cost recast (Shawn, S111: a HIGH pass costs ~3x a minimal one, so v1's 'cheap6' is not the cheap end in dollars) asks whether the dollar-axis frontier collapses onto the minimal-thinking rungs.",
    "tie_set": [
@@ -715,7 +720,7 @@
     "Obs 362 — deployment reversal (the scope qualification on the F1 column)"
    ],
    "manually_verified_at": "2026-06-12T06:59:01Z",
-   "_prereg_rationale": "post-hoc: as pass-budget-pareto; the measured-token costing axis additionally has no registered basis."
+   "_prereg_rationale": "post-hoc: as pass-budget-pareto; the measured-token costing axis additionally has no registered basis. Deviations completed post-verification (S134 blind-verifier finding A: E62 names the constituent run; E56 governs the best-prob_t operating points)."
   },
   {
    "analysis_id": "flash35-model-roles",
