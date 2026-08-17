@@ -11,6 +11,88 @@ collaborative drafting.
 
 ---
 
+## S134 revision proposal — decision register (MD1–MD6)
+
+**Added 2026-08-17 (S134)**, after the D17 reconciliation closed and
+the first Methods prose (`docs/paper/methods-draft.md` § M.x) landed.
+The outline below this section is the 2026-vintage scaffold; it
+pre-dates the Era structure, the 55-map reference, and the
+reconciliation, and needs the following decisions before further
+Methods prose is drafted. Pattern per the Results outline: each MDn
+is OPEN until the PI rules; mechanical fixes are listed separately
+and need no ruling.
+
+**MD1 — where the preregistration subsection sits.** M.x
+("Preregistration, amendments, and analysis status") is drafted and
+overlaps §§ 4.4/6.1 here. (A) Place it early, as § 1.2, so every
+later Methods and Results section can cite statuses forward;
+§§ 4.4/6.1 collapse into pointers. (B) Keep registration material in
+§ 6 (transparency) where convention often puts it. *Lean A: Results
+already cites "Methods § M.x" for family verdicts, and early
+placement serves the linear reader.*
+
+**MD2 — evaluation corpora and scopes.** The outline describes only
+the registered 60-tile holdout; every reported result actually runs
+on the Era corpora (Era 1: 340 tiles/512 px; Era 2: 487/384 px;
+Era 3: 327; 55-map: 8,541) under the E36 departure. (A) A dedicated
+"Evaluation corpora and scopes" subsection (anchored to
+`results/evaluation-scopes.md`), stating the registered allocation,
+the E36 shift, and each era's composition once, so Results never
+re-explains tile counts. (B) Fold into § 2.4. *Lean A: this is
+load-bearing for every Results claim and the current § 2.4 is
+actively misleading about what was evaluated.*
+
+**MD3 — the 55-map reference construction.** No section covers the
+deployment instrument's reference (student digitisations, the
+Dawid–Skene standardisation, ruling 21, the 279 extension mounds,
+the 773-candidate phantom adjudication). (A) A dedicated subsection
+at Methods depth: construction pipeline + the headline provenance
+numbers, with per-step detail to supplement; § R8 keeps the
+epistemics (what the reference can support) per D14. (B) Compress to
+a paragraph and push construction wholly to supplement. *Lean A: R7
+and R8 both consume it, and reviewers will audit the reference before
+they audit the model.*
+
+**MD4 — the statistics subsection rewrite.** § 5.3 currently states
+the registered method only. It must become: registered inference
+(bootstrap CIs + BH-FDR, E54 parameters) → adopted inference
+(tile-swap permutation, within-board BH, greedy-clique tiering,
+disclosed unregistered per E45) → the family-FDR construction
+(m = 7, one primary per hypothesis, registration-before-compute) →
+the pairing rule for confirmatory claims. Dependency: the H2 and H3
+bootstrap pairings are queued $0 analyses; the subsection drafts now
+with two [PENDING] slots. (A) One integrated subsection in this
+order. (B) Split registered/adopted across § 5.3 and a § 6
+disclosure. *Lean A: one place, one story, matching M.x.*
+
+**MD5 — deployment execution.** The 55-map campaigns (batch API,
+TPM-governed concurrency, recovery passes, the audited cost basis in
+§ 5.4) have no execution subsection. (A) A compact "Deployment
+execution" subsection: pipeline identity with the GS runs, scale
+numbers, recovery disclosure, § 5.4 cross-reference. (B) Leave
+execution detail to supplement and § 5.4. *Lean A, kept short: the
+deployment gap story in R7 needs the execution facts once.*
+
+**MD6 — verifier specification depth.** § 3.5 describes the
+registered PV sketch, not the production verifier (adversarial
+text-only, minimal thinking, T = 0.0, n = 1, carry-forward
+provenance) whose robustness R5 reports. (A) Expand § 3.5 to the
+production specification with the E37/E58 lineage named. (B) Keep
+§ 3.5 registered-level and specify production config in a table.
+*Lean A: R4/R5 hang off this configuration; prose beats a table for
+the lineage.*
+
+**Mechanical fixes (no ruling needed, applied on adoption)**: § 4.1's
+"H2 Condition C not executed — erratum pending" → E59 exists; § 4.4
+"30+ entries" and § 6.1 "57 entries" → 78, deferring to M.x; § 4.3
+phase table regenerated from the register (current cells carry
+pre-Era-2 numbers); working-precision derivation subsection added
+under § 5 per the settled D6 rider (Methods carries the derivation,
+R1 recaps values); § 3.3 factor table gains thinking level, tile
+size, and verifier parameters with registered/post-hoc marked.
+
+---
+
 ## 1. Study Design Overview
 
 - Preregistered, sequential OFAT study (OSF registration, 2026-01-31;
