@@ -80,8 +80,8 @@ The compile-time recommendation ("20, with E56 and E57 discussed alongside") doe
 the vintage move; its nearest E78 descendant is **27 with E56/E57/E74/E75/E78 discussed in the
 same passage**. The Methods draft currently takes the alternative this census also licenses:
 **no aggregate at all — cite entries individually because any headline count depends on the
-counting rule adopted**. Both are honest; adopting one is a PI call (queued, S135 block plan
-§ 6 L4).
+counting rule adopted**. Both are honest; **the PI adopted the cite-individually rule**
+(2026-08-17, S135 L4 walk), with the 18–30 range noted once in the Methods passage.
 
 ---
 
