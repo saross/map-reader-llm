@@ -7377,3 +7377,54 @@ fixed; my dossier claim was the stale text). Scheduling
 register-dependent prose immediately after register settlement means
 the wording cannot lag the semantics — the residual risk moves to
 documents *about* the prose, which is where it duly appeared.
+
+## Session 135 — 2026-08-17/18 (the clean-context audit can stand in for the operator dialogue; verifier value has moved from numbers to premises; a smoke test is a cache with unstated expiry; execution autonomy pairs with decision deferral)
+
+**The clean-context audit as AFK substitute worked — and its headline
+catch was a re-commit of a documented error.** With the PI AFK and a
+directed start, the pre-run-review dialogue could not run; the
+codified substitute (fresh-context Opus audit of the committed block
+plan, naive-reviewer stance, live probes) returned 15 confirmed
+findings including a genuine blocker: the plan's "H6 Pro data" was
+the E57 Flash mis-dispatch — an error the errata register had
+documented in June and the drafting instance re-committed in August
+by trusting a label prefix. The pattern to keep: documented errors
+do not stay caught; they must be re-caught every time the same
+surface (here, `pro-*` pool names) is touched, and fresh eyes with
+instructions to open the artefacts are what re-catch them. The
+model-provenance gate that now exists in code is the durable form of
+the catch.
+
+**Blind-verifier value has completed its migration from numbers to
+premises.** S133's verifiers found zero numerical errors and seven
+wording defects; S134's confirmed 105/105 table cells and argued
+semantics. This session's H6 verifier reproduced every number cold
+— and then falsified the analysis's *framing premise* ("the
+confound cannot be resolved at $0") by finding the completed Pro
+2×2 in committed data, upgrading the scientific finding itself
+(temperature identified as the driver). The verification stack is
+now doing discovery, not just checking. Corollary: the drafting
+instance's blind spot was not arithmetic but *inventory* — it did
+not know what data existed. Verifiers briefed to derive cold from
+primary sources search the repo in ways the drafter, anchored on
+the plan, does not.
+
+**A smoke test is a cached measurement with an expiry nobody had
+written down.** The pin ($0.00102/tile) was taken at T = 0.0; the
+audit then corrected the run to T = 1.0; output volume tripled and
+the run closed 31 % over its approved figure with every formal gate
+green. The general form: gate chains cache quantities (costs, tile
+counts, comparability facts), and a correction anywhere upstream
+silently invalidates caches downstream unless the chain re-runs from
+the point of change. Encoded fix: audit resolves ALL parameters
+before the smoke prices them; any later parameter change re-prices.
+
+**Execution autonomy with total decision deferral scaled to a
+five-analysis block.** Everything ran, was verified, and was
+committed while the PI was away — and every classification,
+counting rule, and sign-off came back as PROPOSED with rationale,
+none self-ratified. The L4 walk then discharged in minutes because
+each queued decision arrived with its evidence attached. The one
+refinement the walk surfaced: for the least-certain call, attach the
+full argument up front (claude-obs 57) — a recommendation label is
+not evidence.

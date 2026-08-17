@@ -7072,3 +7072,61 @@ This session's dossier recorded the outcome honestly
 ("no change needed — found already fixed on re-verification"), which
 is the right disposition record; the improvement is to catch it
 before the PI reads the item, not after approval.
+
+## 2026-08-18 (Session 135, map-reader-llm): The confound that was an inventory failure — a blind verifier falsifies the analysis's framing premise
+
+**Session:** f663bca7-99a8-4488-b70c-cc273e48374d
+**Instance:** primary
+
+### Surprising fact
+
+The H6 blind verifier, briefed to re-derive every claim cold,
+reported that the load-bearing premise of the A-06 analysis was
+false: I had framed the Pro temperature–thinking contrast as
+inseparably confounded ("the existing Pro data vary none of the four
+registered factors cleanly... cannot be settled further at $0"),
+but the full genuine-Pro thinking × temperature 2×2 exists in
+committed data — the two n1-pro-rerun-384 corners plus two
+pv-diag-384 Pro baselines, same corpus, identical instruction and
+library hashes.
+
+### Probe
+
+Per the disagreement rule, a third derivation before landing
+anything: re-pulled the four corner F1s from the conditions
+manifest, re-computed the clean contrasts, and re-verified model
+provenance for the pv-diag pools against the passes manifest
+(gemini-3.1-pro-preview on all four). All three derivations agree:
+temperature fires the registered ≥0.03 rule in all four cells
+(+0.037 to +0.075, every paired-bootstrap delta CI excluding zero);
+thinking at matched temperature reaches 0.03 nowhere.
+
+### Belief revision
+
+From "the factor question is unanswerable without a ~$48 re-run" to
+"temperature is the driver, settled at $0" — a revision of the
+finding itself, not a number in it. The deeper revision is about
+where my errors live: the confound framing came from anchoring on
+the E40 erratum ("Pro cannot run MINIMAL") and the corners I had
+just used, without inventorying what else the repo held. The
+verifier, anchored on nothing, searched. Second, compact instance of
+the same session-level pattern: the audit's transmission check found
+the committed arm-A passes ran at T = 1.0, against the stale
+"F1=0.660 at T=0.0" note in the phase3a YAML I had trusted —
+manifest-over-narrative, again.
+
+### What would change this belief
+
+A hash or provenance mismatch on the pv-diag corners (different
+instruction or library) would restore the confound; a replicate-
+count sensitivity showing the 5–10-pass T=0.7 corners drive the
+contrast would weaken "settled". Both were checked at the probe
+(hashes identical; deltas agree across two estimators to ≤0.0005).
+
+### Implications for practice
+
+Before writing "cannot be determined from existing data", run the
+inventory question as its own step: what committed data touches
+these factors at all? The claim of impossibility is a claim about
+the whole repo, and it deserves repo-level evidence — or a verifier
+briefed to find the counterexample.

@@ -10281,3 +10281,58 @@ draft, and should know the drafting order was chosen deliberately:
 prereg-linked passages first because only this instance held the
 nuance, board-descriptive sections deferred because any instance can
 draft them from committed artefacts.
+
+## Session 135 — 2026-08-17/18 — the analyses the drafts were waiting for, and the run that overshot its gate
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+Twice, and Shawn was right both times — in the same direction. On the
+replicate design I proposed a staged n = 2(→3) as an optimisation
+over his flat n = 3, conditional on T = 0.0 determinism; forty
+minutes later the audit established the run had to execute at
+T = 1.0 to match arm A, where replicates are genuinely stochastic
+and flat n = 3 is simply correct. The optimisation was clever,
+conditional, and premised on a parameter value that had not survived
+its own audit yet. On the H6 classification we did not exactly
+disagree, but he declined to ratify my recommendation until the full
+argument was in front of him — and the four-argument case with its
+counter-case attached is what earned "agree, in full". The common
+lesson is about where his scepticism points: not at my conclusions
+but at my *premises and warrants*. The instances that work with him
+best are the ones that surface those unprompted.
+
+### Prompt: What felt uncertain or unresolved at the end?
+
+The cost overrun sits in an odd epistemic position. Every gate fired
+as designed — smoke test, priced approval, 2× per-item halt
+threshold — and the run still came in 31 % over the number Shawn
+approved, because the smoke's pin silently expired when the audit
+corrected the temperature. The letter of the gate was honoured and
+its substance was not. The fix is recorded (re-pin after any
+audit-stage parameter change), but the unresolved question is
+whether other cached quantities in the gate chain have the same
+expiry semantics nobody has written down — the tile-count pin, the
+per-pass cost means, the arm-A comparability facts all have
+freshness assumptions that are currently implicit. And hovering over
+the close: the Discussion walk (DD1–DD10) crosses a model boundary
+untouched — the strawman was built by this instance, and whether its
+leans read as persuasive or merely plausible to the instance that
+walks them with Shawn is exactly the kind of thing continuity files
+flatten.
+
+### Prompt: What question emerged that wasn't pursued?
+
+V1 measured the dedup artefact at arm A: within-pass 20 m dedup
+removes 57 of 973 detections and lifts F1@20 m by +0.020 — *at the
+12.5 % overlap every Era-1 corpus has always had*. The unpursued
+question is what that implies for the committed Era-1 single-pass
+boards, which were scored without cross-tile dedup: if the effect is
+uniform it cancels out of within-board comparisons, but the absolute
+F1s carry a small systematic depression, and whether it is uniform
+across configurations (recall-leaning configs plausibly duplicate
+more) is an empirical question nobody has asked. The H13 scoring
+chain will produce the machinery to answer it almost for free.
+Second, smaller: why Pro text prefers the union (k = 1) at N = 3
+while the Flash comparator prefers the intersection (k = 3) at
+matched configuration — the threshold-as-model-property mechanism
+behind Obs 415's rider is characterised but not explained.

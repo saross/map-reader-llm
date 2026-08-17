@@ -8578,3 +8578,48 @@ vocabulary; board-descriptive sections were deferred as
 context-independent. The Discussion outline walk was deliberately
 left as S135's opener. All subagents ran on the Opus tier per the
 standing conservation policy; the session ran in Fable.
+
+## Session 135 — 2026-08-17/18 — the five-item $0 block, the L4 walk, and H13 arms B+C run to completion
+
+One continuous Fable session (amd-tower + sapphire), ~US$5.75 API.
+(1) **Discussion outline strawman** committed
+(`docs/paper/discussion-outline.md`, DD1–DD10 all OPEN with leans;
+the walk itself did not run — the PI redirected to analyses).
+(2) **The five-item $0 analysis block** under a solo pre-run review
+(PI AFK, directed start; `planning/s135-analysis-block-2026-08-17.md`)
+with a clean-context Opus audit substituting for the operator
+dialogue (15 findings adjudicated; headline: H6 inputs re-anchored
+from the E57 Flash mis-dispatch pools to genuine-Pro
+n1-pro-rerun-384). Delivered: errata census refreshed to E78
+vintage (two-vintage recount, blind-verified exact); E45 bootstrap
+pairings for the H2/H3 family contrasts (both registered CIs
+exclude zero; verifier reproduced both legs bit-for-bit); H6
+A-06/A-07/A-09 (verification round completed the Pro 2×2 —
+temperature identified as the driver; A-07 text threshold reverses
+between models at matched N=3; A-09 CLOSED against the Flash
+frontier; A-08 explicitly not computable); four register rows (36
+total), hypothesis-outcome table drift-green; every methods-draft
+[PENDING]/[unverified] slot closed, including the M.3 D-S fills.
+(3) **L4 walk**: E45 row confirmatory-with-deviation; H6 rows
+post-hoc (ruled "in full" after a requested rationale); counting
+rule cite-individually adopted; A-06 upgrade accepted → Obs 415 +
+precision sweep. (4) **H13 arms B+C** (S134 ruling, E75): phase
+gate (caught the missing scorer dedup and the 2.99× arm-C tile
+count), design rulings (carried brief-text config, flat n=3,
+real-time flex), $0 validations + $0.0051 smoke, `/audit-config`
+READY after correcting T=0.0→T=1.0 to match arm A, PI-gated launch:
+6 passes (B 430×3, C 999×3) + a 1-tile recovery, all committed.
+Actual $5.74 vs the $4.37 gate (+31 %), flagged not absorbed.
+Handoff + reflections written; commits `2604a5e7d`→`3b4ec3f38` (25)
+plus handoff/reflection commits, all pushed; local = sapphire =
+origin; zbook still behind.
+
+**Contextual assumptions.** Fable credits exhausted at close —
+Session 136 runs on a different model by design; everything queued
+(H13 $0 scoring chain, the Discussion walk, Methods conversions) is
+model-agnostic and fully specified in committed docs. The smoke
+test priced T=0.0 output volumes; its pin did not survive the
+audit's temperature correction — the overrun is a process lesson
+(re-pin after any parameter change), not an API pricing change.
+Sapphire holds untracked regenerable tile trees
+(inputs/tiles_512_ov128, _ov256) that the scoring chain needs.
