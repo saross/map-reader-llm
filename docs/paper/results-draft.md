@@ -1,12 +1,12 @@
 # Results — working draft
 
-> **Last revised**: 2026-08-14 (Session 132, queue item 5: every 55-map
-> figure moved to the ruling-21 standardised reference; both boards
-> re-tiered with IDENTICAL tier structures, so no conclusion moved;
-> blind-verifier corrections applied). Prior: 2026-06-13 (Session 114:
-> draft notes resolved; § R9 added; § R7 lesson (iii) strengthened with
-> the registered MCC tiering). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-08-17 (Session 134: post-reconciliation
+> confirmatory passages landed — per-subsection registration-status
+> markers (D16), the hypothesis-outcome table framing after § R0, the
+> family-FDR verdicts in §§ R2–R4 including H2's falsified-prediction
+> passage and H7's direction reversal, and the H11 trigger/scope
+> clauses). Prior: 2026-08-14 (Session 132, standardised-reference
+> migration). See [§ Changelog](#changelog) for revision history.
 
 **Status**: first full-prose draft for collaborative revision. Every number
 is anchored to a registered manifest condition or analysis
@@ -61,6 +61,22 @@ the statistics.
 the matching algorithm (Hungarian, per map), and bootstrap CIs once Methods
 prose lands.]
 
+Table [N] reconciles all fifteen registered hypotheses against what
+was executed. Each row states the hypothesis's registered tier, its
+execution disposition, its family-FDR verdict where one applies, the
+register entries that carry it, and the errata that qualify it. The
+table is generated from the analysis register rather than maintained
+by hand, so its cells cannot drift from the underlying record
+(Methods § M.x). Three statuses recur in the sections that follow.
+Confirmatory results are reported with their family-FDR verdicts.
+Registered-exploratory results are reported as hypothesis-generating
+characterisation. Post-hoc results carry no registered standing and
+are reported as characterisation only. Each section below opens with
+a one-line registration status naming which of these applies.
+
+[TABLE N: `results/hypothesis-outcome-table/hypothesis-outcome-table.md`
+— the generated table, placed here per D16.]
+
 ## R1. Working precisions are empirical properties of the system, not free parameters
 
 Buffer radius is the analyst's largest free parameter, so we derived it
@@ -90,12 +106,17 @@ plateau), and all 55-map results at 50 m.
 
 ## R2. Single-pass baselines: a broad statistical tie at modest performance
 
+*Registration status: H1, H4, H5, H7, and H8 are confirmatory
+hypotheses, adjudicated in the registered family FDR (Methods § M.x).
+H7 is rejected. H1, H4, H5, and H8 are not rejected. The boards that
+organise this subsection are post-hoc characterisation.*
+
 This subsection compresses the preregistered single-factor results
-(H1, H4, H5, H7, H8) into one board-led narrative: each hypothesis was
-tested as registered, the per-hypothesis detail tables go to
-supplementary material, and the body reports the pattern they share —
-because that shared pattern, not any single-factor effect, is the
-finding. [Resolved 2026-06-13: board-led compression adopted; see
+(H1, H4, H5, H7, H8) into one board-led narrative: each registered
+contrast was tested and carries a family-FDR verdict, the
+per-hypothesis detail tables go to supplementary material, and the
+body reports the pattern the factors share, because that shared
+pattern, not any single-factor effect, is the finding. [Resolved 2026-06-13: board-led compression adopted; see
 Changelog.]
 
 No single-pass configuration separates from the pack. On the Era-1 board
@@ -112,13 +133,39 @@ configs from one another. Two robust patterns do emerge: text-modality
 prompts dominate image-only prompts at the bottom of the board, and a
 metric trade-off recurs in which text cells reach F1 ≈ 0.60 at
 near-zero MCC while image cells trade F1 for far better tile
-discrimination. Single-pass performance, at best ~0.63 F1, is the floor
+discrimination.
+
+The registered contrasts read the same way, with one exception. In
+the confirmatory family (Methods § M.x), H1's registered pooled
+modality contrast returns a null (Δ = +0.0238, 95 % CI −0.0104 to
++0.0585, two-sided paired bootstrap p = 0.1774, adjusted p = 0.248),
+and H4 (example ordering), H5 (negative-text treatment), and H8
+(library composition and scaling) are likewise not rejected (adjusted
+p = 0.217, 0.834, and 0.834). The exception is temperature. H7
+rejects (adjusted p = 0.00233, from the registered five-level Phase 2b
+sweep: single-pass text track, F1, +0.072 at FDR p = 0.004), and
+it rejects against its own registered expectation, which was that the
+vendor-recommended T = 1.0 would be optimal with lower temperatures
+degrading performance. The reverse held: on the single-pass Pro
+384 px board (F1), the two Tier-1 cells run at T = 0.0 and the two
+Tier-2 cells at T = 0.7, so low temperature won at a factor level the
+registration listed but did not predict (`n1-baseline-matrix-384`).
+Temperature claims in this study do not generalise across metric or
+corpus, so each is stated with its instrument, corpus, and metric
+attached. Single-pass performance, at best ~0.63 F1, is the floor
 every architectural intervention below is measured against.
 
 ## R3. Consensus voting buys real performance; its mechanism is pass diversity
 
+*Registration status: H3 is confirmatory and rejects in the family
+FDR (voting improves on single-pass). H9 is registered-exploratory
+and its prediction found no support. The thinking-level dividend is a
+post-hoc discovery.*
+
 Consensus voting over repeated passes (H3) delivers the study's first
-large, statistically clean gain. Pooling N independent passes and
+large, statistically clean gain. The consensus-beats-single-pass
+comparison is the registered H3 test, and it survives the
+confirmatory family at adjusted p = 0.00035 (Methods § M.x). Pooling N independent passes and
 thresholding on cross-pass vote count lifts the text pipeline from the
 single-pass tie (~0.63) to 0.69–0.77 at each pool's best (N, threshold)
 operating point — and the size of the lift depends on *pass diversity*,
@@ -142,10 +189,30 @@ once a verifier stage exists.
 
 ## R4. The proposer–verifier architecture is the best architecture on every tile size
 
+*Registration status: H2 is confirmatory and rejects in the family
+FDR against its own registered prediction, a falsification in the
+architecture's favour. Its scope is coarse-to-fine only, because the
+registered Condition C never ran (E59). H11 is registered-exploratory
+with its trigger met. The 82-cell board is post-hoc
+characterisation.*
+
 Adding an adversarial verification stage (H2) — an independent
 text-prompted pass that re-examines a crop around each candidate and
 assigns an acceptance probability — is the single best architectural move
 in the study, on every tile size tested.
+
+The registration predicted the opposite. H2's registered prediction
+was that neither two-stage architecture would improve on single-stage
+detection with voting, and its registered stopping rule set a bar of
+at least 0.05 F1 before two-stage designs would be pursued at all.
+Both now read in the architecture's favour. The family FDR rejects
+H2's null at adjusted p = 0.00035 (Methods § M.x), and on the 384 px
+instrument the verified pipeline's margin over the best
+consensus-only configuration (0.890 against 0.814) exceeds the
+registered adoption bar. Since the registered fine-to-coarse
+Condition C was never built (erratum E59), this conclusion is scoped
+to the coarse-to-fine proposer–verifier architecture rather than to
+two-stage designs generally.
 
 On the Era-1 definitive board (82 cells: 36 single-pass + 42 consensus + 4
 clean PV cells), the sole Tier-1 leader is HIGH-thinking text consensus
@@ -156,7 +223,11 @@ pairs significant, 10 tiers). Just as consequentially for budgets, a
 MINIMAL single-pass plus verifier — two calls per tile — reaches the same
 tier as the 30-call HIGH-thinking consensus (0.770), beating it on MCC.
 
-The verifier also interacts strongly with tile size (H11). The tile-size
+The verifier also interacts strongly with tile size (H11, a
+registered-exploratory hypothesis whose trigger, 512 px performance
+below F1 0.85, was met on every cell of the single-pass board). The
+registered comparison was 512 px against 384 px. The 256 px arm is a
+post-hoc extension. The tile-size
 optimum is architecture-dependent: single-pass climbs monotonically with
 tile size (256 px 0.342 < 384 px 0.520 < 512 px 0.606 in the clean
 isolation), because without any false-positive filter larger tiles give
@@ -463,6 +534,28 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-08-17 — Post-reconciliation confirmatory passages (Session 134)
+
+Drafted immediately after the D17 reconciliation block and its PI
+walk closed, so the registration-status prose matches the
+vocabulary-v2 register exactly. Added: the Table [N] framing
+paragraph and placeholder after § R0 (D16: table at the Results
+head); per-subsection registration-status markers at §§ R2–R4; the
+§ R2 family-verdict passage (H1 null with the CMT-0106 numbers;
+H4/H5/H8 not rejected; H7 rejected with its registered
+vendor-default expectation reversed, qualifiers per the D8 rider);
+the § R3 H3 family sentence (adjusted p = 0.00035); the § R4
+falsified-prediction passage (registered null and ≥0.05 stopping
+rule both read in the architecture's favour, 0.890 vs 0.814 on the
+384 px instrument; scope limited to coarse-to-fine per E59); and the
+H11 trigger-met/256 px-extension clauses. Changed, not added: § R2's
+"each hypothesis was tested as registered" tightened to "each
+registered contrast was tested and carries a family-FDR verdict",
+which is what the reconciled register supports. Numbers sourced from
+the family-FDR row, `h1-cmt0106-pooled-modality`, the e43 row's
+Phase 2b anchor, and `diversity-dividend-384`; companion Methods
+subsection at `docs/paper/methods-draft.md` § M.x.
 
 ### 2026-08-14 (b) — Blind-verifier corrections applied
 
