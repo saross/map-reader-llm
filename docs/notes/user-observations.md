@@ -662,3 +662,46 @@ runs without a human in the loop between go and report. Worth
 Shawn's verdict on whether that autonomy envelope is right, and
 whether it extends to the D17 reconciliation block (which touches
 the manifest and schema — higher stakes than prose).
+
+## Pending review — 2026-08-17 (Session 134 handoff candidates)
+
+**Candidate 1 — Shawn's context gauge beat Claude's, and the
+correction unlocked the session's second half.** At the drafting
+decision Claude reported context as roughly 40 % remaining and
+recommended stopping after one small unit; Shawn corrected in the
+moment — "you are just over 50% context and are doing very well, I'd
+push forward with as much drafting as possible" — and the corrected
+budget fitted the entire Methods outline walk plus six drafted
+subsections with room left for the full reflection. Claude's
+self-estimates ran conservative all session; the external gauge was
+the accurate one. Worth keeping if the pattern recurs: calibrate
+against Shawn's read, not against precautionary padding.
+
+**Candidate 2 — the outline-first correction arrived with the
+compliment attached.** "I'm happy you've drafted methods, but I'd be
+more comfortable reviewing an outline with you first before we start
+drafting too much text" — a process correction delivered mid-approval.
+Claude had extended prose into a section whose structure Shawn had
+not settled, on momentum from the licensed Results work. The remedy
+cost two question rounds (MD1–MD6) and licensed five further
+subsections, so the correction was cheap to honour — but it was
+Shawn who had to make it; Claude should have proposed the outline
+walk before drafting M.x, not after.
+
+**Candidate 3 — Shawn asked the gating question Claude should have
+volunteered.** "Do we need to undertake any of the remaining analyses
+flagged as not completed before we write up more text?" — the
+dependency check between the queued $0 analyses and the prose was
+material (it produced the [PENDING]-slot strategy and the five-item
+dependency table), and it came from Shawn, not from Claude's
+"push forward with drafting" proposal. When proposing to extend work
+into a new phase, the blocking-dependency question belongs in the
+proposal, not in the reply to it.
+
+**Candidate 4 — in-the-moment close: "thanks for a productive
+session, happy that we're back into writing."** Recorded as data
+about session shape: a $0 day that executed a five-item
+reconciliation block, closed two decision walks (17 rulings), and
+landed the paper's first post-reconciliation prose read to Shawn as
+productive specifically because it crossed the analysis→writing
+boundary he has been steering toward since S113.
