@@ -18,7 +18,7 @@ census document is the only file edited).
 
 **Anchoring convention**: the `L` column gives the line number of the entry's `### En:` heading in
 `protocol-errata.md`. The `Type` column reproduces the entry's own declared `Type` field **verbatim**
-— including the five entries whose labels fall outside the document's own three-way scheme.
+— including the 26 entries whose labels fall outside the document's own three-way scheme (see § 1).
 
 **The document's declared scheme** (`protocol-errata.md:11-15`):
 
@@ -60,7 +60,9 @@ today the bare counts are therefore 22 / 16 / 11 with 8 composites. Any consumer
 compile-time "18 bare Deviations" figure is quoting a superseded vintage — this bit
 `docs/paper/methods-draft.md`, whose first tally asserted 16 bare deviations *at E78 scope*
 (correct only for E1–E57) and 28 composites (correct for neither vintage; the true E78 figure
-is 26).
+is 26). The same draft passage also lists E59 among the composite-labelled omission-recording
+entries; E59's Type is bare `Deviation` (it records an omission in substance, not by label),
+so only E74/E75/E78 belong to that labelled set.
 
 **Reading for the Methods passage.** The scheme admits three types; 26 of 78 entries now use
 composite or ad-hoc labels, including several of the most interpretively consequential (E56,
@@ -68,9 +70,9 @@ E57, E45). **If the paper reports "N deviations" it must say which counting rule
 Defensible headline numbers at E78 vintage:
 
 - **18** — strict bare `Deviation` label only.
-- **30** — all deviation-labelled entries (bare + the ten deviation-family composites incl. the
-  three omission-recorders) + E47 (a reversion *is* a protocol change, back to the registered
-  value) + E52 (self-labelled deviation with a qualifier).
+- **30** — all deviation-labelled entries (the 18 bare + the eleven deviation-family composites
+  listed in the grouping paragraph above, E52 included) + E47 (a reversion *is* a protocol
+  change, back to the registered value).
 - **27** — as 30, excluding the three omission-recording entries (E74, E75, E78), which record
   registered work that never happened rather than changes to what did.
 
@@ -328,7 +330,7 @@ tile-level resampling (`L1682`; the actual specification lives at `decisions-log
    preregistered CI procedure.** The honest statement is that CIs on the deployment/condition
    register use BCa at 10,000 iterations with tile-level resampling and seed 42, that this departs
    from the registered percentile/1,000 specification, and that the migration is traced at
-   `results/ci-metadata-registry.md:187` (commit `e20f3e18`). **Recommend a new erratum (E58) rather
+   `results/ci-metadata-registry.md:187` (commit `e20f3e18`). **Recommend a new erratum (the number E58 has since been taken — next free is E79) rather
    than an edit to E54**, since E54's date (2026-04-21) precedes the migration and rewriting it would
    destroy the chronology.
 
@@ -406,8 +408,12 @@ one command.
 — by the S135 clean-context auditor and by the executing session's parser — with an
 initial two-entry disagreement traced to E31/E32's bulleted `- **Type**:` format (a third
 derivation); after the format fix the two counts agree exactly (22/18/12/26 at E1–E78,
-22/16/11/8 at E1–E57 today). Line anchors in §§ 2–3 were re-derived programmatically against
-the current file (60 updated). Sections 4 and 5 retain compile-time `protocol-errata.md:<range>`
+22/16/11/8 at E1–E57 today). The **heading** line anchors in §§ 2–3 (the `L` column and the
+`(L###)` row keys) were re-derived programmatically against the current file (60 updated); the
+17 **inline quote citations** inside § 3's interpretation cells (e.g. "`L639`", "`L1155-1158`")
+were NOT re-derived and remain compile-time vintage — the 2026-08-17 blind verification
+confirmed the quoted content verbatim inside the correct entries but found all 17 inline
+anchors displaced by the file's growth. Treat § 3's inline `L###` as historical. Sections 4 and 5 retain compile-time `protocol-errata.md:<range>`
 citations; ranges may have drifted with the file's growth. At refresh, E54's entry was re-read
 in full (its 1,000-registered / 10,000-post-hoc split stands, with the 2026-07-28 attribution
 correction to Decision 10) and E56's heading and thesis were confirmed against the entry
@@ -415,6 +421,20 @@ correction to Decision 10) and E56's heading and thesis were confirmed against t
 re-audited.
 
 ## Changelog
+
+### 2026-08-17 (later) — Blind-verification corrections
+
+Fresh-context verifier (Opus): all counts confirmed exact across
+three independent derivations (zero counting errors; the E10/E37/E45
+retype list proven complete by a full Type diff against the
+compile-time vintage; all 78 heading anchors and Type strings
+re-checked programmatically). Six findings, all citation hygiene,
+corrected: header "five entries" → 26; § 3's 17 inline quote
+anchors flagged as compile-time vintage with § 6's claim narrowed
+to heading anchors; § 5's stale "(E58)" recommendation renumbered
+(next free E79); the E59 label-vs-substance point added to § 1's
+methods-draft diagnosis; the § 1 deviation-family boundary
+harmonised with the "30" option.
 
 ### 2026-08-17 — Refreshed to E78 vintage (S135 analysis block, item 3)
 
