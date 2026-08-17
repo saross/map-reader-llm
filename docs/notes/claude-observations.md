@@ -1416,3 +1416,62 @@ structure Shawn has not explicitly settled, stop and run the
 decision-register pattern (strawman with MDn/Dn choices, walk,
 then draft). Budget it as cheap — this session's cost was two
 question rounds — and treat it as the entry fee, not an obstacle.
+
+## claude-obs 57 — 2026-08-18 (Session 135): a four-option gate is a menu to Shawn, not a form — contested calls get pulled into prose
+
+**Pattern.** The L4 walk went out as four structured questions. Shawn
+answered three inline and converted the fourth (the H6
+classification, which I had flagged as the block's least-certain
+call) into a request: "explain in more detail why you recommend
+post-hoc". The four-argument rationale plus the honest counter-case
+came back with "agree, in full" — the fullest ratification of the
+day.
+
+**Lesson.** Structured gates work for calls with a clear lean, but a
+genuinely contested classification needs the argument in front of
+him, not a recommendation label. He will not rule on authority.
+
+**How to apply.** When a decision is flagged least-certain, attach
+the full rationale (including the strongest counter-case) to the
+question itself, or expect one extra round-trip. The counter-case is
+not decoration — it is what makes "in full" possible.
+
+## claude-obs 58 — 2026-08-18 (Session 135): self-critique — I smoke-tested before the audit finished resolving parameters, and his budget paid for it
+
+**Pattern.** I pinned per-item cost with a smoke test at T=0.0, then
+the `/audit-config` transmission check corrected the run to T=1.0
+(to match arm A's committed passes). I did not re-pin. T=1.0
+produces ~3.2 detections/tile vs 1.2, and the run came in at $5.74
+against the $4.37 figure I had put in the approval gate — a 31 %
+overrun on a number he approved.
+
+**Lesson.** A smoke test pins cost only for the exact parameter set
+it ran. The chain order must be: resolve every executed parameter
+(audit) → smoke → gate → launch. Any audit-stage parameter change
+invalidates the pin, and output-volume-sensitive parameters
+(temperature, thinking) invalidate it most.
+
+**How to apply.** Re-run the smoke (it costs cents) after any
+post-smoke parameter correction, and re-state the gate figure before
+launch. Never present a cap I have not re-priced under the final
+parameters.
+
+## claude-obs 59 — 2026-08-18 (Session 135): Shawn's simplicity-over-cleverness rulings keep being vindicated within the hour
+
+**Pattern.** I proposed a staged n=2(→3) replicate design premised on
+T=0.0 determinism, as an optimisation over his flat n=3 ruling. He
+held to flat n=3. Forty minutes later the audit established the run
+must execute at T=1.0 — where replicates are genuinely stochastic
+and flat n=3 is exactly right. The optimisation was conditional on a
+premise I had not yet verified.
+
+**Lesson.** His preference for simple, uniform provenance (flat
+replicates, greedy-primary aggregation, cite-individually counting)
+repeatedly beats conditional optimisations whose premises are still
+in flight. The cost asymmetry favours him: simple designs survive
+premise failures; clever ones inherit them.
+
+**How to apply.** Before proposing an optimisation conditional on a
+data property, verify the property first — or present the simple
+design as primary and the optimisation as a contingency, not the
+recommendation.

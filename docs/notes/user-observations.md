@@ -675,3 +675,28 @@ cost two question rounds (MD1–MD6) and licensed five further
 subsections, so the correction was cheap to honour — but it was
 Shawn who had to make it; Claude should have proposed the outline
 walk before drafting M.x, not after.
+
+## S135 candidates (2026-08-18, pending review)
+
+Drafted at handoff; accept / edit / discard / replace. Unanswered
+candidates hold over — silence never discards.
+
+- **Candidate 1 — the rationale-before-ruling exchange.** On the H6
+  classification you declined to rule on a recommendation label and
+  asked for the full argument; the written rationale (four arguments
+  plus the counter-case) got "agree, in full". Was the initial
+  compressed presentation an under-serve for a call of that weight,
+  or is recommendation-first-then-expand the right default with
+  expansion on demand?
+- **Candidate 2 — the AFK block's decision-deferral.** You returned
+  from AFK to a completed, blind-verified five-analysis batch with
+  every PI-facing call queued as PROPOSED rather than made (classes,
+  counting rule, sign-offs). Did that division — full execution
+  autonomy, zero decision autonomy — land where you want it, or was
+  anything queued that Claude should have just decided (or vice
+  versa)?
+- **Candidate 3 — the cost-overrun flagging.** The H13 run came in
+  31 % over the gated figure and Claude led with that fact in the
+  report and commit rather than absorbing a ~$1.40 difference.
+  Useful calibration, or noise at this dollar scale? (The underlying
+  process error is logged as claude-obs 58 either way.)
