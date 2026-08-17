@@ -1,120 +1,293 @@
 {
- "_README": "A-06 (registered: preregistration.md:677 \u2014 'If alternative outperforms Flash-optimal by >=0.03 F1, flag factor for adjustment', registered WITHOUT a CI condition). None of the four registered Phase-2 factors (M/E, H5, T, O) is cleanly evaluable from existing Pro data: the only available contrast moves temperature AND thinking level together (the corners design; E40-class confound). The registered rule's arithmetic is reported on that confounded contrast, per modality, with the confound named. The delta CI is the operational augmentation documented in lib_phase4_transfer.py:22-27 and is fed a real paired tile-bootstrap CI of the DIFFERENCE (B=1,000, seed 42), never a per-condition F1 CI.",
- "generated_at": "2026-08-17T09:18:01.764494+00:00",
+ "_README": "A-06 (registered: preregistration.md:677 \u2014 'If alternative outperforms Flash-optimal by >=0.03 F1, flag factor for adjustment', registered WITHOUT a CI condition). REVISED after the S135 blind verification (HIGH-1): the full genuine-Pro thinking x temperature 2x2 exists per modality (n1-pro-rerun-384 + pv-diag-384 Pro baselines, same Era-2 corpus, identical instruction/library hashes), so the registered factor T IS cleanly evaluable at matched thinking \u2014 the earlier confounded-only framing is superseded. Thinking level is not a registered Phase-2 factor and is reported as decomposition context. M/E, H5, and O remain unvaried. The delta CI is the operational augmentation documented in lib_phase4_transfer.py:22-27, fed a paired tile-bootstrap CI of the DIFFERENCE (B=1,000, seed 42), never a per-condition F1 CI. Replicate-count caveat: the T=0.7 corners average 5-10 passes vs 3 for the others (same estimator, differing precision).",
+ "generated_at": "2026-08-17T09:46:16.123539+00:00",
  "registered_prediction": "H6: 'The Flash-optimal configuration will perform well on Pro, with at most minor factor adjustments needed' (preregistration.md, H6 Prediction).",
- "contrasts": {
+ "registered_factor_T": {
   "text": {
-   "carried_level_f1": 0.7555,
-   "alternative_level_f1": 0.8045,
-   "delta": 0.049,
-   "registered_rule_fires (delta >= 0.03)": true,
-   "delta_ci95_paired_bootstrap": {
-    "lower": 0.026676,
-    "upper": 0.070325
-   },
-   "delta_bootstrap": {
-    "n_iterations": 1000,
-    "seed": 42,
-    "observed_delta": 0.048999,
-    "bootstrap_delta_mean": 0.048584,
-    "ci95": {
-     "lower": 0.026676,
-     "upper": 0.070325
+   "high": {
+    "t07_f1": 0.745,
+    "t00_f1": 0.8045,
+    "delta (manifest eval vintage)": 0.0595,
+    "delta (pass-averaged micro vintage)": 0.05951,
+    "registered_rule_fires (delta >= 0.03)": true,
+    "delta_ci95_paired_bootstrap": {
+     "lower": 0.033959,
+     "upper": 0.084565
     },
-    "prop_le_zero": 0.0,
-    "prop_gt_zero": 1.0,
-    "p_value": 0.001,
-    "p_at_floor": true,
-    "ci_excludes_zero": true
-   },
-   "library_result_with_ci_augmentation": {
-    "factor_name": "temperature+thinking (text; E40-class confound)",
-    "flash_optimal_level": "pro-text-medium-t07 (carried T=0.7, MEDIUM)",
-    "tested_levels": [
-     {
-      "level": "pro-text-medium-t07 (carried T=0.7, MEDIUM)",
-      "f1": 0.7555,
-      "ci_lower": null,
-      "ci_upper": null,
-      "delta": 0.0,
-      "flagged": false,
-      "is_baseline": true
+    "_ci_semantics": "CI of the F1 DIFFERENCE (T=0.0 minus T=0.7), not of either condition's F1 \u2014 including inside library_result_with_ci_augmentation.tested_levels, whose schema labels it 'ci' (audit M-6)",
+    "delta_bootstrap": {
+     "n_iterations": 1000,
+     "seed": 42,
+     "observed_delta": 0.05951,
+     "bootstrap_delta_mean": 0.05911,
+     "ci95": {
+      "lower": 0.033959,
+      "upper": 0.084565
      },
-     {
-      "level": "pro-text-high-t0 (T=0.0, HIGH)",
-      "f1": 0.8045,
-      "ci_lower": 0.026676,
-      "ci_upper": 0.070325,
-      "delta": 0.049000000000000044,
-      "flagged": true,
-      "is_baseline": false
-     }
-    ],
-    "flagged": true,
-    "recommended_level": "pro-text-high-t0 (T=0.0, HIGH)",
-    "message": "Factor temperature+thinking (text; E40-class confound) flagged: Alternative level(s) outperform Flash-optimal by \u22650.03. Recommended: pro-text-high-t0 (T=0.0, HIGH) (F1=0.804)"
+     "prop_le_zero": 0.0,
+     "prop_gt_zero": 1.0,
+     "p_value": 0.001,
+     "p_at_floor": true,
+     "ci_excludes_zero": true
+    },
+    "library_result_with_ci_augmentation": {
+     "factor_name": "T (text, matched HIGH thinking)",
+     "flash_optimal_level": "T=0.7 (pv-diag-384::baseline-pro-text-high-t-0-7)",
+     "tested_levels": [
+      {
+       "level": "T=0.7 (pv-diag-384::baseline-pro-text-high-t-0-7)",
+       "f1": 0.745,
+       "ci_lower": null,
+       "ci_upper": null,
+       "delta": 0.0,
+       "flagged": false,
+       "is_baseline": true
+      },
+      {
+       "level": "T=0.0 (n1-pro-rerun-384::baseline-pro-text-high-t-0-0)",
+       "f1": 0.8045,
+       "ci_lower": 0.033959,
+       "ci_upper": 0.084565,
+       "delta": 0.0595,
+       "flagged": true,
+       "is_baseline": false
+      }
+     ],
+     "flagged": true,
+     "recommended_level": "T=0.0 (n1-pro-rerun-384::baseline-pro-text-high-t-0-0)",
+     "message": "Factor T (text, matched HIGH thinking) flagged: Alternative level(s) outperform Flash-optimal by \u22650.03. Recommended: T=0.0 (n1-pro-rerun-384::baseline-pro-text-high-t-0-0) (F1=0.804)"
+    },
+    "n_passes": {
+     "t07": 10,
+     "t00": 3
+    }
    },
-   "n_passes": {
-    "carried": 3,
-    "alternative": 3
+   "medium": {
+    "t07_f1": 0.7555,
+    "t00_f1": 0.7921,
+    "delta (manifest eval vintage)": 0.0366,
+    "delta (pass-averaged micro vintage)": 0.036628,
+    "registered_rule_fires (delta >= 0.03)": true,
+    "delta_ci95_paired_bootstrap": {
+     "lower": 0.011291,
+     "upper": 0.062031
+    },
+    "_ci_semantics": "CI of the F1 DIFFERENCE (T=0.0 minus T=0.7), not of either condition's F1 \u2014 including inside library_result_with_ci_augmentation.tested_levels, whose schema labels it 'ci' (audit M-6)",
+    "delta_bootstrap": {
+     "n_iterations": 1000,
+     "seed": 42,
+     "observed_delta": 0.036628,
+     "bootstrap_delta_mean": 0.036546,
+     "ci95": {
+      "lower": 0.011291,
+      "upper": 0.062031
+     },
+     "prop_le_zero": 0.0,
+     "prop_gt_zero": 1.0,
+     "p_value": 0.001,
+     "p_at_floor": true,
+     "ci_excludes_zero": true
+    },
+    "library_result_with_ci_augmentation": {
+     "factor_name": "T (text, matched MEDIUM thinking)",
+     "flash_optimal_level": "T=0.7 (n1-pro-rerun-384::baseline-pro-text-medium-t-0-7)",
+     "tested_levels": [
+      {
+       "level": "T=0.7 (n1-pro-rerun-384::baseline-pro-text-medium-t-0-7)",
+       "f1": 0.7555,
+       "ci_lower": null,
+       "ci_upper": null,
+       "delta": 0.0,
+       "flagged": false,
+       "is_baseline": true
+      },
+      {
+       "level": "T=0.0 (pv-diag-384::baseline-pro-text-medium-t-0-0)",
+       "f1": 0.7921,
+       "ci_lower": 0.011291,
+       "ci_upper": 0.062031,
+       "delta": 0.03660000000000008,
+       "flagged": true,
+       "is_baseline": false
+      }
+     ],
+     "flagged": true,
+     "recommended_level": "T=0.0 (pv-diag-384::baseline-pro-text-medium-t-0-0)",
+     "message": "Factor T (text, matched MEDIUM thinking) flagged: Alternative level(s) outperform Flash-optimal by \u22650.03. Recommended: T=0.0 (pv-diag-384::baseline-pro-text-medium-t-0-0) (F1=0.792)"
+    },
+    "n_passes": {
+     "t07": 3,
+     "t00": 3
+    }
    }
   },
   "image": {
-   "carried_level_f1": 0.595,
-   "alternative_level_f1": 0.6658,
-   "delta": 0.0708,
-   "registered_rule_fires (delta >= 0.03)": true,
-   "delta_ci95_paired_bootstrap": {
-    "lower": 0.036877,
-    "upper": 0.101575
-   },
-   "delta_bootstrap": {
-    "n_iterations": 1000,
-    "seed": 42,
-    "observed_delta": 0.070744,
-    "bootstrap_delta_mean": 0.070848,
-    "ci95": {
-     "lower": 0.036877,
-     "upper": 0.101575
+   "high": {
+    "t07_f1": 0.5908,
+    "t00_f1": 0.6658,
+    "delta (manifest eval vintage)": 0.075,
+    "delta (pass-averaged micro vintage)": 0.074953,
+    "registered_rule_fires (delta >= 0.03)": true,
+    "delta_ci95_paired_bootstrap": {
+     "lower": 0.04206,
+     "upper": 0.107635
     },
-    "prop_le_zero": 0.0,
-    "prop_gt_zero": 1.0,
-    "p_value": 0.001,
-    "p_at_floor": true,
-    "ci_excludes_zero": true
-   },
-   "library_result_with_ci_augmentation": {
-    "factor_name": "temperature+thinking (image; E40-class confound)",
-    "flash_optimal_level": "pro-image-medium-t07 (carried T=0.7, MEDIUM)",
-    "tested_levels": [
-     {
-      "level": "pro-image-medium-t07 (carried T=0.7, MEDIUM)",
-      "f1": 0.595,
-      "ci_lower": null,
-      "ci_upper": null,
-      "delta": 0.0,
-      "flagged": false,
-      "is_baseline": true
+    "_ci_semantics": "CI of the F1 DIFFERENCE (T=0.0 minus T=0.7), not of either condition's F1 \u2014 including inside library_result_with_ci_augmentation.tested_levels, whose schema labels it 'ci' (audit M-6)",
+    "delta_bootstrap": {
+     "n_iterations": 1000,
+     "seed": 42,
+     "observed_delta": 0.074953,
+     "bootstrap_delta_mean": 0.07514,
+     "ci95": {
+      "lower": 0.04206,
+      "upper": 0.107635
      },
-     {
-      "level": "pro-image-high-t0 (T=0.0, HIGH)",
-      "f1": 0.6658,
-      "ci_lower": 0.036877,
-      "ci_upper": 0.101575,
-      "delta": 0.07079999999999997,
-      "flagged": true,
-      "is_baseline": false
-     }
-    ],
-    "flagged": true,
-    "recommended_level": "pro-image-high-t0 (T=0.0, HIGH)",
-    "message": "Factor temperature+thinking (image; E40-class confound) flagged: Alternative level(s) outperform Flash-optimal by \u22650.03. Recommended: pro-image-high-t0 (T=0.0, HIGH) (F1=0.666)"
+     "prop_le_zero": 0.0,
+     "prop_gt_zero": 1.0,
+     "p_value": 0.001,
+     "p_at_floor": true,
+     "ci_excludes_zero": true
+    },
+    "library_result_with_ci_augmentation": {
+     "factor_name": "T (image, matched HIGH thinking)",
+     "flash_optimal_level": "T=0.7 (pv-diag-384::baseline-pro-image-high-t-0-7)",
+     "tested_levels": [
+      {
+       "level": "T=0.7 (pv-diag-384::baseline-pro-image-high-t-0-7)",
+       "f1": 0.5908,
+       "ci_lower": null,
+       "ci_upper": null,
+       "delta": 0.0,
+       "flagged": false,
+       "is_baseline": true
+      },
+      {
+       "level": "T=0.0 (n1-pro-rerun-384::baseline-pro-image-high-t-0-0)",
+       "f1": 0.6658,
+       "ci_lower": 0.04206,
+       "ci_upper": 0.107635,
+       "delta": 0.07499999999999996,
+       "flagged": true,
+       "is_baseline": false
+      }
+     ],
+     "flagged": true,
+     "recommended_level": "T=0.0 (n1-pro-rerun-384::baseline-pro-image-high-t-0-0)",
+     "message": "Factor T (image, matched HIGH thinking) flagged: Alternative level(s) outperform Flash-optimal by \u22650.03. Recommended: T=0.0 (n1-pro-rerun-384::baseline-pro-image-high-t-0-0) (F1=0.666)"
+    },
+    "n_passes": {
+     "t07": 5,
+     "t00": 3
+    }
    },
-   "n_passes": {
-    "carried": 3,
-    "alternative": 3
+   "medium": {
+    "t07_f1": 0.595,
+    "t00_f1": 0.6555,
+    "delta (manifest eval vintage)": 0.0605,
+    "delta (pass-averaged micro vintage)": 0.060015,
+    "registered_rule_fires (delta >= 0.03)": true,
+    "delta_ci95_paired_bootstrap": {
+     "lower": 0.029897,
+     "upper": 0.088783
+    },
+    "_ci_semantics": "CI of the F1 DIFFERENCE (T=0.0 minus T=0.7), not of either condition's F1 \u2014 including inside library_result_with_ci_augmentation.tested_levels, whose schema labels it 'ci' (audit M-6)",
+    "delta_bootstrap": {
+     "n_iterations": 1000,
+     "seed": 42,
+     "observed_delta": 0.060015,
+     "bootstrap_delta_mean": 0.059927,
+     "ci95": {
+      "lower": 0.029897,
+      "upper": 0.088783
+     },
+     "prop_le_zero": 0.0,
+     "prop_gt_zero": 1.0,
+     "p_value": 0.001,
+     "p_at_floor": true,
+     "ci_excludes_zero": true
+    },
+    "library_result_with_ci_augmentation": {
+     "factor_name": "T (image, matched MEDIUM thinking)",
+     "flash_optimal_level": "T=0.7 (n1-pro-rerun-384::baseline-pro-image-medium-t-0-7)",
+     "tested_levels": [
+      {
+       "level": "T=0.7 (n1-pro-rerun-384::baseline-pro-image-medium-t-0-7)",
+       "f1": 0.595,
+       "ci_lower": null,
+       "ci_upper": null,
+       "delta": 0.0,
+       "flagged": false,
+       "is_baseline": true
+      },
+      {
+       "level": "T=0.0 (pv-diag-384::baseline-pro-image-medium-t-0-0)",
+       "f1": 0.6555,
+       "ci_lower": 0.029897,
+       "ci_upper": 0.088783,
+       "delta": 0.0605,
+       "flagged": true,
+       "is_baseline": false
+      }
+     ],
+     "flagged": true,
+     "recommended_level": "T=0.0 (pv-diag-384::baseline-pro-image-medium-t-0-0)",
+     "message": "Factor T (image, matched MEDIUM thinking) flagged: Alternative level(s) outperform Flash-optimal by \u22650.03. Recommended: T=0.0 (pv-diag-384::baseline-pro-image-medium-t-0-0) (F1=0.655)"
+    },
+    "n_passes": {
+     "t07": 3,
+     "t00": 3
+    }
    }
   }
  },
- "a08_statement": "A-08 (the registered three-way transfer verdict, preregistration.md:693-699) is not computed: the registered Phase 2 varies four factors (M/E, H5, T, O) one at a time on Pro, and the existing Pro data vary none of them cleanly \u2014 the only available contrast moves temperature and thinking level together (E40-class confound), so 'all factors within 0.03 of Flash-optimal' is unevaluable. Computing a verdict from one confounded factor would misrepresent the registered criterion; the honest disposition is not-computable-as-registered."
+ "thinking_decomposition_context (not a registered factor)": {
+  "text": {
+   "t0-0": {
+    "high_f1": 0.8045,
+    "medium_f1": 0.7921,
+    "delta": 0.0124,
+    "reaches_0.03": false,
+    "delta_ci95_paired_bootstrap": {
+     "lower": -0.010073,
+     "upper": 0.035112
+    }
+   },
+   "t0-7": {
+    "high_f1": 0.745,
+    "medium_f1": 0.7555,
+    "delta": -0.0105,
+    "reaches_0.03": false,
+    "delta_ci95_paired_bootstrap": {
+     "lower": -0.034098,
+     "upper": 0.012573
+    }
+   }
+  },
+  "image": {
+   "t0-0": {
+    "high_f1": 0.6658,
+    "medium_f1": 0.6555,
+    "delta": 0.0103,
+    "reaches_0.03": false,
+    "delta_ci95_paired_bootstrap": {
+     "lower": -0.016713,
+     "upper": 0.038436
+    }
+   },
+   "t0-7": {
+    "high_f1": 0.5908,
+    "medium_f1": 0.595,
+    "delta": -0.0042,
+    "reaches_0.03": false,
+    "delta_ci95_paired_bootstrap": {
+     "lower": -0.035818,
+     "upper": 0.027849
+    }
+   }
+  }
+ },
+ "superseded_confounded_contrast": {
+  "note": "The original S135 run reported only the corner contrast (T=0.0+HIGH vs T=0.7+MEDIUM: text +0.0490, dCI [+0.0267, +0.0703]; image +0.0708, dCI [+0.0369, +0.1016]) under a 'confound cannot be resolved at $0' premise the blind verification falsified. Retained for the record (preserve, do not delete); superseded by registered_factor_T above."
+ },
+ "a08_statement": "A-08 (the registered three-way transfer verdict, preregistration.md:693-699) is not computed: the registered Phase 2 varies four factors (M/E, H5, T, O) one at a time on Pro, and the existing Pro data cleanly vary exactly ONE of them \u2014 temperature, via the completed thinking x temperature 2x2 (S135 blind verification, HIGH-1; the earlier 'none cleanly' premise is superseded). M/E, H5, and O remain unvaried, so 'all factors within 0.03 of Flash-optimal' is unevaluable. Computing a three-way verdict from one factor would misrepresent the registered criterion; the honest disposition is not-computable-as-registered."
 }

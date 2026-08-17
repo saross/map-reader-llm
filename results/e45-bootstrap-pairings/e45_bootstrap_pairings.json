@@ -1,8 +1,8 @@
 {
- "_README": "E45 bootstrap pairings: the registered bootstrap construction (tile-level resampling, percentile CI95; B=1,000 per Decision 10, with the E54 B=10,000 sensitivity) computed for the two family-FDR primary contrasts that entered the family on permutation p-values (H2, H3). Pairing per E45's disclosure obligation; the permutation p remains the family input \u2014 this artefact is the paired disclosure, not a replacement.",
- "generated_at": "2026-08-17T09:09:39.258314+00:00",
+ "_README": "E45 bootstrap pairings: the registered bootstrap construction computed for the two family-FDR primary contrasts that entered the family on permutation floors (H2, H3; H8's family input is also permutation-sourced but is a Simes minimum over seven contrasts, for which a paired delta is not defined). REGISTERED quantities: the percentile CI95 from tile-level resampling and the CI-excludes-zero significance reading (Decision 10, decisions-log.md:335-345; B=1,000 registered, B=10,000 per E54). The 2*min-tail p-value is NOT registered \u2014 it is carried for comparability with the family-FDR H1 leg's convention only (audit M-9). The permutation p remains the family input; this artefact is the paired disclosure, not a replacement.",
+ "generated_at": "2026-08-17T09:46:15.569092+00:00",
  "registration_anchors": {
-  "registered_inference": "docs/methodology/preregistration/osf/preregistration.md:293 (95% bootstrapped CIs); parameters Decision 10, docs/methodology/preregistration/decisions-log.md:337",
+  "registered_inference": "docs/methodology/preregistration/osf/preregistration.md:293 (95% bootstrapped CIs); parameters Decision 10, docs/methodology/preregistration/decisions-log.md:335-345 (parameter row :345)",
   "family_construction": "reports/verification/family-fdr-registration.md \u00a7 6 (H2, H3 primary rows)",
   "errata": [
    "E45",
@@ -50,6 +50,16 @@
     "p_value": {
      "recomputed": 0.0,
      "committed": 0.0,
+     "pass": true
+    },
+    "wins_a": {
+     "recomputed": 52.0,
+     "committed": 52.0,
+     "pass": true
+    },
+    "losses_a": {
+     "recomputed": 27.0,
+     "committed": 27.0,
      "pass": true
     }
    },

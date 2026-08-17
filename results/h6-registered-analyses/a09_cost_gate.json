@@ -1,6 +1,8 @@
 {
- "_README": "A-09 (registered: preregistration.md:691). Cost basis per the S135 audit (HIGH-7): audited per-pass cost_usd from results/passes-manifest.json on BOTH sides for the matched-configuration comparison; the all-Flash audited pareto_v2 frontier (results/verifier-robustness/pareto/, flex-tier audited dollars, same corpus and buffer) is the Flash-OPTIMAL yardstick the registered gate implies. Comparability windows are operational choices, stated inline, not registered.",
- "generated_at": "2026-08-17T09:18:01.764494+00:00",
+ "_README": "A-09 (registered: preregistration.md:691). Cost bases: audited per-pass cost_usd from results/passes-manifest.json (per-pass extractor) on both sides of the matched-configuration comparison; the all-Flash pareto_v2 frontier (results/verifier-robustness/pareto/, modelled token-load-audit flex dollars) as the Flash-optimal yardstick. The two bases are not identically constructed (audit M-8); if the Pro passes were billed above flex rates the Pro side is over-costed, which makes the CLOSED verdict conservative. Comparability windows are operational choices declared in the limb blocks, not registered.",
+ "generated_at": "2026-08-17T09:46:16.123539+00:00",
+ "registered_gate_verdict": "CLOSED",
+ "verdict_basis": "the Flash-optimal frontier (min6, min11) \u2014 the yardstick the registered scope limitation implies. The matched-configuration comparison measures the pure model effect at Pro's preferred corner (Flash never optimised there) and does not decide the gate.",
  "matched_configuration_comparison": {
   "text": {
    "pro_single_pass": {
@@ -12,13 +14,39 @@
     "cost_per_pass_usd": 0.5971
    },
    "flash_same_config_n3_consensus_best": {
-    "f1_at_20m": 0.5665,
+    "f1_at_20m": 0.566502,
     "cost_usd": 1.7913
    },
-   "limb1_matched_config": {
-    "comparison": "Pro 1 pass vs Flash-same-config 3-pass consensus (costs within ~5%)",
-    "f1_ratio": 1.4201,
-    "fires (>=1.20 at comparable cost)": true
+   "limbs_vs_flash_same_config_n3": {
+    "f1_ratio_pro_over_other": 1.4201,
+    "cost_ratio_pro_over_other": 1.0346,
+    "cost_comparable_within_10pct": true,
+    "f1_comparable_within_0.02": false,
+    "limb1_fires (>=1.20 F1 at comparable cost)": true,
+    "limb2_fires (comparable F1 at <=50% cost)": false
+   },
+   "coverage_disclosure": {
+    "pro": {
+     "n_passes": 3,
+     "statuses": [
+      "ok"
+     ],
+     "n_tiles_processed_range": [
+      487,
+      487
+     ]
+    },
+    "flash_comparator": {
+     "n_passes": 3,
+     "statuses": [
+      "partial"
+     ],
+     "n_tiles_processed_range": [
+      485,
+      485
+     ]
+    },
+    "note": "the Flash comparator passes are status=partial (485-486/487 tiles) while all Pro passes are ok at 487/487 \u2014 a one-sided gap that slightly depresses Flash F1 and cost (audit M-2); the matched-config limb results sit within that uncertainty where margins are thin"
    }
   },
   "image": {
@@ -31,20 +59,124 @@
     "cost_per_pass_usd": 3.9717
    },
    "flash_same_config_n3_consensus_best": {
-    "f1_at_20m": 0.5525,
+    "f1_at_20m": 0.552454,
     "cost_usd": 11.9151
    },
-   "limb1_matched_config": {
-    "comparison": "Pro 1 pass vs Flash-same-config 3-pass consensus (costs within ~5%)",
-    "f1_ratio": 1.2051,
-    "fires (>=1.20 at comparable cost)": true
+   "limbs_vs_flash_same_config_n3": {
+    "f1_ratio_pro_over_other": 1.2052,
+    "cost_ratio_pro_over_other": 1.3207,
+    "cost_comparable_within_10pct": false,
+    "f1_comparable_within_0.02": false,
+    "limb1_fires (>=1.20 F1 at comparable cost)": false,
+    "limb2_fires (comparable F1 at <=50% cost)": false
+   },
+   "coverage_disclosure": {
+    "pro": {
+     "n_passes": 3,
+     "statuses": [
+      "ok"
+     ],
+     "n_tiles_processed_range": [
+      487,
+      487
+     ]
+    },
+    "flash_comparator": {
+     "n_passes": 3,
+     "statuses": [
+      "partial"
+     ],
+     "n_tiles_processed_range": [
+      485,
+      486
+     ]
+    },
+    "note": "the Flash comparator passes are status=partial (485-486/487 tiles) while all Pro passes are ok at 487/487 \u2014 a one-sided gap that slightly depresses Flash F1 and cost (audit M-2); the matched-config limb results sit within that uncertainty where margins are thin"
    }
   }
  },
- "flash_optimal_frontier": {
+ "flash_optimal_frontier_evaluation": {
   "source": "results/verifier-robustness/pareto/pareto_v2.json",
-  "note": "verdict against the frontier computed in the findings doc from the pareto artefact's efficient set; the artefact is committed and cited rather than re-derived here",
-  "efficient_set_present": true
+  "rungs_used": {
+   "min6": {
+    "f1": 0.8784,
+    "est_cost_usd": 2.43
+   },
+   "min11": {
+    "f1": 0.8835,
+    "est_cost_usd": 4.0
+   }
+  },
+  "per_modality": {
+   "text": {
+    "pro_single_pass_vs_min6": {
+     "f1_ratio_pro_over_other": 0.9159,
+     "cost_ratio_pro_over_other": 0.7627,
+     "cost_comparable_within_10pct": false,
+     "f1_comparable_within_0.02": false,
+     "limb1_fires (>=1.20 F1 at comparable cost)": false,
+     "limb2_fires (comparable F1 at <=50% cost)": false
+    },
+    "pro_n3_union_vs_min6": {
+     "f1_ratio_pro_over_other": 0.9793,
+     "cost_ratio_pro_over_other": 2.288,
+     "cost_comparable_within_10pct": false,
+     "f1_comparable_within_0.02": true,
+     "limb1_fires (>=1.20 F1 at comparable cost)": false,
+     "limb2_fires (comparable F1 at <=50% cost)": false
+    },
+    "pro_single_pass_vs_min11": {
+     "f1_ratio_pro_over_other": 0.9106,
+     "cost_ratio_pro_over_other": 0.4633,
+     "cost_comparable_within_10pct": false,
+     "f1_comparable_within_0.02": false,
+     "limb1_fires (>=1.20 F1 at comparable cost)": false,
+     "limb2_fires (comparable F1 at <=50% cost)": false
+    },
+    "pro_n3_union_vs_min11": {
+     "f1_ratio_pro_over_other": 0.9736,
+     "cost_ratio_pro_over_other": 1.39,
+     "cost_comparable_within_10pct": false,
+     "f1_comparable_within_0.02": false,
+     "limb1_fires (>=1.20 F1 at comparable cost)": false,
+     "limb2_fires (comparable F1 at <=50% cost)": false
+    }
+   },
+   "image": {
+    "pro_single_pass_vs_min6": {
+     "f1_ratio_pro_over_other": 0.758,
+     "cost_ratio_pro_over_other": 6.4759,
+     "cost_comparable_within_10pct": false,
+     "f1_comparable_within_0.02": false,
+     "limb1_fires (>=1.20 F1 at comparable cost)": false,
+     "limb2_fires (comparable F1 at <=50% cost)": false
+    },
+    "pro_n3_union_vs_min6": {
+     "f1_ratio_pro_over_other": 0.8223,
+     "cost_ratio_pro_over_other": 19.4278,
+     "cost_comparable_within_10pct": false,
+     "f1_comparable_within_0.02": false,
+     "limb1_fires (>=1.20 F1 at comparable cost)": false,
+     "limb2_fires (comparable F1 at <=50% cost)": false
+    },
+    "pro_single_pass_vs_min11": {
+     "f1_ratio_pro_over_other": 0.7536,
+     "cost_ratio_pro_over_other": 3.9341,
+     "cost_comparable_within_10pct": false,
+     "f1_comparable_within_0.02": false,
+     "limb1_fires (>=1.20 F1 at comparable cost)": false,
+     "limb2_fires (comparable F1 at <=50% cost)": false
+    },
+    "pro_n3_union_vs_min11": {
+     "f1_ratio_pro_over_other": 0.8175,
+     "cost_ratio_pro_over_other": 11.8024,
+     "cost_comparable_within_10pct": false,
+     "f1_comparable_within_0.02": false,
+     "limb1_fires (>=1.20 F1 at comparable cost)": false,
+     "limb2_fires (comparable F1 at <=50% cost)": false
+    }
+   }
+  }
  },
- "a08_statement": "A-08 (the registered three-way transfer verdict, preregistration.md:693-699) is not computed: the registered Phase 2 varies four factors (M/E, H5, T, O) one at a time on Pro, and the existing Pro data vary none of them cleanly \u2014 the only available contrast moves temperature and thinking level together (E40-class confound), so 'all factors within 0.03 of Flash-optimal' is unevaluable. Computing a verdict from one confounded factor would misrepresent the registered criterion; the honest disposition is not-computable-as-registered."
+ "a08_statement": "A-08 (the registered three-way transfer verdict, preregistration.md:693-699) is not computed: the registered Phase 2 varies four factors (M/E, H5, T, O) one at a time on Pro, and the existing Pro data cleanly vary exactly ONE of them \u2014 temperature, via the completed thinking x temperature 2x2 (S135 blind verification, HIGH-1; the earlier 'none cleanly' premise is superseded). M/E, H5, and O remain unvaried, so 'all factors within 0.03 of Flash-optimal' is unevaluable. Computing a three-way verdict from one factor would misrepresent the registered criterion; the honest disposition is not-computable-as-registered."
 }
