@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T00:25:36Z",
+  "generated_at": "2026-08-17T00:26:59Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -1317,6 +1317,149 @@
           "results/h12-v2/analysis_summary.md"
         ],
         "last_extracted_at": "2026-08-17T00:25:36Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "h6-phase4-transfer",
+      "type": "disposition",
+      "conditions_compared": [],
+      "hypothesis_refs": [
+        "H6"
+      ],
+      "preregistered": "not-executed",
+      "deviations": [
+        "E40",
+        "E41",
+        "E74"
+      ],
+      "predicted_outcome": "The Flash-optimal configuration will perform well on Pro, with at most minor factor adjustments needed (osf/preregistration.md:655) \u2014 never tested as registered.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "NOT EXECUTED \u2014 the registered four-phase Flash\u2192Pro transfer protocol (osf/preregistration.md:651-701) never ran: 13 PLACEHOLDER strings remain in studies/phase4-transfer.yaml, the 20-tile holdout manifest was never created, and only one of four registered OFAT factors was ever varied on Pro. The substitute 487-tile/384 px Pro comparison is an exploratory extension (E41), not H6. The only registered confirmatory hypothesis with no result; excluded and disclosed from the family BH-FDR (m=7). Full disclosure: E74.",
+      "paper_section": "Methods",
+      "output_path": "reports/d17-inventory/unexecuted-register.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "reports/d17-inventory/unexecuted-register.md"
+        ],
+        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "h13-overlap-stride",
+      "type": "disposition",
+      "conditions_compared": [],
+      "hypothesis_refs": [
+        "H13"
+      ],
+      "preregistered": "not-executed",
+      "deviations": [
+        "E64",
+        "E75"
+      ],
+      "predicted_outcome": "The registration poses a question, not a directional prediction: does increasing tile overlap improve detection performance, and is the cost justified? (osf/preregistration.md:1020) \u2014 never tested.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "NOT EXECUTED \u2014 the registered three-arm overlap/stride contrast (osf/preregistration.md:1024-1028) never ran: arms B (25%) and C (50%) were never built, and overlap was a fixed parameter (12.5% at every tile size), never a manipulated factor, so no registered H13 analysis (all comparative) is computable. Silently dropped with no dated decision; cannot shelter under the Tier C 'registered as deferred' framing. Full disclosure: E75.",
+      "paper_section": "Methods",
+      "output_path": "reports/d17-inventory/unexecuted-register.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "reports/d17-inventory/unexecuted-register.md"
+        ],
+        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "h14-cross-model-consistency",
+      "type": "disposition",
+      "conditions_compared": [],
+      "hypothesis_refs": [
+        "H14"
+      ],
+      "preregistered": "not-executed",
+      "deviations": [
+        "E76"
+      ],
+      "predicted_outcome": "The Flash-optimal configuration will perform similarly on Claude and GPT models, with at most minor factor adjustments needed (osf/preregistration.md:1062) \u2014 never tested.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "NOT EXECUTED \u2014 registered as deferred at lodgement (osf/preregistration.md:1052-1068), the honest case: the deferral and its reasons are in the registration itself. Positively verified: all 1,131 model-labelled passes are Gemini; no Anthropic or OpenAI client was ever a dependency. Every generalisation claim is scoped to Gemini; within-Google comparisons are never H14 evidence. Qualifications (deferral provenance, execution-plan contradiction, coverage-document overstatement): E76.",
+      "paper_section": "Methods",
+      "output_path": "reports/d17-inventory/unexecuted-register.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "reports/d17-inventory/unexecuted-register.md"
+        ],
+        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "h15-cross-model-voting",
+      "type": "disposition",
+      "conditions_compared": [],
+      "hypothesis_refs": [
+        "H15"
+      ],
+      "preregistered": "not-executed",
+      "deviations": [
+        "E77"
+      ],
+      "predicted_outcome": "The registration poses a question, not a directional prediction: does cross-model voting outperform within-model voting at equivalent total passes? (osf/preregistration.md:1080) \u2014 never tested.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "NOT EXECUTED \u2014 registered as deferred with a dependency on H14 as its first ground (osf/preregistration.md:1082-1086); H14 never ran, so H15 was gated, not skipped. Positively verified: no scored condition aggregates votes across models (123 distinct proposer pools, all single-model). The cross-model cascades that exist (Pro/Flash-3.5 verifiers over Flash pools) test verification, not voting, and must never be cited as H15. Full disclosure incl. the mixed-pool provenance hazard: E77.",
+      "paper_section": "Methods",
+      "output_path": "reports/d17-inventory/unexecuted-register.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "reports/d17-inventory/unexecuted-register.md"
+        ],
+        "last_extracted_at": "2026-08-17T00:26:59Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "h2-condition-c-fine-to-coarse",
+      "type": "disposition",
+      "conditions_compared": [],
+      "hypothesis_refs": [
+        "H2"
+      ],
+      "preregistered": "not-executed",
+      "deviations": [
+        "E59"
+      ],
+      "predicted_outcome": "Neither two-stage architecture will improve F1 over single-stage detection with voting (osf/preregistration.md:461) \u2014 for Condition C, never tested (Condition B falsified the registered null; see family-bh-fdr-confirmatory).",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "NOT EXECUTED \u2014 H2's registered Condition C (fine-to-coarse context expansion, osf/preregistration.md:478-482) never ran: no expand_* config or system instruction was ever created (the registered mapping at osf:2015 names them), and the registered one-tailed test, \u22650.05 stopping rule, and advance criterion are unevaluable for that architecture. H2's registered test is two-thirds executed; every H2 conclusion must be phrased over coarse-to-fine, never 'two-stage architectures' generally. The archived Strategy-10 approximation does not discharge it. Full disclosure: E59 (+ 2026-08-17 update).",
+      "paper_section": "Methods",
+      "output_path": "reports/d17-inventory/unexecuted-register.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "reports/d17-inventory/unexecuted-register.md"
+        ],
+        "last_extracted_at": "2026-08-17T00:26:59Z",
         "extractor_version": "0.7.1"
       }
     }
