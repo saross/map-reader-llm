@@ -105,14 +105,12 @@ table framing, R2–R9 status markers, and R2–R4 confirmatory
 passages landed (`99d6f9e27`, `c818aeaca`) — prereg-linked passages
 first, board-descriptive sections deliberately deferred as
 context-independent. (7) Reflection set + claude-obs 54–56
-(`6e7800986`); S134 user-obs candidates pending in
-`docs/notes/user-observations.md`; two working-notes candidates held
-over in this entry (see below). Commits `dfb0eb4ad` → this handoff,
-all pushed. **Held-over working-notes candidates (no silent
-discard)**: (a) the discharge principle as a registerable
-methodological observation; (b) the H-keyed blind spot (registered
-obligations without hypothesis numbers escape per-hypothesis
-reconciliation — the § 8.9 discovery).
+(`6e7800986`); observation gates CLOSED in-session: user-obs
+candidate 2 kept (1/3/4 discarded), and both working-notes
+candidates approved and minted as **Obs 413** (the discharge
+principle) and **Obs 414** (the H-keyed blind spot). Commits
+`dfb0eb4ad` → this handoff, all pushed. Nothing pends in either
+notes file.
 
 ## PRIOR SESSION (134) — original queue [Session 133 CLOSED 2026-08-16; ran in Fable]
 

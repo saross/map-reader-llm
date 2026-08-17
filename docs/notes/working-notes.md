@@ -26983,7 +26983,64 @@ Blind-verified (125/123/119/4, zero numerical errors). Sources:
 `results/55maps-ds-summary-v2/report.md` §§ 4.1/4.3/5.3/5.4 +
 2026-08-15 changelog entries (commits `87b828ab2`, `83ea4fad7`).
 
+## Observation 413: Registration-status classification follows discharge, not resemblance — the principle that unified the vocabulary-v2 relabel (Session 134, 2026-08-17)
+
+*Drafted at S134 handoff; approved in-session 2026-08-17 (both S134
+candidates kept).*
+
+The S134 relabel of the analyses register into the five-status
+vocabulary (confirmatory / confirmatory-with-deviation /
+registered-exploratory / post-hoc / not-executed) initially rested on
+case-by-case strictness rulings until a PI clarifying question
+("registered method, unregistered thinking level — post-hoc or
+something else?") forced the criterion into the open: **an analysis
+is registered-class only if it discharges a registered obligation; a
+second application of a registered method to an unregistered factor,
+corpus, or pass pool is an extension, hence post-hoc** — the pattern
+E41 established for the substitute Pro comparison. The principle
+retro-unified five earlier rulings, resolved the register's sharpest
+apparent inconsistency (`diversity-dividend-384`
+confirmatory-with-deviation while `pv-diag-384-consensus-calibration`
+sits post-hoc on the same pools: the former discharges the registered
+H3 contrast and supplies the family BH-FDR's H3 input,
+`reports/verification/family-fdr-registration.md:698`; the latter
+discharges nothing, the registered sweep being discharged by
+`phase3a-consensus-calibration`), and dissolved the blind verifier's
+one upheld disagreement. It is now normative text in the schema
+(`docs/manifest-schemas/analyses-manifest.schema.json`, the
+`post-hoc` description) and the walk record
+(`reports/s134-relabel-walk-dossier.md` § 8). For the paper: the
+Methods § M.x prose states the criterion as "discharge, not
+resemblance", and any future status adjudication should apply it
+before reaching for per-case judgement.
+
+## Observation 414: Per-hypothesis reconciliation has a structural blind spot — registered obligations without hypothesis numbers (Session 134, 2026-08-17)
+
+*Drafted at S134 handoff; approved in-session 2026-08-17 (both S134
+candidates kept).*
+
+The D17 reconciliation ran four parallel per-hypothesis inventories
+(2026-07-27), a consolidated unexecuted register, an errata census,
+and the S134 evidence pass — and every one of them missed the same
+registered obligation: the § 8.9 post-experiment verification
+(`osf/preregistration.md:2139-2145`, a confirmatory full-Hungarian
+comparison of F1, latency, and token cost at the optimal
+configuration, verifying the minimal-thinking decision). It carries
+no H-number, so every audit keyed on H1–H15 walked past it; it
+surfaced only when the S134 blind verifier swept the whole
+registration rather than the hypothesis frame. The latency limb has
+no coverage anywhere in the study, so the registration's anticipated
+"equivalent at a third the latency" finding cannot be claimed (now
+disclosed as E78, with a named-programme disposition row
+`s8-9-post-experiment-verification` keeping the register complete
+beyond the H frame). The general lesson for registry audits: **an
+audit keyed on an ID scheme narrower than the register's commitments
+inherits the scheme's blind spots**; completeness passes must sweep
+the source document, not the ID index. The register's
+single-source-of-truth claim was H-scoped until this fix and did not
+know it.
+
 ## Candidates pending review — none outstanding
 
-The two Session-133 candidates were approved in-session on 2026-08-15
-and minted above as Observations 411–412.
+The two Session-134 candidates were approved in-session on 2026-08-17
+and minted above as Observations 413–414.
