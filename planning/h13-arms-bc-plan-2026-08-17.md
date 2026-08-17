@@ -121,7 +121,52 @@ off the pinned values) halts; no silent mode or model changes.
 n = 2(→3) → **$2.92 expected, $4.37 cap**; flat n = 3 → **$4.37**.
 Model `gemini-3-flash-preview` pinned; real-time flex; sapphire.
 
+## 7. Audit outcome and run record (2026-08-17/18)
+
+**`/audit-config`: READY TO LAUNCH** (7/7 requirements matched; no
+blockers). The transmission check **caught and corrected a
+temperature mismatch**: the committed arm-A passes
+(`retest-phase2a::brief-text`) all ran at **T = 1.0** (verified in
+the passes manifest; the plan's T = 0.0 came from a stale
+60-tile-era note in the phase3a YAML), so the run launched at
+T = 1.0 to preserve arm comparability — which also made the flat
+n = 3 ruling correct (replicates genuinely stochastic). One
+WARNING, to disclose in the findings: arm A's passes are March
+pipeline vintage, B/C today's (config and instruction file
+identical; E66-class orchestration evolution).
+
+**Run record** (PI-approved gate; commits `11f20b2a0` smoke,
+`3b4ec3f38` main): 6 passes complete — arm B 1,353/1,362/1,380
+detections, arm C 3,034/3,130/3,125; one tile failed (JSON parse,
+armB run_1 `K-35-078-1_Lesovo_x2304_y1536`) and was recovered as an
+additive pass (`run_1_recovery`, $0.0021); two transient 503s
+retried. **Actual spend $5.74 vs the $4.37 gate figure (+31 %),
+flagged to the PI, not absorbed**: the smoke priced T = 0.0 output
+volumes (~1.2 detections/tile) and the audit's correction to
+T = 1.0 (~3.2/tile) inflated output tokens; per-item cost stayed
+under the 2× halt threshold mid-run. **Lesson recorded: re-pin the
+smoke after ANY audit-stage parameter change.**
+
+**Next ($0, sapphire) — the scoring chain**: per-arm bounds files
+(`generate_tile_bounds.py --manifest` per arm tree); uniform 20 m
+within-pass dedup before scoring for ALL arms (arm A re-scored from
+committed detections — committed arm-A F1s are NOT comparable);
+F1-vs-overlap with paired tile bootstrap deltas; cost-efficiency on
+actual audited spend; edge-detection analysis (new script:
+detection/GT recall vs distance-to-tile-boundary per arm); findings
+doc; register row (post-hoc class per the discharge principle, PI
+to ratify) + E75 disposition update; verification stack per S135
+conventions. Note: sapphire holds the (untracked, regenerable) tile
+trees `inputs/tiles_512_ov128/` and `_ov256/` — do not clean them
+before scoring.
+
 ## Changelog
+
+### 2026-08-18 — Audit READY; run complete; overrun recorded
+
+Section 7 added: audit outcome (temperature catch), run record
+(6 passes + recovery, $5.74 actual vs $4.37 gate, +31 % flagged),
+and the fully-specified $0 scoring chain for the next session.
 
 ### 2026-08-17 (later) — Validations complete; price pinned
 
