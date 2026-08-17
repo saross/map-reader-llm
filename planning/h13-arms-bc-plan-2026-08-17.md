@@ -89,7 +89,46 @@ failures halt before spend; the smoke test's per-item cost exceeding
 2× the estimate halts for re-approval; any tiling anomaly (counts
 off the pinned values) halts; no silent mode or model changes.
 
+## 6. Validation results (2026-08-17, all four complete)
+
+1. **Dedup uniformity (V1)**: on arm-A `retest-phase2a/brief-text`
+   run_1 (340 tiles, 12.5 % overlap), within-pass 20 m dedup removes
+   57/973 detections (54 multi-clusters) and moves F1@20 m
+   0.5397 → 0.5595 (FP 565 → 509, TP 408 → 407). The duplication
+   artefact is material even at arm A, confirming the uniform-dedup
+   scoring rule; all three arms will be scored deduped, arm A
+   re-scored from committed detections.
+2. **Carried config (V2)**: resolved from
+   `studies/phase3a-h3-voting-track2.yaml` `carried_forward` —
+   `prompts/configs/detect_brief-text.json` ("brief-text"), Phase 2a
+   best M/E, T = 0.0, MINIMAL, 512 px. Arm-A committed detections
+   exist (3 runs). **Rider**: at T = 0.0 output is near-deterministic
+   (E31 verified byte-identical replicates), so flat n = 3 buys
+   little — a staged design (run 2 passes, complete n = 3 only if
+   they differ) is proposed at the gate.
+3. **Tilings (V3)**: trees generated on sapphire
+   (`inputs/tiles_512_ov128`, `_ov256`); footprint-majority
+   manifests committed — **arm B = 430 tiles, arm C = 999**
+   (1,429/pass-set). The plan's geometric estimate (492/1,015)
+   over-counted by anchoring at the footprint rather than the raster
+   origin; the manifests from real tiles are the pinned figures.
+4. **Smoke test (V4)**: 5 calls, `gemini-3-flash-preview`,
+   brief-text, T = 0.0 MINIMAL, real-time flex — 5/5 ok, 7,948
+   tokens, **$0.0051 = $0.00102/tile**, within 5 % of the scaled
+   audited estimate (commit `11f20b2a0`).
+
+**Final priced scenarios (pinned)**: n = 1 → **$1.46**; staged
+n = 2(→3) → **$2.92 expected, $4.37 cap**; flat n = 3 → **$4.37**.
+Model `gemini-3-flash-preview` pinned; real-time flex; sapphire.
+
 ## Changelog
+
+### 2026-08-17 (later) — Validations complete; price pinned
+
+All four validations executed ($0 + $0.0051 smoke). Pinned: B 430 /
+C 999 tiles; $0.00102/tile. V1 grounds the uniform-dedup rule
+empirically; V2 surfaces the T = 0.0 determinism rider on the n = 3
+ruling. Awaiting the final API gate + `/audit-config`.
 
 ### 2026-08-17 — Initial plan (S135)
 
