@@ -189,13 +189,118 @@ E-anchored), explicitly flagged as the block's least-certain calls.
    without confirmed unavailability.
 10. All classification calls PROPOSED, never self-ratified.
 
+## Clean-context audit adjudication (2026-08-17)
+
+The fresh-context Opus audit returned 15 findings (1 BLOCKER, 1
+blocker-class contract defect, 5 HIGH, 4 MEDIUM, 4 LOW) against a
+21-file / 23-probe denominator. All 15 confirmed on adjudication.
+Dispositions:
+
+1. **BLOCKER-1 (fix — scope amendment)**: the plan's "H6 Pro data"
+   (`n1-outstanding-384::pro-*-consensus-*of3`) is **Flash** — the
+   E57 mis-dispatch (`passes-manifest` model fields; F1 0.494 vs the
+   genuine-Pro 0.804 matches E57's table to 3 dp). **Amended H6
+   inputs**: genuine Pro = `n1-pro-rerun-384` (12 per-pass
+   detections, 4 corners × 3 runs, model `gemini-3.1-pro-preview`
+   verified). A genuine-Pro N = 3 consensus is materialised at $0
+   via the standard merge machinery for the two high-t0.0 corners;
+   the E57 mis-dispatch pools are **reused as the matched-N Flash
+   comparator** (preserve-and-compare heuristic). ⏳PI: ratify the
+   amended source; the walk ruling's words were "on the existing Pro
+   data", which `n1-pro-rerun-384` is.
+2. **BLOCKER-2 (fix)**: `preregistered: null` crashes the table
+   generator (`generate_hypothesis_outcome_table.py:137-143`
+   raises). "Sign-off null" means `manually_verified_at` **only**;
+   every new row carries its PROPOSED class in `preregistered`, with
+   the PROPOSED marker recorded in `provenance`.
+3. **HIGH-3 + MEDIUM-11 (fix)**: the H3 gate re-anchors on the
+   tiering artefact's `pairwise` block (micro-F1 0.814118 /
+   0.386778 / Δ 0.42734) — the quantities a paired tile bootstrap
+   operates on; the headline 0.3871 is the eval mean-of-runs
+   vintage (≤ 0.0005 apart, per the tiering script's own
+   documentation). Statistic choice now explicit: the bootstrap
+   resamples exactly the per-tile tables the committed permutation
+   consumed (pass-averaged counts for the single-pass arm).
+4. **HIGH-4 (fix — census scope widened)**: the plan's binary
+   framing was wrong. The census itself is stale inside E1–E57
+   (E10/E37/E45 retyped post-compilation: bare `Deviation` 18 → 16
+   within E1–E57; E78-scope bare counts are 22/18/12/26). The
+   refresh does a four-bucket recount at both vintages with a
+   before→after table covering the retypes, corrects the census §§ 1
+   and 3 tables, and fixes methods-draft (16 → 18, 28 → 26, and the
+   omission-qualifier set is E74/E75/E78 — E59's Type is bare
+   `Deviation`).
+5. **HIGH-5 (fix)**: A-07 as registered presupposes matched N;
+   |T−26|/26 over Pro's k ∈ {1,2,3} is data-independent. **Primary
+   = matched-N = 3 comparison** (genuine-Pro curves vs the E57
+   Flash N = 3 curves, same corpus/config family); the registered
+   N = 30-vs-N = 3 form is declared not-computable-as-registered
+   (A-08 pattern), with the fraction-form reported descriptively.
+6. **HIGH-6 (fix)**: A-06 verdict computed under the **registered**
+   rule (Δ ≥ 0.03, no CI condition, `preregistration.md:677`); the
+   library's CI augmentation is fed a real paired tile-bootstrap
+   **delta** CI (never the per-condition F1 CI, which is vacuous),
+   and labelled operational. Scope: zero of the four registered
+   factors are cleanly evaluable; the nearest contrast (temperature
+   confounded with thinking, both corners) reports under the E40
+   confound caveat.
+7. **HIGH-7 (fix)**: A-09's cost basis = per-pass audited `cost_usd`
+   from `passes-manifest` on **both** sides (genuine-Pro ~$1.85/pass
+   text vs Flash per-pass at matched configuration), basis stated in
+   the artefact; `pass-budget-pareto-v2` (all-Flash) cited as
+   context only.
+8. **MEDIUM-8 (fix via reclassification)**: the H6 rows are
+   PROPOSED **post-hoc**, not confirmatory-with-deviation — the
+   discharge principle (Obs 413) rules: registered method applied to
+   material other than the registered Phase-4 runs is E41-class
+   extension. The existing `h6-phase4-transfer` not-executed
+   disposition row then stands unchanged and the outcome table does
+   not move. Supersedes the scratchpad row stubs. ⏳PI: this is the
+   block's least-certain call; the walk's phrase "registered
+   analyses" pulls the other way.
+9. **MEDIUM-9 (accept + inline mitigation)**: no schema-validation
+   runner exists; validation runs inline (jsonschema 4.26.0) as part
+   of L3. A permanent `validate_manifests.py` is a follow-up
+   candidate, out of scope here.
+10. **MEDIUM-10 (fix in prose)**: the permutation p remains the
+    family-FDR input (registered-before-compute, historical); the
+    bootstrap is the E45 **paired disclosure**, never a replacement.
+    `family_fdr.json` is not regenerated. The positional
+    `headline_contrasts[2]` fragility is noted as standing risk, not
+    triggered by this block.
+11. **LOW-12 (moot)**: sapphire reached HEAD after the plan was
+    written; step zero is a no-op.
+12. **LOW-13 (fix)**: `tests/README.md` does not exist; tier
+    markers per `pytest.ini`. New tests carry `tier1` markers.
+13. **LOW-14 (fix)**: all new artefacts cite the full
+    `docs/methodology/preregistration/osf/preregistration.md` path.
+14. **LOW-15 (adopt)**: the H2 per-tile route is a re-run of
+    `run_pairwise_tests.py` **without** `--quiet` (the committed
+    artefact was written with it), which makes the 6-dp gate free —
+    same code path, same seed. If the re-run would overwrite the
+    committed artefact, the git diff must show only the `per_tile`
+    addition (identical stats) or the output is redirected.
+
 ## Go / no-go
 
 PI-directed start (2026-08-17, "could you start the analyses", AFK).
-Agent go issued after the clean-context audit pass adjudicates: see
-changelog.
+**Agent go issued 2026-08-17** after all 15 audit findings were
+adjudicated above. ⏳PI ratifications queued: the BLOCKER-1 source
+amendment, the MEDIUM-8 post-hoc classification, the E45-row class,
+the counting rule, sign-offs, and the ~$48 H6 decision.
 
 ## Changelog
+
+### 2026-08-17 (later) — Audit adjudicated; go issued; scope amended
+
+15/15 findings confirmed. Material amendments: H6 inputs move to
+genuine-Pro `n1-pro-rerun-384` (+ $0 consensus materialisation, E57
+pools retained as matched-N Flash comparator); A-07 redesigned as
+matched-N; A-06 runs the registered rule with a real delta CI; A-09
+re-based on per-pass audited costs; H6 rows re-proposed post-hoc
+(discharge principle); census refresh widened to a two-vintage
+recount; H3 gate re-anchored on the pairwise micro-F1 block; H2
+per-tile via non-quiet re-run.
 
 ### 2026-08-17 — Initial plan (S135)
 
