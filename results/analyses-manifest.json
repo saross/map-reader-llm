@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T10:25:14Z",
+  "generated_at": "2026-08-17T10:31:05Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -1556,14 +1556,16 @@
       "outcome": "TEMPERATURE IS THE DRIVER (verification round superseded the confounded-only framing): the full genuine-Pro thinking x temperature 2x2 exists (n1-pro-rerun-384 + pv-diag-384 Pro baselines, matched hashes and corpus, extended provenance gate), so the registered factor T is cleanly evaluable at matched thinking. The registered rule fires in ALL FOUR cells: text +0.0595 at HIGH (dCI [+0.0340, +0.0846]) and +0.0366 at MEDIUM ([+0.0113, +0.0620]); image +0.0750 at HIGH ([+0.0421, +0.1076]) and +0.0605 at MEDIUM ([+0.0299, +0.0888]) - Pro prefers T=0.0 over the carried T=0.7. The thinking contrast at matched temperature (not a registered Phase-2 factor) reaches 0.03 in none of four cells (every CI straddles zero). Consistent with H6's 'minor factor adjustments' prediction and the n1-baseline-matrix-384 temperature preference. M/E, H5, O remain unvaried; A-08 explicitly not computed (one factor of four; see findings.md). Estimator-reconciliation gate: manifest-vintage and pass-averaged deltas agree to <=0.0005 with identical verdicts. Replicate caveat: T=0.7 corners average 5-10 passes vs 3. Original confounded contrast retained in-artefact as a superseded record. Artefact: results/h6-registered-analyses/a06_decision_rule.json.",
       "paper_section": "Methods",
       "output_path": "results/h6-registered-analyses",
-      "working_notes_obs": [],
+      "working_notes_obs": [
+        "Obs 415 \u2014 temperature, not thinking, drives the genuine-Pro corner gap (2x2 decomposition; fires all four cells, thinking null); rider: the optimal vote threshold reverses between models at matched N"
+      ],
       "manually_verified_at": null,
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-08-17T09:51:33Z",
+        "last_extracted_at": "2026-08-17T10:31:05Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1589,17 +1591,19 @@
       "predicted_outcome": "Registered: 'Compare Pro optimal threshold to Flash optimal threshold; Note any differences >10% relative'. Under the registered transfer prediction the relative difference is <=10%. The registered >20% extended-test trigger (preregistration.md:689) cannot fire an N=30 Pro run in a $0 block. [Authored before computation.]",
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "SPLIT VERDICT at matched N=3. Text: Pro optimal k=1 (F1@20 0.8602 > 0.8558 > 0.8494) vs Flash-comparator optimal k=3 (0.5665 > 0.5199 > 0.4726) - 67% relative, FLAGGED, robust (well clear of the 10% rule); the >20% level indicates the registered extended N=30 test (cannot execute here; the matched-N form is itself post-hoc and the message is operational wording, not a registered trigger). Image: both optimal at k=3 (Pro 0.7223; Flash 0.5525), 0% relative - transfers, but FRAGILE: the Flash winner leads its runner-up by 0.0016 (and the Pro text winner by 0.0044), under the artefact's 0.005 fragility threshold, and the Flash comparator passes are status=partial (485-486/487, one-sided). The text-track optimum REVERSES between models at matched N (Pro prefers the union, Flash the intersection) - the vote threshold again behaves as a property of the pipeline-corpus-model encounter (cf. Obs 358). Also notable: Pro text N=3 union 0.8602 beats Pro single-pass 0.8045 (+0.056). Gates: model provenance 12 pools; comparator 6/6 at 5e-5; materialisation gates (merge stats, pool size 3, feature counts). Artefact: results/h6-registered-analyses/a07_voting_thresholds.json.",
+      "outcome": "SPLIT VERDICT at matched N=3. Text: Pro optimal k=1 (F1@20 0.8602 > 0.8558 > 0.8494) vs Flash-comparator optimal k=3 (0.5665 > 0.5199 > 0.4726) - 67% relative, FLAGGED, robust (well clear of the 10% rule); the >20% level indicates the registered extended N=30 test (cannot execute here; the matched-N form is itself post-hoc and the message is operational wording, not a registered trigger). Image: both optimal at k=3 (Pro 0.7223; Flash 0.5525), 0% relative - transfers, but FRAGILE: the Flash winner leads its runner-up by 0.0015 (and the Pro text winner by 0.0045), under the artefact's 0.005 fragility threshold, and the Flash comparator passes are status=partial (485-486/487, one-sided). The text-track optimum REVERSES between models at matched N (Pro prefers the union, Flash the intersection) - the vote threshold again behaves as a property of the pipeline-corpus-model encounter (cf. Obs 358). Also notable: Pro text N=3 union 0.8602 beats Pro single-pass 0.8045 (+0.056). Gates: model provenance 12 pools; comparator 6/6 at 5e-5; materialisation gates (merge stats, pool size 3, feature counts). Artefact: results/h6-registered-analyses/a07_voting_thresholds.json.",
       "paper_section": "Methods",
       "output_path": "results/h6-registered-analyses",
-      "working_notes_obs": [],
+      "working_notes_obs": [
+        "Obs 415 \u2014 temperature, not thinking, drives the genuine-Pro corner gap (2x2 decomposition; fires all four cells, thinking null); rider: the optimal vote threshold reverses between models at matched N"
+      ],
       "manually_verified_at": null,
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-08-17T09:51:33Z",
+        "last_extracted_at": "2026-08-17T10:31:05Z",
         "extractor_version": "0.7.1"
       }
     },

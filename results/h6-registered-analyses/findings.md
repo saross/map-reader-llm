@@ -24,7 +24,8 @@ mis-dispatch pools serve instead as a **matched-N,
 matched-configuration Flash comparator** (the project's
 preserve-and-compare heuristic). A model-provenance gate asserts
 both facts from `results/passes-manifest.json` before anything runs
-(8 pools verified); a comparator gate re-derived all six E57-pool
+(12 pools verified after the verification round extended it to the
+pv-diag Pro corners); a comparator gate re-derived all six E57-pool
 consensus F1s from disk against the conditions manifest (6/6 at
 tolerance 5e-5).
 
@@ -66,12 +67,12 @@ factor T in all four cells, with delta CIs excluding zero, and the
 question the confounded framing left open ("which factor?") is
 answered at $0. Consistent with the known Pro single-pass
 temperature preference (`n1-baseline-matrix-384`). Replicate-count
-caveat: the T = 0.7 corners average 5–10 passes against 3 for the
-others (same estimator, differing precision); the two delta
-estimators (manifest eval vintage vs pass-averaged micro) are
-reconciled by an in-script gate and agree to ≤ 0.0007. The original
-confounded contrast is retained in the artefact as a superseded
-record.
+caveat: the two HIGH T = 0.7 corners average 10 (text) and 5
+(image) passes against 3 everywhere else (same estimator, differing
+precision); the two delta estimators (manifest eval vintage vs
+pass-averaged micro) are reconciled by an in-script gate and agree
+to ≤ 0.0005. The original confounded contrast is retained in the
+artefact as a superseded record.
 
 ## A-07 — the Phase 3 voting-threshold comparison
 
@@ -108,7 +109,7 @@ on 487 tiles and neither carries a registered verdict.
 
 **Fragility (verification round).** Both optima sit on near-flat
 curves: the Flash image winner (k = 3) leads its runner-up by
-0.0016 F1, and the Pro text winner (k = 1) by 0.0044 — both under
+0.0015 F1, and the Pro text winner (k = 1) by 0.0045 — both under
 the artefact's 0.005 fragility threshold. Had the Flash image
 optimum landed on k = 1, the image verdict would flip from
 "transfers" to flagged at 200 % relative (the registered metric
