@@ -23,15 +23,15 @@ hypothesis-outcome table generated from the register.
 Deviations are recorded in a numbered errata file (E1–E78). Under the
 file's declared three-way scheme, entries with bare labels tally 22
 corrections (implementation brought back into line with the
-registered protocol), 16 deviations (substantive departures, each
+registered protocol), 18 deviations (substantive departures, each
 with stated justification), and 12 clarifications (interpretations of
-ambiguous registered text). The remaining 28 entries carry composite
-or qualified labels, including the entries that record omissions
-rather than changes (E59, E74, E75, E78). Any headline count of "deviations" depends on the
-counting rule adopted, so we cite entries individually rather than
-aggregating them [unverified: final counting rule pending an errata
-census update at E78 vintage. The E1–E57 census recommended stating
-the rule explicitly].
+ambiguous registered text). The remaining 26 entries carry composite
+or qualified labels, including the three entries explicitly labelled
+as recording omissions rather than changes (E74, E75, E78); E59
+likewise records an unexecuted registered condition, under a bare
+deviation label. Any headline count of "deviations" depends on the
+counting rule adopted (defensible tallies at this vintage run from 18
+to 30), so we cite entries individually rather than aggregating them.
 
 Every analysis in the study carries one of five preregistration
 statuses in a schema-validated register. An analysis is
@@ -190,9 +190,17 @@ correction was executed once, as a single family, on 2026-07-30: one
 primary p-value per confirmatory hypothesis, m = 7 with H6 excluded
 as never run, under a construction registered before computation.
 Wherever a confirmatory claim in Results rests on a permutation
-input, the registered bootstrap construction is reported alongside it
-[PENDING × 2: the H2 and H3 bootstrap pairings, queued as $0
-analyses]. The registered power statement (minimum detectable effect
+input, the registered bootstrap construction is reported alongside
+it. For the two contrasts that entered the family on permutation
+floors, the registered instrument corroborates both rejections: the
+H2 architecture contrast carries a bootstrap ΔF1 of +0.076 (95 % CI
++0.052 to +0.105) and the H3 consensus contrast +0.427 (95 % CI
++0.390 to +0.468), tile-level percentile intervals at the registered
+1,000 iterations, with the 10,000-iteration sensitivity agreeing.
+H8's null also rests on a permutation input (a Simes minimum over
+seven contrasts, for which a paired bootstrap difference is not
+defined) and is reported as permutation-based under the same
+disclosure. The registered power statement (minimum detectable effect
 ~0.07–0.09 F1 at 80 % power on the 60-tile holdout) predates the E36
 scope change. Executed comparisons run on 340–487 tiles at lower
 replication, so per-comparison power differs from the registered
@@ -273,6 +281,22 @@ reference, not of the detector: the derived radii do not transfer to
 other map series or reference constructions without re-derivation.
 
 ## Changelog
+
+### 2026-08-17 (S135, later) — M.4 pairings + M.x tally: all slots closed
+
+The S135 analysis block's outputs land: the M.4 [PENDING × 2]
+becomes the H2/H3 registered-instrument sentence (anchors:
+`results/e45-bootstrap-pairings/e45_bootstrap_pairings.json`,
+blind-verified bit-for-bit; scoping includes the H8
+permutation-source disclosure per the verification round) and the
+M.x [unverified] tally is corrected against the refreshed errata
+census (bare deviations 16 → 18 at E78 scope, composites 28 → 26,
+the omission-qualifier set narrowed to E74/E75/E78 with E59 named
+separately under its bare label; census recount verified twice
+independently plus a third derivation). The cite-individually
+counting rule stands as drafted; adopting an aggregate rule instead
+(census options 18/27/30) remains a queued PI call. No [PENDING] or
+[unverified] markers remain in this document.
 
 ### 2026-08-17 (S135) — M.3 [PENDING] slots filled from the D-S report
 
