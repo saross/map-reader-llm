@@ -25,25 +25,40 @@ project state.
 > registered method to unregistered material is E41-class extension =
 > post-hoc), now also in the schema's post-hoc description.
 >
-> **START HERE — prose drafting per the settled structure**: outline
-> (`docs/paper/results-outline.md`, D1–D17 all settled, gate note at
-> the decision register), zero-draft claims
-> (`docs/paper/results-draft.md`, standardised-reference throughout;
-> the dd-384 passage already carries the U5 fence), Discussion
-> zero-drafts (Seeds 1–7). The riders remain first-class drafting
-> inputs (D6 supplement, D8 qualifiers, D13 Tier-1-set gap framing,
-> D14b test-set→production, D16 prereg-retrospective). Load
-> `academic-prose` before drafting.
+> **PROSE DRAFTING HAS STARTED (S134, same-day)**. Drafted by the
+> instance that ran the reconciliation, register gate + five-test
+> discipline applied throughout: `docs/paper/methods-draft.md`
+> §§ M.x + M.2–M.7 (prereg/status; corpora and scopes; the 55-map
+> reference; statistics; deployment execution; verifier spec;
+> working-precision derivation — the **Methods outline decision
+> register MD1–MD6 is SETTLED, all = A**, `docs/methods-outline.md`
+> top section); `docs/paper/results-draft.md` gained the Table [N]
+> framing after R0, registration-status markers at **R2–R9** (D16
+> complete), and the R2–R4 confirmatory passages (H2's
+> falsified-prediction passage; H7's direction reversal with D8
+> qualifiers). Four **[PENDING]** slots + one **[unverified]** mark
+> analysis-dependent sentences.
 >
-> **Gated items queued by the walk's unexecuted-set adjudication**
-> (each needs its own phase-gate/audit-config; none blocks drafting):
-> (1) **H6 $0 analyses** — the registered ≥0.03 decision rule,
-> Phase-3 voting-threshold comparison, and cost-effectiveness gate,
-> computed on the existing Pro data (unexecuted-register Tier 1 item
-> 2); the ~$48 re-run decision waits on their results. (2) **H13 arms
-> B+C** — run, gated behind a re-pricing check (~$6–8 is a
-> pre-lodgement estimate). (3) **H2-C 1024 px pricing run** — then
-> the run-vs-disclose decision on evidence. H14/H15: disclose-only,
+> **START HERE (S135)**: (1) **the Discussion outline walk** — the
+> outline-first contract re-arms per section (claude-obs 56): build a
+> decision-gated Discussion structure from Seeds 1–7 and walk it
+> BEFORE Seeds→prose; note Seed 7 stays undrafted until its
+> lit-check. (2) **The queued $0/cheap analyses as a small
+> pre-run-reviewed batch** (they fill the [PENDING]/[unverified]
+> slots): E45 bootstrap pairings for H2 and H3 (sapphire, $0);
+> errata-census refresh at E78 vintage ($0); the H6 three $0
+> registered analyses (walk ruling — decision rule, voting-threshold
+> comparison, cost gate on the existing Pro data; the ~$48 re-run
+> decision waits on them). (3) Remaining Methods scaffold conversions
+> (§§ 1–4 detail, § 6) are context-independent — any instance drafts
+> them from the settled outline; § 4.3's phase table regenerates from
+> the register first (noted in-file). Load `academic-prose` before
+> touching prose.
+>
+> **API-gated items** (each needs its own phase-gate/audit-config):
+> **H13 arms B+C** — run, behind a re-pricing check (~$6–8 is a
+> pre-lodgement estimate); **H2-C 1024 px pricing run** — then the
+> run-vs-disclose decision on evidence. H14/H15: disclose-only,
 > CLOSED.
 >
 > **Carry-forward (unchanged from S133)**: Seed 7's
@@ -82,7 +97,22 @@ obligation surfaced by the verifier minted as a named-programme
 disposition row with **E78**; methods-outline unexecuted table
 refreshed; 8 rows stamped. Dossier
 `reports/s134-relabel-walk-dossier.md` (§ 8 = rulings register).
-Commits `dfb0eb4ad` → this handoff, all pushed.
+(6) **Prose drafting opened the same day** (PI: push forward while
+context lasted): the Methods outline decision register MD1–MD6
+settled in a two-round walk (all = A), then M.x + M.2–M.7 drafted
+(`99d6f9e27`, `0d04aa59f`, `887741ca2`) and the Results draft's
+table framing, R2–R9 status markers, and R2–R4 confirmatory
+passages landed (`99d6f9e27`, `c818aeaca`) — prereg-linked passages
+first, board-descriptive sections deliberately deferred as
+context-independent. (7) Reflection set + claude-obs 54–56
+(`6e7800986`); S134 user-obs candidates pending in
+`docs/notes/user-observations.md`; two working-notes candidates held
+over in this entry (see below). Commits `dfb0eb4ad` → this handoff,
+all pushed. **Held-over working-notes candidates (no silent
+discard)**: (a) the discharge principle as a registerable
+methodological observation; (b) the H-keyed blind spot (registered
+obligations without hypothesis numbers escape per-hypothesis
+reconciliation — the § 8.9 discovery).
 
 ## PRIOR SESSION (134) — original queue [Session 133 CLOSED 2026-08-16; ran in Fable]
 
