@@ -18,8 +18,10 @@ the first Methods prose (`docs/paper/methods-draft.md` § M.x) landed.
 The outline below this section is the 2026-vintage scaffold; it
 pre-dates the Era structure, the 55-map reference, and the
 reconciliation, and needs the following decisions before further
-Methods prose is drafted. Pattern per the Results outline: each MDn
-is OPEN until the PI rules; mechanical fixes are listed separately
+Methods prose is drafted. Pattern per the Results outline. **ALL SIX SETTLED = A (PI,
+in-session walk, 2026-08-17)** — every recommended option adopted;
+prose for the newly-ruled subsections drafts in
+`docs/paper/methods-draft.md`. Register kept for the record; mechanical fixes are listed separately
 and need no ruling.
 
 **MD1 — where the preregistration subsection sits.** M.x
@@ -82,8 +84,8 @@ production specification with the E37/E58 lineage named. (B) Keep
 *Lean A: R4/R5 hang off this configuration; prose beats a table for
 the lineage.*
 
-**Mechanical fixes (no ruling needed, applied on adoption)**: § 4.1's
-"H2 Condition C not executed — erratum pending" → E59 exists; § 4.4
+**Mechanical fixes (no ruling needed; applied 2026-08-17)**: § 4.1's
+"erratum pending" note on H2 Condition C → cites E59; § 4.4
 "30+ entries" and § 6.1 "57 entries" → 78, deferring to M.x; § 4.3
 phase table regenerated from the register (current cells carry
 pre-Era-2 numbers); working-precision derivation subsection added
@@ -249,7 +251,7 @@ tracks:
 This is additive — Track 1 followed the full preregistered OFAT
 sequence, with three documented reductions in scope (H5's 3×3 factorial
 collapsed to OFAT, E28; H8 Scale-16/32 deferred, E11, later re-run under
-E51; H2 Condition C not executed — erratum pending), while Track 2 added
+E51; H2 Condition C not executed, E59), while Track 2 added
 scope to explore the unexpected finding. The modest
 additional cost (~$55 for extra temperature cells) was justified by the
 scientific value of understanding the text-only pathway.
@@ -261,6 +263,9 @@ scientific value of understanding the text-only pathway.
 - All runs on the same 60-tile holdout set
 
 ### 4.3 Phase Execution Summary
+
+[S134 note: the table below carries pre-Era-2 values and will be
+regenerated from the analyses register before prose lands.]
 
 | Phase | Hypothesis | Cells | Runs/Cell | Status | Optimal Result |
 |-------|-----------|-------|-----------|--------|----------------|
@@ -288,9 +293,10 @@ were interpreted:
   estimates. Fixed by pre-computing per-tile TP/FP/FN counts before
   resampling.
 
-A complete errata log (30+ entries, classified as correction /
-clarification / deviation with impact assessment) is provided in the
-supplementary materials alongside the full preregistration text.
+A complete errata log (78 entries at S134; see
+`docs/paper/methods-draft.md` § M.x for the by-class accounting and
+the counting-rule caveat) is provided in the supplementary materials
+alongside the full preregistration text.
 
 ## 5. Evaluation
 
@@ -363,9 +369,9 @@ supplementary materials alongside the full preregistration text.
   12:54 UTC)
 - Protocol v4.7 content with versioned changelog (the posted file's
   header retains a stale v4.6 label — see the errata)
-- All deviations documented in a living errata log (57 entries) with
-  classification (correction / clarification / deviation) and impact
-  assessment
+- All deviations documented in a living errata log (78 entries at
+  S134; by-class accounting in `docs/paper/methods-draft.md` § M.x)
+  with classification and impact assessment
 
 ### 6.2 Software and Data
 
