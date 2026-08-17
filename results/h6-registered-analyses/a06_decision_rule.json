@@ -1,0 +1,120 @@
+{
+ "_README": "A-06 (registered: preregistration.md:677 \u2014 'If alternative outperforms Flash-optimal by >=0.03 F1, flag factor for adjustment', registered WITHOUT a CI condition). None of the four registered Phase-2 factors (M/E, H5, T, O) is cleanly evaluable from existing Pro data: the only available contrast moves temperature AND thinking level together (the corners design; E40-class confound). The registered rule's arithmetic is reported on that confounded contrast, per modality, with the confound named. The delta CI is the operational augmentation documented in lib_phase4_transfer.py:22-27 and is fed a real paired tile-bootstrap CI of the DIFFERENCE (B=1,000, seed 42), never a per-condition F1 CI.",
+ "generated_at": "2026-08-17T09:18:01.764494+00:00",
+ "registered_prediction": "H6: 'The Flash-optimal configuration will perform well on Pro, with at most minor factor adjustments needed' (preregistration.md, H6 Prediction).",
+ "contrasts": {
+  "text": {
+   "carried_level_f1": 0.7555,
+   "alternative_level_f1": 0.8045,
+   "delta": 0.049,
+   "registered_rule_fires (delta >= 0.03)": true,
+   "delta_ci95_paired_bootstrap": {
+    "lower": 0.026676,
+    "upper": 0.070325
+   },
+   "delta_bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "observed_delta": 0.048999,
+    "bootstrap_delta_mean": 0.048584,
+    "ci95": {
+     "lower": 0.026676,
+     "upper": 0.070325
+    },
+    "prop_le_zero": 0.0,
+    "prop_gt_zero": 1.0,
+    "p_value": 0.001,
+    "p_at_floor": true,
+    "ci_excludes_zero": true
+   },
+   "library_result_with_ci_augmentation": {
+    "factor_name": "temperature+thinking (text; E40-class confound)",
+    "flash_optimal_level": "pro-text-medium-t07 (carried T=0.7, MEDIUM)",
+    "tested_levels": [
+     {
+      "level": "pro-text-medium-t07 (carried T=0.7, MEDIUM)",
+      "f1": 0.7555,
+      "ci_lower": null,
+      "ci_upper": null,
+      "delta": 0.0,
+      "flagged": false,
+      "is_baseline": true
+     },
+     {
+      "level": "pro-text-high-t0 (T=0.0, HIGH)",
+      "f1": 0.8045,
+      "ci_lower": 0.026676,
+      "ci_upper": 0.070325,
+      "delta": 0.049000000000000044,
+      "flagged": true,
+      "is_baseline": false
+     }
+    ],
+    "flagged": true,
+    "recommended_level": "pro-text-high-t0 (T=0.0, HIGH)",
+    "message": "Factor temperature+thinking (text; E40-class confound) flagged: Alternative level(s) outperform Flash-optimal by \u22650.03. Recommended: pro-text-high-t0 (T=0.0, HIGH) (F1=0.804)"
+   },
+   "n_passes": {
+    "carried": 3,
+    "alternative": 3
+   }
+  },
+  "image": {
+   "carried_level_f1": 0.595,
+   "alternative_level_f1": 0.6658,
+   "delta": 0.0708,
+   "registered_rule_fires (delta >= 0.03)": true,
+   "delta_ci95_paired_bootstrap": {
+    "lower": 0.036877,
+    "upper": 0.101575
+   },
+   "delta_bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "observed_delta": 0.070744,
+    "bootstrap_delta_mean": 0.070848,
+    "ci95": {
+     "lower": 0.036877,
+     "upper": 0.101575
+    },
+    "prop_le_zero": 0.0,
+    "prop_gt_zero": 1.0,
+    "p_value": 0.001,
+    "p_at_floor": true,
+    "ci_excludes_zero": true
+   },
+   "library_result_with_ci_augmentation": {
+    "factor_name": "temperature+thinking (image; E40-class confound)",
+    "flash_optimal_level": "pro-image-medium-t07 (carried T=0.7, MEDIUM)",
+    "tested_levels": [
+     {
+      "level": "pro-image-medium-t07 (carried T=0.7, MEDIUM)",
+      "f1": 0.595,
+      "ci_lower": null,
+      "ci_upper": null,
+      "delta": 0.0,
+      "flagged": false,
+      "is_baseline": true
+     },
+     {
+      "level": "pro-image-high-t0 (T=0.0, HIGH)",
+      "f1": 0.6658,
+      "ci_lower": 0.036877,
+      "ci_upper": 0.101575,
+      "delta": 0.07079999999999997,
+      "flagged": true,
+      "is_baseline": false
+     }
+    ],
+    "flagged": true,
+    "recommended_level": "pro-image-high-t0 (T=0.0, HIGH)",
+    "message": "Factor temperature+thinking (image; E40-class confound) flagged: Alternative level(s) outperform Flash-optimal by \u22650.03. Recommended: pro-image-high-t0 (T=0.0, HIGH) (F1=0.666)"
+   },
+   "n_passes": {
+    "carried": 3,
+    "alternative": 3
+   }
+  }
+ },
+ "a08_statement": "A-08 (the registered three-way transfer verdict, preregistration.md:693-699) is not computed: the registered Phase 2 varies four factors (M/E, H5, T, O) one at a time on Pro, and the existing Pro data vary none of them cleanly \u2014 the only available contrast moves temperature and thinking level together (E40-class confound), so 'all factors within 0.03 of Flash-optimal' is unevaluable. Computing a verdict from one confounded factor would misrepresent the registered criterion; the honest disposition is not-computable-as-registered."
+}

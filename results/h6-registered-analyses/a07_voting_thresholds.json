@@ -1,0 +1,122 @@
+{
+ "_README": "A-07 (registered: preregistration.md:679-683) computed in the only commensurable form the data support: matched-N (N=3) Pro-vs-Flash voting curves at matched configuration and corpus. The REGISTERED form \u2014 Pro optimal threshold vs the Flash production optimum (26-of-30, an N=30 pool) \u2014 is NOT-COMPUTABLE-AS-REGISTERED: a raw vote-count comparison across N=3 and N=30 pools is data-independent (any k in 1..3 differs from 26 by >88% relative), so the >10%-relative rule presupposes matched N. Fraction-form (k/N) reported descriptively below, carrying no registered verdict.",
+ "generated_at": "2026-08-17T09:18:01.764494+00:00",
+ "scope_caveats": [
+  "384 px / 487 tiles (Era 2), not the registered Phase-4 scope",
+  "Pro pools exist only at N=3 (three runs per corner)",
+  "Flash comparator = the E57 mis-dispatch pools (Flash executing the Pro-corner configuration) \u2014 matched config, matched N",
+  "the registered >20% extended-test trigger cannot fire an N=30 Pro run inside this $0 block"
+ ],
+ "results": {
+  "text": {
+   "pro_curve_f1_at_20m": {
+    "1": 0.860215,
+    "2": 0.855758,
+    "3": 0.849449
+   },
+   "flash_curve_f1_at_20m (E57 mis-dispatch pools)": {
+    "1": 0.4726,
+    "2": 0.5199,
+    "3": 0.5665
+   },
+   "pro_optimal_k": 1,
+   "flash_optimal_k": 3,
+   "matched_n3_comparison": {
+    "flash_optimal_n": 3,
+    "flash_optimal_threshold": 3,
+    "pro_optimal_n": 3,
+    "pro_optimal_threshold": 1,
+    "relative_difference": 0.6666666666666666,
+    "flagged": true,
+    "needs_extended_test": true,
+    "message": "Large voting difference: Pro T=1 differs from Flash T=3 by 67%. Run extended N=30 test for stability."
+   }
+  },
+  "image": {
+   "pro_curve_f1_at_20m": {
+    "1": 0.690947,
+    "2": 0.714912,
+    "3": 0.722286
+   },
+   "flash_curve_f1_at_20m (E57 mis-dispatch pools)": {
+    "1": 0.5509,
+    "2": 0.5499,
+    "3": 0.5525
+   },
+   "pro_optimal_k": 3,
+   "flash_optimal_k": 3,
+   "matched_n3_comparison": {
+    "flash_optimal_n": 3,
+    "flash_optimal_threshold": 3,
+    "pro_optimal_n": 3,
+    "pro_optimal_threshold": 3,
+    "relative_difference": 0.0,
+    "flagged": false,
+    "needs_extended_test": false,
+    "message": "Voting threshold transfers: Pro optimal T=3 within 10% of Flash T=3."
+   }
+  }
+ },
+ "fraction_form_descriptive": {
+  "flash_production_optimum": "26-of-30 (0.867)",
+  "pro_text_optimal_fraction": "1-of-3"
+ },
+ "model_provenance_gate": {
+  "n1-pro-rerun-384::pro-text-high-t0": [
+   "gemini-3.1-pro-preview"
+  ],
+  "n1-pro-rerun-384::pro-text-medium-t07": [
+   "gemini-3.1-pro-preview"
+  ],
+  "n1-pro-rerun-384::pro-image-high-t0": [
+   "gemini-3.1-pro-preview"
+  ],
+  "n1-pro-rerun-384::pro-image-medium-t07": [
+   "gemini-3.1-pro-preview"
+  ],
+  "n1-outstanding-384::pro-text-high-t0": [
+   "gemini-3-flash-preview"
+  ],
+  "n1-outstanding-384::pro-text-medium-t07": [
+   "gemini-3-flash-preview"
+  ],
+  "n1-outstanding-384::pro-image-high-t0": [
+   "gemini-3-flash-preview"
+  ],
+  "n1-outstanding-384::pro-image-medium-t07": [
+   "gemini-3-flash-preview"
+  ]
+ },
+ "comparator_gate": {
+  "pro-text-high-t0-k1": {
+   "recomputed": 0.472634,
+   "committed": 0.4726,
+   "pass": true
+  },
+  "pro-text-high-t0-k2": {
+   "recomputed": 0.519913,
+   "committed": 0.5199,
+   "pass": true
+  },
+  "pro-text-high-t0-k3": {
+   "recomputed": 0.566502,
+   "committed": 0.5665,
+   "pass": true
+  },
+  "pro-image-high-t0-k1": {
+   "recomputed": 0.550909,
+   "committed": 0.5509,
+   "pass": true
+  },
+  "pro-image-high-t0-k2": {
+   "recomputed": 0.549906,
+   "committed": 0.5499,
+   "pass": true
+  },
+  "pro-image-high-t0-k3": {
+   "recomputed": 0.552454,
+   "committed": 0.5525,
+   "pass": true
+  }
+ }
+}

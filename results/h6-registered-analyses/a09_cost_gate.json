@@ -1,0 +1,50 @@
+{
+ "_README": "A-09 (registered: preregistration.md:691). Cost basis per the S135 audit (HIGH-7): audited per-pass cost_usd from results/passes-manifest.json on BOTH sides for the matched-configuration comparison; the all-Flash audited pareto_v2 frontier (results/verifier-robustness/pareto/, flex-tier audited dollars, same corpus and buffer) is the Flash-OPTIMAL yardstick the registered gate implies. Comparability windows are operational choices, stated inline, not registered.",
+ "generated_at": "2026-08-17T09:18:01.764494+00:00",
+ "matched_configuration_comparison": {
+  "text": {
+   "pro_single_pass": {
+    "f1_at_20m": 0.8045,
+    "cost_per_pass_usd": 1.8533
+   },
+   "flash_same_config_single_pass": {
+    "f1_at_20m": 0.4942,
+    "cost_per_pass_usd": 0.5971
+   },
+   "flash_same_config_n3_consensus_best": {
+    "f1_at_20m": 0.5665,
+    "cost_usd": 1.7913
+   },
+   "limb1_matched_config": {
+    "comparison": "Pro 1 pass vs Flash-same-config 3-pass consensus (costs within ~5%)",
+    "f1_ratio": 1.4201,
+    "fires (>=1.20 at comparable cost)": true
+   }
+  },
+  "image": {
+   "pro_single_pass": {
+    "f1_at_20m": 0.6658,
+    "cost_per_pass_usd": 15.7365
+   },
+   "flash_same_config_single_pass": {
+    "f1_at_20m": 0.5276,
+    "cost_per_pass_usd": 3.9717
+   },
+   "flash_same_config_n3_consensus_best": {
+    "f1_at_20m": 0.5525,
+    "cost_usd": 11.9151
+   },
+   "limb1_matched_config": {
+    "comparison": "Pro 1 pass vs Flash-same-config 3-pass consensus (costs within ~5%)",
+    "f1_ratio": 1.2051,
+    "fires (>=1.20 at comparable cost)": true
+   }
+  }
+ },
+ "flash_optimal_frontier": {
+  "source": "results/verifier-robustness/pareto/pareto_v2.json",
+  "note": "verdict against the frontier computed in the findings doc from the pareto artefact's efficient set; the artefact is committed and cited rather than re-derived here",
+  "efficient_set_present": true
+ },
+ "a08_statement": "A-08 (the registered three-way transfer verdict, preregistration.md:693-699) is not computed: the registered Phase 2 varies four factors (M/E, H5, T, O) one at a time on Pro, and the existing Pro data vary none of them cleanly \u2014 the only available contrast moves temperature and thinking level together (E40-class confound), so 'all factors within 0.03 of Flash-optimal' is unevaluable. Computing a verdict from one confounded factor would misrepresent the registered criterion; the honest disposition is not-computable-as-registered."
+}
