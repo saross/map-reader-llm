@@ -16,7 +16,13 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
-from h6_registered_analyses import A08_STATEMENT, committed_f1  # noqa: E402
+from h6_registered_analyses import (  # noqa: E402
+    A08_STATEMENT,
+    argmax_with_margin,
+    committed_f1,
+    gate_model_provenance,
+    limbs,
+)
 from lib_phase4_transfer import (  # noqa: E402
     evaluate_voting_threshold_transfer,
 )
@@ -70,4 +76,63 @@ def test_a08_statement_names_the_criterion():
     """The A-08 statement is explicit about non-computability."""
     assert "not computed" in A08_STATEMENT
     assert "693-699" in A08_STATEMENT
-    assert "confound" in A08_STATEMENT
+    assert "exactly ONE" in A08_STATEMENT
+
+
+def _pass(run, pool, model):
+    return {"run_id": run, "proposer_pool": pool, "model_used": model}
+
+
+@pytest.mark.tier1
+def test_provenance_gate_three_paths():
+    """The BLOCKER-1 gate passes, fails on wrong model, fails on empty."""
+    good = (
+        [_pass("n1-pro-rerun-384", p, "gemini-3.1-pro-preview")
+         for p in ("pro-text-high-t0", "pro-text-medium-t07",
+                   "pro-image-high-t0", "pro-image-medium-t07")]
+        + [_pass("n1-outstanding-384", p, "gemini-3-flash-preview")
+           for p in ("pro-text-high-t0", "pro-text-medium-t07",
+                     "pro-image-high-t0", "pro-image-medium-t07")]
+        + [_pass("pv-diag-384", p, "gemini-3.1-pro-preview")
+           for p in ("pro-high-text-n5-text-t0.7",
+                     "pro-high-image-n5-image-t0.7",
+                     "pro-medium-text-baseline-text-t0.0",
+                     "pro-medium-image-baseline-image-t0.0")])
+    record = gate_model_provenance(good)
+    assert len(record) == 12
+
+    bad = list(good)
+    bad[0] = _pass("n1-pro-rerun-384", "pro-text-high-t0",
+                   "gemini-3-flash-preview")
+    with pytest.raises(SystemExit):
+        gate_model_provenance(bad)
+
+    with pytest.raises(SystemExit):
+        gate_model_provenance(good[1:])  # first pool now empty
+
+
+@pytest.mark.tier1
+def test_a09_limbs_require_cost_comparability():
+    """Limb 1 needs BOTH the F1 ratio and comparable cost (audit H-1).
+
+    The real image row (ratio 1.2051 at a 32 % cost premium) must NOT
+    fire; the text row (3.5 % premium) must.
+    """
+    text = limbs(0.8045, 1.8533, 0.5665, 1.7913)
+    assert text["limb1_fires (>=1.20 F1 at comparable cost)"] is True
+    image = limbs(0.6658, 15.7365, 0.5525, 11.9151)
+    assert image["cost_comparable_within_10pct"] is False
+    assert image["limb1_fires (>=1.20 F1 at comparable cost)"] is False
+    # Limb 2: comparable F1 at <= 50 % cost.
+    cheap = limbs(0.870, 1.0, 0.880, 2.5)
+    assert cheap["limb2_fires (comparable F1 at <=50% cost)"] is True
+    dear = limbs(0.870, 1.9, 0.880, 2.5)
+    assert dear["limb2_fires (comparable F1 at <=50% cost)"] is False
+
+
+@pytest.mark.tier1
+def test_argmax_with_margin():
+    """Reports the winner and its margin over the runner-up."""
+    k, margin = argmax_with_margin({1: 0.5509, 2: 0.5499, 3: 0.5525})
+    assert k == 3
+    assert margin == pytest.approx(0.0016)

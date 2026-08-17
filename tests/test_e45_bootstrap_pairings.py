@@ -90,6 +90,40 @@ def test_paired_bootstrap_null_contrast():
 
 
 @pytest.mark.tier1
+def test_paired_bootstrap_is_actually_paired():
+    """The pairing guard the S135 audit demonstrated was missing (H-3).
+
+    Arms share huge per-tile variation but differ by a constant +1 TP
+    per tile, so the PAIRED delta distribution is nearly degenerate
+    (narrow CI). An unpaired resampler (independent index sets per
+    arm) mixes unrelated tiles and produces a CI several times wider
+    — the audit measured 70 % wider on the real H2 table. The width
+    bound below kills that mutant class.
+    """
+    rng = np.random.default_rng(7)
+    tp_b = rng.integers(0, 40, 200).astype(float)
+    fp = rng.integers(0, 10, 200).astype(float)
+    fn = rng.integers(0, 10, 200).astype(float)
+    tp_a = tp_b + 1.0
+    res = paired_bootstrap(tp_a, fp, fn, tp_b, fp, fn, 500, seed=42)
+    width = res["ci95"]["upper"] - res["ci95"]["lower"]
+    # Empirically ~0.002 when paired; an unpaired mutant on these
+    # arrays yields > 0.05. The bound sits an order of magnitude
+    # inside the mutant's reach.
+    assert width < 0.01, f"CI width {width} — pairing appears broken"
+    assert res["ci95"]["lower"] > 0
+
+
+@pytest.mark.tier1
+def test_paired_bootstrap_rejects_mismatched_lengths():
+    """Unequal arm lengths must raise, never silently truncate (L-7)."""
+    a = np.ones(10)
+    b = np.ones(9)
+    with pytest.raises(ValueError):
+        paired_bootstrap(a, a, a, b, b[:9], b, 100, seed=42)
+
+
+@pytest.mark.tier1
 def test_run_gate_passes_within_tolerance():
     """Gate passes at exactly the committed values and records fields."""
     rec = _run_gate("T", {"f1_a": (0.890201, 0.890201),

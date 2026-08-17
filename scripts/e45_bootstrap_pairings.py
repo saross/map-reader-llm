@@ -40,7 +40,7 @@ leg (`compute_family_fdr.py`) for cross-artefact comparability.
 Usage (run on sapphire; ~seconds)::
 
     .venv/bin/python scripts/e45_bootstrap_pairings.py \
-        --h2-rerun-json results/e45-bootstrap-pairings/h2-rerun/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json
+        --h2-rerun-json results/e45-bootstrap-pairings/h2-rerun/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -113,6 +113,10 @@ def paired_bootstrap(tp_a: np.ndarray, fp_a: np.ndarray, fn_a: np.ndarray,
         Dict with the observed delta, CI95 bounds, tail proportions,
         p-value, and floor flag.
     """
+    lengths = {len(a) for a in (tp_a, fp_a, fn_a, tp_b, fp_b, fn_b)}
+    if len(lengths) != 1:
+        raise ValueError(f"per-tile arrays differ in length: {lengths} — "
+                         "a paired bootstrap requires aligned arms")
     n = len(tp_a)
     rng = np.random.default_rng(seed)
     idx = rng.integers(0, n, size=(n_iterations, n))
@@ -128,19 +132,21 @@ def paired_bootstrap(tp_a: np.ndarray, fp_a: np.ndarray, fn_a: np.ndarray,
     p_value = max(2.0 * min(prop_le, prop_gt), 1.0 / n_iterations)
     observed = micro_f1(tp_a.sum(), fp_a.sum(), fn_a.sum()) - micro_f1(
         tp_b.sum(), fp_b.sum(), fn_b.sum())
+    ci_lower = round(float(np.percentile(deltas, 2.5)), 6)
+    ci_upper = round(float(np.percentile(deltas, 97.5)), 6)
     return {
         "n_iterations": n_iterations,
         "seed": seed,
         "observed_delta": round(float(observed), 6),
         "bootstrap_delta_mean": round(float(np.mean(deltas)), 6),
-        "ci95": {"lower": round(float(np.percentile(deltas, 2.5)), 6),
-                 "upper": round(float(np.percentile(deltas, 97.5)), 6)},
+        "ci95": {"lower": ci_lower, "upper": ci_upper},
         "prop_le_zero": prop_le,
         "prop_gt_zero": prop_gt,
         "p_value": p_value,
         "p_at_floor": p_value <= 2.0 / n_iterations,
-        "ci_excludes_zero": bool(
-            np.percentile(deltas, 2.5) > 0 or np.percentile(deltas, 97.5) < 0),
+        # Derived from the same rounded bounds reported above, so the
+        # flag can never disagree with the artefact's own CI (audit L-4).
+        "ci_excludes_zero": bool(ci_lower > 0 or ci_upper < 0),
     }
 
 
@@ -177,6 +183,12 @@ def load_h2_per_tile(rerun_json: Path) -> tuple[dict, dict]:
                              committed["permutation_test"]["observed_f1_diff"]),
         "p_value": (rerun["permutation_test"]["p_value"],
                     committed["permutation_test"]["p_value"]),
+        # Exact permutation fingerprint (audit L-2): the win/loss/tie
+        # split discriminates where the floored p-value cannot.
+        "wins_a": (rerun["permutation_test"]["wins_a"],
+                   committed["permutation_test"]["wins_a"]),
+        "losses_a": (rerun["permutation_test"]["losses_a"],
+                     committed["permutation_test"]["losses_a"]),
     }
     gate = _run_gate("H2", checks)
     return arrays, gate
@@ -223,7 +235,7 @@ def load_h3_per_tile() -> tuple[dict, dict]:
         "tp_b": cell_b["tp"], "fp_b": cell_b["fp"], "fn_b": cell_b["fn"],
     }
     checks = {
-        "n_tiles": (len(tile_order), 487),
+        "n_tiles": (len(tile_order), pair["n_tiles"]),
         "f1_a": (cell_a["observed_micro_f1"], committed_a),
         "f1_b": (cell_b["observed_micro_f1"], committed_b),
         "observed_f1_diff": (
@@ -298,18 +310,25 @@ def main() -> int:
     out = {
         "_README": (
             "E45 bootstrap pairings: the registered bootstrap construction "
-            "(tile-level resampling, percentile CI95; B=1,000 per Decision "
-            "10, with the E54 B=10,000 sensitivity) computed for the two "
-            "family-FDR primary contrasts that entered the family on "
-            "permutation p-values (H2, H3). Pairing per E45's disclosure "
-            "obligation; the permutation p remains the family input — this "
-            "artefact is the paired disclosure, not a replacement."),
+            "computed for the two family-FDR primary contrasts that "
+            "entered the family on permutation floors (H2, H3; H8's "
+            "family input is also permutation-sourced but is a Simes "
+            "minimum over seven contrasts, for which a paired delta is "
+            "not defined). REGISTERED quantities: the percentile CI95 "
+            "from tile-level resampling and the CI-excludes-zero "
+            "significance reading (Decision 10, decisions-log.md:335-345; "
+            "B=1,000 registered, B=10,000 per E54). The 2*min-tail "
+            "p-value is NOT registered — it is carried for comparability "
+            "with the family-FDR H1 leg's convention only (audit M-9). "
+            "The permutation p remains the family input; this artefact "
+            "is the paired disclosure, not a replacement."),
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "registration_anchors": {
             "registered_inference": (
                 "docs/methodology/preregistration/osf/preregistration.md:293 "
                 "(95% bootstrapped CIs); parameters Decision 10, "
-                "docs/methodology/preregistration/decisions-log.md:337"),
+                "docs/methodology/preregistration/decisions-log.md:335-345 "
+                "(parameter row :345)"),
             "family_construction": (
                 "reports/verification/family-fdr-registration.md § 6 "
                 "(H2, H3 primary rows)"),
@@ -320,7 +339,10 @@ def main() -> int:
                    "b": "Flash HIGH text 26-of-30",
                    "committed_artefact": str(
                        COMMITTED_H2.relative_to(BASE_DIR)),
-                   "h2_rerun_json": str(args.h2_rerun_json)},
+                   "h2_rerun_json": str(
+                       args.h2_rerun_json.resolve().relative_to(BASE_DIR)
+                       if args.h2_rerun_json.resolve().is_relative_to(
+                           BASE_DIR) else args.h2_rerun_json)},
             "H3": {"a": H3_REF_A, "b": H3_REF_B,
                    "committed_artefact": str(
                        COMMITTED_H3_TIERING.relative_to(BASE_DIR)),

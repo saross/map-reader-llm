@@ -106,17 +106,77 @@ ALL_CORNERS = ("pro-text-high-t0", "pro-text-medium-t07",
 A08_STATEMENT = (
     "A-08 (the registered three-way transfer verdict, preregistration.md:"
     "693-699) is not computed: the registered Phase 2 varies four factors "
-    "(M/E, H5, T, O) one at a time on Pro, and the existing Pro data vary "
-    "none of them cleanly — the only available contrast moves temperature "
-    "and thinking level together (E40-class confound), so 'all factors "
-    "within 0.03 of Flash-optimal' is unevaluable. Computing a verdict "
-    "from one confounded factor would misrepresent the registered "
-    "criterion; the honest disposition is not-computable-as-registered."
+    "(M/E, H5, T, O) one at a time on Pro, and the existing Pro data "
+    "cleanly vary exactly ONE of them — temperature, via the completed "
+    "thinking x temperature 2x2 (S135 blind verification, HIGH-1; the "
+    "earlier 'none cleanly' premise is superseded). M/E, H5, and O remain "
+    "unvaried, so 'all factors within 0.03 of Flash-optimal' is "
+    "unevaluable. Computing a three-way verdict from one factor would "
+    "misrepresent the registered criterion; the honest disposition is "
+    "not-computable-as-registered."
 )
 
 
-def gate_model_provenance() -> dict:
+# Operational comparability windows for A-09 (declared, not registered):
+# "comparable cost" = within +/-10 %; "comparable F1" = within 0.02.
+COST_WINDOW = 0.10
+F1_WINDOW = 0.02
+
+
+def limbs(pro_f1: float, pro_cost: float,
+          other_f1: float, other_cost: float) -> dict:
+    """Evaluate both registered A-09 limbs with explicit preconditions.
+
+    Registered gate (preregistration.md:691): ">=20% higher F1 at
+    comparable cost, OR comparable F1 at <=50% cost". Both limbs are
+    computed in code so the artefact and any prose verdict cannot
+    diverge (audit H-1); the comparability windows are operational.
+
+    Args:
+        pro_f1: Pro operating point's F1.
+        pro_cost: Pro operating point's cost (USD).
+        other_f1: Comparator operating point's F1.
+        other_cost: Comparator operating point's cost (USD).
+
+    Returns:
+        Dict with ratios, both comparability flags, and both limbs.
+    """
+    cost_ratio = round(pro_cost / other_cost, 4)
+    cost_comparable = abs(cost_ratio - 1.0) <= COST_WINDOW
+    f1_ratio = round(pro_f1 / other_f1, 4)
+    limb1 = bool(f1_ratio >= 1.20 and cost_comparable)
+    f1_comparable = abs(pro_f1 - other_f1) <= F1_WINDOW
+    limb2 = bool(f1_comparable and cost_ratio <= 0.50)
+    return {
+        "f1_ratio_pro_over_other": f1_ratio,
+        "cost_ratio_pro_over_other": cost_ratio,
+        "cost_comparable_within_10pct": cost_comparable,
+        "f1_comparable_within_0.02": f1_comparable,
+        "limb1_fires (>=1.20 F1 at comparable cost)": limb1,
+        "limb2_fires (comparable F1 at <=50% cost)": limb2,
+    }
+
+
+def argmax_with_margin(curve: dict[int, float]) -> tuple[int, float]:
+    """Best threshold and its margin over the runner-up (audit M-3).
+
+    Args:
+        curve: Mapping vote threshold -> F1.
+
+    Returns:
+        (best threshold, margin to the second-best F1, 6 dp).
+    """
+    ordered = sorted(curve.items(), key=lambda kv: kv[1], reverse=True)
+    margin = ordered[0][1] - ordered[1][1]
+    return ordered[0][0], round(margin, 6)
+
+
+def gate_model_provenance(passes: list | None = None) -> dict:
     """Assert the model-of-record for both runs (audit BLOCKER-1).
+
+    Args:
+        passes: Optional pre-parsed passes list (tests); defaults to
+            reading results/passes-manifest.json.
 
     Returns:
         Gate record with per-run model tallies.
@@ -124,14 +184,22 @@ def gate_model_provenance() -> dict:
     Raises:
         SystemExit: If any pass's model contradicts the expectation.
     """
-    manifest = json.loads(PASSES_MANIFEST.read_text())
-    passes = manifest["passes"] if "passes" in manifest else manifest
-    if isinstance(passes, dict):
-        passes = list(passes.values())
+    if passes is None:
+        manifest = json.loads(PASSES_MANIFEST.read_text())
+        passes = manifest["passes"] if "passes" in manifest else manifest
+        if isinstance(passes, dict):
+            passes = list(passes.values())
     record, failures = {}, []
     expectations = {
         (PRO_RUN, "gemini-3.1-pro-preview"): ALL_CORNERS,
         (FLASH_COMPARATOR_RUN, "gemini-3-flash-preview"): ALL_CORNERS,
+        # The pv-diag-384 corners completing the Pro 2x2 (A-06 v2).
+        ("pv-diag-384", "gemini-3.1-pro-preview"): (
+            "pro-high-text-n5-text-t0.7",
+            "pro-high-image-n5-image-t0.7",
+            "pro-medium-text-baseline-text-t0.0",
+            "pro-medium-image-baseline-image-t0.0",
+        ),
     }
     for (run_id, expected_model), pools in expectations.items():
         for pool in pools:
@@ -165,10 +233,32 @@ def materialise_pro_consensus() -> dict[str, dict[int, Path]]:
         out_dir = pool_dir / "consensus"
         out_dir.mkdir(exist_ok=True)
         built[pool] = {}
+        summary = {}
         for k in (1, 2, 3):
             out = out_dir / f"consensus_t{k}.geojson"
-            merge_passes(pool_dir, out, threshold=k)
+            stats = merge_passes(pool_dir, out, threshold=k)
+            # merge_passes signals failure by return value, and the
+            # output path is stable and git-tracked, so a silent no-op
+            # would score a stale committed file as fresh (audit H-2).
+            if not isinstance(stats, dict) or stats.get("error"):
+                sys.exit(f"MATERIALISATION FAIL {pool} k={k}: {stats}")
+            if stats.get("total_passes") != 3:
+                sys.exit(f"POOL-SIZE GATE FAIL {pool}: total_passes="
+                         f"{stats.get('total_passes')}, expected 3 — the "
+                         f"k-of-3 labels would be wrong (audit M-1)")
+            n_features = len(json.loads(out.read_text()).get("features", []))
+            retained = stats.get("retained_clusters")
+            if retained is not None and n_features != retained:
+                sys.exit(f"MATERIALISATION GATE FAIL {pool} k={k}: file "
+                         f"has {n_features} features, merge retained "
+                         f"{retained}")
+            summary[f"t{k}"] = {kk: vv for kk, vv in stats.items()
+                                if not isinstance(vv, (dict, list))}
             built[pool][k] = out
+        # Keep the merge statistics beside the outputs, mirroring the
+        # E57 pools' voting_summary.json (audit L-9).
+        (out_dir / "voting_summary.json").write_text(
+            json.dumps(summary, indent=1))
     return built
 
 
@@ -259,7 +349,10 @@ def main() -> int:
             ok = abs(ours - theirs) <= COMPARATOR_GATE_TOL
             comparator_gate[f"{pool}-k{k}"] = {
                 "recomputed": ours, "committed": theirs, "pass": ok}
-            flash_curves[pool][k] = theirs
+            # Store the 6-dp recomputed value so both curves carry the
+            # same precision (audit M-4); the gate above still anchors
+            # to the committed 4-dp manifest figure.
+            flash_curves[pool][k] = ours
             if not ok:
                 failures.append(f"{pool} k={k}: {ours} vs {theirs}")
     if failures:
@@ -271,8 +364,8 @@ def main() -> int:
     a07_results = {}
     for pool in HIGH_CORNERS:
         modality = "text" if "text" in pool else "image"
-        pro_k = max(pro_curves[pool], key=pro_curves[pool].get)
-        flash_k = max(flash_curves[pool], key=flash_curves[pool].get)
+        pro_k, pro_margin = argmax_with_margin(pro_curves[pool])
+        flash_k, flash_margin = argmax_with_margin(flash_curves[pool])
         matched = evaluate_voting_threshold_transfer(
             flash_optimal_n=3, flash_optimal_threshold=flash_k,
             pro_optimal_n=3, pro_optimal_threshold=pro_k)
@@ -281,8 +374,17 @@ def main() -> int:
             "flash_curve_f1_at_20m (E57 mis-dispatch pools)":
                 flash_curves[pool],
             "pro_optimal_k": pro_k,
+            "pro_optimal_margin_over_runner_up": pro_margin,
             "flash_optimal_k": flash_k,
+            "flash_optimal_margin_over_runner_up": flash_margin,
+            "optimum_fragile (margin < 0.005)": bool(
+                pro_margin < 0.005 or flash_margin < 0.005),
             "matched_n3_comparison": asdict(matched),
+            "_registration_status_note": (
+                "the matched-N form is itself post-hoc (unregistered); "
+                "the library's 'Run extended N=30 test' message is "
+                "operational wording, not a registered trigger "
+                "(audit M-7)"),
         }
     a07 = {
         "_README": (
@@ -304,6 +406,12 @@ def main() -> int:
             "the Pro-corner configuration) — matched config, matched N",
             "the registered >20% extended-test trigger cannot fire an N=30 "
             "Pro run inside this $0 block",
+            "FRAGILITY (image): the Flash comparator image curve is nearly "
+            "flat — k=3 beats k=1 by 0.0016 F1; had k=1 won, the relative "
+            "difference would read 200% and the image verdict would flip "
+            "from 'transfers' to flagged. The image 'transfers' verdict "
+            "is not robust to that margin (S135 blind verification, "
+            "MEDIUM-3).",
         ],
         "results": a07_results,
         "fraction_form_descriptive": {
@@ -315,70 +423,153 @@ def main() -> int:
         "comparator_gate": comparator_gate,
     }
 
-    print("Stage 4: A-06 decision rule ...", flush=True)
-    a06_contrasts = {}
+    print("Stage 4: A-06 decision rule (2x2 decomposition) ...", flush=True)
+    # The full genuine-Pro thinking x temperature 2x2 exists per modality
+    # (S135 blind verification, HIGH-1): the two n1-pro-rerun-384 corners
+    # plus the two pv-diag-384 Pro baselines complete it on the same
+    # Era-2 corpus with identical instruction/library hashes. The
+    # registered factor T is therefore cleanly evaluable at matched
+    # thinking; thinking level (NOT a registered Phase-2 factor) is the
+    # decomposition context; M/E, H5, and O remain unvaried.
+    corner_specs = {
+        ("high", "0-0"): (PRO_RUN, "baseline-pro-{m}-high-t-0-0"),
+        ("medium", "0-7"): (PRO_RUN, "baseline-pro-{m}-medium-t-0-7"),
+        ("high", "0-7"): ("pv-diag-384", "baseline-pro-{m}-high-t-0-7"),
+        ("medium", "0-0"): ("pv-diag-384", "baseline-pro-{m}-medium-t-0-0"),
+    }
+    baseline_specs = {
+        f"{run}::{cid.format(m=m)}": None
+        for (run, cid) in corner_specs.values() for m in ("text", "image")}
+    from n1_baseline_leaderboard_tiering import load_baseline_cells
+    for raw in load_baseline_cells(
+            BASE_DIR / "results" / "run-conditions.json",
+            BASE_DIR / "results" / "run-analyses.json"):
+        if raw["ref"] in baseline_specs:
+            baseline_specs[raw["ref"]] = raw["detections"]
+    missing = [k for k, v in baseline_specs.items() if v is None]
+    if missing:
+        sys.exit(f"A-06 GATE FAIL: 2x2 corner detections not resolvable "
+                 f"via the n1 board loader: {missing}")
+
+    def corner(modality: str, think: str, temp: str) -> dict:
+        run, cid_t = corner_specs[(think, temp)]
+        cid = cid_t.format(m=modality)
+        ref = f"{run}::{cid}"
+        tp, fp, fn, n_passes = pass_averaged_per_tile(
+            Path(baseline_specs[ref]), gdf_ref, gdf_bounds, tile_order)
+        return {"ref": ref, "f1": committed_f1(conditions, run, cid),
+                "tp": tp, "fp": fp, "fn": fn, "n_passes": n_passes}
+
+    a06_factor_t, a06_thinking_ctx = {}, {}
     for modality in ("text", "image"):
-        carried = f"pro-{modality}-medium-t07"   # Flash carry-forward T=0.7
-        alt = f"pro-{modality}-high-t0"          # the alternative corner
-        f1_carried = committed_f1(
-            conditions, PRO_RUN,
-            f"baseline-pro-{modality}-medium-t-0-7")
-        f1_alt = committed_f1(
-            conditions, PRO_RUN, f"baseline-pro-{modality}-high-t-0-0")
-        # Paired delta CI from pass-averaged per-tile arrays (the
-        # operational augmentation; the registered rule is delta alone).
-        tp_c, fp_c, fn_c, n_c = pass_averaged_per_tile(
-            (PRO_DIR / carried).relative_to(BASE_DIR), gdf_ref, gdf_bounds,
-            tile_order)
-        tp_a, fp_a, fn_a, n_a = pass_averaged_per_tile(
-            (PRO_DIR / alt).relative_to(BASE_DIR), gdf_ref, gdf_bounds,
-            tile_order)
-        boot = paired_bootstrap(tp_a, fp_a, fn_a, tp_c, fp_c, fn_c,
-                                n_iterations=B_DELTA_CI, seed=SEED)
-        sens = evaluate_factor_sensitivity(
-            factor_name=(
-                f"temperature+thinking ({modality}; E40-class confound)"),
-            flash_optimal_level=f"{carried} (carried T=0.7, MEDIUM)",
-            baseline_f1=f1_carried,
-            alternatives=[{
-                "level": f"{alt} (T=0.0, HIGH)",
-                "f1": f1_alt,
-                # Delta CI bounds (audit HIGH-6): the CI of the F1
-                # DIFFERENCE, not the per-condition F1 CI.
-                "ci_lower": boot["ci95"]["lower"],
-                "ci_upper": boot["ci95"]["upper"],
-            }])
-        a06_contrasts[modality] = {
-            "carried_level_f1": f1_carried,
-            "alternative_level_f1": f1_alt,
-            "delta": round(f1_alt - f1_carried, 6),
-            "registered_rule_fires (delta >= 0.03)":
-                (f1_alt - f1_carried) >= 0.03,
-            "delta_ci95_paired_bootstrap": boot["ci95"],
-            "delta_bootstrap": boot,
-            "library_result_with_ci_augmentation": asdict(sens),
-            "n_passes": {"carried": n_c, "alternative": n_a},
-        }
+        cells = {(th, tm): corner(modality, th, tm)
+                 for th in ("high", "medium") for tm in ("0-0", "0-7")}
+        # Registered factor T: alternative T=0.0 vs the carried T=0.7,
+        # at matched thinking. Primary at HIGH (the carried production
+        # thinking level); replication at MEDIUM.
+        t_rows = {}
+        for th in ("high", "medium"):
+            base, alt = cells[(th, "0-7")], cells[(th, "0-0")]
+            boot = paired_bootstrap(
+                alt["tp"], alt["fp"], alt["fn"],
+                base["tp"], base["fp"], base["fn"],
+                n_iterations=B_DELTA_CI, seed=SEED)
+            # Estimator reconciliation (audit M-5): the manifest F1s are
+            # the eval mean-of-runs vintage; the bootstrap operates on
+            # micro-F1 of pass-averaged counts. The registered rule is
+            # applied to BOTH deltas and the verdicts must agree.
+            delta_manifest = round(alt["f1"] - base["f1"], 6)
+            delta_arrays = round(boot["observed_delta"], 6)
+            if abs(delta_manifest - delta_arrays) > 0.002:
+                sys.exit(f"A-06 ESTIMATOR GATE FAIL ({modality}/{th}): "
+                         f"manifest delta {delta_manifest} vs array "
+                         f"delta {delta_arrays}")
+            fires_manifest = delta_manifest >= 0.03
+            fires_arrays = delta_arrays >= 0.03
+            if fires_manifest != fires_arrays:
+                sys.exit(f"A-06 VERDICT SPLIT ({modality}/{th}): the two "
+                         f"estimators disagree on the registered rule — "
+                         f"escalate, do not pick one")
+            sens = evaluate_factor_sensitivity(
+                factor_name=f"T ({modality}, matched {th.upper()} thinking)",
+                flash_optimal_level=f"T=0.7 ({base['ref']})",
+                baseline_f1=base["f1"],
+                alternatives=[{
+                    "level": f"T=0.0 ({alt['ref']})",
+                    "f1": alt["f1"],
+                    # Delta CI (audit HIGH-6): CI of the DIFFERENCE.
+                    "ci_lower": boot["ci95"]["lower"],
+                    "ci_upper": boot["ci95"]["upper"],
+                }])
+            t_rows[th] = {
+                "t07_f1": base["f1"], "t00_f1": alt["f1"],
+                "delta (manifest eval vintage)": delta_manifest,
+                "delta (pass-averaged micro vintage)": delta_arrays,
+                "registered_rule_fires (delta >= 0.03)": fires_manifest,
+                "delta_ci95_paired_bootstrap": boot["ci95"],
+                "_ci_semantics": (
+                    "CI of the F1 DIFFERENCE (T=0.0 minus T=0.7), not of "
+                    "either condition's F1 — including inside "
+                    "library_result_with_ci_augmentation.tested_levels, "
+                    "whose schema labels it 'ci' (audit M-6)"),
+                "delta_bootstrap": boot,
+                "library_result_with_ci_augmentation": asdict(sens),
+                "n_passes": {"t07": base["n_passes"],
+                             "t00": alt["n_passes"]},
+            }
+        a06_factor_t[modality] = t_rows
+        # Thinking decomposition context (NOT a registered Phase-2
+        # factor): HIGH - MEDIUM at matched temperature, deltas + CIs.
+        th_rows = {}
+        for tm in ("0-0", "0-7"):
+            hi, md = cells[("high", tm)], cells[("medium", tm)]
+            boot = paired_bootstrap(
+                hi["tp"], hi["fp"], hi["fn"], md["tp"], md["fp"], md["fn"],
+                n_iterations=B_DELTA_CI, seed=SEED)
+            th_rows[f"t{tm}"] = {
+                "high_f1": hi["f1"], "medium_f1": md["f1"],
+                "delta": round(hi["f1"] - md["f1"], 6),
+                "reaches_0.03": abs(hi["f1"] - md["f1"]) >= 0.03,
+                "delta_ci95_paired_bootstrap": boot["ci95"],
+            }
+        a06_thinking_ctx[modality] = th_rows
+
     a06 = {
         "_README": (
             "A-06 (registered: preregistration.md:677 — 'If alternative "
             "outperforms Flash-optimal by >=0.03 F1, flag factor for "
-            "adjustment', registered WITHOUT a CI condition). None of the "
-            "four registered Phase-2 factors (M/E, H5, T, O) is cleanly "
-            "evaluable from existing Pro data: the only available contrast "
-            "moves temperature AND thinking level together (the corners "
-            "design; E40-class confound). The registered rule's arithmetic "
-            "is reported on that confounded contrast, per modality, with "
-            "the confound named. The delta CI is the operational "
-            "augmentation documented in lib_phase4_transfer.py:22-27 and "
-            "is fed a real paired tile-bootstrap CI of the DIFFERENCE "
-            "(B=1,000, seed 42), never a per-condition F1 CI."),
+            "adjustment', registered WITHOUT a CI condition). REVISED "
+            "after the S135 blind verification (HIGH-1): the full "
+            "genuine-Pro thinking x temperature 2x2 exists per modality "
+            "(n1-pro-rerun-384 + pv-diag-384 Pro baselines, same Era-2 "
+            "corpus, identical instruction/library hashes), so the "
+            "registered factor T IS cleanly evaluable at matched "
+            "thinking — the earlier confounded-only framing is "
+            "superseded. Thinking level is not a registered Phase-2 "
+            "factor and is reported as decomposition context. M/E, H5, "
+            "and O remain unvaried. The delta CI is the operational "
+            "augmentation documented in lib_phase4_transfer.py:22-27, "
+            "fed a paired tile-bootstrap CI of the DIFFERENCE (B=1,000, "
+            "seed 42), never a per-condition F1 CI. Replicate-count "
+            "caveat: the T=0.7 corners average 5-10 passes vs 3 for the "
+            "others (same estimator, differing precision)."),
         "generated_at": at,
         "registered_prediction": (
             "H6: 'The Flash-optimal configuration will perform well on "
             "Pro, with at most minor factor adjustments needed' "
             "(preregistration.md, H6 Prediction)."),
-        "contrasts": a06_contrasts,
+        "registered_factor_T": a06_factor_t,
+        "thinking_decomposition_context (not a registered factor)":
+            a06_thinking_ctx,
+        "superseded_confounded_contrast": {
+            "note": (
+                "The original S135 run reported only the corner contrast "
+                "(T=0.0+HIGH vs T=0.7+MEDIUM: text +0.0490, dCI [+0.0267, "
+                "+0.0703]; image +0.0708, dCI [+0.0369, +0.1016]) under a "
+                "'confound cannot be resolved at $0' premise the blind "
+                "verification falsified. Retained for the record "
+                "(preserve, do not delete); superseded by "
+                "registered_factor_T above.")},
         "a08_statement": A08_STATEMENT,
     }
 
@@ -393,10 +584,28 @@ def main() -> int:
                 if p.get("run_id") == run_id
                 and p.get("proposer_pool") == pool
                 and isinstance(p.get("cost_usd"), (int, float))]
-        return round(sum(vals) / len(vals), 4) if vals else float("nan")
+        if not vals:
+            sys.exit(f"A-09 COST GATE FAIL: no cost_usd rows for "
+                     f"{run_id}::{pool} (audit L-5 — never emit NaN)")
+        return round(sum(vals) / len(vals), 4)
 
-    pareto = json.loads(PARETO_V2.read_text()) if PARETO_V2.exists() else None
+    def coverage(run_id: str, pool: str) -> dict:
+        """Status and tile-coverage summary for a pool (audit M-2)."""
+        rows = [p for p in passes if p.get("run_id") == run_id
+                and p.get("proposer_pool") == pool]
+        return {
+            "n_passes": len(rows),
+            "statuses": sorted({str(p.get("status")) for p in rows}),
+            "n_tiles_processed_range": [
+                min(p.get("n_tiles_processed", -1) for p in rows),
+                max(p.get("n_tiles_processed", -1) for p in rows)],
+        }
+
+    pareto = json.loads(PARETO_V2.read_text())
+    rungs = {r["rung"]: r for r in pareto["rungs"]}
     matched_config = {}
+    frontier_eval = {}
+    any_limb_fires_vs_frontier = False
     for pool in HIGH_CORNERS:
         modality = "text" if "text" in pool else "image"
         pro_cost = mean_cost(PRO_RUN, pool)
@@ -417,38 +626,70 @@ def main() -> int:
             "flash_same_config_n3_consensus_best": {
                 "f1_at_20m": flash_n3_best,
                 "cost_usd": round(3 * flash_cost, 4)},
-            "limb1_matched_config": {
-                "comparison": ("Pro 1 pass vs Flash-same-config 3-pass "
-                               "consensus (costs within ~5%)"),
-                "f1_ratio": round(pro_f1 / flash_n3_best, 4),
-                "fires (>=1.20 at comparable cost)":
-                    bool(pro_f1 / flash_n3_best >= 1.20),
+            "limbs_vs_flash_same_config_n3": limbs(
+                pro_f1, pro_cost, flash_n3_best, 3 * flash_cost),
+            "coverage_disclosure": {
+                "pro": coverage(PRO_RUN, pool),
+                "flash_comparator": coverage(FLASH_COMPARATOR_RUN, pool),
+                "note": (
+                    "the Flash comparator passes are status=partial "
+                    "(485-486/487 tiles) while all Pro passes are ok at "
+                    "487/487 — a one-sided gap that slightly depresses "
+                    "Flash F1 and cost (audit M-2); the matched-config "
+                    "limb results sit within that uncertainty where "
+                    "margins are thin"),
             },
         }
+        # The registered gate's yardstick: Flash as actually optimised
+        # (the audited Pareto frontier, same corpus and buffer). Pro's
+        # candidate points: single pass, and the N=3 union at 3x cost.
+        per_rung = {}
+        for rung_name in ("min6", "min11"):
+            r = rungs[rung_name]
+            for label, (pf1, pcost) in {
+                "pro_single_pass": (pro_f1, pro_cost),
+                "pro_n3_union": (max(pro_curves[pool].values()),
+                                 3 * pro_cost),
+            }.items():
+                res = limbs(pf1, pcost, r["f1"], r["est_cost_usd"])
+                per_rung[f"{label}_vs_{rung_name}"] = res
+                if (res["limb1_fires (>=1.20 F1 at comparable cost)"]
+                        or res["limb2_fires (comparable F1 at <=50% cost)"]):
+                    any_limb_fires_vs_frontier = True
+        frontier_eval[modality] = per_rung
+
     a09 = {
         "_README": (
-            "A-09 (registered: preregistration.md:691). Cost basis per the "
-            "S135 audit (HIGH-7): audited per-pass cost_usd from "
-            "results/passes-manifest.json on BOTH sides for the "
-            "matched-configuration comparison; the all-Flash audited "
-            "pareto_v2 frontier (results/verifier-robustness/pareto/, "
-            "flex-tier audited dollars, same corpus and buffer) is the "
-            "Flash-OPTIMAL yardstick the registered gate implies. "
-            "Comparability windows are operational choices, stated "
-            "inline, not registered."),
+            "A-09 (registered: preregistration.md:691). Cost bases: "
+            "audited per-pass cost_usd from results/passes-manifest.json "
+            "(per-pass extractor) on both sides of the matched-"
+            "configuration comparison; the all-Flash pareto_v2 frontier "
+            "(results/verifier-robustness/pareto/, modelled token-load-"
+            "audit flex dollars) as the Flash-optimal yardstick. The two "
+            "bases are not identically constructed (audit M-8); if the "
+            "Pro passes were billed above flex rates the Pro side is "
+            "over-costed, which makes the CLOSED verdict conservative. "
+            "Comparability windows are operational choices declared in "
+            "the limb blocks, not registered."),
         "generated_at": at,
+        "registered_gate_verdict": (
+            "OPEN" if any_limb_fires_vs_frontier else "CLOSED"),
+        "verdict_basis": (
+            "the Flash-optimal frontier (min6, min11) — the yardstick "
+            "the registered scope limitation implies. The matched-"
+            "configuration comparison measures the pure model effect at "
+            "Pro's preferred corner (Flash never optimised there) and "
+            "does not decide the gate."),
         "matched_configuration_comparison": matched_config,
-        "flash_optimal_frontier": {
+        "flash_optimal_frontier_evaluation": {
             "source": str(PARETO_V2.relative_to(BASE_DIR)),
-            "note": ("verdict against the frontier computed in the "
-                     "findings doc from the pareto artefact's efficient "
-                     "set; the artefact is committed and cited rather "
-                     "than re-derived here"),
-            "efficient_set_present": bool(pareto),
+            "rungs_used": {n: {"f1": rungs[n]["f1"],
+                               "est_cost_usd": rungs[n]["est_cost_usd"]}
+                           for n in ("min6", "min11")},
+            "per_modality": frontier_eval,
         },
         "a08_statement": A08_STATEMENT,
     }
-
     for name, doc in (("a06_decision_rule", a06),
                       ("a07_voting_thresholds", a07),
                       ("a09_cost_gate", a09)):
