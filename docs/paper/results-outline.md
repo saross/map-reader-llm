@@ -589,11 +589,14 @@ favourable and should not be given away.
 **Gate before final Results prose**: the D17 reconciliation block
 (schema amendment → relabelling → H10/H12-v2 rows → unexecuted-set
 erratum check → generate the hypothesis-outcome table).
-**Gate status (S134, 2026-08-17)**: ✅ EXECUTED — vocabulary v2
-landed (31-row register: 3 confirmatory-with-deviation, 5
-registered-exploratory, 18 post-hoc, 5 not-executed), errata
-E74–E77 + the E59 update filed, and the table generates at
-`results/hypothesis-outcome-table/` (15/15, pure projection,
-verifier-confirmed 105/105 cells). **PI walk pending**
-(`reports/s134-relabel-walk-dossier.md`) — prose drafting may begin
-once the walk closes.
+**Gate status (S134, 2026-08-17)**: ✅ COMPLETE — vocabulary v2
+landed (final register: 32 rows — 3 confirmatory-with-deviation, 5
+registered-exploratory, 18 post-hoc, 6 not-executed incl. the § 8.9
+named-programme row), errata E74–E78 + the E59 update filed and
+PI-approved, the table generating at
+`results/hypothesis-outcome-table/` (15/15, verifier-confirmed), and
+**the PI walk closed same-day**
+(`reports/s134-relabel-walk-dossier.md` § 8). **Prose drafting is
+OPEN.** Three gated future items queued from the unexecuted-set
+adjudication (H6 $0 analyses; H13 re-pricing → arms B+C; H2-C
+pricing run) — each needs its own phase-gate before execution.

@@ -1,13 +1,15 @@
 # Session 134 — D17 reconciliation block
 
-> **Status**: ✅ EXECUTED 2026-08-17 — all five items landed and
-> verified (blind verifier 26/31 AGREE with 1 upheld disagreement to
-> the PI walk; code audit 2 high + 7 medium + 4 low corrected, 3 lows
-> accepted; 105/105 table cells independently confirmed), US$0.00
-> spent, no stop state fired. **PI walk pending** — the L4 gates
-> (classification walk, sign-offs, erratum wording, unexecuted-set
-> adjudication) are consolidated in
-> `reports/s134-relabel-walk-dossier.md`. PI go was given in-session
+> **Status**: ✅ COMPLETE 2026-08-17 — all five items executed,
+> verified (blind verifier 26/31 AGREE, 1 upheld disagreement
+> adjudicated by the PI; code audit 2 high + 7 medium + 4 low
+> corrected, 3 lows accepted; 105/105 table cells independently
+> confirmed), and **the PI walk CLOSED same-day** — every L4 gate
+> discharged, rulings in `reports/s134-relabel-walk-dossier.md` § 8.
+> Register final state: 32 rows, 8 newly stamped, E74–E78 filed.
+> US$0.00 spent, no stop state fired. Three gated future items queued
+> (H6 $0 analyses; H13 re-pricing → B+C; H2-C pricing run).
+> PI go was given in-session
 > 2026-08-17 AEST after a `/pre-run-review` dialogue (the S131
 > protocol; S133 precedent). This document is the block's controlling
 > document per the pre-run-review exit requirements. Budget:
@@ -158,6 +160,20 @@ ambiguous results requiring investigation or PI input; tripwires
 passed.
 
 ## Changelog
+
+### 2026-08-17 (final) — PI walk closed; block COMPLETE
+
+The walk ran in-session (three question rounds, dossier § 8): sort
+ratified; dd-384 stays confirmatory-with-deviation with the outcome
+fence; the **discharge principle** articulated and adopted for the
+registered-method-on-unregistered-material cases (E41-class extension
+= post-hoc); n1's H6 ref removed; all defect fixes applied (one found
+already fixed on re-verification); errata approved; unexecuted set
+adjudicated (H6 → $0 analyses first; H13 → run B+C after re-pricing;
+H14/H15 → disclose-only closed; H2-C → pricing run first); the § 8.9
+obligation minted as a named-programme disposition row with E78;
+family note annotated; 8 rows stamped, 22 relabels ratified via the
+dossier. Register 31 → 32 rows, ALL VALID. Prose drafting is open.
 
 ### 2026-08-17 (later) — Block executed; PI walk pending
 

@@ -8,7 +8,83 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (134) — THE D17 RECONCILIATION BLOCK, THEN PROSE DRAFTING [Session 133 CLOSED 2026-08-16; ran in Fable]
+## 🎯 NEXT SESSION (135) — PROSE DRAFTING BEGINS [Session 134 CLOSED 2026-08-17; ran in Fable]
+
+> **THE D17 RECONCILIATION BLOCK IS COMPLETE AND THE PI WALK IS
+> CLOSED** — the last gate before Results prose is discharged.
+> Register: **32 rows** (3 confirmatory-with-deviation, 5
+> registered-exploratory, 18 post-hoc, 6 not-executed incl. the
+> § 8.9 named-programme row), 8 PI-stamped 2026-08-17, 22 relabels
+> ratified via the walk dossier; errata **E74–E78** + the E59 update
+> filed and PI-approved; the **hypothesis-outcome table** generates
+> at `results/hypothesis-outcome-table/` (pure projection, 15/15,
+> `--check` drift guard). Rulings register:
+> `reports/s134-relabel-walk-dossier.md` § 8 — including the
+> **discharge principle** (an analysis is registered-class only if it
+> discharges a registered obligation; a second application of a
+> registered method to unregistered material is E41-class extension =
+> post-hoc), now also in the schema's post-hoc description.
+>
+> **START HERE — prose drafting per the settled structure**: outline
+> (`docs/paper/results-outline.md`, D1–D17 all settled, gate note at
+> the decision register), zero-draft claims
+> (`docs/paper/results-draft.md`, standardised-reference throughout;
+> the dd-384 passage already carries the U5 fence), Discussion
+> zero-drafts (Seeds 1–7). The riders remain first-class drafting
+> inputs (D6 supplement, D8 qualifiers, D13 Tier-1-set gap framing,
+> D14b test-set→production, D16 prereg-retrospective). Load
+> `academic-prose` before drafting.
+>
+> **Gated items queued by the walk's unexecuted-set adjudication**
+> (each needs its own phase-gate/audit-config; none blocks drafting):
+> (1) **H6 $0 analyses** — the registered ≥0.03 decision rule,
+> Phase-3 voting-threshold comparison, and cost-effectiveness gate,
+> computed on the existing Pro data (unexecuted-register Tier 1 item
+> 2); the ~$48 re-run decision waits on their results. (2) **H13 arms
+> B+C** — run, gated behind a re-pricing check (~$6–8 is a
+> pre-lodgement estimate). (3) **H2-C 1024 px pricing run** — then
+> the run-vs-disclose decision on evidence. H14/H15: disclose-only,
+> CLOSED.
+>
+> **Carry-forward (unchanged from S133)**: Seed 7's
+> micro-registration claim needs a lit-check before Discussion leans
+> on novelty (`/lit-scout`); the E45 obligation (pair registered
+> bootstrap+BH with permutation at confirmatory claims) lands at
+> Methods drafting; parked doors in the S133 block plan § Parked
+> (vector-extension project; higher-T MCC upper bound);
+> `gs-vs-55map-transfer.{md,json}` canonical-vintage behind an
+> in-text flag; B-leg diagnostics deliberately uncommitted on
+> sapphire; **zbook many commits behind — pull before any zbook
+> work**. Back-burner (PI): the AI-in-research methods-paper corpus
+> mining — no action until the current paper submits.
+
+**Session 134 (2026-08-17, amd-tower, US$0.00)** executed the D17
+reconciliation block end to end and closed its PI walk same-day.
+(1) **Pre-run review dialogue** → block plan (`dfb0eb4ad`), ten
+hardenings incl. the strictness rule, register-semantics widening
+("registered obligations and their dispositions"), and the audit
+gate on Opus subagents. (2) **Errata E74–E77 + E59 update**
+(`67627978a`), all anchors re-verified at source. (3) **Vocabulary
+v2 + 24-row relabel** (`f54dc6787`, atomic by design — a live test
+makes half-migration uncommittable); **H10/H12-v2 rows**
+(`b2af86948`, both null as predicted); **five disposition rows**
+(`5b34ec643`); **the hypothesis-outcome table generator**
+(`ac9eb88b1`). (4) **Verification stack**: blind Opus verifier
+(26/31 AGREE cold, 2 conceded, 1 upheld → PI-adjudicated) + Opus
+code audit (2 high + 7 medium + 4 low corrected, 3 lows accepted) →
+corrections (`6ed5ed9dc`) incl. structural exclusion derivation and
+prose E-number extraction. (5) **The PI walk** (three question
+rounds): sort ratified; dd-384 stays confirmatory-with-deviation
+(it feeds the family H3 contrast) with the outcome fence; the
+discharge principle settled the pv-diag/phase3a post-hoc rulings;
+n1's H6 ref removed; phase3c p-value corrected at source; the § 8.9
+obligation surfaced by the verifier minted as a named-programme
+disposition row with **E78**; methods-outline unexecuted table
+refreshed; 8 rows stamped. Dossier
+`reports/s134-relabel-walk-dossier.md` (§ 8 = rulings register).
+Commits `dfb0eb4ad` → this handoff, all pushed.
+
+## PRIOR SESSION (134) — original queue [Session 133 CLOSED 2026-08-16; ran in Fable]
 
 > **ALL SEVENTEEN OUTLINE DECISIONS ARE SETTLED** — D1–D4 (S118) +
 > D5–D17 (S133, every ruling made by the PI in-session). The register

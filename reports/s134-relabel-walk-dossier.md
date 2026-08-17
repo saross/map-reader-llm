@@ -1,8 +1,8 @@
 # S134 D17 reconciliation — PI walk dossier
 
-> **Last revised**: 2026-08-17 (verification reports landed; § 7
-> added; corrections applied). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-08-17 (WALK CLOSED — all rulings recorded in
+> § 8 and applied; the block's L4 gate is discharged). See
+> [§ Changelog](#changelog) for revision history.
 
 **Purpose**: the L4 operator gate for the S134 D17 reconciliation
 block (`planning/s134-d17-reconciliation-block-2026-08-17.md`). All
@@ -231,7 +231,94 @@ literal placements. Findings and dispositions:
   design — cosmetic; and `--check` is exercised by the strengthened
   tier-1 test rather than a separate CI hook).
 
+## 8. Walk rulings (PI, in-session, 2026-08-17)
+
+Conducted in dossier order as an interactive walk (three question
+rounds). Every ruling below is applied in the same-day close-out
+commits.
+
+**Group A — ratification.** The global vocabulary-v2 sort ratified in
+full, including `h1-cmt0106-pooled-modality` and
+`family-bh-fdr-confirmatory` as `confirmatory-with-deviation`.
+
+**Group B — flagged rows.**
+
+1. `diversity-dividend-384`: **stays confirmatory-with-deviation**
+   (the family BH-FDR sources its H3 headline contrast from this row;
+   the verifier's post-hoc position recorded and not adopted). The
+   outcome fence applied: claim (2) labelled the registered H3
+   comparison; claim (1) labelled a post-registration (post-hoc)
+   discovery.
+2. `pv-diag-384-consensus-calibration`: **post-hoc confirmed**, after
+   a requested clarification that settled on the **discharge
+   principle** — an analysis is registered-class only if it
+   discharges a registered obligation; a second application of a
+   registered method to unregistered material (factor, corpus, or
+   pool) is the E41-class extension pattern. The registered H3 sweep
+   obligation is discharged by `phase3a-consensus-calibration`.
+3. `phase3a-high-consensus-calibration` +
+   `phase3a-replication-thinking-calibration`: **post-hoc confirmed**
+   (unregistered contrast dimension).
+4. `era1-leaderboard`: **division of labour confirmed** — board
+   post-hoc with H2 in its refs; the confirmatory H2 adjudication
+   lives solely at the family row. The consequence (H4/H5/H7/H8 rest
+   on the family row alone) accepted knowingly.
+5. `n1-baseline-matrix-384`: **H6 removed** from `hypothesis_refs`;
+   the board no longer appears under H6 anywhere in the table.
+
+**Group C — factual defects.** All three approved. Applied:
+`phase3c-diversity-calibration` outcome corrected (D vs A p = 0.1812;
+the 0.0610 values belong to B vs A and E vs A — source re-verified at
+`results/phase3c-diversity/track2-text/diversity-analysis-summary.md:35-37`
+before editing); the `results-draft.md` "both preregistered" defect
+was found **already fixed** on re-verification (the U5 correction had
+landed post-inventory) — no change needed; the `methods-outline.md`
+unexecuted table refreshed against the generated register (H10/H12
+removed as executed; H13's discredited reason replaced; H2-C and the
+§ 8.9 obligation added; executed-vs-deferred framings split).
+
+**Group D — errata.** E74, E75, E76, E77, and the E59 Update
+**approved as drafted**.
+
+**Group E — unexecuted-set adjudication.**
+
+- **H6**: the three $0 registered analyses (decision rule,
+  voting-threshold comparison, cost-effectiveness gate) run first on
+  the existing Pro data as a gated item; the ~$48 re-run decision
+  deferred until they report.
+- **H13**: **run arms B + C**, gated behind a re-pricing check.
+- **H14 + H15**: **disclose-only — closed.**
+- **H2 Condition C**: a 1024 px crop **pricing run first**, then the
+  run-vs-disclose decision on evidence (closing E59's open question).
+
+**Group F — verifier-surfaced items.** The § 8.9 obligation gets a
+**named-programme disposition row**
+(`s8-9-post-experiment-verification`, disclosure **E78** drafted the
+same day per the approved coverage-gap pattern); the table's
+outside-frame listing widened to catch named-programme rows. The
+family row's auditability gap resolved by **annotating its sidecar
+note** with the per-hypothesis input sources.
+
+**Group G — sign-offs.** The seven S134 rows (plus the newly minted
+§ 8.9 row — eight total) stamped `2026-08-17T03:50:21Z`; this walk
+and dossier constitute the ratification record for the 22 relabelled
+rows, whose original per-finding stamps are retained.
+
+**Gated future items queued** (each requires its own
+phase-gate/audit-config before execution; recorded in the continuity
+NEXT SESSION block): (1) H6 $0 analyses; (2) H13 re-pricing → arms
+B+C; (3) H2-C 1024 px pricing run.
+
 ## Changelog
+
+### 2026-08-17 (final) — Walk closed, rulings applied
+
+All rulings recorded in § 8 and applied: register now 32 rows (the
+§ 8.9 named-programme disposition row minted with E78), eight rows
+stamped, the dd-384 fence and phase3c correction landed, n1's H6 ref
+removed, the family note annotated, methods-outline refreshed, table
+regenerated. The block's L4 gate is discharged; prose drafting is
+open.
 
 ### 2026-08-17 (later) — Verification landed, corrections applied
 
