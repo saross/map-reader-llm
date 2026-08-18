@@ -34,6 +34,7 @@ from evaluate_tile_mcc import (
     calculate_tile_classification,
     bootstrap_tile_classification_ci,
 )
+from lib_detection_paths import find_pass_geojsons
 
 logging.basicConfig(
     level=logging.INFO,
@@ -63,7 +64,21 @@ def load_runs(
     condition: str,
     max_runs: int | None = None,
 ) -> list[gpd.GeoDataFrame]:
-    """Load individual run detection GeoJSONs."""
+    """Load individual run detection GeoJSONs.
+
+    Per-pass files are resolved through
+    ``lib_detection_paths.find_pass_geojsons``, which expands both naming
+    conventions; the previous single-convention glob under-read any pool
+    holding real-time passes (defect D6).
+
+    Args:
+        study_dir: Study output directory holding condition subdirectories.
+        condition: Condition name (a subdirectory of ``study_dir``).
+        max_runs: Optional cap on the number of run directories loaded.
+
+    Returns:
+        One GeoDataFrame per run, tagged with a ``run_id`` column.
+    """
     condition_dir = study_dir / condition
     run_dirs = sorted(condition_dir.glob("run_*"))
     if max_runs:
@@ -71,7 +86,7 @@ def load_runs(
 
     gdfs = []
     for run_dir in run_dirs:
-        geojsons = list(run_dir.glob("detections_*.geojson"))
+        geojsons = find_pass_geojsons(run_dir)
         if not geojsons:
             log.warning("No GeoJSON in %s", run_dir)
             continue

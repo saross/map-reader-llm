@@ -13,8 +13,9 @@ schema-valid but wrong:
   ``n_detections`` (a wrong-source signal that has caught real errors before —
   ``feedback_feature_count_crosscheck``);
 * **pool resolves** — the condition's ``proposer_pool`` is one of the run's pools
-  (or a flagged cross-run reference), and ``n_passes`` does not exceed the passes
-  on disk;
+  (or a flagged cross-run reference), and ``n_passes`` EQUALS the number of pass
+  files on disk (either direction of disagreement is reported: an undercount is
+  as much a signal as an overcount);
 * **completeness** — every scored evaluation under the run is either claimed by a
   condition or explicitly waived in ``_ignored_evals`` (catches silent omissions).
 
@@ -49,8 +50,10 @@ from typing import Any
 # import (repo root on sys.path via pythonpath=.), so try both.
 try:  # pragma: no cover - exercised by the two run contexts, not a branch to test
     from scripts import generate_post_run_report as g
+    from scripts.lib_detection_paths import resolve_pool_passes
 except ModuleNotFoundError:  # pragma: no cover
     import generate_post_run_report as g
+    from lib_detection_paths import resolve_pool_passes
 
 ERROR = "ERROR"
 WARN = "WARN"
@@ -229,11 +232,33 @@ def verify_condition(spec: dict, scope_bounds: str | None,
                                f"{label}: pool path '{rel}' not found under {run_dir_rel} "
                                f"— n_passes uncheckable"))
         else:
-            n_on_disk = len(list(pool_dir.glob("run_*")))
+            # Count PASS FILES, not run_* directories, and report EITHER
+            # direction of disagreement. Counting directories tolerated a run
+            # that wrote no pass file, and warning only when n_passes exceeded
+            # the count let an UNDERCOUNT through silently — the same class of
+            # defect as the convention-A-only glob (D6). Resolution is the
+            # canonical one, so a real-time pass counts like a batch pass.
+            n_on_disk = len(resolve_pool_passes(pool_dir, allow_multiple=True))
             n_passes = spec.get("n_passes")
-            if isinstance(n_passes, int) and n_passes > n_on_disk:
-                discs.append(_disc(WARN, "n-passes-over",
-                                   f"{label}: n_passes={n_passes} exceeds {n_on_disk} run_* dirs"))
+            if isinstance(n_passes, int) and n_passes != n_on_disk:
+                # Keep the established "n-passes-over" code for the overcount
+                # (some conditions cite it as a by-design signal) and add its
+                # missing mirror for the undercount.
+                over = n_passes > n_on_disk
+                hint = (
+                    "the pool cannot supply them — check for a missing pass or a "
+                    "cross-run reference"
+                    if over else
+                    "usually benign: a condition may deliberately use a subset of "
+                    "the pool; adjudicate against the condition's own eval"
+                )
+                discs.append(_disc(
+                    WARN,
+                    "n-passes-over" if over else "n-passes-under",
+                    f"{label}: n_passes={n_passes} "
+                    f"{'exceeds' if over else 'falls short of'} the {n_on_disk} "
+                    f"pass file(s) resolved under {rel} ({hint})",
+                ))
     return discs
 
 

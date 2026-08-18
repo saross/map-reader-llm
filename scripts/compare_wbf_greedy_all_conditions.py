@@ -41,6 +41,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT / "scripts"))
 
 from lib_advanced_metrics import calculate_f1_internal  # noqa: E402
+from lib_detection_paths import find_pass_geojsons  # noqa: E402
 from lib_fusion import Box, fuse_detections  # noqa: E402
 from merge_passes import (  # noqa: E402
     cluster_across_passes,
@@ -380,7 +381,7 @@ def load_all_boxes(
             continue
 
         pass_id = run_dir.name
-        geojsons = sorted(run_dir.glob("detections*.geojson"))
+        geojsons = find_pass_geojsons(run_dir)
         if not geojsons:
             per_pass_counts[pass_id] = 0
             continue

@@ -22,7 +22,13 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import sys
 from pathlib import Path
+
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_PROJECT_ROOT))
+
+from scripts.lib_detection_paths import find_pass_geojsons  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -95,7 +101,7 @@ def main() -> None:
         return
 
     for run_dir in run_dirs:
-        geojsons = sorted(run_dir.glob("detections*.geojson"))
+        geojsons = find_pass_geojsons(run_dir)
         if not geojsons:
             logger.warning("No detection GeoJSON in %s", run_dir)
             continue

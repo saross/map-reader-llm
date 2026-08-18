@@ -20,7 +20,10 @@ mirroring ``evaluate_detections.py``'s own mutually-exclusive input group:
 * ``detections`` — a single geojson path, *or a list of paths* forwarded to
   ``--detections`` (multiple files are treated as independent replicate runs of
   one condition, producing a replicate-mean summary).
-* ``detections_dir`` (+ optional ``glob``, default ``*/detections_*.geojson``)
+* ``detections_dir`` (+ optional ``glob``; with no glob, ``evaluate_detections.py``
+  resolves the pool through ``scripts/lib_detection_paths.py``, which expands BOTH
+  per-pass naming conventions — the old batch-only default silently under-read any
+  pool holding real-time passes, defect D6)
   — a condition directory whose ``run_*`` subdirs are each a replicate. This is
   the grain the Era-1 phase2 retests need (one condition = K passes under
   ``<condition>/run_K/``); an optional ``replicates`` hint (default 1) keeps the

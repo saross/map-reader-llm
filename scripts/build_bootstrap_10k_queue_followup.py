@@ -55,6 +55,10 @@ import yaml
 # ── Constants ─────────────────────────────────────────────────────────
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
+
 DEFAULT_OUTPUT = Path("/tmp/bootstrap-10k-jobs-followup.csv")
 
 # Pattern A — paper-eval batch YAMLs and the output subtrees they drive.
@@ -84,7 +88,7 @@ BESPOKE_PAPER_EVAL_CELLS: list[dict[str, Any]] = [
     {
         "cell": "results/paper-eval/single-pass-n1",
         "detections_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0",
-        "glob": "run_*/detections_*.geojson",
+        "glob": "",  # empty => canonical resolver (both naming conventions)
         "label": "Single-pass brief-text T=0.0 (N=1 mean)",
         "buffers": [20, 30],
         "mcc": False,
@@ -92,7 +96,7 @@ BESPOKE_PAPER_EVAL_CELLS: list[dict[str, Any]] = [
     {
         "cell": "results/paper-eval/single-pass-n1-high",
         "detections_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
-        "glob": "run_*/detections_*.geojson",
+        "glob": "",  # empty => canonical resolver (both naming conventions)
         "label": "Single-pass brief-text T=0.7 HIGH (N=1 mean of 30)",
         "buffers": [20, 30],
         "mcc": False,
@@ -100,7 +104,7 @@ BESPOKE_PAPER_EVAL_CELLS: list[dict[str, Any]] = [
     {
         "cell": "results/paper-eval/single-pass-n1-t07",
         "detections_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7",
-        "glob": "run_*/detections_*.geojson",
+        "glob": "",  # empty => canonical resolver (both naming conventions)
         "label": "Single-pass brief-text T=0.7 MINIMAL (N=1 mean of 30)",
         "buffers": [20, 30],
         "mcc": False,
@@ -138,7 +142,7 @@ PAIRWISE_TILE_SIZE_CELLS: list[dict[str, Any]] = [
     {
         "cell": "results/pairwise/tile-size-30m/eval-512-on-384-image-t0",
         "detections_dir": "outputs/retest/phase2b/track1-image/T0.0",
-        "glob": "run_*/detections_*.geojson",
+        "glob": "",  # empty => canonical resolver (both naming conventions)
         "label": "512px Image T=0.0 (on 384px grid)",
         "buffers": [20, 30],
     },
@@ -191,6 +195,29 @@ GOLD_STANDARD_CELL: dict[str, Any] = {
 
 
 # ── Helpers ────────────────────────────────────────────────────────────
+
+
+def resolve_detection_files(det_dir: Path, pattern: str) -> list[Path]:
+    """Expand a queue row's ``detections_dir``, honouring an explicit glob.
+
+    Mirrors ``evaluate_detections.find_detection_files``, which the runner
+    ultimately calls: an empty pattern means "use the canonical resolver",
+    which expands BOTH per-pass naming conventions. The literal
+    convention-A glob this builder used to hard-code matched only the
+    batch-written shape and silently under-read any pool whose passes
+    straddled the switch to real-time flex (defect D6).
+
+    Args:
+        det_dir: Absolute path to the condition/pool directory.
+        pattern: Recorded glob relative to ``det_dir``; empty or ``None``
+            selects the canonical resolver.
+
+    Returns:
+        Sorted list of matching paths (run order when resolved).
+    """
+    if pattern:
+        return sorted(det_dir.glob(pattern))
+    return resolve_pool_passes(det_dir, allow_multiple=True)
 
 
 def slugify(text: str) -> str:
@@ -279,7 +306,9 @@ def build_paper_eval_rows() -> list[dict[str, str]]:
         conditions = spec.get("conditions") or []
         default_bounds = defaults.get("bounds")
         default_gt = defaults.get("ground_truth")
-        default_glob = defaults.get("glob") or "*/detections_*.geojson"
+        # An absent YAML glob means evaluate_detections.py's own default,
+        # which is now the canonical resolver rather than a batch-only glob.
+        default_glob = defaults.get("glob") or ""
 
         for cond in conditions:
             label = cond["label"]
@@ -309,17 +338,19 @@ def build_paper_eval_rows() -> list[dict[str, str]]:
             # Schema preservation: per_run > 0 ⇒ used --detections-dir; per_run == 0 ⇒ --detections.
             cond_glob = cond.get("glob") or default_glob
             if n_per_run > 0:
-                # Use --detections-dir mode. If the YAML's glob is the legacy broken pattern
-                # ``run_*/detections_*_run??`` (which Path.glob never matches because ``??``
-                # requires exactly two chars and the actual filenames are
-                # ``detections_*_run01.geojson``), fall back to the default that does match.
-                # The per_run label evidence in the existing N=1K eval shows the canonical
-                # 3-run files were used regardless.
+                # Use --detections-dir mode. If the YAML's glob is the legacy broken
+                # ``run_?`` pattern (which Path.glob never matches, because ``??``
+                # requires exactly two characters while the real per-pass filenames
+                # end ``_run01.geojson``), fall back to the default — now the
+                # canonical resolver in ``scripts.lib_detection_paths``. The per_run
+                # label evidence in the existing N=1K eval shows the canonical 3-run
+                # files were used regardless.
                 det_dir_abs = REPO_ROOT / cond["detections_dir"]
-                if not list(det_dir_abs.glob(cond_glob)):
+                if not resolve_detection_files(det_dir_abs, cond_glob):
                     print(
                         f"  NOTE: YAML glob {cond_glob!r} matched 0 files for "
-                        f"{cond['detections_dir']}; falling back to default glob {default_glob!r}.",
+                        f"{cond['detections_dir']}; falling back to "
+                        f"{default_glob or '<resolver default>'}.",
                         file=sys.stderr,
                     )
                     cond_glob = default_glob
@@ -338,10 +369,11 @@ def build_paper_eval_rows() -> list[dict[str, str]]:
                 # Single-file mode — find the single detection geojson under
                 # detections_dir matching the glob.
                 det_dir_abs = REPO_ROOT / cond["detections_dir"]
-                matches = sorted(det_dir_abs.glob(cond_glob))
+                matches = resolve_detection_files(det_dir_abs, cond_glob)
                 if not matches:
-                    # Try the default _run01 single-file pattern.
-                    matches = sorted(det_dir_abs.glob("run_1/detections_*_run01.geojson"))
+                    # Fall back to the canonical resolver, which walks the
+                    # pool's run_<N> directories under both conventions.
+                    matches = resolve_detection_files(det_dir_abs, "")
                 if not matches:
                     print(
                         f"  ERROR: no detection file found under {cond['detections_dir']} "
@@ -511,12 +543,13 @@ def validate_paths(rows: list[dict[str, str]]) -> tuple[int, list[str]]:
             if not p.exists():
                 problems.append(f"detections_dir={row['detections_dir']} not found")
             else:
-                # Verify glob matches at least one file.
-                glob = row["glob"] or "*/detections_*.geojson"
-                matches = list(p.glob(glob))
+                # Verify the row's detections spec matches at least one file.
+                glob = row["glob"]
+                matches = resolve_detection_files(p, glob)
                 if not matches:
                     problems.append(
-                        f"detections_dir={row['detections_dir']} + glob={glob} matched 0 files"
+                        f"detections_dir={row['detections_dir']} + "
+                        f"glob={glob or '<resolver default>'} matched 0 files"
                     )
         else:
             problems.append("neither detections nor detections_dir set")

@@ -35,6 +35,7 @@ from scripts.lib_advanced_metrics import (
     get_map_name,
     match_detections_to_references,
 )
+from scripts.lib_detection_paths import find_pass_geojsons
 
 # Script version
 __version__ = "1.0.0"
@@ -118,8 +119,15 @@ def find_detection_file(run_dir: Path) -> Path | None:
     """
     Find the detection GeoJSON file in a run directory.
 
-    Mirrors the logic from analyse_phase2_results.py: matches 'detections_*'
-    while excluding .meta.json, _fp.*, _fn.* suffixes.
+    Mirrors the logic from analyse_phase2_results.py: resolution is delegated
+    to ``lib_detection_paths.find_pass_geojsons`` (BOTH per-pass naming
+    conventions, sidecars and aggregation artefacts already excluded), with
+    two things the resolver has no reason to know about handled here: the
+    extension-less pass files early runner versions wrote (the resolver
+    matches ``*.geojson`` only), and the _fp.* / _fn.* diagnostic exports,
+    which are filtered out. The previous local rule matched only the
+    batch-written underscore shape and so under-read any pool holding
+    real-time passes (defect D6).
 
     Args:
         run_dir: Path to a run_N directory.
@@ -127,11 +135,13 @@ def find_detection_file(run_dir: Path) -> Path | None:
     Returns:
         Path to the detection file, or None if not found.
     """
-    for f in run_dir.iterdir():
-        if not f.name.startswith("detections_"):
-            continue
-        if f.name.endswith(".meta.json"):
-            continue
+    candidates = list(find_pass_geojsons(run_dir))
+    candidates += [
+        f for f in sorted(run_dir.iterdir())
+        if f.is_file() and not f.suffix
+        and f.name.startswith(("detections_", "detections-"))
+    ]
+    for f in candidates:
         if "_fp." in f.name or "_fn." in f.name:
             continue
         if f.stem.endswith(("_fp", "_fn")):

@@ -44,6 +44,7 @@ from lib_advanced_metrics import (
     bootstrap_multi_run_effect_size_ci,
     calculate_f1_internal,
 )
+from lib_detection_paths import find_pass_geojsons
 
 # Script version
 __version__ = "1.0.0"
@@ -69,9 +70,16 @@ def load_condition_results(
     Load per-run detection results for a single condition.
 
     Iterate run_* directories under {study_dir}/{condition}/ and load
-    detection files from each. Detection files are identified by matching
-    'detections_*' filenames while excluding '.meta.json', '_fp.*', and
-    '_fn.*' suffixes. Files may or may not have a .geojson extension.
+    detection files from each. Resolution is delegated to
+    ``lib_detection_paths.find_pass_geojsons``, which expands BOTH per-pass
+    filename conventions and excludes '.meta.json' / '.tiles.json' sidecars
+    and aggregation artefacts. The previous local rule matched only the
+    batch-written underscore shape and so silently under-read any pool whose
+    passes straddled the switch to real-time flex (defect D6).
+    Two things the resolver has no reason to know about are handled here: the
+    extension-less pass files early runner versions wrote (the resolver matches
+    ``*.geojson`` only), and '_fp.*' / '_fn.*' diagnostic exports, which are
+    filtered out.
 
     Errata E21: Removed stale 'passes' parameter and pass_N subdirectory
     iteration -- the actual structure is run_K/ with no pass level (single
@@ -111,19 +119,22 @@ def load_condition_results(
             logger.warning("Cannot parse run number from: %s", run_dir.name)
             continue
 
-        # Find detection files: match 'detections_*' but exclude
-        # .meta.json, .tiles.json, _fp.*, and _fn.* files
+        # Resolve pass files through the canonical resolver (both naming
+        # conventions; sidecars and aggregation artefacts already excluded),
+        # then add the extension-less pass files early runner versions wrote,
+        # which the resolver's ``*.geojson`` patterns cannot match. Finally
+        # drop any _fp / _fn diagnostic export.
+        candidates = list(find_pass_geojsons(run_dir))
+        candidates += [
+            f for f in sorted(run_dir.iterdir())
+            if f.is_file() and not f.suffix
+            and f.name.startswith(("detections_", "detections-"))
+        ]
         detection_files = []
-        for f in run_dir.iterdir():
-            if not f.name.startswith("detections_"):
-                continue
-            if f.name.endswith((".meta.json", ".tiles.json")):
-                continue
+        for f in candidates:
             if "_fp." in f.name or "_fn." in f.name:
                 continue
-            # Skip _fp or _fn suffixes without extension
-            stem = f.stem if "." in f.name else f.name
-            if stem.endswith(("_fp", "_fn")):
+            if f.stem.endswith(("_fp", "_fn")):
                 continue
             detection_files.append(f)
 

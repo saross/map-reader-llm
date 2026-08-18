@@ -58,6 +58,7 @@ from lib_consensus import (  # noqa: E402
     deduplicate_within_pass,
     ensure_utm_crs,
 )
+from lib_detection_paths import find_pass_geojsons  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -68,8 +69,10 @@ logger = logging.getLogger(__name__)
 def _load_run_detections(run_dir: Path) -> list[dict]:
     """Load GeoJSON detection features from a run directory.
 
-    Handles both naming conventions: ``detections_*.geojson`` (legacy
-    underscore) and ``detections-*.geojson`` (current hyphen).
+    Both per-pass naming conventions — the batch-written underscore shape and
+    the real-time hyphen shape — are resolved by
+    ``lib_detection_paths.find_pass_geojsons``, which supersedes the pair of
+    local globs this function used to carry.
 
     Args:
         run_dir: Path to a run directory.
@@ -78,12 +81,10 @@ def _load_run_detections(run_dir: Path) -> list[dict]:
         List of GeoJSON feature dictionaries.
     """
     features: list[dict] = []
-    # Try both naming conventions
-    for pattern in ["detections-*.geojson", "detections_*.geojson"]:
-        for geojson_file in sorted(run_dir.glob(pattern)):
-            with open(geojson_file, encoding="utf-8") as f:
-                data = json.load(f)
-                features.extend(data.get("features", []))
+    for geojson_file in find_pass_geojsons(run_dir):
+        with open(geojson_file, encoding="utf-8") as f:
+            data = json.load(f)
+            features.extend(data.get("features", []))
     return features
 
 
@@ -111,8 +112,9 @@ def analyse_detections(
     passes to find persistent false alarms.
 
     Args:
-        detection_dirs: List of run directories, each containing
-            ``detections_*.geojson`` files (one directory per pass).
+        detection_dirs: List of run directories, each containing one
+            per-pass detection GeoJSON (either naming convention; see
+            ``lib_detection_paths``).
         gdf_ref: GeoDataFrame of ground-truth reference mounds.
         gdf_bounds: GeoDataFrame of evaluation tile boundaries.
         buffer_metres: Maximum matching distance in metres.
@@ -602,8 +604,9 @@ def main(argv: list[str] | None = None) -> None:
     )
     parser.add_argument(
         "--detections-dir", type=Path, required=True,
-        help="Directory containing run_1/, run_2/, ... subdirectories "
-             "with detections_*.geojson files",
+        help="Directory containing run_1/, run_2/, ... subdirectories, each "
+             "holding one per-pass detection GeoJSON (either naming "
+             "convention; resolved via scripts.lib_detection_paths)",
     )
     parser.add_argument(
         "--bounds", type=Path, required=True,

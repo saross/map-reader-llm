@@ -70,6 +70,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.evaluate_detections import load_geojson  # noqa: E402
+from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
 from scripts.merge_passes import DISTANCE_THRESHOLD_METRES  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -94,10 +95,15 @@ def resolve_detection_paths(cond: dict[str, Any]) -> list[str]:
     the scorer was pointed at. Three input modes need handling:
 
     - ``--detections``: an explicit list of files.
-    - ``--detections-dir``: a directory, expanded with the recorded
-      ``--glob``. A batch run records the CLI default glob rather than
-      the per-condition pattern from the batch YAML, so a directory that
-      the default glob cannot match falls back to a wider pattern.
+    - ``--detections-dir``: a directory. A recorded ``--glob`` that names
+      a per-pass artefact is honoured by resolving the pool through
+      ``lib_detection_paths.resolve_pool_passes``, which expands BOTH
+      naming conventions — the recorded pattern is convention-A-only and
+      replaying it verbatim silently drops any real-time pass (defect D6).
+      A glob naming something else (``replication_*/consensus_t3.geojson``,
+      ``accepted_run*.geojson``) is replayed verbatim, because it targets a
+      non-pass artefact the resolver knows nothing about. A directory that
+      neither route matches falls back to a wider pattern.
     - stale paths: a few artefacts were relocated after their evaluation
       ran; these are recovered by unique basename under ``outputs/``.
 
@@ -118,7 +124,7 @@ def resolve_detection_paths(cond: dict[str, Any]) -> list[str]:
             continue
         meta = ev.get("_metadata") or {}
         cli = meta.get("cli_args") or {}
-        pattern = cli.get("glob") or "*/detections_*.geojson"
+        pattern = cli.get("glob")
         value = (meta.get("input_files") or {}).get("detections")
         if value is None:
             value = cli.get("detections") or cli.get("detections_dir") or cli.get("batch")
@@ -126,7 +132,14 @@ def resolve_detection_paths(cond: dict[str, Any]) -> list[str]:
             value = [value]
         for path in value or []:
             if os.path.isdir(path):
-                hits = sorted(glob.glob(os.path.join(path, pattern)))
+                if pattern and "detections" not in pattern:
+                    # Non-pass artefact (consensus / accepted set) — replay
+                    # the recorded pattern verbatim.
+                    hits = sorted(glob.glob(os.path.join(path, pattern)))
+                else:
+                    hits = [str(f) for f in resolve_pool_passes(
+                        Path(path), allow_multiple=True,
+                    )]
                 if not hits:
                     hits = sorted(glob.glob(os.path.join(path, "*/detections*.geojson")))
                 out.extend(hits)

@@ -69,6 +69,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.h13_aggregation_sweep import aggregate, write_cell  # noqa: E402
+from scripts.lib_detection_paths import find_pass_geojsons  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_f1_internal,
     get_map_name,
@@ -151,7 +152,7 @@ def load_cell_passes(spec: dict, common: Any) -> dict[str, list[dict]]:
         run_dirs = sorted(POOL_384.glob("run_*"),
                           key=lambda p: int(p.name.split("_")[1]))
         for run_dir in run_dirs:
-            files = sorted(run_dir.glob("detections-*.geojson"))
+            files = find_pass_geojsons(run_dir)
             if not files:
                 continue
             data = json.loads(files[0].read_text())

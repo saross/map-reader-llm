@@ -9,7 +9,8 @@
 #
 # Inputs
 # ------
-#   outputs/h10/evaluation/<config>/run_<N>/detections-*.geojson
+#   outputs/h10/evaluation/<config>/run_<N>/<per-pass GeoJSON>
+#   (either naming convention; resolved via scripts/lib_detection_paths.py)
 #   (one geojson per pass, containing axis-aligned polygon detections
 #    in EPSG:32635)
 #
@@ -37,6 +38,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from scripts.lib_detection_paths import find_pass_geojsons
 from scripts.lib_fusion import (
     DEFAULT_IOU_THRESHOLD,
     DEFAULT_MAX_AREA_M2,
@@ -217,7 +219,7 @@ def load_pass_boxes(config: str) -> tuple[list[Box], dict]:
     )
     for run_dir in run_dirs:
         pass_id = run_dir.name
-        geojsons = sorted(run_dir.glob("detections-*.geojson"))
+        geojsons = find_pass_geojsons(run_dir)
         if not geojsons:
             per_pass_counts[pass_id] = 0
             continue

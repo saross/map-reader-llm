@@ -44,8 +44,9 @@
 #     single-set cell (phase3a / -high / -replication) or the PV cell.
 #   * ``detections_dir`` + ``glob`` -> the per-tile MEAN over the matched files
 #     (float). This is a replicate-mean cell: a single-pass baseline (K runs,
-#     ``*/detections_*.geojson``) or a phase3c diversity pool (5 replications,
-#     ``replication_*/consensus_t{vote}.geojson``).
+#     resolved through ``lib_detection_paths`` so BOTH per-pass naming
+#     conventions are expanded) or a phase3c diversity pool (5 replications,
+#     ``replication_*/consensus_t{vote}.geojson``, replayed verbatim).
 # Both yield float arrays on one fixed tile order, so they drop unchanged into
 # the shared ``permutation_test_float``. A single-pass board cell is an
 # EXPECTATION over replicate passes (pass-averaged per-tile); a consensus
@@ -112,6 +113,7 @@ from n1_baseline_leaderboard_tiering import (  # noqa: E402
 
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
 from lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from lib_detection_paths import resolve_pool_passes  # noqa: E402
 from pairwise_permutation_test import assign_source_tiles  # noqa: E402
 
 DEFAULT_CONDITIONS = BASE_DIR / "results" / "run-conditions.json"
@@ -254,6 +256,12 @@ def cell_per_tile(
     * ``detections_dir`` + ``glob`` -> the per-tile MEAN over the matched files
       (float). This is a replicate-mean cell: a single-pass baseline (K runs) or
       a phase3c diversity pool (5 replications). ``n_passes`` = file count.
+      A pass-file glob is resolved through
+      :func:`scripts.lib_detection_paths.resolve_pool_passes` rather than
+      replayed verbatim, because the recorded pattern matches only the
+      batch-written convention and would drop any real-time pass (defect D6);
+      a glob naming a non-pass artefact (a phase3c consensus set) is replayed
+      as recorded.
 
     Args:
         cli_args: The cell's ``evaluation.json[_metadata][cli_args]``.
@@ -298,7 +306,12 @@ def cell_per_tile(
         # Replicate-mean over the matched files (single-pass K runs, or phase3c
         # 5 replications). Pass-averaged per-tile -- the expected per-tile count.
         pool_dir = BASE_DIR / det_dir
-        pass_files = sorted(pool_dir.glob(glob)) if glob else []
+        if glob and "detections" not in glob:
+            # Non-pass artefact (phase3c ``replication_*/consensus_t*``) —
+            # replay the recorded pattern verbatim.
+            pass_files = sorted(pool_dir.glob(glob))
+        else:
+            pass_files = resolve_pool_passes(pool_dir, allow_multiple=True)
         if not pass_files:
             raise FileNotFoundError(
                 f"No replicate passes under {det_dir} matching glob {glob!r}"

@@ -48,6 +48,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 import geopandas as gpd  # noqa: E402
 
 from evaluate_detections import load_geojson  # noqa: E402
+from lib_detection_paths import resolve_pool_passes  # noqa: E402
 from pairwise_permutation_test import (  # noqa: E402
     load_geojson_detections,
     run_permutation_test,
@@ -280,7 +281,8 @@ def _resolve_geojson(cond_inv: dict, arch: str) -> Path | None:
     For consensus: pick the threshold optimum from the corresponding
         per-arch tier JSON (use the first available buffer's
         best_threshold).
-    For single-pass: the canonical run_1/detections_*.geojson.
+    For single-pass: the first pass file in run order, resolved through
+        ``lib_detection_paths.resolve_pool_passes`` (both naming conventions).
     """
     base = PROJECT_ROOT / cond_inv["path"]
     if arch in {"pv", "single-pass+PV"}:
@@ -289,8 +291,8 @@ def _resolve_geojson(cond_inv: dict, arch: str) -> Path | None:
         cand = base / "detections.geojson"
         return cand if cand.is_file() else None
     if arch == "single-pass":
-        # First detections_*.geojson under run_1
-        candidates = sorted(base.glob("run_*/detections_*.geojson"))
+        # First per-pass GeoJSON in run order (run_1 unless it is absent).
+        candidates = resolve_pool_passes(base, allow_multiple=True)
         return candidates[0] if candidates else None
     if arch == "consensus":
         # Read tier JSON to find best_threshold per stratum

@@ -93,6 +93,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_tile_classification,
     get_map_name,
 )
+from scripts.lib_detection_paths import POOL_PASS_GLOBS  # noqa: E402
 from scripts.merge_passes import (  # noqa: E402
     DISTANCE_THRESHOLD_METRES,
     deduplicate_within_pass,
@@ -115,13 +116,11 @@ ATTRIBUTION_RULES = ("first_source_tile", "nearest_centroid", "union_contributin
 #: Default conditions manifest used to resolve ``condition_id``-only cells.
 DEFAULT_MANIFEST = PROJECT_ROOT / "results/conditions-manifest.json"
 
-#: Glob a batch evaluation records when it was not given an explicit one.
-DEFAULT_PASS_GLOB = "*/detections_*.geojson"
-
-#: Both pass-file naming conventions in use across the corpus. Identical to
-#: ``n1_baseline_leaderboard_tiering.PASS_GLOBS``, restated here so this module
-#: does not import the leaderboard machinery just for a constant.
-PASS_GLOBS = ("*/detections_*.geojson", "*/detections-*.geojson")
+#: Both pass-file naming conventions in use across the corpus, imported from
+#: the canonical resolver rather than restated. The copy this module used to
+#: carry (alongside a convention-A-only default glob) was one of the five
+#: independent re-solvings of the same problem that motivated centralising it.
+PASS_GLOBS = POOL_PASS_GLOBS
 
 
 # ── Spec resolution ───────────────────────────────────────────────────
@@ -165,7 +164,7 @@ def resolve_from_manifest(
         inputs = meta.get("input_files") or {}
         eval_path = eval_path or src
         bounds = bounds or inputs.get("bounds") or cli.get("bounds")
-        pattern = cli.get("glob") or DEFAULT_PASS_GLOB
+        pattern = cli.get("glob")
         value = inputs.get("detections")
         if value is None:
             value = cli.get("detections") or cli.get("detections_dir")
@@ -173,18 +172,16 @@ def resolve_from_manifest(
             value = [value]
         for path in value or []:
             if os.path.isdir(path):
-                # Expand with the recorded glob AND the hyphenated variant.
-                # Pass files are named ``detections_<label>_runNN.geojson`` in
-                # some runs and ``detections-<config>-<date>.geojson`` in
-                # others, and a batch evaluation records only the CLI DEFAULT
-                # glob, not the per-condition pattern from its YAML. Expanding
-                # with one pattern alone silently drops the passes named the
-                # other way — which is exactly how the Session 136 exposure
-                # survey came to score
+                # Expand with BOTH naming conventions, plus the recorded
+                # glob when the evaluation carried one. A batch evaluation
+                # records only the CLI default glob, not the per-condition
+                # pattern from its YAML, and expanding with one convention
+                # alone silently drops the passes named the other way — which
+                # is exactly how the Session 136 exposure survey came to score
                 # ``pv-diag-384::baseline-pro-text-medium-t-0-0`` on 1 of its 3
-                # passes. ``n1_baseline_leaderboard_tiering.PASS_GLOBS`` already
-                # unions both patterns; this matches it.
-                patterns = {pattern, *PASS_GLOBS}
+                # passes. The union is the canonical
+                # ``lib_detection_paths.POOL_PASS_GLOBS``.
+                patterns = set(PASS_GLOBS) | ({pattern} if pattern else set())
                 hits = sorted(
                     {h for g in patterns for h in glob.glob(os.path.join(path, g))}
                 )

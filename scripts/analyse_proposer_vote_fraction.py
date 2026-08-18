@@ -85,6 +85,7 @@ from lib_consensus import (  # noqa: E402
     cluster_across_passes,
     deduplicate_within_pass,
 )
+from lib_detection_paths import find_pass_geojsons  # noqa: E402
 
 __version__ = "1.0.0"
 
@@ -213,14 +214,15 @@ def list_run_dirs(condition_dir: Path) -> list[Path]:
 
 
 def _load_run_features(run_dir: Path) -> list[dict]:
-    """Load features from any ``detections*.geojson`` file in a run dir.
+    """Load features from every per-pass detection GeoJSON in a run dir.
 
     The Phase 3a corpus uses two filename conventions interchangeably:
     ``detections_<condition>_run<NN>.geojson`` (image-n5, n1-outstanding)
     and ``detections-<library>-<arch>-<date>.geojson`` (flash-high-text-n5,
-    flash-high-image-n5). The lib_consensus loader only handles the
-    underscore variant, so we re-implement the glob locally and skip
-    metadata side-files (`.meta.json`, `.tiles.json`).
+    flash-high-image-n5). Both are resolved by
+    ``lib_detection_paths.find_pass_geojsons``, which also excludes the
+    ``.meta.json`` / ``.tiles.json`` side-files; the local glob this
+    function used to carry is therefore obsolete.
 
     Args:
         run_dir: Path to a per-pass run directory.
@@ -230,9 +232,7 @@ def _load_run_features(run_dir: Path) -> list[dict]:
         the directory.
     """
     features: list[dict] = []
-    for path in sorted(run_dir.glob("detections*.geojson")):
-        if ".meta" in path.name or ".tiles" in path.name:
-            continue
+    for path in find_pass_geojsons(run_dir):
         try:
             with open(path, encoding="utf-8") as f:
                 data = json.load(f)
@@ -248,7 +248,8 @@ def load_pass_detections(
 ) -> tuple[dict[str, list[dict]], list[dict]]:
     """Load and deduplicate per-pass detections for a condition.
 
-    Loads every ``detections_*.geojson`` from each ``run_*/`` directory,
+    Loads every per-pass detection GeoJSON (both naming conventions, via
+    ``lib_detection_paths``) from each ``run_*/`` directory,
     deduplicates within-pass at 20 m, and returns:
 
     1. ``pass_detections``: mapping from run name to deduplicated

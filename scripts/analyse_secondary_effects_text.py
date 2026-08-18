@@ -72,6 +72,7 @@ from lib_advanced_metrics import (  # noqa: E402
     spatial_tolerance_curve,
 )
 from evaluate_detections import load_geojson  # noqa: E402
+from lib_detection_paths import resolve_pool_passes  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -194,14 +195,30 @@ def find_optimal_threshold(consensus_dir: Path, gdf_ref, gdf_bounds, buffer_m=20
 
 
 def load_run_geojsons(run_dir: Path) -> list[tuple[str, Path]]:
-    """Find all per-run detection GeoJSON files, sorted by run number."""
-    results = []
-    for d in sorted(run_dir.glob("run_*")):
-        gjs = [f for f in d.glob("*.geojson")
-               if ".meta" not in f.name and ".tiles" not in f.name]
-        if gjs:
-            results.append((d.name, gjs[0]))
-    return results
+    """Find all per-run detection GeoJSON files, sorted by run number.
+
+    Resolution is delegated to ``lib_detection_paths.resolve_pool_passes``,
+    which walks the pool's numeric ``run_<N>`` directories in run order and
+    expands BOTH per-pass naming conventions. The tolerant local glob this
+    function carried (any ``*.geojson`` lacking ``.meta`` / ``.tiles``) was a
+    workaround for the convention-A-only loader in ``lib_consensus``; that
+    loader now uses the same resolver, so the workaround is obsolete.
+
+    Args:
+        run_dir: Pool directory holding ``run_<N>`` subdirectories.
+
+    Returns:
+        List of ``(run directory name, pass GeoJSON path)`` pairs in run order.
+    """
+    # One file per run directory, as before: ``setdefault`` keeps the first
+    # pass file of each run and dict insertion order preserves run order.
+    # (Exactly one directory in the corpus holds two candidates — a complete
+    # re-run superseding an incomplete attempt — and taking both would change
+    # the replicate count.)
+    first_per_run: dict[str, Path] = {}
+    for path in resolve_pool_passes(run_dir, allow_multiple=True):
+        first_per_run.setdefault(path.parent.name, path)
+    return list(first_per_run.items())
 
 
 def _compute_single_run_f1(

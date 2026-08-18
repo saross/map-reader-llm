@@ -56,6 +56,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.lib_advanced_metrics import calculate_f1_internal  # noqa: E402
+from scripts.lib_detection_paths import find_pass_geojsons  # noqa: E402
 from scripts.merge_passes import deduplicate_within_pass  # noqa: E402
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
 
@@ -88,10 +89,9 @@ def load_pool(pool_dir: Path, max_k: int) -> list[list[dict]]:
     run_dirs = sorted(pool_dir.glob("run_*"), key=lambda p: int(p.name.split("_")[1]))
     passes = []
     for run_dir in run_dirs[:max_k]:
-        # Two committed naming conventions: "detections-<config>-<date>.geojson"
-        # (2026-04 pv-diag runs) and "detections_<label>_runNN.geojson"
-        # (earlier retest runs). Match both, or the pool loads silently empty.
-        files = sorted(run_dir.glob("detections[-_]*.geojson"))
+        # Two committed naming conventions (real-time hyphen, batch underscore);
+        # the canonical resolver expands both, or the pool loads silently empty.
+        files = find_pass_geojsons(run_dir)
         if not files:
             continue
         data = json.loads(files[0].read_text())

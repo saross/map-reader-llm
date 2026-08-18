@@ -22,7 +22,6 @@
 # ============================================================================
 from __future__ import annotations
 
-import glob
 import json
 import sys
 from pathlib import Path
@@ -34,24 +33,34 @@ sys.path.insert(0, str(BASE_DIR))
 from scripts.analyse_verifier_robustness import GROUND_TRUTH  # noqa: E402
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
 
 BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
 C = BASE_DIR / "outputs/h11/pv-diag-384/consensus"
 M = BASE_DIR / "outputs/h11/pv-diag-384"
 OUT = BASE_DIR / "results/verifier-robustness/pool_recall_ceilings.json"
 
-# (label, union geojson, per-pass meta glob or None, achieved best PV F1@20m
+# (label, union geojson, proposer pool dir or None, achieved best PV F1@20m
 #  for context — committed records, see min_thinking_pv.log / pro_pv.log /
 #  pareto_leaderboard.json / opmax_vs_headline_permutation.json)
+#
+# The per-pass detection counts come from each pass file's ``.meta.json``
+# sidecar. The pool is resolved through ``scripts/lib_detection_paths.py`` and
+# the sidecars derived from the resolved pass files, rather than globbed with a
+# literal batch-convention sidecar pattern: that literal matched only the
+# batch-written naming convention, so a pool holding real-time passes would
+# have contributed a per-pass mean over the wrong subset (defect D6). On the
+# four convention-A pools below the two routes resolve the same 10/30/10/30
+# sidecars.
 POOLS = [
     ("pro-high-t07-5pass", C / "pro-high-text-1of5.geojson",
-     M / "pro-high-text-n5/text-t0.7/run_*/detections_*.meta.json", 0.8506),
+     M / "pro-high-text-n5/text-t0.7", 0.8506),
     ("flash-min-t07-5pass", C / "flash-minimal-text-t07-1of5.geojson",
-     M / "flash-minimal-text-n30-t07/text-t0.7/run_*/detections_*.meta.json", 0.8708),
+     M / "flash-minimal-text-n30-t07/text-t0.7", 0.8708),
     ("flash-min-t07-10pass", C / "text-1of10.geojson",
-     M / "text-n10/text-t0.7/run_*/detections_*.meta.json", 0.8835),
+     M / "text-n10/text-t0.7", 0.8835),
     ("flash-high-t07-5pass", C / "flash-high-text-1of5.geojson",
-     M / "flash-high-text-n5/text-t0.7/run_*/detections_*.meta.json", 0.8641),
+     M / "flash-high-text-n5/text-t0.7", 0.8641),
     ("flash-high-t07-30pass", C / "flash-high-text-1of30.geojson", None, None),
     ("flash-high-16of30-headline-pool", C / "flash-high-text-16of30.geojson",
      None, 0.8951),
@@ -64,7 +73,7 @@ def main() -> int:
     gdf_bounds = load_geojson(BOUNDS)
     rows = []
     print(f"{'pool':<34} {'n':>6} {'/pass':>6} {'u/p':>5}  R-ceil@20m  F1max  bestPV")
-    for label, gj, meta_glob, pv_f1 in POOLS:
+    for label, gj, pool_dir, pv_f1 in POOLS:
         gdf = gpd.read_file(gj)
         # Magnitude-based CRS detection (declared CRS may be absent or wrong).
         crs = "EPSG:32635" if abs(gdf.geometry.x.iloc[0]) > 180 else "EPSG:4326"
@@ -74,9 +83,11 @@ def main() -> int:
         r = res["recall"]
         f1max = 2 * r / (1 + r)  # F1 at the ceiling recall with perfect precision
         per_pass = ratio = None
-        if meta_glob:
-            nds = [json.load(open(p)).get("results_summary", {}).get("total_detections")
-                   for p in sorted(glob.glob(str(meta_glob)))]
+        if pool_dir:
+            metas = [pass_file.with_suffix(".meta.json")
+                     for pass_file in resolve_pool_passes(pool_dir, allow_multiple=True)]
+            nds = [json.load(open(m)).get("results_summary", {}).get("total_detections")
+                   for m in metas if m.exists()]
             nds = [n for n in nds if n]
             if nds:
                 per_pass = sum(nds) / len(nds)

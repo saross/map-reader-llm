@@ -58,6 +58,10 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
+
 DEFAULT_OUTPUT = Path("/tmp/bca-migration-queue.csv")
 RUNNER_QUEUE = Path("/tmp/bootstrap-10k-jobs.csv")
 RESULTS_DIR = REPO_ROOT / "results"
@@ -171,12 +175,18 @@ def validate_row(row: dict[str, str]) -> list[str]:
         if not det_dir_abs.exists():
             problems.append(f"detections_dir={row['detections_dir']} not found")
         else:
-            glob = row["glob"] or "*/detections_*.geojson"
-            matches = list(det_dir_abs.glob(glob))
+            # An empty glob column means "use evaluate_detections.py's
+            # default", which is now the canonical resolver — both per-pass
+            # naming conventions, not the batch-written shape alone (D6).
+            glob = row["glob"]
+            if glob:
+                matches = list(det_dir_abs.glob(glob))
+            else:
+                matches = resolve_pool_passes(det_dir_abs, allow_multiple=True)
             if not matches:
                 problems.append(
                     f"detections_dir+glob produced 0 matches: "
-                    f"{row['detections_dir']} + {glob}"
+                    f"{row['detections_dir']} + {glob or '<resolver default>'}"
                 )
     elif row["batch"]:
         if not (REPO_ROOT / row["batch"]).exists():

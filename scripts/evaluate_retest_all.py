@@ -42,6 +42,7 @@ from scripts.lib_advanced_metrics import (
     calculate_f1_internal,
     load_data,
 )
+from scripts.lib_detection_paths import PASS_GLOBS
 
 # ── Paths ──────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -171,11 +172,19 @@ def evaluate_multi_run_condition(
 def find_condition_geojsons(phase_dir: Path) -> dict[str, list[Path]]:
     """Discover condition directories and their detection GeoJSON files.
 
-    Expects structure: phase_dir/{condition_name}/run_{N}/detections_*.geojson
+    Expects structure: ``phase_dir/{condition_name}/run_{N}/<pass GeoJSON>``.
+    Pass files are matched with ``lib_detection_paths.PASS_GLOBS`` — BOTH
+    naming conventions — rather than the batch-written shape alone, which
+    silently under-read any condition holding real-time passes (defect D6).
+    The search stays recursive because some retest phases nest a track level
+    between the condition and its run directories.
+
+    Args:
+        phase_dir: Phase output directory holding condition subdirectories.
 
     Returns:
         Dictionary mapping condition name to list of GeoJSON paths (sorted
-        by run number).
+        by path, hence by run number).
     """
     conditions = {}
     for child in sorted(phase_dir.iterdir()):
@@ -185,7 +194,7 @@ def find_condition_geojsons(phase_dir: Path) -> dict[str, list[Path]]:
         if child.name in ("checkpoint.json", "study_manifest.json", "batch_working"):
             continue
 
-        geojsons = sorted(child.rglob("detections_*.geojson"))
+        geojsons = sorted({f for pattern in PASS_GLOBS for f in child.rglob(pattern)})
         if geojsons:
             conditions[child.name] = geojsons
     return conditions

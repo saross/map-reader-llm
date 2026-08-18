@@ -126,6 +126,7 @@ from evaluate_detections import (  # noqa: E402
     load_geojson,
     slugify,
 )
+from lib_detection_paths import resolve_pool_passes  # noqa: E402
 from pairwise_permutation_test import (  # noqa: E402
     load_geojson_detections,
     run_permutation_test,
@@ -427,8 +428,10 @@ def resolve_conditions_from_inventory(
                     cond["id"], gj,
                 )
         elif k <= 1:
-            # Single-pass: find the detection GeoJSON directly
-            det_files = sorted(cond_path.glob("run_*/detections_*.geojson"))
+            # Single-pass: the first per-pass GeoJSON in run order. Resolved
+            # via lib_detection_paths so BOTH naming conventions are expanded;
+            # the previous batch-only glob missed real-time passes (defect D6).
+            det_files = resolve_pool_passes(cond_path, allow_multiple=True)
             if det_files:
                 specs.append(ConditionSpec(
                     label=cond["id"],

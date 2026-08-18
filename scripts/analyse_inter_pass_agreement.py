@@ -98,6 +98,7 @@ from lib_consensus import (  # noqa: E402
     cluster_across_passes,
     deduplicate_within_pass,
 )
+from lib_detection_paths import find_pass_geojsons  # noqa: E402
 
 __version__ = "1.0.0"
 
@@ -292,12 +293,14 @@ CONDITION_REGISTRY: dict[str, dict[str, dict[str, Any]]] = {
 def load_run_features(run_dir: Path) -> list[dict]:
     """Load all detection GeoJSON features from a run directory.
 
-    Mirrors ``analyse_secondary_effects.py``'s tolerant glob: any
-    ``*.geojson`` that does not have ``.meta`` or ``.tiles`` in its
-    name. This handles both ``detections_T<x>_run<NN>.geojson`` (retest
-    layout) and ``detections-<config>-3-flash-<date>.geojson`` (h11 /
-    gold-standard-v2 layout) without falling foul of the underscore-only
-    glob in ``lib_consensus.load_run_detections``.
+    Delegates resolution to ``lib_detection_paths.find_pass_geojsons``,
+    which expands both per-pass naming conventions — the batch-written
+    ``detections_T<x>_run<NN>.geojson`` (retest layout) and the real-time
+    ``detections-<config>-3-flash-<date>.geojson`` (h11 / gold-standard-v2
+    layout) — and excludes ``.meta`` / ``.tiles`` side-files. The tolerant
+    local glob this function carried was a workaround for the
+    convention-A-only loader in ``lib_consensus``; that loader now uses the
+    same resolver, so the workaround is obsolete.
 
     Args:
         run_dir: Path to a run directory.
@@ -305,14 +308,8 @@ def load_run_features(run_dir: Path) -> list[dict]:
     Returns:
         List of GeoJSON feature dictionaries (possibly empty).
     """
-    if not run_dir.exists() or not run_dir.is_dir():
-        return []
     features: list[dict] = []
-    candidates = [
-        f for f in sorted(run_dir.glob("*.geojson"))
-        if ".meta" not in f.name and ".tiles" not in f.name
-    ]
-    for gj in candidates:
+    for gj in find_pass_geojsons(run_dir):
         try:
             with open(gj, encoding="utf-8") as f:
                 data = json.load(f)

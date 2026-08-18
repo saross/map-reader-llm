@@ -33,6 +33,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent))
 
 from lib_advanced_metrics import compute_per_tile_tp_fp_fn
+from lib_detection_paths import PASS_GLOBS
 
 logging.basicConfig(
     level=logging.INFO,
@@ -131,13 +132,31 @@ def load_condition(
     track: str | None,
     condition: str,
 ) -> gpd.GeoDataFrame:
-    """Load averaged detections for a condition (all runs merged)."""
+    """Load averaged detections for a condition (all runs merged).
+
+    Pass files are matched with ``lib_detection_paths.PASS_GLOBS`` — BOTH
+    naming conventions — rather than the batch-written shape alone, which
+    silently under-read any condition holding real-time passes (defect D6).
+    The search stays recursive because the run directories sit one or two
+    levels below the condition depending on the phase layout.
+
+    Args:
+        phase_dir: Phase output directory.
+        track: Optional track subdirectory between phase and condition.
+        condition: Condition directory name.
+
+    Returns:
+        All passes of the condition concatenated into one GeoDataFrame.
+
+    Raises:
+        FileNotFoundError: If the condition directory holds no pass file.
+    """
     if track:
         cond_dir = phase_dir / track / condition
     else:
         cond_dir = phase_dir / condition
 
-    geojsons = sorted(cond_dir.rglob("detections_*.geojson"))
+    geojsons = sorted({f for pattern in PASS_GLOBS for f in cond_dir.rglob(pattern)})
     if not geojsons:
         raise FileNotFoundError(
             f"No GeoJSON found in {cond_dir}",
