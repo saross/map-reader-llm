@@ -1,0 +1,273 @@
+{
+  "generated_at_utc": "2026-08-18T00:39:49.392749+00:00",
+  "scope": {
+    "name": "common (arm A n arm B n arm C)",
+    "carrier_tiles": 340,
+    "area_km2": 1637.5309305245949,
+    "buffer_metres": 20,
+    "dedup_metres": 20.0,
+    "runs_per_arm": 3
+  },
+  "f1_vs_overlap": {
+    "arms": {
+      "armA": {
+        "overlap_fraction": 0.125,
+        "tiles_per_pass": 340,
+        "tp": 397.0,
+        "fp": 488.33333333333337,
+        "fn": 141.0,
+        "precision": 0.44841867469879515,
+        "recall": 0.7379182156133829,
+        "micro_f1": 0.5578454332552694
+      },
+      "armB": {
+        "overlap_fraction": 0.25,
+        "tiles_per_pass": 430,
+        "tp": 422.0,
+        "fp": 663.6666666666666,
+        "fn": 116.0,
+        "precision": 0.38870125882714157,
+        "recall": 0.7843866171003717,
+        "micro_f1": 0.5198111270786286
+      },
+      "armC": {
+        "overlap_fraction": 0.5,
+        "tiles_per_pass": 999,
+        "tp": 469.0,
+        "fp": 1323.6666666666667,
+        "fn": 69.0,
+        "precision": 0.2616214206024544,
+        "recall": 0.8717472118959108,
+        "micro_f1": 0.4024599542334096
+      }
+    },
+    "paired_contrasts": {
+      "armA_vs_armB": {
+        "primary": {
+          "delta": 0.03803430617664072,
+          "ci_lower": 0.0009453550982732143,
+          "ci_upper": 0.07075018924858273,
+          "bootstrap_mean": 0.037413949774150565,
+          "p_two_sided": 0.05,
+          "n_iterations": 1000,
+          "seed": 42,
+          "excludes_zero": true
+        },
+        "sensitivity": {
+          "delta": 0.03803430617664072,
+          "ci_lower": 0.0015171723770212792,
+          "ci_upper": 0.0741118347472877,
+          "bootstrap_mean": 0.03770653840364267,
+          "p_two_sided": 0.0416,
+          "n_iterations": 10000,
+          "seed": 42,
+          "excludes_zero": true
+        }
+      },
+      "armA_vs_armC": {
+        "primary": {
+          "delta": 0.15538547902185978,
+          "ci_lower": 0.1213724722960994,
+          "ci_upper": 0.18887772374435066,
+          "bootstrap_mean": 0.15508470492496082,
+          "p_two_sided": 0.001,
+          "n_iterations": 1000,
+          "seed": 42,
+          "excludes_zero": true
+        },
+        "sensitivity": {
+          "delta": 0.15538547902185978,
+          "ci_lower": 0.12036640190298088,
+          "ci_upper": 0.18903424345230518,
+          "bootstrap_mean": 0.15467960824594332,
+          "p_two_sided": 0.0001,
+          "n_iterations": 10000,
+          "seed": 42,
+          "excludes_zero": true
+        }
+      },
+      "armB_vs_armC": {
+        "primary": {
+          "delta": 0.11735117284521906,
+          "ci_lower": 0.09217316470444688,
+          "ci_upper": 0.14366475899289669,
+          "bootstrap_mean": 0.11767075515081027,
+          "p_two_sided": 0.001,
+          "n_iterations": 1000,
+          "seed": 42,
+          "excludes_zero": true
+        },
+        "sensitivity": {
+          "delta": 0.11735117284521906,
+          "ci_lower": 0.09191261174724284,
+          "ci_upper": 0.14221964263123127,
+          "bootstrap_mean": 0.11697306984230063,
+          "p_two_sided": 0.0001,
+          "n_iterations": 10000,
+          "seed": 42,
+          "excludes_zero": true
+        }
+      }
+    }
+  },
+  "cost_efficiency": {
+    "per_arm": {
+      "armB": {
+        "total_usd": 1.747156,
+        "calls": 1290,
+        "usd_per_call": 0.00135438,
+        "basis": "audited (summed per-pass cost_estimate)",
+        "micro_f1": 0.5198111270786286,
+        "f1_per_usd": 0.297518439726406
+      },
+      "armC": {
+        "total_usd": 3.99657,
+        "calls": 2997,
+        "usd_per_call": 0.00133352,
+        "basis": "audited (summed per-pass cost_estimate)",
+        "micro_f1": 0.4024599542334096,
+        "f1_per_usd": 0.10070133995736583
+      },
+      "armA": {
+        "total_usd": 1.370829,
+        "calls": 1020,
+        "usd_per_call": 0.00134395,
+        "basis": "IMPUTED \u2014 arm A ran free-tier in March 2026 ($0 recorded); priced at the mean measured arm-B/arm-C rate $0.001344/call",
+        "micro_f1": 0.5578454332552694,
+        "f1_per_usd": 0.40694020425251387
+      }
+    },
+    "marginal": [
+      {
+        "from": "armA",
+        "to": "armB",
+        "delta_f1": -0.03803430617664072,
+        "delta_usd": 0.376327,
+        "f1_per_additional_usd": -0.10106717343331925
+      },
+      {
+        "from": "armB",
+        "to": "armC",
+        "delta_f1": -0.11735117284521906,
+        "delta_usd": 2.249414,
+        "f1_per_additional_usd": -0.05216966411928576
+      },
+      {
+        "from": "armA",
+        "to": "armC",
+        "delta_f1": -0.15538547902185978,
+        "delta_usd": 2.625741,
+        "f1_per_additional_usd": -0.059177763161659805
+      }
+    ]
+  },
+  "edge_detection": {
+    "n_mounds": 538,
+    "margin_summary_m": {
+      "armA": {
+        "min": 9.206677092239259,
+        "p10": 217.19261428153845,
+        "median": 498.02718216890935,
+        "max": 1219.1292044939473,
+        "frac_under_100m": 0.01858736059479554
+      },
+      "armB": {
+        "min": 95.46209816727786,
+        "p10": 351.0313334884122,
+        "median": 597.6619535365608,
+        "max": 1270.4279866773866,
+        "frac_under_100m": 0.0018587360594795538
+      },
+      "armC": {
+        "min": 116.06502686813472,
+        "p10": 657.0919203882106,
+        "median": 824.4993348089047,
+        "max": 1272.0720267121799,
+        "frac_under_100m": 0.0
+      }
+    },
+    "binned_by_armA_margin": [
+      {
+        "armA_margin_lo_m": 0,
+        "armA_margin_hi_m": 50,
+        "n_mounds": 4,
+        "recall_armA": 0.0,
+        "recall_armB": 0.75,
+        "recall_armC": 1.0,
+        "median_margin_armA_m": 16.024420549627393,
+        "median_margin_armB_m": 406.88017920742277,
+        "median_margin_armC_m": 876.8380222690175
+      },
+      {
+        "armA_margin_lo_m": 50,
+        "armA_margin_hi_m": 100,
+        "n_mounds": 6,
+        "recall_armA": 0.4444444444444444,
+        "recall_armB": 0.7777777777777777,
+        "recall_armC": 0.8888888888888888,
+        "median_margin_armA_m": 69.45759933267254,
+        "median_margin_armB_m": 755.1874133758246,
+        "median_margin_armC_m": 805.9975657891191
+      },
+      {
+        "armA_margin_lo_m": 100,
+        "armA_margin_hi_m": 200,
+        "n_mounds": 36,
+        "recall_armA": 0.7222222222222222,
+        "recall_armB": 0.787037037037037,
+        "recall_armC": 0.8888888888888888,
+        "median_margin_armA_m": 179.8594929819228,
+        "median_margin_armB_m": 470.0210933542112,
+        "median_margin_armC_m": 825.4768703382285
+      },
+      {
+        "armA_margin_lo_m": 200,
+        "armA_margin_hi_m": 400,
+        "n_mounds": 161,
+        "recall_armA": 0.6790890269151137,
+        "recall_armB": 0.7681159420289856,
+        "recall_armC": 0.8405797101449274,
+        "median_margin_armA_m": 312.53332529659383,
+        "median_margin_armB_m": 617.4030818765168,
+        "median_margin_armC_m": 867.7067722445353
+      },
+      {
+        "armA_margin_lo_m": 400,
+        "armA_margin_hi_m": 800,
+        "n_mounds": 228,
+        "recall_armA": 0.7763157894736842,
+        "recall_armB": 0.8099415204678363,
+        "recall_armC": 0.8903508771929824,
+        "median_margin_armA_m": 580.0233584824309,
+        "median_margin_armB_m": 581.0526511208154,
+        "median_margin_armC_m": 810.4484566832543
+      },
+      {
+        "armA_margin_lo_m": 800,
+        "armA_margin_hi_m": 1300,
+        "n_mounds": 103,
+        "recall_armA": 0.7961165048543689,
+        "recall_armB": 0.7540453074433656,
+        "recall_armC": 0.8673139158576053,
+        "median_margin_armA_m": 945.8106575235724,
+        "median_margin_armB_m": 647.3947822496992,
+        "median_margin_armC_m": 811.7964743515477
+      }
+    ],
+    "low_margin_subgroup": {
+      "definition": "arm-A best margin < 100 m",
+      "n_mounds": 10,
+      "recall_armA": 0.26666666666666666,
+      "recall_armB": 0.7666666666666666,
+      "recall_armC": 0.9333333333333333,
+      "recall_armA_high_margin": 0.7468434343434344,
+      "recall_armB_high_margin": 0.7847222222222222,
+      "recall_armC_high_margin": 0.870580808080808
+    },
+    "overall_recall": {
+      "armA": 0.7379182156133829,
+      "armB": 0.7843866171003717,
+      "armC": 0.8717472118959108
+    }
+  }
+}

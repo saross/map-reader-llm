@@ -1,0 +1,205 @@
+{
+  "dedup_metres": 20.0,
+  "common_scope_km2": 1637.5309305245946,
+  "common_carrier_tiles": 340,
+  "passes": [
+    {
+      "arm": "armA",
+      "run": "run_1",
+      "overlap_frac": 0.125,
+      "tiles": 340,
+      "n_raw": 973,
+      "n_dedup": 916,
+      "n_removed": 57,
+      "removed_frac": 0.05858170606372045,
+      "native": {
+        "n_in": 916,
+        "n_clipped": 0,
+        "n_out": 916,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 916,
+        "n_clipped": 0,
+        "n_out": 916,
+        "n_unassigned": 0
+      }
+    },
+    {
+      "arm": "armA",
+      "run": "run_2",
+      "overlap_frac": 0.125,
+      "tiles": 340,
+      "n_raw": 931,
+      "n_dedup": 869,
+      "n_removed": 62,
+      "removed_frac": 0.06659505907626208,
+      "native": {
+        "n_in": 869,
+        "n_clipped": 0,
+        "n_out": 869,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 869,
+        "n_clipped": 0,
+        "n_out": 869,
+        "n_unassigned": 0
+      }
+    },
+    {
+      "arm": "armA",
+      "run": "run_3",
+      "overlap_frac": 0.125,
+      "tiles": 340,
+      "n_raw": 927,
+      "n_dedup": 871,
+      "n_removed": 56,
+      "removed_frac": 0.06040992448759439,
+      "native": {
+        "n_in": 871,
+        "n_clipped": 0,
+        "n_out": 871,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 871,
+        "n_clipped": 0,
+        "n_out": 871,
+        "n_unassigned": 0
+      }
+    },
+    {
+      "arm": "armB",
+      "run": "run_1",
+      "overlap_frac": 0.25,
+      "tiles": 430,
+      "n_raw": 1361,
+      "n_dedup": 1124,
+      "n_removed": 237,
+      "removed_frac": 0.17413666421748714,
+      "native": {
+        "n_in": 1124,
+        "n_clipped": 0,
+        "n_out": 1124,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 1124,
+        "n_clipped": 43,
+        "n_out": 1081,
+        "n_unassigned": 0
+      }
+    },
+    {
+      "arm": "armB",
+      "run": "run_2",
+      "overlap_frac": 0.25,
+      "tiles": 430,
+      "n_raw": 1361,
+      "n_dedup": 1118,
+      "n_removed": 243,
+      "removed_frac": 0.17854518736223365,
+      "native": {
+        "n_in": 1118,
+        "n_clipped": 0,
+        "n_out": 1118,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 1118,
+        "n_clipped": 53,
+        "n_out": 1065,
+        "n_unassigned": 0
+      }
+    },
+    {
+      "arm": "armB",
+      "run": "run_3",
+      "overlap_frac": 0.25,
+      "tiles": 430,
+      "n_raw": 1380,
+      "n_dedup": 1163,
+      "n_removed": 217,
+      "removed_frac": 0.1572463768115942,
+      "native": {
+        "n_in": 1163,
+        "n_clipped": 0,
+        "n_out": 1163,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 1163,
+        "n_clipped": 52,
+        "n_out": 1111,
+        "n_unassigned": 0
+      }
+    },
+    {
+      "arm": "armC",
+      "run": "run_1",
+      "overlap_frac": 0.5,
+      "tiles": 999,
+      "n_raw": 3034,
+      "n_dedup": 1844,
+      "n_removed": 1190,
+      "removed_frac": 0.3922214897824654,
+      "native": {
+        "n_in": 1844,
+        "n_clipped": 0,
+        "n_out": 1844,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 1844,
+        "n_clipped": 78,
+        "n_out": 1766,
+        "n_unassigned": 0
+      }
+    },
+    {
+      "arm": "armC",
+      "run": "run_2",
+      "overlap_frac": 0.5,
+      "tiles": 999,
+      "n_raw": 3130,
+      "n_dedup": 1877,
+      "n_removed": 1253,
+      "removed_frac": 0.40031948881789137,
+      "native": {
+        "n_in": 1877,
+        "n_clipped": 0,
+        "n_out": 1877,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 1877,
+        "n_clipped": 74,
+        "n_out": 1803,
+        "n_unassigned": 0
+      }
+    },
+    {
+      "arm": "armC",
+      "run": "run_3",
+      "overlap_frac": 0.5,
+      "tiles": 999,
+      "n_raw": 3125,
+      "n_dedup": 1887,
+      "n_removed": 1238,
+      "removed_frac": 0.39616,
+      "native": {
+        "n_in": 1887,
+        "n_clipped": 0,
+        "n_out": 1887,
+        "n_unassigned": 0
+      },
+      "common": {
+        "n_in": 1887,
+        "n_clipped": 78,
+        "n_out": 1809,
+        "n_unassigned": 0
+      }
+    }
+  ]
+}
