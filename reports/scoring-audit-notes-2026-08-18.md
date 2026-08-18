@@ -225,4 +225,4 @@ values that prompted the check: the neighbour-share median is **43.75 %**, not
 43.7 % (and it is exactly (1 − (384/512)²), the arithmetic of a 12.5 %-overlap
 tiling, not an empirical near-miss), and the calibration ∩ evaluation share is
 **38.76 %**, which rounds to the 38.8 % previously quoted. Everything else
-reproduced as stated.
+reproduced as stated. Landed alongside erratum E81 in commit `503e21daf`.
