@@ -8,6 +8,87 @@ project state.
 
 ---
 
+## 🎯 NEXT SESSION (137) — DECIDE D15, THEN RESUME THE DISCUSSION WALK [Session 136 CLOSED 2026-08-19; ran on Opus 5]
+
+> **START HERE: D15.** The BCa bootstrap wrapper transposes its axes, so
+> **every confidence interval on that path is too narrow** — measured
+> **1.66× at B=1,000 and 5.50× at B=10,000** on a real published cell,
+> matching `sqrt(B/n)` to two decimals at both counts. **1,520 committed
+> evaluations used B=10,000.** Point estimates are untouched; the
+> `percentile_fallback` branch, permutation tests, and this session's
+> paired bootstraps are all unaffected. It matters beyond width because
+> Decision 10 registers the CI as the inference instrument and the
+> registered significance rule is "the 95 % CI excludes zero" — so the
+> error runs towards **false positives**, and every BCa-based significance
+> reading is unverified until recomputed. **Verified and deliberately NOT
+> fixed**: the correction moves essentially every interval in the study,
+> which is a sequencing decision, and bundling it with E81's landed work
+> would make both deltas unattributable. Full working, the one-line fix,
+> the test that would have caught it, and three re-emission options (all
+> $0) are in `reports/bca-axis-defect-2026-08-18.md`. It also **blocks the
+> grid's register row** (D16).
+>
+> **THEN**: (1) the **grid register row** — writing it needs per-cell
+> evaluations, which `evaluate_detections.py` cannot produce without
+> bootstrap CIs, so it unblocks the moment D15 lands. (2) The
+> **verifier stage** on the grid, costed **$6.33** for all four K=10
+> unions (or $4.09 for the two 50 % cells), which is what settles whether
+> the tile-size ranking and the overlap reversal survive a precision
+> stage. (3) The **Discussion outline walk** — `docs/paper/
+> discussion-outline.md`, DD1–DD10 still ALL OPEN; the walk has now been
+> deferred through two sessions. (4) Remaining Methods scaffold
+> conversions (§§ 1–4 detail, § 6).
+
+**Session 136 (2026-08-18/19, amd-tower + sapphire, US$18.54 API)** ran
+from the H13 scoring chain to a completed second experiment, and turned
+into the session where the study's scoring layer was audited properly.
+
+**Science.** H13 discharged: F1 falls monotonically with overlap
+(0.5578 / 0.5198 / 0.4025), the registered edge mechanism confirmed but
+concentrated in ten edge-marooned mounds, and every additional API dollar
+on overlap buying negative F1. Then the reversal: under a corroboration ×
+consensus filter the ranking inverts, arm C going worst → best
+(0.4025 → 0.7114). The **tile-size × overlap grid** (30,130 calls,
+**$18.53**, all four cells full after recovering six parse-failed tiles)
+overturned two standing priors — **512 px wins at every overlap and every
+K**, so the 384 px sweet spot does not reproduce under one footprint at
+T=0.7; and **passes do not substitute for overlap**, one pass of 512/50 %
+beating ten passes of either 12.5 % cell. The interaction is unresolved
+(CI spans zero). Best cell: 512/50 %, c≥2, k≥8, K=10 — F1 **0.7518**,
+tile-MCC 0.5897.
+
+**Scoring defects, all found this session.** E79 (order-dependent tile
+assignment, ~0.01 F1 on 123 conditions), E80 (two coexisting scoring
+paths — preregistration-COMPLIANT, but cross-path comparisons confounded;
+155 of 333 conditions), E81 (undefined tile-MCC published as `0.0`,
+originating in a mathematically false claim in the registration itself at
+`preregistration.md:392`; 25 evaluations re-emitted, `Tier 7` retired, no
+F1 moved), and **D15** above. D6 — two detection-filename conventions
+silently under-reading mixed pools — closed with a canonical resolver and
+30 migrated sites.
+
+**Two suspicions cleared rather than confirmed**, which is a result and is
+recorded: the calibration exclusion is sound (tile-level intersection
+zero; the area sharing is below what any evaluation tile shares with its
+own neighbours), and D8's 519/587 provenance gap is a documented recovery
+top-up, not a defect.
+
+**Metadata is now trustworthy going forward.** Recorded cost is the amount
+actually **billed** (flex carries the same 50 % discount as the Batch API,
+which nothing in the code knew), with list price and an explicit
+`cost_basis` beside it; `parse_failures` can now see a parse failure; and
+`total_detections` is reconciled against the artefact it describes.
+Historical metadata is unchanged and its defects are recorded as D12/D13.
+
+**The register**: 36 rows, all valid. H13 now reads **executed** — its
+not-executed disposition row was retired with PI approval and archived to
+`archive/superseded-register-rows/`.
+
+**Everything is tracked in `reports/defect-register-2026-08-18.md`** —
+D1–D16, with three cleared suspicions and the audit's findings on its own
+fixes (D6a–D6c). Tier-1 suite green at 1,517. All work committed and
+pushed; local = sapphire = origin.
+
 ## 🎯 NEXT SESSION (136) — H13 SCORING CHAIN, THEN THE DISCUSSION WALK [Session 135 CLOSED 2026-08-18; ran in Fable — SESSION 136 RUNS ON A DIFFERENT MODEL (Fable credits exhausted); all queued work is $0 or PI-gated and model-agnostic]
 
 > **THE S135 $0 ANALYSIS BLOCK IS COMPLETE AND H13 ARMS B+C HAVE
