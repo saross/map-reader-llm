@@ -1,0 +1,54 @@
+{
+  "_comment": "The 6 consensus conditions the exposure survey flagged as dedup-exposed. These carry no source_tile, so BOTH arms derive one with the committed first-intersecting rule; the tile-assignment mechanism (E79) is thereby held fixed and the measured movement is attributable to deduplication alone.",
+  "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+  "cells": [
+    {
+      "name": "consensus-384-t1-0::consensus-1of30",
+      "condition_id": "consensus-384-t1-0::consensus-1of30",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "consensus-384-t1-0::consensus-2of30",
+      "condition_id": "consensus-384-t1-0::consensus-2of30",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "e47-propose-brief::consensus-1of5",
+      "condition_id": "e47-propose-brief::consensus-1of5",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "e47-propose-brief::consensus-2of5",
+      "condition_id": "e47-propose-brief::consensus-2of5",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "n1-outstanding-384::brief-text-t03-consensus-1of3",
+      "condition_id": "n1-outstanding-384::brief-text-t03-consensus-1of3",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "n1-outstanding-384::image-t03-consensus-1of3",
+      "condition_id": "n1-outstanding-384::image-t03-consensus-1of3",
+      "buffers": [
+        20,
+        30
+      ]
+    }
+  ]
+}

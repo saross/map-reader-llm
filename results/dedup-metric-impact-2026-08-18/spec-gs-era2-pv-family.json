@@ -1,0 +1,94 @@
+{
+  "_comment": "The 11 proposer-verifier cells re-scored as probe batch 3 of reports/scoring-sensitivity-review-2026-08-18.md; the *-baseline* rows of the gs-era2-pv-family-30m leaderboard plus the two era1-pv-stage-d corners.",
+  "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+  "cells": [
+    {
+      "name": "pv-diag-384::verified-adv-text-baseline",
+      "condition_id": "pv-diag-384::verified-adv-text-baseline",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "pv-diag-384::verified-adv-text-baseline-medium-vf",
+      "condition_id": "pv-diag-384::verified-adv-text-baseline-medium-vf",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "pv-diag-384::verified-adv-text-baseline-pro-vf",
+      "condition_id": "pv-diag-384::verified-adv-text-baseline-pro-vf",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "pv-diag-384::verified-adv-image-baseline",
+      "condition_id": "pv-diag-384::verified-adv-image-baseline",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "pv-diag-384::verified-adv-image-baseline-pro-vf",
+      "condition_id": "pv-diag-384::verified-adv-image-baseline-pro-vf",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "pv-diag-384::verified-adv-pro-text-baseline",
+      "condition_id": "pv-diag-384::verified-adv-pro-text-baseline",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "pv-diag-384::verified-adv-pro-image-baseline",
+      "condition_id": "pv-diag-384::verified-adv-pro-image-baseline",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "retest-phase2b::verified-adv-text-t0.0",
+      "condition_id": "retest-phase2b::verified-adv-text-t0.0",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "retest-phase2b::verified-adv-image-t0.0",
+      "condition_id": "retest-phase2b::verified-adv-image-t0.0",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "proposer-verifier-384::verified-adversarial-text",
+      "condition_id": "proposer-verifier-384::verified-adversarial-text",
+      "buffers": [
+        20,
+        30
+      ]
+    },
+    {
+      "name": "proposer-verifier-384::verified-checklist-text",
+      "condition_id": "proposer-verifier-384::verified-checklist-text",
+      "buffers": [
+        20,
+        30
+      ]
+    }
+  ]
+}
