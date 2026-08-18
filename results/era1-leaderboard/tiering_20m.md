@@ -2,6 +2,7 @@
 
 - **Cells**: 82 (36 single-pass + 42 consensus + 4 verified-PV), 340 evaluation tiles
 - **Metric**: micro-average F1 @ 20 m; MCC reported (tile-level, buffer-agnostic — NOT cross-era comparable)
+- **`undefined` in the MCC column**: the tile-level MCC is not computable for that cell — the configuration returned a detection on every evaluation tile, so the predicted-negative column of the tile confusion matrix is empty and the MCC denominator vanishes. It is **not** a value of zero; see erratum E81 in `docs/methodology/preregistration/protocol-errata.md`. Tiering here is on micro-F1, so no rank or tier depends on it.
 - **Test**: round-robin tile-swap permutation, 10,000 perms, seed 42, two-sided; **BH-FDR** q = 0.05
 - **Pairs**: 3321 (2351 significant) -> **10 tiers**
 - **Tie set (Tier 1)**: `retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30`
@@ -55,38 +56,38 @@
 | 45 | `image-t1.0-n10-7of10` | consensus | 1 | 0.655 | 0.655 | +0.000 | 0.459 | 6 |
 | 46 | `image-t1.0-n5-4of5` | consensus | 1 | 0.639 | 0.639 | +0.000 | 0.460 | 6 |
 | 47 | `canonical-last` | single-pass | 1 | 0.631 | 0.631 | +0.000 | 0.213 | 6 |
-| 48 | `text-scale-4` | single-pass | 1 | 0.609 | 0.609 | +0.000 | 0.000 | 7 |
-| 49 | `text-scale-8` | single-pass | 1 | 0.607 | 0.607 | +0.000 | 0.000 | 7 |
-| 50 | `text-t0.3` | single-pass | 3 | 0.607 | 0.606 | -0.000 | 0.044 | 7 |
+| 48 | `text-scale-4` | single-pass | 1 | 0.609 | 0.609 | +0.000 | undefined | 7 |
+| 49 | `text-scale-8` | single-pass | 1 | 0.607 | 0.607 | +0.000 | undefined | 7 |
+| 50 | `text-t0.3` | single-pass | 3 | 0.607 | 0.606 | -0.000 | 0.067 | 7 |
 | 51 | `config-default` | single-pass | 1 | 0.606 | 0.606 | +0.000 | 0.213 | 7 |
-| 52 | `text-t0.0` | single-pass | 3 | 0.606 | 0.605 | -0.000 | 0.000 | 7 |
+| 52 | `text-t0.0` | single-pass | 3 | 0.606 | 0.605 | -0.000 | undefined | 7 |
 | 53 | `image-terse` | single-pass | 1 | 0.605 | 0.605 | -0.000 | 0.224 | 7 |
-| 54 | `text-canonical` | single-pass | 1 | 0.605 | 0.604 | -0.000 | 0.000 | 7 |
-| 55 | `text-pure-positive-canon` | single-pass | 1 | 0.605 | 0.604 | -0.000 | 0.000 | 7 |
+| 54 | `text-canonical` | single-pass | 1 | 0.605 | 0.604 | -0.000 | undefined | 7 |
+| 55 | `text-pure-positive-canon` | single-pass | 1 | 0.605 | 0.604 | -0.000 | undefined | 7 |
 | 56 | `image-verbose` | single-pass | 1 | 0.603 | 0.603 | -0.000 | 0.281 | 7 |
 | 57 | `image-plus-hp` | single-pass | 1 | 0.599 | 0.598 | -0.000 | 0.094 | 7 |
 | 58 | `image-exploratory-pure-positive-4hp` | single-pass | 1 | 0.599 | 0.598 | -0.000 | 0.164 | 7 |
 | 59 | `canonical-first` | single-pass | 1 | 0.599 | 0.598 | -0.000 | 0.094 | 7 |
-| 60 | `text-terse` | single-pass | 1 | 0.598 | 0.598 | +0.000 | 0.000 | 7 |
-| 61 | `text-plus-hp` | single-pass | 1 | 0.597 | 0.597 | +0.000 | 0.000 | 7 |
+| 60 | `text-terse` | single-pass | 1 | 0.598 | 0.598 | +0.000 | undefined | 7 |
+| 61 | `text-plus-hp` | single-pass | 1 | 0.597 | 0.597 | +0.000 | undefined | 7 |
 | 62 | `image-scale-8` | single-pass | 1 | 0.587 | 0.587 | +0.000 | 0.150 | 7 |
 | 63 | `image-t0.0` | single-pass | 3 | 0.586 | 0.586 | -0.000 | 0.150 | 7 |
-| 64 | `text-t0.7` | single-pass | 3 | 0.584 | 0.584 | -0.000 | 0.000 | 7 |
+| 64 | `text-t0.7` | single-pass | 3 | 0.584 | 0.584 | -0.000 | undefined | 7 |
 | 65 | `image-scale-4` | single-pass | 1 | 0.584 | 0.584 | +0.000 | 0.134 | 7 |
 | 66 | `text-verbose` | single-pass | 1 | 0.583 | 0.583 | -0.000 | 0.067 | 7 |
 | 67 | `image-canonical` | single-pass | 1 | 0.581 | 0.581 | +0.000 | 0.094 | 7 |
 | 68 | `image-t0.3` | single-pass | 3 | 0.575 | 0.575 | -0.000 | 0.123 | 8 |
-| 69 | `image-exploratory-pure-positive-2hp` | single-pass | 1 | 0.571 | 0.571 | +0.000 | 0.000 | 8 |
+| 69 | `image-exploratory-pure-positive-2hp` | single-pass | 1 | 0.571 | 0.571 | +0.000 | undefined | 8 |
 | 70 | `random` | single-pass | 1 | 0.571 | 0.571 | -0.000 | 0.067 | 8 |
 | 71 | `image-exploratory-pure-positive-canon` | single-pass | 1 | 0.570 | 0.570 | -0.000 | 0.094 | 8 |
 | 72 | `image-pure-positive-canon` | single-pass | 1 | 0.568 | 0.568 | +0.000 | 0.094 | 8 |
-| 73 | `brief-text` | single-pass | 3 | 0.552 | 0.552 | -0.000 | 0.044 | 8 |
+| 73 | `brief-text` | single-pass | 3 | 0.552 | 0.552 | -0.000 | 0.067 | 8 |
 | 74 | `text-t1.3` | single-pass | 3 | 0.544 | 0.544 | -0.000 | 0.067 | 8 |
 | 75 | `image-t0.7` | single-pass | 3 | 0.537 | 0.537 | -0.000 | 0.173 | 9 |
-| 76 | `text-t1.0` | single-pass | 3 | 0.533 | 0.533 | -0.000 | 0.022 | 9 |
+| 76 | `text-t1.0` | single-pass | 3 | 0.533 | 0.533 | -0.000 | 0.067 | 9 |
 | 77 | `image-t1.0` | single-pass | 3 | 0.527 | 0.527 | -0.000 | 0.181 | 9 |
 | 78 | `brief-text-image` | single-pass | 3 | 0.522 | 0.522 | -0.000 | 0.177 | 9 |
 | 79 | `verbose-text-image` | single-pass | 3 | 0.517 | 0.517 | -0.000 | 0.291 | 9 |
-| 80 | `verbose-text` | single-pass | 3 | 0.502 | 0.502 | -0.000 | 0.044 | 9 |
+| 80 | `verbose-text` | single-pass | 3 | 0.502 | 0.502 | -0.000 | 0.067 | 9 |
 | 81 | `image-t1.3` | single-pass | 3 | 0.492 | 0.492 | -0.000 | 0.210 | 10 |
 | 82 | `image-only` | single-pass | 3 | 0.470 | 0.470 | -0.000 | 0.109 | 10 |
