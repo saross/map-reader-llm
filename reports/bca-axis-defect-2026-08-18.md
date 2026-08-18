@@ -359,6 +359,12 @@ marginal "MCC above chance" readings on board tables. They are, however,
 the concrete size of the re-emission the PI is choosing about — and per
 the E81 interaction above, an E81 re-emission delivers them anyway.
 
+*Caveat on that count*: the tile label **order** is not recorded in the
+artefacts, only the four counts, so the reconstruction is
+distributionally exact but not bit-identical to the committed draw.
+Cells sitting within Monte-Carlo noise of zero could tip either way, so
+read 225 as the scale of the change, not as a per-cell verdict.
+
 **What could not be covered.** The F1/precision/recall intervals were
 not recomputed corpus-wide: unlike tile-MCC they are not reconstructible
 from a recorded summary and would need the detection geometry re-scored
