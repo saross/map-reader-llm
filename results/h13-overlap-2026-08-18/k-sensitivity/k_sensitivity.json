@@ -1,0 +1,1391 @@
+{
+  "generated_at_utc": "2026-08-18T02:58:37.101806+00:00",
+  "classification": "POST-HOC diagnostic (E41-class).",
+  "native_scope": {
+    "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "tiles": 487
+  },
+  "decomposition": {
+    "condition": "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10",
+    "committed_f1": 0.6667,
+    "native_scope_deduped_f1": 0.6565040650406503,
+    "shared_scope_deduped_f1": 0.6463,
+    "precision": 0.5883424408014571,
+    "recall": 0.7425287356321839,
+    "n_detections": 549,
+    "note": "The committed pipeline ALREADY deduplicates (merge_passes.py Step 1), and this rebuild reproduces its clustering exactly (549 clusters at 9-of-10). The residual gap to the committed 0.6667 is therefore neither deduplication nor aggregation: it is the tile-assignment tie-break. evaluate_detections.py books a detection to the FIRST intersecting bounds tile (row-order dependent); this chain books it to the nearest-centroid tile. Of 549 detections, 90 change tile and 10 change MAP SHEET, and because matching is per map those 10 move F1 by 0.0102.",
+    "residual_is": "tile-assignment tie-break, not dedup"
+  },
+  "k_sensitivity": {
+    "minimal-t1.0": {
+      "corroboration_profile": {
+        "1": 0.9373782625633035,
+        "2": 0.061258278145695365,
+        "3": 0.001168679392286716,
+        "4": 0.00019477989871445267
+      },
+      "cells": [
+        {
+          "K": 3,
+          "min_corroboration": 1,
+          "min_votes": 1,
+          "precision": 0.24748110831234257,
+          "recall": 0.903448275862069,
+          "f1": 0.38853188334157196,
+          "n_detections": 1588
+        },
+        {
+          "K": 3,
+          "min_corroboration": 1,
+          "min_votes": 2,
+          "precision": 0.40504939626783754,
+          "recall": 0.8482758620689655,
+          "f1": 0.5482912332838039,
+          "n_detections": 911
+        },
+        {
+          "K": 3,
+          "min_corroboration": 1,
+          "min_votes": 3,
+          "precision": 0.5374376039933444,
+          "recall": 0.7425287356321839,
+          "f1": 0.6235521235521235,
+          "n_detections": 601
+        },
+        {
+          "K": 3,
+          "min_corroboration": 2,
+          "min_votes": 1,
+          "precision": 0.6966292134831461,
+          "recall": 0.1425287356321839,
+          "f1": 0.2366412213740458,
+          "n_detections": 89
+        },
+        {
+          "K": 3,
+          "min_corroboration": 2,
+          "min_votes": 2,
+          "precision": 0.9152542372881356,
+          "recall": 0.12413793103448276,
+          "f1": 0.21862348178137653,
+          "n_detections": 59
+        },
+        {
+          "K": 3,
+          "min_corroboration": 2,
+          "min_votes": 3,
+          "precision": 0.975609756097561,
+          "recall": 0.09195402298850575,
+          "f1": 0.16806722689075632,
+          "n_detections": 41
+        },
+        {
+          "K": 3,
+          "min_corroboration": 3,
+          "min_votes": 1,
+          "precision": 1.0,
+          "recall": 0.009195402298850575,
+          "f1": 0.018223234624145785,
+          "n_detections": 4
+        },
+        {
+          "K": 3,
+          "min_corroboration": 3,
+          "min_votes": 2,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 3,
+          "min_corroboration": 3,
+          "min_votes": 3,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 1,
+          "precision": 0.2082035306334372,
+          "recall": 0.9218390804597701,
+          "f1": 0.3396865734858111,
+          "n_detections": 1926
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 2,
+          "precision": 0.33885017421602787,
+          "recall": 0.8942528735632184,
+          "f1": 0.4914718888186987,
+          "n_detections": 1148
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 3,
+          "precision": 0.4246885617214043,
+          "recall": 0.8620689655172413,
+          "f1": 0.5690440060698028,
+          "n_detections": 883
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 4,
+          "precision": 0.4936708860759494,
+          "recall": 0.8068965517241379,
+          "f1": 0.6125654450261779,
+          "n_detections": 711
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 5,
+          "precision": 0.6051080550098232,
+          "recall": 0.7080459770114943,
+          "f1": 0.652542372881356,
+          "n_detections": 509
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 1,
+          "precision": 0.6504854368932039,
+          "recall": 0.15402298850574714,
+          "f1": 0.24907063197026025,
+          "n_detections": 103
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 2,
+          "precision": 0.8194444444444444,
+          "recall": 0.135632183908046,
+          "f1": 0.23274161735700197,
+          "n_detections": 72
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 3,
+          "precision": 0.8870967741935484,
+          "recall": 0.12643678160919541,
+          "f1": 0.22132796780684105,
+          "n_detections": 62
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 4,
+          "precision": 0.9444444444444444,
+          "recall": 0.11724137931034483,
+          "f1": 0.2085889570552147,
+          "n_detections": 54
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 5,
+          "precision": 0.972972972972973,
+          "recall": 0.08275862068965517,
+          "f1": 0.15254237288135594,
+          "n_detections": 37
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 1,
+          "precision": 1.0,
+          "recall": 0.009195402298850575,
+          "f1": 0.018223234624145785,
+          "n_detections": 4
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 2,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 3,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 4,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 1,
+          "precision": 0.18576709796672827,
+          "recall": 0.9241379310344827,
+          "f1": 0.3093497499038092,
+          "n_detections": 2164
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 2,
+          "precision": 0.30214723926380366,
+          "recall": 0.9057471264367816,
+          "f1": 0.4531339850488787,
+          "n_detections": 1304
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 3,
+          "precision": 0.37306201550387597,
+          "recall": 0.8850574712643678,
+          "f1": 0.5248807089297888,
+          "n_detections": 1032
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 4,
+          "precision": 0.42479908151549944,
+          "recall": 0.8505747126436781,
+          "f1": 0.5666156202143952,
+          "n_detections": 871
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 5,
+          "precision": 0.48582995951417,
+          "recall": 0.8275862068965517,
+          "f1": 0.6122448979591836,
+          "n_detections": 741
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 6,
+          "precision": 0.5473515248796148,
+          "recall": 0.7839080459770115,
+          "f1": 0.6446124763705104,
+          "n_detections": 623
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 7,
+          "precision": 0.6363636363636364,
+          "recall": 0.6758620689655173,
+          "f1": 0.6555183946488294,
+          "n_detections": 462
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 1,
+          "precision": 0.6542056074766355,
+          "recall": 0.16091954022988506,
+          "f1": 0.25830258302583026,
+          "n_detections": 107
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 2,
+          "precision": 0.7926829268292683,
+          "recall": 0.14942528735632185,
+          "f1": 0.2514506769825919,
+          "n_detections": 82
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 3,
+          "precision": 0.8450704225352113,
+          "recall": 0.13793103448275862,
+          "f1": 0.23715415019762845,
+          "n_detections": 71
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 4,
+          "precision": 0.8888888888888888,
+          "recall": 0.12873563218390804,
+          "f1": 0.22489959839357426,
+          "n_detections": 63
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 5,
+          "precision": 0.9245283018867925,
+          "recall": 0.11264367816091954,
+          "f1": 0.20081967213114754,
+          "n_detections": 53
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 6,
+          "precision": 0.9534883720930233,
+          "recall": 0.09425287356321839,
+          "f1": 0.17154811715481172,
+          "n_detections": 43
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 7,
+          "precision": 0.967741935483871,
+          "recall": 0.06896551724137931,
+          "f1": 0.12875536480686695,
+          "n_detections": 31
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 1,
+          "precision": 1.0,
+          "recall": 0.009195402298850575,
+          "f1": 0.018223234624145785,
+          "n_detections": 4
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 2,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 3,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 4,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 5,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 6,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 7,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 1,
+          "precision": 0.16330645161290322,
+          "recall": 0.9310344827586207,
+          "f1": 0.27787307032590053,
+          "n_detections": 2480
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 2,
+          "precision": 0.2637508283631544,
+          "recall": 0.9149425287356322,
+          "f1": 0.4094650205761317,
+          "n_detections": 1509
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 3,
+          "precision": 0.3313708999158957,
+          "recall": 0.9057471264367816,
+          "f1": 0.48522167487684725,
+          "n_detections": 1189
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 4,
+          "precision": 0.3712632594021215,
+          "recall": 0.8850574712643678,
+          "f1": 0.5230978260869564,
+          "n_detections": 1037
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 5,
+          "precision": 0.4190687361419069,
+          "recall": 0.8689655172413793,
+          "f1": 0.5654450261780105,
+          "n_detections": 902
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 6,
+          "precision": 0.4643304130162703,
+          "recall": 0.8528735632183908,
+          "f1": 0.6012965964343597,
+          "n_detections": 799
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 7,
+          "precision": 0.49654218533886585,
+          "recall": 0.825287356321839,
+          "f1": 0.6200345423143351,
+          "n_detections": 723
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 8,
+          "precision": 0.5404984423676013,
+          "recall": 0.7977011494252874,
+          "f1": 0.6443825441039925,
+          "n_detections": 642
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 9,
+          "precision": 0.5883424408014571,
+          "recall": 0.7425287356321839,
+          "f1": 0.6565040650406503,
+          "n_detections": 549
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 10,
+          "precision": 0.6609756097560976,
+          "recall": 0.6229885057471264,
+          "f1": 0.6414201183431952,
+          "n_detections": 410
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 1,
+          "precision": 0.6140350877192983,
+          "recall": 0.16091954022988506,
+          "f1": 0.25500910746812383,
+          "n_detections": 114
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 2,
+          "precision": 0.7303370786516854,
+          "recall": 0.14942528735632185,
+          "f1": 0.24809160305343514,
+          "n_detections": 89
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 3,
+          "precision": 0.8205128205128205,
+          "recall": 0.1471264367816092,
+          "f1": 0.24951267056530216,
+          "n_detections": 78
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 4,
+          "precision": 0.8611111111111112,
+          "recall": 0.1425287356321839,
+          "f1": 0.24457593688362922,
+          "n_detections": 72
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 5,
+          "precision": 0.9076923076923077,
+          "recall": 0.135632183908046,
+          "f1": 0.23600000000000002,
+          "n_detections": 65
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 6,
+          "precision": 0.9107142857142857,
+          "recall": 0.11724137931034483,
+          "f1": 0.20773930753564157,
+          "n_detections": 56
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 7,
+          "precision": 0.9245283018867925,
+          "recall": 0.11264367816091954,
+          "f1": 0.20081967213114754,
+          "n_detections": 53
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 8,
+          "precision": 0.9375,
+          "recall": 0.10344827586206896,
+          "f1": 0.18633540372670807,
+          "n_detections": 48
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 9,
+          "precision": 0.9512195121951219,
+          "recall": 0.0896551724137931,
+          "f1": 0.1638655462184874,
+          "n_detections": 41
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 10,
+          "precision": 0.9629629629629629,
+          "recall": 0.059770114942528735,
+          "f1": 0.11255411255411255,
+          "n_detections": 27
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 1,
+          "precision": 1.0,
+          "recall": 0.009195402298850575,
+          "f1": 0.018223234624145785,
+          "n_detections": 4
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 2,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 3,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 4,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 5,
+          "precision": 1.0,
+          "recall": 0.004597701149425287,
+          "f1": 0.009153318077803202,
+          "n_detections": 2
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 6,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 7,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 8,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 9,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 10,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        }
+      ]
+    },
+    "minimal-t0.7": {
+      "corroboration_profile": {
+        "1": 0.9279648609077599,
+        "2": 0.06998535871156662,
+        "3": 0.0015617374328940946,
+        "4": 0.0004880429477794046
+      },
+      "cells": [
+        {
+          "K": 3,
+          "min_corroboration": 1,
+          "min_votes": 1,
+          "precision": 0.2856088560885609,
+          "recall": 0.8896551724137931,
+          "f1": 0.4324022346368715,
+          "n_detections": 1355
+        },
+        {
+          "K": 3,
+          "min_corroboration": 1,
+          "min_votes": 2,
+          "precision": 0.38786008230452673,
+          "recall": 0.8666666666666667,
+          "f1": 0.5358919687277897,
+          "n_detections": 972
+        },
+        {
+          "K": 3,
+          "min_corroboration": 1,
+          "min_votes": 3,
+          "precision": 0.47761194029850745,
+          "recall": 0.8091954022988506,
+          "f1": 0.6006825938566552,
+          "n_detections": 737
+        },
+        {
+          "K": 3,
+          "min_corroboration": 2,
+          "min_votes": 1,
+          "precision": 0.7127659574468085,
+          "recall": 0.15402298850574714,
+          "f1": 0.25330812854442347,
+          "n_detections": 94
+        },
+        {
+          "K": 3,
+          "min_corroboration": 2,
+          "min_votes": 2,
+          "precision": 0.8142857142857143,
+          "recall": 0.1310344827586207,
+          "f1": 0.22574257425742578,
+          "n_detections": 70
+        },
+        {
+          "K": 3,
+          "min_corroboration": 2,
+          "min_votes": 3,
+          "precision": 0.8846153846153846,
+          "recall": 0.10574712643678161,
+          "f1": 0.188911704312115,
+          "n_detections": 52
+        },
+        {
+          "K": 3,
+          "min_corroboration": 3,
+          "min_votes": 1,
+          "precision": 0.2,
+          "recall": 0.0022988505747126436,
+          "f1": 0.004545454545454546,
+          "n_detections": 5
+        },
+        {
+          "K": 3,
+          "min_corroboration": 3,
+          "min_votes": 2,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 3,
+          "min_corroboration": 3,
+          "min_votes": 3,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 1,
+          "precision": 0.2460765850596359,
+          "recall": 0.9011494252873563,
+          "f1": 0.3865877712031558,
+          "n_detections": 1593
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 2,
+          "precision": 0.34692028985507245,
+          "recall": 0.8804597701149425,
+          "f1": 0.49772579597141,
+          "n_detections": 1104
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 3,
+          "precision": 0.3968421052631579,
+          "recall": 0.8666666666666667,
+          "f1": 0.544404332129964,
+          "n_detections": 950
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 4,
+          "precision": 0.4547707558859975,
+          "recall": 0.8436781609195402,
+          "f1": 0.5909822866344605,
+          "n_detections": 807
+        },
+        {
+          "K": 5,
+          "min_corroboration": 1,
+          "min_votes": 5,
+          "precision": 0.5222052067381318,
+          "recall": 0.7839080459770115,
+          "f1": 0.6268382352941176,
+          "n_detections": 653
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 1,
+          "precision": 0.6568627450980392,
+          "recall": 0.15402298850574714,
+          "f1": 0.24953445065176907,
+          "n_detections": 102
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 2,
+          "precision": 0.7875,
+          "recall": 0.14482758620689656,
+          "f1": 0.2446601941747573,
+          "n_detections": 80
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 3,
+          "precision": 0.8142857142857143,
+          "recall": 0.1310344827586207,
+          "f1": 0.22574257425742578,
+          "n_detections": 70
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 4,
+          "precision": 0.8360655737704918,
+          "recall": 0.11724137931034483,
+          "f1": 0.20564516129032256,
+          "n_detections": 61
+        },
+        {
+          "K": 5,
+          "min_corroboration": 2,
+          "min_votes": 5,
+          "precision": 0.8888888888888888,
+          "recall": 0.09195402298850575,
+          "f1": 0.16666666666666666,
+          "n_detections": 45
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 1,
+          "precision": 0.375,
+          "recall": 0.006896551724137931,
+          "f1": 0.013544018058690745,
+          "n_detections": 8
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 2,
+          "precision": 0.5,
+          "recall": 0.0022988505747126436,
+          "f1": 0.004576659038901601,
+          "n_detections": 2
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 3,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 4,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 5,
+          "min_corroboration": 3,
+          "min_votes": 5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 1,
+          "precision": 0.2226628895184136,
+          "recall": 0.903448275862069,
+          "f1": 0.3572727272727273,
+          "n_detections": 1765
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 2,
+          "precision": 0.32101806239737274,
+          "recall": 0.8988505747126436,
+          "f1": 0.4730792498487599,
+          "n_detections": 1218
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 3,
+          "precision": 0.36867239732569246,
+          "recall": 0.8873563218390804,
+          "f1": 0.5209176788124157,
+          "n_detections": 1047
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 4,
+          "precision": 0.4055496264674493,
+          "recall": 0.8735632183908046,
+          "f1": 0.5539358600583091,
+          "n_detections": 937
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 5,
+          "precision": 0.4439083232810615,
+          "recall": 0.8459770114942529,
+          "f1": 0.5822784810126582,
+          "n_detections": 829
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 6,
+          "precision": 0.47651006711409394,
+          "recall": 0.8160919540229885,
+          "f1": 0.6016949152542374,
+          "n_detections": 745
+        },
+        {
+          "K": 7,
+          "min_corroboration": 1,
+          "min_votes": 7,
+          "precision": 0.5409015025041736,
+          "recall": 0.7448275862068966,
+          "f1": 0.6266924564796905,
+          "n_detections": 599
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 1,
+          "precision": 0.6216216216216216,
+          "recall": 0.15862068965517243,
+          "f1": 0.2527472527472528,
+          "n_detections": 111
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 2,
+          "precision": 0.7710843373493976,
+          "recall": 0.1471264367816092,
+          "f1": 0.24710424710424708,
+          "n_detections": 83
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 3,
+          "precision": 0.7866666666666666,
+          "recall": 0.135632183908046,
+          "f1": 0.23137254901960785,
+          "n_detections": 75
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 4,
+          "precision": 0.8082191780821918,
+          "recall": 0.135632183908046,
+          "f1": 0.23228346456692914,
+          "n_detections": 73
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 5,
+          "precision": 0.8181818181818182,
+          "recall": 0.12413793103448276,
+          "f1": 0.21556886227544908,
+          "n_detections": 66
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 6,
+          "precision": 0.8545454545454545,
+          "recall": 0.10804597701149425,
+          "f1": 0.19183673469387755,
+          "n_detections": 55
+        },
+        {
+          "K": 7,
+          "min_corroboration": 2,
+          "min_votes": 7,
+          "precision": 0.8717948717948718,
+          "recall": 0.07816091954022988,
+          "f1": 0.14345991561181434,
+          "n_detections": 39
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 1,
+          "precision": 0.375,
+          "recall": 0.006896551724137931,
+          "f1": 0.013544018058690745,
+          "n_detections": 8
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 2,
+          "precision": 0.3333333333333333,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045662100456621,
+          "n_detections": 3
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 3,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 4,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 5,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 6,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 7,
+          "min_corroboration": 3,
+          "min_votes": 7,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 1,
+          "precision": 0.2013285641287685,
+          "recall": 0.9057471264367816,
+          "f1": 0.3294314381270903,
+          "n_detections": 1957
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 2,
+          "precision": 0.2934131736526946,
+          "recall": 0.9011494252873563,
+          "f1": 0.4426877470355732,
+          "n_detections": 1336
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 3,
+          "precision": 0.33738074588031225,
+          "recall": 0.8942528735632184,
+          "f1": 0.48992443324937024,
+          "n_detections": 1153
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 4,
+          "precision": 0.3683206106870229,
+          "recall": 0.8873563218390804,
+          "f1": 0.5205664194200944,
+          "n_detections": 1048
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 5,
+          "precision": 0.3895169578622816,
+          "recall": 0.871264367816092,
+          "f1": 0.5383522727272727,
+          "n_detections": 973
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 6,
+          "precision": 0.41409691629955947,
+          "recall": 0.864367816091954,
+          "f1": 0.5599404318689502,
+          "n_detections": 908
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 7,
+          "precision": 0.4432497013142174,
+          "recall": 0.8528735632183908,
+          "f1": 0.5833333333333334,
+          "n_detections": 837
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 8,
+          "precision": 0.4666666666666667,
+          "recall": 0.8206896551724138,
+          "f1": 0.5950000000000001,
+          "n_detections": 765
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 9,
+          "precision": 0.5072886297376094,
+          "recall": 0.8,
+          "f1": 0.6208742194469224,
+          "n_detections": 686
+        },
+        {
+          "K": 10,
+          "min_corroboration": 1,
+          "min_votes": 10,
+          "precision": 0.5535714285714286,
+          "recall": 0.7126436781609196,
+          "f1": 0.6231155778894473,
+          "n_detections": 560
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 1,
+          "precision": 0.5691056910569106,
+          "recall": 0.16091954022988506,
+          "f1": 0.25089605734767023,
+          "n_detections": 123
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 2,
+          "precision": 0.6914893617021277,
+          "recall": 0.14942528735632185,
+          "f1": 0.2457466918714556,
+          "n_detections": 94
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 3,
+          "precision": 0.7619047619047619,
+          "recall": 0.1471264367816092,
+          "f1": 0.2466281310211946,
+          "n_detections": 84
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 4,
+          "precision": 0.7721518987341772,
+          "recall": 0.14022988505747128,
+          "f1": 0.23735408560311286,
+          "n_detections": 79
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 5,
+          "precision": 0.8082191780821918,
+          "recall": 0.135632183908046,
+          "f1": 0.23228346456692914,
+          "n_detections": 73
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 6,
+          "precision": 0.8142857142857143,
+          "recall": 0.1310344827586207,
+          "f1": 0.22574257425742578,
+          "n_detections": 70
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 7,
+          "precision": 0.8208955223880597,
+          "recall": 0.12643678160919541,
+          "f1": 0.21912350597609564,
+          "n_detections": 67
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 8,
+          "precision": 0.8392857142857143,
+          "recall": 0.10804597701149425,
+          "f1": 0.1914460285132383,
+          "n_detections": 56
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 9,
+          "precision": 0.88,
+          "recall": 0.10114942528735632,
+          "f1": 0.1814432989690722,
+          "n_detections": 50
+        },
+        {
+          "K": 10,
+          "min_corroboration": 2,
+          "min_votes": 10,
+          "precision": 0.8717948717948718,
+          "recall": 0.07816091954022988,
+          "f1": 0.14345991561181434,
+          "n_detections": 39
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 1,
+          "precision": 0.375,
+          "recall": 0.006896551724137931,
+          "f1": 0.013544018058690745,
+          "n_detections": 8
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 2,
+          "precision": 0.5,
+          "recall": 0.004597701149425287,
+          "f1": 0.009111617312072893,
+          "n_detections": 4
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 3,
+          "precision": 0.3333333333333333,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045662100456621,
+          "n_detections": 3
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 4,
+          "precision": 0.5,
+          "recall": 0.0022988505747126436,
+          "f1": 0.004576659038901601,
+          "n_detections": 2
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 5,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 6,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 7,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 8,
+          "precision": 1.0,
+          "recall": 0.0022988505747126436,
+          "f1": 0.0045871559633027525,
+          "n_detections": 1
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 9,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        },
+        {
+          "K": 10,
+          "min_corroboration": 3,
+          "min_votes": 10,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_detections": 0
+        }
+      ]
+    }
+  }
+}
