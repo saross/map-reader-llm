@@ -115,6 +115,28 @@ def _as_list(value: Any) -> list[str]:
     return [str(value)]
 
 
+def _as_int(value: Any) -> int | None:
+    """Coerce a possibly-NumPy, possibly-missing numeric property to ``int``.
+
+    GeoJSON integer properties arrive as NumPy scalars, which ``json.dumps``
+    cannot serialise, and as ``NaN`` where the property is absent.
+
+    Args:
+        value: Property value.
+
+    Returns:
+        The value as a Python ``int``, or ``None`` when missing.
+    """
+    if value is None:
+        return None
+    try:
+        if isinstance(value, float) and np.isnan(value):
+            return None
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def pair_report(
     gdf,
     radius: float,
@@ -162,10 +184,10 @@ def pair_report(
             both_singleton += 1
         anatomy.append({
             "distance_m": round(dist, 3),
-            "vote_a": row_a.get("vote_count"),
-            "vote_b": row_b.get("vote_count"),
-            "cluster_size_a": None if size_a is None else int(size_a),
-            "cluster_size_b": None if size_b is None else int(size_b),
+            "vote_a": _as_int(row_a.get("vote_count")),
+            "vote_b": _as_int(row_b.get("vote_count")),
+            "cluster_size_a": _as_int(size_a),
+            "cluster_size_b": _as_int(size_b),
             "n_shared_contributing_passes": len(passes_a & passes_b),
             "n_shared_source_tiles": len(tiles_a & tiles_b),
         })

@@ -115,6 +115,14 @@ ATTRIBUTION_RULES = ("first_source_tile", "nearest_centroid", "union_contributin
 #: Default conditions manifest used to resolve ``condition_id``-only cells.
 DEFAULT_MANIFEST = PROJECT_ROOT / "results/conditions-manifest.json"
 
+#: Glob a batch evaluation records when it was not given an explicit one.
+DEFAULT_PASS_GLOB = "*/detections_*.geojson"
+
+#: Both pass-file naming conventions in use across the corpus. Identical to
+#: ``n1_baseline_leaderboard_tiering.PASS_GLOBS``, restated here so this module
+#: does not import the leaderboard machinery just for a constant.
+PASS_GLOBS = ("*/detections_*.geojson", "*/detections-*.geojson")
+
 
 # ── Spec resolution ───────────────────────────────────────────────────
 
@@ -146,6 +154,7 @@ def resolve_from_manifest(
     detections: list[str] = []
     bounds: str | None = None
     eval_path: str | None = None
+    n_runs_expected = 0
 
     for src in (cond.get("provenance") or {}).get("source_files") or []:
         if not os.path.exists(src):
@@ -156,7 +165,7 @@ def resolve_from_manifest(
         inputs = meta.get("input_files") or {}
         eval_path = eval_path or src
         bounds = bounds or inputs.get("bounds") or cli.get("bounds")
-        pattern = cli.get("glob") or "*/detections_*.geojson"
+        pattern = cli.get("glob") or DEFAULT_PASS_GLOB
         value = inputs.get("detections")
         if value is None:
             value = cli.get("detections") or cli.get("detections_dir")
@@ -164,7 +173,21 @@ def resolve_from_manifest(
             value = [value]
         for path in value or []:
             if os.path.isdir(path):
-                hits = sorted(glob.glob(os.path.join(path, pattern)))
+                # Expand with the recorded glob AND the hyphenated variant.
+                # Pass files are named ``detections_<label>_runNN.geojson`` in
+                # some runs and ``detections-<config>-<date>.geojson`` in
+                # others, and a batch evaluation records only the CLI DEFAULT
+                # glob, not the per-condition pattern from its YAML. Expanding
+                # with one pattern alone silently drops the passes named the
+                # other way — which is exactly how the Session 136 exposure
+                # survey came to score
+                # ``pv-diag-384::baseline-pro-text-medium-t-0-0`` on 1 of its 3
+                # passes. ``n1_baseline_leaderboard_tiering.PASS_GLOBS`` already
+                # unions both patterns; this matches it.
+                patterns = {pattern, *PASS_GLOBS}
+                hits = sorted(
+                    {h for g in patterns for h in glob.glob(os.path.join(path, g))}
+                )
                 if not hits:
                     hits = sorted(
                         glob.glob(os.path.join(path, "*/detections*.geojson"))
@@ -172,6 +195,7 @@ def resolve_from_manifest(
                 detections.extend(hits)
             elif os.path.isfile(path):
                 detections.append(path)
+            n_runs_expected += _n_runs(ev)
 
     if not detections:
         raise FileNotFoundError(
@@ -181,7 +205,27 @@ def resolve_from_manifest(
         "detections": sorted(set(detections)),
         "bounds": bounds,
         "eval_path": eval_path,
+        "n_runs_expected": n_runs_expected,
     }
+
+
+def _n_runs(ev: dict[str, Any]) -> int:
+    """Number of replicate runs a committed evaluation record aggregated.
+
+    ``evaluate_detections`` writes one ``per_run`` entry per scored artefact
+    and reports ``summary.n_runs``; either is a sufficient statement of how
+    many files the committed number averaged over.
+
+    Args:
+        ev: Parsed ``evaluation.json``.
+
+    Returns:
+        The recorded run count, or 0 when the record does not state one.
+    """
+    summary = ev.get("summary") or {}
+    if isinstance(summary.get("n_runs"), int):
+        return summary["n_runs"]
+    return len(ev.get("per_run") or [])
 
 
 def resolve_cell(
@@ -213,6 +257,7 @@ def resolve_cell(
         if not resolved.get("bounds") and found["bounds"]:
             resolved["bounds"] = found["bounds"]
         resolved.setdefault("eval_path", found["eval_path"])
+        resolved.setdefault("n_passes_expected", found["n_runs_expected"])
     if not resolved.get("bounds"):
         resolved["bounds"] = default_bounds
     if not resolved.get("tile_source"):
@@ -713,13 +758,25 @@ def run_cell(
         )
 
     means = aggregate_passes(passes, buffers)
+    expected = cell.get("n_passes_expected")
+    if expected and expected != len(passes):
+        logger.warning(
+            "%s: resolved %d pass file(s) but its evaluation.json aggregated %d "
+            "— the committed value cannot be reproduced from this file set",
+            cell["name"], len(passes), expected,
+        )
     result: dict[str, Any] = {
         "name": cell["name"],
         "condition_id": cell.get("condition_id"),
         "board": cell.get("board"),
         "bounds": bounds_key,
         "tile_source": tile_source,
+        "detections": [str(d) for d in cell["detections"]],
         "n_passes": len(passes),
+        "n_passes_expected": expected,
+        "pass_count_gate": (
+            None if not expected else bool(expected == len(passes))
+        ),
         "n_populated_tiles": len(populated),
         "n_tiles": len(tile_order),
         "mean_over_passes": means,
