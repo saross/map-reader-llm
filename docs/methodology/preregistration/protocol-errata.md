@@ -4065,3 +4065,257 @@ the two Session 136 reports:
 `reports/dedup-gap-compliance-2026-08-18.md` (compliance reading).
 
 ---
+
+### E81: Undefined tile-level MCC published as `0.0` — nine conditions reported at the value the scale calls "random" where the metric is not computable, four more depressed by averaging an undefined pass into a mean
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-18 (mechanism first flagged in § 2.6 of the Session 136 deduplication-impact campaign; the defined-versus-undefined split, the corpus-wide exposure, the consumer sweep, and the registered-text reading established independently for this entry) |
+| Type | Correction (reporting defect — 13 committed tile-MCC values are withdrawn as published; not a protocol violation, because § 4.2 prescribes no handling for a degenerate confusion matrix) |
+| Commit | — (documents the defect and withdraws the values; no code change lands with this entry, because the fix is a PI decision — see **Protocol impact**) |
+| Files | `scripts/evaluate_detections.py:533-535` (`_safe_round`) and `:752-788` (multi-run averaging; confusion carried from run 1 at `:787`); `scripts/lib_advanced_metrics.py:1980-1982` (`mcc = None`), `:2034-2036` (docstring) against `:2087-2091` (code), and `:1069-1073` (the divergence already documented on `score_detection_set`); `docs/methodology/preregistration/osf/preregistration.md:390-392` (§ 4.2 scale legend and rationale); `results/conditions-manifest.json` and `.md` (13 of 333 conditions); source evaluations under `results/paper-eval/phase2/512px-14buf-mcc/` and the duplicate root `results/paper-eval/mcc/512px/`; consumers at `docs/paper/results-draft.md:134-135`, `results/analyses-manifest.json` (`era1-single-pass-baseline-matrix.outcome`), and `results/leaderboard/combined/era1/leaderboard_tiers_mcc.md:125-135`; first flag in `results/dedup-metric-impact-2026-08-18/findings.md` § 2.6 |
+| Impact | Medium — no F1, precision, recall, or registered hypothesis outcome is touched, but nine conditions publish a value the metric does not have, four more publish an arithmetic blend of measurements and placeholders, one load-bearing sentence of the Results draft rests on the imputed zeros, and an entire published tier of an MCC-tiered leaderboard exists only because of them |
+
+**Description**: the tile-level Matthews Correlation Coefficient (MCC) is
+undefined when the 2 × 2 tile confusion matrix is degenerate — when any row or
+column marginal is zero, the denominator `√((TP+FP)(TP+FN)(TN+FP)(TN+FN))`
+vanishes. `lib_advanced_metrics.calculate_tile_classification` handles this
+correctly and returns `None` (`:1980-1982`, "Edge case: MCC undefined when any
+row/column sum is zero"). `evaluate_detections.py` then discards the
+distinction: the nested helper `_safe_round` (`:533-535`) is documented as
+"Round a value, returning 0.0 for None (undefined MCC)" and coerces the `None`
+to `0.0` on its way into the published `tile_classification` block.
+
+`0.0` is not a neutral placeholder here. It is a value with a stated meaning on
+this scale, and the registration supplies the legend: § 4.2 says MCC "ranges
+from -1 (perfect inverse classification) through **0 (random)** to +1 (perfect
+classification)"
+(`docs/methodology/preregistration/osf/preregistration.md:390`). A reader taking
+the published boards at face value therefore reads nine conditions as
+*performing at chance* on tile-level discrimination. What the data support is
+that the question was not answerable for those conditions. Which of those two
+statements flatters the model depends entirely on the surrounding argument —
+which is exactly why the substitution cannot be left standing.
+
+**The degenerate case, and which marginal vanishes.** Across all 1,990 per-pass
+tile confusion blocks in the committed result set, exactly **35 are
+degenerate**, and in **every one of the 35** the vanishing marginal is the same:
+**TN + FN = 0**. Every tile in the 340-tile Era-1 scope was predicted populated
+— the model emitted at least one detection in all 340 — so the
+predicted-negative column of the matrix is empty. This corrects the first flag:
+`results/dedup-metric-impact-2026-08-18/findings.md` § 2.6 attributes the
+degeneracy to "TN + FP = 0". TN + FP is the count of reference-empty tiles, 136
+on this scope, and is never zero anywhere in the committed corpus. Sensitivity
+and specificity are consequently always defined — `_safe_round` wraps those too
+but never fires on them — so this entry concerns MCC alone.
+
+**The split, verified condition by condition.** Nine conditions in
+`results/conditions-manifest.json` publish a tile MCC of exactly `0.0`. All nine
+carry the identical confusion matrix TP = 204, TN = 0, FP = 136, FN = 0. **All
+nine are the undefined case; not one is a genuine zero.** There is no mixed
+population to disentangle:
+
+| Condition | Degenerate passes | TP / TN / FP / FN | Published | Truthful value |
+|---|---|---|---|---|
+| `retest-phase2b::text-t0.0` | 3 of 3 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+| `retest-phase2b::text-t0.7` | 3 of 3 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+| `retest-phase2c::image-exploratory-pure-positive-2hp` | 1 of 1 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+| `retest-phase2c::text-canonical` | 1 of 1 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+| `retest-phase2c::text-plus-hp` | 1 of 1 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+| `retest-phase2c::text-pure-positive-canon` | 1 of 1 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+| `retest-phase2c::text-scale-4` | 1 of 1 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+| `retest-phase2c::text-scale-8` | 1 of 1 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+| `retest-phase2d::text-terse` | 1 of 1 | 204 / 0 / 136 / 0 | 0.0 | undefined |
+
+**The averaging effect, which is the less defensible half.**
+`evaluate_multi_run_mean` (`:752-788`) averages the per-run MCC blocks
+arithmetically with no guard for the coerced zeros — by the time it sees them
+they are indistinguishable from measurements. A condition with two computable
+passes and one degenerate pass therefore publishes a mean pulled toward zero by
+a number that was never a measurement. Four further conditions are affected:
+
+| Condition | Degenerate passes | Published | Mean over defined passes |
+|---|---|---|---|
+| `retest-phase2a::brief-text` | 1 of 3 | 0.0443 | 0.0665 |
+| `retest-phase2a::verbose-text` | 1 of 3 | 0.0443 | 0.0665 |
+| `retest-phase2b::text-t0.3` | 1 of 3 | 0.0443 | 0.0665 |
+| `retest-phase2b::text-t1.0` | 2 of 3 | 0.0222 | 0.0665 |
+
+Total exposure: **13 of 333 conditions** (3.9 %), all of them 512 px Era-1
+phase-2 cells — 13 of the 38 conditions across `retest-phase2a` … `phase2e`.
+Every condition outside phase 2, including all 55-map, 384 px, and Era-2
+boards, is clean. A second nuance in the same aggregation block: for multi-run
+cells the published confusion matrix is **run 1's**, not a sum or a mean
+(`:787`, `avg_mcc["confusion"] = mcc_results[0].get("confusion", {})`), which is
+why the four rows above show a non-degenerate matrix (TN = 1) beside a mean that
+a degenerate pass contaminated. That is a pre-existing schema property rather
+than a new defect, but it is what makes the contamination invisible on the face
+of the record.
+
+**The bootstrap block has the same defect, and a docstring that denies it.**
+`bootstrap_tile_classification_ci` documents its handling of degenerate
+resamples as "the score is treated as `NaN` and skipped when computing the CI
+bounds" (`:2034-2036`). The code does the opposite: `_mcc_from_idx` returns
+`0.0` for any degenerate resample, commented "MCC undefined — return 0.0 so
+scipy can compute bounds" (`:2087-2091`). The bootstrap mean and both CI bounds
+are therefore mixtures of MCC values and zeros. This is visible in the committed
+data: a pass with TN = 1 has a deterministic point of 0.0665 but a bootstrap
+mean of 0.0514 and a CI lower bound of exactly 0.0000, because resamples that
+happen to omit the single true-negative tile are degenerate and are counted as
+zero rather than dropped. Any tile-MCC CI whose lower bound is exactly 0.0000 on
+these cells is that substitution surfacing, not a percentile.
+
+**The registered text anticipated this case and got it wrong.** § 4.2's
+rationale for preferring MCC reads: "A method that simply predicts 'mounds
+present' for every tile would achieve 50 % accuracy but **MCC ≈ 0**" (`:392`).
+That is precisely the observed configuration, and the claim is false: the MCC of
+an all-positive predictor is not approximately zero, it is undefined, because
+the predictor never emits a negative and the predicted-negative marginal is
+empty. The `0.0` in the published boards is thus a faithful implementation of
+the registration's own stated expectation — and the registration's expectation
+is a mathematical error. Both halves need saying: the code is not freelancing,
+and the registered rationale cannot be leaned on to defend the published value.
+
+**What the metric is actually measuring on these cells.** On the Era-1 scope,
+with TP = 204 and FN = 0 fixed across the whole phase-2 text family, tile MCC
+collapses to a step function of a single integer — how many of the 136
+reference-empty tiles the model left alone: 0 → undefined, 1 → 0.0665, 2 →
+0.0942, 3 → 0.1156. Every published tile-MCC value in that family is one of
+those steps, and the gap between a "0.0" condition and a "0.0665" condition is
+one tile out of 136. This does not excuse the defect, but it bounds its
+scientific consequence: the substantive reading — that phase-2 text-only
+conditions have essentially no tile-level discrimination while image conditions
+have a little — survives any correction contemplated here, and the confirmatory
+proposer-verifier cells of the same phase (`verified-adv-text-t0.0` at 0.7895,
+`verified-adv-image-t0.0` at 0.8894) sit an order of magnitude away, untouched.
+
+**The codebase already knew.** `score_detection_set`, the in-process point
+scorer added for grid and sweep analyses, documents the divergence explicitly
+(`scripts/lib_advanced_metrics.py:1069-1073`): "the one deliberate difference is
+that an *undefined* MCC (degenerate tile confusion matrix) is returned here as
+`None` rather than coerced to `0.0` as the CLI's `_safe_round` does — `None` is
+the more honest 'undefined', and callers should rank/aggregate on F1 (or guard
+`None`) rather than treat a missing MCC as zero discrimination." That note
+identifies both the defect and the remedy. What it never did was propagate the
+remedy back into the command-line interface that writes the committed boards.
+
+**Where this reaches a reader.** A sweep of `docs/paper/`,
+`results/metric-leaderboards/`, `results/analyses-manifest.json`,
+`results/hypothesis-outcome-table/`, `results/leaderboard/`, and
+`results/paper-tables/` found the exposure to be qualitative in the paper and
+structural in the leaderboards. No paper file quotes `0.0`, `0.0443`, or
+`0.0222` as an MCC.
+
+- **Paper prose — one sentence, load-bearing.** `docs/paper/results-draft.md:134-135`
+  reads "a metric trade-off recurs in which text cells reach F1 ≈ 0.60 at
+  near-zero MCC while image cells trade F1 for far better tile discrimination".
+  "Near-zero MCC" *is* the imputation. Its source is verbatim in the
+  `era1-single-pass-baseline-matrix` outcome text of
+  `results/analyses-manifest.json` ("text cells reach F1 ~0.60-0.61 at MCC ~0.0
+  while image cells trail on F1 but carry higher tile-discrimination MCC"), and
+  `docs/paper/results-outline.md:200-201` designates this the home of the D3
+  thread and marks the surrounding item **load-bearing**. The claim's
+  *direction* survives — image cells at 0.09–0.28 genuinely exceed text cells —
+  but its *magnitude* is built on values that do not exist, and the honest text
+  cells sit at 0.0665, not at zero.
+- **MCC-tiered leaderboards — a tier that exists only as an artefact.**
+  `results/leaderboard/combined/era1/leaderboard_tiers_mcc.md:125` opens
+  `## Tier 7 (MCC: 0.000–0.000)`, and ranks 87–93 (`:129-135`) are exactly and
+  only seven of the nine degenerate conditions. In the per-architecture
+  single-pass boards
+  (`results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_mcc_20m.md`,
+  `**Tiering metric**: MCC` at `:4`) the same seven occupy ranks 15–21
+  (`:32-38`) and the tier's own lower bound is the imputed value
+  (`## Tier 2 (MCC: 0.000–0.164)` at `:18`) — replicated across the 20/30/40/50/100 m
+  and `q01` variants and both `tier_stability_mcc` tables, plus the `.json`
+  counterparts. Two of the nine (`text-t0.0`, `text-t0.7`) do not reach these
+  boards: that stratum carries their K = 3 consensus rows instead, whose MCC is
+  defined. The four averaged means do not appear on these boards at all.
+- **Not affected.** `results/metric-leaderboards/` — zero occurrences of any of
+  the 13 across the directory; its MCC-tiered boards cover 55-map and Era-2 PV
+  cells only. The `era1-single-pass-baseline-matrix` **tie set** is safe: it is
+  tiered by round-robin tile-swap **micro-F1** permutation (10 k perms, seed 42,
+  BH-FDR q = 0.05) at 20 m, with MCC a display column, so the nine affected
+  conditions sitting inside that tie set are there on F1.
+  `results/hypothesis-outcome-table/` carries no MCC dependence for any of the
+  13 — its only MCC references are the two 55-map boards, a different corpus.
+  `results/paper-tables/metrics_master.csv` has no MCC column.
+- **Other republishers**, none paper-facing: `results/conditions-manifest.md`,
+  `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.{md,json}`,
+  `results/era1-leaderboard/tiering_20m.{md,json}`, the per-cell
+  `evaluation.{json,md,csv}` under `results/paper-eval/phase2/512px-14buf-mcc/`
+  and its duplicate roots, and `reports/d17-inventory/d17-inventory-h5-h8.md:559-563`.
+  `results/dedup-metric-impact-2026-08-18/impact-era1-single-pass-board.json` is
+  the one artefact that preserves the honest signal, recording the as-committed
+  tile MCC as `null`.
+
+**Protocol impact**: this is a **reporting defect, not a protocol violation**.
+§ 4.2 registers tile-level MCC as a secondary outcome and fixes the
+classification matrix; it prescribes no handling for a degenerate matrix, so no
+registered requirement was breached — and, as recorded above, the registration's
+own rationale asserts the very value the code publishes. No F1, precision,
+recall, or confidence interval anywhere in the study is affected; no registered
+hypothesis verdict changes; no tie set moves. What is withdrawn is the
+publication status of 13 numbers.
+
+Four obligations follow for the paper:
+
+- **Never print `0.0` for the nine.** Wherever a tile MCC is reported for a
+  condition whose tile confusion matrix is degenerate, print "undefined" (or
+  "n/a — every tile predicted populated") with a footnote giving the reason, and
+  **exclude the cell from any MCC ranking, tier, mean, or tie set** rather than
+  seating it at the bottom. A condition for which the metric is not computable
+  has no rank on that metric. Tier 7 of
+  `results/leaderboard/combined/era1/leaderboard_tiers_mcc.md` should cease to
+  exist rather than be renumbered.
+- **Restate the four averaged means, or drop them.** `0.0443`, `0.0443`,
+  `0.0443`, and `0.0222` are blends of measurements and placeholders and
+  correspond to no defensible estimator. Either publish the mean over the
+  defined passes — 0.0665 in all four cases, with the pass count stated — or
+  report the cell as undefined. Note that the first option collapses four
+  apparently distinct values into a seven-way tie at 0.0665 with
+  `retest-phase2b::text-t1.3`, `retest-phase2d::text-verbose`, and
+  `retest-phase2e::random`, which is the honest picture: all seven differ by at
+  most one correctly-identified empty tile.
+- **Rewrite the D3 sentence to say what happened.** `results-draft.md:134-135`
+  should not say text cells reach "near-zero MCC". It should say that for the
+  text-only single-pass cells the model fired on **every** tile in the 340-tile
+  scope, so tile MCC is undefined rather than low, and that this is a stronger
+  form of the same finding: the metric cannot separate a text cell from chance
+  because the text cell never declines to detect. Read that way the D3 thread
+  gains rather than loses; what it must not do is quote a number.
+- **Do not quote a tile-MCC confidence interval whose lower bound is exactly
+  0.0000 on an affected cell.**
+
+**Recommended fix, offered as a recommendation and deliberately not taken
+here.** The minimal change is three-part and should land as one commit with a
+re-extraction — not a re-run — of the affected cells:
+
+1. Let `None` survive into the JSON: replace the `_safe_round` coercion for the
+   `mcc` block with a null-preserving round, so `tile_classification.mcc.point`
+   is `null` on a degenerate matrix, and add a sibling boolean `mcc_defined` so
+   consumers need not infer undefinedness from a null.
+2. Aggregate over defined passes only: in `evaluate_multi_run_mean`, filter
+   nulls before averaging, record `n_passes_mcc_defined` beside the mean, and
+   emit `null` when no pass is defined.
+3. Bring `_mcc_from_idx` into line with its own docstring — return `np.nan` for
+   degenerate resamples and use `nan`-aware mean and percentile paths — or, if
+   that materially moves the surviving bounds, correct the docstring instead and
+   state plainly in Methods that the MCC bootstrap substitutes zero for
+   degenerate resamples.
+
+Whether to re-extract or re-run, and whether to accept item 3's effect on
+published CIs, are PI decisions. None of this should be bundled with the E79
+tile-assignment change or the E80 deduplication decision: all three touch the
+scoring path, all three are separable, and bundling them would make their deltas
+unattributable.
+
+Cross-references: E80 (deduplication gap — the campaign whose § 2.6 first
+flagged this, and whose fourth paper obligation warns that tile MCC is not
+invariant to deduplication), E79 (order-dependent tile assignment — the other
+scoring-path finding of the same session), E64 (ii) (corpus size — § 4.2's
+"30 empty tiles, 30 non-empty tiles" balance is not the executed 136/204
+split), and `reports/scoring-audit-notes-2026-08-18.md` (the two suspicions
+from the same audit that cleared and therefore have no erratum).
+
+---
