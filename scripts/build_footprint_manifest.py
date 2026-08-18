@@ -66,7 +66,16 @@ sys.path.insert(0, str(PROJECT_ROOT))
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
+#: Default footprint: the Era-1 512 px evaluation set, which is what the H13
+#: arm manifests were built against and what --verify reproduces.
 FOOTPRINT = PROJECT_ROOT / "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+
+#: The Era-2 384 px evaluation set. Preferred for new multi-geometry grids:
+#: it is a strict subset of Era-1 and has zero area overlap with the
+#: calibration footprint, whereas Era-1 shares the usual overlap bands with
+#: it. Both exclude calibration tiles at the tile level; Era-2 additionally
+#: buffers the calibration ground out entirely.
+FOOTPRINT_ERA2 = PROJECT_ROOT / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
 
 #: Fraction of a tile's area that must fall inside the footprint. The
 #: comparison is STRICT (>), so an exactly-half tile is excluded.
@@ -130,18 +139,19 @@ def tile_bounds_for_tree(tiles_dir: Path, tile_size: int) -> gpd.GeoDataFrame:
 
 
 def select_majority_tiles(
-    tiles_dir: Path, tile_size: int,
+    tiles_dir: Path, tile_size: int, footprint_path: Path | None = None,
 ) -> tuple[list[str], int]:
     """Select the tiles whose area lies mostly inside the study footprint.
 
     Args:
         tiles_dir: Tile tree root.
         tile_size: Tile edge in pixels.
+        footprint_path: Footprint to select against; defaults to Era-1.
 
     Returns:
         Tuple of (sorted tile filenames, total tiles in the tree).
     """
-    footprint = gpd.read_file(FOOTPRINT).geometry.union_all()
+    footprint = gpd.read_file(footprint_path or FOOTPRINT).geometry.union_all()
     bounds = tile_bounds_for_tree(tiles_dir, tile_size)
     frac = bounds.geometry.intersection(footprint).area / bounds.geometry.area
     keep = frac > MAJORITY_FRACTION
@@ -207,6 +217,10 @@ def main() -> int:
     parser.add_argument("--tiles-dir", type=Path, help="Tile tree root.")
     parser.add_argument("--tile-size", type=int, help="Tile edge in pixels.")
     parser.add_argument("--output", type=Path, help="Manifest output path.")
+    parser.add_argument(
+        "--footprint", type=Path, default=None,
+        help="Footprint GeoJSON to select against (default: the Era-1 512 px "
+             "evaluation bounds; pass the Era-2 384 px bounds for new grids).")
     args = parser.parse_args()
 
     if args.verify:
@@ -216,7 +230,8 @@ def main() -> int:
         parser.error("--tiles-dir, --tile-size and --output are required "
                      "unless --verify is given")
 
-    selected, total = select_majority_tiles(args.tiles_dir, args.tile_size)
+    selected, total = select_majority_tiles(
+        args.tiles_dir, args.tile_size, args.footprint)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(selected, indent=1) + "\n")
     logger.info("Selected %d of %d tiles (%.1f %% of the tree) -> %s",
