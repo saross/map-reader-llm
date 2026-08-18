@@ -160,7 +160,15 @@ def synthetic_batch(tmp_path: Path) -> tuple[Path, Path]:
     conditions = []
     for label, points in condition_points.items():
         det_dir = tmp_path / "dets" / label
-        _write_detections(points, det_dir / "run_1" / "detections_001.geojson")
+        # Convention-A pass filename. The earlier "detections_001.geojson"
+        # was a shape no writer in this project emits: convention A is
+        # detections_<config>_run<NN>.geojson and convention B is
+        # detections-<config>-<model>-<date>.geojson (see
+        # scripts/lib_detection_paths). A fixture inventing its own shape
+        # tests the pipeline against an object that cannot exist, and it
+        # broke when the resolver started matching the real conventions
+        # strictly (Session 136 audit, defect D6).
+        _write_detections(points, det_dir / "run_1" / f"detections_{label}_run01.geojson")
         conditions.append(
             {
                 "label": label,
