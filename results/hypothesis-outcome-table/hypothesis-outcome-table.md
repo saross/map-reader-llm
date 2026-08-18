@@ -2,7 +2,7 @@
 
 > **GENERATED FILE — do not hand-edit.** Produced by
 > `scripts/generate_hypothesis_outcome_table.py` from
-> `results/analyses-manifest.json` at commit `faff43dd4`; re-run the
+> `results/analyses-manifest.json` at commit `e612f7ac0`; re-run the
 > script after any manifest regeneration. Pure projection per the
 > D17 ruling (`docs/paper/results-outline.md` § D17): no cell is
 > hand-maintained.
@@ -33,7 +33,7 @@ themselves.
 | H10 | Training-pool size effects (osf:904) | exploratory (Tier B) | executed | — (exploratory: not in family) | h10-pool-size [registered-exploratory] | E13, E37, E45, E49, E50 |
 | H11 | Tile size effects (osf:944) | exploratory (Tier B) | executed | — (exploratory: not in family) | tile-size-sweep [registered-exploratory] | E36, E41, E43, E44, E56, E57, E62 |
 | H12 | Hard-positive to hard-negative ratio (osf:980) | exploratory (Tier B) | executed | — (exploratory: not in family) | h12-v2-hp-hn-ratio [registered-exploratory] | E13, E45, E49, E50, E51, E52 |
-| H13 | Overlap/stride effects (osf:1014) | exploratory (Tier B) | partially executed | — (exploratory: not in family) | h13-overlap-2026-08-18 [registered-exploratory]; h13-overlap-stride [not-executed] | E54, E64, E66, E75 |
+| H13 | Overlap/stride effects (osf:1014) | exploratory (Tier B) | executed | — (exploratory: not in family) | h13-overlap-2026-08-18 [registered-exploratory] | E54, E66, E75 |
 | H14 | Cross-model consistency (osf:1056) | exploratory (Tier C, deferred) | not executed | — (exploratory: not in family) | h14-cross-model-consistency [not-executed] | E76 |
 | H15 | Cross-model consensus voting (osf:1074) | exploratory (Tier C, deferred) | not executed | — (exploratory: not in family) | h15-cross-model-voting [not-executed] | E77 |
 

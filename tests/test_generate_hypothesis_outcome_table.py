@@ -189,14 +189,13 @@ def test_live_register_projects_and_matches_committed_output():
     assert records["H12"]["analyses"] == ["h12-v2-hp-hn-ratio [registered-exploratory]"]
     for h in ("H14", "H15"):
         assert records[h]["disposition"] == "not executed"
-    # H13 moved to "partially executed" in Session 136: arms B and C were run
-    # and all three registered analyses reported (analysis row
-    # h13-overlap-2026-08-18), while the older h13-overlap-stride disposition
-    # row is marked SUPERSEDED but deliberately still classed not-executed
-    # pending the PI's ruling on whether to retire it. The projection reports
-    # both rows, hence "partially" — which UNDERSTATES the position and is the
-    # flag for that pending decision, not a defect in the projection.
-    assert records["H13"]["disposition"] == "partially executed"
+    # H13 became "executed" in Session 136: arms B and C were run and all three
+    # registered analyses reported (row h13-overlap-2026-08-18). The former
+    # not-executed disposition row was archived with PI approval to
+    # archive/superseded-register-rows/ — while it remained, the projection
+    # rendered H13 "partially executed", because that verdict fires whenever a
+    # not-executed row coexists with an executed one.
+    assert records["H13"]["disposition"] == "executed"
     # The committed outputs equal a regeneration (the --check contract,
     # asserted for real — S134 audit finding M-4): MD compared with the
     # commit-hash stamp neutralised on both sides, JSON compared exactly.

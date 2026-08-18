@@ -1,0 +1,30 @@
+{
+ "_README": "Superseded register row, archived 2026-08-18 with PI approval. This was H13's not-executed disposition row, recording that the registered three-arm overlap contrast had never run. That premise is void: arms B and C were executed 2026-08-17/18 and all three registered H13 analyses are reported in results/h13-overlap-2026-08-18/, carried by the register row h13-overlap-2026-08-18. While this row remained in the active register the hypothesis-outcome table projected H13 as 'partially executed', because that projection fires whenever a not-executed row coexists with an executed one — understating a discharged obligation. Removed from results/run-analyses.json and preserved here in full; the non-execution history it records is also narrated in erratum E75, whose disposition section marks it REMEDIATED.",
+ "archived_at": "2026-08-18T13:02:17+00:00",
+ "archived_from": "results/run-analyses.json",
+ "superseded_by": "h13-overlap-2026-08-18",
+ "pi_approved": "2026-08-18",
+ "row": {
+  "analysis_id": "h13-overlap-stride",
+  "type": "disposition",
+  "_note": "Disposition row (vocabulary v2, S134 D17 reconciliation 2026-08-17): recorded the non-execution of a registered obligation. SUPERSEDED 2026-08-18 (S136) — the obligation has since been discharged; see h13-overlap-2026-08-18. The row is retained as the historical disposition record, per archive-never-delete. Its original text was PI-stamped 2026-08-17T03:50:21Z; that stamp is recorded here and manually_verified_at is reset to null because the outcome text below has been amended since, and the row's class (still 'not-executed') needs the PI's ruling: either retire it in favour of the new row, or keep it as a closed historical disposition. Until then the hypothesis-outcome table renders H13 as 'partially executed', which understates the position — all three registered H13 analyses are now reported.",
+  "_prereg_rationale": "not-executed: registered exploratory Tier B, in scope at lodgement (osf:1016); trigger clause 2 arguably fired (baseline F1 0.660) and was answered by different mechanisms (E75).",
+  "conditions_compared": [],
+  "hypothesis_refs": [
+   "H13"
+  ],
+  "preregistered": "not-executed",
+  "deviations": [
+   "E64",
+   "E75"
+  ],
+  "predicted_outcome": "The registration poses a question, not a directional prediction: does increasing tile overlap improve detection performance, and is the cost justified? (osf/preregistration.md:1020) — never tested.",
+  "predicted_outcome_amended": null,
+  "tie_set": [],
+  "outcome": "SUPERSEDED 2026-08-18 — arms B and C were executed 2026-08-17/18 and all three registered H13 analyses are reported in results/h13-overlap-2026-08-18/ (register row h13-overlap-2026-08-18). E75's disposition is updated accordingly. The original disposition text follows, unaltered, as the historical record. --- NOT EXECUTED — the registered three-arm overlap/stride contrast (osf/preregistration.md:1024-1028) never ran: arms B (25%) and C (50%) were never built, and overlap was a fixed parameter (12.5% at every tile size), never a manipulated factor, so no registered H13 analysis (all comparative) is computable. Silently dropped with no dated decision; cannot shelter under the Tier C 'registered as deferred' framing. Full disclosure: E75.",
+  "paper_section": "Methods",
+  "output_path": "reports/d17-inventory/unexecuted-register.md",
+  "working_notes_obs": [],
+  "manually_verified_at": null
+ }
+}

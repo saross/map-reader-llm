@@ -1164,29 +1164,6 @@
    "manually_verified_at": "2026-08-17T03:50:21Z"
   },
   {
-   "analysis_id": "h13-overlap-stride",
-   "type": "disposition",
-   "_note": "Disposition row (vocabulary v2, S134 D17 reconciliation 2026-08-17): recorded the non-execution of a registered obligation. SUPERSEDED 2026-08-18 (S136) — the obligation has since been discharged; see h13-overlap-2026-08-18. The row is retained as the historical disposition record, per archive-never-delete. Its original text was PI-stamped 2026-08-17T03:50:21Z; that stamp is recorded here and manually_verified_at is reset to null because the outcome text below has been amended since, and the row's class (still 'not-executed') needs the PI's ruling: either retire it in favour of the new row, or keep it as a closed historical disposition. Until then the hypothesis-outcome table renders H13 as 'partially executed', which understates the position — all three registered H13 analyses are now reported.",
-   "_prereg_rationale": "not-executed: registered exploratory Tier B, in scope at lodgement (osf:1016); trigger clause 2 arguably fired (baseline F1 0.660) and was answered by different mechanisms (E75).",
-   "conditions_compared": [],
-   "hypothesis_refs": [
-    "H13"
-   ],
-   "preregistered": "not-executed",
-   "deviations": [
-    "E64",
-    "E75"
-   ],
-   "predicted_outcome": "The registration poses a question, not a directional prediction: does increasing tile overlap improve detection performance, and is the cost justified? (osf/preregistration.md:1020) — never tested.",
-   "predicted_outcome_amended": null,
-   "tie_set": [],
-   "outcome": "SUPERSEDED 2026-08-18 — arms B and C were executed 2026-08-17/18 and all three registered H13 analyses are reported in results/h13-overlap-2026-08-18/ (register row h13-overlap-2026-08-18). E75's disposition is updated accordingly. The original disposition text follows, unaltered, as the historical record. --- NOT EXECUTED — the registered three-arm overlap/stride contrast (osf/preregistration.md:1024-1028) never ran: arms B (25%) and C (50%) were never built, and overlap was a fixed parameter (12.5% at every tile size), never a manipulated factor, so no registered H13 analysis (all comparative) is computable. Silently dropped with no dated decision; cannot shelter under the Tier C 'registered as deferred' framing. Full disclosure: E75.",
-   "paper_section": "Methods",
-   "output_path": "reports/d17-inventory/unexecuted-register.md",
-   "working_notes_obs": [],
-   "manually_verified_at": null
-  },
-  {
    "analysis_id": "h14-cross-model-consistency",
    "type": "disposition",
    "_note": "Disposition row (vocabulary v2, S134 D17 reconciliation 2026-08-17): records the non-execution of a registered obligation; it is not a performed analysis. Disposition (run vs formally close) pends the S134 unexecuted-set adjudication gate (planning/s134-d17-reconciliation-block-2026-08-17.md, hardening 7).",
@@ -1399,7 +1376,7 @@
   {
    "analysis_id": "h13-overlap-2026-08-18",
    "type": "comparison",
-   "_note": "S136. The registered three-arm H13 overlap contrast, executed at last (arms B and C ran 2026-08-17/18; arm A re-scored from its committed Phase 2a brief-text detections). All three arms scored under ONE uniform rule: preregistered within-pass 20 m deduplication (S8.5 Step 1) and a common A-intersect-B-intersect-C evaluation footprint (1637.5 km2, 538 mounds) carried on the arm-A grid. Both hazards were caught at gates, not in the data: the missing scorer dedup at the S135 phase gate, the divergent per-arm footprints in S136 scoring. CLASSIFICATION IS CONTESTED AND AWAITS THE PI. The S135 plan (planning/h13-arms-bc-plan-2026-08-17.md S7) proposed 'post-hoc per the discharge principle'; this row proposes 'registered-exploratory' instead, on the ground that the arms, their overlap values and all three analyses are the registered ones (osf/preregistration.md:1014-1048), so the row discharges a registered obligation rather than extending a registered method to unregistered material. If the PI prefers the plan's reading, relabel to post-hoc and cite E75 alone.",
+   "_note": "S136. The registered three-arm H13 overlap contrast, executed at last (arms B and C ran 2026-08-17/18; arm A re-scored from its committed Phase 2a brief-text detections). All three arms scored under ONE uniform rule: preregistered within-pass 20 m deduplication (S8.5 Step 1) and a common A-intersect-B-intersect-C evaluation footprint (1637.5 km2, 538 mounds) carried on the arm-A grid. Both hazards were caught at gates, not in the data: the missing scorer dedup at the S135 phase gate, the divergent per-arm footprints in S136 scoring. CLASSIFICATION IS CONTESTED AND AWAITS THE PI. The S135 plan (planning/h13-arms-bc-plan-2026-08-17.md S7) proposed 'post-hoc per the discharge principle'; this row proposes 'registered-exploratory' instead, on the ground that the arms, their overlap values and all three analyses are the registered ones (osf/preregistration.md:1014-1048), so the row discharges a registered obligation rather than extending a registered method to unregistered material. If the PI prefers the plan's reading, relabel to post-hoc and cite E75 alone. SUPERSESSION (2026-08-18, PI-approved): this row now carries H13's disposition outright. The former not-executed row h13-overlap-stride is archived at archive/superseded-register-rows/h13-overlap-stride-2026-08-18.json; its presence had forced the hypothesis-outcome table to render H13 'partially executed'.",
    "_prereg_rationale": "registered-exploratory: H13 is registered as exploratory at Tier B (budget-dependent; osf/preregistration.md:1014-1048, commitment CMT-0334). The executed arms match the registered table exactly (A = 64 px / stride 448 / 12.5 %, B = 128 px / 384 / 25 %, C = 256 px / 256 / 50 %) and all three registered analyses are reported. Deviations, all disclosed: E75 (the contrast was silently dropped and is executed out of sequence, after the study's other phases); the registered 'optimal configuration from Stages 1-2' could not be identified because the Era-1 single-pass board is a 20-cell Tier-1 tie, so a carried configuration (brief-text) is held constant across arms instead and the result is stated for that configuration under the plateau rule; arm A is reused and re-scored rather than re-run; E66-class pipeline-vintage asymmetry between arm A (March) and arms B/C (August).",
    "conditions_compared": [
     "h13::arm-a-overlap-12-5",
