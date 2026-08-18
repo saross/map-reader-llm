@@ -118,7 +118,9 @@ python -c "import geopandas as gpd; print(gpd.read_file('outputs/detections.geoj
 
 **Symptom**: Same location detected multiple times.
 
-**Explanation**: Expected with overlapping tiles (STRIDE < TILE_SIZE). The evaluation script handles deduplication using 20m clustering.
+**Explanation**: Expected with overlapping tiles (STRIDE < TILE_SIZE).
+
+**Correction (2026-08-18, erratum E80)**: this entry previously stated that "the evaluation script handles deduplication using 20m clustering". That is **false**. `evaluate_detections.py` applies no spatial deduplication to detections; under the preregistered one-to-one Hungarian matching (§ 4.1.2) the second copy of an overlap-band mound scores as a false positive. Within-pass 20 m deduplication lives in `merge_passes.deduplicate_within_pass` (preregistration § 8.5 Step 1) and is reached only by the multi-pass consensus and weighted-box-fusion paths. A single-pass artefact, or a proposer-verifier artefact whose proposer pool was a single raw pass, carries its duplicates into scoring. See `docs/methodology/preregistration/protocol-errata.md` (E80) and `reports/dedup-gap-compliance-2026-08-18.md`.
 
 ## Evaluation Issues
 

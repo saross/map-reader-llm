@@ -3467,7 +3467,9 @@ the S135 phase gate re-priced them and caught two load-bearing errors
 before any spend (arm C needs **2.99×** the tiles, not the registered
 "~2×"; and `evaluate_detections.py` has no deduplication step, so
 naive scoring would have manufactured an "overlap hurts precision"
-artefact). Arms B and C ran on 2026-08-17/18 —
+artefact — **that second finding is H13-scoped here and is generalised
+to the whole result set in E80**, which measures it at 155 of 333
+conditions). Arms B and C ran on 2026-08-17/18 —
 `gemini-3-flash-preview`, brief-text, T = 1.0, MINIMAL, 512 px, three
 passes each, 6 passes plus a one-tile recovery, **US$5.7488 actual
 against a $4.37 gate estimate (+31 %, flagged to the PI, not
@@ -3521,6 +3523,16 @@ deduplication machinery exists) at an indicative ~$6-8, but that
 figure is a pre-lodgement drafting estimate and must be re-priced
 before it is relied on. Disposition is scheduled for the S134
 unexecuted-set adjudication.
+
+**Cross-reference (added 2026-08-18)**: the missing-deduplication
+mechanism named in the Disposition paragraph above is disclosed in
+general form as **E80**. This entry retains only the H13-scoped
+statement, because deduplication is what makes the three arms
+comparable; the study-wide exposure (155 of 333 conditions, ΔF1@20 up
+to +0.058), the compliance reading that it is a comparability confound
+rather than a registered-protocol breach, and the paper's obligations
+all belong to E80. E80 is also the reason the H13 arms are the only
+conditions in the manifest scored on explicitly deduplicated inputs.
 
 ---
 
@@ -3817,5 +3829,239 @@ rule), and the S136 review at
 `reports/scoring-sensitivity-review-2026-08-18.md`, which also treats
 the second, larger scoring-path finding of the same session (the
 missing within-pass deduplication).
+
+---
+
+### E80: No within-pass deduplication in the scoring path — a comparability confound on 155 of 333 conditions, preregistration-compliant but asymmetric across architectures
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-18 (mechanism caught by the S135 H13 phase gate; exposure, effect, and compliance reading established in Session 136) |
+| Type | Clarification (records a scoring-path asymmetry; no registered requirement was breached, no committed value is withdrawn) |
+| Commit | — (documents a property of the scoring path; the only change landed with this entry is the correction of a false statement in `docs/troubleshooting.md`) |
+| Files | `scripts/evaluate_detections.py:430-432`; `scripts/merge_passes.py:71` and `:137-219`; `scripts/extract_candidates.py:272-284` and `:315-324`; `osf/preregistration.md:1861-1901`, `:358-375`, `:313-329`, and `:1036-1040`; `config.py:66-68`; `docs/troubleshooting.md:121` (corrected); measurements in `results/scoring-sensitivity-2026-08-18/`; compliance reading in `reports/dedup-gap-compliance-2026-08-18.md` |
+| Impact | Medium — no committed number is wrong and no registered outcome changes, but two scoring paths coexist in the result set, and any comparison spanning them carries an F1 offset of up to ~0.058 that scales with detection density |
+
+**Description**: `scripts/evaluate_detections.py` applies no spatial
+deduplication to detections anywhere in its scoring path. Its per-buffer point
+estimate comes straight from `lib_advanced_metrics.calculate_f1_internal`
+(`:430-432`), which Hungarian-matches whatever features it is handed. (The one
+`# Deduplicate` comment in that file, at `:1437-1442`, deduplicates the *tile
+list* for a detection and is the separate E79 tie-break, not a spatial merge.)
+
+The preregistered within-pass 20 m deduplication lives elsewhere, in
+`merge_passes.deduplicate_within_pass` (`scripts/merge_passes.py:137-219`,
+greedy star clustering at `DISTANCE_THRESHOLD_METRES = 20.0`, `:71`). Whether a
+scored artefact has been through it is therefore a property of the **path the
+artefact took**, not of its architecture label:
+
+- **Multi-pass consensus and weighted-box-fusion cells reach it** — they are
+  deduplicated by construction, because `merge_passes` is how they are built.
+- **Single-pass cells do not.** A raw pass is scored exactly as emitted.
+- **Proposer-verifier cells whose proposer pool was a single raw pass do not
+  either.** `scripts/extract_candidates.py` crops one candidate per input
+  feature with no clustering (`:315-324`); its only concession to the issue is
+  normalising `source_tiles` → `source_tile` (`:272-284`). Duplicate proposals
+  become duplicate crops, are verified independently, and — where both copies
+  clear the probability threshold — land in the scored accepted set as two
+  detections.
+
+The study tiles at 12.5 % overlap in both axes at every tile size
+(`config.py:66-68`: `TILE_SIZE = 512`, `OVERLAP = 64`,
+`STRIDE = TILE_SIZE - OVERLAP`). A mound in an overlap band is therefore seen
+and emitted twice, and under § 4.1.2's one-to-one matching the second copy
+scores as a false positive.
+
+**Why this is a comparability confound and not a protocol violation**: the
+registered text scopes within-pass deduplication to the consensus/voting
+pipeline. Section 8.5 is headed "Voting Implementation"
+(`osf/preregistration.md:1861`) and opens "Consensus voting aggregates
+detections from multiple passes into a single prediction set" (`:1863`); the
+requirement itself reads "**Within-pass deduplication**: *Before voting*,
+detections from overlapping tiles within the same pass are deduplicated using
+the 20m spatial tolerance. This prevents a single pass from contributing
+multiple votes for the same physical location detected in adjacent tiles"
+(`:1869`, emphasis added). Its stated purpose is vote-count integrity, and it
+is step 1 of a seven-step Spatial Clustering Algorithm (`:1875-1885`) whose
+remaining six steps — pool, distance, cluster, count votes, threshold, output
+centroid — presuppose N > 1 passes.
+
+The registered **evaluation** protocol contains no such step and instead
+specifies what becomes of a second copy: § 4.1.2 (`:358-375`) prescribes
+one-to-one Hungarian assignment in full, defines "**False Positive**: Each
+unmatched detection (not assigned to any reference)" (`:368`), and claims as a
+property that "a single detection cannot satisfy multiple references"
+(`:375`). Section 3.8 "Evaluation Protocol" (`:313-329`) is silent on
+overlap-band duplicates. The scorer's behaviour is therefore what the
+registered algorithm says it should be.
+
+The one place the registration prescribes deduplication outside the voting
+pipeline is H13's own Implementation block — "Spatial deduplication applied to
+handle redundant detections" (`:1039`) — which is precisely the hypothesis
+where overlap is the manipulated factor, and it **was** honoured (see E75
+disposition; `results/h13-overlap-2026-08-18/findings.md:127-134`). That H13
+had to say it separately is itself evidence that § 8.5 Step 1 does not bind
+general evaluation. The 26 exposed proposer-verifier conditions are covered by
+nothing at all: PV is "a post-hoc extension to the preregistered single-stage
+detection approach" (`decisions-log.md:1070`, Decision 22).
+
+Full reading, with every quotation anchored:
+`reports/dedup-gap-compliance-2026-08-18.md`.
+
+**What is nevertheless wrong** is an asymmetry the registration did not
+anticipate: § 8.5 Step 1 makes multi-pass artefacts deduplicated by
+construction while single-pass and single-proposer-pass artefacts are not, so
+**two scoring paths coexist in the same result set**. A comparison that places
+an exposed cell against an unexposed one — the shape of the
+consensus-versus-single-pass and diversity-dividend claims — measures the
+scoring-path difference in addition to the effect it names.
+
+**Exposure**: established by measurement, not by reading `architecture`.
+`scripts/scoring_sensitivity_survey.py` resolves the scored detection files
+behind every condition in `results/conditions-manifest.json` and counts the
+features lying within 20 m of another feature in the same artefact
+(`:155-185`). Register:
+`results/scoring-sensitivity-2026-08-18/exposure-survey.json`.
+
+| Architecture | conditions | exposed (>1 %) | median pair involvement, exposed | max |
+|---|--:|--:|--:|--:|
+| single-pass | 125 | 123 | 0.129 | 0.229 |
+| proposer-verifier | 83 | 26 | 0.190 | 0.250 |
+| consensus | 125 | 6 | 0.037 | 0.069 |
+| **total** | **333** | **155** | — | — |
+
+All 333 conditions resolved; none was unreadable. 289,065 features sit in the
+exposed set. Two caveats on the table. First, "pair involvement" counts every
+feature having at least one neighbour within 20 m and is roughly twice the
+fraction deduplication actually removes; the removal fractions are 0.0–12.7 %
+across the 48 probed cells. Second, the 123 single-pass figure includes
+`h13::arm-c-overlap-50`, which *was* deduplicated but retains a 3.20 % residual
+because greedy star clustering is not quite idempotent at 50 % overlap; the
+genuinely un-deduplicated single-pass set is 122. The 6 consensus conditions
+are all low-vote-threshold cells at 1.6–6.9 % and are the same non-idempotency
+residual, an implementation-fidelity matter inside a registered step rather
+than a gap.
+
+**Effect, measured on 48 cells at US$0.00**:
+`scripts/scoring_sensitivity_probe.py --mode dedup` scores each cell twice from
+the same bounds and ground truth — once exactly as committed, once after
+applying `deduplicate_within_pass`. The as-committed column reproduces the
+committed `evaluation.json` F1 to four decimal places in all 48 cells, which
+validates the harness.
+
+**Every one of the 48 deltas is non-negative.** ΔF1@20 spans **+0.0000 to
++0.0578** and ΔF1@30 spans **+0.0000 to +0.0589**; the three near-zero cells
+are `h13::arm-a-overlap-12-5` (already deduplicated, +0.0000),
+`55maps-image-generalisation::verified` (+0.0004), and `h13::arm-c-overlap-50`
+(+0.0044), with the remaining 45 spanning +0.0090 to +0.0578 at 20 m. Recall is
+bit-identical before and after in every proposer-verifier cell and unchanged in
+33 of the 68 single-pass cell–buffer pairs; precision does all the work
+(0.8060 → 0.9235 at 30 m on the most exposed cell). That signature — precision
+rises, recall does not move — is the strongest evidence that the removed
+features are duplicates rather than detections.
+
+The magnitude scales with detection density, so **paired contrasts do not
+cancel**. For geometric calibration: raw removal at 12.5 % overlap is 5.9–6.7 %
+per pass, at 25 % it is 15.7–17.9 %, and at 50 % it is 39.2–40.0 %
+(`results/h13-overlap-2026-08-18/findings.md:138-142`).
+
+**Which committed claims this reaches.** Both study headlines are safe: the
+gold-standard headline `pv-diag-384::verified-adv-text-consensus-16of30` has
+pair involvement 0.0000, and the 55-map deployment cell moves +0.0004 F1@20.
+Two paper-cited claims are materially at risk, both because they compare an
+exposed cell against an unexposed one:
+
+- the `diversity-dividend-384` Tier-1 three-member tie
+  (`results/diversity-dividend-384/tiering-champions/tiering_20m.json`,
+  `tie_set`), where the consensus champion `consensus-flash-high-text-26of30`
+  (F1@20 0.8141, unexposed to deduplication) is currently at the top of a tie
+  containing two exposed Pro single-pass baselines —
+  `n1-pro-rerun-384::baseline-pro-text-high-t-0-0` (0.8045 → **0.8545**) and
+  `pv-diag-384::baseline-pro-text-medium-t-0-0` (0.7921 → **0.8211**). On
+  deduplicated point estimates the "cheap Flash consensus reaches the expensive
+  Pro single-pass tier" framing reverses direction; and
+- the § R5 zero-diversity anchor `pv-diag-384::verified-adv-text-baseline`,
+  the single most exposed condition in the study (pair involvement 0.2500),
+  F1@30 0.8320 → **0.8905**, which moves it from 29th to 13th of the 39 rows on
+  `gs-era2-pv-family-30m` and shrinks the measured diversity dividend
+  substantially.
+
+Neither movement has been tested. Every figure above is a **point estimate**;
+no bootstrap interval or permutation tiering was re-run, so whether the Tier-1
+tie survives is unknown. One further approximation must be stated plainly:
+deduplicating an *accepted* proposer-verifier set post hoc is not identical to
+what deduplicating before crop extraction would have produced — the verifier
+would have seen ~405 crops rather than 464, and the accepted set could differ
+in composition as well as count. Full assessment, including the claims verified
+unexposed: `reports/scoring-sensitivity-review-2026-08-18.md` § 3.
+
+**Relationship to E75 and E79.** E75 (H13) records the mechanism in passing, in
+the narrow form in which the S135 phase gate met it: "`evaluate_detections.py`
+has no deduplication step, so naive scoring would have manufactured an 'overlap
+hurts precision' artefact". That statement is correct and remains in place
+because it is load-bearing for H13's disposition, but it is scoped to three
+conditions. **E80 is now the general disclosure**; E75 cross-references it.
+
+E79 (order-dependent tile assignment) is the *other* scoring-path finding of
+the same session, and the two must be kept separate in the paper. They are
+near-disjoint (155 versus 123 conditions, 6 in common), they run in opposite
+directions (deduplication raises F1, the nearest-centroid tile rule lowers it),
+and they differ in magnitude by roughly fivefold. E79 is a genuine sensitivity
+between two equally defensible rules; E80 is an asymmetry between two paths
+only one of which the registration contemplated. Bundling them into one
+"scoring caveats" note would make the deltas unattributable — and, if both were
+fixed in one commit, unmeasurable.
+
+**A contributing cause worth recording.** `docs/troubleshooting.md:121`, under
+the heading "Duplicate Detections", stated from `211a1bce4` (2026-01-18,
+thirteen days before lodgement) that "The evaluation script handles
+deduplication using 20m clustering." This is false, and it is the entry an
+operator who noticed duplicate detections would have consulted. The false
+reassurance plausibly explains why the gap survived to Session 135, and it is
+corrected in the commit landing this erratum.
+
+**Protocol impact**: none on any registered outcome. No committed value is
+withdrawn or revised, and no deviation from the registered evaluation algorithm
+is disclosed — § 4.1.2 was followed. Four obligations follow for the paper:
+
+- **Describe both scoring paths in Methods.** The Methods draft currently
+  mentions deduplication nowhere. It must state that multi-pass aggregation
+  applies § 8.5 Step 1 within-pass deduplication at 20 m, that single-pass and
+  single-proposer-pass conditions are scored as emitted, and that overlap-band
+  duplicates therefore score as false positives in the latter per § 4.1.2.
+- **Do not present a cross-path comparison without re-scoring it.** Any table
+  or claim placing an exposed cell against an unexposed one needs both sides on
+  the same path, with confidence intervals, before it can be published as an
+  effect.
+- **Re-score selectively, not blanketly.** The targeted campaign in
+  `reports/scoring-sensitivity-review-2026-08-18.md` § 6 — the
+  `diversity-dividend-384` tiering, the twelve `*-baseline*` rows of
+  `gs-era2-pv-family-30m` with the § R5 anchor, the two single-pass baseline
+  matrices, and the H1 pooled-modality bootstrap — covers the exposure that
+  reaches a reader. 108 of the 155 exposed conditions are per-pass lineage rows
+  cited nowhere; re-scoring them would move numbers no reader sees at the cost
+  of invalidating every cross-reference into the conditions manifest.
+- **Report tile-level MCC movement as unquantified where it applies.** MCC is
+  not automatically invariant to deduplication — collapsing two copies emitted
+  from two overlapping tiles into one centroid can empty one of those tiles and
+  flip its predicted class — and no MCC movement was measured anywhere. The
+  55-map MCC boards carry only 1.05 % exposure, so the risk concentrates in the
+  gold-standard single-pass boards.
+
+Whether to add deduplication to `evaluate_detections.py` is a PI decision and
+is deliberately not taken here. The safer pattern is a `--deduplicate` flag
+defaulting off, with the targeted campaign run explicitly under it, since
+changing the default would silently move 155 committed conditions. Unifying the
+tile-assignment rule (E79) is a separate one-line change with its own ~0.01 F1
+cost; the two must not be bundled.
+
+Cross-references: E79 (order-dependent tile assignment — the companion
+scoring-path finding of the same session), E75 (H13 execution, whose
+disposition first recorded this mechanism in H13-scoped form), E72 (coverage
+confound — the same family of "scoring-path property mistaken for a result"),
+Decision 22 in `decisions-log.md:1066-1088` (PV as a post-hoc extension), and
+the two Session 136 reports:
+`reports/scoring-sensitivity-review-2026-08-18.md` (measurement) and
+`reports/dedup-gap-compliance-2026-08-18.md` (compliance reading).
 
 ---
