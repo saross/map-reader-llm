@@ -28,6 +28,17 @@ project state.
 > $0) are in `reports/bca-axis-defect-2026-08-18.md`. It also **blocks the
 > grid's register row** (D16).
 >
+> **THE PROGRAMME**: the recall-levers research plan is written out in
+> full at `planning/recall-levers-programme-2026-08-19.md` — PI-approved
+> 2026-08-19, with Phase 0 ($0) to run immediately and later phases gated.
+> Its organising insight is that **stride is the cost variable**
+> (cost ≈ k/stride², verified against grid spend), so tile size and overlap
+> are not independent levers but two ways of moving one quantity. It also
+> flags that the "256 px swamps the verifier" premise rests on a
+> cross-scope comparison (0.8558 on `px256-1032` vs 0.8835 on
+> `era-2-487`) with a gap of only 0.028, and needs re-scoring on a common
+> footprint before it constrains anything.
+>
 > **THEN**: (1) the **grid register row** — writing it needs per-cell
 > evaluations, which `evaluate_detections.py` cannot produce without
 > bootstrap CIs, so it unblocks the moment D15 lands. (2) The
