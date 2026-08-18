@@ -109,7 +109,7 @@ from lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_classification,
 )
 from pairwise_permutation_test import (  # noqa: E402
-    _compute_mcc,
+    compute_mcc_or_none,
     run_permutation_test_mcc,
 )
 
@@ -131,6 +131,58 @@ DEFAULT_SEED = 42
 #: so anything tighter than half a unit in the last place would fail on
 #: rounding alone.
 MCC_TOLERANCE = 5e-5
+
+#: Rendered wherever the tile-level MCC is not computable (erratum E81).
+#: Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
+UNDEFINED_DISPLAY = "undefined"
+
+
+def _safe_round(val: float | None, digits: int = 6) -> float | None:
+    """Round a possibly-undefined MCC, preserving ``None``.
+
+    Args:
+        val: The value, or ``None`` when the coefficient is undefined.
+        digits: Decimal places.
+
+    Returns:
+        The rounded float, or ``None``. Erratum E81: ``None`` must
+        reach the JSON as ``null``, never as 0.0.
+    """
+    return None if val is None else round(val, digits)
+
+
+def _delta(a: float | None, b: float | None) -> float | None:
+    """Difference ``a - b``, propagating undefinedness.
+
+    Args:
+        a: Arm A's MCC, or ``None`` when undefined.
+        b: Arm B's MCC, or ``None`` when undefined.
+
+    Returns:
+        ``a - b``, or ``None`` when either arm's coefficient is
+        undefined — a ΔMCC measured against a non-measurement is not
+        itself a measurement (erratum E81).
+    """
+    if a is None or b is None:
+        return None
+    return a - b
+
+
+def _fmt_mcc(val: float | None, width: int = 8, digits: int = 4) -> str:
+    """Right-align a possibly-undefined MCC for a console column.
+
+    Args:
+        val: The coefficient, or ``None`` when undefined.
+        width: Column width.
+        digits: Decimal places for the numeric case.
+
+    Returns:
+        The formatted number, or :data:`UNDEFINED_DISPLAY`, padded to
+        ``width``. A genuine zero still renders as ``'0.0000'``.
+    """
+    if val is None:
+        return f"{UNDEFINED_DISPLAY:>{width}s}"
+    return f"{val:{width}.{digits}f}"
 
 
 class ConfusionGateError(RuntimeError):
@@ -228,7 +280,13 @@ def aggregate_confusion(
         gdf_bounds: Evaluation bounds with a ``tile_name`` column.
 
     Returns:
-        Dict with ``tp``, ``tn``, ``fp``, ``fn``, ``n_tiles`` and ``mcc``.
+        Dict with ``tp``, ``tn``, ``fp``, ``fn``, ``n_tiles`` and
+        ``mcc``, where ``mcc`` is ``None`` when the 2 x 2 table is
+        degenerate (erratum E81, 2026-08-18). It used to be 0.0 in two
+        places — an empty per-tile frame, and any zero-denominator
+        table via ``_compute_mcc`` — which published a coefficient
+        that was never computable at the value § 4.2 of the
+        preregistration reads as chance.
 
     Example:
         >>> cells = aggregate_confusion(det, ref, bounds)  # doctest: +SKIP
@@ -237,7 +295,10 @@ def aggregate_confusion(
     """
     per_tile = compute_per_tile_classification(gdf_det, gdf_ref, gdf_bounds)
     if per_tile.empty:
-        return {"tp": 0, "tn": 0, "fp": 0, "fn": 0, "n_tiles": 0, "mcc": 0.0}
+        # No tiles at all: the confusion table does not exist, so the
+        # coefficient is undefined rather than zero.
+        return {"tp": 0, "tn": 0, "fp": 0, "fn": 0, "n_tiles": 0,
+                "mcc": None}
     tp = int(per_tile["tp"].sum())
     tn = int(per_tile["tn"].sum())
     fp = int(per_tile["fp"].sum())
@@ -245,7 +306,7 @@ def aggregate_confusion(
     return {
         "tp": tp, "tn": tn, "fp": fp, "fn": fn,
         "n_tiles": int(len(per_tile)),
-        "mcc": _compute_mcc(tp, tn, fp, fn),
+        "mcc": compute_mcc_or_none(tp, tn, fp, fn),
     }
 
 
@@ -257,8 +318,16 @@ def expected_from_evaluation(eval_path: Path) -> dict:
             ``evaluate_detections.py`` with ``--mcc``.
 
     Returns:
-        Dict with ``tp``, ``tn``, ``fp``, ``fn``, ``mcc`` and
-        ``n_detections`` (the last two may be ``None`` if absent).
+        Dict with ``tp``, ``tn``, ``fp``, ``fn``, ``mcc``,
+        ``mcc_recorded`` and ``n_detections``.
+
+        ``mcc`` may be ``None`` for two quite different reasons, which
+        erratum E81 makes it essential to separate: the evaluation may
+        predate the ``point`` field (nothing recorded — nothing to
+        gate against), or it may record the coefficient as JSON
+        ``null`` (recorded, and recorded as *undefined* — which the
+        gate must enforce). ``mcc_recorded`` is ``True`` only in the
+        second case, i.e. when the ``point`` key is present.
 
     Raises:
         ConfusionGateError: if the file carries no tile-classification block,
@@ -274,12 +343,17 @@ def expected_from_evaluation(eval_path: Path) -> dict:
             "scored without --mcc and cannot serve as a gate reference.",
         )
     confusion = tile_class["confusion"]
+    mcc_block = tile_class.get("mcc") or {}
     return {
         "tp": int(confusion["tp"]),
         "tn": int(confusion["tn"]),
         "fp": int(confusion["fp"]),
         "fn": int(confusion["fn"]),
-        "mcc": (tile_class.get("mcc") or {}).get("point"),
+        "mcc": mcc_block.get("point"),
+        # Key presence, not truthiness: a recorded ``null`` is an
+        # assertion that the coefficient is undefined and must be
+        # gated on; an absent key is simply nothing to gate against.
+        "mcc_recorded": "point" in mcc_block,
         "n_detections": summary.get("n_detections"),
         "source": str(eval_path),
     }
@@ -297,8 +371,12 @@ def check_confusion_gate(
     Three checks, all hard:
 
     1. the four confusion cells match exactly;
-    2. the recomputed MCC matches the recorded point estimate within
-       ``mcc_tolerance`` (the recorded value is stored rounded to 4 dp);
+    2. the recomputed MCC agrees with the recorded point estimate — first
+       on **definedness** (both defined, or both undefined; a mismatch is
+       a failure), then, when both are defined, on value within
+       ``mcc_tolerance`` (the recorded value is stored rounded to 4 dp).
+       Erratum E81: an evaluation that records the coefficient as
+       ``null`` still gates, rather than skipping the check;
     3. where both are available, the detection GeoJSON's feature count matches
        the evaluation's ``n_detections`` — the cross-check that caught three
        wrong-source errors retrospectively in an earlier session, and the
@@ -326,15 +404,40 @@ def check_confusion_gate(
                 f"recorded {expected[cell]}",
             )
 
+    # Erratum E81: this used to be ``if recorded_mcc is not None:``,
+    # which meant a cell recording an *undefined* MCC (JSON ``null``)
+    # skipped the MCC check entirely — the gate weakened silently
+    # exactly where the record was most fragile. The check is now on
+    # DEFINEDNESS first: whenever the evaluation recorded a value at
+    # all, the recomputation must agree about whether the coefficient
+    # exists, and only then about what it is.
     recorded_mcc = expected.get("mcc")
-    if recorded_mcc is not None:
-        delta = abs(observed["mcc"] - float(recorded_mcc))
-        if delta > mcc_tolerance:
+    observed_mcc = observed["mcc"]
+    mcc_recorded = expected.get("mcc_recorded", recorded_mcc is not None)
+    if mcc_recorded:
+        if recorded_mcc is None and observed_mcc is not None:
             failures.append(
-                f"MCC: recomputed {observed['mcc']:.6f} != recorded "
-                f"{float(recorded_mcc):.6f} (|Δ| = {delta:.2e} > "
-                f"{mcc_tolerance:.0e})",
+                f"MCC: the evaluation records the coefficient as "
+                f"{UNDEFINED_DISPLAY} (degenerate tile confusion matrix) "
+                f"but the recomputation gives {observed_mcc:.6f}",
             )
+        elif recorded_mcc is not None and observed_mcc is None:
+            failures.append(
+                f"MCC: the recomputation gives {UNDEFINED_DISPLAY} "
+                "(degenerate tile confusion matrix) but the evaluation "
+                f"records {float(recorded_mcc):.6f}",
+            )
+        elif recorded_mcc is not None and observed_mcc is not None:
+            delta = abs(observed_mcc - float(recorded_mcc))
+            if delta > mcc_tolerance:
+                failures.append(
+                    f"MCC: recomputed {observed_mcc:.6f} != recorded "
+                    f"{float(recorded_mcc):.6f} (|Δ| = {delta:.2e} > "
+                    f"{mcc_tolerance:.0e})",
+                )
+        # Both ``None`` — recomputation and record agree that the
+        # coefficient is undefined. That is a PASS, and reaching it
+        # required the check above rather than a skip.
 
     recorded_n = expected.get("n_detections")
     if n_detections is not None and recorded_n is not None:
@@ -354,7 +457,15 @@ def check_confusion_gate(
     return {
         "reference": expected.get("source"),
         "confusion_matched": True,
-        "mcc_matched": recorded_mcc is not None,
+        # ``mcc_matched`` now means "the MCC check ran and passed",
+        # which includes the both-undefined case. ``mcc_defined``
+        # records which of the two agreements it was, so a provenance
+        # reader can tell a matched number from a matched
+        # non-measurement (erratum E81).
+        "mcc_matched": bool(mcc_recorded),
+        "mcc_defined": (
+            None if not mcc_recorded else observed_mcc is not None
+        ),
         "n_detections_matched": (
             n_detections is not None and recorded_n is not None
         ),
@@ -405,10 +516,10 @@ def _gate_arm(
             ),
         )
     logger.info(
-        "  GATE PASSED %-42s TP/TN/FP/FN %d/%d/%d/%d  MCC %.4f  "
+        "  GATE PASSED %-42s TP/TN/FP/FN %d/%d/%d/%d  MCC %s  "
         "(%d reference%s)",
         label, observed["tp"], observed["tn"], observed["fp"],
-        observed["fn"], observed["mcc"], len(records),
+        observed["fn"], _fmt_mcc(observed["mcc"], width=0), len(records),
         "" if len(records) == 1 else "s",
     )
     return gdf_det, observed, records
@@ -475,7 +586,7 @@ def run_pair(
             "geojson": str(job["geojson_a"]),
             "n_detections": int(len(gdf_a)),
             "confusion": {k: conf_a[k] for k in ("tp", "tn", "fp", "fn")},
-            "mcc": round(conf_a["mcc"], 6),
+            "mcc": _safe_round(conf_a["mcc"]),
             "gate": gate_a,
         },
         "arm_b": {
@@ -483,14 +594,42 @@ def run_pair(
             "geojson": str(job["geojson_b"]),
             "n_detections": int(len(gdf_b)),
             "confusion": {k: conf_b[k] for k in ("tp", "tn", "fp", "fn")},
-            "mcc": round(conf_b["mcc"], 6),
+            "mcc": _safe_round(conf_b["mcc"]),
             "gate": gate_b,
         },
-        "observed_mcc_diff": round(conf_a["mcc"] - conf_b["mcc"], 6),
+        "observed_mcc_diff": _safe_round(
+            _delta(conf_a["mcc"], conf_b["mcc"]),
+        ),
     }
 
     if not permute:
         result["permutation_test"] = None
+        return result
+
+    # Erratum E81: with either arm's coefficient undefined there is no
+    # observed ΔMCC, so there is no statistic for the null to be a null
+    # OF. Running the kernel anyway would silently substitute its
+    # internal 0.0 convention for the missing arm and return a p-value
+    # for a comparison that was never made — the exact defect E81
+    # exists to stop. The pair is reported as undefined instead.
+    if result["observed_mcc_diff"] is None:
+        logger.warning(
+            "  Pair %s: tile MCC is %s for at least one arm (A=%s, B=%s) "
+            "— the 2 x 2 tile confusion matrix is degenerate. No ΔMCC "
+            "and no permutation test; the pair is reported as %s rather "
+            "than tested against a substituted zero (erratum E81).",
+            job["pair_id"], UNDEFINED_DISPLAY,
+            _fmt_mcc(conf_a["mcc"], width=0),
+            _fmt_mcc(conf_b["mcc"], width=0), UNDEFINED_DISPLAY,
+        )
+        result["permutation_test"] = None
+        result["mcc_undefined"] = True
+        result["mcc_undefined_note"] = (
+            "Tile-level MCC is undefined for at least one arm "
+            "(degenerate 2 x 2 tile confusion matrix), so ΔMCC and its "
+            "permutation p-value do not exist for this pair. Erratum "
+            "E81: not reported as 0."
+        )
         return result
 
     perm = run_permutation_test_mcc(
@@ -712,10 +851,18 @@ def main(argv: list[str] | None = None) -> int:
             p_str = (
                 f"{perm['p_value']:.4f}" if "p_value" in perm else "  (dry)"
             )
+            # Erratum E81: an undefined arm MCC (or the ΔMCC that
+            # cannot be formed from one) prints the word, not a number.
+            diff = result["observed_mcc_diff"]
+            diff_str = (
+                f"{UNDEFINED_DISPLAY:>9s}" if diff is None
+                else f"{diff:+9.4f}"
+            )
             print(
-                f"{result['pair_id']:28s} {result['arm_a']['mcc']:8.4f} "
-                f"{result['arm_b']['mcc']:8.4f} "
-                f"{result['observed_mcc_diff']:+9.4f} {p_str:>8s}",
+                f"{result['pair_id']:28s} "
+                f"{_fmt_mcc(result['arm_a']['mcc'])} "
+                f"{_fmt_mcc(result['arm_b']['mcc'])} "
+                f"{diff_str} {p_str:>8s}",
             )
         print("=" * 78)
     return 0

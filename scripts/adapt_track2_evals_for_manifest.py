@@ -60,6 +60,10 @@ from score_55maps_extended_gt_canonical import (  # noqa: E402
 OUT_BASE = REPO / "results/55maps-extended-gt-2026-06-07"
 BOUNDS_REL = str(BOUNDS.relative_to(REPO))
 HEADLINE_BUFFER = 50  # the 55-map deployment headline (jitter-matched, Obs 260)
+
+# Rendered wherever a tile-level metric is not computable
+# (erratum E81). Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
+UNDEFINED_DISPLAY = "undefined"
 GT_REFERENCE = (
     "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv "
     "(773 phantoms, per-buffer gated) + "
@@ -140,10 +144,14 @@ def main() -> None:
         p = adapt_one(cell["label"], cell["det"])
         s = json.loads(p.read_text())["summary"]
         b50 = next(b for b in s["buffers"] if b["buffer_metres"] == HEADLINE_BUFFER)
+        # Erratum E81: the tile MCC is ``None`` when the 2 x 2 tile
+        # confusion matrix is degenerate. Print the word rather than a
+        # number — "0.0000" here would read as a chance-level result.
         mcc = s["tile_classification"]["mcc"]
+        mcc_str = UNDEFINED_DISPLAY if mcc is None else f"{mcc:.4f}"
         print(
             f"  {cell['label']:8s} → {p.relative_to(REPO)}  "
-            f"n_det={s['n_detections']}  F1@50={b50['f1']:.4f}  MCC@50={mcc:.4f}"
+            f"n_det={s['n_detections']}  F1@50={b50['f1']:.4f}  MCC@50={mcc_str}"
         )
 
 

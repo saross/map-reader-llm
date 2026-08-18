@@ -127,7 +127,15 @@ def reconstruct_selected_conditions(
                 k=int(c["k"]),
                 evaluations=evaluations_int_keys,
                 condition_id="",  # Not stored in JSON; not needed by MD writer.
-                tile_mcc=float(c.get("tile_mcc", 0.0)),
+                # Erratum E81: ``null`` means the tile MCC is
+                # undefined for this condition; preserve it as
+                # ``None`` so the renderer prints "undefined"
+                # rather than crashing on ``float(None)`` or
+                # reporting a chance-level 0.000.
+                tile_mcc=(
+                    None if c.get("tile_mcc") is None
+                    else float(c["tile_mcc"])
+                ),
             )
         )
     return out

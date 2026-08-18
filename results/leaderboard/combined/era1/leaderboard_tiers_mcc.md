@@ -1,10 +1,10 @@
 # Leaderboard (MCC tiers) — 20m buffer
 
-**Generated**: 2026-04-26T02:52:21.986715+00:00
+**Generated**: 2026-08-18T13:22:19.524952+00:00
 **Tiering metric**: MCC
 **FDR q**: 0.05
 **Note**: MCC is buffer-invariant in this codebase (tile-level binary classification). Threshold selection still maximises F1 at the primary buffer for cross-metric alignment; the per-buffer F1 column reflects that.
-**Conditions**: 93 in 7 tier(s)
+**Conditions**: 86 in 6 tier(s)
 
 ## Tier 1 (MCC: 0.638–0.714)
 
@@ -45,7 +45,7 @@
 | 28 | h3-high-track2-text-T0.7 | greedy | 1 | text | 30 | 22 | 0.571 | 0.773 | [0.727, 0.812] | 0.822 | 0.729 |
 | 29 | h3-rep-high | greedy | 1 | text | 30 | 21 | 0.545 | 0.770 | [0.725, 0.811] | 0.785 | 0.757 |
 
-## Tier 3 (MCC: 0.404–0.501)
+## Tier 3 (MCC: 0.395–0.501)
 
 | # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
@@ -69,13 +69,13 @@
 | 47 | h9-track2-text-h9-E-p5 | greedy | 1 | text | 5 | 4 | 0.423 | 0.650 | [0.598, 0.700] | 0.690 | 0.614 |
 | 48 | h9-track2-text-h9-A-p3 | greedy | 1 | text | 5 | 4 | 0.410 | 0.710 | [0.663, 0.753] | 0.693 | 0.727 |
 | 49 | h9-track2-text-h9-E-p4 | greedy | 1 | text | 5 | 4 | 0.404 | 0.658 | [0.604, 0.705] | 0.669 | 0.647 |
+| 50 | h9-track2-text-h9-B-v1 | greedy | 1 | text | 5 | 4 | 0.403 | 0.698 | [0.651, 0.745] | 0.659 | 0.740 |
+| 51 | h1-verbose-text-image | greedy | 1 | image | 3 | 2 | 0.395 | 0.627 | [0.581, 0.670] | 0.591 | 0.668 |
 
-## Tier 4 (MCC: 0.302–0.403)
+## Tier 4 (MCC: 0.302–0.379)
 
 | # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
-| 50 | h9-track2-text-h9-B-v1 | greedy | 1 | text | 5 | 4 | 0.403 | 0.698 | [0.651, 0.745] | 0.659 | 0.740 |
-| 51 | h1-verbose-text-image | greedy | 1 | image | 3 | 2 | 0.395 | 0.627 | [0.581, 0.670] | 0.591 | 0.668 |
 | 52 | h7-track2-text-T1.3 | greedy | 1 | text | 3 | 3 | 0.379 | 0.640 | [0.584, 0.690] | 0.645 | 0.636 |
 | 53 | h7-track1-image-T1.3 | greedy | 1 | image | 3 | 2 | 0.367 | 0.606 | [0.567, 0.644] | 0.577 | 0.636 |
 | 54 | h9-track2-text-h9-B-v4 | greedy | 1 | text | 5 | 4 | 0.353 | 0.658 | [0.607, 0.708] | 0.670 | 0.647 |
@@ -122,14 +122,14 @@
 | 85 | h4-random | 1-pass | 1 | image | 1 | 1 | 0.084 | 0.571 | [0.519, 0.618] | 0.473 | 0.720 |
 | 86 | h5-track2-text-verbose | 1-pass | 1 | text | 1 | 1 | 0.081 | 0.583 | [0.525, 0.636] | 0.489 | 0.724 |
 
-## Tier 7 (MCC: 0.000–0.000)
+## MCC undefined (not ranked)
 
-| # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
-| 87 | h5-track2-text-terse | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.598 | [0.537, 0.651] | 0.485 | 0.781 |
-| 88 | h8-track1-image-exploratory-pure-positive-2hp | 1-pass | 1 | image | 1 | 1 | 0.000 | 0.571 | [0.519, 0.617] | 0.473 | 0.722 |
-| 89 | h8-track2-text-canonical | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.605 | [0.546, 0.655] | 0.484 | 0.805 |
-| 90 | h8-track2-text-plus-hp | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.597 | [0.540, 0.648] | 0.480 | 0.788 |
-| 91 | h8-track2-text-pure-positive-canon | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.605 | [0.547, 0.653] | 0.486 | 0.800 |
-| 92 | h8-track2-text-scale-4 | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.609 | [0.553, 0.659] | 0.491 | 0.803 |
-| 93 | h8-track2-text-scale-8 | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.607 | [0.548, 0.656] | 0.489 | 0.800 |
+7 condition(s) are absent from the tiers above because their tile-level MCC is not computable: the 2 x 2 tile confusion matrix is degenerate, so the denominator sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN)) vanishes. They are **not** ranked at 0.000, because 0 on this scale means "random" (§ 4.2 of the preregistration) and would assert a measurement that was not made. See erratum E81 in `docs/methodology/preregistration/protocol-errata.md`.
+
+- h5-track2-text-terse
+- h8-track1-image-exploratory-pure-positive-2hp
+- h8-track2-text-canonical
+- h8-track2-text-plus-hp
+- h8-track2-text-pure-positive-canon
+- h8-track2-text-scale-4
+- h8-track2-text-scale-8

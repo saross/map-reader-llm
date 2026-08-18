@@ -14,7 +14,9 @@ P / R points and confidence intervals (CIs), and, where the MCC-widened
 header is present, MCC + MCC CI + sensitivity + specificity (constant
 across buffers, from ``summary.tile_classification``). ``N/A *`` CI
 cells (bootstrap unreliable) are checked for consistency with the
-JSON's ``ci_unreliable`` flags.
+JSON's ``ci_unreliable`` flags, and ``undefined`` tile-metric cells
+(erratum E81 — degenerate 2 x 2 tile confusion matrix) are checked for
+definedness agreement with the JSON's ``null``.
 
 Verdicts per file: VERIFIED / MISMATCH (cells listed) / PARSE-FAIL /
 NO-SOURCE. Deterministic; run on sapphire per project compute policy.
@@ -44,6 +46,17 @@ DEFAULT_OUT = REPO_ROOT / "reports" / "verification" / "c4-regen" / "evaluation-
 DETECTIONS_RE = re.compile(r"^\*\*Detections\*\*:\s*([\d,]+)")
 ROW_RE = re.compile(r"^\|\s*(\d+)m\s*\|")
 CI_RE = re.compile(r"^\[\s*([-\d.]+),\s*([-\d.]+)\s*\]$")
+
+#: The literal string ``evaluate_detections.py`` writes into a
+#: tile-metric cell whose value is not computable — its
+#: ``UNDEFINED_DISPLAY`` constant. Erratum E81 (2026-08-18): when the
+#: 2 x 2 tile confusion matrix is degenerate the Matthews Correlation
+#: Coefficient (MCC) has no value, and the JSON now carries ``null``
+#: where it used to carry a coerced ``0.0``. A markdown cell reading
+#: this word against a ``null`` source is a PASS — the two agree that
+#: no measurement exists. A number against ``null`` (or this word
+#: against a number) is a MISMATCH.
+UNDEFINED_DISPLAY = "undefined"
 
 
 def check_cell(quoted: str, actual, cell: str, problems: list[str]) -> None:
@@ -81,9 +94,67 @@ def check_cell_either(quoted: str, record: dict, cell: str,
                     f"{record.get('mean')} nor point {record.get('point')}")
 
 
+def check_tile_metric(quoted: str, record: dict, cell: str,
+                      problems: list[str]) -> None:
+    """Compare a tile-metric cell, allowing an explicitly undefined value.
+
+    Wraps :func:`check_cell_either` with the erratum-E81 branch: a tile
+    metric is *undefined* when its JSON block carries ``null`` in both
+    ``mean`` and ``point`` (a degenerate 2 x 2 tile confusion matrix
+    leaves the coefficient with no value), and the renderer writes the
+    word :data:`UNDEFINED_DISPLAY` for it. Definedness must agree on
+    both sides:
+
+    * word vs ``null`` — PASS (both say "no measurement");
+    * number vs ``null`` — MISMATCH (the markdown asserts a
+      measurement the JSON does not support, which is the defect E81
+      exists to catch);
+    * word vs number — MISMATCH (the markdown hides a measurement);
+    * number vs number — falls through to the normal comparison, so a
+      genuine 0.000 is still checked as a number.
+
+    Args:
+        quoted: The markdown cell text, stripped.
+        record: The metric's JSON block (``mean`` / ``point`` / CI).
+        cell: Cell identifier for the problem message.
+        problems: Accumulator the caller renders into the verdict.
+    """
+    defined = (
+        record.get("mean") is not None or record.get("point") is not None
+    )
+    if quoted == UNDEFINED_DISPLAY:
+        if defined:
+            problems.append(
+                f"{cell}: quoted {UNDEFINED_DISPLAY!r} but JSON records "
+                f"mean {record.get('mean')} / point {record.get('point')}",
+            )
+        return
+    if not defined:
+        problems.append(
+            f"{cell}: quoted {quoted} but the JSON metric is undefined "
+            f"(mean and point are both null) — it should read "
+            f"{UNDEFINED_DISPLAY!r}",
+        )
+        return
+    check_cell_either(quoted, record, cell, problems)
+
+
 def check_ci(quoted: str, lo, hi, unreliable: bool, cell: str,
              problems: list[str]) -> None:
-    """Compare a CI cell — either ``[a, b]`` or the ``N/A *`` marker."""
+    """Compare a CI cell — ``[a, b]``, ``N/A *``, or ``undefined``.
+
+    Erratum E81: an MCC CI whose bounds are ``null`` is rendered as the
+    whole-cell word :data:`UNDEFINED_DISPLAY` rather than as an
+    interval. That must PASS against ``null`` bounds and FAIL against
+    present ones.
+    """
+    if quoted == UNDEFINED_DISPLAY:
+        if lo is not None or hi is not None:
+            problems.append(
+                f"{cell}: quoted {UNDEFINED_DISPLAY!r} but JSON CI is "
+                f"present ([{lo}, {hi}])",
+            )
+        return
     if quoted.startswith("N/A"):
         if not unreliable and lo is not None:
             problems.append(f"{cell}: N/A quoted but JSON CI present and reliable")
@@ -147,12 +218,16 @@ def verify_file(md_path: Path, json_path: Path) -> dict:
             # The renderer prints the bootstrap MEAN for these columns
             # (evaluate_detections.py:834,837), not the point estimate;
             # accept mean first, point as fallback, and record which.
+            # E81: any of the three tile metrics may be undefined, so
+            # these go through check_tile_metric rather than
+            # check_cell_either — a rendered "undefined" against a
+            # null JSON value is a PASS, not an unparseable quote.
             mcc, sens, spec = tc.get("mcc", {}), tc.get("sensitivity", {}), tc.get("specificity", {})
-            check_cell_either(cells[7], mcc, f"{buffer_m}m.mcc", problems)
+            check_tile_metric(cells[7], mcc, f"{buffer_m}m.mcc", problems)
             check_ci(cells[8], mcc.get("ci_lower"), mcc.get("ci_upper"),
                      unreliable, f"{buffer_m}m.mcc_ci", problems)
-            check_cell_either(cells[9], sens, f"{buffer_m}m.sens", problems)
-            check_cell_either(cells[10], spec, f"{buffer_m}m.spec", problems)
+            check_tile_metric(cells[9], sens, f"{buffer_m}m.sens", problems)
+            check_tile_metric(cells[10], spec, f"{buffer_m}m.spec", problems)
 
     if rows_checked == 0:
         return {"file": str(md_path.relative_to(REPO_ROOT)),

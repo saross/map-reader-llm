@@ -72,6 +72,10 @@ ERA_BOUNDS = {
 }
 ARCHITECTURES = ["single-pass", "consensus", "single-pass+PV", "pv"]
 BUFFERS = [20, 30, 40, 50, 100]
+
+# Rendered wherever a metric is not computable (erratum E81).
+# Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
+UNDEFINED_DISPLAY = "undefined"
 SEED = 42
 N_PERMUTATIONS = 10_000
 
@@ -89,15 +93,31 @@ def _load_tier_json(era: int, arch: str, metric: str, buf: int) -> dict | None:
         return json.load(fh)
 
 
-def _condition_score(cond_dict: dict, metric: str, buf: int) -> float:
-    """Read the score for a condition dict at buffer."""
+def _condition_score(cond_dict: dict, metric: str, buf: int) -> float | None:
+    """Read the score for a condition dict at buffer.
+
+    Args:
+        cond_dict: One element of a tier JSON's ``tiers[].conditions``.
+        metric: ``"f1"`` or ``"mcc"``.
+        buf: Buffer in metres (F1 only; MCC is buffer-invariant).
+
+    Returns:
+        The score, or ``None`` when the metric is undefined for this
+        condition. Erratum E81 (2026-08-18): the leaderboard now
+        serialises an uncomputable tile MCC as ``null`` rather than
+        coercing it to 0.0, and ``float(None)`` would raise here.
+        Ranking it at 0.0 instead would be worse — § 4.2 of the
+        preregistration reads 0 on the MCC scale as "random". F1 keeps
+        its 0.0 default: an unevaluated buffer genuinely scores zero.
+    """
     if metric == "f1":
         return float(
             cond_dict.get("evaluations", {})
                      .get(str(buf), {})
                      .get("f1", 0.0)
         )
-    return float(cond_dict.get("tile_mcc", 0.0))
+    mcc = cond_dict.get("tile_mcc")
+    return None if mcc is None else float(mcc)
 
 
 # --- Stage 4a -------------------------------------------------------
@@ -136,8 +156,23 @@ def build_flat_table(
                 "ci_lo": None, "ci_hi": None,
             })
             continue
+        # Erratum E81: rank only the conditions the metric can score.
+        # A stratum where every Tier-1 condition has an undefined MCC
+        # has no representative on the MCC axis — it is reported as
+        # such rather than represented by an arbitrary 0.0.
+        scorable = [
+            c for c in tier1
+            if _condition_score(c, metric, buf) is not None
+        ]
+        if not scorable:
+            rows.append({
+                "arch": arch, "score": None, "label": None, "tier": None,
+                "ci_lo": None, "ci_hi": None,
+                "note": f"_{metric.upper()} {UNDEFINED_DISPLAY}_",
+            })
+            continue
         best = max(
-            tier1,
+            scorable,
             key=lambda c: _condition_score(c, metric, buf),
         )
         eval_buf = best.get("evaluations", {}).get(str(buf), {})
@@ -178,8 +213,13 @@ def build_flat_table(
     ]
     for row in rows:
         if row["score"] is None:
+            # Two different absences: no Tier-1 condition at all, or
+            # none whose metric is defined (erratum E81). The note
+            # distinguishes them so a reader is not told a populated
+            # stratum was empty.
+            reason = row.get("note") or "_empty stratum_"
             lines.append(
-                f"| {row['arch']} | _empty stratum_ | — | — | "
+                f"| {row['arch']} | {reason} | — | — | "
                 "— | — | — | — |"
             )
             continue

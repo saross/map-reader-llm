@@ -74,6 +74,40 @@ def close(a: Any, b: Any, tol: float = 1e-6) -> bool:
     return a == b
 
 
+def agree(a: Any, b: Any, tol: float = 1e-6) -> bool:
+    """Definedness-first comparison for a possibly-undefined metric cell.
+
+    Erratum E81 (2026-08-18): a tile metric that is not computable —
+    the 2 x 2 tile confusion matrix is degenerate — is now serialised
+    as ``null`` rather than coerced to ``0.0``. ``None`` therefore
+    carries meaning and must be compared, not skipped: two ``None``
+    values agree (both say "no measurement"), and a ``None`` against a
+    number disagrees no matter how small the number is. Only when both
+    sides carry a value does the float tolerance apply, so a genuine
+    0.0 is still compared as a number.
+
+    :func:`close` cannot express this on its own: ``close(0.0, None)``
+    reaches ``float(None)`` and returns ``False`` through its exception
+    handler, while ``close(None, None)`` returns ``True`` through the
+    non-float branch — right answers, but by accident rather than by
+    stated intent.
+
+    Args:
+        a: First value, or ``None`` when undefined/absent.
+        b: Second value, or ``None`` when undefined/absent.
+        tol: Absolute tolerance applied when both values are present.
+
+    Returns:
+        ``True`` when the two agree on definedness and (when defined)
+        on value within ``tol``.
+    """
+    if a is None and b is None:
+        return True
+    if a is None or b is None:
+        return False
+    return close(a, b, tol=tol)
+
+
 def verdict_row(field: str, manifest_val: Any, derived: Any,
                 silent_ok: bool = False) -> dict:
     """Build one field-verdict record."""
@@ -438,21 +472,48 @@ def rederive_condition(row: dict, decomposition: dict) -> dict:
                            "manifest": "(block)", "derived": None})
         else:
             def flat(tc: dict) -> dict:
+                """Flatten a tile_classification block to comparable cells.
+
+                Only cells the block actually **carries** appear in the
+                result. Erratum E81: ``None`` now means "this metric is
+                undefined" (degenerate tile confusion matrix), so a
+                recorded ``null`` and an absent field are different
+                assertions and must not collapse into one another —
+                the first has to be matched, the second has nothing to
+                match against.
+                """
                 conf = tc.get("confusion") or {}
-                def pt(v):
-                    return v.get("point") if isinstance(v, dict) else v
-                return {"tp": conf.get("tp", tc.get("tp")),
-                        "tn": conf.get("tn", tc.get("tn")),
-                        "fp": conf.get("fp", tc.get("fp")),
-                        "fn": conf.get("fn", tc.get("fn")),
-                        "mcc": pt(tc.get("mcc")),
-                        "sensitivity": pt(tc.get("sensitivity")),
-                        "specificity": pt(tc.get("specificity"))}
+                out: dict = {}
+                for cell in ("tp", "tn", "fp", "fn"):
+                    if cell in conf:
+                        out[cell] = conf[cell]
+                    elif cell in tc:
+                        out[cell] = tc[cell]
+                for metric in ("mcc", "sensitivity", "specificity"):
+                    if metric not in tc:
+                        continue
+                    value = tc[metric]
+                    if isinstance(value, dict):
+                        if "point" in value:
+                            out[metric] = value["point"]
+                    else:
+                        out[metric] = value
+                return out
             man_flat, ev_flat = flat(man_tc), flat(ev_tc)
-            same = all(close(man_flat.get(k), ev_flat.get(k), tol=5e-5)
-                       for k in man_flat if man_flat.get(k) is not None)
+            # Erratum E81: the old test was
+            # ``all(close(...) for k in man_flat if man_flat.get(k) is
+            # not None)``, which SKIPPED every cell the manifest
+            # recorded as ``None`` — so an undefined manifest MCC
+            # agreed with any derived value at all. Definedness is now
+            # compared first, and the disagreeing cells are named.
+            tc_mismatches = sorted(
+                k for k in man_flat
+                if not agree(man_flat.get(k), ev_flat.get(k), tol=5e-5)
+            )
+            same = not tc_mismatches
             fields.append({"field": "metrics.tile_classification",
                            "verdict": "MATCH" if same else "MISMATCH",
+                           "mismatched_cells": tc_mismatches,
                            "manifest": man_tc if not same else "(block)",
                            "derived": ev_tc if not same else "(block)"})
     return {"condition_id": row["condition_id"], "fields": fields}

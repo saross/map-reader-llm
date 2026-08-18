@@ -56,6 +56,40 @@ BOOTSTRAP = 1000
 SEED = 42
 CONDITION_NAME = "text-t0.7"
 
+# Rendered wherever a tile-level metric is not computable (erratum
+# E81). Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
+UNDEFINED_DISPLAY = "undefined"
+
+
+def _safe_round(val: float | None, digits: int = 4) -> float | None:
+    """Round a possibly-undefined tile metric, preserving ``None``.
+
+    Args:
+        val: The metric, or ``None`` when it is undefined (degenerate
+            2 x 2 tile confusion matrix — erratum E81).
+        digits: Decimal places.
+
+    Returns:
+        The rounded float, or ``None``. ``csv.DictWriter`` renders
+        ``None`` as an empty cell, which is the only honest CSV
+        representation of a metric that was not computable; a genuine
+        0.0 still comes through as ``0.0``.
+    """
+    return None if val is None else round(val, digits)
+
+
+def _fmt_metric(val: float | None, digits: int = 3) -> str:
+    """Format a possibly-undefined tile metric for console output.
+
+    Args:
+        val: The metric, or ``None`` when it is undefined.
+        digits: Decimal places for the numeric case.
+
+    Returns:
+        The formatted number, or :data:`UNDEFINED_DISPLAY`.
+    """
+    return UNDEFINED_DISPLAY if val is None else f"{val:.{digits}f}"
+
 # ── Consensus clustering (from analyse_consensus_sweep.py) ──────────
 
 
@@ -313,23 +347,23 @@ def main() -> None:
                     == f"N={pool_size}, {threshold}-of-{pool_size}"
                     and r["buffer_metres"] == 20
                 ):
-                    r["mcc"] = round(
-                        tile_class.get("mcc", 0) or 0, 4,
-                    )
+                    # Erratum E81 (2026-08-18): these used to read
+                    # ``round(x or 0, 4)``, which published an
+                    # *undefined* tile metric — the 2 x 2 tile
+                    # confusion matrix is degenerate, so MCC has no
+                    # value — as 0.0, indistinguishable from the
+                    # chance-level result § 4.2 of the preregistration
+                    # says 0 means. ``_safe_round`` keeps ``None``,
+                    # which csv.DictWriter renders as an empty cell.
+                    r["mcc"] = _safe_round(tile_class.get("mcc"))
                     mcc_ci = tile_ci.get("mcc", {})
-                    r["mcc_ci_lower"] = round(
-                        mcc_ci.get("ci_lower", 0) or 0, 4,
+                    r["mcc_ci_lower"] = _safe_round(mcc_ci.get("ci_lower"))
+                    r["mcc_ci_upper"] = _safe_round(mcc_ci.get("ci_upper"))
+                    r["sensitivity"] = _safe_round(
+                        tile_class.get("sensitivity"),
                     )
-                    r["mcc_ci_upper"] = round(
-                        mcc_ci.get("ci_upper", 0) or 0, 4,
-                    )
-                    r["sensitivity"] = round(
-                        tile_class.get("sensitivity", 0) or 0,
-                        4,
-                    )
-                    r["specificity"] = round(
-                        tile_class.get("specificity", 0) or 0,
-                        4,
+                    r["specificity"] = _safe_round(
+                        tile_class.get("specificity"),
                     )
                     r["tp"] = tile_class.get("tp", 0)
                     r["tn"] = tile_class.get("tn", 0)
@@ -337,7 +371,7 @@ def main() -> None:
                     r["fn"] = tile_class.get("fn", 0)
 
             log.info(
-                "    20m: F1=%.3f P=%.3f R=%.3f MCC=%.3f",
+                "    20m: F1=%.3f P=%.3f R=%.3f MCC=%s",
                 [
                     r
                     for r in results
@@ -359,13 +393,17 @@ def main() -> None:
                     and r["config_details"]
                     == f"N={pool_size}, {threshold}-of-{pool_size}"
                 ][0]["recall"],
-                [
-                    r
-                    for r in results
-                    if r["buffer_metres"] == 20
-                    and r["config_details"]
-                    == f"N={pool_size}, {threshold}-of-{pool_size}"
-                ][0].get("mcc", 0),
+                # Erratum E81: the word, not a numeral, when the tile
+                # MCC is not computable for this configuration.
+                _fmt_metric(
+                    [
+                        r
+                        for r in results
+                        if r["buffer_metres"] == 20
+                        and r["config_details"]
+                        == f"N={pool_size}, {threshold}-of-{pool_size}"
+                    ][0].get("mcc"),
+                ),
             )
 
     # Write results CSV
@@ -427,7 +465,7 @@ def main() -> None:
                 f"{best['f1_ci_upper']:.3f}] "
                 f"P={best['precision']:.3f} "
                 f"R={best['recall']:.3f} "
-                f"MCC={best.get('mcc', '?')}"
+                f"MCC={_fmt_metric(best.get('mcc'))}"
             )
 
     # Write metadata

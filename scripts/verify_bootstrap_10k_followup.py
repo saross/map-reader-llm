@@ -63,6 +63,27 @@ MCC_POINT_TOLERANCE = 5e-4  # §7.5 binding tolerance when ``mcc.point`` is avai
 # still catches real bugs while accepting expected MC noise.
 MCC_MEAN_FALLBACK_TOLERANCE = 1e-2  # §7.5 fallback tolerance (bootstrap mean, Obs 303)
 
+#: Rendered wherever the tile-level MCC is not computable (erratum
+#: E81). Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
+UNDEFINED_DISPLAY = "undefined"
+
+
+def _fmt_mcc(val: float | None, digits: int = 4) -> str:
+    """Format a possibly-undefined MCC for a failure message.
+
+    Args:
+        val: The coefficient, or ``None`` when it is undefined
+            (degenerate 2 x 2 tile confusion matrix — erratum E81).
+        digits: Decimal places for the numeric case.
+
+    Returns:
+        The formatted number, or :data:`UNDEFINED_DISPLAY`. A genuine
+        zero still renders as ``'0.0000'``, so a definedness-change
+        message never reads as though 0 and undefined were the same
+        thing.
+    """
+    return UNDEFINED_DISPLAY if val is None else f"{val:.{digits}f}"
+
 
 def load_queue(path: Path) -> list[dict[str, str]]:
     """Load the queue CSV."""
@@ -254,22 +275,45 @@ def check_mcc_stability(
     detectable through the fallback (genuine corruption shifts MCC by
     O(1e-2) or more, matching the F1 bug-class threshold).
 
+    Undefined MCC (erratum E81)
+    ---------------------------
+    From 2026-08-18 an MCC that is not computable — the 2 x 2 tile
+    confusion matrix is degenerate, so the denominator vanishes — is
+    serialised as JSON ``null`` instead of a coerced ``0.0``. "Value is
+    ``None``" therefore no longer means "field absent", and the check is
+    made on DEFINEDNESS first:
+
+    * both sides undefined — PASS. There is no value, hence no drift;
+      the old code reported this as "neither mcc.point nor mcc.mean
+      available", a spurious failure.
+    * one side undefined, the other a number — FAIL. Whether the
+      coefficient exists at all changed between the baseline and the
+      current file, which is a larger event than any tolerance breach.
+    * both sides defined — the tolerance comparison below, unchanged, so
+      a genuine MCC of 0.0 is still compared as a number.
+
     Args:
         rows: Queue rows (with the ``mcc`` flag column).
         pre_tag: Git tag whose committed eval JSONs are the comparison baseline.
 
     Returns:
-        (n_pass, n_fail, n_fallback, failures, fallback_warnings).
+        (n_pass, n_fail, n_fallback, failures, fallback_warnings,
+        undefined_notes).
 
-        * ``n_pass`` includes both strict-mode passes (mcc.point available)
-          and fallback-mode passes (mcc.mean within 1e-2).
+        * ``n_pass`` includes strict-mode passes (mcc.point available),
+          fallback-mode passes (mcc.mean within 1e-2), and matched-
+          undefined passes.
         * ``n_fallback`` is the subset of ``n_pass`` that used the fallback.
-        * ``failures`` are cells whose drift exceeded the active tolerance.
+        * ``failures`` are cells whose drift exceeded the active tolerance,
+          or whose definedness changed.
         * ``fallback_warnings`` lists the cells that used fallback semantics.
+        * ``undefined_notes`` lists the cells that passed because both
+          sides record the coefficient as undefined.
     """
     mcc_rows = [r for r in rows if r.get("mcc") == "1"]
     failures: list[str] = []
     fallback_warnings: list[str] = []
+    undefined_notes: list[str] = []
     n_pass = 0
     n_fallback = 0
     for row in mcc_rows:
@@ -289,9 +333,28 @@ def check_mcc_stability(
         pre_mcc_block = pre_tc.get("mcc") or {}
 
         # Preferred path: deterministic point estimate (BCa-onward schema).
+        # E81: gate on key PRESENCE, not on truthiness — a present
+        # ``point`` of ``None`` is an assertion that the coefficient is
+        # undefined, and must be compared, not skipped.
         cur_point = cur_mcc_block.get("point")
         pre_point = pre_mcc_block.get("point")
-        if cur_point is not None and pre_point is not None:
+        if "point" in cur_mcc_block and "point" in pre_mcc_block:
+            if cur_point is None and pre_point is None:
+                n_pass += 1
+                undefined_notes.append(
+                    f"{ep_rel}: mcc.point is {UNDEFINED_DISPLAY} on BOTH "
+                    "sides (degenerate tile confusion matrix) — matched "
+                    "definedness, nothing to drift"
+                )
+                continue
+            if (cur_point is None) != (pre_point is None):
+                failures.append(
+                    f"{ep_rel}: mcc.point DEFINEDNESS CHANGED — "
+                    f"pre={_fmt_mcc(pre_point)} cur={_fmt_mcc(cur_point)} "
+                    "(one side records the coefficient as undefined, the "
+                    "other as a number)"
+                )
+                continue
             dmcc = abs(cur_point - pre_point)
             if dmcc < MCC_POINT_TOLERANCE:
                 n_pass += 1
@@ -305,6 +368,23 @@ def check_mcc_stability(
         # Fallback path: bootstrap mean with relaxed tolerance, with explicit warning.
         cur_mean = cur_mcc_block.get("mean")
         pre_mean = pre_mcc_block.get("mean")
+        if "mean" in cur_mcc_block and "mean" in pre_mcc_block:
+            if cur_mean is None and pre_mean is None:
+                n_pass += 1
+                undefined_notes.append(
+                    f"{ep_rel}: mcc.mean is {UNDEFINED_DISPLAY} on BOTH "
+                    "sides (degenerate tile confusion matrix; mcc.point "
+                    "unavailable) — matched definedness, nothing to drift"
+                )
+                continue
+            if (cur_mean is None) != (pre_mean is None):
+                failures.append(
+                    f"{ep_rel}: FALLBACK mcc.mean DEFINEDNESS CHANGED — "
+                    f"pre={_fmt_mcc(pre_mean)} cur={_fmt_mcc(cur_mean)} "
+                    "(one side records the coefficient as undefined, the "
+                    "other as a number; mcc.point unavailable)"
+                )
+                continue
         if cur_mean is None or pre_mean is None:
             failures.append(
                 f"{ep_rel}: neither mcc.point nor mcc.mean available "
@@ -326,7 +406,8 @@ def check_mcc_stability(
                 f"Δ={dmcc:.5f} (fallback tol={MCC_MEAN_FALLBACK_TOLERANCE} EXCEEDED; "
                 "mcc.point unavailable — drift exceeds bug-class threshold)"
             )
-    return n_pass, len(failures), n_fallback, failures, fallback_warnings
+    return (n_pass, len(failures), n_fallback, failures,
+            fallback_warnings, undefined_notes)
 
 
 def main() -> int:
@@ -407,19 +488,22 @@ def main() -> int:
         f"{MCC_POINT_TOLERANCE}. Fallback (when mcc.point absent): "
         f"mcc.mean, |Δ|<{MCC_MEAN_FALLBACK_TOLERANCE} (Obs 303 expected drift)."
     )
-    n_pass_mcc, n_fail_mcc, n_fallback_mcc, mcc_fails, mcc_warns = check_mcc_stability(
-        rows, args.pre_tag
-    )
+    (n_pass_mcc, n_fail_mcc, n_fallback_mcc, mcc_fails, mcc_warns,
+     mcc_undefined) = check_mcc_stability(rows, args.pre_tag)
     n_mcc = sum(1 for r in rows if r.get("mcc") == "1")
     # Decomposition: every fallback case (pass or fail) appears in either ``mcc_warns``
     # (fallback-PASS) or as a FALLBACK-tagged entry in ``mcc_fails`` (fallback-FAIL).
     n_fallback_fail = sum(1 for f in mcc_fails if "FALLBACK" in f)
     n_fallback_pass = len(mcc_warns)
-    n_strict_pass = n_pass_mcc - n_fallback_pass
+    # E81: matched-undefined cells pass on neither the strict-value nor
+    # the fallback-value path, so they are decomposed out separately.
+    n_undefined_pass = len(mcc_undefined)
+    n_strict_pass = n_pass_mcc - n_fallback_pass - n_undefined_pass
     print(f"  Total MCC-flag cells: {n_mcc}")
     print(
         f"  PASS: {n_pass_mcc}/{n_mcc} "
-        f"(strict-mcc.point: {n_strict_pass}; fallback-mcc.mean: {n_fallback_pass})"
+        f"(strict-mcc.point: {n_strict_pass}; fallback-mcc.mean: "
+        f"{n_fallback_pass}; matched-{UNDEFINED_DISPLAY}: {n_undefined_pass})"
     )
     print(f"  FAIL: {n_fail_mcc} (of which {n_fallback_fail} on fallback path)")
     for f in mcc_fails[:20]:
@@ -435,6 +519,17 @@ def main() -> int:
             print(f"    {w}")
         if len(mcc_warns) > 10:
             print(f"    ... and {len(mcc_warns) - 10} more fallback warnings")
+    if mcc_undefined:
+        print(
+            f"  NOTE: {len(mcc_undefined)} cell(s) record an "
+            f"{UNDEFINED_DISPLAY} MCC on BOTH sides (erratum E81 — "
+            "degenerate tile confusion matrix). Matched definedness is a "
+            "PASS; it is NOT a measured agreement at 0:"
+        )
+        for u in mcc_undefined[:10]:
+            print(f"    {u}")
+        if len(mcc_undefined) > 10:
+            print(f"    ... and {len(mcc_undefined) - 10} more")
     print()
 
     # ── Final verdict ────────────────────────────────────────

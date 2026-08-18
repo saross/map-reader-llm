@@ -4319,3 +4319,228 @@ split), and `reports/scoring-audit-notes-2026-08-18.md` (the two suspicions
 from the same audit that cleared and therefore have no erratum).
 
 ---
+
+#### E81 changelog
+
+##### 2026-08-18 — Fix landed and values re-emitted (Session 136)
+
+The "recommended fix, deliberately not taken here" above **has now been
+taken**, in three commits on `main`: `69061a2db` (code and tests),
+`6afc393b5` (the 13 re-emitted cells and their manifest/paper consumers), and
+`22dc99578` (the two F1-tiered display boards). The withdrawn values are
+replaced rather than merely withdrawn, so the `Commit | —` row of the header
+table is superseded by this entry.
+
+**What was changed in the code.**
+
+1. `_safe_round` (`scripts/evaluate_detections.py`) preserves `None` instead of
+   returning `0.0`. A *genuine* zero — the specificity of a condition that
+   false-positives on every reference-empty tile — still returns `0.0`; the
+   test suite pins both halves.
+2. The per-pass block builder and the multi-run averager were lifted to
+   module level as `build_tile_classification_block` and
+   `aggregate_tile_classification`, so there is exactly one place that
+   decides what an undefined metric looks like. The aggregate averages over
+   **defined passes only** and records `n_runs` and `n_runs_defined`; it
+   returns `null` when no pass is defined. It also records
+   `confusion_source: "run_1"`, making explicit the schema property this
+   erratum identified as what "made the contamination invisible on the face
+   of the record".
+3. `_bca_ci_from_indices` gained `skip_undefined`. `_mcc_from_idx` now returns
+   `np.nan` for a degenerate resample, as its own docstring always claimed,
+   and the nan-aware mean and percentile paths drop those resamples rather
+   than counting them as zeros; `method` becomes `"undefined"` and the bounds
+   `null` when every resample is degenerate. `n_valid_mcc` /
+   `n_valid_sensitivity` / `n_valid_specificity` stop being hard-coded to
+   `n_iterations` and report the true count.
+4. Renderers: CSV writes an empty cell, Markdown and the console write the
+   word `undefined`, and `evaluation.md` gains a footnote naming the
+   degenerate matrix and citing this erratum. Roughly two dozen downstream
+   consumers were swept for `None`-handling gaps; the ranking keys that read
+   `float(x or 0.0)` were the dangerous ones, because they would have
+   reinstated the defect one layer down.
+
+**Deviation from the recommendation, recorded deliberately.** Item 1 above
+suggested a sibling boolean `mcc_defined`. That was not added. For a
+single-pass cell `mcc.method == "undefined"` is an explicit, non-inferential
+marker beside the `null`; for an aggregated cell `n_runs_defined` carries
+strictly more information than a boolean. Adding a third redundant flag would
+have given consumers three things to keep consistent.
+
+**What moved.** All 13 conditions were re-emitted **surgically** — only the
+`tile_classification` block was recomputed and spliced into the committed
+`evaluation.json`, with every F1, precision, recall, confidence-interval, and
+coverage field carried through untouched. This was a deliberate choice over
+a full replay: replaying `evaluate_detections.py` against the recorded
+`cli_args` reproduces F1 bit-for-bit, but it also imports every unrelated
+change made to the scorer since the cell was written — most visibly the E72
+partial-coverage machinery, which flips `coverage_status` to
+`partial_coverage` on cells whose detection set does not cover every tile.
+Folding that into an MCC-reporting fix would have made both corrections
+unattributable, which is the same failure mode this erratum warns about in
+its own closing paragraph.
+
+| Condition | Published | Re-emitted | Basis |
+|---|---|---|---|
+| `retest-phase2a::brief-text` | 0.0443 | **0.0665** | mean over 2 defined of 3 passes |
+| `retest-phase2a::verbose-text` | 0.0443 | **0.0665** | 2 of 3 |
+| `retest-phase2b::text-t0.3` | 0.0443 | **0.0665** | 2 of 3 |
+| `retest-phase2b::text-t1.0` | 0.0222 | **0.0665** | 1 of 3 |
+| `retest-phase2b::text-t0.0` | 0.0 | **`null`** | 0 of 3 defined |
+| `retest-phase2b::text-t0.7` | 0.0 | **`null`** | 0 of 3 |
+| `retest-phase2c::image-exploratory-pure-positive-2hp` | 0.0 | **`null`** | 0 of 1 |
+| `retest-phase2c::text-canonical` | 0.0 | **`null`** | 0 of 1 |
+| `retest-phase2c::text-plus-hp` | 0.0 | **`null`** | 0 of 1 |
+| `retest-phase2c::text-pure-positive-canon` | 0.0 | **`null`** | 0 of 1 |
+| `retest-phase2c::text-scale-4` | 0.0 | **`null`** | 0 of 1 |
+| `retest-phase2c::text-scale-8` | 0.0 | **`null`** | 0 of 1 |
+| `retest-phase2d::text-terse` | 0.0 | **`null`** | 0 of 1 |
+
+The predicted seven-way tie **materialised and was verified, not assumed**:
+with the four blended means corrected, exactly seven phase-2 cells now sit at
+a tile-MCC point estimate of 0.0665 — `brief-text`, `verbose-text`,
+`text-t0.3`, `text-t1.0` (the four corrected) plus `text-t1.3`,
+`text-verbose`, and `random`, which were already there. Every one is the same
+arithmetic: 204 true positives, one of 136 reference-empty tiles left alone.
+
+The tile-MCC confidence intervals moved on the four corrected cells, as this
+erratum predicted they would: `brief-text`'s bound of exactly `0.0000` was the
+substitution surfacing, and the honest interval is `[0.0605, 0.1281]` with a
+bootstrap mean of 0.081 rather than 0.0343.
+
+**What did not move.** Verified mechanically against `git show HEAD:` for all
+25 re-emitted evaluations (13 in `results/paper-eval/phase2/512px-14buf-mcc/`
+plus 12 in the duplicate single-buffer root `results/paper-eval/mcc/512px/`,
+which lacks the exploratory-2hp cell): **every** field outside
+`tile_classification` is byte-identical. No F1, precision, recall, buffer CI,
+coverage status, or `n_detections` changed anywhere. A corpus-wide sweep of
+`results/` confirms the fix is complete and the diagnosis exact: of **2,103**
+committed `tile_classification` blocks, **39** are degenerate, in **all 39**
+the vanishing marginal is TN + FN, and **none** now publishes a number.
+
+**Two things moved that were not predicted, and both are reported here rather
+than absorbed.**
+
+- *Specificity confidence intervals widened on four cells.* Point estimates
+  and bootstrap means are unchanged everywhere (`0.0074` / `0.0073`), but on
+  the passes with TN = 1 the interval goes from `[0.0040, 0.0095]` to
+  `[0.0000, 0.0236]`. Cause: making the empty-denominator case undefined
+  routes those cells off scipy's BCa path — whose jackknife is degenerate
+  here — and onto the percentile path, whose resampling is correct. The wider
+  interval is the right one: a resample that draws none of the single
+  reference-empty-and-correctly-empty tile genuinely has specificity 0.
+- *The sensitivity `method` label flips* from `"BCa"` to
+  `"percentile_fallback"` on the nine fully-degenerate cells. All four numeric
+  fields are unchanged (`1.0`); only the label moves, and it moves toward the
+  honest description, since the underlying distribution is constant at 1.0 and
+  BCa acceleration is undefined on a constant.
+
+**Consumers corrected.**
+
+- `docs/paper/results-draft.md` § R2 no longer says text cells reach "near-zero
+  MCC". It now states that tile MCC is undefined on eight of the fourteen
+  phase-2 text cells and 0.0665 on the remaining six, against image cells at
+  0.094–0.291, carrying a `[REVISED 2026-08-18]` marker and a changelog entry.
+  The **direction** of the D3 metric-trade-off thread survives intact; its
+  magnitude did not exist.
+- `results/analyses-manifest.{json,md}` — the
+  `era1-single-pass-baseline-matrix` outcome text, which was the verbatim
+  source of the paper sentence.
+- `results/conditions-manifest.{json,md}` — all 13 rows, with
+  `mcc_undefined_reason`, `mcc_n_runs`, and `mcc_n_runs_defined` added. The
+  Markdown was verified byte-identical to what the (also corrected) generator
+  in `scripts/generate_post_run_report.py` now produces, so it cannot drift on
+  the next regeneration.
+- `results/leaderboard/combined/era1/leaderboard_tiers_mcc.{md,json}` and the
+  `_q01` variant, plus `tier_stability_mcc.{md,json}` — see below.
+- `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.{md,json}` and
+  `results/era1-leaderboard/tiering_20m.{md,json}` — both tier on micro-F1
+  with MCC as a display column, so no rank, tier, p-value, or tie set depends
+  on the withdrawn values; only the 13 displayed MCCs changed, and both boards
+  gained a legend entry explaining `undefined`.
+
+**The MCC-tiered leaderboard: `## Tier 7 (MCC: 0.000–0.000)` is gone.** The
+board was regenerated by a **reproduce-then-correct** procedure. Its
+`.cache/` is gitignored and absent from a checkout, but both expensive stages
+are recoverable from committed artefacts — the evaluation sweep from
+`leaderboard_all_evaluations.json`, the 4,278 permutation tests from the
+board's own `pairwise_tests` — so
+`scripts/rebuild_leaderboard_cache_from_committed.py` reconstitutes the cache
+and the documented driver invocation runs unchanged. Rebuilding from the
+*unpatched* cache reproduced the committed board **byte-for-byte** (93
+conditions, 7 tiers, identical tier structure), which is what licenses
+attributing every subsequent difference to E81 alone.
+
+Rebuilt from the corrected cache, the board carries **86 conditions in 6
+tiers**, and the seven undefined conditions appear in a new, explicitly
+labelled `## MCC undefined (not ranked)` section that states why they cannot
+be ranked. Verified against the committed board: **zero** conditions changed
+F1@20 m, best threshold, or MCC; **zero** raw permutation p-values changed;
+Tier 1 remains the same 21 conditions spanning 0.638–0.714.
+
+Two conditions did change tier — `h9-track2-text-h9-B-v1` and
+`h1-verbose-text-image`, both from Tier 4 to Tier 3 — and the mechanism is
+worth stating because it is a real methodological consequence rather than an
+artefact. Dropping seven unrankable conditions removes 623 pairwise
+comparisons from the Benjamini–Hochberg family (4,278 → 3,655). The raw
+p-values of the 3,655 surviving pairs are untouched, but 2,110 of their
+BH-adjusted p-values change and nine flip significance, which regroups the
+Tier 3 / Tier 4 boundary (Tier 3: 20 → 22 conditions; Tier 4: 9 → 7). This is
+the correct outcome: those 623 comparisons were testing a coefficient that
+does not exist, and they should never have been carrying multiple-testing
+weight. `tier_stability_mcc.{md,json}` was rebuilt from the corrected board
+(93 → 86 conditions; Spearman rho remains 1.0 by construction).
+
+**Residuals, deliberately left.**
+
+1. `results/paper-eval/mcc/512px/batch_summary.{json,csv,md}` still carries the
+   withdrawn zeros in its JSON rows. It is a 2026-03-27 roll-up that predates
+   the Session 102 re-score of the cells beneath it, so regenerating it moves
+   **all 33 rows' F1** — five months of unrelated drift that must not land
+   under an MCC-reporting fix. `scripts/rescore_tile_mcc_e81.py
+   --rebuild-batch-summary` will refresh it whenever the PI wants that drift
+   accepted as a separate, attributable change.
+2. The per-architecture MCC boards under
+   `results/leaderboard/per-architecture/era1/single-pass/` were not rebuilt.
+   They carry the same seven conditions at ranks 15–21 across the
+   20/30/40/50/100 m and `q01` variants, and their tier-2 lower bound is the
+   imputed value. The same reproduce-then-correct procedure applies; it is
+   deferred because it multiplies across twelve board files and their
+   `tier_stability_mcc` siblings, and because none of them is paper-facing.
+3. `_compute_mcc` in `scripts/pairwise_permutation_test.py` still returns
+   `0.0` for a degenerate matrix, **by design**: it is the kernel of
+   `run_permutation_test_mcc`'s null-resampling loop, called ~10,000 times per
+   pair, where a `None` would break the null distribution rather than
+   describe it. A companion `compute_mcc_or_none` was added beside it for
+   reporting and gating, and the kernel is now documented as
+   kernel-only. The residual is that `run_permutation_test_mcc` publishes its
+   *observed* `mcc_a` / `mcc_b` / `observed_mcc_diff` through the kernel, so a
+   degenerate observed arm would still report `0.0` there. Deciding what a
+   ΔMCC against an undefined arm even means is a methodological question, not
+   a rendering one, so it is left open. It does not touch the corrected board:
+   the seven undefined conditions are excluded before pairwise testing, and
+   none of the 3,655 surviving pairs has a degenerate arm.
+
+**Separate finding, not fixed here, flagged for a PI decision.** While pinning
+the bootstrap behaviour, the vectorised wrapper inside `_bca_ci_from_indices`
+was found to iterate the **wrong axis** of scipy's resample matrix.
+`scipy.stats.bootstrap` passes an `(n_resamples, n_observations)` index array
+with `axis=-1`, but the wrapper applies `np.moveaxis(idx_array, axis, 0)` and
+iterates the result, so the statistic is evaluated once per *observation*
+over a vector of `n_resamples` draws rather than once per *resample* over a
+vector of `n_observations` draws. On the Era-1 scope this yields a
+"bootstrap distribution" of 340 values each computed from 10,000 draws
+instead of 10,000 values each computed from 340 draws, and the BCa jackknife
+becomes column-wise nonsense (each leave-one-out "sample" contains only two
+distinct tile indices — which is precisely why the specificity and
+sensitivity labels move above). The consequence is that **every BCa-path
+confidence interval in the study is too narrow**, by roughly
+`sqrt(n_resamples / n_tiles)` ≈ 5.4× at 10,000 iterations on 340 tiles. The
+`percentile_fallback` path resamples correctly and is unaffected. This is
+**not** an E81 defect, it is not fixed here, and it should not be bundled
+with E81 for exactly the reason this erratum gives for keeping E79, E80, and
+E81 separate: fixing it would move essentially every published confidence
+interval, and that delta must be attributable on its own. It needs its own
+erratum and its own PI decision.
+
+---

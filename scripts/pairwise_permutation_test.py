@@ -505,10 +505,21 @@ def run_permutation_test(
 # -----------------------------------------------
 
 def _compute_mcc(tp: int, tn: int, fp: int, fn: int) -> float:
-    """Compute Matthews Correlation Coefficient from a 2x2 confusion table.
+    """Compute Matthews Correlation Coefficient, 0.0 when undefined.
 
-    Returns 0.0 when the denominator is zero (any row/column sum is
-    zero — the standard convention used by ``sklearn.metrics``).
+    **Resampling-kernel convention.** Returns 0.0 when the denominator
+    is zero (any row/column sum is zero) — the ``sklearn.metrics``
+    convention. Inside the permutation null of
+    :func:`run_permutation_test_mcc` a degenerate resample must yield
+    *some* number for the null distribution to be computable, and 0.0
+    (the centre of the MCC scale) is the standard choice. The value
+    never leaves the kernel as a published measurement.
+
+    Erratum E81 (2026-08-18) forbids publishing that 0.0 as a *result*:
+    an undefined coefficient is not a chance-level one. Anything that
+    reports, ranks, or gates on an observed MCC must therefore call
+    :func:`compute_mcc_or_none` instead, and render or propagate the
+    ``None``.
 
     Args:
         tp: True positive count.
@@ -524,6 +535,39 @@ def _compute_mcc(tp: int, tn: int, fp: int, fn: int) -> float:
     if denom_parts <= 0:
         return 0.0
     return float(numerator / np.sqrt(denom_parts))
+
+
+def compute_mcc_or_none(
+    tp: int, tn: int, fp: int, fn: int,
+) -> float | None:
+    """Compute Matthews Correlation Coefficient, ``None`` when undefined.
+
+    The reporting counterpart of :func:`_compute_mcc`. Use this
+    wherever the result is published, ranked, compared, or used to gate
+    a run: erratum E81 (2026-08-18) requires an undefined coefficient
+    to stay distinguishable from a measured 0.0, which § 4.2 of the
+    preregistration reads as "random".
+
+    Args:
+        tp: True positive count.
+        tn: True negative count.
+        fp: False positive count.
+        fn: False negative count.
+
+    Returns:
+        MCC in [-1.0, 1.0], or ``None`` when the 2 x 2 table is
+        degenerate so that sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN)) vanishes.
+
+    Examples:
+        >>> compute_mcc_or_none(0, 0, 0, 0) is None
+        True
+        >>> compute_mcc_or_none(1, 1, 1, 1)
+        0.0
+    """
+    denom_parts = (tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)
+    if denom_parts <= 0:
+        return None
+    return float(((tp * tn) - (fp * fn)) / np.sqrt(denom_parts))
 
 
 def run_permutation_test_mcc(

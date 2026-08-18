@@ -33,6 +33,10 @@ F35 = BASE_DIR / "results/flash35-2x2/evals"
 M55 = BASE_DIR / "results/55maps-extended-gt-2026-06-07"
 OUT_DIR = BASE_DIR / "results/metric-leaderboards"
 
+# Rendered wherever a metric is not computable (erratum E81). Matches
+# ``evaluate_detections.UNDEFINED_DISPLAY``.
+UNDEFINED_DISPLAY = "undefined"
+
 GS_CELLS = {
     "headline31 (30-prop+1vf)": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
     "opmax35 (30-prop+5vf)": f"{VR.relative_to(BASE_DIR)}/verified-384-16of30-t0-3-n5-opmax/evaluation.json",
@@ -129,20 +133,78 @@ def flags(c: dict) -> str:
     return "".join(out) or "—"
 
 
+def fmt(val: float | None, digits: int = 4) -> str:
+    """Format a possibly-undefined metric for a Markdown cell.
+
+    Mirrors ``evaluate_detections._fmt_metric``.
+
+    Args:
+        val: The metric, or ``None`` when it is undefined (erratum
+            E81 — a degenerate 2 x 2 tile confusion matrix leaves the
+            Matthews Correlation Coefficient (MCC) with no value).
+        digits: Decimal places for the numeric case.
+
+    Returns:
+        The formatted number, or ``UNDEFINED_DISPLAY`` for ``None``.
+        A genuine zero still renders as ``'0.0000'``.
+    """
+    return UNDEFINED_DISPLAY if val is None else f"{val:.{digits}f}"
+
+
 def board(cells: dict[str, dict], metric: str, buffer_m: int) -> list[str]:
-    """One metric-led table (markdown lines)."""
+    """One metric-led table (markdown lines).
+
+    Erratum E81 (2026-08-18): the ranking key used to be
+    ``-(kv[1][key] or 0)``, which sorted a cell with an *undefined*
+    MCC as though it had scored 0 — the value § 4.2 of the
+    preregistration calls "random" — and, being an ``or``, did the
+    same to a cell with a legitimate MCC of exactly 0.0. Cells whose
+    lead metric is undefined are now held out of the ranking and
+    listed unranked beneath it, so no rank position asserts a
+    measurement that was not made.
+
+    Args:
+        cells: ``{cell_name: row}`` as produced by :func:`load_cell`.
+        metric: ``"MCC"``, ``"precision"``, or ``"recall"`` — the
+            axis the table is led by.
+        buffer_m: Buffer (metres) the F1 column is reported at.
+
+    Returns:
+        Markdown lines for the table, plus a footnote when any cell
+        was held out for an undefined lead metric.
+    """
     key = {"MCC": "mcc", "precision": "p", "recall": "r"}[metric]
     ci_key = {"mcc": "mcc_ci", "p": "p_ci", "r": "r_ci"}[key]
     lines = [f"\n## {metric}-led ranking\n",
              f"| rank | cell | {metric} | 95% CI | F1@{buffer_m} | P | R | MCC | n | flags |",
              "|---:|---|---:|---|---:|---:|---:|---:|---:|---|"]
-    ranked = sorted(cells.items(), key=lambda kv: -(kv[1][key] or 0))
-    for i, (name, c) in enumerate(ranked, 1):
+    defined = [(n, c) for n, c in cells.items() if c[key] is not None]
+    undefined = [(n, c) for n, c in cells.items() if c[key] is None]
+    ranked: list[tuple[str, str, dict]] = [
+        (str(i), n, c)
+        for i, (n, c) in enumerate(
+            sorted(defined, key=lambda kv: -kv[1][key]), 1,
+        )
+    ]
+    # Unranked tail: present in the table (so the cell is not silently
+    # dropped) but carrying no rank position.
+    ranked += [("—", n, c) for n, c in sorted(undefined)]
+    for rank_str, name, c in ranked:
         lo, hi = c[ci_key]
         ci = f"[{lo:.3f}, {hi:.3f}]" if lo is not None and hi is not None else "—"
-        lines.append(f"| {i} | {name} | {c[key]:.4f} | {ci} | {c['f1']:.4f} "
-                     f"| {c['p']:.3f} | {c['r']:.3f} | {c['mcc']:.3f} | {c['n']} "
+        lines.append(f"| {rank_str} | {name} | {fmt(c[key])} | {ci} | {c['f1']:.4f} "
+                     f"| {c['p']:.3f} | {c['r']:.3f} | {fmt(c['mcc'], 3)} | {c['n']} "
                      f"| {flags(c)} |")
+    if undefined:
+        lines.append(
+            f"\n**`{UNDEFINED_DISPLAY}` {metric}** — {len(undefined)} cell(s) "
+            f"carry no rank because their {metric} is not computable "
+            "(degenerate 2 x 2 tile confusion matrix, so the MCC "
+            "denominator vanishes). They are not ranked at 0, which on "
+            "the MCC scale means \"random\" (§ 4.2 of the "
+            "preregistration). See erratum E81 in "
+            "`docs/methodology/preregistration/protocol-errata.md`.\n"
+        )
     return lines
 
 

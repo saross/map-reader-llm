@@ -1,10 +1,10 @@
 # Leaderboard (MCC tiers) — 20m buffer
 
-**Generated**: 2026-04-26T02:52:22.561173+00:00
+**Generated**: 2026-08-18T13:23:24.091710+00:00
 **Tiering metric**: MCC
 **FDR q**: 0.01
 **Note**: MCC is buffer-invariant in this codebase (tile-level binary classification). Threshold selection still maximises F1 at the primary buffer for cross-metric alignment; the per-buffer F1 column reflects that.
-**Conditions**: 93 in 5 tier(s)
+**Conditions**: 86 in 5 tier(s)
 
 ## Tier 1 (MCC: 0.605–0.714)
 
@@ -36,7 +36,7 @@
 | 24 | h9-track1-image-h9-B-v2 | greedy | 1 | image | 5 | 3 | 0.630 | 0.655 | [0.608, 0.698] | 0.672 | 0.638 |
 | 25 | h9-track1-image-h9-E-p5 | greedy | 1 | image | 5 | 3 | 0.605 | 0.656 | [0.609, 0.700] | 0.681 | 0.633 |
 
-## Tier 2 (MCC: 0.487–0.580)
+## Tier 2 (MCC: 0.469–0.580)
 
 | # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
@@ -48,16 +48,16 @@
 | 31 | h9-track2-text-h9-B-v3 | greedy | 1 | text | 5 | 4 | 0.499 | 0.635 | [0.582, 0.688] | 0.632 | 0.638 |
 | 32 | h9-track2-text-h9-A-p4 | greedy | 1 | text | 5 | 4 | 0.495 | 0.731 | [0.684, 0.774] | 0.715 | 0.748 |
 | 33 | h9-track2-text-h9-A-p2 | greedy | 1 | text | 5 | 4 | 0.487 | 0.723 | [0.678, 0.769] | 0.712 | 0.735 |
-
-## Tier 3 (MCC: 0.353–0.476)
-
-| # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
 | 34 | h9-track2-text-h9-D-t1 | greedy | 1 | text | 5 | 4 | 0.476 | 0.735 | [0.689, 0.776] | 0.709 | 0.762 |
 | 35 | h3-track1-image-T1.0 | greedy | 1 | image | 30 | 19 | 0.475 | 0.679 | [0.636, 0.719] | 0.728 | 0.636 |
 | 36 | h9-track2-text-h9-E-p1 | greedy | 1 | text | 5 | 5 | 0.475 | 0.717 | [0.672, 0.760] | 0.769 | 0.672 |
 | 37 | h9-track2-text-h9-D-t2 | greedy | 1 | text | 5 | 4 | 0.473 | 0.712 | [0.662, 0.758] | 0.693 | 0.733 |
 | 38 | h9-track2-text-h9-E-p3 | greedy | 1 | text | 5 | 4 | 0.469 | 0.612 | [0.548, 0.664] | 0.603 | 0.622 |
+
+## Tier 3 (MCC: 0.312–0.444)
+
+| # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
+|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
 | 39 | h9-track2-text-h9-D-t3 | greedy | 1 | text | 5 | 4 | 0.444 | 0.711 | [0.655, 0.757] | 0.697 | 0.725 |
 | 40 | h3-track1-image-T0.7 | greedy | 1 | image | 30 | 18 | 0.443 | 0.691 | [0.649, 0.730] | 0.694 | 0.688 |
 | 41 | h9-track2-text-h9-A-p5 | greedy | 1 | text | 5 | 4 | 0.440 | 0.712 | [0.661, 0.758] | 0.698 | 0.727 |
@@ -74,14 +74,14 @@
 | 52 | h7-track2-text-T1.3 | greedy | 1 | text | 3 | 3 | 0.379 | 0.640 | [0.584, 0.690] | 0.645 | 0.636 |
 | 53 | h7-track1-image-T1.3 | greedy | 1 | image | 3 | 2 | 0.367 | 0.606 | [0.567, 0.644] | 0.577 | 0.636 |
 | 54 | h9-track2-text-h9-B-v4 | greedy | 1 | text | 5 | 4 | 0.353 | 0.658 | [0.607, 0.708] | 0.670 | 0.647 |
-
-## Tier 4 (MCC: 0.203–0.332)
-
-| # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
 | 55 | h7-track1-image-T1.0 | greedy | 1 | image | 3 | 2 | 0.332 | 0.640 | [0.598, 0.678] | 0.596 | 0.690 |
 | 56 | h3-track2-text-T1.0 | greedy | 1 | text | 30 | 22 | 0.331 | 0.686 | [0.633, 0.735] | 0.651 | 0.725 |
 | 57 | h3-rep-minimal | greedy | 1 | text | 30 | 25 | 0.312 | 0.703 | [0.652, 0.750] | 0.673 | 0.737 |
+
+## Tier 4 (MCC: 0.180–0.302)
+
+| # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
+|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
 | 58 | h1-brief-text-image | greedy | 1 | image | 3 | 2 | 0.302 | 0.624 | [0.578, 0.664] | 0.582 | 0.672 |
 | 59 | h7-track2-text-T1.0 | greedy | 1 | text | 3 | 3 | 0.284 | 0.643 | [0.589, 0.691] | 0.633 | 0.653 |
 | 60 | h7-track2-text-T0.7 | greedy | 1 | text | 3 | 3 | 0.283 | 0.687 | [0.636, 0.733] | 0.648 | 0.731 |
@@ -97,12 +97,12 @@
 | 70 | h4-config-default | 1-pass | 1 | image | 1 | 1 | 0.214 | 0.606 | [0.561, 0.654] | 0.520 | 0.725 |
 | 71 | h4-canonical-last | 1-pass | 1 | image | 1 | 1 | 0.212 | 0.631 | [0.587, 0.672] | 0.532 | 0.775 |
 | 72 | h1-verbose-text | greedy | 1 | text | 3 | 2 | 0.203 | 0.596 | [0.540, 0.648] | 0.510 | 0.716 |
+| 73 | h3-track2-text-T0.3 | greedy | 1 | text | 30 | 23 | 0.180 | 0.692 | [0.637, 0.739] | 0.626 | 0.774 |
 
-## Tier 5 (MCC: 0.000–0.180)
+## Tier 5 (MCC: 0.081–0.162)
 
 | # | Condition | Arch | Era | Track | K | t | MCC | F1@buf | F1 95% CI | P | R |
 |--:|-----------|:----:|:---:|:-----:|--:|--:|---:|---:|:------:|---:|---:|
-| 73 | h3-track2-text-T0.3 | greedy | 1 | text | 30 | 23 | 0.180 | 0.692 | [0.637, 0.739] | 0.626 | 0.774 |
 | 74 | h8-track1-image-exploratory-pure-positive-4hp | 1-pass | 1 | image | 1 | 1 | 0.162 | 0.599 | [0.550, 0.646] | 0.508 | 0.727 |
 | 75 | h8-track1-image-scale-8 | 1-pass | 1 | image | 1 | 1 | 0.147 | 0.587 | [0.541, 0.632] | 0.499 | 0.712 |
 | 76 | h8-track1-image-scale-4 | 1-pass | 1 | image | 1 | 1 | 0.133 | 0.584 | [0.533, 0.630] | 0.486 | 0.731 |
@@ -116,10 +116,15 @@
 | 84 | h7-track2-text-T0.0 | greedy | 1 | text | 3 | 3 | 0.088 | 0.643 | [0.585, 0.694] | 0.540 | 0.796 |
 | 85 | h4-random | 1-pass | 1 | image | 1 | 1 | 0.084 | 0.571 | [0.519, 0.618] | 0.473 | 0.720 |
 | 86 | h5-track2-text-verbose | 1-pass | 1 | text | 1 | 1 | 0.081 | 0.583 | [0.525, 0.636] | 0.489 | 0.724 |
-| 87 | h5-track2-text-terse | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.598 | [0.537, 0.651] | 0.485 | 0.781 |
-| 88 | h8-track1-image-exploratory-pure-positive-2hp | 1-pass | 1 | image | 1 | 1 | 0.000 | 0.571 | [0.519, 0.617] | 0.473 | 0.722 |
-| 89 | h8-track2-text-canonical | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.605 | [0.546, 0.655] | 0.484 | 0.805 |
-| 90 | h8-track2-text-plus-hp | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.597 | [0.540, 0.648] | 0.480 | 0.788 |
-| 91 | h8-track2-text-pure-positive-canon | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.605 | [0.547, 0.653] | 0.486 | 0.800 |
-| 92 | h8-track2-text-scale-4 | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.609 | [0.553, 0.659] | 0.491 | 0.803 |
-| 93 | h8-track2-text-scale-8 | 1-pass | 1 | text | 1 | 1 | 0.000 | 0.607 | [0.548, 0.656] | 0.489 | 0.800 |
+
+## MCC undefined (not ranked)
+
+7 condition(s) are absent from the tiers above because their tile-level MCC is not computable: the 2 x 2 tile confusion matrix is degenerate, so the denominator sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN)) vanishes. They are **not** ranked at 0.000, because 0 on this scale means "random" (§ 4.2 of the preregistration) and would assert a measurement that was not made. See erratum E81 in `docs/methodology/preregistration/protocol-errata.md`.
+
+- h5-track2-text-terse
+- h8-track1-image-exploratory-pure-positive-2hp
+- h8-track2-text-canonical
+- h8-track2-text-plus-hp
+- h8-track2-text-pure-positive-canon
+- h8-track2-text-scale-4
+- h8-track2-text-scale-8

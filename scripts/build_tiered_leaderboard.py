@@ -122,6 +122,7 @@ logger = logging.getLogger(__name__)
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from evaluate_detections import (  # noqa: E402
+    UNDEFINED_DISPLAY,
     evaluate_single_run,
     load_geojson,
     slugify,
@@ -139,6 +140,38 @@ from apply_fdr_correction import apply_bh_correction  # noqa: E402
 METRIC_F1 = "f1"
 METRIC_MCC = "mcc"
 SUPPORTED_METRICS = (METRIC_F1, METRIC_MCC)
+
+
+def _fmt_metric(val: float | None, digits: int = 3) -> str:
+    """Format a possibly-undefined metric for a Markdown/console cell.
+
+    Mirrors ``evaluate_detections._fmt_metric`` so leaderboard tables
+    and evaluation tables render an undefined tile-level Matthews
+    Correlation Coefficient (MCC) identically. The display string
+    itself is imported from ``evaluate_detections`` so there is one
+    source of truth for it.
+
+    Args:
+        val: The metric value, or ``None`` when it is undefined
+            (degenerate 2 x 2 tile confusion matrix — erratum E81).
+        digits: Decimal places for the numeric case (default 3, the
+            precision of the leaderboard tables).
+
+    Returns:
+        The formatted number, or :data:`UNDEFINED_DISPLAY` for
+        ``None``. A genuine zero still renders as ``'0.000'``.
+
+    Examples:
+        >>> _fmt_metric(0.0665)
+        '0.066'
+        >>> _fmt_metric(0.0)
+        '0.000'
+        >>> _fmt_metric(None)
+        'undefined'
+    """
+    if val is None:
+        return UNDEFINED_DISPLAY
+    return f"{val:.{digits}f}"
 
 
 # ---------------------------------------------------------------------------
@@ -177,7 +210,13 @@ class SelectedCondition:
     # Tile-level MCC (buffer-invariant in this codebase). Populated
     # from the evaluation result's ``tile_classification.mcc.mean``
     # field by ``select_best_thresholds()`` when MCC was computed.
-    tile_mcc: float = 0.0
+    # ``None`` means *undefined*: either MCC was not computed for this
+    # condition, or the 2 x 2 tile confusion matrix is degenerate so
+    # the coefficient has no value (erratum E81). The default is
+    # deliberately ``None`` and not ``0.0`` — 0 on the MCC scale means
+    # "random" (§ 4.2 of the preregistration), so defaulting to it
+    # would publish a chance-level measurement that was never made.
+    tile_mcc: float | None = None
 
 
 def get_condition_score(
@@ -200,15 +239,41 @@ def get_condition_score(
         metric: ``"f1"`` (default) or ``"mcc"``.
 
     Returns:
-        The score (F1 in [0, 1] or MCC in [-1, 1]). Returns 0.0 when
-        the metric cannot be computed (no detections, undefined MCC,
-        missing buffer evaluation).
+        The score (F1 in [0, 1] or MCC in [-1, 1]). F1 falls back to
+        0.0 when the requested buffer was not evaluated — a missing
+        F1 genuinely is "no detections matched", so 0.0 is a
+        measurement there rather than a placeholder.
+
+    Raises:
+        ValueError: when ``metric`` is unsupported, or when
+            ``metric="mcc"`` and ``cond.tile_mcc`` is ``None``.
+
+            Erratum E81 (2026-08-18): this function used to return
+            ``float(cond.tile_mcc or 0.0)``, which scored an
+            *undefined* MCC as 0.0 and therefore ranked a condition
+            whose coefficient was never computable alongside
+            conditions measured at chance level (§ 4.2 of the
+            preregistration labels 0 on this scale "random"). The
+            ``or`` also swallowed a legitimate MCC of exactly 0.0.
+            Conditions with an undefined MCC are now dropped from the
+            MCC board by :func:`select_best_thresholds`, so reaching
+            this branch means an unscoreable condition leaked into a
+            ranking — failing loudly is the correct outcome, because
+            the alternative is a silent chance-level score.
     """
     if metric == METRIC_F1:
         return cond.evaluations.get(buffer_metres, {}).get("f1", 0.0)
     if metric == METRIC_MCC:
         # MCC is stored at the condition level, not per-buffer.
-        return float(cond.tile_mcc or 0.0)
+        if cond.tile_mcc is None:
+            raise ValueError(
+                f"Tile-level MCC is undefined for {cond.label!r}, so it "
+                "cannot be scored or ranked on MCC (erratum E81). "
+                "Conditions with an undefined MCC are excluded from the "
+                "MCC leaderboard by select_best_thresholds(); this "
+                "condition reached a ranking path it should not have."
+            )
+        return float(cond.tile_mcc)
     raise ValueError(f"Unsupported metric: {metric!r}")
 
 
@@ -782,6 +847,7 @@ def select_best_thresholds(
     primary_buffer: int,
     top_n: int | None = None,
     metric: str = METRIC_F1,
+    undefined_metric_out: list[str] | None = None,
 ) -> list[SelectedCondition]:
     """Select the best consensus threshold per condition.
 
@@ -802,10 +868,27 @@ def select_best_thresholds(
         metric: ``"f1"`` (default) or ``"mcc"``. When ``"mcc"`` the
             sort order at the end uses MCC; threshold selection still
             uses F1.
+        undefined_metric_out: Optional list the caller supplies to
+            receive the labels of conditions dropped because the
+            scoring metric is undefined for them (``metric="mcc"``
+            only — see Returns). Supplied as an out-parameter so the
+            existing single-list return type, and every caller of it,
+            stay unchanged.
 
     Returns:
         List of SelectedCondition, sorted by chosen metric descending
         at primary buffer.
+
+        Erratum E81 (2026-08-18): when ``metric="mcc"``, conditions
+        whose tile-level MCC is **undefined** (degenerate 2 x 2 tile
+        confusion matrix, or MCC never computed) are excluded from
+        this list rather than scored as 0.0. An undefined coefficient
+        is not a chance-level result, and ranking it as one placed
+        conditions on the board at a performance level that was never
+        measured. Their labels are reported through
+        ``undefined_metric_out`` so the caller can render them in an
+        explicitly-labelled "MCC undefined" section instead of
+        dropping them silently.
     """
     selected: list[SelectedCondition] = []
 
@@ -842,11 +925,16 @@ def select_best_thresholds(
 
         # Extract tile-level MCC if available (populated when
         # _evaluate_single_threshold ran with compute_mcc=True).
-        tile_mcc = float(
+        # Erratum E81: ``mean`` may be present and ``None`` (undefined
+        # MCC — degenerate tile confusion matrix), and it may be
+        # absent (MCC not computed). Both map to ``None``; neither
+        # maps to 0.0.
+        mcc_mean = (
             best_eval.get("tile_classification", {})
             .get("mcc", {})
-            .get("mean", 0.0)
+            .get("mean")
         )
+        tile_mcc = None if mcc_mean is None else float(mcc_mean)
 
         # Find the GeoJSON path for the best threshold
         try:
@@ -871,6 +959,25 @@ def select_best_thresholds(
             condition_id=cond.condition_id,
             tile_mcc=tile_mcc,
         ))
+
+    # Erratum E81: drop conditions the scoring metric cannot score
+    # BEFORE sorting, so no unscoreable condition ever reaches a rank.
+    # Only MCC can be undefined here; F1 is always computable (0.0 for
+    # "nothing matched" is a measurement, not a placeholder).
+    if metric == METRIC_MCC:
+        undefined = [c.label for c in selected if c.tile_mcc is None]
+        if undefined:
+            logger.warning(
+                "Excluding %d condition(s) from the MCC leaderboard — "
+                "tile-level MCC is undefined for them (degenerate tile "
+                "confusion matrix, or MCC not computed); erratum E81 "
+                "forbids ranking an undefined coefficient as 0.0, which "
+                "the MCC scale reads as chance: %s",
+                len(undefined), ", ".join(undefined),
+            )
+            selected = [c for c in selected if c.tile_mcc is not None]
+        if undefined_metric_out is not None:
+            undefined_metric_out.extend(undefined)
 
     # Sort by chosen metric descending at primary buffer
     selected.sort(
@@ -1513,7 +1620,7 @@ def write_leaderboard_markdown(
                 lines.append(
                     f"| {rank} | {cond.label} | {arch} | {cond.era} | "
                     f"{cond.track} | {cond.k} | {cond.best_threshold} | "
-                    f"{cond.tile_mcc:.3f} | "
+                    f"{_fmt_metric(cond.tile_mcc)} | "
                     f"{f1:.3f} | [{ci_lo:.3f}, {ci_hi:.3f}] | "
                     f"{p:.3f} | {r:.3f} |"
                 )
@@ -1522,9 +1629,46 @@ def write_leaderboard_markdown(
                     f"| {rank} | {cond.label} | {arch} | {cond.era} | "
                     f"{cond.track} | {cond.k} | {cond.best_threshold} | "
                     f"{f1:.3f} | [{ci_lo:.3f}, {ci_hi:.3f}] | "
-                    f"{p:.3f} | {r:.3f} | {cond.tile_mcc:.3f} |"
+                    f"{p:.3f} | {r:.3f} | {_fmt_metric(cond.tile_mcc)} |"
                 )
 
+        lines.append("")
+
+    # Erratum E81: conditions whose tile-level MCC is undefined are
+    # excluded from the MCC tiers by ``select_best_thresholds`` rather
+    # than ranked at 0.0. They are named here so the exclusion is on
+    # the face of the record instead of being a silent omission.
+    undefined_labels = metadata.get("mcc_undefined_conditions") or []
+    if metric == METRIC_MCC and undefined_labels:
+        lines.append(f"## MCC {UNDEFINED_DISPLAY} (not ranked)")
+        lines.append("")
+        lines.append(
+            f"{len(undefined_labels)} condition(s) are absent from the "
+            "tiers above because their tile-level MCC is not computable: "
+            "the 2 x 2 tile confusion matrix is degenerate, so the "
+            "denominator sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN)) vanishes. "
+            "They are **not** ranked at 0.000, because 0 on this scale "
+            "means \"random\" (§ 4.2 of the preregistration) and would "
+            "assert a measurement that was not made. See erratum E81 in "
+            "`docs/methodology/preregistration/protocol-errata.md`."
+        )
+        lines.append("")
+        for label in undefined_labels:
+            lines.append(f"- {label}")
+        lines.append("")
+    elif metric == METRIC_F1 and any(
+        c.tile_mcc is None for tier in tiers for c in tier
+    ):
+        lines.append(
+            f"**MCC `{UNDEFINED_DISPLAY}`** — the tile-level Matthews "
+            "Correlation Coefficient is not computable for the rows so "
+            "marked (degenerate 2 x 2 tile confusion matrix, or MCC not "
+            "computed for that condition). It is reported as "
+            f"`{UNDEFINED_DISPLAY}` rather than 0.000 because 0 on this "
+            "scale means \"random\" (§ 4.2 of the preregistration). "
+            "Tiering here is on F1 and is unaffected. See erratum E81 in "
+            "`docs/methodology/preregistration/protocol-errata.md`."
+        )
         lines.append("")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1562,9 +1706,13 @@ def write_leaderboard_json(
                     "best_threshold": c.best_threshold,
                     "geojson": str(c.geojson_path),
                     "evaluations": c.evaluations,
-                    # Tile-level MCC (buffer-invariant); 0.0 when MCC
-                    # was not computed for this evaluation pass.
-                    "tile_mcc": float(c.tile_mcc),
+                    # Tile-level MCC (buffer-invariant); JSON ``null``
+                    # when it is undefined — the tile confusion matrix
+                    # is degenerate, or MCC was not computed for this
+                    # evaluation pass. Erratum E81: this used to be
+                    # coerced to 0.0, which consumers could not tell
+                    # apart from a measured chance-level coefficient.
+                    "tile_mcc": c.tile_mcc,
                 }
                 for c in tier
             ],
@@ -1956,12 +2104,18 @@ def main() -> int:
             "(Option A semantics)",
             args.threshold_buffer, args.primary_buffer,
         )
+    # Erratum E81: conditions the scoring metric cannot score are
+    # dropped inside select_best_thresholds; collect their labels so
+    # the Markdown can name them rather than silently omitting them.
+    mcc_undefined: list[str] = []
     selected = select_best_thresholds(
         conditions, all_evaluations,
         primary_buffer=args.threshold_buffer,
         top_n=args.top_n,
         metric=args.metric,
+        undefined_metric_out=mcc_undefined,
     )
+    metadata["mcc_undefined_conditions"] = mcc_undefined
 
     if not selected:
         logger.error("No conditions survived threshold selection")

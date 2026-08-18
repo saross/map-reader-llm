@@ -71,6 +71,27 @@ from lib_detection_paths import resolve_pool_passes  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
+# Rendered wherever a tile-level metric is not computable (erratum E81).
+# Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
+UNDEFINED_DISPLAY = "undefined"
+
+
+def fmt_metric(val: float | None, digits: int = 3) -> str:
+    """Format a possibly-undefined tile metric for a table or log line.
+
+    Args:
+        val: The metric, or ``None`` when it is undefined — the 2 x 2
+            tile confusion matrix is degenerate, so the Matthews
+            Correlation Coefficient (MCC) has no value (erratum E81).
+        digits: Decimal places for the numeric case.
+
+    Returns:
+        The formatted number, or :data:`UNDEFINED_DISPLAY`. A genuine
+        zero still renders as ``'0.000'``; only a non-measurement gets
+        the word.
+    """
+    return UNDEFINED_DISPLAY if val is None else f"{val:.{digits}f}"
+
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
@@ -364,8 +385,14 @@ def analyse_tile_mcc(conditions, optimal_thresholds, gdf_ref, gdf_bounds, n_boot
         if ci["mcc"]["mean"] is not None:
             entry["mcc_ci"] = [round(ci["mcc"]["ci_lower"], 4), round(ci["mcc"]["ci_upper"], 4)]
         results.append(entry)
-        logger.info("  %s: MCC=%.3f Sens=%.3f Spec=%.3f",
-                     cid, tc["mcc"] or 0, tc["sensitivity"], tc["specificity"])
+        # Erratum E81: ``tc["mcc"] or 0`` logged an undefined MCC as
+        # 0.000 (and would have done the same to a real 0.0). Any of
+        # the three tile metrics can be undefined on a degenerate
+        # matrix, so all three go through ``fmt_metric``.
+        logger.info("  %s: MCC=%s Sens=%s Spec=%s",
+                     cid, fmt_metric(tc["mcc"]),
+                     fmt_metric(tc["sensitivity"]),
+                     fmt_metric(tc["specificity"]))
     return results
 
 
@@ -832,12 +859,23 @@ def write_markdown(all_results, output_path, conditions):
         lines.append("")
         lines.append("| Condition | MCC | 95% CI | Sens | Spec | TP | TN | FP | FN |")
         lines.append("|-----------|----:|:------:|-----:|-----:|---:|---:|---:|---:|")
-        for r in sorted(mcc, key=lambda x: -(x["mcc"] or 0)):
-            mcc_val = f"{r['mcc']:.3f}" if r["mcc"] is not None else "—"
+        # Erratum E81: rank the conditions whose MCC is defined, and
+        # list the undefined ones after them UNRANKED. The old key,
+        # ``-(x["mcc"] or 0)``, sorted an undefined MCC into the
+        # position of a chance-level result (and did the same to a
+        # legitimate 0.0).
+        ranked = sorted(
+            (r for r in mcc if r["mcc"] is not None),
+            key=lambda x: -x["mcc"],
+        )
+        ranked += [r for r in mcc if r["mcc"] is None]
+        for r in ranked:
+            mcc_val = fmt_metric(r["mcc"])
             ci = f"[{r['mcc_ci'][0]:.3f}, {r['mcc_ci'][1]:.3f}]" if "mcc_ci" in r else "—"
             lines.append(
                 f"| {r['condition']} | {mcc_val} | {ci} | "
-                f"{r['sensitivity']:.3f} | {r['specificity']:.3f} | "
+                f"{fmt_metric(r['sensitivity'])} | "
+                f"{fmt_metric(r['specificity'])} | "
                 f"{r['tp']} | {r['tn']} | {r['fp']} | {r['fn']} |"
             )
         lines.append("")

@@ -54,6 +54,33 @@ def _arch_label(cond: dict) -> str:
     return arch or "?"
 
 
+def _read_mcc(cond: dict) -> float | None:
+    """Read a condition's tile-level MCC from the first source carrying it.
+
+    Sources, in preference order: the condition-level ``tile_mcc`` key,
+    then the 20 m evaluation block's ``mcc`` (MCC is buffer-invariant
+    in this codebase, so 20 m is representative).
+
+    A source *carries* the metric when the key is **present**, even if
+    the value is JSON ``null``. Erratum E81: ``null`` means the
+    coefficient is undefined for this condition — an answer, not a
+    missing field — so falling through to another source on ``null``
+    would substitute a different number for a non-measurement.
+
+    Args:
+        cond: One element of a tier JSON's ``tiers[].conditions``.
+
+    Returns:
+        The MCC, or ``None`` when undefined or absent everywhere.
+    """
+    evals_20 = cond.get("evaluations", {}).get("20", {})
+    for container, key in ((cond, "tile_mcc"), (evals_20, "mcc")):
+        if isinstance(container, dict) and key in container:
+            value = container[key]
+            return None if value is None else float(value)
+    return None
+
+
 def _tier1(payload: dict) -> list[dict]:
     """Return the list of Tier-1 condition dicts from a tier JSON."""
     tiers = payload.get("tiers", [])
@@ -73,18 +100,34 @@ def _summarise_tier1(payload: dict, metric: str, buffer_m: int | None) -> dict:
     arch_counts = Counter(_arch_label(c) for c in conds)
 
     # Top-3 entries: read score from condition's evaluations.
-    def _score(c: dict) -> float:
+    def _score(c: dict) -> float | None:
+        """Ranking score for one condition, ``None`` when undefined.
+
+        Erratum E81 (2026-08-18): the MCC branch used to be an ``or``
+        chain terminating in ``0``. That turned an *undefined* MCC
+        (now JSON ``null``) into a chance-level 0 — § 4.2 of the
+        preregistration reads 0 on this scale as "random" — and also
+        made a *legitimate* MCC of exactly 0.0 fall through to the
+        next source. Both are fixed by testing key presence and
+        ``is None`` explicitly.
+        """
         if metric == "f1":
             ev = c.get("evaluations", {}).get(str(buffer_m), {})
-            return float(ev.get("f1", 0) or 0)
-        # MCC (buffer-independent — read 20 m or tile_mcc).
-        return float(
-            c.get("tile_mcc")
-            or c.get("evaluations", {}).get("20", {}).get("mcc", 0)
-            or 0,
-        )
+            f1 = ev.get("f1")
+            # F1 is always computable; absent means "not evaluated at
+            # this buffer", which ranks at the bottom rather than
+            # being undefined.
+            return 0.0 if f1 is None else float(f1)
+        # MCC (buffer-independent — read the condition-level tile_mcc,
+        # else the 20 m evaluation block).
+        return _read_mcc(c)
 
-    sorted_conds = sorted(conds, key=_score, reverse=True)
+    def _sort_key(c: dict) -> tuple[int, float]:
+        """Rank defined scores descending; undefined ones last, unranked."""
+        score = _score(c)
+        return (0, -score) if score is not None else (1, 0.0)
+
+    sorted_conds = sorted(conds, key=_sort_key)
     top3 = []
     for c in sorted_conds[:3]:
         ev = c.get("evaluations", {}).get(str(buffer_m or 20), {})
@@ -97,7 +140,9 @@ def _summarise_tier1(payload: dict, metric: str, buffer_m: int | None) -> dict:
             "f1_ci_upper": ev.get("f1_ci_upper"),
             "precision": ev.get("precision"),
             "recall": ev.get("recall"),
-            "mcc": ev.get("mcc") or c.get("tile_mcc"),
+            # Key presence, not truthiness (erratum E81): ``null``
+            # means undefined and 0.0 is a real measurement.
+            "mcc": ev["mcc"] if "mcc" in ev else _read_mcc(c),
         })
     return {
         "populated": True,
@@ -221,7 +266,11 @@ def main() -> int:
             lines.append("| # | Condition | Arch | MCC | F1@20m |")
             lines.append("|--:|:---|:---|---:|---:|")
             for i, t in enumerate(s.get("top3", []), 1):
-                mcc = t.get("score") or t.get("mcc")
+                # Key presence, not truthiness (erratum E81): a score
+                # of exactly 0.0 is a measurement and must not fall
+                # through to the other field. ``None`` renders as an
+                # em-dash — never as +0.000.
+                mcc = t["score"] if t.get("score") is not None else t.get("mcc")
                 f1 = t.get("f1")
                 mcc_str = f"{mcc:+.3f}" if mcc is not None else "—"
                 f1_str = f"{f1:.3f}" if f1 is not None else "—"

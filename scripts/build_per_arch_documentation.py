@@ -28,6 +28,27 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PER_ARCH_DIR = PROJECT_ROOT / "results" / "leaderboard" / "per-architecture"
 LOGGER = logging.getLogger(__name__)
 
+# Rendered wherever a metric is not computable (erratum E81).
+# Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
+UNDEFINED_DISPLAY = "undefined"
+
+
+def _fmt_mcc(val: float | None) -> str:
+    """Format a possibly-undefined tile MCC for a Markdown cell.
+
+    Args:
+        val: The Matthews Correlation Coefficient (MCC), or
+            ``None`` when it is undefined — the 2 x 2 tile
+            confusion matrix is degenerate, so the coefficient
+            has no value (erratum E81).
+
+    Returns:
+        The signed number to three decimals, or
+        :data:`UNDEFINED_DISPLAY`. A genuine zero still renders
+        as ``'+0.000'``; only a non-measurement gets the word.
+    """
+    return UNDEFINED_DISPLAY if val is None else f"{val:+.3f}"
+
 POPULATED_STRATA = [
     ("era1", "single-pass"),
     ("era1", "consensus"),
@@ -180,14 +201,22 @@ def _top_n_conditions(payload: dict, metric: str, n: int = 3) -> list[dict]:
     tier1 = tiers[0].get("conditions", [])
     score_key = "f1" if metric == "f1" else "tile_mcc"
 
-    def _score(c):
+    def _score(c: dict) -> float | None:
+        """Score one condition, ``None`` when the metric is undefined."""
         if score_key == "f1":
             return float(
                 c.get("evaluations", {}).get("20", {}).get("f1", 0.0)
             )
-        return float(c.get("tile_mcc", 0.0))
+        mcc = c.get("tile_mcc")
+        return None if mcc is None else float(mcc)
 
-    sorted_tier = sorted(tier1, key=_score, reverse=True)
+    # Erratum E81: conditions whose MCC is undefined cannot be ranked
+    # on it — ``float(None)`` would raise, and ranking them at 0.0
+    # would place a non-measurement at the value § 4.2 of the
+    # preregistration calls "random". They are excluded from the
+    # top-N rather than competing for a place in it.
+    scorable = [c for c in tier1 if _score(c) is not None]
+    sorted_tier = sorted(scorable, key=_score, reverse=True)
     return sorted_tier[:n]
 
 
@@ -276,10 +305,10 @@ def write_per_stratum_readme(era: str, arch: str) -> Path | None:
             f1 = e.get("f1", 0)
             ci_lo = e.get("f1_ci_lower", 0)
             ci_hi = e.get("f1_ci_upper", 0)
-            mcc = c.get("tile_mcc", 0)
             lines.append(
                 f"| {i} | `{c['label']}` | "
-                f"{f1:.3f} [{ci_lo:.3f}, {ci_hi:.3f}] | {mcc:+.3f} |"
+                f"{f1:.3f} [{ci_lo:.3f}, {ci_hi:.3f}] | "
+                f"{_fmt_mcc(c.get('tile_mcc'))} |"
             )
         lines.append("")
 
@@ -289,10 +318,10 @@ def write_per_stratum_readme(era: str, arch: str) -> Path | None:
         lines.append("| # | Condition | MCC | F1@20 m |")
         lines.append("|--:|:---|---:|---:|")
         for i, c in enumerate(top_mcc, 1):
-            mcc = c.get("tile_mcc", 0)
             f1 = c.get("evaluations", {}).get("20", {}).get("f1", 0)
             lines.append(
-                f"| {i} | `{c['label']}` | {mcc:+.3f} | {f1:.3f} |"
+                f"| {i} | `{c['label']}` | "
+                f"{_fmt_mcc(c.get('tile_mcc'))} | {f1:.3f} |"
             )
         lines.append("")
 
@@ -676,10 +705,10 @@ def write_headlines() -> Path:
             lines.append("| # | Condition | MCC | F1@20m |")
             lines.append("|--:|:---|---:|---:|")
             for i, c in enumerate(_top_n_conditions(mcc_payload, "mcc"), 1):
-                mcc = c.get("tile_mcc", 0)
                 f1 = c.get("evaluations", {}).get("20", {}).get("f1", 0)
                 lines.append(
-                    f"| {i} | `{c['label']}` | {mcc:+.3f} | {f1:.3f} |"
+                    f"| {i} | `{c['label']}` | "
+                    f"{_fmt_mcc(c.get('tile_mcc'))} | {f1:.3f} |"
                 )
             lines.append("")
 

@@ -39,6 +39,11 @@ PER_ARCH_DIR = PROJECT_ROOT / "results" / "leaderboard" / "per-architecture"
 BUFFERS = [20, 30, 40, 50, 100]
 DEFAULT_PRIMARY = 20
 
+# Rendered wherever a score is not computable (erratum E81). Matches
+# ``evaluate_detections.UNDEFINED_DISPLAY`` so every table in the
+# project spells an undefined metric the same way.
+UNDEFINED_DISPLAY = "undefined"
+
 # Strata definitions (mirror of Stage 2 driver). Empty strata are
 # skipped; their stub READMEs are produced separately.
 POPULATED_STRATA = [
@@ -101,42 +106,114 @@ def _condition_tier_map(tiers_payload: dict) -> dict[str, int]:
     return mapping
 
 
+def _fmt_score(val: float | None, digits: int = 3) -> str:
+    """Format a possibly-undefined score for a Markdown cell.
+
+    Mirrors ``evaluate_detections._fmt_metric``. Kept local so this
+    script stays importable without the heavier evaluation stack.
+
+    Args:
+        val: The score, or ``None`` when it is undefined (erratum
+            E81 — a degenerate 2 x 2 tile confusion matrix leaves the
+            Matthews Correlation Coefficient (MCC) with no value).
+        digits: Decimal places for the numeric case.
+
+    Returns:
+        The formatted number, or :data:`UNDEFINED_DISPLAY` for
+        ``None``. A genuine zero still renders as ``'0.000'``.
+
+    Examples:
+        >>> _fmt_score(0.0)
+        '0.000'
+        >>> _fmt_score(None)
+        'undefined'
+    """
+    if val is None:
+        return UNDEFINED_DISPLAY
+    return f"{val:.{digits}f}"
+
+
+def _read_condition_mcc(cond: dict) -> float | None:
+    """Read a condition's tile-level MCC from the first source that carries it.
+
+    Sources are consulted in preference order: the condition-level
+    ``tile_mcc`` key written by the Session-79 builder, then
+    ``evaluations[20m].mcc``, then ``tile_classification.mcc.mean``.
+
+    A source *carries* the metric when the key is **present**, even
+    when its value is JSON ``null``. Erratum E81: ``null`` is the
+    builder saying "this coefficient is undefined for this
+    condition", which is an answer, not a missing field — falling
+    through to a later source on ``null`` would let some other
+    source's number stand in for a non-measurement.
+
+    Args:
+        cond: One element of a tier JSON's ``tiers[].conditions``.
+
+    Returns:
+        The MCC, or ``None`` when it is undefined or no source
+        carries it.
+    """
+    evals_at_primary = cond.get("evaluations", {}).get(
+        str(DEFAULT_PRIMARY), {},
+    )
+    tile_class_mcc = cond.get("tile_classification", {}).get("mcc", {})
+    for container, key in (
+        (cond, "tile_mcc"),
+        (evals_at_primary, "mcc"),
+        (tile_class_mcc, "mean"),
+    ):
+        if isinstance(container, dict) and key in container:
+            value = container[key]
+            return None if value is None else float(value)
+    return None
+
+
 def _condition_score_map(
     tiers_payload: dict, score_key: str,
-) -> dict[str, float]:
+) -> dict[str, float | None]:
     """Return {condition_label: score} from a tier JSON file.
 
     For F1 the score is read from ``evaluations[20m].f1``; for MCC it
-    is read from ``tile_classification.mcc.mean`` (or, if absent,
-    falls back to the top-level ``tile_mcc`` key written by the new
-    builder).
+    is read by :func:`_read_condition_mcc`.
+
+    Erratum E81 (2026-08-18): the MCC lookup used to be an ``or``
+    chain ending in ``0.0``, wrapped in ``float(score or 0.0)``. That
+    carried two defects at once. An *undefined* MCC (now serialised
+    as JSON ``null``) was published as 0.0, which § 4.2 of the
+    preregistration reads as chance-level performance. And a
+    *legitimate* MCC of exactly 0.0 was falsy, so it fell through to
+    the next fallback source — landing on the right number only by
+    the accident of the chain terminating in 0.0, and on a different
+    source's number whenever one was present. Both are fixed by
+    explicit key-presence and ``is None`` tests.
+
+    Args:
+        tiers_payload: Parsed ``leaderboard_tiers*.json`` payload.
+        score_key: ``"f1"`` or ``"mcc"``.
+
+    Returns:
+        Mapping from condition label to score, where ``None`` means
+        the score is undefined (MCC) or unavailable. Callers must
+        render ``None`` as ``undefined`` and must not rank it as 0.
     """
-    mapping: dict[str, float] = {}
+    mapping: dict[str, float | None] = {}
     for tier in tiers_payload.get("tiers", []):
         for cond in tier.get("conditions", []):
+            score: float | None
             if score_key == "f1":
-                score = (
+                # F1 is always computable; 0.0 for "nothing matched"
+                # is a measurement, not a placeholder.
+                score = float(
                     cond.get("evaluations", {})
                         .get(str(DEFAULT_PRIMARY), {})
                         .get("f1", 0.0)
                 )
             elif score_key == "mcc":
-                # New (Session-79 redesign) tier JSONs carry tile_mcc
-                # at the condition level. Fall back to looking inside
-                # the per-evaluation tile_classification block.
-                score = (
-                    cond.get("tile_mcc")
-                    or cond.get("evaluations", {})
-                       .get(str(DEFAULT_PRIMARY), {})
-                       .get("mcc")
-                    or cond.get("tile_classification", {})
-                       .get("mcc", {})
-                       .get("mean")
-                    or 0.0
-                )
+                score = _read_condition_mcc(cond)
             else:
-                score = 0.0
-            mapping[cond["label"]] = float(score or 0.0)
+                score = None
+            mapping[cond["label"]] = score
     return mapping
 
 
@@ -181,7 +258,16 @@ def build_stability_table(
             for buf_map in tier_maps.values()
             for label in buf_map
         },
-        key=lambda lbl: -score_map.get(lbl, 0.0),
+        # Erratum E81: sort defined scores descending and push
+        # undefined ones to the end of the table rather than ranking
+        # them at 0.0 (which the MCC scale reads as chance). The
+        # leading 0/1 flag does the partitioning; the second element
+        # orders within the defined group.
+        key=lambda lbl: (
+            (0, -score_map[lbl])
+            if score_map.get(lbl) is not None
+            else (1, 0.0)
+        ),
     )
 
     # Per-other-buffer Spearman rho between tier@20m and tier@buf
@@ -306,7 +392,7 @@ def build_stability_table(
     )
 
     for cond in all_conditions:
-        score = score_map.get(cond, 0.0)
+        score = score_map.get(cond)
         tier_assignments = [
             tier_maps.get(buf, {}).get(cond, "—") for buf in BUFFERS
         ]
@@ -320,15 +406,16 @@ def build_stability_table(
             for b in BUFFERS if b != DEFAULT_PRIMARY
         )
         marker = "stable" if stable else "shift"
-        score_str = f"{score:.3f}"
+        score_str = _fmt_score(score)
         tier_strs = " | ".join(str(t) for t in tier_assignments)
         lines.append(
             f"| `{cond}` | {score_str} | {tier_strs} | {marker} |"
         )
-    lines.append("")
-
     suffix = "" if metric == "f1" else f"_{metric}"
     output_path = stratum_dir / f"tier_stability{suffix}.md"
+    # A trailing `""` element plus the joined newline emitted two blank
+    # lines at end of file, which markdownlint flags as MD012. The single
+    # trailing newline below is all a well-formed Markdown file needs.
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     LOGGER.info("Wrote tier-stability table: %s", output_path)
 

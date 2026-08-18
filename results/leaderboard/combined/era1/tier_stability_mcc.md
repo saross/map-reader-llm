@@ -2,7 +2,7 @@
 
 **Metric**: MCC
 **Stratum**: combined / era1
-**Conditions**: 93
+**Conditions**: 86
 
 ## Methodology
 
@@ -44,8 +44,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h9-track1-image-h9-E-p1` | 0.643 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h9-track1-image-h9-E-p4` | 0.642 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h3-high-track2-text-T1.0` | 0.641 | 1 | 1 | 1 | 1 | 1 | stable |
-| `h9-track1-image-h9-D-t2` | 0.638 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h9-track1-image-h9-B-v3` | 0.638 | 1 | 1 | 1 | 1 | 1 | stable |
+| `h9-track1-image-h9-D-t2` | 0.638 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h9-track1-image-h9-D-t5` | 0.632 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h9-track1-image-h9-D-t4` | 0.631 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h9-track1-image-h9-B-v2` | 0.630 | 2 | 2 | 2 | 2 | 2 | stable |
@@ -74,8 +74,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h9-track2-text-h9-E-p5` | 0.423 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h9-track2-text-h9-A-p3` | 0.410 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h9-track2-text-h9-E-p4` | 0.404 | 3 | 3 | 3 | 3 | 3 | stable |
-| `h9-track2-text-h9-B-v1` | 0.403 | 4 | 4 | 4 | 4 | 4 | stable |
-| `h1-verbose-text-image` | 0.395 | 4 | 4 | 4 | 4 | 4 | stable |
+| `h9-track2-text-h9-B-v1` | 0.403 | 3 | 3 | 3 | 3 | 3 | stable |
+| `h1-verbose-text-image` | 0.395 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h7-track2-text-T1.3` | 0.379 | 4 | 4 | 4 | 4 | 4 | stable |
 | `h7-track1-image-T1.3` | 0.367 | 4 | 4 | 4 | 4 | 4 | stable |
 | `h9-track2-text-h9-B-v4` | 0.353 | 4 | 4 | 4 | 4 | 4 | stable |
@@ -102,8 +102,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h8-track1-image-scale-8` | 0.147 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h8-track1-image-scale-4` | 0.133 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h7-track1-image-T0.0` | 0.118 | 6 | 6 | 6 | 6 | 6 | stable |
-| `h8-track1-image-plus-hp` | 0.098 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h4-canonical-first` | 0.098 | 6 | 6 | 6 | 6 | 6 | stable |
+| `h8-track1-image-plus-hp` | 0.098 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h8-track1-image-canonical` | 0.098 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h8-track1-image-exploratory-pure-positive-canon` | 0.097 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h8-track1-image-pure-positive-canon` | 0.097 | 6 | 6 | 6 | 6 | 6 | stable |
@@ -111,11 +111,3 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h7-track2-text-T0.0` | 0.088 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h4-random` | 0.084 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h5-track2-text-verbose` | 0.081 | 6 | 6 | 6 | 6 | 6 | stable |
-| `h8-track2-text-canonical` | 0.000 | 7 | 7 | 7 | 7 | 7 | stable |
-| `h8-track1-image-exploratory-pure-positive-2hp` | 0.000 | 7 | 7 | 7 | 7 | 7 | stable |
-| `h8-track2-text-scale-8` | 0.000 | 7 | 7 | 7 | 7 | 7 | stable |
-| `h8-track2-text-scale-4` | 0.000 | 7 | 7 | 7 | 7 | 7 | stable |
-| `h8-track2-text-pure-positive-canon` | 0.000 | 7 | 7 | 7 | 7 | 7 | stable |
-| `h5-track2-text-terse` | 0.000 | 7 | 7 | 7 | 7 | 7 | stable |
-| `h8-track2-text-plus-hp` | 0.000 | 7 | 7 | 7 | 7 | 7 | stable |
-
