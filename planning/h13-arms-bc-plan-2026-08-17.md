@@ -1,7 +1,8 @@
 # H13 arms B + C — preparation plan and phase gate
 
-> **Last revised**: 2026-08-18 (scoring chain complete; all three
-> registered analyses reported). See [§ Changelog](#changelog).
+> **Last revised**: 2026-08-18 (cost-basis note added — all dollar
+> figures here are list price; billed is half). See
+> [§ Changelog](#changelog).
 
 **Ruling being executed**: S134 walk Group E — "H13: run arms B + C,
 gated behind a re-pricing check." E75 discloses the registered
@@ -141,7 +142,10 @@ detections, arm C 3,034/3,130/3,125; one tile failed (JSON parse,
 armB run_1 `K-35-078-1_Lesovo_x2304_y1536`) and was recovered as an
 additive pass (`run_1_recovery`, $0.0021); two transient 503s
 retried. **Actual spend $5.74 vs the $4.37 gate figure (+31 %),
-flagged to the PI, not absorbed**: the smoke priced T = 0.0 output
+flagged to the PI, not absorbed** — both figures on the LIST-price basis
+(see the basis note at the end of this section; billed was **$2.87 against
+a $2.19 gate**, and the +31 % overrun is unaffected because gate and
+actual share one basis): the smoke priced T = 0.0 output
 volumes (~1.2 detections/tile) and the audit's correction to
 T = 1.0 (~3.2/tile) inflated output tokens; per-item cost stayed
 under the 2× halt threshold mid-run. **Lesson recorded: re-pin the
@@ -201,7 +205,37 @@ the row for the PI). E75 disposition updated to REMEDIATED.
 Note: sapphire holds the (untracked, regenerable) tile trees
 `inputs/tiles_512_ov128/` and `_ov256/` — do not clean them.
 
+**COST-BASIS NOTE (added 2026-08-18).** Every dollar figure in §§ 4, 6
+and 7 above is **list price**, because that is what the run metadata
+recorded: `estimate_cost` priced real-time traffic at full rates until
+2026-08-18. Gemini real-time flex carries the same 50 % discount as the
+async Batch API, so the amounts actually billed are **half** those quoted
+— $5.74 → **$2.87** actual, $4.37 → **$2.19** gate, $1.46 → **$0.73**,
+$2.92 → **$1.46**, the smoke $0.0051 → **$0.0026**, and $0.00102/tile →
+**$0.00051/tile**.
+
+Note the mixed basis this document carries: `$0.266` per 487-tile MINIMAL
+pass, quoted from `pareto_v2.json` in § 4, is ALREADY discounted, so it
+was never comparable with the § 6/§ 7 figures beside it. That mismatch is
+what made the two internal cost sources appear to disagree by exactly 2×.
+
+No ratio or decision in this plan changes: the +31 % overrun, the
+scenario ranking, and the gate verdict all rest on comparisons within one
+basis. The writer now records the billed amount with list price and an
+explicit `cost_basis` field (defects D13, and D9 for the corresponding
+correction to `results/h13-overlap-2026-08-18/findings.md`).
+
 ## Changelog
+
+### 2026-08-18 (latest) — Cost-basis note
+
+Every dollar figure in this plan is list price; Gemini real-time flex
+bills at half. Actual spend was **$2.87** rather than $5.74, against a
+gate of **$2.19**. The document also mixed bases: `pareto_v2.json`'s
+$0.266 per pass was
+already discounted while the run figures beside it were not — which is
+why the two internal cost sources appeared to disagree by exactly 2×. No
+ratio, ranking or decision changes.
 
 ### 2026-08-18 (later) — Scoring chain complete
 
