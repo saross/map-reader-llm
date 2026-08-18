@@ -209,10 +209,17 @@ Note: sapphire holds the (untracked, regenerable) tile trees
 and 7 above is **list price**, because that is what the run metadata
 recorded: `estimate_cost` priced real-time traffic at full rates until
 2026-08-18. Gemini real-time flex carries the same 50 % discount as the
-async Batch API, so the amounts actually billed are **half** those quoted
-— $5.74 → **$2.87** actual, $4.37 → **$2.19** gate, $1.46 → **$0.73**,
-$2.92 → **$1.46**, the smoke $0.0051 → **$0.0026**, and $0.00102/tile →
-**$0.00051/tile**.
+async Batch API, so the amounts actually billed are **half** those
+quoted:
+
+| Quantity | Quoted (list) | Billed |
+|---|---:|---:|
+| Actual spend | `$5.74` | `$2.87` |
+| Gate estimate | `$4.37` | `$2.19` |
+| Scenario n = 1 | `$1.46` | `$0.73` |
+| Scenario staged n = 2(→3) | `$2.92` | `$1.46` |
+| Smoke test | `$0.0051` | `$0.0026` |
+| Pinned per-tile rate | `$0.00102` | `$0.00051` |
 
 Note the mixed basis this document carries: `$0.266` per 487-tile MINIMAL
 pass, quoted from `pareto_v2.json` in § 4, is ALREADY discounted, so it
@@ -230,12 +237,12 @@ correction to `results/h13-overlap-2026-08-18/findings.md`).
 ### 2026-08-18 (latest) — Cost-basis note
 
 Every dollar figure in this plan is list price; Gemini real-time flex
-bills at half. Actual spend was **$2.87** rather than $5.74, against a
-gate of **$2.19**. The document also mixed bases: `pareto_v2.json`'s
-$0.266 per pass was
-already discounted while the run figures beside it were not — which is
-why the two internal cost sources appeared to disagree by exactly 2×. No
-ratio, ranking or decision changes.
+bills at half. Actual spend was `$2.87` rather than `$5.74`, against a
+gate of `$2.19` rather than `$4.37`. The document also mixed bases:
+`pareto_v2.json`'s `$0.266` per pass was already discounted while the
+run figures beside it were not, which is why the two internal cost
+sources appeared to disagree by exactly twofold. No ratio, ranking or
+decision changes.
 
 ### 2026-08-18 (later) — Scoring chain complete
 
