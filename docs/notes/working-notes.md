@@ -27098,9 +27098,332 @@ verification round; script `scripts/h6_registered_analyses.py`,
 `750449f89`); block plan
 `planning/s135-analysis-block-2026-08-17.md`.
 
+## Observation 416: Cross-tile corroboration is a precision lever that exists only under overlap — and it inverts the overlap ranking (Session 136, 2026-08-18)
+
+*Drafted in-session 2026-08-19; minted with the four other Session-136
+candidates.*
+
+When overlapping tiles are sent to the model as independent calls, a
+real mound tends to be reported by every tile that contains it, while
+a hallucination tends not to recur at the same coordinates in a
+neighbour's independent call. The preregistered within-pass 20 m
+deduplication (§ 8.5 Step 1) already records how many raw detections
+merged into each cluster — `cluster_size` — so requiring `c ≥ 2`
+converts that book-keeping into a **precision filter at zero cost and
+zero additional API spend**.
+
+Its strength scales with the factor under test:
+
+| Overlap | Corroborated share (`c ≥ 2`) | Within-pass dedup removal |
+| :--- | ---: | ---: |
+| 12.5 % | 7.0 % (512 px), 7.7 % (384 px) | 5.9–6.7 % (H13), 6.4–7.1 % (grid) |
+| 25 % | not published | 15.7–17.9 % (H13 arm B) |
+| 50 % | 40.8 % (512 px), 41.7 % (384 px) | 39.2–40.0 % (H13), 41.2–41.4 % (grid) |
+
+Consequently `c ≥ 2` is **demolition at 12.5 % overlap and nearly free
+at 50 %**. On the K = 10 unions, requiring corroboration strips 512 px
+/ 12.5 % recall to 0.1238 (from 0.9416 at `c ≥ 1`) and 384 px / 12.5 %
+to 0.1589, because almost nothing is ever seen twice; at 50 % overlap
+the same filter retains about 93 % of recall (0.8692 of 0.9416 at
+512 px, 0.8902 of 0.9509 at 384 px) while lifting precision from
+0.1559 → 0.5307 and 0.1226 → 0.3667.
+
+**This inverted the H13 headline.** On raw single-pass scoring F1 falls
+monotonically as overlap rises — 0.5578 / 0.5198 / 0.4025 at
+12.5 / 25 / 50 %, every pairwise contrast clearing zero. Under a
+corroboration × consensus sweep at K = 3 the ordering flips: arm C's
+best cell (`c ≥ 2`, `k ≥ 3`) reaches **F1 0.7114** (P 0.7347, R 0.6896,
+n = 505) against arm A's best 0.6264 and arm B's 0.6331 — worst to
+best, 0.4025 → 0.7114 for the arm itself. The same reversal reproduced
+independently in the tile-size × overlap grid, whose best cell overall
+is **512 px / 50 %, `c ≥ 2`, `k ≥ 8`, K = 10 at F1 0.7518** (P 0.7535,
+R 0.7500, tile MCC 0.5897), ahead of 512 px / 12.5 %'s 0.6759. So
+**overlap's ranking inverts under aggregation; tile size's never
+does** — 512 px beats 384 px in both regimes and at every K.
+
+Why it matters. This is a precision mechanism **unavailable to any
+non-overlapping tiling**, and the registered pipeline discards it
+twice over: the registered scoring path performs no within-pass
+deduplication at all (D2 / E80), so `cluster_size` is never computed;
+and at the registered 512 px / 12.5 % geometry (`config.py:66-68`)
+there would be only ~7 % of it to discard anyway. It may also be
+**complementary to the verifier rather than redundant**, because it
+reduces candidate *load* as well as raising precision — a swamped
+verifier has two problems, per-candidate discrimination and sheer
+volume, and corroboration addresses the second for free (cf. Obs 355,
+where the 1-of-5 proposer union proved the *worst* verifier input).
+Phase 1 of the recall-levers programme tests exactly this.
+
+Caveats. Both boards are **consensus-only** — no verifier stage was
+run, so the whole finding is conditional on "no precision stage
+downstream" until Phase 1 lands. The grid's paired tile bootstraps are
+on the percentile path (seed 42, B = 1,000) and are therefore untouched
+by the D15 BCa axis defect (`c16f016d0`, mechanism re-examined at
+`13b5102d2`). Both boards are post-hoc, E41-class.
+
+Sources: `results/h13-overlap-2026-08-18/findings.md` and
+`tier0-aggregation/tier0_sweep.md` (scoring chain `faff43dd4`);
+`results/grid-2026-08-18/findings.md` and `sweep.csv` (228 rows; run
+`e612f7ac0`, findings `f31992b7d`); programme
+`planning/recall-levers-programme-2026-08-19.md` (`dc14ab969`).
+Related: **Obs 351** (tile-size × architecture interaction — the
+aggregation filter moves the optimum) and **Obs 352** (the adversarial
+verifier rescues 256 px) are the closest priors on "a downstream
+filter reorders the proposer board"; **Obs 359** (the diversity
+dividend does not survive the verifier) is the standing warning that
+proposer-stage gains need not transfer; **Obs 415** extends Obs 358's
+lesson that the optimal vote threshold is a property of the
+pipeline–corpus–model encounter, which is what `c` and `k` interacting
+here look like from the other side.
+
+## Observation 417: Stride is the cost variable — tile size and overlap are not independent levers (Session 136, 2026-08-19)
+
+*Drafted in-session 2026-08-19; minted with the four other Session-136
+candidates.*
+
+Per-call cost is nearly flat across tile size, because **image input
+tokens are a constant 1,502 per call** whether the tile is 384 px or
+512 px (Obs 418). Measured billed cost per call across the grid's four
+cells: **$0.000597 at 384 px / 12.5 %**, $0.000600 at 384 px / 50 %,
+**$0.000643 at 512 px / 12.5 %**, $0.000642 at 512 px / 50 %. Only
+output differs, and it scales with detections per tile, not pixels.
+
+Spend is therefore set by tile count, and tile count by **stride**:
+
+```text
+stride = tile_px × (1 − overlap_fraction)
+tiles  ∝ 1 / stride²
+```
+
+Verified against the grid rather than assumed: `tiles × stride²` is
+constant to within footprint edge effects across all four cells —
+1.000 / 0.918 / 0.925 / 0.867 (296 tiles at stride 448, 832 at 256,
+487 at 336, 1,398 at 192).
+
+**Tile size and overlap are two ways of moving one quantity, and cost
+sees only the product.** Four consequences, which is the substance of
+this observation:
+
+1. **A comparison that varies both is cost-confounded.** The Session
+   136 2 × 2's corners — 512 px / 50 % (stride 256) against 384 px /
+   12.5 % (stride 336) — differ **1.7×** in cost, so that diagonal
+   mixes geometry with sampling density and cannot be read as a clean
+   contrast.
+2. **Small tiles are structurally expensive.** Stride can never exceed
+   tile size, so 256 px at *zero* overlap already costs about **3×** a
+   512 px / 12.5 % run, and 256 px at 50 % overlap costs about **12×**
+   ((448/128)² = 12.25). There is no cheap way to buy small tiles: the
+   cost floor is set by the tile size itself.
+3. **An iso-stride comparison is the sharp instrument.** Because
+   stride is shared, holding it constant isolates the qualitative
+   difference between the two levers with cost *and* sampling density
+   controlled — e.g. 512 px at 34.4 % overlap against 384 px at
+   12.5 %, both at stride 336, ~490 versus 487 tiles, the same money.
+   That is a better use of ~$2.9 than adding corners to a factorial
+   grid, and it has never been run.
+4. **For cost-efficiency questions the target is the cheapest stride
+   that reaches plateau-level F1**, not the highest-F1 configuration.
+   With cost ∝ K / stride², the efficient frontier is computable
+   analytically once F1 is known at a few strides.
+
+Caveat: the cost figures above are on the **billed** (flex-discounted)
+basis. The recorded `cost_estimate` blocks in all 46 grid `*.meta.json`
+files are at list price and overstate billing by exactly 2× — a
+recorded $37.06 for the grid is ≈ $18.53 actually billed (D13, fixed
+in the writer at `d0a709059`; absence of a `cost_basis` key marks the
+old convention). Never re-derive a spend figure from pre-`d0a709059`
+metadata without halving it.
+
+Sources: `planning/recall-levers-programme-2026-08-19.md` § "The
+reframing that organises the design" (`dc14ab969`) carries the full
+programme; per-call costs recomputed here from
+`outputs/grid-2026-08-18/*/run*/*.meta.json` (run `e612f7ac0`); tile
+counts from `results/grid-2026-08-18/findings.md` (`f31992b7d`).
+Related: **Obs 418** (the token measurement this rests on); **Obs
+416** (why the overlap half of the trade-off is not merely a cost
+question); **Obs 357** (the cost meta-rule — on a within-noise tie
+take the cheaper configuration) and **Obs 362** (its scope
+qualification), which this reframing makes computable rather than
+case-by-case; **Obs 351**, whose "384 px is optimal in the PV
+pipeline" result is now visible as a claim about one point on a
+stride ladder.
+
+## Observation 418: Image input tokens do not scale with tile size — price a run by call count, not by pixels (Session 136, 2026-08-19)
+
+*Drafted in-session 2026-08-19; minted with the four other Session-136
+candidates.*
+
+Measured directly from run metadata, not modelled: **1,502 input
+tokens per call at both 384 px and 512 px, identical**. The matched
+8-tile smoke pair recorded 12,016 input tokens each — 1,502 per call
+on both sides — and the four full grid cells reproduce it at scale
+(1,502.3 / 1,502.3 / 1,502.5 / 1,502.2 per call over 4,870 / 13,980 /
+2,960 / 8,320 calls). Gemini buckets both tile sizes into the same
+image-token allotment.
+
+**Output tokens do differ**, tracking detections per tile rather than
+pixels: 112 versus 271 per call across the smoke pair (898 / 2,166
+tokens over 8 calls each, `detect_brief-text`, `gemini-3-flash-preview`,
+MINIMAL thinking, T = 0.7), and 147–149 versus 177–178 per call
+averaged over the full cells.
+
+This is counterintuitive — the natural assumption is that cost scales
+with pixel area — and it is the fact Obs 417 rests on. It also
+silently invalidated an earlier session estimate: scaling a 384 px
+rate by the pixel ratio (512/384)² = 1.778 to predict 512 px cost is
+simply wrong, and produced a projection that was off in the wrong
+direction until it was measured. The realised ratio is
+$0.000643 / $0.000597 = 1.08, not 1.78, and all of that 8 % is output.
+
+Practical rule: **price a run by call count, not by pixels.** The
+corollary for experiment design is Obs 417 — since calls are set by
+stride, and stride by tile size *and* overlap jointly, a cost estimate
+that reasons from resolution alone will be wrong by whatever factor
+the tiling geometry supplies.
+
+Sources: `outputs/grid-2026-08-18/smoke-384/` and `smoke-512/`
+`*.meta.json` (`usage_stats.total_input_tokens` = 12,016 in both;
+`total_output_tokens` 898 vs 2,166), plus the 46 per-run metadata
+blocks under `outputs/grid-2026-08-18/*/run*/` (run `e612f7ac0`).
+Costs on the billed basis per D13 / `d0a709059`. Related: **Obs 417**
+(stride as the cost variable — this is its load-bearing premise);
+**Obs 319** (the T = 0.7 recovery-cost asymmetry), another case where
+a per-unit intuition mispriced an aggregate by two orders of
+magnitude.
+
+## Observation 419: The audit found three defects in the fix for the defect it was auditing — and the test-adequacy lens found the ones that mattered (Session 136, 2026-08-18)
+
+*Drafted in-session 2026-08-19; minted with the four other Session-136
+candidates.*
+
+`/audit` was run on a new resolver (`scripts/lib_detection_paths.py`)
+written to close D6, a silent-undercount defect: two detection-filename
+conventions coexist under `outputs/`, so a `detections_*` glob silently
+under-reads a mixed pool. The audit ran **two orthogonal lenses in
+fresh context** — implementation correctness (Lens A) and test adequacy
+(Lens B) — and found **three defects in the fix itself**:
+
+1. **A live import-time breakage of eight scripts** (D6a).
+   `lib_consensus.py` had no project-level import at all before the
+   migration; adding a package-qualified
+   `from scripts.lib_detection_paths import …` broke every caller that
+   puts only `scripts/` on `sys.path` and imports `lib_consensus`
+   bare-name.
+   `n1_baseline_leaderboard_tiering.py` was unrunnable exactly as its
+   own docstring documents it (`--help` exited 1). **Invisible to the
+   test suite because `pytest.ini` sets `pythonpath = "."`.** Fixed
+   with a documented dual-mode import; all nine scripts verified
+   running again.
+2. **A dead exclusion filter** (D6b). Every filename reaching
+   `_is_pass_file` had already matched `detections_*` or
+   `detections-*`, so its computed stem was always the literal
+   `"detections"` and the aggregation-prefix check could never fire —
+   while **24 real non-passes** were being accepted as raw passes:
+   verifier threshold outputs (`detections_t0.25.geojson`,
+   `detections_vt4_pt0.10.geojson`) and the session's own
+   `detections_dedup.geojson`, the latter sitting *inside* `run_<N>`
+   directories where a glob-only resolver returns them as passes.
+   Replaced with strict per-convention regexes, corpus-validated: every
+   genuine pass matched, all 24 non-passes excluded, 0 passes missed.
+3. **Tests that validated nothing that mattered** (D6c). Measured, not
+   asserted: **reverting the migration at all four call sites left
+   1,489/1,489 tier-1 tests green**, and a call-site tracer showed
+   `load_run_detections`, `build_n1_gdf`, and the `PASS_GLOBS` consumer
+   were executed by *no test in the repository*. Seven caller-wiring
+   tests were added, each built on a convention-B-only pool and
+   asserted through the real entry point, and verified
+   non-tautological: with the migration reverted at runtime, four of
+   them fail.
+
+The generalisable point: **a fix for a silent-failure defect is itself
+prone to silent failure, and the author is the worst-placed person to
+see it.** Lens A found the bugs; Lens B found *why they got past
+review*. Both were needed, and the test-adequacy lens produced the
+finding that changed the work most — a suite that is green under a
+reverted migration is not evidence about the migration.
+
+Rider: the same audit also surfaced that flat pools (a pass file
+sitting directly in a pool with no `run_<N>` level) resolved to
+nothing, including both live grid smoke directories; and a *fourth*
+resolver defect escaped the audit entirely, surfacing only against
+real corpora — `resolve_pool_passes(..., expected_passes=N)` counted
+pass identities pool-wide, so ten run directories holding an
+identically-named real-time file collapsed to one identity and the
+guard raised `PassCountMismatch` on a perfectly healthy pool (fixed at
+`de5f0844c`). Two fresh-context lenses are a strong filter, not a
+complete one.
+
+Sources: `reports/defect-register-2026-08-18.md` (D6, D6a–D6c; register
+`f4c0b6d67`); remediation `6fa658877` ("resolver hardening after a
+two-lens audit — real defects found"), preceded by `6b1cb87af` and
+`4c44e3fd6` and followed by `8e59c9555`; tests
+`tests/test_lib_detection_paths.py`. The prior audit finding that D6
+did **not** reach committed results is C2 in the same register (156
+glob-based evaluations audited, 0 under-reads). Related: **Obs 406**
+(the hardened verifier stack caught a material error its own designer
+had just written, in prose both humans had confirmed) — the same
+author-blindness result on the prose side; **Obs 410** (verifier value
+concentrates where the artefact is answer-shaped); **Obs 397** (the
+pre-run review protocol, four hardenings in one sitting); **Obs 327**
+and **Obs 330** (a schema build functioning as a completeness audit).
+
+## Observation 420: Four separate scope confounds in one session, all the same shape — assume a cross-configuration comparison is scope-confounded until the footprints are measured (Session 136, 2026-08-19)
+
+*Drafted in-session 2026-08-19; minted with the four other Session-136
+candidates.*
+
+Cross-configuration comparisons were repeatedly found to sit on
+different evaluation footprints, each time invalidating the comparison
+until corrected. Four instances in one session:
+
+| # | Comparison | The divergence | Status |
+| :--- | :--- | :--- | :--- |
+| 1 | H13's three overlap arms | footprint-majority manifests give tile unions of 1751.2 / 1694.8 / 1847.0 km² and ground-truth-in-scope of 539 / 563 / 565 | **fixed** — common A ∩ B ∩ C footprint, 1637.5 km², 538 mounds, carried on the arm-A grid |
+| 2 | 384 px versus 512 px corpora | `era-2-487` covers 1415.8 km² with 435 mounds; the H13 512 px common scope covers 1637.5 km² with 538 | **fixed** — re-scored on the intersection (1367.0 km², 332 carrier tiles, 435 mounds) |
+| 3 | the grid's four cells | unions 1415.8 / 1534.5 / 1508.2 / 1640.6 km² holding 435 / 482 / 466 / 495 mounds, *despite* all four manifests being pinned to the same Era-2 footprint (`fe623a555`) | **fixed** — four-way intersection, 1364.47 km², 428 mounds |
+| 4 | the 256 px "swamping" premise | F1 0.8558 on scope `px256-1032` (1,032 tiles) against 0.8835 on `era-2-487` (487 tiles) | **NOT fixed** — Phase 0.3 of the recall-levers programme |
+
+Case 3 is the instructive one: the four cells were *built* to share a
+footprint, and still diverged, because the footprint-majority rule
+keeps a tile whole when more than half of it falls inside, so a denser
+tiling accretes more marginal ground. Only the 384 px / 12.5 % cell
+reproduces `era-2-487` exactly (symmetric difference 0.0 m², asserted
+in code).
+
+Each divergence was caught only by **explicitly measuring the
+footprint rather than assuming it**. The recurrence is the finding:
+**assume a cross-configuration comparison is scope-confounded until
+the footprints have been measured.** Note the asymmetry in
+consequence — (1)–(3) were caught before they reached a conclusion,
+and cost only the re-scoring; (4) has been shaping design decisions
+for some time. It currently underpins the study's caution about
+high-recall proposers, and the gap there is 0.028, not a collapse, so
+"256 px overwhelmed the verifier" may be materially overstated. If it
+shrinks or vanishes on a common footprint, the premise motivating
+caution about the high-recall direction weakens and the
+cost-efficiency question reopens.
+
+Sources: `results/h13-overlap-2026-08-18/findings.md`
+§ "The evaluation-footprint hazard" and
+`tilesize-grid/tilesize_grid.json` (`scope.name` = "384 px corpus ∩
+H13 512 px common"), chain `faff43dd4`;
+`results/grid-2026-08-18/findings.md` § Surprises 3 and § Method
+(`f31992b7d`, run `e612f7ac0`); footprint areas recomputed on sapphire
+in `reports/scoring-audit-notes-2026-08-18.md` § 1.1;
+`planning/recall-levers-programme-2026-08-19.md` § 0.3
+(`dc14ab969`). Related: **Obs 384**, the study's canonical instance —
+the largest configuration effect in the study turned out to be a
+coverage artefact, reversing at matched 487-tile scope; **Obs 386**
+(three simultaneously-true temperature layers, one per
+metric-and-corpus); **Obs 328** (empirical eval-count can mislead on
+nominal scope); **Obs 296** / **Obs 317** (cross-corpus gaps that
+dissolved once the comparison was made properly); **Obs 351** and
+**Obs 352**, which carry the 256 px verifier reading that case 4 puts
+back in play.
+
 ## Candidates pending review — none outstanding
 
-The Session-135 candidate was approved in-session on 2026-08-17 at
-the L4 walk and minted above as Observation 415; the two
-Session-134 candidates were approved on the same date and minted as
-Observations 413–414.
+The five Session-136 candidates were approved in-session on
+2026-08-19 and minted above as Observations 416–420; the
+Session-135 candidate was approved on 2026-08-17 at the L4 walk and
+minted as Observation 415.
