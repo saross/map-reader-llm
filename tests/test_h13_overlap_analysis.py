@@ -154,3 +154,66 @@ def test_assign_primary_tiles_empty_input():
     )
     empty = gpd.GeoDataFrame(geometry=[], crs=CRS)
     assert assign_primary_tiles(empty, bounds) == []
+
+
+# ── Tier-0 aggregation sweep ──────────────────────────────────────────
+
+from scripts.h13_aggregation_sweep import aggregate  # noqa: E402
+
+
+def _det(x, y, cluster_size=1):
+    """Build one deduplicated-detection dict for the aggregation sweep.
+
+    Args:
+        x: Easting. y: Northing. cluster_size: Overlapping tiles that saw it.
+
+    Returns:
+        A detection dict in the shape ``aggregate`` consumes.
+    """
+    return {
+        "centroid": (x, y),
+        "label": "mound",
+        "source_tiles": ["t.png"],
+        "cluster_size": cluster_size,
+    }
+
+
+@pytest.mark.tier1
+def test_aggregate_vote_threshold():
+    """A cluster survives only when enough distinct passes contribute."""
+    passes = {
+        "run_1": [_det(0, 0), _det(500, 500)],
+        "run_2": [_det(5, 5)],
+        "run_3": [_det(10, 0)],
+    }
+    # The three near-origin detections lie within 20 m of each other, so they
+    # form one 3-vote cluster; the lone (500, 500) detection has 1 vote.
+    assert len(aggregate(passes, 1, 1)) == 2
+    assert len(aggregate(passes, 1, 2)) == 1
+    assert len(aggregate(passes, 1, 3)) == 1
+    passes["run_2"] = []
+    passes["run_3"] = []
+    assert aggregate(passes, 1, 2) == []
+
+
+@pytest.mark.tier1
+def test_aggregate_corroboration_filter_applies_before_pooling():
+    """The corroboration filter is within-pass: it drops detections, not votes.
+
+    A detection corroborated by one tile only is removed from its own pass
+    before pooling, so it cannot contribute a vote to any cluster.
+    """
+    passes = {
+        "run_1": [_det(0, 0, cluster_size=1)],
+        "run_2": [_det(0, 0, cluster_size=3)],
+        "run_3": [_det(0, 0, cluster_size=3)],
+    }
+    assert len(aggregate(passes, 1, 3)) == 1   # all three pass the c>=1 filter
+    assert aggregate(passes, 2, 3) == []       # run_1 filtered out, only 2 votes
+    assert len(aggregate(passes, 2, 2)) == 1   # the surviving two still agree
+
+
+@pytest.mark.tier1
+def test_aggregate_empty_input():
+    """Empty passes aggregate to an empty result rather than raising."""
+    assert aggregate({"run_1": [], "run_2": [], "run_3": []}, 1, 1) == []
