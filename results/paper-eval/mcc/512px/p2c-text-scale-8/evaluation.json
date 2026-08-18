@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-30T06:54:28.690640+00:00",
+  "timestamp": "2026-08-18T13:08:38.562788+00:00",
   "summary": {
     "label": "P2c Text scale-8",
     "n_detections": 881,
@@ -43,18 +43,18 @@
         "fn": 0
       },
       "mcc": {
-        "point": 0.0,
-        "mean": 0.0,
-        "ci_lower": 0.0,
-        "ci_upper": 0.0,
-        "method": "percentile_fallback"
+        "point": null,
+        "mean": null,
+        "ci_lower": null,
+        "ci_upper": null,
+        "method": "undefined"
       },
       "sensitivity": {
         "point": 1.0,
         "mean": 1.0,
         "ci_lower": 1.0,
         "ci_upper": 1.0,
-        "method": "BCa"
+        "method": "percentile_fallback"
       },
       "specificity": {
         "point": 0.0,
@@ -102,6 +102,11 @@
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    },
+    "e81_reemission": {
+      "erratum": "E81",
+      "scope": "summary.tile_classification and per_run[*].tile_classification only; F1, precision, recall, coverage, and CI fields carried through unchanged",
+      "script_path": "scripts/rescore_tile_mcc_e81.py"
     }
   }
 }

@@ -49839,13 +49839,15 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0443,
+          "mcc": 0.0665,
           "sensitivity": 1.0,
           "specificity": 0.0049,
           "tp": 204,
           "tn": 1,
           "fp": 135,
-          "fn": 0
+          "fn": 0,
+          "mcc_n_runs": 3,
+          "mcc_n_runs_defined": 2
         }
       },
       "n_detections": null,
@@ -49856,7 +49858,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2a-brief-text/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -50577,13 +50580,15 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0443,
+          "mcc": 0.0665,
           "sensitivity": 1.0,
           "specificity": 0.0049,
           "tp": 204,
           "tn": 1,
           "fp": 135,
-          "fn": 0
+          "fn": 0,
+          "mcc_n_runs": 3,
+          "mcc_n_runs_defined": 2
         }
       },
       "n_detections": null,
@@ -50594,7 +50599,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2a-verbose-text/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -52299,13 +52305,16 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_n_runs": 3,
+          "mcc_n_runs_defined": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": null,
@@ -52316,7 +52325,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-0/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -52545,13 +52555,15 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0443,
+          "mcc": 0.0665,
           "sensitivity": 1.0,
           "specificity": 0.0049,
           "tp": 204,
           "tn": 1,
           "fp": 135,
-          "fn": 0
+          "fn": 0,
+          "mcc_n_runs": 3,
+          "mcc_n_runs_defined": 2
         }
       },
       "n_detections": null,
@@ -52562,7 +52574,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-3/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -52791,13 +52804,16 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_n_runs": 3,
+          "mcc_n_runs_defined": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": null,
@@ -52808,7 +52824,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-7/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -53037,13 +53054,15 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0222,
+          "mcc": 0.0665,
           "sensitivity": 1.0,
           "specificity": 0.0025,
           "tp": 204,
           "tn": 1,
           "fp": 135,
-          "fn": 0
+          "fn": 0,
+          "mcc_n_runs": 3,
+          "mcc_n_runs_defined": 1
         }
       },
       "n_detections": null,
@@ -53054,7 +53073,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-1-0/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -55263,13 +55283,14 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": 823,
@@ -55280,7 +55301,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-exploratory-pure-positive-2hp/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -56001,13 +56023,14 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": 897,
@@ -56018,7 +56041,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-canonical/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -56247,13 +56271,14 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": 885,
@@ -56264,7 +56289,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-plus-hp/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -56493,13 +56519,14 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": 887,
@@ -56510,7 +56537,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-pure-positive-canon/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -56739,13 +56767,14 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": 882,
@@ -56756,7 +56785,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-scale-4/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -56985,13 +57015,14 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": 881,
@@ -57002,7 +57033,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-scale-8/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {
@@ -57723,13 +57755,14 @@
           }
         },
         "tile_classification": {
-          "mcc": 0.0,
+          "mcc": null,
           "sensitivity": 1.0,
           "specificity": 0.0,
           "tp": 204,
           "tn": 0,
           "fp": 136,
-          "fn": 0
+          "fn": 0,
+          "mcc_undefined_reason": "degenerate tile confusion matrix (TN + FN = 0): every evaluation tile was predicted populated, so the MCC denominator vanishes \u2014 erratum E81"
         }
       },
       "n_detections": 868,
@@ -57740,7 +57773,8 @@
           "results/paper-eval/phase2/512px-14buf-mcc/p2d-text-terse/evaluation.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
-        "extractor_version": "0.7.1"
+        "extractor_version": "0.7.1",
+        "e81_correction": "2026-08-18: tile MCC re-derived; see erratum E81"
       }
     },
     {

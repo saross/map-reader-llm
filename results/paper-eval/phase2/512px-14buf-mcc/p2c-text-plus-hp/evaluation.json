@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-06-05T06:51:33.399907+00:00",
+  "timestamp": "2026-08-18T13:03:42.473869+00:00",
   "summary": {
     "label": "detections_plus-hp_run01",
     "n_detections": 885,
@@ -394,18 +394,18 @@
         "fn": 0
       },
       "mcc": {
-        "point": 0.0,
-        "mean": 0.0,
-        "ci_lower": 0.0,
-        "ci_upper": 0.0,
-        "method": "percentile_fallback"
+        "point": null,
+        "mean": null,
+        "ci_lower": null,
+        "ci_upper": null,
+        "method": "undefined"
       },
       "sensitivity": {
         "point": 1.0,
         "mean": 1.0,
         "ci_lower": 1.0,
         "ci_upper": 1.0,
-        "method": "BCa"
+        "method": "percentile_fallback"
       },
       "specificity": {
         "point": 0.0,
@@ -469,6 +469,11 @@
       "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
       "geojson_storage_crs": "EPSG:4326",
       "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
+    },
+    "e81_reemission": {
+      "erratum": "E81",
+      "scope": "summary.tile_classification and per_run[*].tile_classification only; F1, precision, recall, coverage, and CI fields carried through unchanged",
+      "script_path": "scripts/rescore_tile_mcc_e81.py"
     }
   }
 }

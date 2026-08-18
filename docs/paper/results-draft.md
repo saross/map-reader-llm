@@ -1,6 +1,9 @@
 # Results — working draft
 
-> **Last revised**: 2026-08-17 (Session 134: post-reconciliation
+> **Last revised**: 2026-08-18 (Session 136: erratum E81 — the § R1
+> "near-zero MCC" clause corrected, because that near-zero was an
+> imputation for an undefined metric). Prior: 2026-08-17 (Session
+> 134: post-reconciliation
 > confirmatory passages landed — per-subsection registration-status
 > markers (D16), the hypothesis-outcome table framing after § R0, the
 > family-FDR verdicts in §§ R2–R4 including H2's falsified-prediction
@@ -131,9 +134,20 @@ temperature (H7), example-library composition (H8) — all land inside or
 near that tie: the GS instrument cannot separate the stronger single-pass
 configs from one another. Two robust patterns do emerge: text-modality
 prompts dominate image-only prompts at the bottom of the board, and a
-metric trade-off recurs in which text cells reach F1 ≈ 0.60 at
-near-zero MCC while image cells trade F1 for far better tile
-discrimination.
+metric trade-off recurs in which text cells reach F1 ≈ 0.60 with
+essentially no tile-level discrimination while image cells trade F1 for
+markedly better discrimination (MCC 0.094–0.291). For the text cells
+that "essentially none" is literal rather than numerical: eight of the
+fourteen returned at least one detection on every one of the 340
+evaluation tiles, which empties the predicted-negative column of the
+tile confusion matrix and leaves MCC undefined; the six that are
+computable all sit at 0.0665, the value of leaving exactly one of the
+136 reference-empty tiles alone.
+[REVISED 2026-08-18: this passage previously read "at near-zero MCC".
+That near-zero was an imputation — the scorer published an *undefined*
+MCC as `0.0`, the value the registered § 4.2 scale legend calls
+"random" (erratum E81). The direction of the contrast survives
+unchanged; its magnitude rested on values the data do not carry.]
 
 The registered contrasts read the same way, with one exception. In
 the confirmatory family (Methods § M.x), H1's registered pooled
@@ -544,6 +558,38 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-08-18 — Erratum E81: the § R2 "near-zero MCC" clause (Session 136)
+
+**Refresh trigger**: erratum E81
+(`docs/methodology/preregistration/protocol-errata.md`) established that
+`evaluate_detections.py` published an *undefined* tile-level MCC as the
+number `0.0` — the value § 4.2 of the registration labels "random" — on
+nine conditions, and averaged that imputed zero into the multi-run means
+of four more. The § R2 sentence "text cells reach F1 ≈ 0.60 at near-zero
+MCC" quoted that imputation, and `docs/paper/results-outline.md:200-201`
+designates the surrounding item the home of the D3 thread and marks it
+load-bearing, so it could not be left standing.
+
+**Before → after** (numbers re-derived from the re-emitted cells under
+`results/paper-eval/phase2/512px-14buf-mcc/`):
+
+| Claim | Before | After |
+|---|---|---|
+| Text-cell tile MCC | "near-zero" | undefined on 8 of 14 phase-2 text cells; 0.0665 on the other 6 |
+| Image-cell tile MCC | "far better tile discrimination" (unquantified) | MCC 0.094–0.291 |
+| Text-cell F1 | ≈ 0.60 | ≈ 0.60 (unchanged) |
+
+**What did not change**: no F1, precision, recall, or confidence interval
+anywhere in the draft; the `canonical-last` anchor (F1 0.631, MCC 0.213)
+is untouched, as are the `image-verbose` (0.603 / 0.281) and
+`verbose-text-image` (0.517 / 0.291) anchors quoted from the
+`era1-single-pass-baseline-matrix` outcome. The **direction** of the
+metric trade-off survives — image cells genuinely do discriminate better
+at tile level — and no registered hypothesis verdict, tie set, or tier
+ranking moves. What changed is that the text side of the contrast is now
+stated as the undefined metric it is rather than as a measured value at
+chance.
 
 ### 2026-08-17 — Post-reconciliation confirmatory passages (Session 134)
 

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-30T06:54:29.690517+00:00",
+  "timestamp": "2026-08-18T13:08:21.160891+00:00",
   "summary": {
     "label": "P2b Text T=0.7",
     "n_runs": 3,
@@ -20,26 +20,36 @@
     ],
     "tile_classification": {
       "mcc": {
-        "mean": 0.0,
-        "ci_lower": 0.0,
-        "ci_upper": 0.0
+        "mean": null,
+        "ci_lower": null,
+        "ci_upper": null,
+        "point": null,
+        "n_runs": 3,
+        "n_runs_defined": 0
       },
       "sensitivity": {
         "mean": 1.0,
         "ci_lower": 1.0,
-        "ci_upper": 1.0
+        "ci_upper": 1.0,
+        "point": 1.0,
+        "n_runs": 3,
+        "n_runs_defined": 3
       },
       "specificity": {
         "mean": 0.0,
         "ci_lower": 0.0,
-        "ci_upper": 0.0
+        "ci_upper": 0.0,
+        "point": 0.0,
+        "n_runs": 3,
+        "n_runs_defined": 3
       },
       "confusion": {
         "tp": 204,
         "tn": 0,
         "fp": 136,
         "fn": 0
-      }
+      },
+      "confusion_source": "run_1"
     }
   },
   "_metadata": {
@@ -75,6 +85,11 @@
       "detections": "outputs/retest/phase2b/track2-text/T0.7",
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    },
+    "e81_reemission": {
+      "erratum": "E81",
+      "scope": "summary.tile_classification and per_run[*].tile_classification only; F1, precision, recall, coverage, and CI fields carried through unchanged",
+      "script_path": "scripts/rescore_tile_mcc_e81.py"
     }
   },
   "per_run": [
@@ -120,18 +135,18 @@
           "fn": 0
         },
         "mcc": {
-          "point": 0.0,
-          "mean": 0.0,
-          "ci_lower": 0.0,
-          "ci_upper": 0.0,
-          "method": "percentile_fallback"
+          "point": null,
+          "mean": null,
+          "ci_lower": null,
+          "ci_upper": null,
+          "method": "undefined"
         },
         "sensitivity": {
           "point": 1.0,
           "mean": 1.0,
           "ci_lower": 1.0,
           "ci_upper": 1.0,
-          "method": "BCa"
+          "method": "percentile_fallback"
         },
         "specificity": {
           "point": 0.0,
@@ -184,18 +199,18 @@
           "fn": 0
         },
         "mcc": {
-          "point": 0.0,
-          "mean": 0.0,
-          "ci_lower": 0.0,
-          "ci_upper": 0.0,
-          "method": "percentile_fallback"
+          "point": null,
+          "mean": null,
+          "ci_lower": null,
+          "ci_upper": null,
+          "method": "undefined"
         },
         "sensitivity": {
           "point": 1.0,
           "mean": 1.0,
           "ci_lower": 1.0,
           "ci_upper": 1.0,
-          "method": "BCa"
+          "method": "percentile_fallback"
         },
         "specificity": {
           "point": 0.0,
@@ -248,18 +263,18 @@
           "fn": 0
         },
         "mcc": {
-          "point": 0.0,
-          "mean": 0.0,
-          "ci_lower": 0.0,
-          "ci_upper": 0.0,
-          "method": "percentile_fallback"
+          "point": null,
+          "mean": null,
+          "ci_lower": null,
+          "ci_upper": null,
+          "method": "undefined"
         },
         "sensitivity": {
           "point": 1.0,
           "mean": 1.0,
           "ci_lower": 1.0,
           "ci_upper": 1.0,
-          "method": "BCa"
+          "method": "percentile_fallback"
         },
         "specificity": {
           "point": 0.0,

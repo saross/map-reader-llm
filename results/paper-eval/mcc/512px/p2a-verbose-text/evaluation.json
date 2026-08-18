@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-30T06:54:15.548211+00:00",
+  "timestamp": "2026-08-18T13:08:11.286464+00:00",
   "summary": {
     "label": "P2a Verbose text",
     "n_runs": 3,
@@ -20,26 +20,36 @@
     ],
     "tile_classification": {
       "mcc": {
-        "mean": 0.0439,
-        "ci_lower": 0.0317,
-        "ci_upper": 0.0501
+        "mean": 0.0811,
+        "ci_lower": 0.0604,
+        "ci_upper": 0.1285,
+        "point": 0.0665,
+        "n_runs": 3,
+        "n_runs_defined": 2
       },
       "sensitivity": {
         "mean": 1.0,
         "ci_lower": 1.0,
-        "ci_upper": 1.0
+        "ci_upper": 1.0,
+        "point": 1.0,
+        "n_runs": 3,
+        "n_runs_defined": 3
       },
       "specificity": {
-        "mean": 0.0048,
-        "ci_lower": 0.0025,
-        "ci_upper": 0.0063
+        "mean": 0.0049,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0157,
+        "point": 0.0049,
+        "n_runs": 3,
+        "n_runs_defined": 3
       },
       "confusion": {
         "tp": 204,
         "tn": 1,
         "fp": 135,
         "fn": 0
-      }
+      },
+      "confusion_source": "run_1"
     }
   },
   "_metadata": {
@@ -75,6 +85,11 @@
       "detections": "outputs/retest/phase2a/verbose-text",
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    },
+    "e81_reemission": {
+      "erratum": "E81",
+      "scope": "summary.tile_classification and per_run[*].tile_classification only; F1, precision, recall, coverage, and CI fields carried through unchanged",
+      "script_path": "scripts/rescore_tile_mcc_e81.py"
     }
   },
   "per_run": [
@@ -121,24 +136,24 @@
         },
         "mcc": {
           "point": 0.0665,
-          "mean": 0.0658,
-          "ci_lower": 0.0476,
-          "ci_upper": 0.0752,
-          "method": "BCa"
+          "mean": 0.0811,
+          "ci_lower": 0.0604,
+          "ci_upper": 0.1285,
+          "method": "percentile_fallback"
         },
         "sensitivity": {
           "point": 1.0,
           "mean": 1.0,
           "ci_lower": 1.0,
           "ci_upper": 1.0,
-          "method": "BCa"
+          "method": "percentile_fallback"
         },
         "specificity": {
           "point": 0.0074,
-          "mean": 0.0072,
-          "ci_lower": 0.0038,
-          "ci_upper": 0.0094,
-          "method": "BCa"
+          "mean": 0.0073,
+          "ci_lower": 0.0,
+          "ci_upper": 0.0236,
+          "method": "percentile_fallback"
         }
       }
     },
@@ -184,18 +199,18 @@
           "fn": 0
         },
         "mcc": {
-          "point": 0.0,
-          "mean": 0.0,
-          "ci_lower": 0.0,
-          "ci_upper": 0.0,
-          "method": "percentile_fallback"
+          "point": null,
+          "mean": null,
+          "ci_lower": null,
+          "ci_upper": null,
+          "method": "undefined"
         },
         "sensitivity": {
           "point": 1.0,
           "mean": 1.0,
           "ci_lower": 1.0,
           "ci_upper": 1.0,
-          "method": "BCa"
+          "method": "percentile_fallback"
         },
         "specificity": {
           "point": 0.0,
@@ -249,24 +264,24 @@
         },
         "mcc": {
           "point": 0.0665,
-          "mean": 0.0658,
-          "ci_lower": 0.0476,
-          "ci_upper": 0.0752,
-          "method": "BCa"
+          "mean": 0.0811,
+          "ci_lower": 0.0604,
+          "ci_upper": 0.1285,
+          "method": "percentile_fallback"
         },
         "sensitivity": {
           "point": 1.0,
           "mean": 1.0,
           "ci_lower": 1.0,
           "ci_upper": 1.0,
-          "method": "BCa"
+          "method": "percentile_fallback"
         },
         "specificity": {
           "point": 0.0074,
-          "mean": 0.0072,
-          "ci_lower": 0.0038,
-          "ci_upper": 0.0094,
-          "method": "BCa"
+          "mean": 0.0073,
+          "ci_lower": 0.0,
+          "ci_upper": 0.0236,
+          "method": "percentile_fallback"
         }
       }
     }
