@@ -1,0 +1,100 @@
+{
+ "dedup_cells": [
+  {
+   "name": "h13::arm-c-overlap-50",
+   "detections": [
+    "outputs/h13/scoring/common/armC/run_1/detections_dedup.geojson",
+    "outputs/h13/scoring/common/armC/run_2/detections_dedup.geojson",
+    "outputs/h13/scoring/common/armC/run_3/detections_dedup.geojson"
+   ],
+   "bounds": "outputs/h13/scoring/bounds/h13_common_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "h13::arm-a-overlap-12-5",
+   "detections": [
+    "outputs/h13/scoring/common/armA/run_1/detections_dedup.geojson",
+    "outputs/h13/scoring/common/armA/run_2/detections_dedup.geojson",
+    "outputs/h13/scoring/common/armA/run_3/detections_dedup.geojson"
+   ],
+   "bounds": "outputs/h13/scoring/bounds/h13_common_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  }
+ ],
+ "tiebreak_cells": [
+  {
+   "name": "consensus-384-t1-0::consensus-1of30",
+   "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t1.geojson",
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "consensus-384-t1-0::consensus-2of30",
+   "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t2.geojson",
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "e47-propose-brief::consensus-1of5",
+   "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1.geojson",
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "n1-outstanding-384::image-t03-consensus-1of3",
+   "detections": "outputs/h11/n1-outstanding-384/image-t03/consensus/consensus_t1.geojson",
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  }
+ ],
+ "_committed_reference": {
+  "consensus-384-t1-0::consensus-1of30": {
+   "dup_frac": 0.06878850102669405,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "tiebreak_exposed": true
+  },
+  "consensus-384-t1-0::consensus-2of30": {
+   "dup_frac": 0.032467532467532464,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "tiebreak_exposed": true
+  },
+  "e47-propose-brief::consensus-1of5": {
+   "dup_frac": 0.0447561790247161,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "tiebreak_exposed": true
+  },
+  "n1-outstanding-384::image-t03-consensus-1of3": {
+   "dup_frac": 0.04187192118226601,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "tiebreak_exposed": true
+  },
+  "h13::arm-c-overlap-50": {
+   "dup_frac": 0.03198214949795463,
+   "bounds": "outputs/h13/scoring/bounds/h13_common_bounds.geojson",
+   "tiebreak_exposed": false
+  },
+  "h13::arm-a-overlap-12-5": {
+   "dup_frac": 0.0,
+   "bounds": "outputs/h13/scoring/bounds/h13_common_bounds.geojson",
+   "tiebreak_exposed": false
+  }
+ }
+}

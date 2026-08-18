@@ -1,0 +1,5559 @@
+{
+  "generated_at_utc": "2026-08-18T06:10:51.593766+00:00",
+  "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson",
+  "dedup_metres": 20.0,
+  "dedup_cells": [
+    {
+      "name": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 446,
+            "n_dedup": 398,
+            "n_removed": 48,
+            "removed_fraction": 0.10762331838565023,
+            "cluster_size_histogram": {
+              "1": 351,
+              "2": 46,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.766816,
+              "recall": 0.786207,
+              "f1": 0.77639,
+              "n_detections": 446
+            },
+            "30": {
+              "precision": 0.786996,
+              "recall": 0.806897,
+              "f1": 0.796822,
+              "n_detections": 446
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.859296,
+              "recall": 0.786207,
+              "f1": 0.821128,
+              "n_detections": 398
+            },
+            "30": {
+              "precision": 0.88191,
+              "recall": 0.806897,
+              "f1": 0.842737,
+              "n_detections": 398
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.766816,
+            "recall": 0.786207,
+            "f1": 0.77639
+          },
+          "deduplicated": {
+            "precision": 0.859296,
+            "recall": 0.786207,
+            "f1": 0.821128
+          },
+          "delta_f1": 0.044738
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.786996,
+            "recall": 0.806897,
+            "f1": 0.796822
+          },
+          "deduplicated": {
+            "precision": 0.88191,
+            "recall": 0.806897,
+            "f1": 0.842737
+          },
+          "delta_f1": 0.045915
+        }
+      }
+    },
+    {
+      "name": "n1-pro-rerun-384::baseline-pro-text-medium-t-0-7",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "n_passes": 3,
+      "passes": [
+        {
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-text-medium-t07/run_1/detections-detect_brief-text-3.1-pro-2026-06-03.geojson",
+          "dedup_stats": {
+            "n_raw": 471,
+            "n_dedup": 419,
+            "n_removed": 52,
+            "removed_fraction": 0.11040339702760085,
+            "cluster_size_histogram": {
+              "1": 368,
+              "2": 50,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.734607,
+              "recall": 0.795402,
+              "f1": 0.763797,
+              "n_detections": 471
+            },
+            "30": {
+              "precision": 0.774947,
+              "recall": 0.83908,
+              "f1": 0.80574,
+              "n_detections": 471
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.823389,
+              "recall": 0.793103,
+              "f1": 0.807963,
+              "n_detections": 419
+            },
+            "30": {
+              "precision": 0.871122,
+              "recall": 0.83908,
+              "f1": 0.854801,
+              "n_detections": 419
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-text-medium-t07/run_2/detections-detect_brief-text-3.1-pro-2026-06-03.geojson",
+          "dedup_stats": {
+            "n_raw": 464,
+            "n_dedup": 413,
+            "n_removed": 51,
+            "removed_fraction": 0.10991379310344827,
+            "cluster_size_histogram": {
+              "1": 365,
+              "2": 46,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.734914,
+              "recall": 0.783908,
+              "f1": 0.758621,
+              "n_detections": 464
+            },
+            "30": {
+              "precision": 0.778017,
+              "recall": 0.829885,
+              "f1": 0.803115,
+              "n_detections": 464
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.825666,
+              "recall": 0.783908,
+              "f1": 0.804245,
+              "n_detections": 413
+            },
+            "30": {
+              "precision": 0.874092,
+              "recall": 0.829885,
+              "f1": 0.851415,
+              "n_detections": 413
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-text-medium-t07/run_3/detections-detect_brief-text-3.1-pro-2026-06-03.geojson",
+          "dedup_stats": {
+            "n_raw": 460,
+            "n_dedup": 413,
+            "n_removed": 47,
+            "removed_fraction": 0.10217391304347827,
+            "cluster_size_histogram": {
+              "1": 368,
+              "2": 44,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.723913,
+              "recall": 0.765517,
+              "f1": 0.744134,
+              "n_detections": 460
+            },
+            "30": {
+              "precision": 0.791304,
+              "recall": 0.836782,
+              "f1": 0.813408,
+              "n_detections": 460
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.803874,
+              "recall": 0.763218,
+              "f1": 0.783019,
+              "n_detections": 413
+            },
+            "30": {
+              "precision": 0.881356,
+              "recall": 0.836782,
+              "f1": 0.858491,
+              "n_detections": 413
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.731145,
+            "recall": 0.781609,
+            "f1": 0.755517
+          },
+          "deduplicated": {
+            "precision": 0.817643,
+            "recall": 0.780076,
+            "f1": 0.798409
+          },
+          "delta_f1": 0.042892
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.781423,
+            "recall": 0.835249,
+            "f1": 0.807421
+          },
+          "deduplicated": {
+            "precision": 0.875523,
+            "recall": 0.835249,
+            "f1": 0.854902
+          },
+          "delta_f1": 0.047481
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::baseline-pro-text-high-t-0-7",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "n_passes": 10,
+      "passes": [
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 440,
+            "n_dedup": 387,
+            "n_removed": 53,
+            "removed_fraction": 0.12045454545454545,
+            "cluster_size_histogram": {
+              "1": 334,
+              "2": 53
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.734091,
+              "recall": 0.742529,
+              "f1": 0.738286,
+              "n_detections": 440
+            },
+            "30": {
+              "precision": 0.788636,
+              "recall": 0.797701,
+              "f1": 0.793143,
+              "n_detections": 440
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.834625,
+              "recall": 0.742529,
+              "f1": 0.785888,
+              "n_detections": 387
+            },
+            "30": {
+              "precision": 0.896641,
+              "recall": 0.797701,
+              "f1": 0.844282,
+              "n_detections": 387
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+          "dedup_stats": {
+            "n_raw": 448,
+            "n_dedup": 399,
+            "n_removed": 49,
+            "removed_fraction": 0.109375,
+            "cluster_size_histogram": {
+              "1": 351,
+              "2": 47,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.741071,
+              "recall": 0.763218,
+              "f1": 0.751982,
+              "n_detections": 448
+            },
+            "30": {
+              "precision": 0.770089,
+              "recall": 0.793103,
+              "f1": 0.781427,
+              "n_detections": 448
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.829574,
+              "recall": 0.76092,
+              "f1": 0.793765,
+              "n_detections": 399
+            },
+            "30": {
+              "precision": 0.864662,
+              "recall": 0.793103,
+              "f1": 0.827338,
+              "n_detections": 399
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "dedup_stats": {
+            "n_raw": 442,
+            "n_dedup": 395,
+            "n_removed": 47,
+            "removed_fraction": 0.10633484162895927,
+            "cluster_size_histogram": {
+              "1": 349,
+              "2": 45,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.744344,
+              "recall": 0.756322,
+              "f1": 0.750285,
+              "n_detections": 442
+            },
+            "30": {
+              "precision": 0.782805,
+              "recall": 0.795402,
+              "f1": 0.789054,
+              "n_detections": 442
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.832911,
+              "recall": 0.756322,
+              "f1": 0.792771,
+              "n_detections": 395
+            },
+            "30": {
+              "precision": 0.875949,
+              "recall": 0.795402,
+              "f1": 0.833735,
+              "n_detections": 395
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "dedup_stats": {
+            "n_raw": 429,
+            "n_dedup": 384,
+            "n_removed": 45,
+            "removed_fraction": 0.1048951048951049,
+            "cluster_size_histogram": {
+              "1": 341,
+              "2": 41,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.759907,
+              "recall": 0.749425,
+              "f1": 0.75463,
+              "n_detections": 429
+            },
+            "30": {
+              "precision": 0.808858,
+              "recall": 0.797701,
+              "f1": 0.803241,
+              "n_detections": 429
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.846354,
+              "recall": 0.747126,
+              "f1": 0.793651,
+              "n_detections": 384
+            },
+            "30": {
+              "precision": 0.903646,
+              "recall": 0.797701,
+              "f1": 0.847375,
+              "n_detections": 384
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "dedup_stats": {
+            "n_raw": 430,
+            "n_dedup": 381,
+            "n_removed": 49,
+            "removed_fraction": 0.11395348837209303,
+            "cluster_size_histogram": {
+              "1": 333,
+              "2": 47,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.755814,
+              "recall": 0.747126,
+              "f1": 0.751445,
+              "n_detections": 430
+            },
+            "30": {
+              "precision": 0.788372,
+              "recall": 0.77931,
+              "f1": 0.783815,
+              "n_detections": 430
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.853018,
+              "recall": 0.747126,
+              "f1": 0.796569,
+              "n_detections": 381
+            },
+            "30": {
+              "precision": 0.889764,
+              "recall": 0.77931,
+              "f1": 0.830882,
+              "n_detections": 381
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "dedup_stats": {
+            "n_raw": 439,
+            "n_dedup": 395,
+            "n_removed": 44,
+            "removed_fraction": 0.10022779043280182,
+            "cluster_size_histogram": {
+              "1": 352,
+              "2": 42,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.742597,
+              "recall": 0.749425,
+              "f1": 0.745995,
+              "n_detections": 439
+            },
+            "30": {
+              "precision": 0.783599,
+              "recall": 0.790805,
+              "f1": 0.787185,
+              "n_detections": 439
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.825316,
+              "recall": 0.749425,
+              "f1": 0.785542,
+              "n_detections": 395
+            },
+            "30": {
+              "precision": 0.870886,
+              "recall": 0.790805,
+              "f1": 0.828916,
+              "n_detections": 395
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+          "dedup_stats": {
+            "n_raw": 442,
+            "n_dedup": 394,
+            "n_removed": 48,
+            "removed_fraction": 0.1085972850678733,
+            "cluster_size_histogram": {
+              "1": 347,
+              "2": 46,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.737557,
+              "recall": 0.749425,
+              "f1": 0.743444,
+              "n_detections": 442
+            },
+            "30": {
+              "precision": 0.776018,
+              "recall": 0.788506,
+              "f1": 0.782212,
+              "n_detections": 442
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.827411,
+              "recall": 0.749425,
+              "f1": 0.78649,
+              "n_detections": 394
+            },
+            "30": {
+              "precision": 0.870558,
+              "recall": 0.788506,
+              "f1": 0.827503,
+              "n_detections": 394
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+          "dedup_stats": {
+            "n_raw": 433,
+            "n_dedup": 383,
+            "n_removed": 50,
+            "removed_fraction": 0.11547344110854503,
+            "cluster_size_histogram": {
+              "1": 334,
+              "2": 48,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.727483,
+              "recall": 0.724138,
+              "f1": 0.725806,
+              "n_detections": 433
+            },
+            "30": {
+              "precision": 0.78291,
+              "recall": 0.77931,
+              "f1": 0.781106,
+              "n_detections": 433
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.822454,
+              "recall": 0.724138,
+              "f1": 0.770171,
+              "n_detections": 383
+            },
+            "30": {
+              "precision": 0.885117,
+              "recall": 0.77931,
+              "f1": 0.828851,
+              "n_detections": 383
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+          "dedup_stats": {
+            "n_raw": 435,
+            "n_dedup": 388,
+            "n_removed": 47,
+            "removed_fraction": 0.10804597701149425,
+            "cluster_size_histogram": {
+              "1": 342,
+              "2": 45,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.754023,
+              "recall": 0.754023,
+              "f1": 0.754023,
+              "n_detections": 435
+            },
+            "30": {
+              "precision": 0.797701,
+              "recall": 0.797701,
+              "f1": 0.797701,
+              "n_detections": 435
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.845361,
+              "recall": 0.754023,
+              "f1": 0.797084,
+              "n_detections": 388
+            },
+            "30": {
+              "precision": 0.89433,
+              "recall": 0.797701,
+              "f1": 0.843256,
+              "n_detections": 388
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+          "dedup_stats": {
+            "n_raw": 439,
+            "n_dedup": 391,
+            "n_removed": 48,
+            "removed_fraction": 0.10933940774487472,
+            "cluster_size_histogram": {
+              "1": 344,
+              "2": 46,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.731207,
+              "recall": 0.737931,
+              "f1": 0.734554,
+              "n_detections": 439
+            },
+            "30": {
+              "precision": 0.783599,
+              "recall": 0.790805,
+              "f1": 0.787185,
+              "n_detections": 439
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.820972,
+              "recall": 0.737931,
+              "f1": 0.77724,
+              "n_detections": 391
+            },
+            "30": {
+              "precision": 0.879795,
+              "recall": 0.790805,
+              "f1": 0.83293,
+              "n_detections": 391
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.742809,
+            "recall": 0.747356,
+            "f1": 0.745045
+          },
+          "deduplicated": {
+            "precision": 0.8338,
+            "recall": 0.746896,
+            "f1": 0.787917
+          },
+          "delta_f1": 0.042872
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.786259,
+            "recall": 0.791034,
+            "f1": 0.788607
+          },
+          "deduplicated": {
+            "precision": 0.883135,
+            "recall": 0.791034,
+            "f1": 0.834507
+          },
+          "delta_f1": 0.0459
+        }
+      }
+    },
+    {
+      "name": "n1-pro-rerun-384::baseline-pro-image-high-t-0-0",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "n_passes": 3,
+      "passes": [
+        {
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-image-high-t0/run_1/detections-library_plus-hp-3.1-pro-2026-06-03.geojson",
+          "dedup_stats": {
+            "n_raw": 550,
+            "n_dedup": 485,
+            "n_removed": 65,
+            "removed_fraction": 0.11818181818181818,
+            "cluster_size_histogram": {
+              "1": 423,
+              "2": 60,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.598182,
+              "recall": 0.756322,
+              "f1": 0.66802,
+              "n_detections": 550
+            },
+            "30": {
+              "precision": 0.716364,
+              "recall": 0.905747,
+              "f1": 0.8,
+              "n_detections": 550
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.670103,
+              "recall": 0.747126,
+              "f1": 0.706522,
+              "n_detections": 485
+            },
+            "30": {
+              "precision": 0.810309,
+              "recall": 0.903448,
+              "f1": 0.854348,
+              "n_detections": 485
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-image-high-t0/run_2/detections-library_plus-hp-3.1-pro-2026-06-03.geojson",
+          "dedup_stats": {
+            "n_raw": 549,
+            "n_dedup": 485,
+            "n_removed": 64,
+            "removed_fraction": 0.11657559198542805,
+            "cluster_size_histogram": {
+              "1": 425,
+              "2": 57,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.602914,
+              "recall": 0.76092,
+              "f1": 0.672764,
+              "n_detections": 549
+            },
+            "30": {
+              "precision": 0.710383,
+              "recall": 0.896552,
+              "f1": 0.792683,
+              "n_detections": 549
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.678351,
+              "recall": 0.756322,
+              "f1": 0.715217,
+              "n_detections": 485
+            },
+            "30": {
+              "precision": 0.802062,
+              "recall": 0.894253,
+              "f1": 0.845652,
+              "n_detections": 485
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-image-high-t0/run_3/detections-library_plus-hp-3.1-pro-2026-06-03.geojson",
+          "dedup_stats": {
+            "n_raw": 546,
+            "n_dedup": 483,
+            "n_removed": 63,
+            "removed_fraction": 0.11538461538461539,
+            "cluster_size_histogram": {
+              "1": 425,
+              "2": 54,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.589744,
+              "recall": 0.74023,
+              "f1": 0.656473,
+              "n_detections": 546
+            },
+            "30": {
+              "precision": 0.714286,
+              "recall": 0.896552,
+              "f1": 0.795107,
+              "n_detections": 546
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.656315,
+              "recall": 0.728736,
+              "f1": 0.690632,
+              "n_detections": 483
+            },
+            "30": {
+              "precision": 0.805383,
+              "recall": 0.894253,
+              "f1": 0.847495,
+              "n_detections": 483
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.596947,
+            "recall": 0.752491,
+            "f1": 0.665752
+          },
+          "deduplicated": {
+            "precision": 0.668256,
+            "recall": 0.744061,
+            "f1": 0.704124
+          },
+          "delta_f1": 0.038372
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.713678,
+            "recall": 0.899617,
+            "f1": 0.79593
+          },
+          "deduplicated": {
+            "precision": 0.805918,
+            "recall": 0.897318,
+            "f1": 0.849165
+          },
+          "delta_f1": 0.053235
+        }
+      }
+    },
+    {
+      "name": "retest-phase2c::text-scale-4",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2c/track2-text/scale-4/run_1/detections_scale-4_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 882,
+            "n_dedup": 812,
+            "n_removed": 70,
+            "removed_fraction": 0.07936507936507936,
+            "cluster_size_histogram": {
+              "1": 747,
+              "2": 61,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.49093,
+              "recall": 0.80334,
+              "f1": 0.60943,
+              "n_detections": 882
+            },
+            "30": {
+              "precision": 0.515873,
+              "recall": 0.844156,
+              "f1": 0.640394,
+              "n_detections": 882
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.533251,
+              "recall": 0.80334,
+              "f1": 0.641007,
+              "n_detections": 812
+            },
+            "30": {
+              "precision": 0.560345,
+              "recall": 0.844156,
+              "f1": 0.673575,
+              "n_detections": 812
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.49093,
+            "recall": 0.80334,
+            "f1": 0.60943
+          },
+          "deduplicated": {
+            "precision": 0.533251,
+            "recall": 0.80334,
+            "f1": 0.641007
+          },
+          "delta_f1": 0.031577
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.515873,
+            "recall": 0.844156,
+            "f1": 0.640394
+          },
+          "deduplicated": {
+            "precision": 0.560345,
+            "recall": 0.844156,
+            "f1": 0.673575
+          },
+          "delta_f1": 0.033181
+        }
+      }
+    },
+    {
+      "name": "retest-phase2d::text-verbose",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2d/track2-text/verbose/run_1/detections_verbose_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 798,
+            "n_dedup": 747,
+            "n_removed": 51,
+            "removed_fraction": 0.06390977443609022,
+            "cluster_size_histogram": {
+              "1": 701,
+              "2": 43,
+              "3": 1,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.488722,
+              "recall": 0.723562,
+              "f1": 0.583396,
+              "n_detections": 798
+            },
+            "30": {
+              "precision": 0.527569,
+              "recall": 0.781076,
+              "f1": 0.629768,
+              "n_detections": 798
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.52075,
+              "recall": 0.721707,
+              "f1": 0.604977,
+              "n_detections": 747
+            },
+            "30": {
+              "precision": 0.563588,
+              "recall": 0.781076,
+              "f1": 0.654743,
+              "n_detections": 747
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.488722,
+            "recall": 0.723562,
+            "f1": 0.583396
+          },
+          "deduplicated": {
+            "precision": 0.52075,
+            "recall": 0.721707,
+            "f1": 0.604977
+          },
+          "delta_f1": 0.021581
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.527569,
+            "recall": 0.781076,
+            "f1": 0.629768
+          },
+          "deduplicated": {
+            "precision": 0.563588,
+            "recall": 0.781076,
+            "f1": 0.654743
+          },
+          "delta_f1": 0.024975
+        }
+      }
+    },
+    {
+      "name": "retest-phase2c::image-canonical",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2c/track1-image/canonical/run_1/detections_canonical_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 720,
+            "n_dedup": 676,
+            "n_removed": 44,
+            "removed_fraction": 0.06111111111111111,
+            "cluster_size_histogram": {
+              "1": 634,
+              "2": 41,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.508333,
+              "recall": 0.679035,
+              "f1": 0.581414,
+              "n_detections": 720
+            },
+            "30": {
+              "precision": 0.570833,
+              "recall": 0.762523,
+              "f1": 0.652899,
+              "n_detections": 720
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.54142,
+              "recall": 0.679035,
+              "f1": 0.602469,
+              "n_detections": 676
+            },
+            "30": {
+              "precision": 0.606509,
+              "recall": 0.760668,
+              "f1": 0.674897,
+              "n_detections": 676
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.508333,
+            "recall": 0.679035,
+            "f1": 0.581414
+          },
+          "deduplicated": {
+            "precision": 0.54142,
+            "recall": 0.679035,
+            "f1": 0.602469
+          },
+          "delta_f1": 0.021055
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.570833,
+            "recall": 0.762523,
+            "f1": 0.652899
+          },
+          "deduplicated": {
+            "precision": 0.606509,
+            "recall": 0.760668,
+            "f1": 0.674897
+          },
+          "delta_f1": 0.021998
+        }
+      }
+    },
+    {
+      "name": "retest-phase2c::image-plus-hp",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 771,
+            "n_dedup": 723,
+            "n_removed": 48,
+            "removed_fraction": 0.0622568093385214,
+            "cluster_size_histogram": {
+              "1": 678,
+              "2": 43,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.508431,
+              "recall": 0.727273,
+              "f1": 0.598473,
+              "n_detections": 771
+            },
+            "30": {
+              "precision": 0.564202,
+              "recall": 0.80705,
+              "f1": 0.664122,
+              "n_detections": 771
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.542185,
+              "recall": 0.727273,
+              "f1": 0.621236,
+              "n_detections": 723
+            },
+            "30": {
+              "precision": 0.60166,
+              "recall": 0.80705,
+              "f1": 0.689382,
+              "n_detections": 723
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.508431,
+            "recall": 0.727273,
+            "f1": 0.598473
+          },
+          "deduplicated": {
+            "precision": 0.542185,
+            "recall": 0.727273,
+            "f1": 0.621236
+          },
+          "delta_f1": 0.022763
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.564202,
+            "recall": 0.80705,
+            "f1": 0.664122
+          },
+          "deduplicated": {
+            "precision": 0.60166,
+            "recall": 0.80705,
+            "f1": 0.689382
+          },
+          "delta_f1": 0.02526
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::baseline-flash-text-high-t-0-7",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "n_passes": 30,
+      "passes": [
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 1459,
+            "n_dedup": 1370,
+            "n_removed": 89,
+            "removed_fraction": 0.06100068540095956,
+            "cluster_size_histogram": {
+              "1": 1290,
+              "2": 74,
+              "3": 3,
+              "4": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.254284,
+              "recall": 0.852874,
+              "f1": 0.391763,
+              "n_detections": 1459
+            },
+            "30": {
+              "precision": 0.270733,
+              "recall": 0.908046,
+              "f1": 0.417107,
+              "n_detections": 1459
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.270073,
+              "recall": 0.850575,
+              "f1": 0.409972,
+              "n_detections": 1370
+            },
+            "30": {
+              "precision": 0.288321,
+              "recall": 0.908046,
+              "f1": 0.437673,
+              "n_detections": 1370
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+          "dedup_stats": {
+            "n_raw": 1563,
+            "n_dedup": 1478,
+            "n_removed": 85,
+            "removed_fraction": 0.05438259756877799,
+            "cluster_size_histogram": {
+              "1": 1400,
+              "2": 72,
+              "3": 5,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.236084,
+              "recall": 0.848276,
+              "f1": 0.369369,
+              "n_detections": 1563
+            },
+            "30": {
+              "precision": 0.25016,
+              "recall": 0.898851,
+              "f1": 0.391391,
+              "n_detections": 1563
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.248309,
+              "recall": 0.843678,
+              "f1": 0.383691,
+              "n_detections": 1478
+            },
+            "30": {
+              "precision": 0.264547,
+              "recall": 0.898851,
+              "f1": 0.408782,
+              "n_detections": 1478
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_11/detections_text-t0.7_run11.geojson",
+          "dedup_stats": {
+            "n_raw": 1548,
+            "n_dedup": 1462,
+            "n_removed": 86,
+            "removed_fraction": 0.05555555555555555,
+            "cluster_size_histogram": {
+              "1": 1381,
+              "2": 77,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.244186,
+              "recall": 0.868966,
+              "f1": 0.381241,
+              "n_detections": 1548
+            },
+            "30": {
+              "precision": 0.25646,
+              "recall": 0.912644,
+              "f1": 0.400403,
+              "n_detections": 1548
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.257182,
+              "recall": 0.864368,
+              "f1": 0.396415,
+              "n_detections": 1462
+            },
+            "30": {
+              "precision": 0.271546,
+              "recall": 0.912644,
+              "f1": 0.418556,
+              "n_detections": 1462
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_12/detections_text-t0.7_run12.geojson",
+          "dedup_stats": {
+            "n_raw": 1667,
+            "n_dedup": 1578,
+            "n_removed": 89,
+            "removed_fraction": 0.05338932213557288,
+            "cluster_size_histogram": {
+              "1": 1495,
+              "2": 78,
+              "3": 4,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.226155,
+              "recall": 0.866667,
+              "f1": 0.358706,
+              "n_detections": 1667
+            },
+            "30": {
+              "precision": 0.241152,
+              "recall": 0.924138,
+              "f1": 0.382493,
+              "n_detections": 1667
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.237643,
+              "recall": 0.862069,
+              "f1": 0.372578,
+              "n_detections": 1578
+            },
+            "30": {
+              "precision": 0.254753,
+              "recall": 0.924138,
+              "f1": 0.399404,
+              "n_detections": 1578
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_13/detections_text-t0.7_run13.geojson",
+          "dedup_stats": {
+            "n_raw": 1505,
+            "n_dedup": 1416,
+            "n_removed": 89,
+            "removed_fraction": 0.05913621262458472,
+            "cluster_size_histogram": {
+              "1": 1335,
+              "2": 75,
+              "3": 4,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.248505,
+              "recall": 0.85977,
+              "f1": 0.385567,
+              "n_detections": 1505
+            },
+            "30": {
+              "precision": 0.261794,
+              "recall": 0.905747,
+              "f1": 0.406186,
+              "n_detections": 1505
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.264124,
+              "recall": 0.85977,
+              "f1": 0.404106,
+              "n_detections": 1416
+            },
+            "30": {
+              "precision": 0.278249,
+              "recall": 0.905747,
+              "f1": 0.425716,
+              "n_detections": 1416
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_14/detections_text-t0.7_run14.geojson",
+          "dedup_stats": {
+            "n_raw": 1457,
+            "n_dedup": 1372,
+            "n_removed": 85,
+            "removed_fraction": 0.05833905284831846,
+            "cluster_size_histogram": {
+              "1": 1295,
+              "2": 72,
+              "3": 2,
+              "4": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.259437,
+              "recall": 0.868966,
+              "f1": 0.399577,
+              "n_detections": 1457
+            },
+            "30": {
+              "precision": 0.27385,
+              "recall": 0.917241,
+              "f1": 0.421776,
+              "n_detections": 1457
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.27551,
+              "recall": 0.868966,
+              "f1": 0.418373,
+              "n_detections": 1372
+            },
+            "30": {
+              "precision": 0.290816,
+              "recall": 0.917241,
+              "f1": 0.441616,
+              "n_detections": 1372
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_15/detections_text-t0.7_run15.geojson",
+          "dedup_stats": {
+            "n_raw": 1561,
+            "n_dedup": 1478,
+            "n_removed": 83,
+            "removed_fraction": 0.053171044202434334,
+            "cluster_size_histogram": {
+              "1": 1400,
+              "2": 74,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.248559,
+              "recall": 0.891954,
+              "f1": 0.388778,
+              "n_detections": 1561
+            },
+            "30": {
+              "precision": 0.26073,
+              "recall": 0.935632,
+              "f1": 0.407816,
+              "n_detections": 1561
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.26184,
+              "recall": 0.889655,
+              "f1": 0.4046,
+              "n_detections": 1478
+            },
+            "30": {
+              "precision": 0.275372,
+              "recall": 0.935632,
+              "f1": 0.42551,
+              "n_detections": 1478
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_16/detections_text-t0.7_run16.geojson",
+          "dedup_stats": {
+            "n_raw": 1537,
+            "n_dedup": 1450,
+            "n_removed": 87,
+            "removed_fraction": 0.05660377358490566,
+            "cluster_size_histogram": {
+              "1": 1370,
+              "2": 75,
+              "3": 3,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.244632,
+              "recall": 0.864368,
+              "f1": 0.381339,
+              "n_detections": 1537
+            },
+            "30": {
+              "precision": 0.256994,
+              "recall": 0.908046,
+              "f1": 0.400609,
+              "n_detections": 1537
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.258621,
+              "recall": 0.862069,
+              "f1": 0.397878,
+              "n_detections": 1450
+            },
+            "30": {
+              "precision": 0.272414,
+              "recall": 0.908046,
+              "f1": 0.419098,
+              "n_detections": 1450
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_17/detections_text-t0.7_run17.geojson",
+          "dedup_stats": {
+            "n_raw": 1465,
+            "n_dedup": 1384,
+            "n_removed": 81,
+            "removed_fraction": 0.0552901023890785,
+            "cluster_size_histogram": {
+              "1": 1311,
+              "2": 67,
+              "3": 4,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.261433,
+              "recall": 0.88046,
+              "f1": 0.403158,
+              "n_detections": 1465
+            },
+            "30": {
+              "precision": 0.27372,
+              "recall": 0.921839,
+              "f1": 0.422105,
+              "n_detections": 1465
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.276734,
+              "recall": 0.88046,
+              "f1": 0.421111,
+              "n_detections": 1384
+            },
+            "30": {
+              "precision": 0.28974,
+              "recall": 0.921839,
+              "f1": 0.440902,
+              "n_detections": 1384
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_18/detections_text-t0.7_run18.geojson",
+          "dedup_stats": {
+            "n_raw": 1491,
+            "n_dedup": 1403,
+            "n_removed": 88,
+            "removed_fraction": 0.05902079141515761,
+            "cluster_size_histogram": {
+              "1": 1321,
+              "2": 78,
+              "3": 2,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.256204,
+              "recall": 0.878161,
+              "f1": 0.396677,
+              "n_detections": 1491
+            },
+            "30": {
+              "precision": 0.266264,
+              "recall": 0.912644,
+              "f1": 0.412253,
+              "n_detections": 1491
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.271561,
+              "recall": 0.875862,
+              "f1": 0.414581,
+              "n_detections": 1403
+            },
+            "30": {
+              "precision": 0.282965,
+              "recall": 0.912644,
+              "f1": 0.431991,
+              "n_detections": 1403
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_19/detections_text-t0.7_run19.geojson",
+          "dedup_stats": {
+            "n_raw": 1456,
+            "n_dedup": 1372,
+            "n_removed": 84,
+            "removed_fraction": 0.057692307692307696,
+            "cluster_size_histogram": {
+              "1": 1296,
+              "2": 70,
+              "3": 4,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.266484,
+              "recall": 0.891954,
+              "f1": 0.410365,
+              "n_detections": 1456
+            },
+            "30": {
+              "precision": 0.274725,
+              "recall": 0.91954,
+              "f1": 0.423057,
+              "n_detections": 1456
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.282799,
+              "recall": 0.891954,
+              "f1": 0.429441,
+              "n_detections": 1372
+            },
+            "30": {
+              "precision": 0.291545,
+              "recall": 0.91954,
+              "f1": 0.442723,
+              "n_detections": 1372
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "dedup_stats": {
+            "n_raw": 1559,
+            "n_dedup": 1478,
+            "n_removed": 81,
+            "removed_fraction": 0.05195638229634381,
+            "cluster_size_histogram": {
+              "1": 1405,
+              "2": 67,
+              "3": 4,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.247595,
+              "recall": 0.887356,
+              "f1": 0.387161,
+              "n_detections": 1559
+            },
+            "30": {
+              "precision": 0.255933,
+              "recall": 0.917241,
+              "f1": 0.400201,
+              "n_detections": 1559
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.259811,
+              "recall": 0.882759,
+              "f1": 0.401464,
+              "n_detections": 1478
+            },
+            "30": {
+              "precision": 0.269959,
+              "recall": 0.917241,
+              "f1": 0.417146,
+              "n_detections": 1478
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_20/detections_text-t0.7_run20.geojson",
+          "dedup_stats": {
+            "n_raw": 1536,
+            "n_dedup": 1445,
+            "n_removed": 91,
+            "removed_fraction": 0.059244791666666664,
+            "cluster_size_histogram": {
+              "1": 1362,
+              "2": 77,
+              "3": 4,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.246094,
+              "recall": 0.868966,
+              "f1": 0.383562,
+              "n_detections": 1536
+            },
+            "30": {
+              "precision": 0.260417,
+              "recall": 0.91954,
+              "f1": 0.405885,
+              "n_detections": 1536
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.260208,
+              "recall": 0.864368,
+              "f1": 0.4,
+              "n_detections": 1445
+            },
+            "30": {
+              "precision": 0.276817,
+              "recall": 0.91954,
+              "f1": 0.425532,
+              "n_detections": 1445
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_21/detections_text-t0.7_run21.geojson",
+          "dedup_stats": {
+            "n_raw": 1519,
+            "n_dedup": 1429,
+            "n_removed": 90,
+            "removed_fraction": 0.05924950625411455,
+            "cluster_size_histogram": {
+              "1": 1348,
+              "2": 73,
+              "3": 7,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.248848,
+              "recall": 0.868966,
+              "f1": 0.386899,
+              "n_detections": 1519
+            },
+            "30": {
+              "precision": 0.263989,
+              "recall": 0.921839,
+              "f1": 0.41044,
+              "n_detections": 1519
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.263121,
+              "recall": 0.864368,
+              "f1": 0.403433,
+              "n_detections": 1429
+            },
+            "30": {
+              "precision": 0.280616,
+              "recall": 0.921839,
+              "f1": 0.430258,
+              "n_detections": 1429
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_22/detections_text-t0.7_run22.geojson",
+          "dedup_stats": {
+            "n_raw": 1598,
+            "n_dedup": 1509,
+            "n_removed": 89,
+            "removed_fraction": 0.05569461827284105,
+            "cluster_size_histogram": {
+              "1": 1425,
+              "2": 80,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.237171,
+              "recall": 0.871264,
+              "f1": 0.372848,
+              "n_detections": 1598
+            },
+            "30": {
+              "precision": 0.24781,
+              "recall": 0.910345,
+              "f1": 0.389572,
+              "n_detections": 1598
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.250497,
+              "recall": 0.868966,
+              "f1": 0.388889,
+              "n_detections": 1509
+            },
+            "30": {
+              "precision": 0.262425,
+              "recall": 0.910345,
+              "f1": 0.407407,
+              "n_detections": 1509
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_23/detections_text-t0.7_run23.geojson",
+          "dedup_stats": {
+            "n_raw": 1603,
+            "n_dedup": 1507,
+            "n_removed": 96,
+            "removed_fraction": 0.05988771054273238,
+            "cluster_size_histogram": {
+              "1": 1417,
+              "2": 84,
+              "3": 6
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.236432,
+              "recall": 0.871264,
+              "f1": 0.371933,
+              "n_detections": 1603
+            },
+            "30": {
+              "precision": 0.248284,
+              "recall": 0.914943,
+              "f1": 0.390579,
+              "n_detections": 1603
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.251493,
+              "recall": 0.871264,
+              "f1": 0.390319,
+              "n_detections": 1507
+            },
+            "30": {
+              "precision": 0.264101,
+              "recall": 0.914943,
+              "f1": 0.409887,
+              "n_detections": 1507
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_24/detections_text-t0.7_run24.geojson",
+          "dedup_stats": {
+            "n_raw": 1437,
+            "n_dedup": 1353,
+            "n_removed": 84,
+            "removed_fraction": 0.05845511482254697,
+            "cluster_size_histogram": {
+              "1": 1277,
+              "2": 71,
+              "3": 2,
+              "4": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.253305,
+              "recall": 0.836782,
+              "f1": 0.388889,
+              "n_detections": 1437
+            },
+            "30": {
+              "precision": 0.267223,
+              "recall": 0.882759,
+              "f1": 0.410256,
+              "n_detections": 1437
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.269032,
+              "recall": 0.836782,
+              "f1": 0.407159,
+              "n_detections": 1353
+            },
+            "30": {
+              "precision": 0.283075,
+              "recall": 0.88046,
+              "f1": 0.428412,
+              "n_detections": 1353
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_25/detections_text-t0.7_run25.geojson",
+          "dedup_stats": {
+            "n_raw": 1535,
+            "n_dedup": 1451,
+            "n_removed": 84,
+            "removed_fraction": 0.05472312703583062,
+            "cluster_size_histogram": {
+              "1": 1372,
+              "2": 76,
+              "3": 1,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.248208,
+              "recall": 0.875862,
+              "f1": 0.386802,
+              "n_detections": 1535
+            },
+            "30": {
+              "precision": 0.255375,
+              "recall": 0.901149,
+              "f1": 0.39797,
+              "n_detections": 1535
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.261888,
+              "recall": 0.873563,
+              "f1": 0.402969,
+              "n_detections": 1451
+            },
+            "30": {
+              "precision": 0.270159,
+              "recall": 0.901149,
+              "f1": 0.415695,
+              "n_detections": 1451
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_26/detections_text-t0.7_run26.geojson",
+          "dedup_stats": {
+            "n_raw": 1513,
+            "n_dedup": 1432,
+            "n_removed": 81,
+            "removed_fraction": 0.053536021150033045,
+            "cluster_size_histogram": {
+              "1": 1358,
+              "2": 69,
+              "3": 3,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.255122,
+              "recall": 0.887356,
+              "f1": 0.396304,
+              "n_detections": 1513
+            },
+            "30": {
+              "precision": 0.263714,
+              "recall": 0.917241,
+              "f1": 0.409651,
+              "n_detections": 1513
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.269553,
+              "recall": 0.887356,
+              "f1": 0.413498,
+              "n_detections": 1432
+            },
+            "30": {
+              "precision": 0.278631,
+              "recall": 0.917241,
+              "f1": 0.427424,
+              "n_detections": 1432
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_27/detections_text-t0.7_run27.geojson",
+          "dedup_stats": {
+            "n_raw": 1483,
+            "n_dedup": 1390,
+            "n_removed": 93,
+            "removed_fraction": 0.06271072151045179,
+            "cluster_size_histogram": {
+              "1": 1306,
+              "2": 79,
+              "3": 1,
+              "4": 4
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.256912,
+              "recall": 0.875862,
+              "f1": 0.397289,
+              "n_detections": 1483
+            },
+            "30": {
+              "precision": 0.271072,
+              "recall": 0.924138,
+              "f1": 0.419187,
+              "n_detections": 1483
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.273381,
+              "recall": 0.873563,
+              "f1": 0.416438,
+              "n_detections": 1390
+            },
+            "30": {
+              "precision": 0.289209,
+              "recall": 0.924138,
+              "f1": 0.440548,
+              "n_detections": 1390
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_28/detections_text-t0.7_run28.geojson",
+          "dedup_stats": {
+            "n_raw": 1507,
+            "n_dedup": 1422,
+            "n_removed": 85,
+            "removed_fraction": 0.05640345056403451,
+            "cluster_size_histogram": {
+              "1": 1344,
+              "2": 73,
+              "3": 3,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.252157,
+              "recall": 0.873563,
+              "f1": 0.391349,
+              "n_detections": 1507
+            },
+            "30": {
+              "precision": 0.266755,
+              "recall": 0.924138,
+              "f1": 0.414006,
+              "n_detections": 1507
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.266526,
+              "recall": 0.871264,
+              "f1": 0.408185,
+              "n_detections": 1422
+            },
+            "30": {
+              "precision": 0.2827,
+              "recall": 0.924138,
+              "f1": 0.432956,
+              "n_detections": 1422
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_29/detections_text-t0.7_run29.geojson",
+          "dedup_stats": {
+            "n_raw": 1505,
+            "n_dedup": 1426,
+            "n_removed": 79,
+            "removed_fraction": 0.05249169435215947,
+            "cluster_size_histogram": {
+              "1": 1353,
+              "2": 69,
+              "3": 2,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.252492,
+              "recall": 0.873563,
+              "f1": 0.391753,
+              "n_detections": 1505
+            },
+            "30": {
+              "precision": 0.265116,
+              "recall": 0.917241,
+              "f1": 0.41134,
+              "n_detections": 1505
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.265778,
+              "recall": 0.871264,
+              "f1": 0.407308,
+              "n_detections": 1426
+            },
+            "30": {
+              "precision": 0.279804,
+              "recall": 0.917241,
+              "f1": 0.428802,
+              "n_detections": 1426
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "dedup_stats": {
+            "n_raw": 1476,
+            "n_dedup": 1383,
+            "n_removed": 93,
+            "removed_fraction": 0.06300813008130081,
+            "cluster_size_histogram": {
+              "1": 1294,
+              "2": 86,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.25542,
+              "recall": 0.866667,
+              "f1": 0.394558,
+              "n_detections": 1476
+            },
+            "30": {
+              "precision": 0.266938,
+              "recall": 0.905747,
+              "f1": 0.41235,
+              "n_detections": 1476
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.272596,
+              "recall": 0.866667,
+              "f1": 0.414741,
+              "n_detections": 1383
+            },
+            "30": {
+              "precision": 0.284888,
+              "recall": 0.905747,
+              "f1": 0.433443,
+              "n_detections": 1383
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_30/detections_text-t0.7_run30.geojson",
+          "dedup_stats": {
+            "n_raw": 1596,
+            "n_dedup": 1512,
+            "n_removed": 84,
+            "removed_fraction": 0.05263157894736842,
+            "cluster_size_histogram": {
+              "1": 1436,
+              "2": 70,
+              "3": 4,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.23183,
+              "recall": 0.850575,
+              "f1": 0.364353,
+              "n_detections": 1596
+            },
+            "30": {
+              "precision": 0.242481,
+              "recall": 0.889655,
+              "f1": 0.381093,
+              "n_detections": 1596
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.244709,
+              "recall": 0.850575,
+              "f1": 0.380072,
+              "n_detections": 1512
+            },
+            "30": {
+              "precision": 0.255952,
+              "recall": 0.889655,
+              "f1": 0.397535,
+              "n_detections": 1512
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "dedup_stats": {
+            "n_raw": 1442,
+            "n_dedup": 1367,
+            "n_removed": 75,
+            "removed_fraction": 0.052011095700416086,
+            "cluster_size_histogram": {
+              "1": 1299,
+              "2": 62,
+              "3": 5,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.260749,
+              "recall": 0.864368,
+              "f1": 0.400639,
+              "n_detections": 1442
+            },
+            "30": {
+              "precision": 0.270458,
+              "recall": 0.896552,
+              "f1": 0.415557,
+              "n_detections": 1442
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.273592,
+              "recall": 0.85977,
+              "f1": 0.415094,
+              "n_detections": 1367
+            },
+            "30": {
+              "precision": 0.285296,
+              "recall": 0.896552,
+              "f1": 0.432852,
+              "n_detections": 1367
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "dedup_stats": {
+            "n_raw": 1465,
+            "n_dedup": 1394,
+            "n_removed": 71,
+            "removed_fraction": 0.048464163822525594,
+            "cluster_size_histogram": {
+              "1": 1326,
+              "2": 65,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.25802,
+              "recall": 0.868966,
+              "f1": 0.397895,
+              "n_detections": 1465
+            },
+            "30": {
+              "precision": 0.271672,
+              "recall": 0.914943,
+              "f1": 0.418947,
+              "n_detections": 1465
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.271162,
+              "recall": 0.868966,
+              "f1": 0.413341,
+              "n_detections": 1394
+            },
+            "30": {
+              "precision": 0.285509,
+              "recall": 0.914943,
+              "f1": 0.43521,
+              "n_detections": 1394
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+          "dedup_stats": {
+            "n_raw": 1548,
+            "n_dedup": 1454,
+            "n_removed": 94,
+            "removed_fraction": 0.060723514211886306,
+            "cluster_size_histogram": {
+              "1": 1367,
+              "2": 81,
+              "3": 5,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.24354,
+              "recall": 0.866667,
+              "f1": 0.380232,
+              "n_detections": 1548
+            },
+            "30": {
+              "precision": 0.25646,
+              "recall": 0.912644,
+              "f1": 0.400403,
+              "n_detections": 1548
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.257221,
+              "recall": 0.85977,
+              "f1": 0.395977,
+              "n_detections": 1454
+            },
+            "30": {
+              "precision": 0.27304,
+              "recall": 0.912644,
+              "f1": 0.420328,
+              "n_detections": 1454
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+          "dedup_stats": {
+            "n_raw": 1578,
+            "n_dedup": 1480,
+            "n_removed": 98,
+            "removed_fraction": 0.062103929024081114,
+            "cluster_size_histogram": {
+              "1": 1387,
+              "2": 89,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.237643,
+              "recall": 0.862069,
+              "f1": 0.372578,
+              "n_detections": 1578
+            },
+            "30": {
+              "precision": 0.249683,
+              "recall": 0.905747,
+              "f1": 0.391456,
+              "n_detections": 1578
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.252027,
+              "recall": 0.857471,
+              "f1": 0.389556,
+              "n_detections": 1480
+            },
+            "30": {
+              "precision": 0.266216,
+              "recall": 0.905747,
+              "f1": 0.411488,
+              "n_detections": 1480
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+          "dedup_stats": {
+            "n_raw": 1438,
+            "n_dedup": 1349,
+            "n_removed": 89,
+            "removed_fraction": 0.061891515994436715,
+            "cluster_size_histogram": {
+              "1": 1268,
+              "2": 75,
+              "3": 4,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.260779,
+              "recall": 0.862069,
+              "f1": 0.400427,
+              "n_detections": 1438
+            },
+            "30": {
+              "precision": 0.274687,
+              "recall": 0.908046,
+              "f1": 0.421783,
+              "n_detections": 1438
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.277984,
+              "recall": 0.862069,
+              "f1": 0.420404,
+              "n_detections": 1349
+            },
+            "30": {
+              "precision": 0.292809,
+              "recall": 0.908046,
+              "f1": 0.442825,
+              "n_detections": 1349
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+          "dedup_stats": {
+            "n_raw": 1562,
+            "n_dedup": 1466,
+            "n_removed": 96,
+            "removed_fraction": 0.06145966709346991,
+            "cluster_size_histogram": {
+              "1": 1378,
+              "2": 82,
+              "3": 4,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.243278,
+              "recall": 0.873563,
+              "f1": 0.380571,
+              "n_detections": 1562
+            },
+            "30": {
+              "precision": 0.257362,
+              "recall": 0.924138,
+              "f1": 0.402604,
+              "n_detections": 1562
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.258527,
+              "recall": 0.871264,
+              "f1": 0.398738,
+              "n_detections": 1466
+            },
+            "30": {
+              "precision": 0.274216,
+              "recall": 0.924138,
+              "f1": 0.422935,
+              "n_detections": 1466
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.249052,
+            "recall": 0.869272,
+            "f1": 0.387086
+          },
+          "deduplicated": {
+            "precision": 0.26345,
+            "recall": 0.86705,
+            "f1": 0.404011
+          },
+          "delta_f1": 0.016925
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.2614,
+            "recall": 0.912414,
+            "f1": 0.406283
+          },
+          "deduplicated": {
+            "precision": 0.27719,
+            "recall": 0.912337,
+            "f1": 0.425088
+          },
+          "delta_f1": 0.018805
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::baseline-flash-image-high-t-0-7",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "n_passes": 10,
+      "passes": [
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 831,
+            "n_dedup": 771,
+            "n_removed": 60,
+            "removed_fraction": 0.07220216606498195,
+            "cluster_size_histogram": {
+              "1": 714,
+              "2": 54,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.392298,
+              "recall": 0.749425,
+              "f1": 0.515008,
+              "n_detections": 831
+            },
+            "30": {
+              "precision": 0.45006,
+              "recall": 0.85977,
+              "f1": 0.590837,
+              "n_detections": 831
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.42153,
+              "recall": 0.747126,
+              "f1": 0.538972,
+              "n_detections": 771
+            },
+            "30": {
+              "precision": 0.485084,
+              "recall": 0.85977,
+              "f1": 0.620232,
+              "n_detections": 771
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_10/detections_image-t0.7_run10.geojson",
+          "dedup_stats": {
+            "n_raw": 868,
+            "n_dedup": 808,
+            "n_removed": 60,
+            "removed_fraction": 0.06912442396313365,
+            "cluster_size_histogram": {
+              "1": 753,
+              "2": 51,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.37212,
+              "recall": 0.742529,
+              "f1": 0.495779,
+              "n_detections": 868
+            },
+            "30": {
+              "precision": 0.432028,
+              "recall": 0.862069,
+              "f1": 0.575595,
+              "n_detections": 868
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.39604,
+              "recall": 0.735632,
+              "f1": 0.514883,
+              "n_detections": 808
+            },
+            "30": {
+              "precision": 0.464109,
+              "recall": 0.862069,
+              "f1": 0.603379,
+              "n_detections": 808
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+          "dedup_stats": {
+            "n_raw": 904,
+            "n_dedup": 850,
+            "n_removed": 54,
+            "removed_fraction": 0.059734513274336286,
+            "cluster_size_histogram": {
+              "1": 801,
+              "2": 45,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.348451,
+              "recall": 0.724138,
+              "f1": 0.4705,
+              "n_detections": 904
+            },
+            "30": {
+              "precision": 0.409292,
+              "recall": 0.850575,
+              "f1": 0.552651,
+              "n_detections": 904
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.368235,
+              "recall": 0.71954,
+              "f1": 0.48716,
+              "n_detections": 850
+            },
+            "30": {
+              "precision": 0.434118,
+              "recall": 0.848276,
+              "f1": 0.574319,
+              "n_detections": 850
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+          "dedup_stats": {
+            "n_raw": 858,
+            "n_dedup": 796,
+            "n_removed": 62,
+            "removed_fraction": 0.07226107226107226,
+            "cluster_size_histogram": {
+              "1": 741,
+              "2": 50,
+              "3": 3,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.384615,
+              "recall": 0.758621,
+              "f1": 0.510441,
+              "n_detections": 858
+            },
+            "30": {
+              "precision": 0.438228,
+              "recall": 0.864368,
+              "f1": 0.581593,
+              "n_detections": 858
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.414573,
+              "recall": 0.758621,
+              "f1": 0.536149,
+              "n_detections": 796
+            },
+            "30": {
+              "precision": 0.472362,
+              "recall": 0.864368,
+              "f1": 0.610885,
+              "n_detections": 796
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+          "dedup_stats": {
+            "n_raw": 843,
+            "n_dedup": 781,
+            "n_removed": 62,
+            "removed_fraction": 0.07354685646500593,
+            "cluster_size_histogram": {
+              "1": 726,
+              "2": 51,
+              "3": 1,
+              "4": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.385528,
+              "recall": 0.747126,
+              "f1": 0.508607,
+              "n_detections": 843
+            },
+            "30": {
+              "precision": 0.447212,
+              "recall": 0.866667,
+              "f1": 0.589984,
+              "n_detections": 843
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.413572,
+              "recall": 0.742529,
+              "f1": 0.53125,
+              "n_detections": 781
+            },
+            "30": {
+              "precision": 0.482714,
+              "recall": 0.866667,
+              "f1": 0.620066,
+              "n_detections": 781
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+          "dedup_stats": {
+            "n_raw": 822,
+            "n_dedup": 763,
+            "n_removed": 59,
+            "removed_fraction": 0.07177615571776155,
+            "cluster_size_histogram": {
+              "1": 707,
+              "2": 53,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.405109,
+              "recall": 0.765517,
+              "f1": 0.529833,
+              "n_detections": 822
+            },
+            "30": {
+              "precision": 0.452555,
+              "recall": 0.855172,
+              "f1": 0.591885,
+              "n_detections": 822
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.433814,
+              "recall": 0.76092,
+              "f1": 0.552588,
+              "n_detections": 763
+            },
+            "30": {
+              "precision": 0.487549,
+              "recall": 0.855172,
+              "f1": 0.621035,
+              "n_detections": 763
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_6/detections_image-t0.7_run06.geojson",
+          "dedup_stats": {
+            "n_raw": 852,
+            "n_dedup": 797,
+            "n_removed": 55,
+            "removed_fraction": 0.06455399061032864,
+            "cluster_size_histogram": {
+              "1": 746,
+              "2": 48,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.365023,
+              "recall": 0.714943,
+              "f1": 0.483294,
+              "n_detections": 852
+            },
+            "30": {
+              "precision": 0.434272,
+              "recall": 0.850575,
+              "f1": 0.574981,
+              "n_detections": 852
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.388959,
+              "recall": 0.712644,
+              "f1": 0.503247,
+              "n_detections": 797
+            },
+            "30": {
+              "precision": 0.461731,
+              "recall": 0.845977,
+              "f1": 0.597403,
+              "n_detections": 797
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_7/detections_image-t0.7_run07.geojson",
+          "dedup_stats": {
+            "n_raw": 845,
+            "n_dedup": 786,
+            "n_removed": 59,
+            "removed_fraction": 0.06982248520710059,
+            "cluster_size_histogram": {
+              "1": 731,
+              "2": 51,
+              "3": 4
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.368047,
+              "recall": 0.714943,
+              "f1": 0.485938,
+              "n_detections": 845
+            },
+            "30": {
+              "precision": 0.439053,
+              "recall": 0.852874,
+              "f1": 0.579688,
+              "n_detections": 845
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.395674,
+              "recall": 0.714943,
+              "f1": 0.509419,
+              "n_detections": 786
+            },
+            "30": {
+              "precision": 0.47201,
+              "recall": 0.852874,
+              "f1": 0.607699,
+              "n_detections": 786
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_8/detections_image-t0.7_run08.geojson",
+          "dedup_stats": {
+            "n_raw": 836,
+            "n_dedup": 776,
+            "n_removed": 60,
+            "removed_fraction": 0.07177033492822966,
+            "cluster_size_histogram": {
+              "1": 718,
+              "2": 56,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.380383,
+              "recall": 0.731034,
+              "f1": 0.500393,
+              "n_detections": 836
+            },
+            "30": {
+              "precision": 0.438995,
+              "recall": 0.843678,
+              "f1": 0.577498,
+              "n_detections": 836
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.404639,
+              "recall": 0.721839,
+              "f1": 0.51858,
+              "n_detections": 776
+            },
+            "30": {
+              "precision": 0.472938,
+              "recall": 0.843678,
+              "f1": 0.606111,
+              "n_detections": 776
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_9/detections_image-t0.7_run09.geojson",
+          "dedup_stats": {
+            "n_raw": 894,
+            "n_dedup": 839,
+            "n_removed": 55,
+            "removed_fraction": 0.06152125279642058,
+            "cluster_size_histogram": {
+              "1": 788,
+              "2": 48,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.361298,
+              "recall": 0.742529,
+              "f1": 0.48608,
+              "n_detections": 894
+            },
+            "30": {
+              "precision": 0.419463,
+              "recall": 0.862069,
+              "f1": 0.564334,
+              "n_detections": 894
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.384982,
+              "recall": 0.742529,
+              "f1": 0.507064,
+              "n_detections": 839
+            },
+            "30": {
+              "precision": 0.446961,
+              "recall": 0.862069,
+              "f1": 0.588697,
+              "n_detections": 839
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.376287,
+            "recall": 0.739081,
+            "f1": 0.498587
+          },
+          "deduplicated": {
+            "precision": 0.402202,
+            "recall": 0.735632,
+            "f1": 0.519931
+          },
+          "delta_f1": 0.021344
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.436116,
+            "recall": 0.856782,
+            "f1": 0.577905
+          },
+          "deduplicated": {
+            "precision": 0.467958,
+            "recall": 0.856092,
+            "f1": 0.604983
+          },
+          "delta_f1": 0.027078
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "n_passes": 10,
+      "passes": [
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 758,
+            "n_dedup": 698,
+            "n_removed": 60,
+            "removed_fraction": 0.079155672823219,
+            "cluster_size_histogram": {
+              "1": 640,
+              "2": 56,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.440633,
+              "recall": 0.767816,
+              "f1": 0.559933,
+              "n_detections": 758
+            },
+            "30": {
+              "precision": 0.489446,
+              "recall": 0.852874,
+              "f1": 0.621961,
+              "n_detections": 758
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.474212,
+              "recall": 0.76092,
+              "f1": 0.584289,
+              "n_detections": 698
+            },
+            "30": {
+              "precision": 0.531519,
+              "recall": 0.852874,
+              "f1": 0.654898,
+              "n_detections": 698
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_10/detections_image-t0.7_run10.geojson",
+          "dedup_stats": {
+            "n_raw": 769,
+            "n_dedup": 708,
+            "n_removed": 61,
+            "removed_fraction": 0.07932379713914174,
+            "cluster_size_histogram": {
+              "1": 654,
+              "2": 50,
+              "3": 3,
+              "6": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.408322,
+              "recall": 0.721839,
+              "f1": 0.521595,
+              "n_detections": 769
+            },
+            "30": {
+              "precision": 0.483745,
+              "recall": 0.855172,
+              "f1": 0.61794,
+              "n_detections": 769
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.44209,
+              "recall": 0.71954,
+              "f1": 0.547682,
+              "n_detections": 708
+            },
+            "30": {
+              "precision": 0.525424,
+              "recall": 0.855172,
+              "f1": 0.650919,
+              "n_detections": 708
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+          "dedup_stats": {
+            "n_raw": 770,
+            "n_dedup": 706,
+            "n_removed": 64,
+            "removed_fraction": 0.08311688311688312,
+            "cluster_size_histogram": {
+              "1": 645,
+              "2": 59,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.435065,
+              "recall": 0.770115,
+              "f1": 0.556017,
+              "n_detections": 770
+            },
+            "30": {
+              "precision": 0.48961,
+              "recall": 0.866667,
+              "f1": 0.625726,
+              "n_detections": 770
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.470255,
+              "recall": 0.763218,
+              "f1": 0.581946,
+              "n_detections": 706
+            },
+            "30": {
+              "precision": 0.532578,
+              "recall": 0.864368,
+              "f1": 0.659071,
+              "n_detections": 706
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+          "dedup_stats": {
+            "n_raw": 750,
+            "n_dedup": 688,
+            "n_removed": 62,
+            "removed_fraction": 0.08266666666666667,
+            "cluster_size_histogram": {
+              "1": 629,
+              "2": 56,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.445333,
+              "recall": 0.767816,
+              "f1": 0.563713,
+              "n_detections": 750
+            },
+            "30": {
+              "precision": 0.502667,
+              "recall": 0.866667,
+              "f1": 0.636287,
+              "n_detections": 750
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.482558,
+              "recall": 0.763218,
+              "f1": 0.591273,
+              "n_detections": 688
+            },
+            "30": {
+              "precision": 0.547965,
+              "recall": 0.866667,
+              "f1": 0.671416,
+              "n_detections": 688
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+          "dedup_stats": {
+            "n_raw": 755,
+            "n_dedup": 691,
+            "n_removed": 64,
+            "removed_fraction": 0.0847682119205298,
+            "cluster_size_histogram": {
+              "1": 631,
+              "2": 56,
+              "3": 4
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.433113,
+              "recall": 0.751724,
+              "f1": 0.54958,
+              "n_detections": 755
+            },
+            "30": {
+              "precision": 0.498013,
+              "recall": 0.864368,
+              "f1": 0.631933,
+              "n_detections": 755
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.470333,
+              "recall": 0.747126,
+              "f1": 0.577265,
+              "n_detections": 691
+            },
+            "30": {
+              "precision": 0.544139,
+              "recall": 0.864368,
+              "f1": 0.667851,
+              "n_detections": 691
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+          "dedup_stats": {
+            "n_raw": 753,
+            "n_dedup": 688,
+            "n_removed": 65,
+            "removed_fraction": 0.08632138114209828,
+            "cluster_size_histogram": {
+              "1": 626,
+              "2": 59,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.428951,
+              "recall": 0.742529,
+              "f1": 0.543771,
+              "n_detections": 753
+            },
+            "30": {
+              "precision": 0.491368,
+              "recall": 0.850575,
+              "f1": 0.622896,
+              "n_detections": 753
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.468023,
+              "recall": 0.74023,
+              "f1": 0.573464,
+              "n_detections": 688
+            },
+            "30": {
+              "precision": 0.534884,
+              "recall": 0.845977,
+              "f1": 0.655387,
+              "n_detections": 688
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_6/detections_image-t0.7_run06.geojson",
+          "dedup_stats": {
+            "n_raw": 761,
+            "n_dedup": 701,
+            "n_removed": 60,
+            "removed_fraction": 0.07884362680683311,
+            "cluster_size_histogram": {
+              "1": 645,
+              "2": 53,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.449409,
+              "recall": 0.786207,
+              "f1": 0.571906,
+              "n_detections": 761
+            },
+            "30": {
+              "precision": 0.500657,
+              "recall": 0.875862,
+              "f1": 0.637124,
+              "n_detections": 761
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.485021,
+              "recall": 0.781609,
+              "f1": 0.598592,
+              "n_detections": 701
+            },
+            "30": {
+              "precision": 0.543509,
+              "recall": 0.875862,
+              "f1": 0.670775,
+              "n_detections": 701
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_7/detections_image-t0.7_run07.geojson",
+          "dedup_stats": {
+            "n_raw": 752,
+            "n_dedup": 694,
+            "n_removed": 58,
+            "removed_fraction": 0.07712765957446809,
+            "cluster_size_histogram": {
+              "1": 638,
+              "2": 54,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.442819,
+              "recall": 0.765517,
+              "f1": 0.561078,
+              "n_detections": 752
+            },
+            "30": {
+              "precision": 0.50266,
+              "recall": 0.868966,
+              "f1": 0.6369,
+              "n_detections": 752
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.475504,
+              "recall": 0.758621,
+              "f1": 0.584588,
+              "n_detections": 694
+            },
+            "30": {
+              "precision": 0.544669,
+              "recall": 0.868966,
+              "f1": 0.669619,
+              "n_detections": 694
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_8/detections_image-t0.7_run08.geojson",
+          "dedup_stats": {
+            "n_raw": 761,
+            "n_dedup": 701,
+            "n_removed": 60,
+            "removed_fraction": 0.07884362680683311,
+            "cluster_size_histogram": {
+              "1": 644,
+              "2": 54,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.436268,
+              "recall": 0.763218,
+              "f1": 0.555184,
+              "n_detections": 761
+            },
+            "30": {
+              "precision": 0.498029,
+              "recall": 0.871264,
+              "f1": 0.633779,
+              "n_detections": 761
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.472183,
+              "recall": 0.76092,
+              "f1": 0.582746,
+              "n_detections": 701
+            },
+            "30": {
+              "precision": 0.540656,
+              "recall": 0.871264,
+              "f1": 0.667254,
+              "n_detections": 701
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_9/detections_image-t0.7_run09.geojson",
+          "dedup_stats": {
+            "n_raw": 754,
+            "n_dedup": 698,
+            "n_removed": 56,
+            "removed_fraction": 0.07427055702917772,
+            "cluster_size_histogram": {
+              "1": 644,
+              "2": 52,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.435013,
+              "recall": 0.754023,
+              "f1": 0.551724,
+              "n_detections": 754
+            },
+            "30": {
+              "precision": 0.502653,
+              "recall": 0.871264,
+              "f1": 0.637511,
+              "n_detections": 754
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.467049,
+              "recall": 0.749425,
+              "f1": 0.575463,
+              "n_detections": 698
+            },
+            "30": {
+              "precision": 0.541547,
+              "recall": 0.868966,
+              "f1": 0.667255,
+              "n_detections": 698
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.435493,
+            "recall": 0.75908,
+            "f1": 0.55345
+          },
+          "deduplicated": {
+            "precision": 0.470723,
+            "recall": 0.754483,
+            "f1": 0.579731
+          },
+          "delta_f1": 0.026281
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.495885,
+            "recall": 0.864368,
+            "f1": 0.630206
+          },
+          "deduplicated": {
+            "precision": 0.538689,
+            "recall": 0.863448,
+            "f1": 0.663444
+          },
+          "delta_f1": 0.033238
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "n_passes": 30,
+      "passes": [
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 1090,
+            "n_dedup": 1012,
+            "n_removed": 78,
+            "removed_fraction": 0.07155963302752294,
+            "cluster_size_histogram": {
+              "1": 938,
+              "2": 71,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.344954,
+              "recall": 0.864368,
+              "f1": 0.493115,
+              "n_detections": 1090
+            },
+            "30": {
+              "precision": 0.358716,
+              "recall": 0.898851,
+              "f1": 0.512787,
+              "n_detections": 1090
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.371542,
+              "recall": 0.864368,
+              "f1": 0.519696,
+              "n_detections": 1012
+            },
+            "30": {
+              "precision": 0.385375,
+              "recall": 0.896552,
+              "f1": 0.539046,
+              "n_detections": 1012
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+          "dedup_stats": {
+            "n_raw": 1131,
+            "n_dedup": 1050,
+            "n_removed": 81,
+            "removed_fraction": 0.07161803713527852,
+            "cluster_size_histogram": {
+              "1": 972,
+              "2": 75,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.328912,
+              "recall": 0.855172,
+              "f1": 0.475096,
+              "n_detections": 1131
+            },
+            "30": {
+              "precision": 0.338638,
+              "recall": 0.88046,
+              "f1": 0.489144,
+              "n_detections": 1131
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.353333,
+              "recall": 0.852874,
+              "f1": 0.499663,
+              "n_detections": 1050
+            },
+            "30": {
+              "precision": 0.364762,
+              "recall": 0.88046,
+              "f1": 0.515825,
+              "n_detections": 1050
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_11/detections_text-t0.7_run11.geojson",
+          "dedup_stats": {
+            "n_raw": 1096,
+            "n_dedup": 1026,
+            "n_removed": 70,
+            "removed_fraction": 0.06386861313868614,
+            "cluster_size_histogram": {
+              "1": 958,
+              "2": 66,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.336679,
+              "recall": 0.848276,
+              "f1": 0.482038,
+              "n_detections": 1096
+            },
+            "30": {
+              "precision": 0.355839,
+              "recall": 0.896552,
+              "f1": 0.509471,
+              "n_detections": 1096
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.358674,
+              "recall": 0.845977,
+              "f1": 0.503765,
+              "n_detections": 1026
+            },
+            "30": {
+              "precision": 0.380117,
+              "recall": 0.896552,
+              "f1": 0.533881,
+              "n_detections": 1026
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_12/detections_text-t0.7_run12.geojson",
+          "dedup_stats": {
+            "n_raw": 1079,
+            "n_dedup": 1008,
+            "n_removed": 71,
+            "removed_fraction": 0.06580166821130677,
+            "cluster_size_histogram": {
+              "1": 940,
+              "2": 66,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.343837,
+              "recall": 0.852874,
+              "f1": 0.490092,
+              "n_detections": 1079
+            },
+            "30": {
+              "precision": 0.353105,
+              "recall": 0.875862,
+              "f1": 0.503303,
+              "n_detections": 1079
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.368056,
+              "recall": 0.852874,
+              "f1": 0.514207,
+              "n_detections": 1008
+            },
+            "30": {
+              "precision": 0.377976,
+              "recall": 0.875862,
+              "f1": 0.528067,
+              "n_detections": 1008
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_13/detections_text-t0.7_run13.geojson",
+          "dedup_stats": {
+            "n_raw": 1124,
+            "n_dedup": 1050,
+            "n_removed": 74,
+            "removed_fraction": 0.06583629893238434,
+            "cluster_size_histogram": {
+              "1": 978,
+              "2": 70,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.33452,
+              "recall": 0.864368,
+              "f1": 0.48236,
+              "n_detections": 1124
+            },
+            "30": {
+              "precision": 0.344306,
+              "recall": 0.889655,
+              "f1": 0.496472,
+              "n_detections": 1124
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.358095,
+              "recall": 0.864368,
+              "f1": 0.506397,
+              "n_detections": 1050
+            },
+            "30": {
+              "precision": 0.368571,
+              "recall": 0.889655,
+              "f1": 0.521212,
+              "n_detections": 1050
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_14/detections_text-t0.7_run14.geojson",
+          "dedup_stats": {
+            "n_raw": 1099,
+            "n_dedup": 1023,
+            "n_removed": 76,
+            "removed_fraction": 0.06915377616014559,
+            "cluster_size_histogram": {
+              "1": 949,
+              "2": 72,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.343949,
+              "recall": 0.868966,
+              "f1": 0.492829,
+              "n_detections": 1099
+            },
+            "30": {
+              "precision": 0.354868,
+              "recall": 0.896552,
+              "f1": 0.508475,
+              "n_detections": 1099
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.369501,
+              "recall": 0.868966,
+              "f1": 0.518519,
+              "n_detections": 1023
+            },
+            "30": {
+              "precision": 0.381232,
+              "recall": 0.896552,
+              "f1": 0.534979,
+              "n_detections": 1023
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_15/detections_text-t0.7_run15.geojson",
+          "dedup_stats": {
+            "n_raw": 1097,
+            "n_dedup": 1021,
+            "n_removed": 76,
+            "removed_fraction": 0.06927985414767548,
+            "cluster_size_histogram": {
+              "1": 946,
+              "2": 74,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.342753,
+              "recall": 0.864368,
+              "f1": 0.490862,
+              "n_detections": 1097
+            },
+            "30": {
+              "precision": 0.35278,
+              "recall": 0.889655,
+              "f1": 0.505222,
+              "n_detections": 1097
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.368266,
+              "recall": 0.864368,
+              "f1": 0.516484,
+              "n_detections": 1021
+            },
+            "30": {
+              "precision": 0.37904,
+              "recall": 0.889655,
+              "f1": 0.531593,
+              "n_detections": 1021
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_16/detections_text-t0.7_run16.geojson",
+          "dedup_stats": {
+            "n_raw": 1096,
+            "n_dedup": 1019,
+            "n_removed": 77,
+            "removed_fraction": 0.07025547445255474,
+            "cluster_size_histogram": {
+              "1": 945,
+              "2": 72,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.342153,
+              "recall": 0.862069,
+              "f1": 0.489876,
+              "n_detections": 1096
+            },
+            "30": {
+              "precision": 0.354015,
+              "recall": 0.891954,
+              "f1": 0.506858,
+              "n_detections": 1096
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.368008,
+              "recall": 0.862069,
+              "f1": 0.515818,
+              "n_detections": 1019
+            },
+            "30": {
+              "precision": 0.380765,
+              "recall": 0.891954,
+              "f1": 0.5337,
+              "n_detections": 1019
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_17/detections_text-t0.7_run17.geojson",
+          "dedup_stats": {
+            "n_raw": 1087,
+            "n_dedup": 1005,
+            "n_removed": 82,
+            "removed_fraction": 0.07543698252069918,
+            "cluster_size_histogram": {
+              "1": 926,
+              "2": 76,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.356946,
+              "recall": 0.891954,
+              "f1": 0.509855,
+              "n_detections": 1087
+            },
+            "30": {
+              "precision": 0.366145,
+              "recall": 0.914943,
+              "f1": 0.522996,
+              "n_detections": 1087
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.38607,
+              "recall": 0.891954,
+              "f1": 0.538889,
+              "n_detections": 1005
+            },
+            "30": {
+              "precision": 0.39602,
+              "recall": 0.914943,
+              "f1": 0.552778,
+              "n_detections": 1005
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_18/detections_text-t0.7_run18.geojson",
+          "dedup_stats": {
+            "n_raw": 1112,
+            "n_dedup": 1039,
+            "n_removed": 73,
+            "removed_fraction": 0.06564748201438848,
+            "cluster_size_histogram": {
+              "1": 967,
+              "2": 71,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.339928,
+              "recall": 0.868966,
+              "f1": 0.488688,
+              "n_detections": 1112
+            },
+            "30": {
+              "precision": 0.352518,
+              "recall": 0.901149,
+              "f1": 0.506787,
+              "n_detections": 1112
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.363811,
+              "recall": 0.868966,
+              "f1": 0.51289,
+              "n_detections": 1039
+            },
+            "30": {
+              "precision": 0.377286,
+              "recall": 0.901149,
+              "f1": 0.531886,
+              "n_detections": 1039
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_19/detections_text-t0.7_run19.geojson",
+          "dedup_stats": {
+            "n_raw": 1140,
+            "n_dedup": 1050,
+            "n_removed": 90,
+            "removed_fraction": 0.07894736842105263,
+            "cluster_size_histogram": {
+              "1": 963,
+              "2": 85,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.334211,
+              "recall": 0.875862,
+              "f1": 0.48381,
+              "n_detections": 1140
+            },
+            "30": {
+              "precision": 0.344737,
+              "recall": 0.903448,
+              "f1": 0.499048,
+              "n_detections": 1140
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.362857,
+              "recall": 0.875862,
+              "f1": 0.513131,
+              "n_detections": 1050
+            },
+            "30": {
+              "precision": 0.374286,
+              "recall": 0.903448,
+              "f1": 0.529293,
+              "n_detections": 1050
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "dedup_stats": {
+            "n_raw": 1118,
+            "n_dedup": 1046,
+            "n_removed": 72,
+            "removed_fraction": 0.06440071556350627,
+            "cluster_size_histogram": {
+              "1": 975,
+              "2": 70,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.337209,
+              "recall": 0.866667,
+              "f1": 0.485512,
+              "n_detections": 1118
+            },
+            "30": {
+              "precision": 0.350626,
+              "recall": 0.901149,
+              "f1": 0.504829,
+              "n_detections": 1118
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.360421,
+              "recall": 0.866667,
+              "f1": 0.509115,
+              "n_detections": 1046
+            },
+            "30": {
+              "precision": 0.374761,
+              "recall": 0.901149,
+              "f1": 0.529372,
+              "n_detections": 1046
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_20/detections_text-t0.7_run20.geojson",
+          "dedup_stats": {
+            "n_raw": 1084,
+            "n_dedup": 1012,
+            "n_removed": 72,
+            "removed_fraction": 0.06642066420664207,
+            "cluster_size_histogram": {
+              "1": 942,
+              "2": 68,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.348708,
+              "recall": 0.868966,
+              "f1": 0.497696,
+              "n_detections": 1084
+            },
+            "30": {
+              "precision": 0.363469,
+              "recall": 0.905747,
+              "f1": 0.518762,
+              "n_detections": 1084
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.373518,
+              "recall": 0.868966,
+              "f1": 0.52246,
+              "n_detections": 1012
+            },
+            "30": {
+              "precision": 0.389328,
+              "recall": 0.905747,
+              "f1": 0.544575,
+              "n_detections": 1012
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_21/detections_text-t0.7_run21.geojson",
+          "dedup_stats": {
+            "n_raw": 1118,
+            "n_dedup": 1037,
+            "n_removed": 81,
+            "removed_fraction": 0.07245080500894455,
+            "cluster_size_histogram": {
+              "1": 961,
+              "2": 72,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.329159,
+              "recall": 0.845977,
+              "f1": 0.473921,
+              "n_detections": 1118
+            },
+            "30": {
+              "precision": 0.345259,
+              "recall": 0.887356,
+              "f1": 0.497102,
+              "n_detections": 1118
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.35487,
+              "recall": 0.845977,
+              "f1": 0.5,
+              "n_detections": 1037
+            },
+            "30": {
+              "precision": 0.372228,
+              "recall": 0.887356,
+              "f1": 0.524457,
+              "n_detections": 1037
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_22/detections_text-t0.7_run22.geojson",
+          "dedup_stats": {
+            "n_raw": 1098,
+            "n_dedup": 1027,
+            "n_removed": 71,
+            "removed_fraction": 0.06466302367941712,
+            "cluster_size_histogram": {
+              "1": 959,
+              "2": 65,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.340619,
+              "recall": 0.85977,
+              "f1": 0.487932,
+              "n_detections": 1098
+            },
+            "30": {
+              "precision": 0.356102,
+              "recall": 0.898851,
+              "f1": 0.510111,
+              "n_detections": 1098
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.364167,
+              "recall": 0.85977,
+              "f1": 0.511628,
+              "n_detections": 1027
+            },
+            "30": {
+              "precision": 0.380721,
+              "recall": 0.898851,
+              "f1": 0.534884,
+              "n_detections": 1027
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_23/detections_text-t0.7_run23.geojson",
+          "dedup_stats": {
+            "n_raw": 1091,
+            "n_dedup": 1018,
+            "n_removed": 73,
+            "removed_fraction": 0.06691109074243813,
+            "cluster_size_histogram": {
+              "1": 946,
+              "2": 71,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.348304,
+              "recall": 0.873563,
+              "f1": 0.498034,
+              "n_detections": 1091
+            },
+            "30": {
+              "precision": 0.359303,
+              "recall": 0.901149,
+              "f1": 0.513761,
+              "n_detections": 1091
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.373281,
+              "recall": 0.873563,
+              "f1": 0.523056,
+              "n_detections": 1018
+            },
+            "30": {
+              "precision": 0.385069,
+              "recall": 0.901149,
+              "f1": 0.539573,
+              "n_detections": 1018
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_24/detections_text-t0.7_run24.geojson",
+          "dedup_stats": {
+            "n_raw": 1153,
+            "n_dedup": 1079,
+            "n_removed": 74,
+            "removed_fraction": 0.06418039895923677,
+            "cluster_size_histogram": {
+              "1": 1006,
+              "2": 72,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.328708,
+              "recall": 0.871264,
+              "f1": 0.47733,
+              "n_detections": 1153
+            },
+            "30": {
+              "precision": 0.337381,
+              "recall": 0.894253,
+              "f1": 0.489924,
+              "n_detections": 1153
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.351251,
+              "recall": 0.871264,
+              "f1": 0.500661,
+              "n_detections": 1079
+            },
+            "30": {
+              "precision": 0.360519,
+              "recall": 0.894253,
+              "f1": 0.513871,
+              "n_detections": 1079
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_25/detections_text-t0.7_run25.geojson",
+          "dedup_stats": {
+            "n_raw": 1119,
+            "n_dedup": 1038,
+            "n_removed": 81,
+            "removed_fraction": 0.07238605898123325,
+            "cluster_size_histogram": {
+              "1": 959,
+              "2": 77,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.335121,
+              "recall": 0.862069,
+              "f1": 0.482625,
+              "n_detections": 1119
+            },
+            "30": {
+              "precision": 0.350313,
+              "recall": 0.901149,
+              "f1": 0.504505,
+              "n_detections": 1119
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.361272,
+              "recall": 0.862069,
+              "f1": 0.509165,
+              "n_detections": 1038
+            },
+            "30": {
+              "precision": 0.377649,
+              "recall": 0.901149,
+              "f1": 0.532247,
+              "n_detections": 1038
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_26/detections_text-t0.7_run26.geojson",
+          "dedup_stats": {
+            "n_raw": 1132,
+            "n_dedup": 1051,
+            "n_removed": 81,
+            "removed_fraction": 0.0715547703180212,
+            "cluster_size_histogram": {
+              "1": 974,
+              "2": 74,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.325972,
+              "recall": 0.848276,
+              "f1": 0.470964,
+              "n_detections": 1132
+            },
+            "30": {
+              "precision": 0.337456,
+              "recall": 0.878161,
+              "f1": 0.487556,
+              "n_detections": 1132
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.351094,
+              "recall": 0.848276,
+              "f1": 0.496635,
+              "n_detections": 1051
+            },
+            "30": {
+              "precision": 0.363463,
+              "recall": 0.878161,
+              "f1": 0.514132,
+              "n_detections": 1051
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_27/detections_text-t0.7_run27.geojson",
+          "dedup_stats": {
+            "n_raw": 1099,
+            "n_dedup": 1025,
+            "n_removed": 74,
+            "removed_fraction": 0.06733393994540492,
+            "cluster_size_histogram": {
+              "1": 955,
+              "2": 67,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.33576,
+              "recall": 0.848276,
+              "f1": 0.481095,
+              "n_detections": 1099
+            },
+            "30": {
+              "precision": 0.351228,
+              "recall": 0.887356,
+              "f1": 0.503259,
+              "n_detections": 1099
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.36,
+              "recall": 0.848276,
+              "f1": 0.505479,
+              "n_detections": 1025
+            },
+            "30": {
+              "precision": 0.376585,
+              "recall": 0.887356,
+              "f1": 0.528767,
+              "n_detections": 1025
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_28/detections_text-t0.7_run28.geojson",
+          "dedup_stats": {
+            "n_raw": 1070,
+            "n_dedup": 994,
+            "n_removed": 76,
+            "removed_fraction": 0.07102803738317758,
+            "cluster_size_histogram": {
+              "1": 921,
+              "2": 71,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.357009,
+              "recall": 0.878161,
+              "f1": 0.507641,
+              "n_detections": 1070
+            },
+            "30": {
+              "precision": 0.36729,
+              "recall": 0.903448,
+              "f1": 0.522259,
+              "n_detections": 1070
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.3833,
+              "recall": 0.875862,
+              "f1": 0.53324,
+              "n_detections": 994
+            },
+            "30": {
+              "precision": 0.395372,
+              "recall": 0.903448,
+              "f1": 0.550035,
+              "n_detections": 994
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_29/detections_text-t0.7_run29.geojson",
+          "dedup_stats": {
+            "n_raw": 1067,
+            "n_dedup": 993,
+            "n_removed": 74,
+            "removed_fraction": 0.06935332708528585,
+            "cluster_size_histogram": {
+              "1": 922,
+              "2": 69,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.350515,
+              "recall": 0.85977,
+              "f1": 0.498003,
+              "n_detections": 1067
+            },
+            "30": {
+              "precision": 0.362699,
+              "recall": 0.889655,
+              "f1": 0.515313,
+              "n_detections": 1067
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.376636,
+              "recall": 0.85977,
+              "f1": 0.52381,
+              "n_detections": 993
+            },
+            "30": {
+              "precision": 0.388721,
+              "recall": 0.887356,
+              "f1": 0.540616,
+              "n_detections": 993
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "dedup_stats": {
+            "n_raw": 1085,
+            "n_dedup": 1009,
+            "n_removed": 76,
+            "removed_fraction": 0.07004608294930875,
+            "cluster_size_histogram": {
+              "1": 936,
+              "2": 71,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.346544,
+              "recall": 0.864368,
+              "f1": 0.494737,
+              "n_detections": 1085
+            },
+            "30": {
+              "precision": 0.359447,
+              "recall": 0.896552,
+              "f1": 0.513158,
+              "n_detections": 1085
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.371655,
+              "recall": 0.862069,
+              "f1": 0.519391,
+              "n_detections": 1009
+            },
+            "30": {
+              "precision": 0.386521,
+              "recall": 0.896552,
+              "f1": 0.540166,
+              "n_detections": 1009
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_30/detections_text-t0.7_run30.geojson",
+          "dedup_stats": {
+            "n_raw": 1139,
+            "n_dedup": 1069,
+            "n_removed": 70,
+            "removed_fraction": 0.061457418788410885,
+            "cluster_size_histogram": {
+              "1": 1001,
+              "2": 66,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.329236,
+              "recall": 0.862069,
+              "f1": 0.476493,
+              "n_detections": 1139
+            },
+            "30": {
+              "precision": 0.343284,
+              "recall": 0.898851,
+              "f1": 0.496823,
+              "n_detections": 1139
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.350795,
+              "recall": 0.862069,
+              "f1": 0.49867,
+              "n_detections": 1069
+            },
+            "30": {
+              "precision": 0.365762,
+              "recall": 0.898851,
+              "f1": 0.519947,
+              "n_detections": 1069
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "dedup_stats": {
+            "n_raw": 1089,
+            "n_dedup": 1017,
+            "n_removed": 72,
+            "removed_fraction": 0.06611570247933884,
+            "cluster_size_histogram": {
+              "1": 946,
+              "2": 70,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.341598,
+              "recall": 0.855172,
+              "f1": 0.488189,
+              "n_detections": 1089
+            },
+            "30": {
+              "precision": 0.353535,
+              "recall": 0.885057,
+              "f1": 0.505249,
+              "n_detections": 1089
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.365782,
+              "recall": 0.855172,
+              "f1": 0.512397,
+              "n_detections": 1017
+            },
+            "30": {
+              "precision": 0.378564,
+              "recall": 0.885057,
+              "f1": 0.530303,
+              "n_detections": 1017
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "dedup_stats": {
+            "n_raw": 1108,
+            "n_dedup": 1031,
+            "n_removed": 77,
+            "removed_fraction": 0.06949458483754513,
+            "cluster_size_histogram": {
+              "1": 959,
+              "2": 68,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.341155,
+              "recall": 0.868966,
+              "f1": 0.489955,
+              "n_detections": 1108
+            },
+            "30": {
+              "precision": 0.353791,
+              "recall": 0.901149,
+              "f1": 0.508101,
+              "n_detections": 1108
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.366634,
+              "recall": 0.868966,
+              "f1": 0.515689,
+              "n_detections": 1031
+            },
+            "30": {
+              "precision": 0.380213,
+              "recall": 0.901149,
+              "f1": 0.534789,
+              "n_detections": 1031
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+          "dedup_stats": {
+            "n_raw": 1121,
+            "n_dedup": 1049,
+            "n_removed": 72,
+            "removed_fraction": 0.06422836752899197,
+            "cluster_size_histogram": {
+              "1": 980,
+              "2": 67,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.32917,
+              "recall": 0.848276,
+              "f1": 0.474293,
+              "n_detections": 1121
+            },
+            "30": {
+              "precision": 0.338983,
+              "recall": 0.873563,
+              "f1": 0.488432,
+              "n_detections": 1121
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.351764,
+              "recall": 0.848276,
+              "f1": 0.497305,
+              "n_detections": 1049
+            },
+            "30": {
+              "precision": 0.36225,
+              "recall": 0.873563,
+              "f1": 0.512129,
+              "n_detections": 1049
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+          "dedup_stats": {
+            "n_raw": 1067,
+            "n_dedup": 991,
+            "n_removed": 76,
+            "removed_fraction": 0.07122774133083412,
+            "cluster_size_histogram": {
+              "1": 916,
+              "2": 74,
+              "3": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.356139,
+              "recall": 0.873563,
+              "f1": 0.505992,
+              "n_detections": 1067
+            },
+            "30": {
+              "precision": 0.36926,
+              "recall": 0.905747,
+              "f1": 0.524634,
+              "n_detections": 1067
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.383451,
+              "recall": 0.873563,
+              "f1": 0.532959,
+              "n_detections": 991
+            },
+            "30": {
+              "precision": 0.397578,
+              "recall": 0.905747,
+              "f1": 0.552595,
+              "n_detections": 991
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+          "dedup_stats": {
+            "n_raw": 1127,
+            "n_dedup": 1046,
+            "n_removed": 81,
+            "removed_fraction": 0.07187222715173026,
+            "cluster_size_histogram": {
+              "1": 968,
+              "2": 76,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.329193,
+              "recall": 0.852874,
+              "f1": 0.475032,
+              "n_detections": 1127
+            },
+            "30": {
+              "precision": 0.342502,
+              "recall": 0.887356,
+              "f1": 0.494238,
+              "n_detections": 1127
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.354685,
+              "recall": 0.852874,
+              "f1": 0.501013,
+              "n_detections": 1046
+            },
+            "30": {
+              "precision": 0.369025,
+              "recall": 0.887356,
+              "f1": 0.521269,
+              "n_detections": 1046
+            }
+          }
+        },
+        {
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+          "dedup_stats": {
+            "n_raw": 1073,
+            "n_dedup": 994,
+            "n_removed": 79,
+            "removed_fraction": 0.07362534948741846,
+            "cluster_size_histogram": {
+              "1": 917,
+              "2": 75,
+              "3": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.355079,
+              "recall": 0.875862,
+              "f1": 0.505305,
+              "n_detections": 1073
+            },
+            "30": {
+              "precision": 0.362535,
+              "recall": 0.894253,
+              "f1": 0.515915,
+              "n_detections": 1073
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.3833,
+              "recall": 0.875862,
+              "f1": 0.53324,
+              "n_detections": 994
+            },
+            "30": {
+              "precision": 0.391348,
+              "recall": 0.894253,
+              "f1": 0.544437,
+              "n_detections": 994
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.340468,
+            "recall": 0.863372,
+            "f1": 0.488312
+          },
+          "deduplicated": {
+            "precision": 0.365536,
+            "recall": 0.863065,
+            "f1": 0.513512
+          },
+          "delta_f1": 0.0252
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.352671,
+            "recall": 0.894329,
+            "f1": 0.505816
+          },
+          "deduplicated": {
+            "precision": 0.378704,
+            "recall": 0.894176,
+            "f1": 0.532014
+          },
+          "delta_f1": 0.026198
+        }
+      }
+    },
+    {
+      "name": "retest-phase2b::text-t0.7",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 3,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 924,
+            "n_dedup": 859,
+            "n_removed": 65,
+            "removed_fraction": 0.07034632034632035,
+            "cluster_size_histogram": {
+              "1": 797,
+              "2": 59,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.462121,
+              "recall": 0.792208,
+              "f1": 0.583732,
+              "n_detections": 924
+            },
+            "30": {
+              "precision": 0.479437,
+              "recall": 0.821892,
+              "f1": 0.605605,
+              "n_detections": 924
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.494761,
+              "recall": 0.788497,
+              "f1": 0.608011,
+              "n_detections": 859
+            },
+            "30": {
+              "precision": 0.515716,
+              "recall": 0.821892,
+              "f1": 0.633763,
+              "n_detections": 859
+            }
+          }
+        },
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T0.7/run_2/detections_T0.7_run02.geojson",
+          "dedup_stats": {
+            "n_raw": 934,
+            "n_dedup": 878,
+            "n_removed": 56,
+            "removed_fraction": 0.059957173447537475,
+            "cluster_size_histogram": {
+              "1": 825,
+              "2": 50,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.470021,
+              "recall": 0.814471,
+              "f1": 0.596062,
+              "n_detections": 934
+            },
+            "30": {
+              "precision": 0.491435,
+              "recall": 0.851577,
+              "f1": 0.623218,
+              "n_detections": 934
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.498861,
+              "recall": 0.812616,
+              "f1": 0.618207,
+              "n_detections": 878
+            },
+            "30": {
+              "precision": 0.522779,
+              "recall": 0.851577,
+              "f1": 0.647848,
+              "n_detections": 878
+            }
+          }
+        },
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T0.7/run_3/detections_T0.7_run03.geojson",
+          "dedup_stats": {
+            "n_raw": 945,
+            "n_dedup": 886,
+            "n_removed": 59,
+            "removed_fraction": 0.06243386243386243,
+            "cluster_size_histogram": {
+              "1": 831,
+              "2": 52,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.449735,
+              "recall": 0.788497,
+              "f1": 0.572776,
+              "n_detections": 945
+            },
+            "30": {
+              "precision": 0.477249,
+              "recall": 0.836735,
+              "f1": 0.607817,
+              "n_detections": 945
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.477427,
+              "recall": 0.784787,
+              "f1": 0.593684,
+              "n_detections": 886
+            },
+            "30": {
+              "precision": 0.509029,
+              "recall": 0.836735,
+              "f1": 0.632982,
+              "n_detections": 886
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.460626,
+            "recall": 0.798392,
+            "f1": 0.58419
+          },
+          "deduplicated": {
+            "precision": 0.49035,
+            "recall": 0.7953,
+            "f1": 0.606634
+          },
+          "delta_f1": 0.022444
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.482707,
+            "recall": 0.836735,
+            "f1": 0.612213
+          },
+          "deduplicated": {
+            "precision": 0.515841,
+            "recall": 0.836735,
+            "f1": 0.638198
+          },
+          "delta_f1": 0.025985
+        }
+      }
+    },
+    {
+      "name": "retest-phase2b::text-t1.0",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 3,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T1.0/run_1/detections_T1.0_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 1029,
+            "n_dedup": 969,
+            "n_removed": 60,
+            "removed_fraction": 0.05830903790087463,
+            "cluster_size_histogram": {
+              "1": 911,
+              "2": 57,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.388727,
+              "recall": 0.742115,
+              "f1": 0.510204,
+              "n_detections": 1029
+            },
+            "30": {
+              "precision": 0.424684,
+              "recall": 0.810761,
+              "f1": 0.557398,
+              "n_detections": 1029
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.412797,
+              "recall": 0.742115,
+              "f1": 0.530504,
+              "n_detections": 969
+            },
+            "30": {
+              "precision": 0.449948,
+              "recall": 0.808905,
+              "f1": 0.578249,
+              "n_detections": 969
+            }
+          }
+        },
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T1.0/run_2/detections_T1.0_run02.geojson",
+          "dedup_stats": {
+            "n_raw": 965,
+            "n_dedup": 908,
+            "n_removed": 57,
+            "removed_fraction": 0.05906735751295337,
+            "cluster_size_histogram": {
+              "1": 854,
+              "2": 52,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.419689,
+              "recall": 0.751391,
+              "f1": 0.538564,
+              "n_detections": 965
+            },
+            "30": {
+              "precision": 0.454922,
+              "recall": 0.814471,
+              "f1": 0.583777,
+              "n_detections": 965
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.443833,
+              "recall": 0.747681,
+              "f1": 0.557015,
+              "n_detections": 908
+            },
+            "30": {
+              "precision": 0.48348,
+              "recall": 0.814471,
+              "f1": 0.606773,
+              "n_detections": 908
+            }
+          }
+        },
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T1.0/run_3/detections_T1.0_run03.geojson",
+          "dedup_stats": {
+            "n_raw": 929,
+            "n_dedup": 872,
+            "n_removed": 57,
+            "removed_fraction": 0.061356297093649086,
+            "cluster_size_histogram": {
+              "1": 819,
+              "2": 50,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.435953,
+              "recall": 0.751391,
+              "f1": 0.551771,
+              "n_detections": 929
+            },
+            "30": {
+              "precision": 0.467169,
+              "recall": 0.805195,
+              "f1": 0.591281,
+              "n_detections": 929
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.462156,
+              "recall": 0.747681,
+              "f1": 0.571226,
+              "n_detections": 872
+            },
+            "30": {
+              "precision": 0.495413,
+              "recall": 0.801484,
+              "f1": 0.612332,
+              "n_detections": 872
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.41479,
+            "recall": 0.748299,
+            "f1": 0.533513
+          },
+          "deduplicated": {
+            "precision": 0.439595,
+            "recall": 0.745826,
+            "f1": 0.552915
+          },
+          "delta_f1": 0.019402
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.448925,
+            "recall": 0.810142,
+            "f1": 0.577485
+          },
+          "deduplicated": {
+            "precision": 0.47628,
+            "recall": 0.808287,
+            "f1": 0.599118
+          },
+          "delta_f1": 0.021633
+        }
+      }
+    },
+    {
+      "name": "retest-phase2b::text-t1.3",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 3,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T1.3/run_1/detections_T1.3_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 947,
+            "n_dedup": 885,
+            "n_removed": 62,
+            "removed_fraction": 0.06546990496304118,
+            "cluster_size_histogram": {
+              "1": 826,
+              "2": 56,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.428722,
+              "recall": 0.753247,
+              "f1": 0.546433,
+              "n_detections": 947
+            },
+            "30": {
+              "precision": 0.462513,
+              "recall": 0.812616,
+              "f1": 0.589502,
+              "n_detections": 947
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.457627,
+              "recall": 0.751391,
+              "f1": 0.56882,
+              "n_detections": 885
+            },
+            "30": {
+              "precision": 0.493785,
+              "recall": 0.810761,
+              "f1": 0.613764,
+              "n_detections": 885
+            }
+          }
+        },
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T1.3/run_2/detections_T1.3_run02.geojson",
+          "dedup_stats": {
+            "n_raw": 960,
+            "n_dedup": 907,
+            "n_removed": 53,
+            "removed_fraction": 0.05520833333333333,
+            "cluster_size_histogram": {
+              "1": 857,
+              "2": 47,
+              "3": 3
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.41875,
+              "recall": 0.745826,
+              "f1": 0.536358,
+              "n_detections": 960
+            },
+            "30": {
+              "precision": 0.4625,
+              "recall": 0.823748,
+              "f1": 0.592395,
+              "n_detections": 960
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.439912,
+              "recall": 0.74026,
+              "f1": 0.551867,
+              "n_detections": 907
+            },
+            "30": {
+              "precision": 0.488423,
+              "recall": 0.821892,
+              "f1": 0.612725,
+              "n_detections": 907
+            }
+          }
+        },
+        {
+          "detections": "outputs/retest/phase2b/track2-text/T1.3/run_3/detections_T1.3_run03.geojson",
+          "dedup_stats": {
+            "n_raw": 967,
+            "n_dedup": 904,
+            "n_removed": 63,
+            "removed_fraction": 0.06514994829369183,
+            "cluster_size_histogram": {
+              "1": 846,
+              "2": 54,
+              "3": 3,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.428128,
+              "recall": 0.768089,
+              "f1": 0.549801,
+              "n_detections": 967
+            },
+            "30": {
+              "precision": 0.459152,
+              "recall": 0.823748,
+              "f1": 0.589641,
+              "n_detections": 967
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.452434,
+              "recall": 0.758813,
+              "f1": 0.566875,
+              "n_detections": 904
+            },
+            "30": {
+              "precision": 0.49115,
+              "recall": 0.823748,
+              "f1": 0.615385,
+              "n_detections": 904
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.4252,
+            "recall": 0.755721,
+            "f1": 0.544197
+          },
+          "deduplicated": {
+            "precision": 0.449991,
+            "recall": 0.750155,
+            "f1": 0.562521
+          },
+          "delta_f1": 0.018324
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.461388,
+            "recall": 0.820037,
+            "f1": 0.590513
+          },
+          "deduplicated": {
+            "precision": 0.491119,
+            "recall": 0.8188,
+            "f1": 0.613958
+          },
+          "delta_f1": 0.023445
+        }
+      }
+    },
+    {
+      "name": "retest-phase2e::canonical-first",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2e/canonical-first/run_1/detections_canonical-first_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 771,
+            "n_dedup": 723,
+            "n_removed": 48,
+            "removed_fraction": 0.0622568093385214,
+            "cluster_size_histogram": {
+              "1": 678,
+              "2": 43,
+              "3": 1,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.508431,
+              "recall": 0.727273,
+              "f1": 0.598473,
+              "n_detections": 771
+            },
+            "30": {
+              "precision": 0.564202,
+              "recall": 0.80705,
+              "f1": 0.664122,
+              "n_detections": 771
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.542185,
+              "recall": 0.727273,
+              "f1": 0.621236,
+              "n_detections": 723
+            },
+            "30": {
+              "precision": 0.60166,
+              "recall": 0.80705,
+              "f1": 0.689382,
+              "n_detections": 723
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.508431,
+            "recall": 0.727273,
+            "f1": 0.598473
+          },
+          "deduplicated": {
+            "precision": 0.542185,
+            "recall": 0.727273,
+            "f1": 0.621236
+          },
+          "delta_f1": 0.022763
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.564202,
+            "recall": 0.80705,
+            "f1": 0.664122
+          },
+          "deduplicated": {
+            "precision": 0.60166,
+            "recall": 0.80705,
+            "f1": 0.689382
+          },
+          "delta_f1": 0.02526
+        }
+      }
+    },
+    {
+      "name": "retest-phase2d::image-terse",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2d/track1-image/terse/run_1/detections_terse_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 773,
+            "n_dedup": 725,
+            "n_removed": 48,
+            "removed_fraction": 0.062095730918499355,
+            "cluster_size_histogram": {
+              "1": 681,
+              "2": 42,
+              "4": 2
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.513583,
+              "recall": 0.736549,
+              "f1": 0.605183,
+              "n_detections": 773
+            },
+            "30": {
+              "precision": 0.5511,
+              "recall": 0.790353,
+              "f1": 0.64939,
+              "n_detections": 773
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.543448,
+              "recall": 0.730983,
+              "f1": 0.623418,
+              "n_detections": 725
+            },
+            "30": {
+              "precision": 0.587586,
+              "recall": 0.790353,
+              "f1": 0.674051,
+              "n_detections": 725
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.513583,
+            "recall": 0.736549,
+            "f1": 0.605183
+          },
+          "deduplicated": {
+            "precision": 0.543448,
+            "recall": 0.730983,
+            "f1": 0.623418
+          },
+          "delta_f1": 0.018235
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.5511,
+            "recall": 0.790353,
+            "f1": 0.64939
+          },
+          "deduplicated": {
+            "precision": 0.587586,
+            "recall": 0.790353,
+            "f1": 0.674051
+          },
+          "delta_f1": 0.024661
+        }
+      }
+    },
+    {
+      "name": "retest-phase2d::image-verbose",
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/retest/phase2d/track1-image/verbose/run_1/detections_verbose_run01.geojson",
+          "dedup_stats": {
+            "n_raw": 742,
+            "n_dedup": 692,
+            "n_removed": 50,
+            "removed_fraction": 0.0673854447439353,
+            "cluster_size_histogram": {
+              "1": 646,
+              "2": 43,
+              "3": 2,
+              "4": 1
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.520216,
+              "recall": 0.716141,
+              "f1": 0.602654,
+              "n_detections": 742
+            },
+            "30": {
+              "precision": 0.576819,
+              "recall": 0.794063,
+              "f1": 0.668228,
+              "n_detections": 742
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.557803,
+              "recall": 0.716141,
+              "f1": 0.627132,
+              "n_detections": 692
+            },
+            "30": {
+              "precision": 0.618497,
+              "recall": 0.794063,
+              "f1": 0.69537,
+              "n_detections": 692
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.520216,
+            "recall": 0.716141,
+            "f1": 0.602654
+          },
+          "deduplicated": {
+            "precision": 0.557803,
+            "recall": 0.716141,
+            "f1": 0.627132
+          },
+          "delta_f1": 0.024478
+        },
+        "30": {
+          "as_committed": {
+            "precision": 0.576819,
+            "recall": 0.794063,
+            "f1": 0.668228
+          },
+          "deduplicated": {
+            "precision": 0.618497,
+            "recall": 0.794063,
+            "f1": 0.69537
+          },
+          "delta_f1": 0.027142
+        }
+      }
+    }
+  ],
+  "tiebreak_cells": []
+}

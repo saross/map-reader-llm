@@ -3654,3 +3654,168 @@ to execute the registered comparison (a $0 recomputation for
 F1/tokens over committed outputs; latency would need timing metadata
 already recorded in run sidecars, or a small re-measurement) is a PI
 decision not yet taken.
+
+---
+
+### E79: Order-dependent tile assignment in `evaluate_detections.py` — a scoring sensitivity of ~0.01 F1 on the 123 conditions whose detection artefact carries no `source_tile`
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-18 (surfaced while building the H13 overlap scoring chain, Session 136) |
+| Type | Clarification (records a scoring-path sensitivity; no committed result changes) |
+| Commit | — (documents a property of the scoring path; no code change) |
+| Files | `scripts/evaluate_detections.py:1431-1444`; `scripts/lib_advanced_metrics.py:746-801` and `:1106-1184`; `scripts/prepare_h13_scoring.py:287-334`; measurements in `results/scoring-sensitivity-2026-08-18/` (`probe-batch1.json`, `probe-batch4.json`, `exposure-survey.json`) |
+| Impact | Low — no committed number is wrong and no within-analysis ranking is affected, but the two scoring chains in the repository differ by ~0.01 F1 on affected cells, and the committed rule is not invariant under row reordering |
+
+**Description**: Hungarian matching in
+`lib_advanced_metrics.calculate_f1_internal` (`:1106-1184`) runs **per
+map sheet**, not globally: the function loops over the sheets present in
+the evaluation bounds (`:1149`) and scopes detections to a sheet by
+string-matching the detection's `source_tile`
+(`:1159`, `gdf_det['source_tile'].str.startswith(map_name)`). Which
+sheet a detection is booked to therefore determines which reference
+subset it can match against.
+
+Most detection artefacts carry a `source_tile` written by the detector
+itself. Aggregated artefacts do not: `merge_passes.py` writes
+`source_tiles` (plural, a list of contributing tiles), so the
+consensus GeoJSONs arrive at the scorer without the singular key. For
+those, `evaluate_detections.py` derives one
+(`:1431-1444`):
+
+```python
+joined = gpd.sjoin(
+    gdf_det, gdf_bounds[["tile_name", "geometry"]],
+    how="left", predicate="intersects",
+)
+joined = joined[~joined.index.duplicated(keep="first")]
+gdf_det["source_tile"] = joined["tile_name"]
+```
+
+Because the study tiles at 12.5 % overlap, a detection in an overlap
+band intersects two or more bounds tiles, and `keep="first"` resolves
+the ambiguity by **GeoDataFrame row order** — a property of how the
+bounds file happens to be serialised, not of the detection's geometry.
+Between 29 % and 39 % of detections in the measured cells intersect more
+than one tile, so the tie-break is exercised constantly.
+
+The repository already contains the principled alternative and applies
+it to the other side of the same matching problem: references are booked
+to the tile whose **centroid is nearest**
+(`lib_advanced_metrics._assign_refs_to_primary_tiles`, `:746-801`),
+and the H13 overlap chain uses that same rule for detections
+(`prepare_h13_scoring.assign_primary_tiles`, `:287-334`). Detections and
+references are therefore assigned by two different rules in the
+committed scorer, and by one uniform rule in the H13 chain.
+
+**Measurement**: ten committed consensus cells were scored under both
+rules from the same detection and bounds files, with everything else
+held fixed (`scripts/scoring_sensitivity_probe.py --mode tiebreak`;
+outputs in `results/scoring-sensitivity-2026-08-18/probe-batch1.json`).
+The `first_intersecting_tile` column reproduces the committed
+`evaluation.json` value exactly in every cell, which validates the
+harness.
+
+| Condition | n | intersect >1 tile | change tile | change **sheet** | F1@20 first | F1@20 nearest | ΔF1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10` | 549 | 195 | 90 | 10 | 0.6667 | 0.6565 | −0.0102 |
+| `pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30` | 415 | 150 | 63 | 7 | 0.8141 | 0.8047 | −0.0094 |
+| `pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n10-9of10` | 431 | 153 | 59 | 6 | 0.7968 | 0.7875 | −0.0092 |
+| `pv-diag-384::flash-high-text-n5-text-t0.3-consensus-10of10` | 409 | 142 | 56 | 6 | 0.7891 | 0.7773 | −0.0118 |
+| `pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10` | 405 | 156 | 63 | 7 | 0.7500 | 0.7405 | −0.0095 |
+| `retest-phase3a-high::text-high-t0.7-n30-22of30` | 478 | 143 | 67 | 7 | 0.7729 | 0.7591 | −0.0138 |
+| `retest-phase3a-high::text-high-t1.0-n30-23of30` | 442 | 127 | 61 | 6 | 0.7747 | 0.7625 | −0.0122 |
+| `retest-phase3a-replication::text-high-t0.7-n30-21of30` | 520 | 158 | 72 | 7 | 0.7705 | 0.7573 | −0.0132 |
+| `retest-phase3a::image-t0.7-n30-18of30` | 535 | 170 | 77 | 9 | 0.6909 | 0.6834 | −0.0074 |
+| `gold-standard-v2::consensus-5of5` | 420 | 152 | 62 | 8 | 0.7649 | 0.7556 | −0.0094 |
+
+Four further consensus cells at low vote thresholds
+(`probe-batch4.json`) fall in the same band: −0.0028 to −0.0096 at 30 m.
+
+Three features of the measurement matter. First, the **magnitude is
+small and tightly bounded**: ΔF1 spans −0.0028 to −0.0138 across
+fourteen cells, with the ten primary cells clustered at −0.0074 to
+−0.0138. Second, only a handful of reassignments actually bite: of the
+56–90 detections per cell that change tile, only **6–10 change map
+sheet**, and only those can change the matching problem — a
+within-sheet reassignment moves the per-tile bootstrap unit but not the
+point estimate. Third, the **direction is systematic, not noisy**: the
+nearest-centroid rule scores lower than the committed rule in all
+fourteen cells, so the committed figures sit at the optimistic end of
+the interval spanned by the two defensible rules.
+
+**Exposure**: exactly the conditions whose scored artefact carries no
+`source_tile`. `scripts/scoring_sensitivity_survey.py` establishes this
+by reading every artefact behind every condition in
+`results/conditions-manifest.json`: **123 of 333 conditions**, all of
+architecture `consensus` (register:
+`results/scoring-sensitivity-2026-08-18/exposure-survey.json`,
+`summary.n_tiebreak_exposed`). The 125 single-pass conditions and all
+83 proposer-verifier conditions carry a `source_tile` written upstream,
+so the scorer never reaches the tie-break for them and their committed
+values are exactly reproducible.
+
+**Why this is a sensitivity and not an error**: neither rule is
+prescribed by the registration, which specifies the matching algorithm
+in full (§ 4.1.2, `osf/preregistration.md:358-372`: one-to-one Hungarian
+assignment over a cost matrix truncated at the spatial tolerance) but
+never states that matching is partitioned by map sheet, and says nothing
+about how a detection lying in a tile-overlap band is booked to a
+sheet. Both rules are defensible; the
+committed rule is merely arbitrary rather than wrong. Every committed
+comparison applies one rule uniformly across all of its arms, so
+**within-analysis validity is preserved** — no leaderboard ordering,
+tier assignment, or hypothesis outcome computed inside a single chain is
+affected by the choice. What the arbitrariness costs is:
+
+1. **Cross-chain comparability.** The H13 overlap chain
+   (`results/h13-overlap-2026-08-18/`) assigns detections by nearest
+   centroid; every other committed evaluation assigns them by first
+   intersection. Numbers from the two chains are offset by roughly
+   0.01 F1 and must not be placed in the same table without a note.
+   This is the "F1 agrees to within 0.0012" residual already recorded in
+   `results/h13-overlap-2026-08-18/findings.md` § validation and
+   decomposed in `k-sensitivity/k_sensitivity.json`.
+2. **Reproducibility under row reordering.** Regenerating a bounds file
+   with a different feature order, or upgrading a library whose spatial
+   index emits joins in a different order, would move the affected
+   figures by up to ~0.014 F1 without any change to data or method. The
+   committed numbers are reproducible from the committed inputs, but
+   they are not reproducible *in principle* from a re-derived bounds
+   file.
+
+**Protocol impact**: none on any registered outcome. No committed value
+is withdrawn or revised. Three obligations follow for the paper:
+
+- Report the tile-assignment rule in Methods as part of the evaluation
+  specification, rather than leaving it implicit — "a detection lying in
+  a tile-overlap band is assigned to the first intersecting tile in
+  bounds-file order" — and cite this erratum for the measured
+  sensitivity.
+- State the ~0.01 F1 sensitivity once, with the fourteen-cell range,
+  wherever consensus F1 values are compared across the H13 chain and the
+  main chain. Do not restate it per number.
+- Do not report a difference smaller than ~0.014 F1 between two
+  consensus cells as meaningful on the strength of the point estimate
+  alone; the confidence intervals already committed are wider than this,
+  so no published interval is invalidated, but a bare point-estimate
+  ordering inside that band is not robust to the tie-break.
+
+Making the rule uniform (nearest centroid for detections as well as
+references) is a one-line change to `evaluate_detections.py` that would
+require re-scoring 123 conditions at $0 API cost. Whether to do so is a
+PI decision; the argument against is that it would move committed
+numbers by ~0.01 for no gain in validity, and the argument for is that
+it removes a latent reproducibility hazard and makes the two chains
+commensurable. This erratum records the sensitivity so that the decision
+can be deferred without the information being lost.
+
+Cross-references: E72 (coverage confound in an unregistered exploratory
+analysis — the same family of "scoring-path property that looks like a
+result"), E75 (H13 execution, whose scoring chain adopted the uniform
+rule), and the S136 review at
+`reports/scoring-sensitivity-review-2026-08-18.md`, which also treats
+the second, larger scoring-path finding of the same session (the
+missing within-pass deduplication).
+
+---

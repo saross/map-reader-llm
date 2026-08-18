@@ -1,0 +1,235 @@
+{
+ "dedup_cells": [
+  {
+   "name": "pv-diag-384::verified-adv-text-baseline",
+   "detections": [
+    "results/verifier-robustness/sweep-sets/verified-adv-text-baseline.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "pv-diag-384::verified-adv-text-baseline-medium-vf",
+   "detections": [
+    "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-medium-vf.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "pv-diag-384::verified-adv-text-baseline-pro-vf",
+   "detections": [
+    "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-pro-vf.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "pv-diag-384::verified-adv-image-baseline",
+   "detections": [
+    "results/verifier-robustness/sweep-sets/verified-adv-image-baseline.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "pv-diag-384::verified-adv-image-baseline-pro-vf",
+   "detections": [
+    "results/verifier-robustness/sweep-sets/verified-adv-image-baseline-pro-vf.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "pv-diag-384::verified-adv-pro-text-baseline",
+   "detections": [
+    "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "pv-diag-384::verified-adv-pro-image-baseline",
+   "detections": [
+    "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "retest-phase2b::verified-adv-text-t0.0",
+   "detections": [
+    "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run1.geojson",
+    "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run2.geojson",
+    "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run3.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "retest-phase2b::verified-adv-image-t0.0",
+   "detections": [
+    "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run1.geojson",
+    "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run2.geojson",
+    "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run3.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "proposer-verifier-384::verified-adversarial-text",
+   "detections": [
+    "outputs/h11/proposer-verifier-384/verified-adversarial-text-accepted.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  },
+  {
+   "name": "proposer-verifier-384::verified-checklist-text",
+   "detections": [
+    "outputs/h11/proposer-verifier-384/verified-checklist-text-accepted.geojson"
+   ],
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "buffers": [
+    20,
+    30
+   ]
+  }
+ ],
+ "tiebreak_cells": [],
+ "_committed_reference": {
+  "pv-diag-384::verified-adv-text-baseline": {
+   "f1_20": 0.8142,
+   "f1_30": 0.832,
+   "dup_frac": 0.25,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "results/verifier-robustness/sweep-sets/verified-adv-text-baseline.geojson"
+   ]
+  },
+  "pv-diag-384::verified-adv-text-baseline-medium-vf": {
+   "f1_20": 0.8244,
+   "f1_30": 0.84,
+   "dup_frac": 0.24946236559139784,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-medium-vf.geojson"
+   ]
+  },
+  "pv-diag-384::verified-adv-text-baseline-pro-vf": {
+   "f1_20": 0.8263,
+   "f1_30": 0.8419,
+   "dup_frac": 0.24622030237580994,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-pro-vf.geojson"
+   ]
+  },
+  "pv-diag-384::verified-adv-image-baseline": {
+   "f1_20": 0.7167,
+   "f1_30": 0.7822,
+   "dup_frac": 0.22113502935420742,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "results/verifier-robustness/sweep-sets/verified-adv-image-baseline.geojson"
+   ]
+  },
+  "pv-diag-384::verified-adv-image-baseline-pro-vf": {
+   "f1_20": 0.7309,
+   "f1_30": 0.7966,
+   "dup_frac": 0.2180746561886051,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "results/verifier-robustness/sweep-sets/verified-adv-image-baseline-pro-vf.geojson"
+   ]
+  },
+  "pv-diag-384::verified-adv-pro-text-baseline": {
+   "f1_20": 0.7696,
+   "f1_30": 0.7889,
+   "dup_frac": 0.2233502538071066,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline.geojson"
+   ]
+  },
+  "pv-diag-384::verified-adv-pro-image-baseline": {
+   "f1_20": 0.6196,
+   "f1_30": 0.7522,
+   "dup_frac": 0.21237113402061855,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline.geojson"
+   ]
+  },
+  "retest-phase2b::verified-adv-text-t0.0": {
+   "f1_20": 0.7703,
+   "f1_30": 0.811,
+   "dup_frac": 0.204574332909784,
+   "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+   "paths": [
+    "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run1.geojson",
+    "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run2.geojson",
+    "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run3.geojson"
+   ]
+  },
+  "retest-phase2b::verified-adv-image-t0.0": {
+   "f1_20": 0.6739,
+   "f1_30": 0.7467,
+   "dup_frac": 0.1746880570409982,
+   "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+   "paths": [
+    "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run1.geojson",
+    "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run2.geojson",
+    "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run3.geojson"
+   ]
+  },
+  "proposer-verifier-384::verified-adversarial-text": {
+   "f1_20": 0.4708,
+   "f1_30": 0.4769,
+   "dup_frac": 0.14883720930232558,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "outputs/h11/proposer-verifier-384/verified-adversarial-text-accepted.geojson"
+   ]
+  },
+  "proposer-verifier-384::verified-checklist-text": {
+   "f1_20": 0.5214,
+   "f1_30": 0.5318,
+   "dup_frac": 0.16071428571428573,
+   "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "paths": [
+    "outputs/h11/proposer-verifier-384/verified-checklist-text-accepted.geojson"
+   ]
+  }
+ }
+}

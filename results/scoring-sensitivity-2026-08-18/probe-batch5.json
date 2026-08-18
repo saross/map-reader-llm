@@ -1,0 +1,85 @@
+{
+  "generated_at_utc": "2026-08-18T06:26:36.990374+00:00",
+  "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+  "dedup_metres": 20.0,
+  "dedup_cells": [
+    {
+      "name": "55maps-image-generalisation::verified",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "n_passes": 1,
+      "passes": [
+        {
+          "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+          "dedup_stats": {
+            "n_raw": 4680,
+            "n_dedup": 4656,
+            "n_removed": 24,
+            "removed_fraction": 0.005128205128205128,
+            "cluster_size_histogram": {
+              "1": 4632,
+              "2": 24
+            },
+            "clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "20": {
+              "precision": 0.511752,
+              "recall": 0.504635,
+              "f1": 0.508169,
+              "n_detections": 4680
+            },
+            "50": {
+              "precision": 0.780128,
+              "recall": 0.769279,
+              "f1": 0.774666,
+              "n_detections": 4680
+            }
+          },
+          "deduplicated": {
+            "20": {
+              "precision": 0.513531,
+              "recall": 0.503793,
+              "f1": 0.508615,
+              "n_detections": 4656
+            },
+            "50": {
+              "precision": 0.783935,
+              "recall": 0.769069,
+              "f1": 0.776431,
+              "n_detections": 4656
+            }
+          }
+        }
+      ],
+      "mean_over_passes": {
+        "20": {
+          "as_committed": {
+            "precision": 0.511752,
+            "recall": 0.504635,
+            "f1": 0.508169
+          },
+          "deduplicated": {
+            "precision": 0.513531,
+            "recall": 0.503793,
+            "f1": 0.508615
+          },
+          "delta_f1": 0.000446
+        },
+        "50": {
+          "as_committed": {
+            "precision": 0.780128,
+            "recall": 0.769279,
+            "f1": 0.774666
+          },
+          "deduplicated": {
+            "precision": 0.783935,
+            "recall": 0.769069,
+            "f1": 0.776431
+          },
+          "delta_f1": 0.001765
+        }
+      }
+    }
+  ],
+  "tiebreak_cells": []
+}
