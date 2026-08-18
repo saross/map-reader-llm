@@ -185,3 +185,153 @@ def test_pass_globs_covers_both_conventions():
     assert len(PASS_GLOBS) == 2
     assert any("detections_" in g for g in PASS_GLOBS)
     assert any("detections-" in g for g in PASS_GLOBS)
+
+
+# ── Caller wiring ─────────────────────────────────────────────────────
+#
+# Audit finding (Session 136, Lens B): every test above exercises the
+# resolver's own functions, and the migration could be reverted at all four
+# call sites with the entire tier-1 suite still green — the migrated functions
+# were executed by no test in the repository. These tests close that hole. Each
+# builds a convention-B-only pool, which the pre-migration glob could not see
+# at all, and asserts through the real entry point. Revert any call site and
+# the corresponding test fails.
+
+import json  # noqa: E402
+
+CONV_B_FILE = "detections-detect_brief-text-3-flash-2026-08-17.geojson"
+
+
+def _write_pass(run_dir: Path, filename: str, n_features: int = 2) -> None:
+    """Write a minimal but structurally real per-pass detection GeoJSON.
+
+    Args:
+        run_dir: Directory to write into; created if absent.
+        filename: Pass filename, in one of the two conventions.
+        n_features: How many point features to emit.
+    """
+    run_dir.mkdir(parents=True, exist_ok=True)
+    (run_dir / filename).write_text(json.dumps({
+        "type": "FeatureCollection",
+        "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::32635"}},
+        "processed_tiles": ["K-35-052-4_32635_x0_y0.png"],
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [400000.0 + i, 4650000.0]},
+                "properties": {"source_tile": "K-35-052-4_32635_x0_y0.png",
+                               "label": "mound"},
+            }
+            for i in range(n_features)
+        ],
+    }))
+
+
+@pytest.mark.tier1
+def test_evaluate_detections_resolves_realtime_passes(tmp_path):
+    """evaluate_detections must see realtime-written passes.
+
+    The pre-migration default glob resolved ZERO files here, which is what it
+    would have done to the entire tile-size x overlap grid.
+    """
+    from scripts.evaluate_detections import find_detection_files
+
+    pool = tmp_path / "pool"
+    for n in (1, 2, 3):
+        _write_pass(pool / f"run_{n}", CONV_B_FILE)
+
+    assert list(pool.glob("*/detections_*.geojson")) == [], "precondition: invisible to the old glob"
+    assert len(find_detection_files(pool)) == 3
+
+
+@pytest.mark.tier1
+def test_lib_consensus_loads_realtime_passes(tmp_path):
+    """lib_consensus.load_run_detections must return features for convention B.
+
+    Before the migration it returned an empty list for every realtime pass —
+    silently, so a consensus built over such a pool would simply be empty.
+    """
+    from scripts.lib_consensus import load_run_detections
+
+    run_dir = tmp_path / "run_1"
+    _write_pass(run_dir, CONV_B_FILE, n_features=4)
+
+    assert list(run_dir.glob("detections_*.geojson")) == [], "precondition"
+    assert len(load_run_detections(run_dir)) == 4
+
+
+@pytest.mark.tier1
+def test_n1_pool_globs_resolve_realtime_passes(tmp_path):
+    """The leaderboard pool-level path must see convention B too.
+
+    ``n1_baseline_leaderboard_tiering`` globs at pool level via PASS_GLOBS;
+    dropping convention B there silently halves a mixed pool's replicates.
+    """
+    from scripts.n1_baseline_leaderboard_tiering import PASS_GLOBS as N1_GLOBS
+
+    pool = tmp_path / "pool"
+    for n in (1, 2):
+        _write_pass(pool / f"run_{n}", CONV_B_FILE)
+
+    resolved = {f for g in N1_GLOBS for f in pool.glob(g)}
+    assert len(resolved) == 2
+
+
+@pytest.mark.tier1
+def test_evaluate_detections_still_honours_an_explicit_glob(tmp_path):
+    """The negative: an explicit pattern must still override the resolver.
+
+    Some callers legitimately target non-pass artefacts (``accepted_run*``).
+    Without this, a mutation making the resolver unconditional would pass.
+    """
+    from scripts.evaluate_detections import find_detection_files
+
+    pool = tmp_path / "pool"
+    _write_pass(pool / "run_1", CONV_B_FILE)
+    (pool / "run_1" / "accepted_run1.geojson").write_text('{"type": "FeatureCollection"}')
+
+    assert len(find_detection_files(pool)) == 1
+    assert len(find_detection_files(pool, "*/accepted_run*.geojson")) == 1
+
+
+@pytest.mark.tier1
+def test_derived_artefacts_in_a_run_directory_are_not_passes(tmp_path):
+    """Real aggregation shapes must be excluded, not the imaginary ones.
+
+    The corpus holds ``detections_dedup.geojson`` inside run_<N> directories
+    and ``detections_t0.25.geojson`` / ``detections_vt4_pt0.10.geojson`` in
+    verifier output directories. All three begin with ``detections_``, so a
+    glob-only resolver returns them as raw passes.
+    """
+    run_dir = tmp_path / "run_1"
+    _write_pass(run_dir, CONV_B_FILE)
+    for decoy in ("detections_dedup.geojson", "detections_t0.25.geojson",
+                  "detections_vt4_pt0.10.geojson"):
+        (run_dir / decoy).write_text('{"type": "FeatureCollection"}')
+
+    assert [p.name for p in find_pass_geojsons(run_dir)] == [CONV_B_FILE]
+
+
+@pytest.mark.tier1
+def test_flat_pool_without_run_directories_resolves(tmp_path):
+    """A pool holding its pass directly must not resolve to nothing.
+
+    Smoke runs and one-shot proposer runs use this layout; returning [] would
+    be the same silent undercount the module exists to end.
+    """
+    pool = tmp_path / "pool"
+    _write_pass(pool, CONV_B_FILE)
+    assert len(resolve_pool_passes(pool)) == 1
+
+
+@pytest.mark.tier1
+def test_chunked_pass_counts_once(tmp_path):
+    """A Batch-API pass split across chunks is several files but ONE pass."""
+    run_dir = tmp_path / "pool" / "run_1"
+    for chunk in (0, 1):
+        _write_pass(run_dir, f"detections_brief-text_run01_chunk{chunk}.geojson")
+
+    files = resolve_pool_passes(tmp_path / "pool", allow_multiple=True)
+    assert len(files) == 2
+    # The guard counts identities, so expecting ONE pass must not raise.
+    resolve_pool_passes(tmp_path / "pool", expected_passes=1, allow_multiple=True)

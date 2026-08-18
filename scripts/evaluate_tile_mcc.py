@@ -149,7 +149,7 @@ def build_n1_gdf(
         List of GeoDataFrames, one per run.
     """
     if glob_pattern is None:
-        det_files = resolve_pool_passes(detections_dir, allow_multiple=True)
+        det_files = resolve_pool_passes(detections_dir)
     else:
         det_files = sorted(detections_dir.glob(glob_pattern))
     if not det_files:

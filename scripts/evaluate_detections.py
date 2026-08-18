@@ -366,7 +366,7 @@ def find_detection_files(
     With no explicit pattern, resolution is delegated to
     :func:`scripts.lib_detection_paths.resolve_pool_passes`, which expands BOTH
     per-pass filename conventions. The previous default,
-    ``"*/detections_*.geojson"``, matched only the batch-written shape and so
+    a batch-only pattern, matched just the ``..._run<NN>.geojson`` shape and so
     silently under-read any pool whose passes straddled the project's switch
     from the Batch API to real-time flex (defect D6).
 
@@ -380,15 +380,20 @@ def find_detection_files(
             (the default) uses the canonical resolver.
 
     Returns:
-        Sorted list of matching file paths.
+        Matching file paths, in run order (run_2 before run_10).
     """
     if glob_pattern is None:
-        matches = resolve_pool_passes(detections_dir, allow_multiple=True)
+        # allow_multiple stays False: a run directory holding two candidate
+        # files means a superseded artefact is present, and averaging both
+        # into a 'pass' count is the silent-wrongness this resolver exists
+        # to prevent. Let it raise and make the operator disambiguate.
+        matches = resolve_pool_passes(detections_dir)
     else:
         matches = sorted(detections_dir.glob(glob_pattern))
     if not matches:
         logger.warning(
-            "No files matching '%s' in %s", glob_pattern, detections_dir,
+            "No pass files found in %s (pattern: %s)",
+            detections_dir, glob_pattern or "canonical resolver",
         )
     return matches
 

@@ -115,7 +115,12 @@ DEFAULT_OUTPUT = BASE_DIR / "results" / "paper-eval" / "n1" / "384px-14buf-mcc" 
 # cells with the genuine-Pro re-run (n1-pro-rerun-384) — take effect with no
 # change to this script. Each ref ``<run>::<label>`` is resolved against
 # run-conditions.json for its detections dir and evaluation.json.
-from scripts.lib_detection_paths import POOL_PASS_GLOBS  # noqa: E402
+# Dual-mode import — see the note in lib_consensus.py. This script puts
+# ``scripts/`` on sys.path (line above), so the bare form is the live one.
+try:
+    from lib_detection_paths import POOL_PASS_GLOBS
+except ImportError:  # repo root on sys.path (pytest, or a package-style caller)
+    from scripts.lib_detection_paths import POOL_PASS_GLOBS
 
 ANALYSIS_ID = "n1-baseline-matrix-384"
 
