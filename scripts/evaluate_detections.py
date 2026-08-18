@@ -98,6 +98,234 @@ def _worst_coverage_status(statuses: list[str]) -> str:
         return COVERAGE_STATUS_NORMAL
     return max(statuses, key=lambda s: _COVERAGE_SEVERITY.get(s, 0))
 
+
+# ── Undefined-metric rendering (errata E81) ───────────────────────────
+
+# Rendered in human-readable output wherever a tile-level metric is not
+# computable. Deliberately a word rather than a number: the whole point of
+# E81 is that no numeral on the MCC scale can stand in for "undefined"
+# without asserting something the data do not support.
+UNDEFINED_DISPLAY = "undefined"
+
+
+def _csv_metric(val: float | None) -> float | str:
+    """Render a possibly-undefined metric for a CSV cell.
+
+    Args:
+        val: The metric value, or ``None`` when it is undefined.
+
+    Returns:
+        ``val`` unchanged when it is a number, or ``""`` (an empty cell)
+        when it is ``None``. Errata E81: an empty cell is the only
+        honest CSV rendering of an undefined metric — ``0`` would be
+        read as a measurement.
+
+    Examples:
+        >>> _csv_metric(0.0)
+        0.0
+        >>> _csv_metric(None)
+        ''
+    """
+    return "" if val is None else val
+
+
+def _safe_round(val: float | None, digits: int = 4) -> float | None:
+    """Round a metric value, preserving ``None`` for an undefined metric.
+
+    Errata E81 (2026-08-18): this helper used to return ``0.0`` for
+    ``None``. The tile-level Matthews Correlation Coefficient (MCC) is
+    *undefined* when the 2 x 2 tile confusion matrix is degenerate, and
+    ``0.0`` is not a neutral placeholder for it — § 4.2 of the
+    preregistration labels ``0`` on this scale "random", so the
+    substitution published nine conditions as performing at chance where
+    the metric was simply not computable. ``None`` serialises to JSON
+    ``null``, which readers and downstream consumers can tell apart from
+    a measured zero. A genuine zero — for example the specificity of a
+    condition that false-positives on every reference-empty tile — still
+    comes through as ``0.0``. Distinguishing those two cases is the
+    entire point of the change.
+
+    Args:
+        val: The value to round, or ``None`` when the underlying metric
+            is undefined.
+        digits: Decimal places (default 4, the published precision of
+            the ``tile_classification`` block).
+
+    Returns:
+        The rounded ``float``, or ``None`` when ``val`` is ``None``.
+
+    Examples:
+        >>> _safe_round(0.06651234)
+        0.0665
+        >>> _safe_round(0.0)
+        0.0
+        >>> _safe_round(None) is None
+        True
+    """
+    return round(val, digits) if val is not None else None
+
+
+def build_tile_classification_block(
+    tile_class: dict[str, Any],
+    tile_ci: dict[str, Any],
+) -> dict[str, Any]:
+    """Assemble the published ``tile_classification`` block for one pass.
+
+    Pairs the deterministic point estimates from
+    :func:`lib_advanced_metrics.calculate_tile_classification` with the
+    bootstrap distribution summary from
+    :func:`lib_advanced_metrics.bootstrap_tile_classification_ci`.
+
+    ``point`` fields carry the deterministic estimate computed across all
+    tiles (no bootstrap). The § 7.5 verifier fix needs a named field that
+    is invariant to bootstrap iteration count; ``mean`` is the bootstrap
+    distribution mean and is not deterministic across seed changes.
+
+    Every numeric field passes through :func:`_safe_round`, so an
+    undefined metric arrives at the JSON as ``null`` rather than ``0.0``
+    (errata E81).
+
+    Args:
+        tile_class: Result of ``calculate_tile_classification`` — the
+            confusion counts plus deterministic MCC / sensitivity /
+            specificity (any of which may be ``None``).
+        tile_ci: Result of ``bootstrap_tile_classification_ci`` — per
+            metric ``mean`` / ``ci_lower`` / ``ci_upper`` / ``method``.
+
+    Returns:
+        The ``tile_classification`` dict as published in
+        ``evaluation.json``.
+    """
+    block: dict[str, Any] = {
+        "confusion": {
+            "tp": tile_class["tp"],
+            "tn": tile_class["tn"],
+            "fp": tile_class["fp"],
+            "fn": tile_class["fn"],
+        },
+    }
+    for metric in ("mcc", "sensitivity", "specificity"):
+        ci = tile_ci[metric]
+        block[metric] = {
+            "point": _safe_round(tile_class.get(metric)),
+            "mean": _safe_round(ci["mean"]),
+            "ci_lower": _safe_round(ci["ci_lower"]),
+            "ci_upper": _safe_round(ci["ci_upper"]),
+            "method": ci.get("method", "BCa"),
+        }
+    return block
+
+
+def aggregate_tile_classification(
+    mcc_results: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Average per-pass ``tile_classification`` blocks over DEFINED passes.
+
+    Errata E81 (2026-08-18): an undefined tile metric used to reach this
+    function as a coerced ``0.0``, indistinguishable from a measurement,
+    so a cell with two computable passes and one degenerate pass
+    published a mean pulled toward the value the § 4.2 scale legend calls
+    "random" — ``0.0443 = mean(0.0665, 0, 0.0665)`` where the honest
+    answer over the defined passes is ``0.0665``. Undefined passes now
+    arrive as ``None`` and are excluded from the mean, and the block
+    records how many passes actually contributed.
+
+    Args:
+        mcc_results: Per-pass ``tile_classification`` blocks, in run
+            order, as produced by :func:`build_tile_classification_block`.
+
+    Returns:
+        An aggregated ``tile_classification`` block. Each metric carries
+        ``mean`` / ``ci_lower`` / ``ci_upper`` (and ``point`` when the
+        per-pass blocks supply it), each of which is ``None`` when no
+        pass was defined; plus ``n_runs`` (passes carrying the metric)
+        and ``n_runs_defined`` (passes that contributed a value). The
+        block also carries ``confusion`` — **run 1's matrix, not a sum
+        or a mean** — and ``confusion_source`` recording that fact.
+
+    Examples:
+        >>> blocks = [
+        ...     {"mcc": {"point": 0.0665, "mean": 0.05, "ci_lower": 0.0,
+        ...              "ci_upper": 0.12}},
+        ...     {"mcc": {"point": None, "mean": None, "ci_lower": None,
+        ...              "ci_upper": None}},
+        ... ]
+        >>> agg = aggregate_tile_classification(blocks)
+        >>> agg["mcc"]["point"], agg["mcc"]["n_runs_defined"]
+        (0.0665, 1)
+    """
+    avg: dict[str, Any] = {}
+    for metric in ("mcc", "sensitivity", "specificity"):
+        values = [m[metric] for m in mcc_results if metric in m]
+        if not values:
+            continue
+        metric_block: dict[str, Any] = {}
+        for key in ("mean", "ci_lower", "ci_upper"):
+            defined = [
+                v[key] for v in values if key in v and v[key] is not None
+            ]
+            metric_block[key] = (
+                round(float(np.mean(defined)), 4) if defined else None
+            )
+        point_present = [v for v in values if "point" in v]
+        point_defined = [
+            v["point"] for v in point_present if v["point"] is not None
+        ]
+        if point_present:
+            metric_block["point"] = (
+                round(float(np.mean(point_defined)), 4)
+                if point_defined else None
+            )
+        # Definedness bookkeeping: a reader must be able to see that a
+        # "mean across 3 runs" was in fact a mean across 2. Counted on
+        # the deterministic ``point`` where present, falling back to the
+        # bootstrap ``mean`` for legacy per-pass blocks that predate the
+        # ``point`` field.
+        if point_present:
+            n_defined = len(point_defined)
+        else:
+            n_defined = len([
+                v for v in values if v.get("mean") is not None
+            ])
+        metric_block["n_runs"] = len(values)
+        metric_block["n_runs_defined"] = n_defined
+        avg[metric] = metric_block
+
+    # Use the first run's confusion matrix as representative. E81 flagged
+    # that this is easy to misread as a pooled matrix — a run-1 matrix
+    # with TN = 1 sitting beside a mean contaminated by a *different*
+    # run's degenerate matrix is what made the defect invisible on the
+    # face of the record — so the provenance is now stated in the block.
+    avg["confusion"] = mcc_results[0].get("confusion", {}) if mcc_results else {}
+    avg["confusion_source"] = "run_1"
+    return avg
+
+
+def _fmt_metric(val: float | None, digits: int = 3) -> str:
+    """Format a possibly-undefined metric for human-readable output.
+
+    Args:
+        val: The metric value, or ``None`` when it is undefined
+            (degenerate tile confusion matrix — see errata E81).
+        digits: Decimal places for the numeric case (default 3, matching
+            the precision used in the evaluation Markdown tables).
+
+    Returns:
+        The formatted number, or :data:`UNDEFINED_DISPLAY` for ``None``.
+
+    Examples:
+        >>> _fmt_metric(0.2132)
+        '0.213'
+        >>> _fmt_metric(0.0)
+        '0.000'
+        >>> _fmt_metric(None)
+        'undefined'
+    """
+    if val is None:
+        return UNDEFINED_DISPLAY
+    return f"{val:.{digits}f}"
+
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(levelname)s: %(message)s",
@@ -550,57 +778,19 @@ def evaluate_single_run(
             gdf_det, gdf_ref, gdf_bounds,
             n_iterations=n_bootstrap, random_seed=seed,
         )
-        def _safe_round(val: float | None, digits: int = 4) -> float:
-            """Round a value, returning 0.0 for None (undefined MCC)."""
-            return round(val, digits) if val is not None else 0.0
-
-        # ``point`` fields carry the deterministic estimate computed
-        # across all tiles (no bootstrap). The §7.5 verifier fix needs a
-        # named field that is invariant to bootstrap iteration count;
-        # ``mean`` is the bootstrap distribution mean and is not
-        # deterministic across seed changes.
-        result["tile_classification"] = {
-            "confusion": {
-                "tp": tile_class["tp"],
-                "tn": tile_class["tn"],
-                "fp": tile_class["fp"],
-                "fn": tile_class["fn"],
-            },
-            "mcc": {
-                "point": _safe_round(tile_class.get("mcc")),
-                "mean": _safe_round(tile_ci["mcc"]["mean"]),
-                "ci_lower": _safe_round(tile_ci["mcc"]["ci_lower"]),
-                "ci_upper": _safe_round(tile_ci["mcc"]["ci_upper"]),
-                "method": tile_ci["mcc"].get("method", "BCa"),
-            },
-            "sensitivity": {
-                "point": _safe_round(tile_class.get("sensitivity")),
-                "mean": _safe_round(tile_ci["sensitivity"]["mean"]),
-                "ci_lower": _safe_round(
-                    tile_ci["sensitivity"]["ci_lower"],
-                ),
-                "ci_upper": _safe_round(
-                    tile_ci["sensitivity"]["ci_upper"],
-                ),
-                "method": tile_ci["sensitivity"].get("method", "BCa"),
-            },
-            "specificity": {
-                "point": _safe_round(tile_class.get("specificity")),
-                "mean": _safe_round(tile_ci["specificity"]["mean"]),
-                "ci_lower": _safe_round(
-                    tile_ci["specificity"]["ci_lower"],
-                ),
-                "ci_upper": _safe_round(
-                    tile_ci["specificity"]["ci_upper"],
-                ),
-                "method": tile_ci["specificity"].get("method", "BCa"),
-            },
-        }
+        result["tile_classification"] = build_tile_classification_block(
+            tile_class, tile_ci,
+        )
+        # E81: every field here can legitimately be ``None`` when the
+        # tile confusion matrix is degenerate, so the log line is built
+        # from the None-safe formatter rather than ``%.3f``.
         logger.info(
-            "  MCC=%.3f [%.3f, %.3f], Sens=%.3f, Spec=%.3f",
-            tile_class["mcc"],
-            tile_ci["mcc"]["ci_lower"], tile_ci["mcc"]["ci_upper"],
-            tile_class["sensitivity"], tile_class["specificity"],
+            "  MCC=%s [%s, %s], Sens=%s, Spec=%s",
+            _fmt_metric(tile_class["mcc"]),
+            _fmt_metric(tile_ci["mcc"]["ci_lower"]),
+            _fmt_metric(tile_ci["mcc"]["ci_upper"]),
+            _fmt_metric(tile_class["sensitivity"]),
+            _fmt_metric(tile_class["specificity"]),
         )
 
     return result
@@ -647,6 +837,18 @@ def evaluate_multi_run_mean(
     the existing ``tile_classification`` block now also includes
     ``point`` keys for ``mcc`` / ``sensitivity`` / ``specificity``,
     averaged across per-run point estimates.
+
+    Undefined-metric rollup (errata E81, 2026-08-18): a tile-level
+    metric is *undefined* on a pass whose 2 x 2 tile confusion matrix is
+    degenerate, and such a pass now arrives here as ``None`` rather than
+    as a coerced ``0.0``. The mean is therefore taken over the
+    **defined** passes only; each metric block additionally carries
+    ``n_runs`` (passes with a ``tile_classification`` block) and
+    ``n_runs_defined`` (passes that contributed a computable value), so
+    a mean of two defined passes can never be read as a mean of three.
+    When *no* pass is defined the averaged fields are ``None``. The
+    block also records ``confusion_source`` — the confusion matrix
+    reported for an aggregated cell is run 1's, not a sum or a mean.
 
     Args:
         run_results: List of per-run result dicts from evaluate_single_run().
@@ -775,44 +977,17 @@ def evaluate_multi_run_mean(
         if "tile_classification" in r
     ]
     if mcc_results:
-        avg_mcc: dict[str, dict] = {}
-        for metric in ["mcc", "sensitivity", "specificity"]:
-            values = [m[metric] for m in mcc_results if metric in m]
-            if values:
-                # ``point`` is the deterministic per-run estimate
-                # computed across all tiles (no bootstrap). Averaging
-                # per-run points gives the aggregated cell's
-                # deterministic estimate; this mirrors the schema of
-                # non-aggregated tile_classification blocks.
-                point_values = [
-                    v["point"] for v in values if "point" in v
-                ]
-                metric_block: dict[str, Any] = {
-                    "mean": round(float(np.mean(
-                        [v["mean"] for v in values],
-                    )), 4),
-                    "ci_lower": round(float(np.mean(
-                        [v["ci_lower"] for v in values],
-                    )), 4),
-                    "ci_upper": round(float(np.mean(
-                        [v["ci_upper"] for v in values],
-                    )), 4),
-                }
-                if point_values:
-                    metric_block["point"] = round(
-                        float(np.mean(point_values)), 4,
-                    )
-                avg_mcc[metric] = metric_block
-        # Use first run's confusion matrix as representative
-        avg_mcc["confusion"] = mcc_results[0].get("confusion", {})
+        avg_mcc = aggregate_tile_classification(mcc_results)
         result["tile_classification"] = avg_mcc
 
+        mcc_block = avg_mcc.get("mcc", {})
         logger.info(
-            "  Mean MCC across %d runs: %.3f [%.3f, %.3f]",
+            "  Mean MCC across %d/%d defined runs: %s [%s, %s]",
+            mcc_block.get("n_runs_defined", len(mcc_results)),
             len(mcc_results),
-            avg_mcc["mcc"]["mean"],
-            avg_mcc["mcc"]["ci_lower"],
-            avg_mcc["mcc"]["ci_upper"],
+            _fmt_metric(mcc_block.get("mean")),
+            _fmt_metric(mcc_block.get("ci_lower")),
+            _fmt_metric(mcc_block.get("ci_upper")),
         )
 
     return result
@@ -908,13 +1083,18 @@ def write_outputs(
                 sens = tc.get("sensitivity", {})
                 spec = tc.get("specificity", {})
                 # MCC is buffer-invariant; repeated per row for tabular
-                # convenience.
+                # convenience. E81: an undefined value is written as an
+                # empty cell, never as ``0``. ``csv`` renders ``None`` as
+                # the empty string, but the intent is made explicit here
+                # rather than left to that default — a ``0`` in this
+                # column is a claim about the model, and only a measured
+                # zero may make it.
                 row.update({
-                    "mcc": mcc.get("mean", 0),
-                    "mcc_ci_lower": mcc.get("ci_lower", 0),
-                    "mcc_ci_upper": mcc.get("ci_upper", 0),
-                    "sensitivity": sens.get("mean", 0),
-                    "specificity": spec.get("mean", 0),
+                    "mcc": _csv_metric(mcc.get("mean")),
+                    "mcc_ci_lower": _csv_metric(mcc.get("ci_lower")),
+                    "mcc_ci_upper": _csv_metric(mcc.get("ci_upper")),
+                    "sensitivity": _csv_metric(sens.get("mean")),
+                    "specificity": _csv_metric(spec.get("mean")),
                 })
             if has_coverage:
                 cov = buf.get("coverage", {}) or {}
@@ -991,12 +1171,20 @@ def write_outputs(
             if has_mcc:
                 # MCC CI is buffer-invariant; suppression for tabular
                 # MCC follows the same rule because the same tile pool
-                # underlies all CIs.
+                # underlies all CIs. E81: an undefined MCC renders as
+                # the word "undefined", never as 0.000 — see the
+                # footnote emitted below the table.
+                mcc_lo = mcc.get("ci_lower")
+                mcc_hi = mcc.get("ci_upper")
+                if mcc_lo is None or mcc_hi is None:
+                    mcc_ci_cell = UNDEFINED_DISPLAY
+                else:
+                    mcc_ci_cell = _ci(mcc_lo, mcc_hi, ci_unreliable)
                 mcc_cells = (
-                    f"| {mcc.get('mean', 0):.3f} "
-                    f"| {_ci(mcc.get('ci_lower', 0), mcc.get('ci_upper', 0), ci_unreliable)} "
-                    f"| {sens.get('mean', 0):.3f} "
-                    f"| {spec.get('mean', 0):.3f} "
+                    f"| {_fmt_metric(mcc.get('mean'))} "
+                    f"| {mcc_ci_cell} "
+                    f"| {_fmt_metric(sens.get('mean'))} "
+                    f"| {_fmt_metric(spec.get('mean'))} "
                 )
                 f.write(row_body + mcc_cells + "|\n")
             else:
@@ -1048,6 +1236,40 @@ def write_outputs(
                 "`archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` "
                 "for the underlying methodology decision.\n",
             )
+
+        # Undefined-metric footnote (errata E81). Emitted independently of
+        # the coverage footnotes above: an undefined MCC is a different
+        # diagnosis from a sparse or partial CI, and a reader who sees the
+        # word "undefined" in a metric column is owed the reason.
+        if has_mcc:
+            mcc_block = tc.get("mcc", {})
+            undefined_fields = [
+                name for name in ("point", "mean", "ci_lower", "ci_upper")
+                if name in mcc_block and mcc_block[name] is None
+            ]
+            if undefined_fields:
+                n_defined = mcc_block.get("n_runs_defined")
+                n_runs_total = mcc_block.get("n_runs")
+                runs_clause = (
+                    f" (defined on {n_defined} of {n_runs_total} passes)"
+                    if n_defined is not None and n_runs_total is not None
+                    else ""
+                )
+                conf = tc.get("confusion", {})
+                f.write(
+                    "\n**Undefined MCC** — the tile-level Matthews "
+                    "Correlation Coefficient is not computable here"
+                    f"{runs_clause}: the 2 x 2 tile confusion matrix is "
+                    "degenerate, so the denominator "
+                    "sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN)) vanishes "
+                    f"(TP={conf.get('tp', '?')}, TN={conf.get('tn', '?')}, "
+                    f"FP={conf.get('fp', '?')}, FN={conf.get('fn', '?')}). "
+                    "It is reported as `undefined` rather than 0.000, "
+                    "because 0 on this scale means \"random\" (§ 4.2 of "
+                    "the preregistration) and would assert a measurement "
+                    "that was not made. See erratum E81 in "
+                    "`docs/methodology/preregistration/protocol-errata.md`.\n",
+                )
         f.write("\n")
     logger.info("Markdown written: %s", md_path)
 
@@ -1166,12 +1388,15 @@ def write_batch_summary(
                 mcc = tc.get("mcc", {})
                 sens = tc.get("sensitivity", {})
                 spec = tc.get("specificity", {})
+                # E81: preserve ``None`` (undefined) all the way to the
+                # renderers — the batch summary must not be the place
+                # where an undefined MCC quietly becomes a zero.
                 row.update({
-                    "mcc": mcc.get("mean", 0),
-                    "mcc_ci_lower": mcc.get("ci_lower", 0),
-                    "mcc_ci_upper": mcc.get("ci_upper", 0),
-                    "sensitivity": sens.get("mean", 0),
-                    "specificity": spec.get("mean", 0),
+                    "mcc": mcc.get("mean"),
+                    "mcc_ci_lower": mcc.get("ci_lower"),
+                    "mcc_ci_upper": mcc.get("ci_upper"),
+                    "sensitivity": sens.get("mean"),
+                    "specificity": spec.get("mean"),
                 })
             flat_rows.append(row)
 
@@ -1261,12 +1486,22 @@ def write_batch_summary(
                 f"{row['r_ci_upper']:.3f}] "
             )
             if has_mcc:
+                # E81: ``undefined`` covers both "this condition carries
+                # no tile_classification block" and "the metric is not
+                # computable on this condition". Neither may render as
+                # 0.000, which reads as a measured chance-level result.
+                mcc_lo = row.get("mcc_ci_lower")
+                mcc_hi = row.get("mcc_ci_upper")
+                mcc_ci_cell = (
+                    UNDEFINED_DISPLAY
+                    if mcc_lo is None or mcc_hi is None
+                    else f"[{mcc_lo:.3f}, {mcc_hi:.3f}]"
+                )
                 mcc_cells = (
-                    f"| {row.get('mcc', 0):.3f} "
-                    f"| [{row.get('mcc_ci_lower', 0):.3f}, "
-                    f"{row.get('mcc_ci_upper', 0):.3f}] "
-                    f"| {row.get('sensitivity', 0):.3f} "
-                    f"| {row.get('specificity', 0):.3f} "
+                    f"| {_fmt_metric(row.get('mcc'))} "
+                    f"| {mcc_ci_cell} "
+                    f"| {_fmt_metric(row.get('sensitivity'))} "
+                    f"| {_fmt_metric(row.get('specificity'))} "
                 )
                 f.write(row_body + mcc_cells + "|\n")
             else:

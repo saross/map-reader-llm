@@ -1322,6 +1322,35 @@ def _md_table(headers: list[str], rows: list[list]) -> str:
     return "\n".join(lines)
 
 
+def _fmt_mcc_cell(value: Any) -> Any:
+    """Render a tile-level MCC for a manifest table cell.
+
+    ``_md_table`` renders ``None`` as an em dash, which in these tables
+    means "not recorded". A ``None`` MCC means something sharper and
+    scientifically load-bearing: the metric is **undefined**, because the
+    2 x 2 tile confusion matrix is degenerate (errata E81). Rendering it
+    as ``undefined`` keeps it distinguishable both from a missing value
+    and — critically — from a measured ``0.0``, which § 4.2 of the
+    preregistration labels "random".
+
+    Args:
+        value: The manifest's ``metrics.tile_classification.mcc``, which
+            is a float, or ``None`` when the metric is undefined.
+
+    Returns:
+        The value unchanged, or the string ``"undefined"`` for ``None``.
+
+    Examples:
+        >>> _fmt_mcc_cell(0.0665)
+        0.0665
+        >>> _fmt_mcc_cell(0.0)
+        0.0
+        >>> _fmt_mcc_cell(None)
+        'undefined'
+    """
+    return "undefined" if value is None else value
+
+
 def _coverage_note(manifest: str, n_rows: int) -> str:
     """Human-readable coverage line for a manifest's rendered Markdown header."""
     return {
@@ -1360,7 +1389,8 @@ def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
             ["condition_id", "arch", "agg", "vote", "n", "F1@20m", "MCC", "n_det"],
             [[r["condition_id"], r["architecture"], r["aggregation"], r["vote_threshold"],
               r["n_passes"], r["metrics"]["per_buffer"].get("20", {}).get("f1"),
-              r["metrics"]["tile_classification"]["mcc"], r["n_detections"]] for r in rows])
+              _fmt_mcc_cell(r["metrics"]["tile_classification"]["mcc"]),
+              r["n_detections"]] for r in rows])
     elif manifest == "passes":
         # ``tiles`` renders as an em dash for verifier rows, whose tile count is
         # null by construction (E72); ``cands`` carries their crop count so the

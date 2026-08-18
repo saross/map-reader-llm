@@ -302,6 +302,7 @@ def _bca_ci_from_indices(
     n_iterations: int = 1000,
     random_seed: int | None = None,
     confidence_level: float = 0.95,
+    skip_undefined: bool = False,
 ) -> dict[str, Any]:
     """Compute a Bias-Corrected and Accelerated (BCa) bootstrap CI.
 
@@ -329,10 +330,25 @@ def _bca_ci_from_indices(
         random_seed: Optional integer seed. When provided, every call
             with the same seed is bit-reproducible.
         confidence_level: Two-sided confidence level (default 0.95).
+        skip_undefined: When ``True``, resamples on which ``statistic``
+            returns a non-finite value (``NaN``) are treated as
+            *undefined* and **dropped** before the bounds and the mean
+            are computed, rather than being folded in as numbers.
+            Errata E81: substituting ``0.0`` for an undefined Matthews
+            Correlation Coefficient (MCC) makes every bound a mixture of
+            measurements and placeholders. When every resample is
+            undefined the returned ``mean`` / ``ci_lower`` / ``ci_upper``
+            are ``None`` and ``method`` is ``"undefined"``. Leave
+            ``False`` (the default) for statistics that are always
+            defined — the numeric path is then bit-identical to the
+            pre-E81 behaviour.
 
     Returns:
-        Dict with keys ``mean``, ``ci_lower``, ``ci_upper``, ``method``
-        (``"BCa"`` or ``"percentile_fallback"``), and
+        Dict with keys ``mean``, ``ci_lower``, ``ci_upper`` (each
+        ``float``, or ``None`` when ``skip_undefined`` is set and every
+        resample was undefined), ``method`` (``"BCa"``,
+        ``"percentile_fallback"``, or ``"undefined"``), ``n_valid`` (the
+        number of resamples that produced a finite statistic), and
         ``bootstrap_distribution`` (numpy array — useful for diagnostics
         and back-compat callers that compute their own percentiles).
     """
@@ -385,15 +401,51 @@ def _bca_ci_from_indices(
                 statistic(rng.choice(indices, size=n, replace=True))
                 for _ in range(n_iterations)
             ])
-            ci_lower = float(np.percentile(distribution, 2.5))
-            ci_upper = float(np.percentile(distribution, 97.5))
+            if skip_undefined:
+                # E81: drop undefined resamples instead of counting them
+                # as zeros. ``nanpercentile`` over the same resample
+                # sequence — the draws are unchanged, only the handling
+                # of the undefined ones is.
+                finite = distribution[np.isfinite(distribution)]
+                if finite.size:
+                    ci_lower = float(np.nanpercentile(distribution, 2.5))
+                    ci_upper = float(np.nanpercentile(distribution, 97.5))
+                else:
+                    ci_lower = float("nan")
+                    ci_upper = float("nan")
+            else:
+                ci_lower = float(np.percentile(distribution, 2.5))
+                ci_upper = float(np.percentile(distribution, 97.5))
             method_used = "percentile_fallback"
 
+    n_valid = int(np.count_nonzero(np.isfinite(distribution)))
+
+    if skip_undefined and n_valid == 0:
+        # Every resample was degenerate: the metric has no bootstrap
+        # distribution at all. Report that honestly rather than
+        # manufacturing a point at zero.
+        return {
+            "mean": None,
+            "ci_lower": None,
+            "ci_upper": None,
+            "method": "undefined",
+            "n_valid": 0,
+            "bootstrap_distribution": distribution,
+        }
+
+    if skip_undefined:
+        mean_value = float(np.nanmean(distribution))
+    else:
+        mean_value = (
+            float(np.mean(distribution)) if distribution.size else 0.0
+        )
+
     return {
-        "mean": float(np.mean(distribution)) if distribution.size else 0.0,
+        "mean": mean_value,
         "ci_lower": ci_lower,
         "ci_upper": ci_upper,
         "method": method_used,
+        "n_valid": n_valid,
         "bootstrap_distribution": distribution,
     }
 
@@ -2035,6 +2087,20 @@ def bootstrap_tile_classification_ci(
     or (tn+fn) row/column sums is zero, the metric is undefined; the
     score is treated as ``NaN`` and skipped when computing the CI bounds.
 
+    Errata E81 (2026-08-18) made the code match that sentence. Until
+    then ``_mcc_from_idx`` returned ``0.0`` for a degenerate resample,
+    so every bootstrap mean and both CI bounds were a mixture of
+    measurements and placeholders — visible in the committed corpus as
+    tile-MCC CI lower bounds of exactly ``0.0000`` on cells whose point
+    estimate is positive. Degenerate resamples are now dropped. When
+    *every* resample is degenerate (the whole-corpus case is
+    TN + FN = 0 — the model predicted every tile populated) the metric
+    has no distribution at all, and ``mean`` / ``ci_lower`` /
+    ``ci_upper`` are returned as ``None`` with ``method`` set to
+    ``"undefined"``. ``n_valid_mcc`` / ``n_valid_sensitivity`` /
+    ``n_valid_specificity`` report how many of the ``n_iterations``
+    resamples were actually defined.
+
     Args:
         gdf_det: GeoDataFrame of detections.
         gdf_ref: GeoDataFrame of ground truth references.
@@ -2085,33 +2151,45 @@ def bootstrap_tile_classification_ci(
         numerator = (tp * tn) - (fp * fn)
         denom_parts = (tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)
         if denom_parts <= 0.0:
-            # MCC undefined — return 0.0 so scipy can compute bounds.
-            # The point estimate is still tracked separately via
-            # ``calculate_tile_classification``.
-            return 0.0
+            # MCC undefined on this resample (E81). Return NaN so the
+            # resample is *dropped* by ``skip_undefined=True`` — the
+            # behaviour this function's docstring has always claimed.
+            # Substituting 0.0 here silently pulled means and lower
+            # bounds toward the value § 4.2 of the registration labels
+            # "random".
+            return float("nan")
         return numerator / np.sqrt(denom_parts)
 
     def _sensitivity_from_idx(idx: np.ndarray) -> float:
         idx = np.asarray(idx, dtype=int)
         tp = float(tp_arr[idx].sum())
         fn = float(fn_arr[idx].sum())
-        return tp / (tp + fn) if (tp + fn) > 0 else 0.0
+        # Undefined when the resample contains no reference-populated
+        # tile; NaN so the resample is dropped, not scored as zero.
+        return tp / (tp + fn) if (tp + fn) > 0 else float("nan")
 
     def _specificity_from_idx(idx: np.ndarray) -> float:
         idx = np.asarray(idx, dtype=int)
         tn = float(tn_arr[idx].sum())
         fp = float(fp_arr[idx].sum())
-        return tn / (tn + fp) if (tn + fp) > 0 else 0.0
+        # Undefined when the resample contains no reference-empty tile.
+        # NOTE: a specificity of 0.0 with (tn + fp) > 0 is a *measured*
+        # zero (every empty tile drew a false positive) and is preserved
+        # as 0.0 — only the empty-denominator case is undefined.
+        return tn / (tn + fp) if (tn + fp) > 0 else float("nan")
 
     indices = np.arange(n_tiles)
     mcc_ci = _bca_ci_from_indices(
         indices, _mcc_from_idx, n_iterations, random_seed,
+        skip_undefined=True,
     )
     sens_ci = _bca_ci_from_indices(
         indices, _sensitivity_from_idx, n_iterations, random_seed,
+        skip_undefined=True,
     )
     spec_ci = _bca_ci_from_indices(
         indices, _specificity_from_idx, n_iterations, random_seed,
+        skip_undefined=True,
     )
 
     # Deterministic point estimates from the original sample (no bootstrap).
@@ -2145,9 +2223,13 @@ def bootstrap_tile_classification_ci(
             "method": spec_ci["method"],
         },
         "n_iterations": n_iterations,
-        "n_valid_mcc": int(n_iterations),
-        "n_valid_sensitivity": int(n_iterations),
-        "n_valid_specificity": int(n_iterations),
+        # E81: these were hard-coded to ``n_iterations`` while degenerate
+        # resamples were being scored as 0.0, so they asserted a validity
+        # the numbers did not have. They now report the true count of
+        # resamples on which each metric was defined.
+        "n_valid_mcc": int(mcc_ci.get("n_valid", n_iterations)),
+        "n_valid_sensitivity": int(sens_ci.get("n_valid", n_iterations)),
+        "n_valid_specificity": int(spec_ci.get("n_valid", n_iterations)),
         "bootstrap_method": BOOTSTRAP_METHOD,
         "bootstrap_lib": BOOTSTRAP_LIB,
     }
