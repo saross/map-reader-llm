@@ -451,6 +451,19 @@ also establishes that no existing test had pinned the defective widths.
 3. **Do not bundle with E81** — its corrections are landed and
    attributable.
 
+## Reproducing every number in this report
+
+`scripts/verify_bca_axis_defect.py` re-derives each measurement above
+from source data, so this document can be checked rather than trusted.
+Five probes — `shapes`, `compare`, `sign`, `census`, `mcc` — matching
+the sections of the same names. Pure local computation, no API calls,
+no writes to any committed artefact. Run `census` and `mcc` on sapphire
+per the project compute policy:
+
+```bash
+python scripts/verify_bca_axis_defect.py --probe all
+```
+
 ## See also
 
 - **Preceding experiment(s)**: `reports/defect-register-2026-08-18.md` —
@@ -502,7 +515,9 @@ unregistered method independent of this bug (next free erratum: E82).
 **Landed**: `122104b8a` — fix in
 `scripts/lib_advanced_metrics.py::_bca_ci_from_indices` plus
 `tests/test_bca_vectorised_wrapper.py` (5 tier-1 tests, all 5 fail on
-the pre-fix source). No committed result re-emitted.
+the pre-fix source); `37be54c86` —
+`scripts/verify_bca_axis_defect.py`, which re-derives every measurement
+in this document. No committed result re-emitted.
 
 ### 2026-08-18 — Original publication
 
