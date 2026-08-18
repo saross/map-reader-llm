@@ -1,6 +1,6 @@
 # Results — working draft
 
-> **Last revised**: 2026-08-18 (Session 136: erratum E81 — the § R1
+> **Last revised**: 2026-08-18 (Session 136: erratum E81 — the § R2
 > "near-zero MCC" clause corrected, because that near-zero was an
 > imputation for an undefined metric). Prior: 2026-08-17 (Session
 > 134: post-reconciliation
@@ -134,10 +134,11 @@ temperature (H7), example-library composition (H8) — all land inside or
 near that tie: the GS instrument cannot separate the stronger single-pass
 configs from one another. Two robust patterns do emerge: text-modality
 prompts dominate image-only prompts at the bottom of the board, and a
-metric trade-off recurs in which text cells reach F1 ≈ 0.60 with
-essentially no tile-level discrimination while image cells trade F1 for
-markedly better discrimination (MCC 0.094–0.291). For the text cells
-that "essentially none" is literal rather than numerical: eight of the
+metric trade-off recurs in which text-only cells reach F1 ≈ 0.60 with
+essentially no tile-level discrimination while image-bearing cells trade
+F1 for markedly better discrimination (MCC 0.094–0.291 across the
+seventeen computable image-bearing cells). For the text-only cells that
+"essentially none" is literal rather than numerical: eight of the
 fourteen returned at least one detection on every one of the 340
 evaluation tiles, which empties the predicted-negative column of the
 tile confusion matrix and leaves MCC undefined; the six that are
@@ -576,9 +577,9 @@ load-bearing, so it could not be left standing.
 
 | Claim | Before | After |
 |---|---|---|
-| Text-cell tile MCC | "near-zero" | undefined on 8 of 14 phase-2 text cells; 0.0665 on the other 6 |
-| Image-cell tile MCC | "far better tile discrimination" (unquantified) | MCC 0.094–0.291 |
-| Text-cell F1 | ≈ 0.60 | ≈ 0.60 (unchanged) |
+| Text-only-cell tile MCC | "near-zero" | undefined on 8 of the 14 phase-2 text-only cells; 0.0665 on the other 6 |
+| Image-bearing-cell tile MCC | "far better tile discrimination" (unquantified) | MCC 0.094–0.291 over the 17 computable image-bearing cells |
+| Text-only-cell F1 | ≈ 0.60 | ≈ 0.60 (unchanged) |
 
 **What did not change**: no F1, precision, recall, or confidence interval
 anywhere in the draft; the `canonical-last` anchor (F1 0.631, MCC 0.213)

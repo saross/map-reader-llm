@@ -4439,8 +4439,12 @@ than absorbed.**
 
 - `docs/paper/results-draft.md` § R2 no longer says text cells reach "near-zero
   MCC". It now states that tile MCC is undefined on eight of the fourteen
-  phase-2 text cells and 0.0665 on the remaining six, against image cells at
-  0.094–0.291, carrying a `[REVISED 2026-08-18]` marker and a changelog entry.
+  phase-2 text-only cells and 0.0665 on the remaining six, against
+  0.094–0.291 over the seventeen computable image-bearing cells, carrying a
+  `[REVISED 2026-08-18]` marker and a changelog entry. (The four phase-2e
+  ordering variants sit in neither group: they are image-track by
+  registration but vary example order rather than modality, and one of them,
+  `random`, is itself at 0.0665.)
   The **direction** of the D3 metric-trade-off thread survives intact; its
   magnitude did not exist.
 - `results/analyses-manifest.{json,md}` — the
