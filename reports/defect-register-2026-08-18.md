@@ -1,7 +1,7 @@
 # Defect register — Session 136 (2026-08-18)
 
-> **Last revised**: 2026-08-18 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-18 (D6 fixed; three further defects found by the
+> audit of that fix; two new items). See [§ Changelog](#changelog).
 
 **What this is.** A single tracked list of every defect surfaced during
 Session 136, with status and the fix each one needs. The session produced
@@ -30,7 +30,10 @@ artefact that carries the evidence rather than restating it.
 |---|---|---|---|
 | D4 | `_safe_round` returns `0.0` for an undefined MCC; `aggregate_runs` averages those zeros into multi-run means. | `evaluate_detections.py:533-535`, `:752-788` | Emit `null`, and average over defined passes only. Re-emit the 13 affected conditions. |
 | D5 | `bootstrap_tile_classification_ci` documents degenerate resamples as "treated as `NaN` and skipped" but returns `0.0`. Every tile-MCC CI lower bound of exactly `0.0000` on the affected cells is that substitution, not a percentile. | `lib_advanced_metrics.py:2034-2036` (docstring) vs `:2087-2091` (code) | Make code and docstring agree; skip degenerate resamples. |
-| D6 | Two detection-file naming conventions coexist (`detections_<label>_runNN.geojson` and `detections-<config>-<date>.geojson`). Any `detections_*` glob silently under-reads a mixed-convention run. | `evaluate_detections.py:1299` (`--glob` default); `scoring_sensitivity_survey.py:121` | Shared resolver handling both, with a pass-count assertion against the manifest's `n_passes`. **The assertion, not the glob fix, is what catches this class of error.** No committed evaluation is affected (156 audited, 0 under-reads) — but this session's survey script WAS bitten, and it is still live. |
+| D6 | Two detection-file naming conventions coexist. Any `detections_*` glob silently under-reads a mixed pool. | `evaluate_detections.py`; `scoring_sensitivity_survey.py`; 24 further sites | **FIXED** — `scripts/lib_detection_paths.py` + 30 sites migrated (`6b1cb87af`, `4c44e3fd6`, `6fa658877`, `8e59c9555`). Repo guard green; tier-1 suite 1,479 passed. |
+| D6a | **Found by the audit of D6's fix.** Adding a package-qualified import to `lib_consensus.py` — which previously had no project import at all — broke **8 scripts at import time**; `n1_baseline_leaderboard_tiering.py` was unrunnable as documented. Invisible to tests because `pytest.ini` sets `pythonpath = "."`. | `lib_consensus.py`, `n1_baseline_leaderboard_tiering.py` | **FIXED** — dual-mode import; all 9 scripts verified running. |
+| D6b | **Found by the audit of D6's fix.** The exclusion filter was dead code: every filename reaching it had already matched the glob, so its stem was always `"detections"`. Meanwhile 24 real non-passes DO begin `detections_` — verifier threshold outputs and this session's `detections_dedup.geojson`, the latter inside `run_<N>` directories. | `lib_detection_paths.py` | **FIXED** — strict per-convention regexes, corpus-validated. |
+| D6c | **Found by the audit of D6's fix.** The tests validated the resolver's interior and nothing the defect broke: reverting the migration at all four call sites left 1,489/1,489 tier-1 tests green, and the migrated functions were executed by no test. | `tests/test_lib_detection_paths.py` | **FIXED** — 7 caller-wiring tests; verified to fail under a reverted migration. |
 | D7 | A parsed detection lacking a `box_2d` key is counted by the results tracker but silently skipped when features are built — no log, unlike the malformed-length branch immediately below it. Cost one detection in H13 arm B run_2 (meta 1,362 vs GeoJSON 1,361). | `4_detect_mounds_batch.py:606-607` | Log the skip, and reconcile the tracker count with the emitted feature count. |
 | D8 | `pro-medium-image-baseline` provenance mismatch: the crop manifest cites 519 candidates from a raw pass that now holds 587 features. Three `gs-era2` rows depend on it. | `outputs/h11/pv-diag-384/pro-medium-image-baseline/` | Investigate which artefact moved and when; document or correct. |
 
@@ -39,6 +42,7 @@ artefact that carries the evidence rather than restating it.
 | # | Defect | Location | Fix needed |
 |---|---|---|---|
 | D9 | H13 cost-efficiency figures are reported on the UNDISCOUNTED basis. Gemini real-time flex carries a 50 % discount, so `$5.7488` total and the F1-per-dollar values (0.4069 / 0.2975 / 0.1007) are about 2× actual. Ratios and the "every additional dollar buys negative F1" conclusion are unaffected, because all arms share one basis. | `results/h13-overlap-2026-08-18/findings.md` § Analysis 2 | Halve the dollar figures, state the basis explicitly, add a changelog entry. |
+| D11 | `results/scoring-sensitivity-2026-08-18/exposure-survey.json` was produced while the under-read was live, so `pv-diag-384::baseline-pro-{text,image}-medium-t-0-0` were scored on 1 pass of 3. Re-running now resolves 3 each. The exposure classifications are unchanged, but the recorded per-cell numbers for those two conditions are wrong. | `results/scoring-sensitivity-2026-08-18/` | OPEN — $0 re-run; feeds the dedup correction campaign |
 | D10 | The grid runs' auto-written `experiment_intent.md` records hypothesis `H1` and "factor being varied: `include_example_images`", inherited from `detect_brief-text.json`. Wrong for a geometry grid, and it lands in provenance. | `outputs/grid-2026-08-18/**/experiment_intent.md` | Correct in the register row and post-run report rather than forking the config. |
 
 ## Cleared — investigated, not defects
@@ -58,6 +62,27 @@ artefact that carries the evidence rather than restating it.
 - **Decisions / Errata**: E79, E80, E81 — the three protocol-facing disclosures from this session. E75 — H13's disposition, which carried D2's mechanism before E80 took it over.
 
 ## Changelog
+
+### 2026-08-18 (later) — D6 fixed; its own fix audited
+
+D6 closed: `scripts/lib_detection_paths.py` plus 30 migrated sites, repo
+guard green, tier-1 suite 1,479 passed.
+
+The `/audit` gate then ran two orthogonal lenses over that fix and found
+**three further defects in it** (D6a-D6c), one of which — an import-time
+breakage of eight scripts — was live and invisible to the test suite. That
+is the case for the gate: the fix for a silent-undercount defect itself
+shipped a silent breakage, a dead guard, and a test suite that would have
+stayed green if the whole migration were reverted. All three are fixed.
+
+Two corrections to earlier claims in this register's own lineage: the
+migration is **not** "strictly a superset" at pool level (6 files across 4
+pools are no longer resolved — correctly, as they are aggregation
+artefacts), and the corpus counts quoted in the resolver's docstrings were
+measured against `outputs/` while a run was writing to it, so they were
+unverifiable and have been removed rather than restated.
+
+D11 added: the exposure survey is affected data and needs a $0 re-run.
 
 ### 2026-08-18 — Original publication
 

@@ -240,24 +240,27 @@ def verify_condition(spec: dict, scope_bounds: str | None,
             # canonical one, so a real-time pass counts like a batch pass.
             n_on_disk = len(resolve_pool_passes(pool_dir, allow_multiple=True))
             n_passes = spec.get("n_passes")
-            if isinstance(n_passes, int) and n_passes != n_on_disk:
-                # Keep the established "n-passes-over" code for the overcount
-                # (some conditions cite it as a by-design signal) and add its
-                # missing mirror for the undercount.
-                over = n_passes > n_on_disk
-                hint = (
-                    "the pool cannot supply them — check for a missing pass or a "
-                    "cross-run reference"
-                    if over else
-                    "usually benign: a condition may deliberately use a subset of "
-                    "the pool; adjudicate against the condition's own eval"
-                )
+            # Deliberately ONE-DIRECTIONAL. n_passes BELOW the on-disk count is
+            # normal and by design: a condition consumes a prefix of its pool
+            # (the conditions schema defines n_passes as "the prefix length,
+            # e.g. consensus-n5 -> 5"), so a 5-pass condition over a 30-pass
+            # pool is correct, not suspect. Warning on it fired 110 times
+            # against legitimate conditions and would have trained the reader
+            # to ignore the check.
+            #
+            # The overcount direction still catches an under-read: if pass
+            # resolution silently misses files — the convention-A-only defect
+            # D6 — n_on_disk drops below n_passes and this fires. Counting
+            # pass FILES rather than run_* directories is what gives it that
+            # power; the previous directory count could not see a run that
+            # wrote no pass file at all.
+            if isinstance(n_passes, int) and n_passes > n_on_disk:
                 discs.append(_disc(
-                    WARN,
-                    "n-passes-over" if over else "n-passes-under",
-                    f"{label}: n_passes={n_passes} "
-                    f"{'exceeds' if over else 'falls short of'} the {n_on_disk} "
-                    f"pass file(s) resolved under {rel} ({hint})",
+                    WARN, "n-passes-over",
+                    f"{label}: n_passes={n_passes} exceeds the {n_on_disk} pass "
+                    f"file(s) resolved under {rel} — the pool cannot supply "
+                    f"them; check for a missing pass, an unresolved naming "
+                    f"convention, or a cross-run reference",
                 ))
     return discs
 
