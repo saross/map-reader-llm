@@ -355,20 +355,59 @@ def _bca_ci_from_indices(
     indices = np.asarray(indices)
 
     def _vectorised(idx_array: np.ndarray, axis: int = -1) -> np.ndarray:
-        """Apply ``statistic`` along the last axis for scipy's vectorised loop.
+        """Apply ``statistic`` along ``axis`` for scipy's vectorised loop.
 
-        scipy passes either a 1-D ``(n,)`` array (for the point estimate
-        and jackknife) or a 2-D ``(B, n)`` array (resampled batch). We
-        broadcast the user-supplied statistic by iterating along the
-        leading dimension when 2-D.
+        scipy's ``vectorized=True`` contract is *"the statistic is
+        computed along ``axis`` and that axis is consumed"*: the call
+        receives an array whose ``axis`` holds the resampled
+        observations, and every remaining axis enumerates independent
+        resamples. Concretely ``scipy.stats.bootstrap`` makes three
+        kinds of call for a one-sample statistic on ``n`` observations
+        with ``B`` resamples, all with ``axis=-1``:
+
+        * ``(n,)`` — the point estimate, one scalar out;
+        * ``(B, n)`` — the resample batch, ``B`` scalars out;
+        * ``(n, n - 1)`` — the BCa jackknife batch (``n`` leave-one-out
+          rows of ``n - 1`` observations), ``n`` scalars out.
+
+        The correct adaptation therefore iterates the *leading* axes and
+        hands ``statistic`` one slice **along** ``axis`` per call.
+
+        **Defect history (D15, fixed 2026-08-19).** This wrapper
+        previously did ``np.moveaxis(idx_array, axis, 0)`` and iterated
+        the result, which transposes the batch: on a ``(B, n)`` input it
+        returned ``n`` statistics of ``B`` draws each instead of ``B``
+        statistics of ``n`` draws each, and on the jackknife batch it
+        returned ``n - 1`` meaningless pseudo-values. scipy performs no
+        length check on a vectorised statistic's return value, so this
+        failed silently: the resulting interval scaled as
+        ``sqrt(n / B)`` of the correct width — too narrow whenever
+        ``B > n`` and too wide whenever ``B < n``. See
+        ``reports/bca-axis-defect-2026-08-18.md``.
+
+        Args:
+            idx_array: Index array supplied by scipy — 1-D for the point
+                estimate, otherwise a resample or jackknife batch.
+            axis: Axis holding the resampled observations. scipy passes
+                ``-1`` for every batched call.
+
+        Returns:
+            A float for the 1-D case, otherwise an array whose shape is
+            ``idx_array``'s shape with ``axis`` removed.
         """
         idx_array = np.asarray(idx_array, dtype=int)
         if idx_array.ndim == 1:
             return float(statistic(idx_array))
-        # 2-D resample batch: apply statistic along ``axis``
+        # Put the observation axis last, then flatten every remaining
+        # (resample-enumerating) axis so each row is one resample of
+        # ``n`` observations. Reshaping back drops ``axis``, which is
+        # exactly what scipy's contract requires.
+        moved = np.moveaxis(idx_array, axis, -1)
+        flat = moved.reshape(-1, moved.shape[-1])
         return np.array(
-            [statistic(row) for row in np.moveaxis(idx_array, axis, 0)]
-        )
+            [statistic(row) for row in flat],
+            dtype=float,
+        ).reshape(moved.shape[:-1])
 
     # Suppress scipy's DegenerateDataWarning so it does not leak into the
     # caller's log; we surface degeneracy via the ``method`` field instead.
