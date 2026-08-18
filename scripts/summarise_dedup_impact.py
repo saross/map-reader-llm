@@ -71,6 +71,11 @@ TIERING_RUNS = {
         "control: 55-map standardised tile-MCC board",
     "tiering-55map-mcc-standardised-dedup":
         "treatment: 55-map standardised tile-MCC board",
+    "tiering-era1-leaderboard-control":
+        "control: the 82-cell definitive Era-1 leaderboard, no deduplication",
+    "tiering-era1-leaderboard-dedup":
+        "treatment: the same board with 20 m deduplication applied uniformly to "
+        "every cell",
 }
 
 

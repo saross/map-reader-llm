@@ -1,0 +1,2288 @@
+{
+  "generated_at_utc": "2026-08-18T07:19:23.517833+00:00",
+  "spec": "results/dedup-metric-impact-2026-08-18/spec-gs-era2-pv-family.json",
+  "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+  "dedup_metres": 20.0,
+  "attribution_rules": [
+    "first_source_tile",
+    "nearest_centroid",
+    "union_contributing"
+  ],
+  "cells": [
+    {
+      "name": "pv-diag-384::verified-adv-text-baseline",
+      "condition_id": "pv-diag-384::verified-adv-text-baseline",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "results/verifier-robustness/sweep-sets/verified-adv-text-baseline.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.788793,
+              "recall": 0.841379,
+              "f1": 0.814238,
+              "n_detections": 464.0
+            },
+            "deduplicated": {
+              "precision": 0.903704,
+              "recall": 0.841379,
+              "f1": 0.871429,
+              "n_detections": 405.0
+            },
+            "delta_f1": 0.057191,
+            "delta_precision": 0.114911,
+            "delta_recall": 0.0
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.806034,
+              "recall": 0.85977,
+              "f1": 0.832036,
+              "n_detections": 464.0
+            },
+            "deduplicated": {
+              "precision": 0.923457,
+              "recall": 0.85977,
+              "f1": 0.890476,
+              "n_detections": 405.0
+            },
+            "delta_f1": 0.05844,
+            "delta_precision": 0.117423,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.832813,
+          "first_source_tile": 0.778829,
+          "nearest_centroid": 0.786436,
+          "union_contributing": 0.832813
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.053984,
+          "delta_mcc_nearest_centroid": -0.046377,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline.geojson",
+          "dedup_stats": {
+            "n_raw": 464,
+            "n_dedup": 405,
+            "n_removed": 59,
+            "removed_fraction": 0.127155,
+            "n_clusters_spanning_multiple_tiles": 57,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.788793,
+                "recall": 0.841379,
+                "f1": 0.814238,
+                "n_detections": 464
+              },
+              "30": {
+                "precision": 0.806034,
+                "recall": 0.85977,
+                "f1": 0.832036,
+                "n_detections": 464
+              }
+            },
+            "tile_classification": {
+              "tp": 199,
+              "tn": 247,
+              "fp": 11,
+              "fn": 30,
+              "mcc": 0.832813,
+              "sensitivity": 0.868996,
+              "specificity": 0.957364,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.903704,
+                "recall": 0.841379,
+                "f1": 0.871429,
+                "n_detections": 405
+              },
+              "30": {
+                "precision": 0.923457,
+                "recall": 0.85977,
+                "f1": 0.890476,
+                "n_detections": 405
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 185,
+                "tn": 247,
+                "fp": 11,
+                "fn": 44,
+                "mcc": 0.778829,
+                "sensitivity": 0.80786,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 187,
+                "tn": 247,
+                "fp": 11,
+                "fn": 42,
+                "mcc": 0.786436,
+                "sensitivity": 0.816594,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 199,
+                "tn": 247,
+                "fp": 11,
+                "fn": 30,
+                "mcc": 0.832813,
+                "sensitivity": 0.868996,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              }
+            }
+          },
+          "gate_tile_confusion": {
+            "fast": {
+              "tp": 199,
+              "tn": 247,
+              "fp": 11,
+              "fn": 30
+            },
+            "calculate_tile_classification": {
+              "tp": 199,
+              "tn": 247,
+              "fp": 11,
+              "fn": 30
+            },
+            "agree": true,
+            "mcc_fast": 0.832813,
+            "mcc_committed_function": 0.832813
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/verifier-robustness/evals/verified-adv-text-baseline/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.8142,
+            "reproduced_f1": 0.814238,
+            "abs_diff": 3.8e-05,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.832,
+            "reproduced_f1": 0.832036,
+            "abs_diff": 3.6e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.8328,
+          "reproduced_mcc": 0.832813,
+          "abs_diff": 1.3e-05,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::verified-adv-text-baseline-medium-vf",
+      "condition_id": "pv-diag-384::verified-adv-text-baseline-medium-vf",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-medium-vf.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.797849,
+              "recall": 0.852874,
+              "f1": 0.824444,
+              "n_detections": 465.0
+            },
+            "deduplicated": {
+              "precision": 0.913793,
+              "recall": 0.852874,
+              "f1": 0.882283,
+              "n_detections": 406.0
+            },
+            "delta_f1": 0.057839,
+            "delta_precision": 0.115944,
+            "delta_recall": 0.0
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.812903,
+              "recall": 0.868966,
+              "f1": 0.84,
+              "n_detections": 465.0
+            },
+            "deduplicated": {
+              "precision": 0.931034,
+              "recall": 0.868966,
+              "f1": 0.89893,
+              "n_detections": 406.0
+            },
+            "delta_f1": 0.05893,
+            "delta_precision": 0.118131,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.837208,
+          "first_source_tile": 0.779656,
+          "nearest_centroid": 0.791011,
+          "union_contributing": 0.837208
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.057552,
+          "delta_mcc_nearest_centroid": -0.046197,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-medium-vf.geojson",
+          "dedup_stats": {
+            "n_raw": 465,
+            "n_dedup": 406,
+            "n_removed": 59,
+            "removed_fraction": 0.126882,
+            "n_clusters_spanning_multiple_tiles": 57,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.797849,
+                "recall": 0.852874,
+                "f1": 0.824444,
+                "n_detections": 465
+              },
+              "30": {
+                "precision": 0.812903,
+                "recall": 0.868966,
+                "f1": 0.84,
+                "n_detections": 465
+              }
+            },
+            "tile_classification": {
+              "tp": 199,
+              "tn": 248,
+              "fp": 10,
+              "fn": 30,
+              "mcc": 0.837208,
+              "sensitivity": 0.868996,
+              "specificity": 0.96124,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.913793,
+                "recall": 0.852874,
+                "f1": 0.882283,
+                "n_detections": 406
+              },
+              "30": {
+                "precision": 0.931034,
+                "recall": 0.868966,
+                "f1": 0.89893,
+                "n_detections": 406
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 184,
+                "tn": 248,
+                "fp": 10,
+                "fn": 45,
+                "mcc": 0.779656,
+                "sensitivity": 0.803493,
+                "specificity": 0.96124,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 187,
+                "tn": 248,
+                "fp": 10,
+                "fn": 42,
+                "mcc": 0.791011,
+                "sensitivity": 0.816594,
+                "specificity": 0.96124,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 199,
+                "tn": 248,
+                "fp": 10,
+                "fn": 30,
+                "mcc": 0.837208,
+                "sensitivity": 0.868996,
+                "specificity": 0.96124,
+                "n_tiles": 487
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/verifier-robustness/evals/verified-adv-text-baseline-medium-vf/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.8244,
+            "reproduced_f1": 0.824444,
+            "abs_diff": 4.4e-05,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.84,
+            "reproduced_f1": 0.84,
+            "abs_diff": 0.0,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.8372,
+          "reproduced_mcc": 0.837208,
+          "abs_diff": 8e-06,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::verified-adv-text-baseline-pro-vf",
+      "condition_id": "pv-diag-384::verified-adv-text-baseline-pro-vf",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-pro-vf.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.801296,
+              "recall": 0.852874,
+              "f1": 0.826281,
+              "n_detections": 463.0
+            },
+            "deduplicated": {
+              "precision": 0.916049,
+              "recall": 0.852874,
+              "f1": 0.883333,
+              "n_detections": 405.0
+            },
+            "delta_f1": 0.057052,
+            "delta_precision": 0.114753,
+            "delta_recall": 0.0
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.816415,
+              "recall": 0.868966,
+              "f1": 0.841871,
+              "n_detections": 463.0
+            },
+            "deduplicated": {
+              "precision": 0.933333,
+              "recall": 0.868966,
+              "f1": 0.9,
+              "n_detections": 405.0
+            },
+            "delta_f1": 0.058129,
+            "delta_precision": 0.116918,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.832813,
+          "first_source_tile": 0.775037,
+          "nearest_centroid": 0.786436,
+          "union_contributing": 0.832813
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.057776,
+          "delta_mcc_nearest_centroid": -0.046377,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-pro-vf.geojson",
+          "dedup_stats": {
+            "n_raw": 463,
+            "n_dedup": 405,
+            "n_removed": 58,
+            "removed_fraction": 0.12527,
+            "n_clusters_spanning_multiple_tiles": 56,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.801296,
+                "recall": 0.852874,
+                "f1": 0.826281,
+                "n_detections": 463
+              },
+              "30": {
+                "precision": 0.816415,
+                "recall": 0.868966,
+                "f1": 0.841871,
+                "n_detections": 463
+              }
+            },
+            "tile_classification": {
+              "tp": 199,
+              "tn": 247,
+              "fp": 11,
+              "fn": 30,
+              "mcc": 0.832813,
+              "sensitivity": 0.868996,
+              "specificity": 0.957364,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.916049,
+                "recall": 0.852874,
+                "f1": 0.883333,
+                "n_detections": 405
+              },
+              "30": {
+                "precision": 0.933333,
+                "recall": 0.868966,
+                "f1": 0.9,
+                "n_detections": 405
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 184,
+                "tn": 247,
+                "fp": 11,
+                "fn": 45,
+                "mcc": 0.775037,
+                "sensitivity": 0.803493,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 187,
+                "tn": 247,
+                "fp": 11,
+                "fn": 42,
+                "mcc": 0.786436,
+                "sensitivity": 0.816594,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 199,
+                "tn": 247,
+                "fp": 11,
+                "fn": 30,
+                "mcc": 0.832813,
+                "sensitivity": 0.868996,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/verifier-robustness/evals/verified-adv-text-baseline-pro-vf/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.8263,
+            "reproduced_f1": 0.826281,
+            "abs_diff": 1.9e-05,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.8419,
+            "reproduced_f1": 0.841871,
+            "abs_diff": 2.9e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.8328,
+          "reproduced_mcc": 0.832813,
+          "abs_diff": 1.3e-05,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::verified-adv-image-baseline",
+      "condition_id": "pv-diag-384::verified-adv-image-baseline",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "results/verifier-robustness/sweep-sets/verified-adv-image-baseline.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.663405,
+              "recall": 0.77931,
+              "f1": 0.716702,
+              "n_detections": 511.0
+            },
+            "deduplicated": {
+              "precision": 0.743929,
+              "recall": 0.774713,
+              "f1": 0.759009,
+              "n_detections": 453.0
+            },
+            "delta_f1": 0.042307,
+            "delta_precision": 0.080524,
+            "delta_recall": -0.004597
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.72407,
+              "recall": 0.850575,
+              "f1": 0.782241,
+              "n_detections": 511.0
+            },
+            "deduplicated": {
+              "precision": 0.816777,
+              "recall": 0.850575,
+              "f1": 0.833333,
+              "n_detections": 453.0
+            },
+            "delta_f1": 0.051092,
+            "delta_precision": 0.092707,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.876598,
+          "first_source_tile": 0.839247,
+          "nearest_centroid": 0.831079,
+          "union_contributing": 0.876598
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.037351,
+          "delta_mcc_nearest_centroid": -0.045519,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-baseline.geojson",
+          "dedup_stats": {
+            "n_raw": 511,
+            "n_dedup": 453,
+            "n_removed": 58,
+            "removed_fraction": 0.113503,
+            "n_clusters_spanning_multiple_tiles": 55,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.663405,
+                "recall": 0.77931,
+                "f1": 0.716702,
+                "n_detections": 511
+              },
+              "30": {
+                "precision": 0.72407,
+                "recall": 0.850575,
+                "f1": 0.782241,
+                "n_detections": 511
+              }
+            },
+            "tile_classification": {
+              "tp": 216,
+              "tn": 241,
+              "fp": 17,
+              "fn": 13,
+              "mcc": 0.876598,
+              "sensitivity": 0.943231,
+              "specificity": 0.934109,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.743929,
+                "recall": 0.774713,
+                "f1": 0.759009,
+                "n_detections": 453
+              },
+              "30": {
+                "precision": 0.816777,
+                "recall": 0.850575,
+                "f1": 0.833333,
+                "n_detections": 453
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 207,
+                "tn": 241,
+                "fp": 17,
+                "fn": 22,
+                "mcc": 0.839247,
+                "sensitivity": 0.90393,
+                "specificity": 0.934109,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 205,
+                "tn": 241,
+                "fp": 17,
+                "fn": 24,
+                "mcc": 0.831079,
+                "sensitivity": 0.895197,
+                "specificity": 0.934109,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 216,
+                "tn": 241,
+                "fp": 17,
+                "fn": 13,
+                "mcc": 0.876598,
+                "sensitivity": 0.943231,
+                "specificity": 0.934109,
+                "n_tiles": 487
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/verifier-robustness/evals/verified-adv-image-baseline/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.7167,
+            "reproduced_f1": 0.716702,
+            "abs_diff": 2e-06,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.7822,
+            "reproduced_f1": 0.782241,
+            "abs_diff": 4.1e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.8766,
+          "reproduced_mcc": 0.876598,
+          "abs_diff": 2e-06,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::verified-adv-image-baseline-pro-vf",
+      "condition_id": "pv-diag-384::verified-adv-image-baseline-pro-vf",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "results/verifier-robustness/sweep-sets/verified-adv-image-baseline-pro-vf.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.6778,
+              "recall": 0.793103,
+              "f1": 0.730932,
+              "n_detections": 509.0
+            },
+            "deduplicated": {
+              "precision": 0.75885,
+              "recall": 0.788506,
+              "f1": 0.773393,
+              "n_detections": 452.0
+            },
+            "delta_f1": 0.042461,
+            "delta_precision": 0.08105,
+            "delta_recall": -0.004597
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.738703,
+              "recall": 0.864368,
+              "f1": 0.79661,
+              "n_detections": 509.0
+            },
+            "deduplicated": {
+              "precision": 0.831858,
+              "recall": 0.864368,
+              "f1": 0.847802,
+              "n_detections": 452.0
+            },
+            "delta_f1": 0.051192,
+            "delta_precision": 0.093155,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.888703,
+          "first_source_tile": 0.856246,
+          "nearest_centroid": 0.848247,
+          "union_contributing": 0.888703
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.032457,
+          "delta_mcc_nearest_centroid": -0.040456,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-baseline-pro-vf.geojson",
+          "dedup_stats": {
+            "n_raw": 509,
+            "n_dedup": 452,
+            "n_removed": 57,
+            "removed_fraction": 0.111984,
+            "n_clusters_spanning_multiple_tiles": 54,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.6778,
+                "recall": 0.793103,
+                "f1": 0.730932,
+                "n_detections": 509
+              },
+              "30": {
+                "precision": 0.738703,
+                "recall": 0.864368,
+                "f1": 0.79661,
+                "n_detections": 509
+              }
+            },
+            "tile_classification": {
+              "tp": 215,
+              "tn": 245,
+              "fp": 13,
+              "fn": 14,
+              "mcc": 0.888703,
+              "sensitivity": 0.938865,
+              "specificity": 0.949612,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.75885,
+                "recall": 0.788506,
+                "f1": 0.773393,
+                "n_detections": 452
+              },
+              "30": {
+                "precision": 0.831858,
+                "recall": 0.864368,
+                "f1": 0.847802,
+                "n_detections": 452
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 206,
+                "tn": 246,
+                "fp": 12,
+                "fn": 23,
+                "mcc": 0.856246,
+                "sensitivity": 0.899563,
+                "specificity": 0.953488,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 204,
+                "tn": 246,
+                "fp": 12,
+                "fn": 25,
+                "mcc": 0.848247,
+                "sensitivity": 0.89083,
+                "specificity": 0.953488,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 215,
+                "tn": 245,
+                "fp": 13,
+                "fn": 14,
+                "mcc": 0.888703,
+                "sensitivity": 0.938865,
+                "specificity": 0.949612,
+                "n_tiles": 487
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/verifier-robustness/evals/verified-adv-image-baseline-pro-vf/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.7309,
+            "reproduced_f1": 0.730932,
+            "abs_diff": 3.2e-05,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.7966,
+            "reproduced_f1": 0.79661,
+            "abs_diff": 1e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.8887,
+          "reproduced_mcc": 0.888703,
+          "abs_diff": 3e-06,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::verified-adv-pro-text-baseline",
+      "condition_id": "pv-diag-384::verified-adv-pro-text-baseline",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.809645,
+              "recall": 0.733333,
+              "f1": 0.769602,
+              "n_detections": 394.0
+            },
+            "deduplicated": {
+              "precision": 0.911429,
+              "recall": 0.733333,
+              "f1": 0.812739,
+              "n_detections": 350.0
+            },
+            "delta_f1": 0.043137,
+            "delta_precision": 0.101784,
+            "delta_recall": 0.0
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.829949,
+              "recall": 0.751724,
+              "f1": 0.788902,
+              "n_detections": 394.0
+            },
+            "deduplicated": {
+              "precision": 0.934286,
+              "recall": 0.751724,
+              "f1": 0.833121,
+              "n_detections": 350.0
+            },
+            "delta_f1": 0.044219,
+            "delta_precision": 0.104337,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.782286,
+          "first_source_tile": 0.742774,
+          "nearest_centroid": 0.749904,
+          "union_contributing": 0.782286
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.039512,
+          "delta_mcc_nearest_centroid": -0.032382,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline.geojson",
+          "dedup_stats": {
+            "n_raw": 394,
+            "n_dedup": 350,
+            "n_removed": 44,
+            "removed_fraction": 0.111675,
+            "n_clusters_spanning_multiple_tiles": 44,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.809645,
+                "recall": 0.733333,
+                "f1": 0.769602,
+                "n_detections": 394
+              },
+              "30": {
+                "precision": 0.829949,
+                "recall": 0.751724,
+                "f1": 0.788902,
+                "n_detections": 394
+              }
+            },
+            "tile_classification": {
+              "tp": 177,
+              "tn": 254,
+              "fp": 4,
+              "fn": 52,
+              "mcc": 0.782286,
+              "sensitivity": 0.772926,
+              "specificity": 0.984496,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.911429,
+                "recall": 0.733333,
+                "f1": 0.812739,
+                "n_detections": 350
+              },
+              "30": {
+                "precision": 0.934286,
+                "recall": 0.751724,
+                "f1": 0.833121,
+                "n_detections": 350
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 166,
+                "tn": 254,
+                "fp": 4,
+                "fn": 63,
+                "mcc": 0.742774,
+                "sensitivity": 0.724891,
+                "specificity": 0.984496,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 168,
+                "tn": 254,
+                "fp": 4,
+                "fn": 61,
+                "mcc": 0.749904,
+                "sensitivity": 0.733624,
+                "specificity": 0.984496,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 177,
+                "tn": 254,
+                "fp": 4,
+                "fn": 52,
+                "mcc": 0.782286,
+                "sensitivity": 0.772926,
+                "specificity": 0.984496,
+                "n_tiles": 487
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-baseline/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.7696,
+            "reproduced_f1": 0.769602,
+            "abs_diff": 2e-06,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.7889,
+            "reproduced_f1": 0.788902,
+            "abs_diff": 2e-06,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.7823,
+          "reproduced_mcc": 0.782286,
+          "abs_diff": 1.4e-05,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "pv-diag-384::verified-adv-pro-image-baseline",
+      "condition_id": "pv-diag-384::verified-adv-pro-image-baseline",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.587629,
+              "recall": 0.655172,
+              "f1": 0.619565,
+              "n_detections": 485.0
+            },
+            "deduplicated": {
+              "precision": 0.646651,
+              "recall": 0.643678,
+              "f1": 0.645161,
+              "n_detections": 433.0
+            },
+            "delta_f1": 0.025596,
+            "delta_precision": 0.059022,
+            "delta_recall": -0.011494
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.713402,
+              "recall": 0.795402,
+              "f1": 0.752174,
+              "n_detections": 485.0
+            },
+            "deduplicated": {
+              "precision": 0.799076,
+              "recall": 0.795402,
+              "f1": 0.797235,
+              "n_detections": 433.0
+            },
+            "delta_f1": 0.045061,
+            "delta_precision": 0.085674,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.823151,
+          "first_source_tile": 0.800039,
+          "nearest_centroid": 0.78833,
+          "union_contributing": 0.823151
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.023112,
+          "delta_mcc_nearest_centroid": -0.034821,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline.geojson",
+          "dedup_stats": {
+            "n_raw": 485,
+            "n_dedup": 433,
+            "n_removed": 52,
+            "removed_fraction": 0.107216,
+            "n_clusters_spanning_multiple_tiles": 51,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.587629,
+                "recall": 0.655172,
+                "f1": 0.619565,
+                "n_detections": 485
+              },
+              "30": {
+                "precision": 0.713402,
+                "recall": 0.795402,
+                "f1": 0.752174,
+                "n_detections": 485
+              }
+            },
+            "tile_classification": {
+              "tp": 202,
+              "tn": 242,
+              "fp": 16,
+              "fn": 27,
+              "mcc": 0.823151,
+              "sensitivity": 0.882096,
+              "specificity": 0.937984,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.646651,
+                "recall": 0.643678,
+                "f1": 0.645161,
+                "n_detections": 433
+              },
+              "30": {
+                "precision": 0.799076,
+                "recall": 0.795402,
+                "f1": 0.797235,
+                "n_detections": 433
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 194,
+                "tn": 244,
+                "fp": 14,
+                "fn": 35,
+                "mcc": 0.800039,
+                "sensitivity": 0.847162,
+                "specificity": 0.945736,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 191,
+                "tn": 244,
+                "fp": 14,
+                "fn": 38,
+                "mcc": 0.78833,
+                "sensitivity": 0.834061,
+                "specificity": 0.945736,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 202,
+                "tn": 242,
+                "fp": 16,
+                "fn": 27,
+                "mcc": 0.823151,
+                "sensitivity": 0.882096,
+                "specificity": 0.937984,
+                "n_tiles": 487
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/verifier-robustness/evals/verified-adv-pro-image-baseline/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.6196,
+            "reproduced_f1": 0.619565,
+            "abs_diff": 3.5e-05,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.7522,
+            "reproduced_f1": 0.752174,
+            "abs_diff": 2.6e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.8232,
+          "reproduced_mcc": 0.823151,
+          "abs_diff": 4.9e-05,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "retest-phase2b::verified-adv-text-t0.0",
+      "condition_id": "retest-phase2b::verified-adv-text-t0.0",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run1.geojson",
+        "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run2.geojson",
+        "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run3.geojson"
+      ],
+      "n_passes": 3,
+      "n_passes_expected": 3,
+      "pass_count_gate": true,
+      "n_populated_tiles": 204,
+      "n_tiles": 340,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.780824,
+              "recall": 0.760049,
+              "f1": 0.770288,
+              "n_detections": 524.666667
+            },
+            "deduplicated": {
+              "precision": 0.873491,
+              "recall": 0.760049,
+              "f1": 0.812826,
+              "n_detections": 469.0
+            },
+            "delta_f1": 0.042538,
+            "delta_precision": 0.092667,
+            "delta_recall": 0.0
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.822132,
+              "recall": 0.800247,
+              "f1": 0.811032,
+              "n_detections": 524.666667
+            },
+            "deduplicated": {
+              "precision": 0.919699,
+              "recall": 0.800247,
+              "f1": 0.855819,
+              "n_detections": 469.0
+            },
+            "delta_f1": 0.044787,
+            "delta_precision": 0.097567,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.789474,
+          "first_source_tile": 0.734193,
+          "nearest_centroid": 0.763047,
+          "union_contributing": 0.789474
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.055281,
+          "delta_mcc_nearest_centroid": -0.026427,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run1.geojson",
+          "dedup_stats": {
+            "n_raw": 529,
+            "n_dedup": 472,
+            "n_removed": 57,
+            "removed_fraction": 0.10775,
+            "n_clusters_spanning_multiple_tiles": 53,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.778828,
+                "recall": 0.764378,
+                "f1": 0.771536,
+                "n_detections": 529
+              },
+              "30": {
+                "precision": 0.816635,
+                "recall": 0.801484,
+                "f1": 0.808989,
+                "n_detections": 529
+              }
+            },
+            "tile_classification": {
+              "tp": 175,
+              "tn": 131,
+              "fp": 5,
+              "fn": 29,
+              "mcc": 0.805885,
+              "sensitivity": 0.857843,
+              "specificity": 0.963235,
+              "n_tiles": 340
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.872881,
+                "recall": 0.764378,
+                "f1": 0.815035,
+                "n_detections": 472
+              },
+              "30": {
+                "precision": 0.915254,
+                "recall": 0.801484,
+                "f1": 0.854599,
+                "n_detections": 472
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 164,
+                "tn": 131,
+                "fp": 5,
+                "fn": 40,
+                "mcc": 0.75167,
+                "sensitivity": 0.803922,
+                "specificity": 0.963235,
+                "n_tiles": 340
+              },
+              "nearest_centroid": {
+                "tp": 170,
+                "tn": 131,
+                "fp": 5,
+                "fn": 34,
+                "mcc": 0.780812,
+                "sensitivity": 0.833333,
+                "specificity": 0.963235,
+                "n_tiles": 340
+              },
+              "union_contributing": {
+                "tp": 175,
+                "tn": 131,
+                "fp": 5,
+                "fn": 29,
+                "mcc": 0.805885,
+                "sensitivity": 0.857843,
+                "specificity": 0.963235,
+                "n_tiles": 340
+              }
+            }
+          }
+        },
+        {
+          "detections": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run2.geojson",
+          "dedup_stats": {
+            "n_raw": 525,
+            "n_dedup": 469,
+            "n_removed": 56,
+            "removed_fraction": 0.106667,
+            "n_clusters_spanning_multiple_tiles": 52,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.780952,
+                "recall": 0.760668,
+                "f1": 0.770677,
+                "n_detections": 525
+              },
+              "30": {
+                "precision": 0.824762,
+                "recall": 0.80334,
+                "f1": 0.81391,
+                "n_detections": 525
+              }
+            },
+            "tile_classification": {
+              "tp": 173,
+              "tn": 130,
+              "fp": 6,
+              "fn": 31,
+              "mcc": 0.788785,
+              "sensitivity": 0.848039,
+              "specificity": 0.955882,
+              "n_tiles": 340
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.8742,
+                "recall": 0.760668,
+                "f1": 0.813492,
+                "n_detections": 469
+              },
+              "30": {
+                "precision": 0.923241,
+                "recall": 0.80334,
+                "f1": 0.859127,
+                "n_detections": 469
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 161,
+                "tn": 130,
+                "fp": 6,
+                "fn": 43,
+                "mcc": 0.730158,
+                "sensitivity": 0.789216,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              },
+              "nearest_centroid": {
+                "tp": 168,
+                "tn": 130,
+                "fp": 6,
+                "fn": 36,
+                "mcc": 0.763876,
+                "sensitivity": 0.823529,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              },
+              "union_contributing": {
+                "tp": 173,
+                "tn": 130,
+                "fp": 6,
+                "fn": 31,
+                "mcc": 0.788785,
+                "sensitivity": 0.848039,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              }
+            }
+          }
+        },
+        {
+          "detections": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes/accepted_run3.geojson",
+          "dedup_stats": {
+            "n_raw": 520,
+            "n_dedup": 466,
+            "n_removed": 54,
+            "removed_fraction": 0.103846,
+            "n_clusters_spanning_multiple_tiles": 50,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.782692,
+                "recall": 0.755102,
+                "f1": 0.76865,
+                "n_detections": 520
+              },
+              "30": {
+                "precision": 0.825,
+                "recall": 0.795918,
+                "f1": 0.810198,
+                "n_detections": 520
+              }
+            },
+            "tile_classification": {
+              "tp": 170,
+              "tn": 130,
+              "fp": 6,
+              "fn": 34,
+              "mcc": 0.773752,
+              "sensitivity": 0.833333,
+              "specificity": 0.955882,
+              "n_tiles": 340
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.873391,
+                "recall": 0.755102,
+                "f1": 0.80995,
+                "n_detections": 466
+              },
+              "30": {
+                "precision": 0.920601,
+                "recall": 0.795918,
+                "f1": 0.853731,
+                "n_detections": 466
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 159,
+                "tn": 130,
+                "fp": 6,
+                "fn": 45,
+                "mcc": 0.72075,
+                "sensitivity": 0.779412,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              },
+              "nearest_centroid": {
+                "tp": 164,
+                "tn": 130,
+                "fp": 6,
+                "fn": 40,
+                "mcc": 0.744453,
+                "sensitivity": 0.803922,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              },
+              "union_contributing": {
+                "tp": 170,
+                "tn": 130,
+                "fp": 6,
+                "fn": 34,
+                "mcc": 0.773752,
+                "sensitivity": 0.833333,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/era1-pv-stage-d/512-single-text-t0.0/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.7703,
+            "reproduced_f1": 0.770288,
+            "abs_diff": 1.2e-05,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.811,
+            "reproduced_f1": 0.811032,
+            "abs_diff": 3.2e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.7895,
+          "reproduced_mcc": 0.789474,
+          "abs_diff": 2.6e-05,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "retest-phase2b::verified-adv-image-t0.0",
+      "condition_id": "retest-phase2b::verified-adv-image-t0.0",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run1.geojson",
+        "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run2.geojson",
+        "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run3.geojson"
+      ],
+      "n_passes": 3,
+      "n_passes_expected": 3,
+      "pass_count_gate": true,
+      "n_populated_tiles": 204,
+      "n_tiles": 340,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.660739,
+              "recall": 0.687693,
+              "f1": 0.67394,
+              "n_detections": 561.0
+            },
+            "deduplicated": {
+              "precision": 0.722488,
+              "recall": 0.685838,
+              "f1": 0.703681,
+              "n_detections": 511.666667
+            },
+            "delta_f1": 0.029741,
+            "delta_precision": 0.061749,
+            "delta_recall": -0.001855
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.732034,
+              "recall": 0.761905,
+              "f1": 0.746663,
+              "n_detections": 561.0
+            },
+            "deduplicated": {
+              "precision": 0.802609,
+              "recall": 0.761905,
+              "f1": 0.781721,
+              "n_detections": 511.666667
+            },
+            "delta_f1": 0.035058,
+            "delta_precision": 0.070575,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.889426,
+          "first_source_tile": 0.820225,
+          "nearest_centroid": 0.837843,
+          "union_contributing": 0.889426
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.069201,
+          "delta_mcc_nearest_centroid": -0.051583,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run1.geojson",
+          "dedup_stats": {
+            "n_raw": 563,
+            "n_dedup": 512,
+            "n_removed": 51,
+            "removed_fraction": 0.090586,
+            "n_clusters_spanning_multiple_tiles": 47,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.660746,
+                "recall": 0.690167,
+                "f1": 0.675136,
+                "n_detections": 563
+              },
+              "30": {
+                "precision": 0.730018,
+                "recall": 0.762523,
+                "f1": 0.745917,
+                "n_detections": 563
+              }
+            },
+            "tile_classification": {
+              "tp": 191,
+              "tn": 130,
+              "fp": 6,
+              "fn": 13,
+              "mcc": 0.88537,
+              "sensitivity": 0.936275,
+              "specificity": 0.955882,
+              "n_tiles": 340
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.724609,
+                "recall": 0.688312,
+                "f1": 0.705994,
+                "n_detections": 512
+              },
+              "30": {
+                "precision": 0.802734,
+                "recall": 0.762523,
+                "f1": 0.782112,
+                "n_detections": 512
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 178,
+                "tn": 130,
+                "fp": 6,
+                "fn": 26,
+                "mcc": 0.81446,
+                "sensitivity": 0.872549,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              },
+              "nearest_centroid": {
+                "tp": 182,
+                "tn": 130,
+                "fp": 6,
+                "fn": 22,
+                "mcc": 0.835603,
+                "sensitivity": 0.892157,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              },
+              "union_contributing": {
+                "tp": 191,
+                "tn": 130,
+                "fp": 6,
+                "fn": 13,
+                "mcc": 0.88537,
+                "sensitivity": 0.936275,
+                "specificity": 0.955882,
+                "n_tiles": 340
+              }
+            }
+          }
+        },
+        {
+          "detections": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run2.geojson",
+          "dedup_stats": {
+            "n_raw": 564,
+            "n_dedup": 515,
+            "n_removed": 49,
+            "removed_fraction": 0.086879,
+            "n_clusters_spanning_multiple_tiles": 46,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.657801,
+                "recall": 0.688312,
+                "f1": 0.672711,
+                "n_detections": 564
+              },
+              "30": {
+                "precision": 0.73227,
+                "recall": 0.766234,
+                "f1": 0.748867,
+                "n_detections": 564
+              }
+            },
+            "tile_classification": {
+              "tp": 191,
+              "tn": 129,
+              "fp": 7,
+              "fn": 13,
+              "mcc": 0.878931,
+              "sensitivity": 0.936275,
+              "specificity": 0.948529,
+              "n_tiles": 340
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.718447,
+                "recall": 0.686456,
+                "f1": 0.702087,
+                "n_detections": 515
+              },
+              "30": {
+                "precision": 0.801942,
+                "recall": 0.766234,
+                "f1": 0.783681,
+                "n_detections": 515
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 177,
+                "tn": 129,
+                "fp": 7,
+                "fn": 27,
+                "mcc": 0.802412,
+                "sensitivity": 0.867647,
+                "specificity": 0.948529,
+                "n_tiles": 340
+              },
+              "nearest_centroid": {
+                "tp": 181,
+                "tn": 129,
+                "fp": 7,
+                "fn": 23,
+                "mcc": 0.823527,
+                "sensitivity": 0.887255,
+                "specificity": 0.948529,
+                "n_tiles": 340
+              },
+              "union_contributing": {
+                "tp": 191,
+                "tn": 129,
+                "fp": 7,
+                "fn": 13,
+                "mcc": 0.878931,
+                "sensitivity": 0.936275,
+                "specificity": 0.948529,
+                "n_tiles": 340
+              }
+            }
+          }
+        },
+        {
+          "detections": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes/accepted_run3.geojson",
+          "dedup_stats": {
+            "n_raw": 556,
+            "n_dedup": 508,
+            "n_removed": 48,
+            "removed_fraction": 0.086331,
+            "n_clusters_spanning_multiple_tiles": 45,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.663669,
+                "recall": 0.684601,
+                "f1": 0.673973,
+                "n_detections": 556
+              },
+              "30": {
+                "precision": 0.733813,
+                "recall": 0.756957,
+                "f1": 0.745205,
+                "n_detections": 556
+              }
+            },
+            "tile_classification": {
+              "tp": 192,
+              "tn": 132,
+              "fp": 4,
+              "fn": 12,
+              "mcc": 0.903978,
+              "sensitivity": 0.941176,
+              "specificity": 0.970588,
+              "n_tiles": 340
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.724409,
+                "recall": 0.682746,
+                "f1": 0.702961,
+                "n_detections": 508
+              },
+              "30": {
+                "precision": 0.80315,
+                "recall": 0.756957,
+                "f1": 0.77937,
+                "n_detections": 508
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 181,
+                "tn": 132,
+                "fp": 4,
+                "fn": 23,
+                "mcc": 0.843802,
+                "sensitivity": 0.887255,
+                "specificity": 0.970588,
+                "n_tiles": 340
+              },
+              "nearest_centroid": {
+                "tp": 183,
+                "tn": 132,
+                "fp": 4,
+                "fn": 21,
+                "mcc": 0.8544,
+                "sensitivity": 0.897059,
+                "specificity": 0.970588,
+                "n_tiles": 340
+              },
+              "union_contributing": {
+                "tp": 192,
+                "tn": 132,
+                "fp": 4,
+                "fn": 12,
+                "mcc": 0.903978,
+                "sensitivity": 0.941176,
+                "specificity": 0.970588,
+                "n_tiles": 340
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/era1-pv-stage-d/512-single-image-t0.0/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.6739,
+            "reproduced_f1": 0.67394,
+            "abs_diff": 4e-05,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.7467,
+            "reproduced_f1": 0.746663,
+            "abs_diff": 3.7e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.8894,
+          "reproduced_mcc": 0.889426,
+          "abs_diff": 2.6e-05,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "proposer-verifier-384::verified-adversarial-text",
+      "condition_id": "proposer-verifier-384::verified-adversarial-text",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "outputs/h11/proposer-verifier-384/verified-adversarial-text-accepted.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.711628,
+              "recall": 0.351724,
+              "f1": 0.470769,
+              "n_detections": 215.0
+            },
+            "deduplicated": {
+              "precision": 0.772727,
+              "recall": 0.351724,
+              "f1": 0.483412,
+              "n_detections": 198.0
+            },
+            "delta_f1": 0.012643,
+            "delta_precision": 0.061099,
+            "delta_recall": 0.0
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.72093,
+              "recall": 0.356322,
+              "f1": 0.476923,
+              "n_detections": 215.0
+            },
+            "deduplicated": {
+              "precision": 0.782828,
+              "recall": 0.356322,
+              "f1": 0.489731,
+              "n_detections": 198.0
+            },
+            "delta_f1": 0.012808,
+            "delta_precision": 0.061898,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.43133,
+          "first_source_tile": 0.408324,
+          "nearest_centroid": 0.412189,
+          "union_contributing": 0.43133
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.023006,
+          "delta_mcc_nearest_centroid": -0.019141,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "outputs/h11/proposer-verifier-384/verified-adversarial-text-accepted.geojson",
+          "dedup_stats": {
+            "n_raw": 215,
+            "n_dedup": 198,
+            "n_removed": 17,
+            "removed_fraction": 0.07907,
+            "n_clusters_spanning_multiple_tiles": 14,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.711628,
+                "recall": 0.351724,
+                "f1": 0.470769,
+                "n_detections": 215
+              },
+              "30": {
+                "precision": 0.72093,
+                "recall": 0.356322,
+                "f1": 0.476923,
+                "n_detections": 215
+              }
+            },
+            "tile_classification": {
+              "tp": 90,
+              "tn": 247,
+              "fp": 11,
+              "fn": 139,
+              "mcc": 0.43133,
+              "sensitivity": 0.393013,
+              "specificity": 0.957364,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.772727,
+                "recall": 0.351724,
+                "f1": 0.483412,
+                "n_detections": 198
+              },
+              "30": {
+                "precision": 0.782828,
+                "recall": 0.356322,
+                "f1": 0.489731,
+                "n_detections": 198
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 84,
+                "tn": 247,
+                "fp": 11,
+                "fn": 145,
+                "mcc": 0.408324,
+                "sensitivity": 0.366812,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 85,
+                "tn": 247,
+                "fp": 11,
+                "fn": 144,
+                "mcc": 0.412189,
+                "sensitivity": 0.371179,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 90,
+                "tn": 247,
+                "fp": 11,
+                "fn": 139,
+                "mcc": 0.43133,
+                "sensitivity": 0.393013,
+                "specificity": 0.957364,
+                "n_tiles": 487
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-adversarial-text-accepted/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.4708,
+            "reproduced_f1": 0.470769,
+            "abs_diff": 3.1e-05,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.4769,
+            "reproduced_f1": 0.476923,
+            "abs_diff": 2.3e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.4313,
+          "reproduced_mcc": 0.43133,
+          "abs_diff": 3e-05,
+          "agree_3dp": true
+        }
+      }
+    },
+    {
+      "name": "proposer-verifier-384::verified-checklist-text",
+      "condition_id": "proposer-verifier-384::verified-checklist-text",
+      "board": null,
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "tile_source": "property",
+      "detections": [
+        "outputs/h11/proposer-verifier-384/verified-checklist-text-accepted.geojson"
+      ],
+      "n_passes": 1,
+      "n_passes_expected": 0,
+      "pass_count_gate": null,
+      "n_populated_tiles": 229,
+      "n_tiles": 487,
+      "mean_over_passes": {
+        "buffers": {
+          "20": {
+            "as_committed": {
+              "precision": 0.598214,
+              "recall": 0.462069,
+              "f1": 0.521401,
+              "n_detections": 336.0
+            },
+            "deduplicated": {
+              "precision": 0.652597,
+              "recall": 0.462069,
+              "f1": 0.54105,
+              "n_detections": 308.0
+            },
+            "delta_f1": 0.019649,
+            "delta_precision": 0.054383,
+            "delta_recall": 0.0
+          },
+          "30": {
+            "as_committed": {
+              "precision": 0.610119,
+              "recall": 0.471264,
+              "f1": 0.531777,
+              "n_detections": 336.0
+            },
+            "deduplicated": {
+              "precision": 0.665584,
+              "recall": 0.471264,
+              "f1": 0.551817,
+              "n_detections": 308.0
+            },
+            "delta_f1": 0.02004,
+            "delta_precision": 0.055465,
+            "delta_recall": 0.0
+          }
+        },
+        "mcc": {
+          "as_committed": 0.315427,
+          "first_source_tile": 0.295261,
+          "nearest_centroid": 0.294641,
+          "union_contributing": 0.315427
+        },
+        "delta": {
+          "delta_mcc_first_source_tile": -0.020166,
+          "delta_mcc_nearest_centroid": -0.020786,
+          "delta_mcc_union_contributing": 0.0
+        }
+      },
+      "passes": [
+        {
+          "detections": "outputs/h11/proposer-verifier-384/verified-checklist-text-accepted.geojson",
+          "dedup_stats": {
+            "n_raw": 336,
+            "n_dedup": 308,
+            "n_removed": 28,
+            "removed_fraction": 0.083333,
+            "n_clusters_spanning_multiple_tiles": 25,
+            "n_clusters_spanning_multiple_map_sheets": 0
+          },
+          "as_committed": {
+            "buffers": {
+              "20": {
+                "precision": 0.598214,
+                "recall": 0.462069,
+                "f1": 0.521401,
+                "n_detections": 336
+              },
+              "30": {
+                "precision": 0.610119,
+                "recall": 0.471264,
+                "f1": 0.531777,
+                "n_detections": 336
+              }
+            },
+            "tile_classification": {
+              "tp": 107,
+              "tn": 213,
+              "fp": 45,
+              "fn": 122,
+              "mcc": 0.315427,
+              "sensitivity": 0.467249,
+              "specificity": 0.825581,
+              "n_tiles": 487
+            }
+          },
+          "deduplicated": {
+            "buffers": {
+              "20": {
+                "precision": 0.652597,
+                "recall": 0.462069,
+                "f1": 0.54105,
+                "n_detections": 308
+              },
+              "30": {
+                "precision": 0.665584,
+                "recall": 0.471264,
+                "f1": 0.551817,
+                "n_detections": 308
+              }
+            },
+            "tile_classification": {
+              "first_source_tile": {
+                "tp": 101,
+                "tn": 214,
+                "fp": 44,
+                "fn": 128,
+                "mcc": 0.295261,
+                "sensitivity": 0.441048,
+                "specificity": 0.829457,
+                "n_tiles": 487
+              },
+              "nearest_centroid": {
+                "tp": 102,
+                "tn": 213,
+                "fp": 45,
+                "fn": 127,
+                "mcc": 0.294641,
+                "sensitivity": 0.445415,
+                "specificity": 0.825581,
+                "n_tiles": 487
+              },
+              "union_contributing": {
+                "tp": 107,
+                "tn": 213,
+                "fp": 45,
+                "fn": 122,
+                "mcc": 0.315427,
+                "sensitivity": 0.467249,
+                "specificity": 0.825581,
+                "n_tiles": 487
+              }
+            }
+          }
+        }
+      ],
+      "committed_check": {
+        "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-checklist-text-accepted/evaluation.json",
+        "buffers": {
+          "20": {
+            "committed_f1": 0.5214,
+            "reproduced_f1": 0.521401,
+            "abs_diff": 1e-06,
+            "agree_4dp": true
+          },
+          "30": {
+            "committed_f1": 0.5318,
+            "reproduced_f1": 0.531777,
+            "abs_diff": 2.3e-05,
+            "agree_4dp": true
+          }
+        },
+        "mcc": {
+          "committed_mcc_point": 0.3154,
+          "reproduced_mcc": 0.315427,
+          "abs_diff": 2.7e-05,
+          "agree_3dp": true
+        }
+      }
+    }
+  ]
+}

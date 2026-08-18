@@ -1,0 +1,2116 @@
+{
+  "generated_at_utc": "2026-08-18T07:08:49.614423+00:00",
+  "radius_metres": 20.0,
+  "survey": "/home/shawn/Code/map-reader-llm/results/scoring-sensitivity-2026-08-18/exposure-survey.json",
+  "conditions": [
+    {
+      "condition_id": "consensus-384-t1-0::consensus-1of30",
+      "survey_duplicate_fraction": 0.06878850102669405,
+      "survey_n_features": 974,
+      "artefacts": [
+        {
+          "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t1.geojson",
+          "properties": [
+            "cluster_size",
+            "confidence",
+            "contributing_passes",
+            "source_tiles",
+            "subtype",
+            "total_passes",
+            "vote_count"
+          ],
+          "merge_passes_property_set_present": true,
+          "missing_merge_passes_properties": [],
+          "has_source_tile_singular": false,
+          "pair_report": {
+            "n_features": 974,
+            "n_pairs": 34,
+            "n_features_involved": 67,
+            "involved_fraction": 0.068789,
+            "distance_min_m": 11.125,
+            "distance_median_m": 16.786,
+            "distance_max_m": 19.206,
+            "n_pairs_sharing_a_contributing_pass": 0,
+            "n_pairs_sharing_a_source_tile": 30,
+            "n_pairs_both_singleton_clusters": 0,
+            "pairs": [
+              {
+                "distance_m": 18.615,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 12.309,
+                "vote_a": 5,
+                "vote_b": 1,
+                "cluster_size_a": 5,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 16.225,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.458,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.148,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.333,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.578,
+                "vote_a": 5,
+                "vote_b": 1,
+                "cluster_size_a": 5,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 11.563,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.145,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.675,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.798,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 16.866,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.896,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.99,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.253,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.706,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.182,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.181,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.776,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.253,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.079,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.456,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 11.125,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.094,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.039,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.312,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.533,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 17.43,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.661,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.022,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 13.395,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.206,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.3,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.016,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              }
+            ]
+          },
+          "vote_threshold_decay": [
+            {
+              "vote_threshold": 1,
+              "n_features": 974,
+              "n_pairs": 34,
+              "involved_fraction": 0.068789
+            },
+            {
+              "vote_threshold": 2,
+              "n_features": 616,
+              "n_pairs": 10,
+              "involved_fraction": 0.032468
+            },
+            {
+              "vote_threshold": 3,
+              "n_features": 484,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            },
+            {
+              "vote_threshold": 4,
+              "n_features": 395,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            },
+            {
+              "vote_threshold": 5,
+              "n_features": 295,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition_id": "consensus-384-t1-0::consensus-2of30",
+      "survey_duplicate_fraction": 0.032467532467532464,
+      "survey_n_features": 616,
+      "artefacts": [
+        {
+          "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t2.geojson",
+          "properties": [
+            "cluster_size",
+            "confidence",
+            "contributing_passes",
+            "source_tiles",
+            "subtype",
+            "total_passes",
+            "vote_count"
+          ],
+          "merge_passes_property_set_present": true,
+          "missing_merge_passes_properties": [],
+          "has_source_tile_singular": false,
+          "pair_report": {
+            "n_features": 616,
+            "n_pairs": 10,
+            "n_features_involved": 20,
+            "involved_fraction": 0.032468,
+            "distance_min_m": 11.563,
+            "distance_median_m": 15.677,
+            "distance_max_m": 18.615,
+            "n_pairs_sharing_a_contributing_pass": 0,
+            "n_pairs_sharing_a_source_tile": 9,
+            "n_pairs_both_singleton_clusters": 0,
+            "pairs": [
+              {
+                "distance_m": 18.615,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.458,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.333,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 11.563,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.866,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.896,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.079,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.039,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.312,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.533,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              }
+            ]
+          },
+          "vote_threshold_decay": [
+            {
+              "vote_threshold": 2,
+              "n_features": 616,
+              "n_pairs": 10,
+              "involved_fraction": 0.032468
+            },
+            {
+              "vote_threshold": 3,
+              "n_features": 484,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            },
+            {
+              "vote_threshold": 4,
+              "n_features": 395,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            },
+            {
+              "vote_threshold": 5,
+              "n_features": 295,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition_id": "e47-propose-brief::consensus-1of5",
+      "survey_duplicate_fraction": 0.0447561790247161,
+      "survey_n_features": 4491,
+      "artefacts": [
+        {
+          "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1.geojson",
+          "properties": [
+            "cluster_size",
+            "confidence",
+            "contributing_passes",
+            "source_tiles",
+            "subtype",
+            "total_passes",
+            "vote_count"
+          ],
+          "merge_passes_property_set_present": true,
+          "missing_merge_passes_properties": [],
+          "has_source_tile_singular": false,
+          "pair_report": {
+            "n_features": 4491,
+            "n_pairs": 101,
+            "n_features_involved": 201,
+            "involved_fraction": 0.044756,
+            "distance_min_m": 9.218,
+            "distance_median_m": 17.087,
+            "distance_max_m": 19.997,
+            "n_pairs_sharing_a_contributing_pass": 0,
+            "n_pairs_sharing_a_source_tile": 86,
+            "n_pairs_both_singleton_clusters": 0,
+            "pairs": [
+              {
+                "distance_m": 12.443,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.366,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.624,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.246,
+                "vote_a": 5,
+                "vote_b": 2,
+                "cluster_size_a": 5,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 16.712,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.717,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.464,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.613,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.216,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.608,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 12.94,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.874,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.819,
+                "vote_a": 5,
+                "vote_b": 1,
+                "cluster_size_a": 6,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 16.119,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.943,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.848,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.632,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.085,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.801,
+                "vote_a": 5,
+                "vote_b": 1,
+                "cluster_size_a": 5,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 9.218,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.833,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.057,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.764,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 19.096,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 13.557,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.076,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.139,
+                "vote_a": 5,
+                "vote_b": 2,
+                "cluster_size_a": 5,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.038,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.514,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.318,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 12.068,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.323,
+                "vote_a": 4,
+                "vote_b": 2,
+                "cluster_size_a": 4,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.999,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 11.113,
+                "vote_a": 4,
+                "vote_b": 2,
+                "cluster_size_a": 4,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 18.965,
+                "vote_a": 5,
+                "vote_b": 1,
+                "cluster_size_a": 5,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.417,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.123,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.392,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.569,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.996,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 19.461,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.421,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.329,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.644,
+                "vote_a": 3,
+                "vote_b": 3,
+                "cluster_size_a": 3,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.918,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.718,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 19.783,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.66,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.004,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.841,
+                "vote_a": 5,
+                "vote_b": 1,
+                "cluster_size_a": 5,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 18.523,
+                "vote_a": 5,
+                "vote_b": 1,
+                "cluster_size_a": 5,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 14.671,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.087,
+                "vote_a": 4,
+                "vote_b": 2,
+                "cluster_size_a": 4,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.11,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.807,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.866,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.403,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.891,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.34,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.525,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.105,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.869,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.304,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.363,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.952,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.641,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.01,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.977,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.703,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.348,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.058,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.997,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.334,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.545,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 12.773,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.193,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.774,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.148,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.521,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.887,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.214,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.971,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.999,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.386,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 17.158,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.576,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 16.65,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.354,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.522,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.999,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 19.746,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.428,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.156,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.374,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 19.892,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.518,
+                "vote_a": 4,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 17.61,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.349,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.616,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 12.725,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 10.992,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 3,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              }
+            ]
+          },
+          "vote_threshold_decay": [
+            {
+              "vote_threshold": 1,
+              "n_features": 4491,
+              "n_pairs": 101,
+              "involved_fraction": 0.044756
+            },
+            {
+              "vote_threshold": 2,
+              "n_features": 1659,
+              "n_pairs": 21,
+              "involved_fraction": 0.025316
+            },
+            {
+              "vote_threshold": 3,
+              "n_features": 1080,
+              "n_pairs": 1,
+              "involved_fraction": 0.001852
+            },
+            {
+              "vote_threshold": 4,
+              "n_features": 738,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            },
+            {
+              "vote_threshold": 5,
+              "n_features": 461,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition_id": "e47-propose-brief::consensus-2of5",
+      "survey_duplicate_fraction": 0.02531645569620253,
+      "survey_n_features": 1659,
+      "artefacts": [
+        {
+          "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2.geojson",
+          "properties": [
+            "cluster_size",
+            "confidence",
+            "contributing_passes",
+            "source_tiles",
+            "subtype",
+            "total_passes",
+            "vote_count"
+          ],
+          "merge_passes_property_set_present": true,
+          "missing_merge_passes_properties": [],
+          "has_source_tile_singular": false,
+          "pair_report": {
+            "n_features": 1659,
+            "n_pairs": 21,
+            "n_features_involved": 42,
+            "involved_fraction": 0.025316,
+            "distance_min_m": 11.113,
+            "distance_median_m": 17.087,
+            "distance_max_m": 19.366,
+            "n_pairs_sharing_a_contributing_pass": 0,
+            "n_pairs_sharing_a_source_tile": 17,
+            "n_pairs_both_singleton_clusters": 0,
+            "pairs": [
+              {
+                "distance_m": 19.366,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.246,
+                "vote_a": 5,
+                "vote_b": 2,
+                "cluster_size_a": 5,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 16.613,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.216,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.874,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.085,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.833,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.139,
+                "vote_a": 5,
+                "vote_b": 2,
+                "cluster_size_a": 5,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.323,
+                "vote_a": 4,
+                "vote_b": 2,
+                "cluster_size_a": 4,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 11.113,
+                "vote_a": 4,
+                "vote_b": 2,
+                "cluster_size_a": 4,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 18.644,
+                "vote_a": 3,
+                "vote_b": 3,
+                "cluster_size_a": 3,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.671,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.087,
+                "vote_a": 4,
+                "vote_b": 2,
+                "cluster_size_a": 4,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.11,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 17.807,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.34,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.363,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.521,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.576,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 17.999,
+                "vote_a": 3,
+                "vote_b": 2,
+                "cluster_size_a": 3,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 19.156,
+                "vote_a": 2,
+                "vote_b": 3,
+                "cluster_size_a": 2,
+                "cluster_size_b": 3,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              }
+            ]
+          },
+          "vote_threshold_decay": [
+            {
+              "vote_threshold": 2,
+              "n_features": 1659,
+              "n_pairs": 21,
+              "involved_fraction": 0.025316
+            },
+            {
+              "vote_threshold": 3,
+              "n_features": 1080,
+              "n_pairs": 1,
+              "involved_fraction": 0.001852
+            },
+            {
+              "vote_threshold": 4,
+              "n_features": 738,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            },
+            {
+              "vote_threshold": 5,
+              "n_features": 461,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition_id": "n1-outstanding-384::brief-text-t03-consensus-1of3",
+      "survey_duplicate_fraction": 0.01627339300244101,
+      "survey_n_features": 1229,
+      "artefacts": [
+        {
+          "detections": "outputs/h11/n1-outstanding-384/brief-text-t03/consensus/consensus_t1.geojson",
+          "properties": [
+            "cluster_size",
+            "confidence",
+            "contributing_passes",
+            "source_tiles",
+            "subtype",
+            "total_passes",
+            "vote_count"
+          ],
+          "merge_passes_property_set_present": true,
+          "missing_merge_passes_properties": [],
+          "has_source_tile_singular": false,
+          "pair_report": {
+            "n_features": 1229,
+            "n_pairs": 10,
+            "n_features_involved": 20,
+            "involved_fraction": 0.016273,
+            "distance_min_m": 10.564,
+            "distance_median_m": 17.647,
+            "distance_max_m": 19.068,
+            "n_pairs_sharing_a_contributing_pass": 0,
+            "n_pairs_sharing_a_source_tile": 10,
+            "n_pairs_both_singleton_clusters": 0,
+            "pairs": [
+              {
+                "distance_m": 18.551,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 10.564,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.638,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.866,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.383,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.764,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 18.427,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.068,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.457,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.822,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              }
+            ]
+          },
+          "vote_threshold_decay": [
+            {
+              "vote_threshold": 1,
+              "n_features": 1229,
+              "n_pairs": 10,
+              "involved_fraction": 0.016273
+            },
+            {
+              "vote_threshold": 2,
+              "n_features": 952,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            },
+            {
+              "vote_threshold": 3,
+              "n_features": 794,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition_id": "n1-outstanding-384::image-t03-consensus-1of3",
+      "survey_duplicate_fraction": 0.04187192118226601,
+      "survey_n_features": 812,
+      "artefacts": [
+        {
+          "detections": "outputs/h11/n1-outstanding-384/image-t03/consensus/consensus_t1.geojson",
+          "properties": [
+            "cluster_size",
+            "confidence",
+            "contributing_passes",
+            "source_tiles",
+            "subtype",
+            "total_passes",
+            "vote_count"
+          ],
+          "merge_passes_property_set_present": true,
+          "missing_merge_passes_properties": [],
+          "has_source_tile_singular": false,
+          "pair_report": {
+            "n_features": 812,
+            "n_pairs": 17,
+            "n_features_involved": 34,
+            "involved_fraction": 0.041872,
+            "distance_min_m": 11.162,
+            "distance_median_m": 16.001,
+            "distance_max_m": 19.916,
+            "n_pairs_sharing_a_contributing_pass": 0,
+            "n_pairs_sharing_a_source_tile": 14,
+            "n_pairs_both_singleton_clusters": 0,
+            "pairs": [
+              {
+                "distance_m": 15.275,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.276,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.001,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 17.497,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 11.162,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 12.518,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.817,
+                "vote_a": 2,
+                "vote_b": 2,
+                "cluster_size_a": 2,
+                "cluster_size_b": 2,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.119,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.337,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.916,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 15.469,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 13.52,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 14.518,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.386,
+                "vote_a": 3,
+                "vote_b": 1,
+                "cluster_size_a": 4,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 0
+              },
+              {
+                "distance_m": 18.941,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 16.475,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              },
+              {
+                "distance_m": 19.788,
+                "vote_a": 2,
+                "vote_b": 1,
+                "cluster_size_a": 2,
+                "cluster_size_b": 1,
+                "n_shared_contributing_passes": 0,
+                "n_shared_source_tiles": 1
+              }
+            ]
+          },
+          "vote_threshold_decay": [
+            {
+              "vote_threshold": 1,
+              "n_features": 812,
+              "n_pairs": 17,
+              "involved_fraction": 0.041872
+            },
+            {
+              "vote_threshold": 2,
+              "n_features": 664,
+              "n_pairs": 2,
+              "involved_fraction": 0.006024
+            },
+            {
+              "vote_threshold": 3,
+              "n_features": 567,
+              "n_pairs": 0,
+              "involved_fraction": 0.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
