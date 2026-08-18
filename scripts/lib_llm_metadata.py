@@ -408,13 +408,45 @@ class LLMMetadataTracker:
             self.stats.items_processed += 1
             self.stats.completed_items.append(item_id)
 
-    def log_failure(self, item_id: str, reason: str) -> None:
-        """Log a failed item."""
+    #: Failure categories that are also parse failures. Kept as a set so the
+    #: mapping from a caller's category string to the summary counter is
+    #: explicit rather than inferred from the free-text reason.
+    _PARSE_FAILURE_CATEGORIES = frozenset({"parse", "json_parse"})
+
+    def log_failure(
+        self, item_id: str, reason: str, category: str | None = None,
+    ) -> None:
+        """Log a failed item, and attribute it to a summary counter.
+
+        ``parse_failures`` was previously incremented only inside
+        :meth:`log_response`, from ``metadata.parse_success``. That flag
+        describes whether the *API envelope* parsed — so a response that
+        arrived cleanly and whose JSON body then failed to parse downstream
+        was recorded as ``parse_failures: 0`` while the item was genuinely
+        lost. Six passes of the 2026-08-18 grid run carried exactly that
+        contradiction: one tile lost each, ``parse_failures: 0``, and
+        ``finish_reason_counts`` reporting unbroken success.
+
+        ``finish_reason_counts`` remains the API's own verdict and is
+        deliberately not rewritten here — the call really did finish
+        successfully. The categorised counter is what distinguishes "the model
+        answered" from "we could use the answer".
+
+        Args:
+            item_id: Identifier of the failed item (usually a tile filename).
+            reason: Free-text explanation, recorded verbatim.
+            category: Machine-readable class, e.g. ``"parse"``, ``"api"``,
+                ``"io"``. ``None`` records the failure without attributing it
+                to a category counter.
+        """
         with self._lock:
             self.stats.items_failed += 1
+            if category in self._PARSE_FAILURE_CATEGORIES:
+                self.stats.parse_failures += 1
             self.stats.failed_items.append({
                 "item_id": item_id,
                 "reason": reason,
+                "category": category,
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             })
 
@@ -1034,21 +1066,61 @@ PRICING = {
 }
 
 
+#: Discount applied to Gemini real-time **flex** traffic. Flex carries the
+#: same 50 % reduction as the async Batch API — the project moved from batch
+#: to flex for simplicity once that became true — so a run priced at list
+#: rates overstates the actual bill by a factor of two.
+#:
+#: Recording the list price as though it were the bill is not a rounding
+#: matter: it silently doubled every cost-efficiency figure derived from run
+#: metadata, and left two internal sources (this metadata and the audited
+#: ``pareto_v2.json`` model, which does apply the discount) disagreeing by
+#: exactly 2x with nothing in either artefact to say which was right.
+FLEX_DISCOUNT = 0.5
+
+#: Discount for the Google async Batch API. Identical in size to the flex
+#: discount; kept as a separate constant because they are separate commercial
+#: terms and may diverge.
+BATCH_API_DISCOUNT = 0.5
+
+
 def estimate_cost(
     usage: AggregatedUsage,
     provider: str,
     model: str,
+    discount: float = 1.0,
+    discount_reason: str | None = None,
 ) -> dict[str, float]:
     """
     Estimate cost from aggregated token usage.
+
+    Records BOTH the list price and the amount actually billed, so a reader
+    can always tell which basis a figure is on. ``total_cost_usd`` is the
+    **billed** amount — the number anyone comparing against an invoice or
+    computing cost-efficiency wants — while ``list_total_cost_usd`` preserves
+    the undiscounted figure.
+
+    Historical metadata written before 2026-08-18 records list price in
+    ``total_cost_usd`` for real-time runs (no discount was applied) and billed
+    price for Batch API runs (a 0.5 multiplier was applied after the fact).
+    The ``cost_basis`` field distinguishes them: its absence means the older,
+    ambiguous convention.
 
     Args:
         usage: Aggregated token usage stats.
         provider: The LLM provider.
         model: The model name.
+        discount: Multiplier applied to list price to get the billed amount.
+            1.0 means list price is the bill. Use :data:`FLEX_DISCOUNT` for
+            Gemini real-time flex and :data:`BATCH_API_DISCOUNT` for the async
+            Batch API.
+        discount_reason: Human-readable justification, recorded alongside the
+            multiplier so the number can be audited without reading this code.
 
     Returns:
-        Dict with input_cost, output_cost, total_cost (in USD).
+        Dict with billed input/output/total cost, the list-price equivalents,
+        and a ``pricing_used`` block carrying the rates, the discount, and the
+        basis.
     """
     pricing_table = PRICING.get(provider, PRICING.get("google_gemini"))
 
@@ -1063,17 +1135,30 @@ def estimate_cost(
                 rates = model_rates
                 best_match_len = len(model_key)
 
-    input_cost = (usage.total_input_tokens / 1_000_000) * rates["input"]
-    output_cost = (usage.total_output_tokens / 1_000_000) * rates["output"]
+    list_input_cost = (usage.total_input_tokens / 1_000_000) * rates["input"]
+    list_output_cost = (usage.total_output_tokens / 1_000_000) * rates["output"]
+    input_cost = list_input_cost * discount
+    output_cost = list_output_cost * discount
 
     return {
+        # Billed amounts — what the invoice will show.
         "input_cost_usd": round(input_cost, 6),
         "output_cost_usd": round(output_cost, 6),
         "total_cost_usd": round(input_cost + output_cost, 6),
+        # List-price equivalents, kept so the discount is auditable and so a
+        # figure quoted on either basis can be reconciled with the other.
+        "list_input_cost_usd": round(list_input_cost, 6),
+        "list_output_cost_usd": round(list_output_cost, 6),
+        "list_total_cost_usd": round(list_input_cost + list_output_cost, 6),
+        "cost_basis": "billed" if discount != 1.0 else "list",
         "pricing_used": {
             "model": model,
             "input_per_1m": rates["input"],
             "output_per_1m": rates["output"],
+            "discount": discount,
+            "discount_reason": discount_reason or (
+                "no discount applied" if discount == 1.0 else "unspecified"
+            ),
         },
     }
 

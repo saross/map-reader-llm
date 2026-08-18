@@ -55,7 +55,8 @@ from config import (
 )
 
 # Import comprehensive metadata tracking
-from scripts.lib_llm_metadata import (
+from scripts.lib_llm_metadata import (  # noqa: E402
+    FLEX_DISCOUNT,
     LLMMetadataTracker,
     extract_gemini_metadata,
     create_error_metadata,
@@ -555,7 +556,8 @@ def process_single_tile(
                 response_metadata.parse_success = False
             metadata_tracker.log_failure(
                 tile_filename,
-                "Retries Exhausted / Invalid Finish Reason"
+                "Retries Exhausted / Invalid Finish Reason",
+                category="api",
             )
             if response_metadata:
                 metadata_tracker.log_response(tile_filename, response_metadata)
@@ -590,13 +592,20 @@ def process_single_tile(
                     detections = json_response
             else:
                 detections = json_response.get("detections", [])
+            # NB: counted again below from the emitted features, so that
+            # total_detections matches the GeoJSON. Kept here only for the
+            # per-subtype class_counts.
             results_tracker.update(detections)
         except Exception as e:
             print(f"Failed to parse response for {tile_filename}: {e}")
             metadata_tracker.log_failure(
-                tile_filename, f"JSON Parse Error: {e}"
+                tile_filename, f"JSON Parse Error: {e}", category="parse",
             )
             return None
+
+        # Detections parsed but not emitted as features, for the reconciliation
+        # below. A silent gap here is how metadata stops being trustworthy.
+        skipped_detections = 0
 
         with rasterio.open(tile_path) as src:
             transform = src.transform
@@ -604,6 +613,18 @@ def process_single_tile(
 
         for det in detections:
             if "box_2d" not in det:
+                # Previously a bare ``continue``: the detection was counted by
+                # the results tracker but never became a feature, so the meta's
+                # total_detections exceeded the GeoJSON's feature count with
+                # nothing recorded to explain the gap. Observed once in H13
+                # arm B run_2 (meta 1,362 vs GeoJSON 1,361). The sibling
+                # malformed-length branch below always logged; this one did
+                # not, which is why it went unnoticed.
+                print(
+                    f"  Skipping detection with no box_2d key in {tile_filename} "
+                    f"(keys: {sorted(det)[:6]})"
+                )
+                skipped_detections += 1
                 continue
             box_coords = det["box_2d"]
             if not isinstance(box_coords, (list, tuple)) or len(box_coords) != 4:
@@ -612,6 +633,7 @@ def process_single_tile(
                     f"(length={len(box_coords) if isinstance(box_coords, (list, tuple)) else 'N/A'})"
                     f" in {tile_filename}"
                 )
+                skipped_detections += 1
                 continue
             ymin_n, xmin_n, ymax_n, xmax_n = box_coords
             px_min_x = (xmin_n / 1000.0) * tile_size
@@ -646,13 +668,18 @@ def process_single_tile(
         # without exception. This prevents the same tile appearing
         # in both completed_items and failed_items when a valid API
         # response fails downstream processing.
+        if skipped_detections:
+            print(
+                f"  {tile_filename}: {skipped_detections} parsed detection(s) "
+                f"could not be converted to features and are NOT in the output"
+            )
         metadata_tracker.log_success(tile_filename)
         return features
 
     except Exception as e:
         print(f"Error processing {tile_filename}: {e}")
         traceback.print_exc()
-        metadata_tracker.log_failure(tile_filename, str(e))
+        metadata_tracker.log_failure(tile_filename, str(e), category="processing")
         return None
 
 def detect_mounds_versioned(
@@ -1218,8 +1245,30 @@ def detect_mounds_versioned(
     with open(manifest_path, "w") as f:
         json.dump(tile_manifest, f, indent=2)
 
-    # Add results summary to metadata tracker
-    metadata_tracker.update_results_summary(results_tracker.get_summary())
+    # Add results summary to metadata tracker.
+    #
+    # RECONCILIATION: total_detections is taken from the features actually
+    # written to the GeoJSON, not from the count of parsed detection objects.
+    # Those two diverge whenever a parsed detection cannot be converted to a
+    # feature (a missing or malformed box_2d), and the older behaviour
+    # published the parsed count — so the meta claimed more detections than
+    # the artefact contained, with nothing recording the gap. The parsed count
+    # is kept alongside as ``parsed_detections`` and any shortfall is stated
+    # explicitly, so the two numbers can never disagree silently again.
+    results_summary = results_tracker.get_summary()
+    parsed_detections = results_summary.get("total_detections", 0)
+    emitted_detections = len(features)
+    results_summary["total_detections"] = emitted_detections
+    results_summary["parsed_detections"] = parsed_detections
+    results_summary["detections_not_emitted"] = parsed_detections - emitted_detections
+    results_summary["reconciled_against"] = "geojson feature count"
+    if parsed_detections != emitted_detections:
+        print(
+            f"WARNING: {parsed_detections - emitted_detections} parsed "
+            f"detection(s) could not be converted to features; "
+            f"total_detections reports the {emitted_detections} actually written"
+        )
+    metadata_tracker.update_results_summary(results_summary)
 
     # ── Clean up context cache ─────────────────────────────────
     if cache_name:
@@ -1229,11 +1278,17 @@ def detect_mounds_versioned(
         except Exception as e:
             print(f"Cache cleanup failed (will expire via TTL): {e}")
 
-    # Estimate costs
+    # Estimate costs. Real-time traffic on this project runs on FLEX, which
+    # carries the same 50 % discount as the async Batch API — so pricing at
+    # list rates, as this call did until 2026-08-18, overstated every
+    # real-time run's cost by a factor of two and put the metadata at odds
+    # with the audited pareto_v2 cost model. Both bases are now recorded.
     cost_estimate = estimate_cost(
         usage=metadata_tracker.usage,
         provider=LLMProvider.GEMINI.value,
-        model=model_name_cfg
+        model=model_name_cfg,
+        discount=FLEX_DISCOUNT,
+        discount_reason="Gemini real-time flex (50 % of list, as per Batch API)",
     )
 
     # Finalise and save metadata — include governor stats if used
@@ -1261,7 +1316,7 @@ def detect_mounds_versioned(
     print(f"Metadata saved to {meta_file}")
     print(f"Tiles processed: {meta['execution_stats']['items_processed']}")
     print(f"Tiles failed: {meta['execution_stats']['items_failed']}")
-    print(f"Total detections: {results_tracker.get_summary()['total_detections']}")
+    print(f"Total detections: {emitted_detections}")
     print(f"Tokens used: {meta['usage_stats']['total_tokens']:,}")
     print(f"Estimated cost: ${cost_estimate['total_cost_usd']:.4f}")
 

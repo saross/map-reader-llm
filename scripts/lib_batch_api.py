@@ -56,7 +56,8 @@ import rasterio
 from shapely.geometry import box, mapping
 
 from config import EXAMPLES_DIR, TILE_SIZE, TILES_DIR
-from scripts.lib_llm_metadata import (
+from scripts.lib_llm_metadata import (  # noqa: E402
+    BATCH_API_DISCOUNT,
     AggregatedUsage,
     LLMMetadataTracker,
     LLMProvider,
@@ -1384,23 +1385,18 @@ def write_batch_outputs(
         usage.total_tokens = usage_stats.get("total_tokens", 0)
     tracker.usage = usage
 
-    # Estimate costs (batch API gets 50% discount)
+    # The discount is now a parameter of the cost model rather than a
+    # post-hoc multiply here, so batch and real-time flex share one code path
+    # and one recorded convention. ``batch_discount`` is retained in
+    # pricing_used for backwards compatibility with readers of older metadata.
     cost_estimate = estimate_cost(
         usage=usage,
         provider=LLMProvider.GEMINI.value,
         model=model_name,
+        discount=BATCH_API_DISCOUNT,
+        discount_reason="Google async Batch API (50 % of list)",
     )
-    # Apply 50% batch discount
-    cost_estimate["input_cost_usd"] = round(
-        cost_estimate["input_cost_usd"] * 0.5, 6
-    )
-    cost_estimate["output_cost_usd"] = round(
-        cost_estimate["output_cost_usd"] * 0.5, 6
-    )
-    cost_estimate["total_cost_usd"] = round(
-        cost_estimate["input_cost_usd"] + cost_estimate["output_cost_usd"], 6
-    )
-    cost_estimate["pricing_used"]["batch_discount"] = 0.5
+    cost_estimate["pricing_used"]["batch_discount"] = BATCH_API_DISCOUNT
 
     meta = tracker.finalise(include_per_item=False)
     meta["cost_estimate"] = cost_estimate
