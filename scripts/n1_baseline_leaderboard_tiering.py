@@ -115,6 +115,8 @@ DEFAULT_OUTPUT = BASE_DIR / "results" / "paper-eval" / "n1" / "384px-14buf-mcc" 
 # cells with the genuine-Pro re-run (n1-pro-rerun-384) — take effect with no
 # change to this script. Each ref ``<run>::<label>`` is resolved against
 # run-conditions.json for its detections dir and evaluation.json.
+from scripts.lib_detection_paths import POOL_PASS_GLOBS  # noqa: E402
+
 ANALYSIS_ID = "n1-baseline-matrix-384"
 
 # Candidate replicate-pass globs, UNION-ed (not first-non-empty). The original
@@ -125,7 +127,10 @@ ANALYSIS_ID = "n1-baseline-matrix-384"
 # (Session 98): batch run_1 + realtime run_2/run_3. A filename is either
 # ``detections_…`` or ``detections-…`` (never both), so unioning the two
 # patterns and de-duplicating collects every replicate without double-counting.
-PASS_GLOBS = ("*/detections_*.geojson", "*/detections-*.geojson")
+# Canonical since Session 136: the tuple now lives in
+# ``scripts.lib_detection_paths`` so every caller expands the same patterns.
+# Re-exported here under its original name for this module's four importers.
+PASS_GLOBS = POOL_PASS_GLOBS
 
 
 def git_commit() -> str:

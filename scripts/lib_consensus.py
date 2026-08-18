@@ -36,6 +36,8 @@ from scipy.spatial import cKDTree
 from shapely.geometry import Point as ShapelyPoint
 from shapely.geometry import shape
 
+from scripts.lib_detection_paths import find_pass_geojsons
+
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
@@ -252,15 +254,24 @@ def load_run_detections(run_dir: Path) -> list[dict]:
     """
     Load all GeoJSON detection features from a run directory.
 
+    Resolution is delegated to :func:`scripts.lib_detection_paths.find_pass_geojsons`,
+    which expands both per-pass filename conventions. This function previously
+    globbed only the batch-written ``detections_*.geojson`` shape and so
+    returned nothing for a realtime-written pass (defect D6, erratum E80's
+    sibling); because it is imported by ten scripts and reached at runtime via
+    :func:`generate_consensus_gdf`, that undercount was live rather than
+    theoretical.
+
     Args:
-        run_dir: Path to a run directory containing
-            ``detections_*.geojson`` files.
+        run_dir: Path to a run directory containing per-pass detection
+            GeoJSONs under either naming convention.
 
     Returns:
-        List of GeoJSON feature dictionaries.
+        List of GeoJSON feature dictionaries, empty when the directory holds
+        no pass file.
     """
     features: list[dict] = []
-    for geojson_file in sorted(run_dir.glob("detections_*.geojson")):
+    for geojson_file in find_pass_geojsons(run_dir):
         with open(geojson_file, encoding="utf-8") as f:
             data = json.load(f)
             features.extend(data.get("features", []))

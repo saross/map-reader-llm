@@ -70,6 +70,8 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(levelname)s: %(message)s",
 )
+from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
+
 logger = logging.getLogger(__name__)
 
 __version__ = "1.0.0"
@@ -127,22 +129,32 @@ def _safe_round(
 
 def build_n1_gdf(
     detections_dir: Path,
-    glob_pattern: str,
+    glob_pattern: str | None,
     gdf_bounds: gpd.GeoDataFrame,
 ) -> list[gpd.GeoDataFrame]:
     """Load N=1 detection GeoJSON files as GeoDataFrames.
 
+    With ``glob_pattern=None`` resolution is delegated to
+    :func:`scripts.lib_detection_paths.resolve_pool_passes`, which expands both
+    per-pass naming conventions. The previous default matched only the
+    batch-written shape and silently under-read mixed pools (defect D6).
+
     Args:
         detections_dir: Directory containing run subdirectories.
-        glob_pattern: Glob pattern for finding GeoJSON files.
+        glob_pattern: Glob for finding GeoJSON files, or ``None`` to use the
+            canonical resolver.
         gdf_bounds: Tile boundaries for source_tile assignment.
 
     Returns:
         List of GeoDataFrames, one per run.
     """
-    det_files = sorted(detections_dir.glob(glob_pattern))
+    if glob_pattern is None:
+        det_files = resolve_pool_passes(detections_dir, allow_multiple=True)
+    else:
+        det_files = sorted(detections_dir.glob(glob_pattern))
     if not det_files:
-        logger.warning("No files matching '%s' in %s", glob_pattern, detections_dir)
+        logger.warning("No pass files found in %s (pattern: %s)",
+                       detections_dir, glob_pattern or "canonical resolver")
         return []
 
     gdfs = []
@@ -502,7 +514,10 @@ def main() -> int:
     parser.add_argument("--pv-threshold", type=float)
     parser.add_argument("--detections-dir", type=Path)
     parser.add_argument(
-        "--glob", default="*/detections_*.geojson",
+        "--glob", default=None,
+        help=("Glob for finding pass GeoJSONs within --detections-dir. "
+              "Default: resolve both naming conventions via "
+              "scripts.lib_detection_paths."),
     )
     parser.add_argument("--label", type=str, default="condition")
     parser.add_argument(
@@ -612,7 +627,7 @@ def _run_batch(args: argparse.Namespace) -> int:
                 )
             elif cond_type == "n1":
                 det_dir = Path(cond["detections_dir"])
-                glob_pat = cond.get("glob", "*/detections_*.geojson")
+                glob_pat = cond.get("glob")  # None -> canonical resolver
                 gdfs = build_n1_gdf(det_dir, glob_pat, gdf_bounds)
                 if not gdfs:
                     logger.warning("  No files — skipping")

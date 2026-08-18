@@ -73,7 +73,7 @@ def test_projection_dispositions_and_family_verdicts():
     assert records["H1"]["family_fdr"] == "not rejected"
     # Exploratory hypotheses never enter the family.
     assert records["H9"]["family_fdr"] == "— (exploratory: not in family)"
-    assert records["H13"]["disposition"] == "not executed"
+    assert records["H13"]["disposition"] == "not executed"  # synthetic fixture
 
 
 @pytest.mark.tier1
@@ -187,8 +187,16 @@ def test_live_register_projects_and_matches_committed_output():
     assert records["H3"]["family_fdr"] == "rejected (q=0.05)"
     assert records["H10"]["analyses"] == ["h10-pool-size [registered-exploratory]"]
     assert records["H12"]["analyses"] == ["h12-v2-hp-hn-ratio [registered-exploratory]"]
-    for h in ("H13", "H14", "H15"):
+    for h in ("H14", "H15"):
         assert records[h]["disposition"] == "not executed"
+    # H13 moved to "partially executed" in Session 136: arms B and C were run
+    # and all three registered analyses reported (analysis row
+    # h13-overlap-2026-08-18), while the older h13-overlap-stride disposition
+    # row is marked SUPERSEDED but deliberately still classed not-executed
+    # pending the PI's ruling on whether to retire it. The projection reports
+    # both rows, hence "partially" — which UNDERSTATES the position and is the
+    # flag for that pending decision, not a defect in the projection.
+    assert records["H13"]["disposition"] == "partially executed"
     # The committed outputs equal a regeneration (the --check contract,
     # asserted for real — S134 audit finding M-4): MD compared with the
     # commit-hash stamp neutralised on both sides, JSON compared exactly.

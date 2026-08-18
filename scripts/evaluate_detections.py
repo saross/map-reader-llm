@@ -20,10 +20,9 @@ Usage:
     python scripts/evaluate_detections.py \\
         --detections run_1/detections.geojson run_2/detections.geojson
 
-    # Glob pattern for all runs in a directory
+    # All passes in a directory (both naming conventions resolved automatically)
     python scripts/evaluate_detections.py \\
-        --detections-dir outputs/retest/h11-single-pass-384-t0/brief-text-t0 \\
-        --glob "*/detections_*.geojson"
+        --detections-dir outputs/retest/h11-single-pass-384-t0/brief-text-t0
 
     # Multiple buffer distances with custom output
     python scripts/evaluate_detections.py \\
@@ -59,6 +58,7 @@ import yaml
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     COVERAGE_STATUS_NORMAL,
     COVERAGE_STATUS_PARTIAL,
@@ -359,18 +359,33 @@ def load_geojson(path: Path, target_crs: str = DEFAULT_CRS) -> gpd.GeoDataFrame:
 
 def find_detection_files(
     detections_dir: Path,
-    glob_pattern: str = "*/detections_*.geojson",
+    glob_pattern: str | None = None,
 ) -> list[Path]:
-    """Find detection GeoJSON files in a directory using a glob pattern.
+    """Find detection GeoJSON files in a directory.
+
+    With no explicit pattern, resolution is delegated to
+    :func:`scripts.lib_detection_paths.resolve_pool_passes`, which expands BOTH
+    per-pass filename conventions. The previous default,
+    ``"*/detections_*.geojson"``, matched only the batch-written shape and so
+    silently under-read any pool whose passes straddled the project's switch
+    from the Batch API to real-time flex (defect D6).
+
+    An explicit ``glob_pattern`` still takes precedence, because a few callers
+    legitimately target non-pass artefacts — ``accepted_run*.geojson`` under
+    ``results/era1-pv-stage-d/``, for instance.
 
     Args:
         detections_dir: Base directory to search.
-        glob_pattern: Glob pattern relative to detections_dir.
+        glob_pattern: Optional glob relative to ``detections_dir``. ``None``
+            (the default) uses the canonical resolver.
 
     Returns:
         Sorted list of matching file paths.
     """
-    matches = sorted(detections_dir.glob(glob_pattern))
+    if glob_pattern is None:
+        matches = resolve_pool_passes(detections_dir, allow_multiple=True)
+    else:
+        matches = sorted(detections_dir.glob(glob_pattern))
     if not matches:
         logger.warning(
             "No files matching '%s' in %s", glob_pattern, detections_dir,
@@ -1296,10 +1311,12 @@ def main() -> int:
     )
 
     parser.add_argument(
-        "--glob", type=str, default="*/detections_*.geojson",
+        "--glob", type=str, default=None,
         help=(
-            "Glob pattern for finding GeoJSON files within "
-            "--detections-dir (default: '*/detections_*.geojson')"
+            "Glob pattern for finding GeoJSON files within --detections-dir. "
+            "Default: resolve both per-pass naming conventions via "
+            "scripts.lib_detection_paths. Pass an explicit pattern only to "
+            "target non-pass artefacts (e.g. 'accepted_run*.geojson')."
         ),
     )
 
@@ -1622,7 +1639,8 @@ def _build_condition_tasks(
     for i, cond in enumerate(conditions, 1):
         label = cond.get("label", f"condition_{i}")
         det_dir = Path(cond["detections_dir"])
-        glob_pat = cond.get("glob", "*/detections_*.geojson")
+        # None means "use the canonical resolver" (see find_detection_files).
+        glob_pat = cond.get("glob")
         buffers = cond.get("buffers", DEFAULT_BUFFERS)
         n_bootstrap = cond.get("bootstrap", DEFAULT_BOOTSTRAP)
         seed = cond.get("seed", DEFAULT_SEED)
