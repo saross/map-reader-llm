@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-08-03T02:32:37Z · 1132 row(s) · schema v1.0.
+> Generated 2026-08-18T00:49:03Z · 1138 row(s) · schema v1.0.
 >
-> **Coverage**: 1132 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1138 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
 |---|---|---|---|---|---|---|---|---|
@@ -1140,3 +1140,9 @@
 | 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.277686 |
 | 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.319278 |
 | 55maps-text-min-n10-uplift::verified-3of10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 16482 | 22.532409 |
+| h13::armb::run1 | gemini-3-flash-preview | text | minimal | 1.0 | partial | 429 | — | 0.579331 |
+| h13::armb::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.581053 |
+| h13::armb::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.584686 |
+| h13::armc::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 1.321305 |
+| h13::armc::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 1.338168 |
+| h13::armc::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 1.337097 |

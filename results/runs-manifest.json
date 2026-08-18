@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-03T02:32:37Z",
+  "generated_at": "2026-08-18T00:48:34Z",
   "generator_version": "0.7.1",
   "runs": [
     {
@@ -1052,6 +1052,37 @@
           "outputs/55maps-text-min-n10-uplift/proposer/run_10/detections-detect_brief-text-3-flash-2026-06-11.meta.json"
         ],
         "last_extracted_at": "2026-08-03T02:32:37Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "run_id": "h13",
+      "directory_path": "outputs/h13",
+      "primary_hypothesis": "H13",
+      "also_informs": [],
+      "purpose": "Registered three-arm tile-overlap contrast (E75 remediation): arms B (25%) and C (50%) at 512 px, brief-text, three passes each. Arm A (12.5%) is the reused retest-phase2a::brief-text condition.",
+      "run_type": "single-pass",
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "h13-common-338",
+        "bounds_path": "outputs/h13/scoring/bounds/h13_common_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "outputs/h13/scoring/bounds/h13_common_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-08-18T00:48:34Z",
         "extractor_version": "0.7.1"
       }
     }

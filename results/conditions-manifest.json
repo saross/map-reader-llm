@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T08:45:35Z",
+  "generated_at": "2026-08-18T00:48:34Z",
   "generator_version": "0.7.1",
   "conditions": [
     {
@@ -76823,6 +76823,159 @@
           "results/55maps-standardised-ref-2026-08-14/TM-n10-k5/evaluation.json"
         ],
         "last_extracted_at": "2026-08-14T08:45:35Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "h13::arm-a-overlap-12-5",
+      "run_id": "h13",
+      "label": "arm-a-overlap-12-5",
+      "architecture": "single-pass",
+      "aggregation": "none",
+      "proposer_pool": "brief-text",
+      "n_passes": 3,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": null,
+      "scope_override": null,
+      "metrics": {
+        "per_buffer": {
+          "20": {
+            "f1": 0.558,
+            "precision": 0.4487,
+            "recall": 0.7379,
+            "ci": {
+              "low": 0.521,
+              "high": 0.5934,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.1058,
+          "sensitivity": 0.9526,
+          "specificity": 0.1029,
+          "tp": 195,
+          "tn": 11,
+          "fp": 125,
+          "fn": 9
+        }
+      },
+      "n_detections": null,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/h13-overlap-2026-08-18/common/armA/evaluation.json"
+        ],
+        "last_extracted_at": "2026-08-18T00:48:34Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "h13::arm-b-overlap-25",
+      "run_id": "h13",
+      "label": "arm-b-overlap-25",
+      "architecture": "single-pass",
+      "aggregation": "none",
+      "proposer_pool": "brief-text",
+      "n_passes": 3,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": null,
+      "scope_override": null,
+      "metrics": {
+        "per_buffer": {
+          "20": {
+            "f1": 0.5198,
+            "precision": 0.3887,
+            "recall": 0.7844,
+            "ci": {
+              "low": 0.4874,
+              "high": 0.5531,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.2579,
+          "sensitivity": 0.9428,
+          "specificity": 0.2328,
+          "tp": 192,
+          "tn": 30,
+          "fp": 106,
+          "fn": 12
+        }
+      },
+      "n_detections": null,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/h13-overlap-2026-08-18/common/armB/evaluation.json"
+        ],
+        "last_extracted_at": "2026-08-18T00:48:34Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "h13::arm-c-overlap-50",
+      "run_id": "h13",
+      "label": "arm-c-overlap-50",
+      "architecture": "single-pass",
+      "aggregation": "none",
+      "proposer_pool": "brief-text",
+      "n_passes": 3,
+      "vote_threshold": null,
+      "prob_threshold": null,
+      "verifier_config": null,
+      "scope_override": null,
+      "metrics": {
+        "per_buffer": {
+          "20": {
+            "f1": 0.4024,
+            "precision": 0.2616,
+            "recall": 0.8718,
+            "ci": {
+              "low": 0.3678,
+              "high": 0.4332,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.0593,
+          "sensitivity": 0.9853,
+          "specificity": 0.0343,
+          "tp": 201,
+          "tn": 5,
+          "fp": 131,
+          "fn": 3
+        }
+      },
+      "n_detections": null,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/h13-overlap-2026-08-18/common/armC/evaluation.json"
+        ],
+        "last_extracted_at": "2026-08-18T00:48:34Z",
         "extractor_version": "0.7.1"
       }
     }

@@ -1,7 +1,7 @@
 # H13 arms B + C — preparation plan and phase gate
 
-> **Last revised**: 2026-08-17 (initial plan; phase gate run; API
-> spend NOT yet approved). See [§ Changelog](#changelog).
+> **Last revised**: 2026-08-18 (scoring chain complete; all three
+> registered analyses reported). See [§ Changelog](#changelog).
 
 **Ruling being executed**: S134 walk Group E — "H13: run arms B + C,
 gated behind a re-pricing check." E75 discloses the registered
@@ -147,20 +147,72 @@ T = 1.0 (~3.2/tile) inflated output tokens; per-item cost stayed
 under the 2× halt threshold mid-run. **Lesson recorded: re-pin the
 smoke after ANY audit-stage parameter change.**
 
-**Next ($0, sapphire) — the scoring chain**: per-arm bounds files
-(`generate_tile_bounds.py --manifest` per arm tree); uniform 20 m
-within-pass dedup before scoring for ALL arms (arm A re-scored from
-committed detections — committed arm-A F1s are NOT comparable);
-F1-vs-overlap with paired tile bootstrap deltas; cost-efficiency on
-actual audited spend; edge-detection analysis (new script:
-detection/GT recall vs distance-to-tile-boundary per arm); findings
-doc; register row (post-hoc class per the discharge principle, PI
-to ratify) + E75 disposition update; verification stack per S135
-conventions. Note: sapphire holds the (untracked, regenerable) tile
-trees `inputs/tiles_512_ov128/` and `_ov256/` — do not clean them
-before scoring.
+## 8. Scoring chain — complete (2026-08-18, S136)
+
+Executed on sapphire, $0 API. Sequence: per-arm bounds
+(`generate_tile_bounds.py --manifest`, 340 / 430 / 999 tiles) →
+uniform within-pass 20 m deduplication for ALL arms →
+`evaluate_detections.py` at 20 m with `--mcc` on two scopes →
+three registered analyses → independent verification.
+
+**One hazard the plan missed, caught in scoring.** The plan assumed
+the three arms cover the same ground. They do not: the
+footprint-majority manifests give tile unions of 1751 / 1695 /
+1847 km² and ground-truth-in-scope counts of 539 / 563 / 565, so
+native scoring would have confounded overlap with tile inclusion.
+Resolution: a **common A ∩ B ∩ C footprint** (1637.5 km², 538
+mounds) carried on the arm-A grid, with detections clipped and
+reassigned to it — which also supplies the shared resampling unit the
+paired bootstrap needs. Native scoring is retained alongside; the two
+agree to under 0.005 F1 (tile-level MCC does *not* survive the scope
+change and carries no overlap claim).
+
+**Results** (common scope, 20 m, mean of 3 passes): F1 falls
+monotonically with overlap — **A 0.5578, B 0.5198, C 0.4025**. All
+three paired contrasts exclude zero at B = 1,000 and B = 10,000
+(A−B +0.0380, CI95 [+0.0009, +0.0708] — marginal; A−C +0.1554;
+B−C +0.1174). Recall rises (0.7379 → 0.7844 → 0.8717), precision
+falls faster (0.4484 → 0.3887 → 0.2616). Deduplication removes
+5.9–6.7 % / 15.7–17.9 % / 39.2–40.0 % of raw detections by arm, so
+V1's finding generalises and the phase gate's catch was load-bearing;
+but after removing every duplicate arm C still carries 1323.7 FPs per
+pass against arm A's 488.3, so the precision collapse is a real
+property of looking more often, not a scoring artefact. The
+registered edge mechanism is confirmed and localised: recall on the
+ten mounds arm A could only ever see within 100 m of a tile edge goes
+0.2667 → 0.7667 → 0.9333. Cost-efficiency: every additional API
+dollar buys negative F1.
+
+**Verification**: `scripts/verify_h13_overlap.py` re-derives counts,
+scope, per-arm P/R/F1, cost and the edge subgroup from raw artefacts
+along a separate code path (no shared library imports) — **20/20
+checks pass**; V1's arm-A gate (973 → 916) reproduces exactly.
+
+**Artefacts**: `results/h13-overlap-2026-08-18/` (findings.md,
+analysis JSON, per-arm evaluations on both scopes);
+`outputs/h13/scoring/` (deduplicated sets, bounds, dedup summary);
+scripts `prepare_h13_scoring.py`, `h13_overlap_analysis.py`,
+`verify_h13_overlap.py`. Register: run `h13` with three conditions
+and six proposer passes now in the manifests; analysis row
+`h13-overlap-2026-08-18` PROPOSED `registered-exploratory` (this
+plan's § 7 had proposed `post-hoc`; the disagreement is recorded in
+the row for the PI). E75 disposition updated to REMEDIATED.
+
+Note: sapphire holds the (untracked, regenerable) tile trees
+`inputs/tiles_512_ov128/` and `_ov256/` — do not clean them.
 
 ## Changelog
+
+### 2026-08-18 (later) — Scoring chain complete
+
+Section 8 added. All three registered analyses reported under a
+uniform dedup rule and a common evaluation footprint (a hazard the
+plan had not anticipated, caught before it could confound the
+result). F1 falls monotonically with overlap; the registered edge
+mechanism is confirmed but too localised to pay for the precision it
+costs. Independent verification 20/20. Register rows and the E75
+disposition updated; classification proposed as
+`registered-exploratory` rather than the § 7 `post-hoc`, for the PI.
 
 ### 2026-08-18 — Audit READY; run complete; overrun recorded
 

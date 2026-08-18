@@ -7220,6 +7220,57 @@
      "_note": "TM-n10-k5 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
     }
    ]
+  },
+  "h13": {
+   "proposer_pools": {
+    "armb": {
+     "modality": "text",
+     "path": "armB"
+    },
+    "armc": {
+     "modality": "text",
+     "path": "armC"
+    }
+   },
+   "verifier_passes": {},
+   "conditions": [
+    {
+     "label": "arm-a-overlap-12-5",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "brief-text",
+     "n_passes": 3,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "eval_path": "results/h13-overlap-2026-08-18/common/armA/evaluation.json",
+     "detections": "outputs/h13/scoring/common/armA"
+    },
+    {
+     "label": "arm-b-overlap-25",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "brief-text",
+     "n_passes": 3,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "eval_path": "results/h13-overlap-2026-08-18/common/armB/evaluation.json",
+     "detections": "outputs/h13/scoring/common/armB"
+    },
+    {
+     "label": "arm-c-overlap-50",
+     "architecture": "single-pass",
+     "aggregation": "none",
+     "proposer_pool": "brief-text",
+     "n_passes": 3,
+     "vote_threshold": null,
+     "prob_threshold": null,
+     "verifier_config": null,
+     "eval_path": "results/h13-overlap-2026-08-18/common/armC/evaluation.json",
+     "detections": "outputs/h13/scoring/common/armC"
+    }
+   ]
   }
  }
 }

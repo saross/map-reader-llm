@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-08-14T08:45:35Z · 330 row(s) · schema v1.0.
+> Generated 2026-08-18T00:48:34Z · 333 row(s) · schema v1.0.
 >
-> **Coverage**: 330 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 333 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -338,3 +338,6 @@
 | flash35-pv-2x2::f3prop-f35vf-6of10 | proposer-verifier | verified | 6 | 10 | 0.8689 | 0.7666 | 389 |
 | 55maps-text-min-n10-uplift::verified-5of10-canonical-gt | proposer-verifier | verified | 5 | 10 | 0.647194465795542 | 0.6724579910368705 | 4361 |
 | 55maps-text-min-n10-uplift::verified-5of10-standardised-gt | proposer-verifier | verified | 5 | 10 | 0.6878668231778892 | 0.670886957725763 | 4361 |
+| h13::arm-a-overlap-12-5 | single-pass | none | — | 3 | 0.558 | 0.1058 | — |
+| h13::arm-b-overlap-25 | single-pass | none | — | 3 | 0.5198 | 0.2579 | — |
+| h13::arm-c-overlap-50 | single-pass | none | — | 3 | 0.4024 | 0.0593 | — |

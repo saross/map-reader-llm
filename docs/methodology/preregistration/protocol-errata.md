@@ -3460,6 +3460,55 @@ reasons are undercut by the drafters' own ~$6 costing
 (pre-lodgement estimate) and by the three independently generated
 tile trees already in the repository.
 
+**Disposition (2026-08-18, Sessions 135–136 — REMEDIATED)**: the
+omission has been closed by execution, not by disclosure alone. The
+S134 walk (Group E) ruled the arms back in behind a re-pricing gate;
+the S135 phase gate re-priced them and caught two load-bearing errors
+before any spend (arm C needs **2.99×** the tiles, not the registered
+"~2×"; and `evaluate_detections.py` has no deduplication step, so
+naive scoring would have manufactured an "overlap hurts precision"
+artefact). Arms B and C ran on 2026-08-17/18 —
+`gemini-3-flash-preview`, brief-text, T = 1.0, MINIMAL, 512 px, three
+passes each, 6 passes plus a one-tile recovery, **US$5.7488 actual
+against a $4.37 gate estimate (+31 %, flagged to the PI, not
+absorbed)**. All three registered analyses are reported in
+`results/h13-overlap-2026-08-18/findings.md`, with every arm scored
+under one uniform rule (preregistered within-pass 20 m
+deduplication; a common A ∩ B ∩ C evaluation footprint, since the
+three arms' tile manifests turned out not to cover identical ground).
+Arm A was re-scored from its committed Phase 2a `brief-text`
+detections rather than re-run, so **the committed arm-A F1 values are
+superseded and not comparable with the H13 numbers**.
+
+**What the paper may now say.** The prohibition in the Protocol impact
+paragraph above is lifted to this extent: overlap/stride effects may
+be characterised **for the carried `brief-text` configuration on the
+Era-1 four-sheet corpus**, and only there. F1 falls monotonically as
+overlap rises (0.5578 / 0.5198 / 0.4025 at 12.5 % / 25 % / 50 %); all
+three paired contrasts exclude zero; the registered edge-detection
+mechanism is confirmed but sharply localised (the ten mounds arm A
+could only ever see within 100 m of a tile edge go from recall 0.2667
+to 0.9333 across the arms, against 0.7468 → 0.8706 for the other 528);
+and every additional API dollar spent on overlap buys negative F1. The
+statement that "overlap was a fixed parameter throughout" remains
+correct **for every other result in the study** — H13 is the sole
+place where overlap is manipulated, and nothing outside H13 may be
+read as evidence about it.
+
+**Residual deviations, all disclosed**: the arms ran out of sequence,
+after the study's other phases; the registered "optimal configuration
+from Stages 1-2" could not be identified (the Era-1 single-pass board
+is a 20-cell Tier-1 tie), so a carried configuration is held constant
+across arms and the result is stated for that configuration under the
+plateau rule; arm A is reused rather than re-run, and its passes are
+March pipeline vintage against August for arms B and C (E66-class);
+arm A's dollar cost is imputed, not audited, because those passes ran
+free-tier. Register: `h13-overlap-2026-08-18`
+(PROPOSED `registered-exploratory`, PI ratification queued; the S135
+plan had proposed `post-hoc` — the disagreement is recorded in the
+row). The prior `h13-overlap-stride` disposition row is marked
+superseded and awaits the PI's ruling on whether to retire it.
+
 **Protocol impact**: H13 does not shelter under the Tier C
 "registered as deferred" framing that covers H14/H15 — it was
 registered fully in scope and dropped silently. The paper must

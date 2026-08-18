@@ -2,9 +2,9 @@
 
 # Run registry
 
-> Generated 2026-05-30T08:03:46Z · 31 row(s) · schema v1.0.
+> Generated 2026-05-30T08:03:46Z · 32 row(s) · schema v1.0.
 >
-> **Coverage**: all 31 runs (hand-verified input).
+> **Coverage**: all 32 runs (hand-verified input).
 
 | run_id | directory_path | status |
 |---|---|---|
@@ -39,3 +39,4 @@
 | verifier-robustness | outputs/verifier-robustness | active |
 | flash35-pv-2x2 | outputs/flash35-pv-2x2 | active |
 | 55maps-text-min-n10-uplift | outputs/55maps-text-min-n10-uplift | active |
+| h13 | outputs/h13 | active |

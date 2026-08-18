@@ -767,6 +767,27 @@
     "only the >=3-of-10 band was cropped/verified (16,482 candidates); sub-3-vote operating points are not reachable from the verified band",
     "outputs/55maps-text-min-n10-uplift/proposer-all/ is an untracked symlink farm (regenerable merge scaffolding) — deliberate"
    ]
+  },
+  "h13": {
+   "primary_hypothesis": "H13",
+   "also_informs": [],
+   "purpose": "Registered three-arm tile-overlap contrast (E75 remediation): arms B (25%) and C (50%) at 512 px, brief-text, three passes each. Arm A (12.5%) is the reused retest-phase2a::brief-text condition.",
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "h13-common-338",
+    "bounds_path": "outputs/h13/scoring/bounds/h13_common_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
   }
  }
 }

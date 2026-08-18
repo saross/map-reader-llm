@@ -1166,7 +1166,7 @@
   {
    "analysis_id": "h13-overlap-stride",
    "type": "disposition",
-   "_note": "Disposition row (vocabulary v2, S134 D17 reconciliation 2026-08-17): records the non-execution of a registered obligation; it is not a performed analysis. Disposition (run vs formally close) pends the S134 unexecuted-set adjudication gate (planning/s134-d17-reconciliation-block-2026-08-17.md, hardening 7).",
+   "_note": "Disposition row (vocabulary v2, S134 D17 reconciliation 2026-08-17): recorded the non-execution of a registered obligation. SUPERSEDED 2026-08-18 (S136) — the obligation has since been discharged; see h13-overlap-2026-08-18. The row is retained as the historical disposition record, per archive-never-delete. Its original text was PI-stamped 2026-08-17T03:50:21Z; that stamp is recorded here and manually_verified_at is reset to null because the outcome text below has been amended since, and the row's class (still 'not-executed') needs the PI's ruling: either retire it in favour of the new row, or keep it as a closed historical disposition. Until then the hypothesis-outcome table renders H13 as 'partially executed', which understates the position — all three registered H13 analyses are now reported.",
    "_prereg_rationale": "not-executed: registered exploratory Tier B, in scope at lodgement (osf:1016); trigger clause 2 arguably fired (baseline F1 0.660) and was answered by different mechanisms (E75).",
    "conditions_compared": [],
    "hypothesis_refs": [
@@ -1180,11 +1180,11 @@
    "predicted_outcome": "The registration poses a question, not a directional prediction: does increasing tile overlap improve detection performance, and is the cost justified? (osf/preregistration.md:1020) — never tested.",
    "predicted_outcome_amended": null,
    "tie_set": [],
-   "outcome": "NOT EXECUTED — the registered three-arm overlap/stride contrast (osf/preregistration.md:1024-1028) never ran: arms B (25%) and C (50%) were never built, and overlap was a fixed parameter (12.5% at every tile size), never a manipulated factor, so no registered H13 analysis (all comparative) is computable. Silently dropped with no dated decision; cannot shelter under the Tier C 'registered as deferred' framing. Full disclosure: E75.",
+   "outcome": "SUPERSEDED 2026-08-18 — arms B and C were executed 2026-08-17/18 and all three registered H13 analyses are reported in results/h13-overlap-2026-08-18/ (register row h13-overlap-2026-08-18). E75's disposition is updated accordingly. The original disposition text follows, unaltered, as the historical record. --- NOT EXECUTED — the registered three-arm overlap/stride contrast (osf/preregistration.md:1024-1028) never ran: arms B (25%) and C (50%) were never built, and overlap was a fixed parameter (12.5% at every tile size), never a manipulated factor, so no registered H13 analysis (all comparative) is computable. Silently dropped with no dated decision; cannot shelter under the Tier C 'registered as deferred' framing. Full disclosure: E75.",
    "paper_section": "Methods",
    "output_path": "reports/d17-inventory/unexecuted-register.md",
    "working_notes_obs": [],
-   "manually_verified_at": "2026-08-17T03:50:21Z"
+   "manually_verified_at": null
   },
   {
    "analysis_id": "h14-cross-model-consistency",
@@ -1395,6 +1395,34 @@
    "output_path": "results/h6-registered-analyses",
    "working_notes_obs": [],
    "manually_verified_at": "2026-08-17T13:02:16Z"
+  },
+  {
+   "analysis_id": "h13-overlap-2026-08-18",
+   "type": "comparison",
+   "_note": "S136. The registered three-arm H13 overlap contrast, executed at last (arms B and C ran 2026-08-17/18; arm A re-scored from its committed Phase 2a brief-text detections). All three arms scored under ONE uniform rule: preregistered within-pass 20 m deduplication (S8.5 Step 1) and a common A-intersect-B-intersect-C evaluation footprint (1637.5 km2, 538 mounds) carried on the arm-A grid. Both hazards were caught at gates, not in the data: the missing scorer dedup at the S135 phase gate, the divergent per-arm footprints in S136 scoring. CLASSIFICATION IS CONTESTED AND AWAITS THE PI. The S135 plan (planning/h13-arms-bc-plan-2026-08-17.md S7) proposed 'post-hoc per the discharge principle'; this row proposes 'registered-exploratory' instead, on the ground that the arms, their overlap values and all three analyses are the registered ones (osf/preregistration.md:1014-1048), so the row discharges a registered obligation rather than extending a registered method to unregistered material. If the PI prefers the plan's reading, relabel to post-hoc and cite E75 alone.",
+   "_prereg_rationale": "registered-exploratory: H13 is registered as exploratory at Tier B (budget-dependent; osf/preregistration.md:1014-1048, commitment CMT-0334). The executed arms match the registered table exactly (A = 64 px / stride 448 / 12.5 %, B = 128 px / 384 / 25 %, C = 256 px / 256 / 50 %) and all three registered analyses are reported. Deviations, all disclosed: E75 (the contrast was silently dropped and is executed out of sequence, after the study's other phases); the registered 'optimal configuration from Stages 1-2' could not be identified because the Era-1 single-pass board is a 20-cell Tier-1 tie, so a carried configuration (brief-text) is held constant across arms instead and the result is stated for that configuration under the plateau rule; arm A is reused and re-scored rather than re-run; E66-class pipeline-vintage asymmetry between arm A (March) and arms B/C (August).",
+   "conditions_compared": [
+    "h13::arm-a-overlap-12-5",
+    "h13::arm-b-overlap-25",
+    "h13::arm-c-overlap-50"
+   ],
+   "hypothesis_refs": [
+    "H13"
+   ],
+   "preregistered": "registered-exploratory",
+   "deviations": [
+    "E75",
+    "E66",
+    "E54"
+   ],
+   "predicted_outcome": "Registered expectation (osf/preregistration.md:1014-1048): increasing tile overlap improves detection performance, principally by mitigating edge-effect errors on mounds that fall near tile boundaries, at a registered cost multiplier of ~1.4x (arm B) and ~2x (arm C). AUTHORING DISCLOSURE: unlike the S135 block rows, this predicted_outcome was written AFTER the computation, because the run and its scoring fell in successive sessions; it is therefore a quotation of the registered prediction, not evidence of the analyst's foresight. The registered cost multiplier is independently checkable and was already known to be wrong before any result existed: arm C needs 2.99x the tiles, not ~2x (S135 phase gate).",
+   "predicted_outcome_amended": null,
+   "tie_set": [],
+   "outcome": "PREDICTION SPLIT: the registered MECHANISM is confirmed, the registered PERFORMANCE claim is falsified. F1 falls monotonically as overlap rises - arm A (12.5 %) 0.5578, arm B (25 %) 0.5198, arm C (50 %) 0.4025 (common scope, 20 m, mean of 3 passes). All three paired tile-bootstrap contrasts exclude zero at B = 1,000 and B = 10,000 (A-B +0.0380, CI95 [+0.0009, +0.0708] - marginal; A-C +0.1554 [+0.1214, +0.1889]; B-C +0.1174 [+0.0922, +0.1437]). Recall behaves exactly as registered (0.7379 -> 0.7844 -> 0.8717) but precision falls faster (0.4484 -> 0.3887 -> 0.2616). The registered edge-detection analysis confirms the hypothesised mechanism and localises it: the ten mounds arm A could only ever see within 100 m of a tile edge go from recall 0.2667 (A) to 0.7667 (B) to 0.9333 (C), against 0.7468 -> 0.7847 -> 0.8706 for the other 528; arm A misses all four of the most edge-marooned mounds in all three passes and arm C finds all four. The gain is real but concentrated in under 2 % of mounds, too few to pay for the precision lost elsewhere. Cost-efficiency: every additional API dollar spent on overlap buys NEGATIVE F1 (A->B -0.1011 F1 per additional $; B->C -0.0522; arm A's $1.3708 is imputed at the measured B/C per-call rate, arms B and C are audited spend, $5.7488 total including the smoke test). The precision collapse is NOT a deduplication artefact: dedup removes 5.9-6.7 % (A), 15.7-17.9 % (B) and 39.2-40.0 % (C) of raw detections, and after removing every duplicate arm C still carries 1323.7 false positives per pass against arm A's 488.3 - each extra look is a fresh opportunity to hallucinate a mound at a new location, which no dedup rule can remove. Tile-level MCC (A 0.106, B 0.258, C 0.059) is NOT robust to the scope choice and carries no overlap claim here. Verification: scripts/verify_h13_overlap.py re-derives counts, scope, per-arm P/R/F1, cost and the edge subgroup from raw artefacts along a separate code path, 20/20 checks pass.",
+   "paper_section": "Results",
+   "output_path": "results/h13-overlap-2026-08-18",
+   "working_notes_obs": [],
+   "manually_verified_at": null
   }
  ]
 }
