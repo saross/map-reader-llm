@@ -441,7 +441,7 @@ No, with one distinction worth drawing.
 **A targeted re-scoring campaign is warranted. A blanket 155-condition campaign
 is not.**
 
-The argument against blanket re-scoring: 109 of the exposed conditions are
+The argument against blanket re-scoring: 108 of the exposed conditions are
 per-pass lineage rows cited nowhere; re-scoring them would move numbers that no
 reader ever sees, at the cost of invalidating every cross-reference into the
 conditions manifest. The argument for targeted re-scoring: two paper-cited
