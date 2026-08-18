@@ -1,7 +1,7 @@
 # H13 — tile overlap: F1, cost-efficiency, and edge detection
 
-> **Last revised**: 2026-08-18 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-18 (cost figures corrected to the billed
+> basis). See [§ Changelog](#changelog) for revision history.
 
 **What this is.** The registered three-arm H13 overlap contrast
 (`docs/methodology/preregistration/osf/preregistration.md:1014-1048`),
@@ -51,17 +51,21 @@ consistent, marginally resolved", not as a firm effect.
 
 ## Analysis 2 — cost-efficiency per additional API dollar
 
+All figures are the amount **actually billed**. Gemini real-time flex
+carries the same 50 % discount as the async Batch API, which the run
+metadata did not apply — see the basis note below.
+
 | Arm | Calls (3 passes) | Spend | $/call | F1 | F1 per $ |
 |---|---:|---:|---:|---:|---:|
-| A | 1,020 | $1.3708 *(imputed)* | $0.001344 | 0.5578 | 0.4069 |
-| B | 1,290 | $1.7472 | $0.001354 | 0.5198 | 0.2975 |
-| C | 2,997 | $3.9966 | $0.001334 | 0.4025 | 0.1007 |
+| A | 1,020 | $0.6854 *(imputed)* | $0.000672 | 0.5578 | 0.8138 |
+| B | 1,290 | $0.8736 | $0.000677 | 0.5198 | 0.5950 |
+| C | 2,997 | $1.9983 | $0.000667 | 0.4025 | 0.2014 |
 
 | Step | ΔF1 | Δ$ | F1 per additional $ |
 |---|---:|---:|---:|
-| A → B | −0.0380 | +$0.3763 | −0.1011 |
-| B → C | −0.1174 | +$2.2494 | −0.0522 |
-| A → C | −0.1554 | +$2.6257 | −0.0592 |
+| A → B | −0.0380 | +$0.1882 | −0.2019 |
+| B → C | −0.1173 | +$1.1247 | −0.1043 |
+| A → C | −0.1553 | +$1.3129 | −0.1183 |
 
 **Every additional dollar of overlap buys negative F1.** The registered
 analysis asked what F1 an additional API dollar purchases; for this
@@ -71,11 +75,22 @@ within 1.5 %, so the ranking is not a pricing artefact.
 
 *Imputation disclosure*: arm A's three passes ran free-tier in March
 2026 and carry `total_cost_usd = 0.0` in their metadata. Arm A is
-priced here at $0.001344/call, the mean of the measured arm-B and
-arm-C rates, so the three arms sit on one basis. Arms B and C are
+priced here at $0.000672/call, the mean of the measured arm-B and
+arm-C billed rates, so the three arms sit on one basis. Arms B and C are
 audited spend, summed from the committed per-pass `cost_estimate`
-blocks (arm B includes its single-tile recovery pass). Total H13
-arms-B+C spend, including the smoke test: **$5.7488**.
+blocks (arm B includes its single-tile recovery pass) and then halved
+to the billed basis. Total H13 arms-B+C spend, including the smoke
+test: **$2.8744 billed** ($5.7488 at list price).
+
+*Cost-basis note (added 2026-08-18)*: this section originally quoted
+list price throughout, because the run metadata recorded it. Gemini
+real-time flex carries the same 50 % discount as the async Batch API,
+so the recorded figures were about twice the actual bill. Every dollar
+figure above has been halved. **No ratio, ranking or conclusion
+changed** — all three arms sat on one basis, so the relative
+cost-efficiency argument was unaffected; only the absolute amounts were
+wrong. The writer now records the billed amount with list price beside
+it (`cost_basis` field), so the ambiguity cannot recur.
 
 ## Analysis 3 — edge detection
 
@@ -304,6 +319,30 @@ Gate reproduced: validation V1's arm-A run_1 deduplication figure
   tile-level resampling, percentile CI95, B = 1,000.
 
 ## Changelog
+
+### 2026-08-18 (later) — Cost figures corrected to the billed basis
+
+Trigger: Gemini real-time flex was found to carry the same 50 % discount
+as the async Batch API, which the run metadata did not apply. § Analysis 2
+therefore quoted list price as though it were spend.
+
+| Quantity | Before (list) | After (billed) |
+|---|---:|---:|
+| Arm A spend (imputed) | $1.3708 | $0.6854 |
+| Arm B spend | $1.7472 | $0.8736 |
+| Arm C spend | $1.9983 × 2 = $3.9966 | $1.9983 |
+| Total, incl. smoke | $5.7488 | $2.8744 |
+| F1 per $ (A / B / C) | 0.4069 / 0.2975 / 0.1007 | 0.8138 / 0.5950 / 0.2014 |
+| F1 per additional $ (A→C) | −0.0592 | −0.1183 |
+
+**What did NOT change**: every F1, precision, recall and MCC value; the
+arm ranking; the paired bootstrap contrasts; the edge-detection result;
+and the conclusion that every additional API dollar spent on overlap buys
+negative F1. All three arms shared one cost basis, so the relative
+argument was never affected — only the absolute amounts.
+
+Landed with the writer-side fix that records the billed amount alongside
+list price and an explicit `cost_basis` field (defect D13).
 
 ### 2026-08-18 — Original publication
 
