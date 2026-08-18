@@ -303,6 +303,7 @@ def resolve_pool_passes(
         return flat
 
     passes: list[Path] = []
+    n_passes = 0
     for run_dir in run_dirs:
         found = find_pass_geojsons(run_dir)
         if len(found) > 1 and not allow_multiple:
@@ -313,10 +314,16 @@ def resolve_pool_passes(
                 f"and pass it directly. Refusing to guess."
             )
         passes.extend(found)
+        # Count distinct pass identities WITHIN this run directory. A
+        # Batch-API pass split across ``_chunk<N>`` files is several files but
+        # one pass; collapsing identities pool-wide instead would be wrong,
+        # because real-time filenames encode config, model and date but NOT
+        # the run number — so ten healthy passes of one condition share a
+        # single filename and would collapse to one identity, firing the guard
+        # on a perfectly good pool. The run directory is what distinguishes
+        # them, which is why the count has to be taken inside this loop.
+        n_passes += len({pass_identity(f) for f in found}) if found else 0
 
-    # Count distinct pass IDENTITIES, not files: a Batch-API pass split across
-    # ``_chunk<N>`` files is several files but one pass.
-    n_passes = len({pass_identity(p) for p in passes})
     if expected_passes is not None and n_passes != expected_passes:
         raise PassCountMismatch(
             f"{pool_dir} resolved {n_passes} pass(es) ({len(passes)} file(s)) "

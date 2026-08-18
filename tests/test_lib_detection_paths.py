@@ -335,3 +335,34 @@ def test_chunked_pass_counts_once(tmp_path):
     assert len(files) == 2
     # The guard counts identities, so expecting ONE pass must not raise.
     resolve_pool_passes(tmp_path / "pool", expected_passes=1, allow_multiple=True)
+
+
+@pytest.mark.tier1
+def test_identically_named_realtime_passes_each_count_once(tmp_path):
+    """Ten real-time passes share one filename and must count as ten.
+
+    Real-time filenames encode config, model and date but NOT the run number,
+    so every pass of a condition run on one day is called the same thing. An
+    identity collapse taken pool-wide therefore reduced ten healthy passes to
+    one and fired PassCountMismatch on a good pool — which is how the guard
+    behaved against every cell of the 2026-08-18 grid. The run directory is
+    what distinguishes them.
+    """
+    pool = _make_pool(tmp_path, {f"run_{n}": [CONV_B_FILE] for n in range(1, 11)})
+    assert len(resolve_pool_passes(pool)) == 10
+    resolve_pool_passes(pool, expected_passes=10)  # must not raise
+
+
+@pytest.mark.tier1
+def test_chunks_still_collapse_within_one_run(tmp_path):
+    """The negative: chunk-collapsing must survive the per-run scoping.
+
+    Without this, "count files, not identities" would pass the test above
+    while silently reinstating the chunked-pass overcount.
+    """
+    pool = _make_pool(tmp_path, {"run_1": [
+        "detections_brief-text_run01_chunk0.geojson",
+        "detections_brief-text_run01_chunk1.geojson",
+    ], "run_2": [CONV_B_FILE]})
+    assert len(resolve_pool_passes(pool, allow_multiple=True)) == 3
+    resolve_pool_passes(pool, expected_passes=2, allow_multiple=True)  # 2 passes
