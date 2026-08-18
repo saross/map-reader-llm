@@ -547,6 +547,98 @@ def board_55map_mcc(
     }
 
 
+# ── Board: any run-analyses board via the generic Era-1 harness ───────
+
+def board_generic_analysis(
+    analysis_id: str,
+    dedup_mode: str,
+    rank_by: str,
+    n_permutations: int,
+    seed: int,
+) -> dict[str, Any]:
+    """Rebuild any ``run-analyses.json`` board through ``era1_leaderboard_tiering``.
+
+    That harness is already generic: it reads board membership from a named
+    analysis's ``conditions_compared`` and reproduces each cell's per-tile
+    counts from the cell's own recorded ``cli_args``, dispatching between
+    single-set and replicate-mean cells. Both branches funnel through one
+    function, ``_per_tile_one_set``, which receives a detection set that already
+    carries ``source_tile``.
+
+    Deduplication is therefore injected by replacing that single function for
+    the duration of the run, rather than by reimplementing the loader — the cell
+    dispatch, the CRS contract, the ranking, the permutation and the tiering all
+    stay byte-identical to the committed board. The injection is uniform: every
+    cell is scored through the same 20 m deduplication, which is the point (an
+    asymmetric scoring path is the confound being removed). Cells already built
+    by ``merge_passes`` lose only their residual, measured at 0–3.4 %.
+
+    Args:
+        analysis_id: The analysis whose ``conditions_compared`` defines the board.
+        dedup_mode: ``none`` or anything else (treated as "deduplicate uniformly").
+        rank_by: ``eval_f1`` or ``observed_micro_f1``.
+        n_permutations: Permutations per pair.
+        seed: Random seed.
+
+    Returns:
+        Result dict ready to serialise.
+    """
+    from scripts import era1_leaderboard_tiering as era1
+
+    original = era1._per_tile_one_set
+
+    def _dedup_then_score(gdf_det, gdf_ref, gdf_bounds, tile_order):
+        """Deduplicate at 20 m, then delegate to the committed per-tile scorer."""
+        gdf_dedup, _, _ = dedup_with_provenance(gdf_det, gdf_bounds)
+        return original(gdf_dedup, gdf_ref, gdf_bounds, tile_order)
+
+    if dedup_mode != "none":
+        era1._per_tile_one_set = _dedup_then_score
+    try:
+        cells, _gdf_ref, _gdf_bounds, _tile_order = era1.load_cells(
+            BASE_DIR / "results" / "run-conditions.json",
+            BASE_DIR / "results" / "run-analyses.json",
+            analysis_id,
+            None,
+            None,
+        )
+    finally:
+        era1._per_tile_one_set = original
+
+    for cell in cells:
+        cell["mcc_committed"] = cell.pop("mcc", None)
+
+    pairwise, tiers, ordered = run_round_robin_and_tier(
+        cells, rank_by, n_permutations, seed
+    )
+    tier_of = {ref: t for t, members in enumerate(tiers, 1) for ref in members}
+    return {
+        "board": analysis_id,
+        "source_script": "scripts/era1_leaderboard_tiering.py",
+        "metric": "f1",
+        "buffer_metres": HEADLINE_BUFFER_M,
+        "dedup_mode": dedup_mode,
+        "dedup_metres": 20.0,
+        "rank_by": rank_by,
+        "n_permutations": n_permutations,
+        "seed": seed,
+        "fdr_q": FDR_Q,
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "git_commit": git_commit(),
+        "ranking": [
+            {
+                "rank": i + 1,
+                **{k: v for k, v in c.items() if k not in ("tp", "fp", "fn")},
+                "tier": tier_of[c["ref"]],
+            }
+            for i, c in enumerate(ordered)
+        ],
+        "tiers": [{"tier": i + 1, "members": m} for i, m in enumerate(tiers)],
+        "tie_set": tiers[0],
+        "pairwise": pairwise,
+    }
+
+
 def main() -> int:
     """CLI entry point.
 
@@ -555,7 +647,9 @@ def main() -> int:
     """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--board", required=True,
-                        choices=["diversity-dividend-384", "55map-mcc"])
+                        choices=["diversity-dividend-384", "55map-mcc", "analysis"])
+    parser.add_argument("--analysis-id", type=str, default=None,
+                        help="--board analysis only: the run-analyses.json board.")
     parser.add_argument("--dedup", default="single-pass",
                         choices=["none", "single-pass", "all"])
     parser.add_argument("--rank-by", default="observed_micro_f1",
@@ -577,9 +671,16 @@ def main() -> int:
         result = board_diversity_dividend(
             args.dedup, args.rank_by, args.n_permutations, args.seed, impact
         )
-    else:
+    elif args.board == "55map-mcc":
         result = board_55map_mcc(
             args.dedup, args.reference, args.n_permutations, args.seed
+        )
+    else:
+        if not args.analysis_id:
+            parser.error("--board analysis requires --analysis-id")
+        result = board_generic_analysis(
+            args.analysis_id, args.dedup, args.rank_by,
+            args.n_permutations, args.seed,
         )
 
     print(
