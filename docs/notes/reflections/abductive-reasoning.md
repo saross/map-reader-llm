@@ -7214,3 +7214,91 @@ universal pattern is the specific error here. And when the consequence is
 claim before saying so; the alarming version of a finding should carry the
 same evidential burden as the reassuring one, and in practice it gets less
 scrutiny because it feels appropriately cautious.
+
+## 2026-08-19 (Session 137, map-reader-llm): The flat curve whose winner never moved
+
+**Session:** d8bd85a9-85da-4483-9b77-35b225f3fb63
+**Instance:** primary
+
+### Surprising fact
+
+Every "best cell" figure in this study is an argmax over candidates scored on the
+evaluation set, so each is optimistically biased. I set out to measure that bias,
+and predicted where it would be worst: the verifier probability-threshold sweep,
+which erratum E56 documents as having a **flat** F1 curve (≤ 0.022 across the
+plateau; the in-sample optimum at 0.15 scores 0.8641 against 0.8610 at the fixed
+reference of 0.20). A flat curve means the winner beats its rivals by almost
+nothing, so the winner should be unstable and the optimism large. The nearest
+published analogue, SIREN on adaptive LLM benchmarking, measures +0.42 to +3.70
+percentage points and reports it reversing near-tie decisions.
+
+Measured, that sweep was the **easiest** case of the eighteen candidate sets
+tested: argmax stability 0.906, optimism **+0.0004** — the smallest of any. The
+whole grid ran ≤ +0.0041. The prediction was not merely off in magnitude; the
+board I expected to be worst was the best.
+
+### Probe
+
+I had per-tile TP/FP/FN arrays for every candidate, so I could resample tiles and
+watch the argmax directly rather than reason about it. Across the eighteen sets,
+optimism tracked argmax stability almost deterministically — 1.000 → −0.0008;
+0.947 → +0.0011; 0.891 → +0.0016; 0.704 → +0.0041; 0.646 → +0.0132 — which
+located the question at "what makes an argmax stable" rather than "how flat is
+the curve".
+
+The threshold sweep's candidates are the *same detection set* at different
+probability cutoffs, so they nest: a higher threshold's accepted set is a subset
+of a lower one's. Under a tile resample they move together almost exactly. The
+grid's candidates nest similarly in the vote threshold. SIREN's, by contrast,
+come from random search over prompts and are close to independent.
+
+A confirming case arrived from the other direction: `era1-single-pass-baseline-
+matrix`, 36 genuinely different configurations rather than a nested sweep, showed
+the session's largest optimism at +0.0132 with stability 0.646.
+
+### Belief revision
+
+**Before**: flatness of the performance curve is the thing that makes selection
+dangerous — close values mean an unreliable winner.
+
+**After**: the size of the differences is nearly irrelevant. What governs argmax
+stability, and therefore selection optimism, is the **variance of the
+differences** under resampling. Nested candidates have tiny difference-variance
+however close their values, because the resample moves them together; independent
+candidates have large difference-variance however far apart they look.
+
+This also revises a rule I would otherwise have carried across projects: "I
+searched k configurations, so I should worry about the winner's curse in
+proportion to k." k is the wrong statistic. A grid search over correlated
+hyperparameters at k = 30 is far safer than a random search over independent
+prompts at k = 10.
+
+### What would change this belief
+
+A candidate set that is strongly nested yet shows an unstable argmax and large
+optimism, or an independent set that shows a stable one. The cleanest test would
+be synthetic: generate two candidate families with matched value spreads and
+deliberately different correlation structures, and confirm optimism tracks the
+correlation rather than the spread. I did not run it — the evidence here is
+observational across eighteen real sets, and the correlation structure was
+inferred from how the candidates are constructed rather than measured directly.
+
+Measuring the pairwise correlation of the per-tile difference series would be the
+cheap direct check, and I should have done it.
+
+### Implications for practice
+
+- Report **argmax stability** beside any selected-best figure. It is one line of
+  bootstrap output and it says more about how much to trust the selection than
+  the gap to the runner-up does.
+- Do not use the number of candidates as a proxy for selection risk.
+- When a curve is flat, distinguish "the winner is arbitrary" (which flatness
+  does suggest, and which MCB answers by admitting several) from "the winner's
+  score is inflated" (which it does not).
+
+### What this is not
+
+Not a claim that selection bias is generally small in LLM evaluation. SIREN's
+measurements stand for its setting, and the mechanism identified here explains
+why the two differ rather than contradicting either. Our correction being ≤ 0.004
+is a fact about *nested sweeps on shared units*, not about argmax selection.

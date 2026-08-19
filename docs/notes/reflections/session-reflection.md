@@ -10423,3 +10423,90 @@ written per corpus and never diffed. If a future reader takes one
 operational rule from this session, it should be to compute the tile
 union and ground-truth count for every cell of a comparison before
 reporting a delta between them.
+
+## Session 137 — 2026-08-19 — the session where asking "should we review this?" changed the paper
+
+### Prompt: What was different about this session compared to recent ones?
+
+Recent sessions have been about executing a plan and catching defects in the
+execution. This one inverted that: the largest result came from auditing a
+*proposal* before it was executed, and the audit overturned it.
+
+I had proposed one instrument for the winner's-curse problem — bootstrap the
+selection procedure — and Shawn asked a single question: "should we
+review-implementation of the selection-aware intervals decision, or are you
+comfortable with it?" The honest answer was that I had offered one option in a
+domain where his own standing instruction says the first working solution is
+likely suboptimal, and that I should have surveyed. The review found that my
+proposal was a real published method but under-specified in three ways, and that
+a better-matched instrument existed — multiple comparisons with the best, which
+is the canonical tool for the question the project's tie sets already ask.
+
+That chain then found a defect in published work. MCB put ten of eighty-two cells
+in the `era1-leaderboard` admissible set where the register published a *sole*
+leader; chasing the gap found the tiering rule closing its first tier at the first
+significant condition, so a marginal BH-adjusted 0.048 at rank two shut the tier
+while five cells the test could not separate from the leader were pushed into
+tier two. None of that would have surfaced if I had implemented what I proposed.
+
+The other difference is how often I corrected myself. The overlap sign in a
+register row I had written hours earlier; the MCB relation on the single-pass
+board, which reversed from superset to subset once I ran Hsu's actual
+construction instead of my conservative stand-in; the tile-MCC derivation that
+produced a plausible 0.898 against a committed 0.790; the batch-mode diagnosis I
+first reported as "cells declare neither field" when the cause was a loader gap;
+and a buffer default that scored four boards at 20 m when they are 50 m boards.
+Five self-corrections in one session is not a comfortable number, but each was
+caught by a gate rather than by rereading, which is the part worth keeping.
+
+### Prompt: What decision or trade-off made today will look arbitrary without this session's context?
+
+Replacing `tie_set` with the MCB admissible set while **keeping** tiers two and
+below will look like an odd half-measure. Why change the first group's meaning
+and leave the rest?
+
+The reason is that the two objects answer different questions and only one of
+them is well defined. "Which configurations cannot be ruled out as best" is a
+statistical claim with a canonical instrument. "Which configurations belong in
+tier three" is not, because non-significance is not transitive — A
+indistinguishable from B and B from C does not make A indistinguishable from C,
+so any partition built from pairwise non-significance is an artefact of the order
+you build it in. The measurements bear this out: against MCB the sequential rule
+ran too narrow twice, too wide three times, identical once, and on
+`min-vs-high-thinking-pv` produced a set that was neither subset nor superset.
+Nothing uniform repairs that.
+
+So the first group becomes a real inferential object and the rest become
+descriptive rank bands, retained on Shawn's direction because showing what did
+not work is part of the result. Without this context the asymmetry reads as
+inconsistency; with it, it is the only defensible split.
+
+The related trade-off: I did not re-emit committed evaluations when the
+`ci_unreliable` semantics changed, so the corpus is now mixed-vintage on that
+field. That was deliberate — the alternative was rewriting seventeen hundred
+files to change a flag whose old value is recoverable — and `ci_flag_basis`
+records which rule produced each. It will look like sloppiness unless the reason
+is legible.
+
+### Prompt: What felt uncertain or unresolved at the end?
+
+Two things, of different kinds.
+
+The MCB critical value is the honest one. Hsu's construction takes it from a
+Dunnett distribution assuming normal, homoscedastic, independent group means, and
+none of those hold for micro-F1 over shared tiles. I substituted a bootstrap
+analogue that is well-motivated and unverified, and it now sits under fourteen
+boards. I wrote the brief for a statistician and made it a standing item in
+continuity precisely because I do not trust my own assessment of it — the failure
+mode would be a coverage error I cannot see by inspection. The mitigation is that
+the two-sided band I computed alongside is strictly wider and brackets it, so an
+anti-conservative finding has a safe retreat.
+
+The quieter unease is the four 55-map boards returning tie sets *identical* to
+what was published. Four for four, after ten of the other boards moved. That is a
+perfectly plausible outcome — those boards have eight cells at n = 8,541, where
+the instrument has power to spare — and I did not interrogate it hard, because a
+result that requires no action attracts less scrutiny than one that does. I put
+it in the audit brief under "where I am least confident" for exactly that reason.
+Convenient agreement is the kind of thing that turns out, months later, to have
+been a scope mismatch nobody checked.

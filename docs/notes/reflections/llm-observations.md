@@ -7481,3 +7481,63 @@ edited). The partitioning worked; what nearly did not was my own habit of
 `scp`-ing files to sapphire rather than going through git, which twice left
 the two machines holding byte-identical-but-untracked copies that blocked a
 rebase.
+
+## Session 137 — 2026-08-19 (correlation is what kills the winner's curse; a review of a proposal beats a review of an implementation; the wrong instrument survives because nobody asks what object it computes; a convenient result buys less scrutiny than an inconvenient one)
+
+**Correlation between candidates, not their number, governs selection
+optimism.** The nearest published analogue to our setting (SIREN, arXiv
+2605.05973, adaptive LLM benchmarking) measures naive-winner optimism at +0.42 to
++3.70 percentage points and reports it reversing near-tie deployment decisions.
+Across eighteen candidate sets here it ran −0.0008 to +0.0137, an order of
+magnitude smaller, and tracked argmax stability almost deterministically:
+stability 1.000 gave −0.0008, stability 0.646 gave +0.0132. The mechanism is that
+SIREN searches near-independent prompt candidates while our sweeps are nested —
+a higher vote threshold's accepted set is a subset of a lower one's — so thirty
+nominal candidates behave like a handful of effective ones and there is little
+selection noise to be optimistic about. **The practical reading for LLM
+evaluation: "I tried k configurations" does not bound the winner's curse; what
+bounds it is how much the configurations move together under resampling.** A grid
+search over correlated hyperparameters is far safer than a random search over
+independent prompts at the same k.
+
+**The sharpest instance was a prediction failure.** I expected the verifier
+probability-threshold curve to be the hard case, because erratum E56 records it
+as flat (≤ 0.022 F1 across the plateau) and I took flatness to imply an unstable
+argmax. It was the *easiest* case measured: stability 0.906, optimism +0.0004.
+Flatness of a curve and instability of its argmax are different properties, and
+what connects them is the variance of the *differences* rather than their size.
+Nested candidates have tiny difference-variance however close their values.
+
+**Reviewing a proposal is worth more than reviewing an implementation.** The
+session's largest result came from running a structured review on a design
+decision *before* building it, prompted by a one-line question from the operator.
+The review rejected my single-instrument proposal, substituted a better-matched
+one, and that instrument then falsified a published claim. Had I implemented what
+I proposed, the code would have been correct, the tests would have passed, and
+the defect in the published tiering would still be there — because my proposal
+targeted a problem (optimism, ≤ 0.004 in the grid) that turned out to be nearly
+absent, while the instrument I had not considered targeted the one that was real.
+**An implementation review asks "is this built right"; a proposal review asks "is
+this the right thing", and only the second can catch a well-built answer to the
+wrong question.**
+
+**A wrong instrument survives because nobody asks what object it computes.**
+`greedy_clique_tiers` had a docstring promising `tiers[0]` is "the leader's
+clique". It is not — it closes the tier at the first significant condition, so it
+computes a run-length, not a clique. That discrepancy sat in a load-bearing
+function through multiple audits because reviewers check whether code matches its
+description at the level of *behaviour on examples*, and on most boards the two
+agree; they diverge only when a marginal result sits at rank two. Eleven tiering
+artefacts exist and three are affected. **Docstrings that assert a mathematical
+property are testable claims, and testing the property rather than the outputs is
+a distinct review move that nothing in our process currently prompts.**
+
+**A result that requires no action attracts less scrutiny.** The four 55-map
+boards returned tie sets identical to those published, after ten other boards
+moved. I checked membership, confirmed it, and moved on — noticeably faster than
+I moved on any board that changed. The asymmetry is not justified: a spurious
+agreement (wrong scope, wrong buffer, wrong reference vintage) produces exactly
+the same reassuring output as a genuine one, and I had *already* been bitten this
+session by a buffer default that silently scored those same boards at the wrong
+radius. I recorded the unease in the audit brief rather than resolving it, which
+is second-best.

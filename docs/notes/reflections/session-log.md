@@ -8694,3 +8694,67 @@ queue concurrently against one working tree; file-ownership partitions
 were specified per brief. Cost figures throughout assume the flex
 discount, which was only established mid-session — anything quoted from
 run metadata before that point is list price.
+
+## Session 137 — 2026-08-19 (amd-tower + sapphire; US$0.00 API)
+
+**Commits** `2907713f3`..`74e30f0c9` (19), on `3abec641a`. Tier-1 1,593 passing
+throughout. Local = sapphire = origin at close; zbook synced separately.
+
+### Errata filed
+
+- **E82** — bootstrap CIs depart from Decision 10 on both method and count. Three
+  disclosures: BCa replaced the registered percentile method undisclosed
+  (`2026999ad`, 2026-04-30); the D15 axis defect, corrected characterisation
+  (width rescaled by `sqrt(n/B)`, so too narrow only where `B > n` — 69,663
+  intervals — and too **wide** for 840); and E54's iteration-count claim inverted
+  (1,583 files at B = 10,000 against 114 at 1,000). PI ruling: standardise on
+  10,000.
+- **E83** — tie-set instrument replaced. `greedy_clique_tiers` closes a tier at
+  the first significant condition rather than computing the leader's clique;
+  `tie_set` is now the Hsu MCB admissible set on all fourteen boards.
+
+### Executed
+
+- **E82 discharged.** 49 register-backing evaluations replayed at B = 10,000
+  (they ran under the pre-fix wrapper, so one pass delivered both the axis
+  correction and the standardisation); 16 more re-declared without re-running,
+  having always run at 10,000 under a key the extractor did not read. All 337
+  conditions now declare `n_iter = 10000`; zero point estimates moved.
+- **Phase 0.3** (recall-levers): the 256 px versus 384 px gap survives a common
+  footprint (+0.028 → +0.031/+0.036) but the "swamping" mechanism does not — the
+  256 px cell is worse on precision *and* recall.
+- **D11** exposure survey re-run; **D16** grid registered (33 runs / 337
+  conditions / 37 analyses).
+- **Selection-aware intervals**: MCB (Hsu, constrained) plus Efron–Gong optimism
+  with the argmax replayed, over 18 candidate sets, F1 and tile-MCC.
+- **All 14 boards re-tiered**: ten changed, four (55-map) identical.
+- **`ci_unreliable` made measured** rather than a sparseness heuristic.
+- **Two 55-map references materialised**: `best-available-gt-55maps` (5,010
+  records, buffer-invariant) and `canonical-gt-55maps-r50` (5,161, radius-stamped
+  because that vintage is buffer-gated). Both verified against committed cells.
+- **Documentation**: inference-instrument policy; tile-MCC explained; 55-map runs
+  doc brought from two tracks to three; MCB open-question brief; Session 137
+  audit brief.
+- **Seven held-over user-observation candidates** answered and recorded.
+
+### Defects
+
+Opened D17 (hard-coded `n_iter`), D18 (E81 corrections not reproducible; manifest
+schema-invalid on 26 counts), D19 (E82's deviation), D20 (tier construction),
+D21 (`uuid` is a symbol code — rediscovery of a 2026-08-04 census ruling), D22
+(batch-mode cells unreproducible), D23 (tile-MCC undocumented traps), D24 (MCB
+critical value unverified — **OPEN**, standing item). Closed D11, D15, D16, D17,
+D18, D20, D22, D23.
+
+### Contextual assumptions
+
+The 10,000-iteration standardisation is a PI ruling made this session, not a
+preregistered parameter; E82 is the disclosure. The MCB critical value is a
+bootstrap substitute for Dunnett's tabulated one because the latter's normality
+and homoscedasticity assumptions fail here — that substitution is unverified and
+underpins every re-tiered board, which is why D24 is a standing item rather than
+a closed defect. Tiers below the first were retained on explicit PI direction
+("we need to keep them to show what didn't work"); the alternative was deleting
+them. Committed evaluations were deliberately not re-emitted when
+`ci_unreliable` semantics changed, leaving the corpus mixed-vintage on that
+field with `ci_flag_basis` recording which rule applied.
