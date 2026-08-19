@@ -7428,3 +7428,56 @@ each queued decision arrived with its evidence attached. The one
 refinement the walk surfaced: for the least-certain call, attach the
 full argument up front (claude-obs 57) — a recommendation label is
 not evidence.
+
+## Session 136 — 2026-08-18/19 (the audit gate earns its cost by auditing the auditor's own fix; two orthogonal lenses find disjoint defect classes; delegation scales when the brief carries the falsifier; a plausible number is the hardest failure mode to see)
+
+**The audit gate paid for itself on the fix, not the code.** `/audit` was
+run on a resolver written to close a silent-undercount defect. Its two
+lenses found three defects in that resolver: an import-time breakage of
+eight scripts, a dead exclusion filter guarding against filenames that do
+not exist while admitting 24 that do, and a test suite that stayed green
+with the entire migration reverted. The general form is that **a fix for a
+silent-failure defect inherits the failure mode it is fixing**, and the
+author cannot see it because the same assumptions that produced the defect
+shape the test. Delegating to fresh context is not a formality here; it is
+the only mechanism that works.
+
+**The two lenses were not redundant, and the split mattered.** Lens A
+(implementation correctness) found the bugs. Lens B (test adequacy) found
+*why they survived review* — measuring, not asserting, that reverting the
+migration at all four call sites left 1,489/1,489 tests green, and that a
+call-site tracer showed the migrated functions were executed by no test in
+the repository. Two agents asked the same question return the same answer
+including the same blind spot; two asked different questions return
+disjoint defect classes. Lens B produced the finding that changed the work
+most, and it is the lens I would have skipped under time pressure.
+
+**A brief that names the falsifier gets a better answer than one that
+names the task.** The BCa verification agent was told to *try to refute*
+the claim, with four specific alternative hypotheses to test. It confirmed
+the mechanism and refuted three of the four consequences I had attached to
+it — including the alarming one. An agent told "verify this" tends to
+verify it; an agent told "here is what would make this wrong" goes looking.
+The same pattern appeared in the D8 brief, where naming the cheapest
+alternative explanation first ("test whether 519 is one pass and 587 is
+three") let the agent dissolve the defect in one step.
+
+**The session's characteristic failure mode was the plausible number.**
+None of the three scoring defects raised an error. A glob matching one file
+of three returns a result; a degenerate MCC renders as 0.0 and sorts into a
+tier; a transposed bootstrap produces bounds in the right order. Detection
+in every case came from a *cross-check between two artefacts that should
+agree* — meta count against GeoJSON feature count, manifest against tile
+tree, library interval against an independently computed one. That
+suggests a general instrument for this codebase: not more assertions inside
+a function, but more comparisons between artefacts that were produced
+independently and must agree.
+
+**Scale note.** Nine agents across the session, running concurrently
+against one working tree, with explicit file-ownership partitions in every
+brief. Two collisions occurred anyway, both benign (a scp'd copy shadowing
+a committed file; a constant redefined in a test file I had already
+edited). The partitioning worked; what nearly did not was my own habit of
+`scp`-ing files to sapphire rather than going through git, which twice left
+the two machines holding byte-identical-but-untracked copies that blocked a
+rebase.

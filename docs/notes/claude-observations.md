@@ -1475,3 +1475,99 @@ premise failures; clever ones inherit them.
 data property, verify the property first — or present the simple
 design as primary and the optimisation as a contingency, not the
 recommendation.
+
+## claude-obs 60 — 2026-08-19 (Session 136): Shawn challenges findings that contradict his memory of his own rigour, and that memory is reliable
+
+**Pattern.** I reported that the Era-1 evaluation scope contained
+"50.1 km² of calibration leakage". His reply was not "fix it" but
+"that's annoying, I thought we'd been careful about excluding
+calibration tiles (please re-check that finding)". The re-check
+showed the tile-level intersection was **zero** — the exclusion was
+correctly implemented at the level the model is actually shown data —
+and the area overlap I had flagged was *below* the rate at which any
+two neighbouring evaluation tiles share ground. My framing was
+alarmist and wrong; his recollection of the original care was right.
+
+**Lesson.** When a finding says "your earlier work was sloppy", that
+is exactly the class of finding that most deserves a second pass
+before it is reported, because it is both the most consequential if
+true and the most embarrassing if wrong. Shawn's pushback is a
+reliable detector here: he does not defend conclusions, he defends
+recollections of *process*, and those have been accurate every time
+this session.
+
+**How to apply.** Before reporting that a prior decision was
+mistaken, distinguish the level at which the decision was made from
+the level at which I am measuring. The calibration exclusion was a
+*tile-level* decision; I measured *area* overlap and called the
+mismatch a defect. Check that the metric matches the decision's own
+unit before concluding anything failed.
+
+## claude-obs 61 — 2026-08-19 (Session 136): a consequential finding gets "have an agent probe that", and it caught me over-escalating
+
+**Pattern.** On the BCa defect he did not act on my report and did
+not simply accept it. He said: have an agent probe it, "make sure
+that it's real, that we know what the problem is (exactly), and have
+a fix". The agent confirmed the mechanism and refuted three of the
+consequences I had attached to it — including the alarming one, that
+every BCa-based significance reading was unverified. Zero published
+verdicts actually change.
+
+**Lesson.** His verification instinct scales with *consequence*, not
+with his confidence in me. The more a finding would force him to act,
+the more he wants it independently attacked first. That is the right
+policy, and this session proved it against my own work rather than
+against a subagent's.
+
+**How to apply.** Volunteer the adversarial pass on my own findings
+when the finding is severe, instead of waiting to be asked. The
+asymmetry to watch: an alarming claim feels appropriately cautious and
+therefore gets *less* scrutiny than a reassuring one, when it should
+get the same. Where a claim would change what Shawn does, brief a
+refutation attempt before reporting it, not after.
+
+## claude-obs 62 — 2026-08-19 (Session 136): self-critique — I inferred a defect's direction from two points on one side of a crossover
+
+**Pattern.** Having confirmed the BCa axis transposition, I measured
+interval width at B = 1,000 and B = 10,000 against n = 340 tiles,
+found both too narrow, and reported "every BCa interval in the study
+is too narrow, and the error runs towards false positives". Width
+actually rescales by `sqrt(n/B)`: intervals are too narrow only when
+`B > n`, and **840 committed intervals sit the other side of the
+crossover and are too wide**. I had sampled one side of a boundary
+and described the pattern as universal.
+
+**Lesson.** Two measurements agreeing with a predicted formula to two
+decimal places is strong evidence *for the formula* and no evidence
+at all about its behaviour outside the sampled range. The agreement
+felt like confirmation and functioned as an anchor.
+
+**How to apply.** When a defect's magnitude is a ratio of two
+quantities, solve for where the ratio crosses one before describing
+any direction — and sample both sides. Separately: when asserting
+that published results are affected, trace the call graph from the
+defect to a published claim first. That check was ten minutes and I
+skipped it.
+
+## claude-obs 63 — 2026-08-19 (Session 136): self-critique — I committed over a failing linter because the exit status came from a later command
+
+**Pattern.** I ran `npx markdownlint-cli2 <file> 2>&1|tail -1 && git
+add … && git commit …`. The pipe made the chain's exit status
+`tail`'s, so a failing lint check passed silently and the commit
+landed with an MD037 violation. I then "fixed" it twice in ways that
+only moved which instance markdownlint reported first, because I was
+reading the reported line number as the cause rather than a symptom
+of an unbalanced marker upstream.
+
+**Lesson.** Two distinct errors, and the second is the more general:
+a linter that reports a *position* is telling me where its parser
+gave up, not where the mistake is. Also, chaining a check into a
+`&&` sequence through a pipe silently disarms the check — the same
+class of silent failure this entire session was spent finding in the
+scoring layer, committed by me while documenting it.
+
+**How to apply.** Run verification commands as their own step and
+read the result before proceeding; never let a check share a `&&`
+chain with the action it is meant to gate. When a linter's reported
+location looks innocent, look upstream for the unbalanced construct
+rather than editing at the reported line.

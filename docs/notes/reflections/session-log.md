@@ -8623,3 +8623,74 @@ audit's temperature correction — the overrun is a process lesson
 (re-pin after any parameter change), not an API pricing change.
 Sapphire holds untracked regenerable tile trees
 (inputs/tiles_512_ov128, _ov256) that the scoring chain needs.
+
+## Session 136 — 2026-08-18/19 — the H13 scoring chain, a second experiment, and a scoring-layer audit
+
+**API spend**: US$18.54 (grid run, flex-discounted; $37.06 at list price).
+All analysis compute on sapphire. Nine subagents.
+
+### Science
+
+- **H13 discharged.** Uniform 20 m within-pass dedup across all three arms
+  (arm A re-scored, so its committed F1 values are superseded) on a common
+  A∩B∩C footprint. F1 falls monotonically with overlap — 0.5578 / 0.5198 /
+  0.4025 at 12.5 / 25 / 50 % — all three paired contrasts excluding zero.
+  The registered edge mechanism is confirmed but concentrated: the ten
+  mounds arm A could only see within 100 m of a tile edge go from recall
+  0.2667 to 0.9333 across arms, against 0.7468 → 0.8706 for the other 528.
+  Every additional API dollar on overlap buys negative F1.
+- **Tier-0 aggregation sweep** ($0): the ranking **inverts** under a
+  corroboration × consensus filter — arm C from worst to best,
+  0.4025 → 0.7114.
+- **Tile-size × overlap grid** (30,130 calls, 4 cells × n=10, era-2-487
+  footprint): 512 px wins at every overlap and every K; passes do **not**
+  substitute for overlap (one pass of 512/50 % beats ten of either 12.5 %
+  cell); interaction unresolved. Best cell 512/50 %, c≥2, k≥8, K=10 —
+  F1 0.7518, tile-MCC 0.5897. Six tiles lost to JSON-parse failures,
+  recovered additively.
+
+### Errata and defects
+
+- **E79** tile-assignment tie-break (~0.01 F1, 123 conditions).
+- **E80** no within-pass dedup on the single-pass scoring path — 155 of 333
+  conditions, preregistration-**compliant**, but two scoring paths coexist.
+- **E81** undefined tile-MCC published as `0.0`, originating in a
+  mathematically false claim in the registration (`osf:392`). 25
+  evaluations re-emitted; `Tier 7 (MCC 0.000–0.000)` retired; no F1 moved.
+- **D15** BCa vectorised adapter transposes its axes. Mechanism confirmed;
+  consequence corrected (too narrow only when `B > n`; zero published
+  verdicts change). Fix landed and validated to floating-point equality
+  against scipy's non-vectorised path.
+- **D6** two detection-filename conventions silently under-reading mixed
+  pools — closed with `scripts/lib_detection_paths.py` and 30 migrated
+  sites, plus a repo guard.
+- Register `reports/defect-register-2026-08-18.md` tracks D1–D16 and three
+  **cleared** suspicions (calibration exclusion sound; naming split never
+  reached committed results; six "un-deduplicated" consensus cells a
+  mislabel).
+
+### Infrastructure
+
+- Cost now recorded as **billed** (flex carries the Batch API's 50 %
+  discount, which the writer did not know), with list price and an
+  explicit `cost_basis` beside it. `parse_failures` can now see a parse
+  failure; `total_detections` reconciled against the artefact.
+- Register: 36 rows, all valid. H13 reads **executed** — the not-executed
+  disposition row retired with PI approval and archived.
+- Obs 416–420 minted; `planning/recall-levers-programme-2026-08-19.md`
+  written and PI-approved.
+
+### Decisions
+
+- PI: retire H13's disposition row; approve the recall-levers programme;
+  **standardise on 10,000 bootstrap iterations**, re-run what needs it, and
+  disclose via **E82** (three disclosures: unregistered BCa, the axis
+  defect, and E54's now-false claim that preregistered analyses use 1,000).
+
+### Contextual assumptions
+
+The grid ran unattended overnight while three agents worked the defect
+queue concurrently against one working tree; file-ownership partitions
+were specified per brief. Cost figures throughout assume the flex
+discount, which was only established mid-session — anything quoted from
+run metadata before that point is list price.

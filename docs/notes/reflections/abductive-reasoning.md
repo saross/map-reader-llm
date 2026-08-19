@@ -7130,3 +7130,87 @@ inventory question as its own step: what committed data touches
 these factors at all? The claim of impossibility is a claim about
 the whole repo, and it deserves repo-level evidence — or a verifier
 briefed to find the counterexample.
+
+## 2026-08-19 (Session 136, map-reader-llm): The defect whose direction I inferred from two points on one side of a crossover
+
+**Session:** 070cbde6-3cc6-423e-a60e-c8d3e591e8ef
+**Instance:** primary
+
+### Surprising fact
+
+A sibling agent, working on an unrelated correction, reported that
+`_bca_ci_from_indices` transposes its axes when adapting a per-tile
+statistic for `scipy.stats.bootstrap(vectorized=True)`. I reproduced the
+wrapper outside the module and confirmed it: given scipy's `(2000, 340)`
+resample array with `axis=-1`, it returned **340** values, each computed
+over **2000** indices, instead of 2000 values over 340 indices.
+
+The surprise was not that a bug existed but that it was **silent and
+load-bearing**. This function produces the study's confidence intervals,
+Decision 10 makes the CI the registered inference instrument, and nothing
+had ever flagged it — scipy performs no length validation, so it
+concatenates whatever comes back and reads quantiles off it.
+
+### Probe
+
+I measured interval width against a correct percentile bootstrap on a real
+published cell (H13 arm A, F1@20 m, n = 340 tiles) at B = 1,000 and
+B = 10,000. Library intervals were 1.66× and 5.50× too narrow, against
+`sqrt(B/n)` predictions of 1.71 and 5.42 — matching to two decimals at
+both counts. I took the agreement as confirming the mechanism, and
+generalised: every BCa interval too narrow, error running towards false
+positives, every BCa-based significance reading unverified.
+
+Because the consequence was serious, I then commissioned an independent
+agent with an explicitly adversarial brief — try to refute this, here are
+four alternative hypotheses.
+
+### Belief revision
+
+The mechanism survived; **three of my consequences did not.**
+
+1. Width rescales by `sqrt(n/B)`, so intervals are too narrow only when
+   `B > n`. I had tested B = 1,000 and B = 10,000 against n = 340 — both
+   above the crossover — and reported the pattern as universal. **840
+   committed intervals sit at `B < n` and are too wide**: false negatives,
+   the opposite direction.
+2. My scope counts did not reproduce (1,520/101 claimed; 1,583/114 actual).
+3. "Every significance reading is unverified" was vacuous. Decision 10
+   defines the rule on a *difference* CI; the defective wrapper is
+   reachable only from two single-condition functions. **Zero published
+   verdicts change.**
+
+The revision is not about the bug. It is about the inferential step from
+*mechanism* to *consequence*. Two measurements agreeing with a predicted
+formula felt like strong confirmation — and it was, of the formula. It said
+nothing about the formula's behaviour outside the sampled range, and I did
+not check where the range ended. Separately, I asserted a downstream
+consequence ("published results undermined") without tracing the call graph
+from the defect to any published claim, which was a ten-minute check.
+
+A bonus revision ran the other way. The agent found that **BCa is itself
+unregistered**: Decision 10 registers "1000 iterations, percentile method
+(2.5th/97.5th)", and `BCa` appears zero times in the decisions log or the
+lodged registration. The undisclosed 2026-04-29 migration is arguably a
+more serious disclosure failure than the bug, and I had looked straight
+past it while measuring the bug's magnitude — I was auditing the
+implementation of an instrument without checking whether that instrument
+was the registered one.
+
+### What would change this belief
+
+If the difference-CI path (`_compute_bca_ci`) turned out to share the
+defective adapter after all, the "zero verdicts change" conclusion would
+collapse and my original escalation would have been closer to right. The
+agent traced reachability by grep and by call graph; a dynamic trace under
+a real family-FDR run would settle it beyond doubt and has not been done.
+
+### Implications for practice
+
+When a defect's consequence depends on a ratio, **locate the crossover
+before describing the direction** — sampling one side and reporting a
+universal pattern is the specific error here. And when the consequence is
+"published results are affected", trace the path from defect to published
+claim before saying so; the alarming version of a finding should carry the
+same evidential burden as the reassuring one, and in practice it gets less
+scrutiny because it feels appropriately cautious.

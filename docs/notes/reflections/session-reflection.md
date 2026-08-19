@@ -10336,3 +10336,90 @@ Second, smaller: why Pro text prefers the union (k = 1) at N = 3
 while the Flash comparator prefers the intersection (k = 3) at
 matched configuration — the threshold-as-model-property mechanism
 behind Obs 415's rider is characterised but not explained.
+
+## Session 136 — 2026-08-18/19 — the session that audited its own instruments, and the escalation I had to walk back
+
+### Prompt: What surprised you about this session?
+
+That the scoring layer had three independent defects in it, and that
+none of them had ever announced itself. The study has been careful —
+preregistered, errata-tracked, register-ratified — and yet
+`evaluate_detections.py` had been silently under-reading mixed pools,
+publishing an undefined MCC as the value its own scale labels
+"random", and computing bootstrap intervals off a transposed array.
+Each was invisible for the same reason: **the failure mode was a
+plausible number rather than an error.** A glob that matches one file
+of three returns a result. A degenerate MCC rendered as 0.0 sorts
+into a tier. A transposed bootstrap yields an interval with bounds in
+the right order. Nothing crashed, so nothing was checked.
+
+The sharpest instance was the documentation. `docs/troubleshooting.md`
+had stated since thirteen days *before lodgement* that "the evaluation
+script handles deduplication using 20m clustering" — false, and
+precisely the entry an operator noticing duplicate detections would
+have consulted. A false reassurance is worse than silence: it converts
+a live suspicion into a closed question. That single sentence
+plausibly explains why the deduplication gap survived four months of
+careful work.
+
+The second surprise was directional. I expected the audit of the
+resolver I had just written to be a formality. It found three defects
+*in the fix*, one of them an import-time breakage of eight scripts
+that the entire test suite could not see because `pytest.ini` sets
+`pythonpath = "."`. A fix for a silent-failure defect is itself prone
+to silent failure, and the author is the worst-placed person to notice.
+
+### Prompt: What would you do differently if you replayed this session?
+
+I would not have escalated D15 the way I did. Having confirmed that
+the BCa wrapper transposes its axes, I measured interval width at
+B = 1,000 and B = 10,000 — both above n = 340 — found both too
+narrow, and generalised to "every BCa interval in the study is too
+narrow" with the consequence that "the error runs towards false
+positives" and "every BCa-based significance reading is unverified".
+
+Three of those claims were wrong, and the verification agent
+established each: width rescales by `sqrt(n/B)`, so at `B < n` the
+intervals are too *wide* — 840 committed intervals are — my scope
+counts didn't reproduce, and the significance claim was vacuous,
+because Decision 10's rule is defined on *difference* CIs and the
+defective wrapper is reachable only from single-condition ones. Zero
+published verdicts change.
+
+What I got wrong is not the mechanism — that held — but the step from
+mechanism to consequence. I sampled two points on one side of a
+crossover and reported the pattern as universal, and I asserted the
+alarming downstream effect without tracing which intervals actually
+feed a significance claim. Ten minutes with `grep` on the call graph
+would have caught it. The lesson is specific: **when a defect's
+consequence depends on a ratio, find the crossover before describing
+the direction**; and when the consequence is "published results are
+undermined", trace the path from the defect to a published claim
+before saying so.
+
+Worth noting that the same session contains the counter-example. On
+the calibration question I did the opposite — Shawn pushed back on my
+"50.1 km² of leakage" claim, I re-checked, found the exclusion was
+correctly implemented at tile level and the area overlap was *below*
+the normal neighbour-sharing rate, and retracted cleanly. The
+difference was that he asked. Nobody asked about D15 until I put an
+agent on it.
+
+### Prompt: What is the single most important thing a future reader should know about this session?
+
+That four separate cross-configuration comparisons in one session
+turned out to sit on different evaluation footprints, and that this
+kept happening after I knew to look for it. H13's three arms, the
+384-versus-512 corpora, the grid's own four cells — each was built to
+be comparable, each was not, and each was caught only by measuring
+the footprint rather than assuming it. The fourth, the 256 px
+"swamping" premise, is still uncorrected and has been shaping design
+decisions.
+
+The generalisable form: in a study that re-tiles the same ground many
+ways, **the evaluation footprint is a hidden parameter of every
+comparison**, and it drifts silently because tile-selection rules are
+written per corpus and never diffed. If a future reader takes one
+operational rule from this session, it should be to compute the tile
+union and ground-truth count for every cell of a comparison before
+reporting a delta between them.
