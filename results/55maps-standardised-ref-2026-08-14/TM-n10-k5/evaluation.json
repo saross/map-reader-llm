@@ -22,6 +22,13 @@
       125,
       150
     ],
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level",
+      "method": "percentile",
+      "source": "metadata.bootstrap_n of the source summary.json"
+    },
     "input_files": {
       "detections": [
         "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson"

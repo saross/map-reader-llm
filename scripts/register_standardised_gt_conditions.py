@@ -151,6 +151,21 @@ def adapt_one(label: str, det_rel: str) -> Path:
                 "single block is exact at every buffer, not a 50 m pin."
             ),
             "buffers": list(BUFFERS),
+            # The bootstrap parameters the source summary actually recorded.
+            # These cells have always run at 10,000 iterations, but they wrote
+            # the count as `metadata.bootstrap_n` in summary.json, which the
+            # manifest extractor does not read, so the register could not see
+            # it and D17's fix correctly omitted the field. Restating it here in
+            # the shape every other evaluation uses closes that gap without a
+            # re-run: nothing is recomputed, a true value is simply declared
+            # where the register can find it.
+            "bootstrap": {
+                "n_iterations": summary["metadata"]["bootstrap_n"],
+                "seed": summary["metadata"].get("seed"),
+                "resampling_unit": "tile_level",
+                "method": "percentile",
+                "source": "metadata.bootstrap_n of the source summary.json",
+            },
             "input_files": {
                 "detections": [det_rel],
                 "bounds": BOUNDS_REL,
@@ -217,10 +232,16 @@ def main() -> None:
     rc = json.loads(RUN_CONDITIONS.read_text())
     for cell in CELLS:
         print(register_one(rc["decomposition"], cell["label"]))
-    # Match the file's canonical serialisation (indent=1, non-ASCII kept,
-    # no trailing newline) so the diff is only the added conditions.
+    # Match the file's canonical serialisation (indent=1, non-ASCII kept) so the
+    # diff is only the added conditions. The trailing newline is PRESERVED from
+    # what is on disk rather than assumed: this comment used to assert there was
+    # none, the file has since gained one, and the round-trip guard in
+    # tests/test_author_e43_matched_temperature.py detects the trailing sequence
+    # adaptively, so it cannot catch the assumption going stale.
+    _existing = RUN_CONDITIONS.read_text()
+    _trailing = "\n" if _existing.endswith("\n") else ""
     RUN_CONDITIONS.write_text(
-        json.dumps(rc, indent=1, ensure_ascii=False)
+        json.dumps(rc, indent=1, ensure_ascii=False) + _trailing
     )
     print(f"Wrote {RUN_CONDITIONS.relative_to(REPO)}")
 

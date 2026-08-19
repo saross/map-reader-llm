@@ -22,6 +22,13 @@
       125,
       150
     ],
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level",
+      "method": "percentile",
+      "source": "metadata.bootstrap_n of the source summary.json"
+    },
     "input_files": {
       "detections": [
         "outputs/55maps-image-generalisation/verified/verified_detections.geojson"

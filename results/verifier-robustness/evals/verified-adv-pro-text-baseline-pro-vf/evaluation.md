@@ -1,6 +1,6 @@
 # Evaluation: verified-adv-pro-text-baseline-pro-vf
 
-**Generated**: 2026-06-12T07:14:20.769571+00:00  
+**Generated**: 2026-08-19T05:11:10.031199+00:00  
 **Detections**: 402  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

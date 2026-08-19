@@ -58,6 +58,19 @@ from score_55maps_extended_gt_canonical import (  # noqa: E402
 )
 
 OUT_BASE = REPO / "results/55maps-extended-gt-2026-06-07"
+
+#: Cells scored into this directory that are NOT members of the shared
+#: seven-cell ``CELLS`` list. The Session-113 uplift arm was added after that
+#: list was fixed, and adding it there would change the seven-cell leaderboards,
+#: so it is carried here instead. Without this entry the adapter silently skips
+#: the cell, which is how it came to be the one condition in the register with
+#: no declared bootstrap count (D17).
+EXTRA_CELLS: list[dict] = [
+    {
+        "label": "TM-n10-k5",
+        "det": "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
+    },
+]
 BOUNDS_REL = str(BOUNDS.relative_to(REPO))
 HEADLINE_BUFFER = 50  # the 55-map deployment headline (jitter-matched, Obs 260)
 
@@ -119,6 +132,21 @@ def adapt_one(label: str, det_rel: str) -> Path:
                 "/ consolidated-track2.csv for the full per-buffer MCC."
             ),
             "buffers": list(BUFFERS),
+            # The bootstrap parameters the source summary actually recorded.
+            # These cells have always run at 10,000 iterations, but they wrote
+            # the count as `metadata.bootstrap_n` in summary.json, which the
+            # manifest extractor does not read, so the register could not see it
+            # and D17's fix correctly omitted the field. Restating it here in the
+            # shape every other evaluation uses closes that gap without a re-run:
+            # nothing is recomputed, a true value is declared where the register
+            # can find it.
+            "bootstrap": {
+                "n_iterations": summary["metadata"]["bootstrap_n"],
+                "seed": summary["metadata"].get("seed"),
+                "resampling_unit": "tile_level",
+                "method": "percentile",
+                "source": "metadata.bootstrap_n of the source summary.json",
+            },
             # input_files are what scripts/verify_run_conditions.py reads to confirm
             # the eval scored this condition's detections and on the right scope.
             "input_files": {
@@ -140,7 +168,7 @@ def adapt_one(label: str, det_rel: str) -> Path:
 
 def main() -> None:
     """Adapt all 7 Track-2 cells."""
-    for cell in CELLS:
+    for cell in CELLS + EXTRA_CELLS:
         p = adapt_one(cell["label"], cell["det"])
         s = json.loads(p.read_text())["summary"]
         b50 = next(b for b in s["buffers"] if b["buffer_metres"] == HEADLINE_BUFFER)

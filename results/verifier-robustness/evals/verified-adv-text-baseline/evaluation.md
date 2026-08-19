@@ -1,6 +1,6 @@
 # Evaluation: verified-adv-text-baseline
 
-**Generated**: 2026-06-12T07:14:22.447429+00:00  
+**Generated**: 2026-08-19T05:13:32.826644+00:00  
 **Detections**: 464  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

@@ -4677,7 +4677,7 @@ dominant regime and narrower for the 55-map B = 1 000 cells, and the statistical
 method reported in any paper text must read BCa at 10 000 tile-level iterations,
 with the percentile-method cells identified where they occur.
 
-**Remediation**:
+**Remediation** (items 1 and 2 executed 2026-08-19; see the completion note below):
 
 1. The axis fix is landed (`122104b8a`). The `evaluate_detections.py` path now
    produces correct BCa intervals at whatever `B` it is given.
@@ -4690,9 +4690,36 @@ with the percentile-method cells identified where they occur.
 3. Paper-facing text must not quote a committed interval width until the cell
    behind it has been re-emitted at B = 10 000 under the fixed wrapper.
 
+**Completion note (2026-08-19)**: the standardisation is executed for everything
+the register carries. All 49 evaluations backing
+`results/conditions-manifest.json` that ran below 10 000 iterations were replayed
+from their own `_metadata.cli_args` with only the iteration count changed
+(`scripts/rerun_evals_at_10k.py`; report at
+`results/bootstrap-10k-restandardisation.json`). Because these ran under the
+pre-`122104b8a` wrapper, one pass delivered both the axis correction and the
+standardisation. **All 337 registered conditions now declare `n_iter = 10 000`**,
+321 on the BCa path and 16 on the percentile path. Point estimates were gated at
+1e-9 and **none moved**.
+
+Interval widths moved as the mechanism predicts, in both directions: 46 of 49
+widened and 3 narrowed, with the ratio tracking `sqrt(B_old / n)`. The narrowing
+cells are the n = 1 032 scopes, where `B < n` had made the defective interval too
+wide (0.96x), and the largest widening is on n = 340 scopes (1.79x against a
+predicted `sqrt(1000/340)` = 1.71).
+
+The 16 percentile cells needed no re-run: they had always run at 10 000, but
+recorded it as `metadata.bootstrap_n` in their source `summary.json`, a key the
+manifest extractor does not read. Their two adapters now restate it in the shape
+every other evaluation uses, so the register can see a value that was already
+true. `archive/` evaluations and pre-2026-04-30 artefacts that predate the BCa
+migration were deliberately left alone: neither backs a live claim, and both are
+covered as history by this entry.
+
 **Reference artefacts**:
 
 - Registered specification: `docs/methodology/preregistration/decisions-log.md:345`
+- Restandardisation report and script: `results/bootstrap-10k-restandardisation.json`;
+  `scripts/rerun_evals_at_10k.py`
 - Migration to BCa: commit `2026999ad` (2026-04-30), plan
   `planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md`, rollback tag
   `pre-bca-mit3-2026-04-29`

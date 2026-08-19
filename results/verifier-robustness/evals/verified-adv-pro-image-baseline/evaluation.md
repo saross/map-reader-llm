@@ -1,6 +1,6 @@
 # Evaluation: verified-adv-pro-image-baseline
 
-**Generated**: 2026-06-12T07:14:22.986181+00:00  
+**Generated**: 2026-08-19T05:10:22.016375+00:00  
 **Detections**: 485  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

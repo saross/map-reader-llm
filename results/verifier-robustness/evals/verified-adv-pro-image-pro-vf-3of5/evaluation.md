@@ -1,6 +1,6 @@
 # Evaluation: verified-adv-pro-image-pro-vf-3of5
 
-**Generated**: 2026-06-12T07:14:21.501667+00:00  
+**Generated**: 2026-08-19T05:10:38.321048+00:00  
 **Detections**: 434  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
