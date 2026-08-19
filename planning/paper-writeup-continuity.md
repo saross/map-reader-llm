@@ -8,6 +8,38 @@ project state.
 
 ---
 
+## ⚠️ STANDING ITEM — AWAITING EXTERNAL STATISTICAL REVIEW (opened 2026-08-19)
+
+> **The MCB critical value is the one unverified step under fourteen register
+> boards.** Shawn is seeking a statistician to review it. **Remind him if this is
+> still open at any later session close, and do not let it be quietly dropped:
+> it is the only known methodological gap that reaches paper-facing claims.**
+>
+> The brief is written and self-contained for someone outside the project:
+> **`docs/methodology/mcb-critical-value-open-question.md`**. Defect **D24**.
+>
+> **The question in one line**: Hsu's MCB takes its critical value from a
+> one-sided Dunnett distribution assuming normal, homoscedastic, independent
+> group means; our statistics are micro-F1 and tile-MCC over the *same* tiles for
+> every configuration, so we substituted a tile-level bootstrap analogue. Does
+> that substitution attain nominal simultaneous coverage, and if not, in which
+> direction does it fail?
+>
+> **What is and is not at stake**: no registered hypothesis is stated in terms of
+> tie-set membership, so no hypothesis verdict depends on this. What depends on
+> it is how wide the fourteen published "indistinguishable from best" sets are.
+> Ten changed membership under MCB (erratum E83); four returned what was already
+> published. A fallback exists if the substitution proves anti-conservative — the
+> two-sided max-|deviation| band is computed alongside, is strictly wider, and
+> brackets the Hsu result from above.
+>
+> **If a statistician engages**, everything they need is committed: per-tile
+> TP/FP/FN arrays per configuration, the ~200-line implementation
+> (`scripts/selection_aware_intervals.py`), per-board diagnostics under
+> `results/selection-aware/` (theta per configuration, both critical values,
+> argmax stability 0.545–1.000, and the m-out-of-n sensitivity), and a
+> reproduction path that recovers every published F1 to within 0.0005.
+
 ## 🎯 NEXT SESSION (137) — DECIDE D15, THEN RESUME THE DISCUSSION WALK [Session 136 CLOSED 2026-08-19; ran on Opus 5]
 
 > **START HERE: D15.** The BCa bootstrap wrapper transposes its axes, so

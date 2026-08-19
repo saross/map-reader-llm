@@ -589,9 +589,13 @@ def main() -> int:
         logger.info("    %-38s theta=%+.4f  [%+.4f, %+.4f]", name,
                     res["mcb_theta"][i], res["mcb_lower"][i], res["mcb_upper"][i])
 
+    # The buffer is ALWAYS stamped into the filename, never only when it differs
+    # from the default. An unstamped name is ambiguous, and that ambiguity put a
+    # 20 m result for a 50 m board on disk beside the correct one, reporting a
+    # different admissible set. Two files that answer different questions must
+    # not be distinguishable only by an optional suffix.
     suffix = "" if args.metric == "f1" else f"_{args.metric}"
-    if args.buffer != BUFFER_M:
-        suffix += f"_b{args.buffer}"
+    suffix += f"_b{args.buffer}"
     out = args.out / f"{tag}{suffix}_m{args.m_frac:g}.json"
     out.write_text(json.dumps(res, indent=2))
     logger.info("wrote %s", out)
