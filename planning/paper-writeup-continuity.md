@@ -70,6 +70,88 @@ project state.
 > argmax stability 0.545–1.000, and the m-out-of-n sensitivity), and a
 > reproduction path that recovers every published F1 to within 0.0005.
 
+## 🎯 NEXT SESSION (138) — AUDIT FIRST, THEN THE DISCUSSION WALK [Session 137 CLOSED 2026-08-19; ran on Opus 5; $0 API]
+
+> **START HERE: the Session 137 audit** (`planning/session-137-audit-brief.md`),
+> per the block at the head of this file. Do not build on S137's changes until it
+> is reported. Everything else below is queued behind it.
+>
+> **THEN, in order**:
+>
+> 1. **The Discussion outline walk** — `docs/paper/discussion-outline.md`,
+>    **DD1–DD10 ALL STILL OPEN**. Deferred through S135, S136 and S137 now. Seeds
+>    → prose stays gated on it; Seed 7 additionally on its `/lit-scout` check.
+> 2. **Results-draft revision** — four sentences carry inline `[E83]` flags plus a
+>    banner. The load-bearing one is the methodological sentence defining "Tier 1"
+>    as "statistically inseparable from the board leader", which several later
+>    claims inherit. The audit should confirm those four are the complete set;
+>    I grepped for a handful of patterns only.
+> 3. **Remaining Methods scaffold conversions** (§§ 1–4 detail, § 6) — still
+>    context-independent, still undone across four sessions.
+>
+> **PI decisions open**: H6 ~$48 re-run (Claude's lean: disclose-only); H2-C
+> 1024 px pricing probe; DD5's second lit pass.
+>
+> **API-gated and NOT queued**: the verifier over the grid ($6.33), which is what
+> makes both grid headlines unconditional. Recall-levers Phase 2 additionally
+> needs the two 512 px tile trees regenerated (N1b — they hold zero PNGs).
+>
+> **Machine state**: local, sapphire and zbook all synced at close. Sapphire holds
+> the untracked tile trees Phase 0 needs — **do not clean, and beware
+> `git stash -u`** (N1). **If working from zbook away from the home network,
+> sapphire is unreachable**: it has a working venv and 144 GB free, so $0 analysis
+> can run locally, but the CLAUDE.md compute rule assumes sapphire is available.
+
+**Session 137 (2026-08-19, amd-tower + sapphire, US$0.00 API)** began by filing an
+erratum and ended having changed the inferential instrument behind fourteen
+leaderboards. Nineteen commits, `2907713f3`..`74e30f0c9`. Tier-1 1,593 passing.
+
+**Two errata.** **E82** discloses that bootstrap CIs depart from Decision 10 on
+both method and count: BCa replaced the registered percentile method undisclosed
+in `2026999ad` (2026-04-30); the D15 axis defect rescales width by `sqrt(n/B)`, so
+intervals are too narrow only where `B > n` (69,663) and too **wide** for 840; and
+E54's iteration claim is inverted (1,583 files at B = 10,000 against 114 at
+1,000). PI ruled standardise on 10,000, and it is **executed** — 49 evaluations
+replayed, 16 re-declared, **all 337 conditions now declare `n_iter = 10000` with
+zero point-estimate drift**. **E83** replaces the tie-set instrument.
+
+**The session's largest result came from auditing a proposal, not an
+implementation.** Asked "should we review-implementation of the selection-aware
+intervals decision?", the review rejected the single instrument Claude had
+proposed and substituted Hsu's **multiple comparisons with the best**. That
+instrument then falsified a published headline: `era1-leaderboard` publishes a
+**sole** Tier-1 leader, and MCB admits 10 of 82. Chasing the gap found the cause
+in `greedy_clique_tiers`, which closes its first tier at the first significant
+condition — a marginal BH-adjusted **0.048** at rank two shut the tier while five
+cells the test cannot separate from the leader were pushed to tier two. The
+leader's true clique has **six** members, zero violating pairs. **All fourteen
+boards are now on MCB: ten changed, four (55-map) identical.** Tiers below the
+first are retained as descriptive rank bands on PI direction.
+
+**Selection optimism turned out negligible** (−0.0008 to +0.0137 across eighteen
+candidate sets) and tracks argmax stability, an order of magnitude below the
+nearest published analogue — because our candidates are nested rather than
+independent. The E56 threshold curve, predicted to be the worst case for being
+flat, was the best (+0.0004).
+
+**Other landings**: Phase 0.3 — the 256 px gap survives a common footprint
+(+0.031/+0.036) but the "swamping" mechanism does not, since that cell is worse on
+precision *and* recall; D11 and D16 closed; `ci_unreliable` made measured rather
+than a sparseness heuristic that was warning on 91 of 337 conditions including the
+headline GS cell for a pathology BCa fixed in 2026-04; two 55-map references
+materialised and verified (`best-available-gt-55maps`, 5,010 records,
+buffer-invariant; `canonical-gt-55maps-r50`, 5,161, radius-stamped); three new
+methodology documents; all seven held-over user-observation candidates answered.
+
+**Defects**: opened D17–D24 and N1b; closed D11, D15, D16, D17, D18, D20, D22,
+D23. **D24 is the one that matters and is OPEN** — see the standing item above.
+
+**Carry-forward**: parked doors (vector-extension; higher-T MCC bound); back-burner
+AI-in-research methods-paper corpus; `gs-vs-55map-transfer.{md,json}`
+canonical-vintage behind an in-text flag. **Working-notes candidates drafted at
+this handoff are pending** in `docs/notes/user-observations.md` — silence never
+discards.
+
 ## 🎯 NEXT SESSION (137) — DECIDE D15, THEN RESUME THE DISCUSSION WALK [Session 136 CLOSED 2026-08-19; ran on Opus 5]
 
 > **START HERE: D15.** The BCa bootstrap wrapper transposes its axes, so
