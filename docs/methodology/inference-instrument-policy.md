@@ -123,8 +123,25 @@ artefacts and unmet in the reporting.
 
 Rule: any table or outcome quoting an FDR-corrected p-value must give the
 uncorrected one beside it. Where a family is large enough that per-pair listing is
-impractical, report the count at both levels ("227 of 630 pairs significant
-uncorrected; 189 after BH at q = 0.05") and cite the artefact for the full table.
+impractical, report the count at both levels and cite the artefact for the full
+table. The counts are computed for every family in
+`results/selection-aware/pvalue-counts-both-levels.json`; the paper-facing ones:
+
+| Family | Pairs | *p* < 0.05 uncorrected | Significant after BH (q = 0.05) |
+|---|---:|---:|---:|
+| `era1-leaderboard` | 3,321 | 2,407 | 2,351 |
+| `era1-single-pass-baseline-matrix` | 630 | 258 | **227** |
+| `n1-baseline-matrix-384` | 153 | 129 | 129 |
+| `diversity-dividend-consensus-vs-baseline` | 325 | 269 | 268 |
+
+The correction is doing least work where the effects are large and most where
+they are not: it removes 31 of 258 on the single-pass board and 56 of 2,407 on
+the full leaderboard, and nothing at all on two families.
+
+This is not bookkeeping. Defect D20 turned on a **BH-adjusted p of 0.048 whose
+uncorrected value was 0.034** — a result sitting on the threshold, which is
+precisely the fragility that quoting one number conceals and quoting both makes
+visible.
 
 ## See also
 

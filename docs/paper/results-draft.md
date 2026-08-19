@@ -1,5 +1,17 @@
 # Results — working draft
 
+> **[E83 REVISION FLAG — 2026-08-19]** Tier-1 membership on eight boards has been
+> replaced by the Hsu MCB admissible set; the sequential greedy-clique rule that
+> produced the published tie sets was order-dependent (defect D20). **Every
+> sentence below that asserts a sole leader, a Tier-1 membership count, or a tier
+> boundary needs revision before submission.** The affected lines are marked
+> inline with `[E83]`. Point estimates, pairwise p-values, and registered
+> hypothesis verdicts are unchanged. Four 55-map boards and two others could not
+> be recomputed and remain on the superseded instrument — see E83. Prose is not
+> rewritten here because the Results draft is gated on the Discussion outline.
+
+---
+
 > **Last revised**: 2026-08-18 (Session 136: erratum E81 — the § R2
 > "near-zero MCC" clause corrected, because that near-zero was an
 > imputation for an undefined metric). Prior: 2026-08-17 (Session
@@ -55,7 +67,9 @@ comparison uses one machinery throughout: paired tile-swap micro-F1
 permutation tests (10,000 permutations, seed 42, two-sided),
 Benjamini–Hochberg false-discovery-rate (FDR) correction at q = 0.05, and
 greedy-clique tiering, so that "Tier 1" always means "statistically
-inseparable from the board leader". Tile sets differ by instrument and tile
+inseparable from the board leader". <!-- [E83] This is exactly the claim the
+greedy-clique rule does not support; Tier 1 is now the Hsu MCB admissible set.
+Rewrite this methodological sentence first — several claims below inherit it. --> Tile sets differ by instrument and tile
 size (GS 512 px: 340 tiles; GS 384 px: 487; GS 256 px: 1,032; 55-map:
 8,541), so cross-era comparison is descriptive while within-era tiers carry
 the statistics.
@@ -124,7 +138,7 @@ Changelog.]
 
 No single-pass configuration separates from the pack. On the Era-1 board
 (512 px, 340 tiles, curator GT, F1@20 m) the 36 single-pass cells resolve
-into only four tiers, and Tier 1 is a 20-cell statistical tie spanning
+into only four tiers, and Tier 1 is a 20-cell statistical tie spanning <!-- [E83] 20 -> 15 under MCB; the published 20 was five too many. -->
 F1 0.583–0.631, led numerically by a few-shot-ordering variant
 (`canonical-last`, F1 0.631, MCC 0.213; analysis
 `era1-single-pass-baseline-matrix`, 227/630 pairs significant). The
@@ -213,7 +227,7 @@ characterisation.*
 
 Adding an adversarial verification stage (H2) — an independent
 text-prompted pass that re-examines a crop around each candidate and
-assigns an acceptance probability — is the single best architectural move
+assigns an acceptance probability — is the single best architectural move <!-- [E83] "single best" rests on the sole-Tier-1 reading above; restate as "among the admissible best". -->
 in the study, on every tile size tested.
 
 The registration predicted the opposite. H2's registered prediction
@@ -230,7 +244,7 @@ to the coarse-to-fine proposer–verifier architecture rather than to
 two-stage designs generally.
 
 On the Era-1 definitive board (82 cells: 36 single-pass + 42 consensus + 4
-clean PV cells), the sole Tier-1 leader is HIGH-thinking text consensus
+clean PV cells), the sole Tier-1 leader is HIGH-thinking text consensus <!-- [E83] NOT SOLE. MCB admits 10 of 82; the leader's own clique has 6. This claim must go. -->
 *plus* the adversarial verifier (F1 0.792, MCC 0.676), statistically clear
 of everything below — the verifier's lift (0.775 → 0.792) is what breaks
 the old six-way consensus tie (analysis `era1-leaderboard`, 2,351/3,321

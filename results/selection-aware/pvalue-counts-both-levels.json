@@ -1,0 +1,112 @@
+{
+  "note": "Registered \u00a73.5 requires reporting both uncorrected and FDR-corrected p-values. Per-pair values live in each tiering artefact; these are the family counts at both levels, for quoting in tables where per-pair listing is impractical.",
+  "threshold_uncorrected": 0.05,
+  "fdr_q": 0.05,
+  "families": [
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-55map-mcc-canonical-control.json",
+      "n_pairs": 28,
+      "n_significant_uncorrected": 21,
+      "n_significant_bh_q05": 20
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-55map-mcc-canonical-dedup.json",
+      "n_pairs": 28,
+      "n_significant_uncorrected": 21,
+      "n_significant_bh_q05": 20
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-55map-mcc-standardised-control.json",
+      "n_pairs": 28,
+      "n_significant_uncorrected": 20,
+      "n_significant_bh_q05": 20
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-55map-mcc-standardised-dedup.json",
+      "n_pairs": 28,
+      "n_significant_uncorrected": 20,
+      "n_significant_bh_q05": 20
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-dd384-control-none-evalf1.json",
+      "n_pairs": 231,
+      "n_significant_uncorrected": 197,
+      "n_significant_bh_q05": 197
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-dd384-control-none-microf1.json",
+      "n_pairs": 231,
+      "n_significant_uncorrected": 197,
+      "n_significant_bh_q05": 197
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-dd384-dedup-all.json",
+      "n_pairs": 231,
+      "n_significant_uncorrected": 188,
+      "n_significant_bh_q05": 186
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-dd384-dedup-singlepass.json",
+      "n_pairs": 231,
+      "n_significant_uncorrected": 188,
+      "n_significant_bh_q05": 186
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-era1-leaderboard-control.json",
+      "n_pairs": 3321,
+      "n_significant_uncorrected": 2407,
+      "n_significant_bh_q05": 2351
+    },
+    {
+      "analysis_id": "dedup-metric-impact-2026-08-18",
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-era1-leaderboard-dedup.json",
+      "n_pairs": 3321,
+      "n_significant_uncorrected": 2270,
+      "n_significant_bh_q05": 2192
+    },
+    {
+      "analysis_id": "diversity-dividend-consensus-vs-baseline-384",
+      "artefact": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+      "n_pairs": 231,
+      "n_significant_uncorrected": 197,
+      "n_significant_bh_q05": 197
+    },
+    {
+      "analysis_id": "diversity-dividend-consensus-vs-baseline-384",
+      "artefact": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+      "n_pairs": 325,
+      "n_significant_uncorrected": 269,
+      "n_significant_bh_q05": 268
+    },
+    {
+      "analysis_id": "era1-leaderboard",
+      "artefact": "results/era1-leaderboard/tiering_20m.json",
+      "n_pairs": 3321,
+      "n_significant_uncorrected": 2407,
+      "n_significant_bh_q05": 2351
+    },
+    {
+      "analysis_id": "n1-baseline-matrix-384",
+      "artefact": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+      "n_pairs": 153,
+      "n_significant_uncorrected": 129,
+      "n_significant_bh_q05": 129
+    },
+    {
+      "analysis_id": "era1-single-pass-baseline-matrix",
+      "artefact": "results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.json",
+      "n_pairs": 630,
+      "n_significant_uncorrected": 258,
+      "n_significant_bh_q05": 227
+    }
+  ]
+}

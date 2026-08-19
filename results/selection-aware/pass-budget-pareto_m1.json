@@ -1,0 +1,115 @@
+{
+  "metric": "f1",
+  "n_candidates": 5,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 4,
+  "apparent_f1": 0.8951048951048951,
+  "optimism": 0.001858716689158296,
+  "optimism_mcse": 0.0001326176062972111,
+  "optimism_spread_p2_5_p97_5": [
+    -0.025064087206520015,
+    0.027327671403698014
+  ],
+  "corrected_f1": 0.8932461784157368,
+  "naive_ci": [
+    0.8677494199535963,
+    0.919487221447477
+  ],
+  "selection_aware_ci": [
+    0.8658907032644381,
+    0.9176285047583187
+  ],
+  "argmax_stability": 0.8073,
+  "n_distinct_argmax": 5,
+  "mcb_critical_width": 0.02489635190563123,
+  "mcb_theta": [
+    -0.031027225201982533,
+    -0.021155315272962327,
+    -0.018199854073242094,
+    -0.0049041867223685864,
+    0.0049041867223685864
+  ],
+  "mcb_lower": [
+    -0.05592357710761377,
+    -0.04605166717859356,
+    -0.04309620597887333,
+    -0.029800538627999817,
+    -0.019992165183262644
+  ],
+  "mcb_upper": [
+    -0.006130873296351303,
+    0.003741036632668903,
+    0.006696497832389136,
+    0.019992165183262644,
+    0.029800538627999817
+  ],
+  "mcb_not_ruled_out": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "hsu_w_upper": 0.02056346323871062,
+  "hsu_w_lower": 0.021932803047204248,
+  "hsu_lower": [
+    -0.05296002824918678,
+    -0.043088118320166575,
+    -0.04013265712044634,
+    -0.026836989769572835,
+    -0.01702861632483566
+  ],
+  "hsu_upper": [
+    0.0,
+    0.0,
+    0.002363609165468527,
+    0.015659276516342035,
+    0.025467649961079208
+  ],
+  "hsu_not_ruled_out": [
+    2,
+    3,
+    4
+  ],
+  "hsu_vs_band_delta": -1,
+  "board": "pass-budget-pareto",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::verified-adv-text-4of5",
+      "label": "verified-adv-text-4of5",
+      "eval_f1": 0.8641
+    },
+    {
+      "ref": "verifier-robustness::verified-384-ge3of5-t0-3-n5",
+      "label": "verified-384-ge3of5-t0-3-n5",
+      "eval_f1": 0.8739
+    },
+    {
+      "ref": "pv-diag-384::verified-adv-text-6of10",
+      "label": "verified-adv-text-6of10",
+      "eval_f1": 0.8769
+    },
+    {
+      "ref": "pv-diag-384::verified-adv-text-consensus-16of30",
+      "label": "verified-adv-text-consensus-16of30",
+      "eval_f1": 0.8902
+    },
+    {
+      "ref": "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
+      "label": "verified-384-16of30-t0-3-n5-opmax",
+      "eval_f1": 0.8951
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

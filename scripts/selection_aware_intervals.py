@@ -101,9 +101,24 @@ COMMON_BOUNDS = SCORING_DIR / "bounds" / "grid_common_bounds.geojson"
 SEED = 42
 
 
+def reference_occupancy(
+    gdf_ref: "gpd.GeoDataFrame", gdf_bounds: "gpd.GeoDataFrame",
+    tile_order: list[str],
+) -> np.ndarray:
+    """Per-tile reference occupancy, by INTERSECTION (registered § 4.2).
+
+    A reference lying in an overlap region counts for every tile it intersects,
+    which is what `lib_advanced_metrics.calculate_tile_classification` does and
+    what makes the derived confusion matrix reproduce the committed one.
+    """
+    geom = dict(zip(gdf_bounds["tile_name"], gdf_bounds.geometry, strict=False))
+    return np.array([len(gdf_ref[gdf_ref.intersects(geom[t])]) > 0
+                     for t in tile_order])
+
+
 def build_candidate_tile_counts(
     cell: str, k_total: int, bounds: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
-) -> tuple[list[dict[str, int]], np.ndarray]:
+) -> tuple[list[dict[str, int]], np.ndarray, np.ndarray]:
     """Score every (corroboration, vote) candidate to per-tile TP/FP/FN.
 
     Args:
@@ -113,8 +128,9 @@ def build_candidate_tile_counts(
         gdf_ref: Ground-truth references.
 
     Returns:
-        ``(specs, counts)`` where ``specs`` names each candidate and ``counts``
-        has shape ``(n_candidates, n_tiles, 3)`` in TP/FP/FN order.
+        ``(specs, counts, has_mounds)`` where ``specs`` names each candidate,
+        ``counts`` has shape ``(n_candidates, n_tiles, 3)`` in TP/FP/FN order,
+        and ``has_mounds`` is per-tile reference occupancy.
     """
     passes = load_cell_passes(SCORING_DIR, cell)[:k_total]
     tile_order = list(bounds["tile_name"])
@@ -148,7 +164,7 @@ def build_candidate_tile_counts(
                 arr[:, 2] = tm["fn"].to_numpy(dtype=float)
             specs.append({"min_corroboration": c, "min_votes": k})
             rows.append(arr)
-    return specs, np.stack(rows)
+    return specs, np.stack(rows), reference_occupancy(gdf_ref, bounds, tile_order)
 
 
 def f1_from_counts(counts: np.ndarray, weights: np.ndarray | None = None) -> np.ndarray:
@@ -170,34 +186,114 @@ def f1_from_counts(counts: np.ndarray, weights: np.ndarray | None = None) -> np.
     return np.where(denom > 0, 2 * tp / np.maximum(denom, 1e-12), 0.0)
 
 
+def mcc_from_indicators(
+    has_det: np.ndarray, has_mounds: np.ndarray, weights: np.ndarray | None = None,
+) -> np.ndarray:
+    """Tile-level MCC per candidate, optionally tile-weighted.
+
+    Implements registered § 4.2 tile-level discrimination. A tile is
+    reference-populated when any reference INTERSECTS it (so a reference in an
+    overlap region counts for both neighbours) and predicted-populated when any
+    detection is booked to it. Verified to reproduce a committed
+    ``tile_classification`` block exactly, confusion counts and MCC alike, before
+    being used here — deriving reference occupancy from the detection-level FN
+    column instead does NOT reproduce it, because references are booked to tiles
+    by a different rule than detections.
+
+    An undefined MCC (any vanishing marginal, erratum E81) is returned as NaN and
+    never as 0.0.
+
+    Args:
+        has_det: ``(n_candidates, n_tiles)`` boolean predicted-populated.
+        has_mounds: ``(n_tiles,)`` boolean reference-populated.
+        weights: Per-tile multiplicities from a resample; ``None`` means ones.
+
+    Returns:
+        ``(n_candidates,)`` tile MCC, NaN where undefined.
+    """
+    w = np.ones(has_mounds.shape[0]) if weights is None else weights
+    ref = has_mounds[None, :]
+    tp = (has_det & ref) @ w
+    tn = (~has_det & ~ref) @ w
+    fp = (has_det & ~ref) @ w
+    fn = (~has_det & ref) @ w
+    den = np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+    with np.errstate(invalid="ignore", divide="ignore"):
+        out = np.where(den > 0, (tp * tn - fp * fn) / np.maximum(den, 1e-300), np.nan)
+    return out
+
+
 def resample_weights(rng: np.random.Generator, n: int, m: int) -> np.ndarray:
     """Draw one tile resample as a multiplicity vector (m draws from n tiles)."""
     return np.bincount(rng.integers(0, n, size=m), minlength=n).astype(float)
 
 
-def run(counts: np.ndarray, b: int, m_frac: float, seed: int) -> dict[str, Any]:
+def run(
+    counts: np.ndarray, b: int, m_frac: float, seed: int,
+    has_mounds: np.ndarray | None = None, metric: str = "f1",
+) -> dict[str, Any]:
     """Selection-aware bootstrap plus bootstrap MCB over one candidate set.
 
     Args:
-        counts: ``(n_candidates, n_tiles, 3)`` per-tile counts.
+        counts: ``(n_candidates, n_tiles, 3)`` per-tile TP/FP/FN counts.
         b: Bootstrap resamples.
         m_frac: Subsample size as a fraction of n (1.0 = ordinary n-out-of-n).
         seed: RNG seed.
+        has_mounds: ``(n_tiles,)`` reference occupancy; required for ``mcc``.
+        metric: ``f1`` (detection-level micro-F1) or ``mcc`` (tile-level).
 
     Returns:
         A dict of results; see the module docstring for interpretation.
+
+    Raises:
+        ValueError: if ``mcc`` is requested without ``has_mounds``, or if fewer
+            than two candidates have a defined statistic.
     """
     rng = np.random.default_rng(seed)
     n_cand, n_tiles, _ = counts.shape
     m = max(1, int(round(m_frac * n_tiles)))
 
-    f1_full = f1_from_counts(counts)
-    k_star = int(np.argmax(f1_full))
+    if metric == "mcc":
+        if has_mounds is None:
+            raise ValueError("metric='mcc' requires has_mounds")
+        has_det = (counts[:, :, 0] + counts[:, :, 1]) > 0
+
+        def stat(w: np.ndarray | None = None) -> np.ndarray:
+            return mcc_from_indicators(has_det, has_mounds, w)
+    else:
+        def stat(w: np.ndarray | None = None) -> np.ndarray:
+            return f1_from_counts(counts, w)
+
+    f1_full = stat()
+    # A candidate whose statistic is undefined on the full data cannot be
+    # "the best" in any defined sense, and E81 forbids reading its undefined
+    # MCC as 0.0. Drop it from the candidate set and say so.
+    defined = np.isfinite(f1_full)
+    n_undefined = int((~defined).sum())
+    if n_undefined:
+        if int(defined.sum()) < 2:
+            raise ValueError("fewer than two candidates have a defined statistic")
+        keep = np.flatnonzero(defined)
+        counts = counts[keep]
+        if metric == "mcc":
+            has_det = has_det[keep]
+
+            def stat(w: np.ndarray | None = None) -> np.ndarray:  # noqa: F811
+                return mcc_from_indicators(has_det, has_mounds, w)
+        else:
+            def stat(w: np.ndarray | None = None) -> np.ndarray:  # noqa: F811
+                return f1_from_counts(counts, w)
+        f1_full = stat()
+        n_cand = len(keep)
+    else:
+        keep = np.arange(n_cand)
+    k_star = int(np.nanargmax(f1_full))
     apparent = float(f1_full[k_star])
 
     # theta_i = F1_i - max_{j != i} F1_j, the MCB quantity.
     def theta(f: np.ndarray) -> np.ndarray:
-        order = np.argsort(f)[::-1]
+        """theta_i = stat_i - max_{j != i} stat_j, NaN-safe."""
+        order = np.argsort(np.where(np.isfinite(f), f, -np.inf))[::-1]
         best, second = f[order[0]], f[order[1]]
         out = f - best
         out[order[0]] = best - second
@@ -211,28 +307,32 @@ def run(counts: np.ndarray, b: int, m_frac: float, seed: int) -> dict[str, Any]:
     optimism = np.empty(b)
     for i in range(b):
         w = resample_weights(rng, n_tiles, m)
-        f = f1_from_counts(counts, w)
+        f = stat(w)
+        # A resample can make a candidate's MCC undefined even where the full
+        # data does not. Undefined stays NaN — substituting -inf would poison
+        # the MCB deviation arithmetic downstream — and the argmax and the
+        # deviation quantiles are taken NaN-aware instead.
         boot_f1[i] = f
         boot_theta[i] = theta(f)
-        kb = int(np.argmax(f))
+        kb = int(np.nanargmax(f)) if np.any(np.isfinite(f)) else k_star
         sel[i] = kb
         # Efron-Gong optimism with the argmax REPLAYED: the winner inside this
         # resample, scored in-resample, against that same winner scored on the
         # full data. The comparator is held fixed by construction.
         optimism[i] = f[kb] - f1_full[kb]
 
-    opt = float(optimism.mean())
+    opt = float(np.nanmean(optimism))
     # The SPREAD of per-resample optimism is not the uncertainty on its MEAN.
     # Report both: the spread describes how variable the selection penalty is
     # from resample to resample, while the Monte Carlo standard error says how
     # well B resamples pin the estimate down. Quoting the spread alone would
     # make a well-determined optimism look unmeasurable.
-    opt_mcse = float(optimism.std(ddof=1) / np.sqrt(len(optimism)))
+    opt_mcse = float(np.nanstd(optimism, ddof=1) / np.sqrt(np.isfinite(optimism).sum()))
     corrected = apparent - opt
 
     # Naive interval for k*, then the same interval location-shifted by the
     # measured optimism. The shift is what makes it a post-selection interval.
-    naive_lo, naive_hi = np.percentile(boot_f1[:, k_star], [2.5, 97.5])
+    naive_lo, naive_hi = np.nanpercentile(boot_f1[:, k_star], [2.5, 97.5])
     shifted = (float(naive_lo - opt), float(naive_hi - opt))
 
     # --- MCB, two ways -------------------------------------------------------
@@ -255,21 +355,25 @@ def run(counts: np.ndarray, b: int, m_frac: float, seed: int) -> dict[str, Any]:
     #     critical value, which assumes normal homoscedastic means that micro-F1
     #     on correlated tiles does not satisfy.
     dev_signed_up = boot_theta - theta_full[None, :]
-    crit = float(np.percentile(np.abs(dev_signed_up).max(axis=1), 95))
+    crit = float(np.nanpercentile(np.nanmax(np.abs(dev_signed_up), axis=1), 95))
     mcb_lo = theta_full - crit
     mcb_hi = theta_full + crit
-    not_ruled_out = [i for i in range(n_cand) if mcb_hi[i] >= 0]
+    not_ruled_out = [i for i in range(n_cand)
+                     if np.isfinite(mcb_hi[i]) and mcb_hi[i] >= 0]
 
-    w_upper = float(np.percentile(dev_signed_up.max(axis=1), 95))
-    w_lower = float(np.percentile((-dev_signed_up).max(axis=1), 95))
+    w_upper = float(np.nanpercentile(np.nanmax(dev_signed_up, axis=1), 95))
+    w_lower = float(np.nanpercentile(np.nanmax(-dev_signed_up, axis=1), 95))
     hsu_lo = np.minimum(0.0, theta_full - w_lower)
     hsu_hi = np.maximum(0.0, theta_full + w_upper)
     hsu_not_ruled_out = [i for i in range(n_cand)
-                         if theta_full[i] + w_upper > 0]
+                         if np.isfinite(theta_full[i]) and theta_full[i] + w_upper > 0]
 
     sel_counts = np.bincount(sel, minlength=n_cand)
     return {
+        "metric": metric,
         "n_candidates": n_cand,
+        "n_candidates_dropped_undefined": n_undefined,
+        "kept_indices": [int(i) for i in keep],
         "n_tiles": n_tiles,
         "m_out_of_n": m,
         "bootstrap": b,
@@ -277,7 +381,7 @@ def run(counts: np.ndarray, b: int, m_frac: float, seed: int) -> dict[str, Any]:
         "apparent_f1": apparent,
         "optimism": opt,
         "optimism_mcse": opt_mcse,
-        "optimism_spread_p2_5_p97_5": [float(x) for x in np.percentile(optimism, [2.5, 97.5])],
+        "optimism_spread_p2_5_p97_5": [float(x) for x in np.nanpercentile(optimism, [2.5, 97.5])],
         "corrected_f1": float(corrected),
         "naive_ci": [float(naive_lo), float(naive_hi)],
         "selection_aware_ci": list(shifted),
@@ -297,7 +401,9 @@ def run(counts: np.ndarray, b: int, m_frac: float, seed: int) -> dict[str, Any]:
     }
 
 
-def build_board_tile_counts(analysis_id: str) -> tuple[list[dict[str, Any]], np.ndarray]:
+def build_board_tile_counts(
+    analysis_id: str,
+) -> tuple[list[dict[str, Any]], np.ndarray, np.ndarray]:
     """Load a registered leaderboard's cells as per-tile TP/FP/FN.
 
     Reuses ``era1_leaderboard_tiering.load_cells``, which resolves each cell from
@@ -312,7 +418,7 @@ def build_board_tile_counts(analysis_id: str) -> tuple[list[dict[str, Any]], np.
     """
     from scripts.era1_leaderboard_tiering import load_cells  # noqa: PLC0415
 
-    cells, _gdf_ref, _bounds, tile_order = load_cells(
+    cells, gdf_ref, gdf_bounds, tile_order = load_cells(
         PROJECT_ROOT / "results/run-conditions.json",
         PROJECT_ROOT / "results/run-analyses.json",
         analysis_id, None, None,
@@ -327,10 +433,12 @@ def build_board_tile_counts(analysis_id: str) -> tuple[list[dict[str, Any]], np.
     ])
     logger.info("board %s: %d cells over %d tiles", analysis_id, len(specs),
                 len(tile_order))
-    return specs, counts
+    return specs, counts, reference_occupancy(gdf_ref, gdf_bounds, tile_order)
 
 
-def build_evals_tile_counts(pattern: str) -> tuple[list[dict[str, Any]], np.ndarray]:
+def build_evals_tile_counts(
+    pattern: str,
+) -> tuple[list[dict[str, Any]], np.ndarray, np.ndarray]:
     """Load an arbitrary set of committed evaluations as per-tile TP/FP/FN.
 
     For candidate sets that are not a registered board — the verifier
@@ -383,7 +491,7 @@ def build_evals_tile_counts(pattern: str) -> tuple[list[dict[str, Any]], np.ndar
                       "eval_f1": b20.get("f1")})
     logger.info("evals %s: %d candidates over %d tiles", pattern, len(specs),
                 len(tile_order))
-    return specs, np.stack(rows)
+    return specs, np.stack(rows), reference_occupancy(gdf_ref, gdf_bounds, tile_order)
 
 
 def main() -> int:
@@ -397,6 +505,8 @@ def main() -> int:
     ap.add_argument("--evals", default=None,
                     help="Glob of evaluation.json files forming the candidate set.")
     ap.add_argument("--tag", default=None, help="Output filename stem for --evals.")
+    ap.add_argument("--metric", choices=("f1", "mcc"), default="f1",
+                    help="Detection-level micro-F1, or registered tile-level MCC.")
     ap.add_argument("--K", type=int, default=10)
     ap.add_argument("--bootstrap", type=int, default=10000)
     ap.add_argument("--m-frac", type=float, default=1.0,
@@ -410,17 +520,18 @@ def main() -> int:
     args.out.mkdir(parents=True, exist_ok=True)
 
     if args.evals:
-        specs, counts = build_evals_tile_counts(args.evals)
+        specs, counts, has_mounds = build_evals_tile_counts(args.evals)
         tag = args.tag or "evals"
         res_meta = {"evals_glob": args.evals}
     elif args.board:
-        specs, counts = build_board_tile_counts(args.board)
+        specs, counts, has_mounds = build_board_tile_counts(args.board)
         tag = args.board
         res_meta = {"board": args.board}
     else:
         bounds = gpd.read_file(COMMON_BOUNDS)
         gdf_ref = gpd.read_file(GROUND_TRUTH)
-        specs, counts = build_candidate_tile_counts(args.cell, args.K, bounds, gdf_ref)
+        specs, counts, has_mounds = build_candidate_tile_counts(
+            args.cell, args.K, bounds, gdf_ref)
         logger.info("%s K=%d: %d candidates over %d carrier tiles",
                     CELL_LABEL.get(args.cell, args.cell), args.K, len(specs),
                     len(bounds))
@@ -428,19 +539,25 @@ def main() -> int:
         res_meta = {"cell": args.cell, "label": CELL_LABEL.get(args.cell, args.cell),
                     "K": args.K}
 
-    res = run(counts, args.bootstrap, args.m_frac, SEED)
+    res = run(counts, args.bootstrap, args.m_frac, SEED,
+              has_mounds=has_mounds, metric=args.metric)
     res.update(res_meta)
     res.update({"m_frac": args.m_frac, "candidates": specs, "seed": SEED,
                 "buffer_metres": BUFFER_M})
 
+    kept = res["kept_indices"]
+    specs = [specs[i] for i in kept]
+    if res["n_candidates_dropped_undefined"]:
+        logger.info("dropped %d candidate(s) with an undefined %s (E81)",
+                    res["n_candidates_dropped_undefined"], args.metric)
     s = specs[res["selected_index"]]
     logger.info("selected: %s", s.get("label") or
                 f"c>={s.get('min_corroboration')} k>={s.get('min_votes')}")
-    logger.info("apparent F1            : %.4f", res["apparent_f1"])
+    logger.info("apparent %-4s          : %.4f", args.metric, res["apparent_f1"])
     logger.info("optimism (selection)   : %+.4f  (MC s.e. %.5f; per-resample "
                 "spread [%+.4f, %+.4f])", res["optimism"], res["optimism_mcse"],
                 *res["optimism_spread_p2_5_p97_5"])
-    logger.info("corrected F1           : %.4f", res["corrected_f1"])
+    logger.info("corrected %-4s         : %.4f", args.metric, res["corrected_f1"])
     logger.info("naive CI95             : [%.4f, %.4f]", *res["naive_ci"])
     logger.info("selection-aware CI95   : [%.4f, %.4f]", *res["selection_aware_ci"])
     logger.info("argmax stability       : %.3f (%d distinct winners across resamples)",
@@ -458,7 +575,8 @@ def main() -> int:
         logger.info("    %-38s theta=%+.4f  [%+.4f, %+.4f]", name,
                     res["mcb_theta"][i], res["mcb_lower"][i], res["mcb_upper"][i])
 
-    out = args.out / f"{tag}_m{args.m_frac:g}.json"
+    suffix = "" if args.metric == "f1" else f"_{args.metric}"
+    out = args.out / f"{tag}{suffix}_m{args.m_frac:g}.json"
     out.write_text(json.dumps(res, indent=2))
     logger.info("wrote %s", out)
     return 0

@@ -4734,3 +4734,108 @@ covered as history by this entry.
   literal and is not evidence of the path taken
 
 ---
+
+### E83: Tier-1 membership was decided by an order-dependent sequential rule, not by the clique its docstring promised — eight boards' tie sets revised to Hsu MCB, including one that published a sole leader it does not have
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-19 |
+| Type | Correction (inferential instrument replaced; published tie-set membership changes in both directions) |
+| Commit | — (this entry lands with the register revision; the superseded tiering code is retained, see **Protocol impact**) |
+| Files | `scripts/n1_baseline_leaderboard_tiering.py:383` (`greedy_clique_tiers`); `results/era1-leaderboard/tiering_20m.json` and two `results/dedup-metric-impact-2026-08-18/tiering-era1-leaderboard-*.json`; eight `tie_set` fields in `results/run-analyses.json`; instruments in `scripts/selection_aware_intervals.py`; audit in `scripts/audit_tier1_cliques.py`; findings in `results/selection-aware/findings.md`; policy in `docs/methodology/inference-instrument-policy.md` |
+| Impact | Medium-to-high on claim wording, nil on measurement. No point estimate, F1, MCC, or pairwise p-value changes. What changes is which conditions are published as statistically indistinguishable from the best, on eight of fourteen boards, in both directions — and one board's headline claim of a **sole** leader does not survive |
+
+**Description**: leaderboard tiers are built by `greedy_clique_tiers`, which walks
+conditions in F1-descending order and closes the current tier at the **first**
+condition that is Benjamini-Hochberg-significant against any current member. Its
+docstring states that `tiers[0]` is "the leader's clique (the tie_set)". That is
+not what the function computes. Because it closes on first failure, a marginally
+significant condition immediately below the leader shuts tier 1 before any
+lower-ranked condition is considered, however clearly non-separable that
+condition may be.
+
+**The failure is visible on the study's own headline board.** On
+`era1-leaderboard` the rank-2 condition is significant at **BH-adjusted
+p = 0.048**, and closes tier 1 at a single member. Five lower-ranked conditions
+are non-significant against the leader, and — checked pairwise — mutually
+non-significant: **all 15 pairs within the leader plus those five are
+non-significant**. The leader's actual clique therefore has **six** members,
+verified with zero violating pairs. The register published `tie_set` = 1 and an
+outcome reading "proposer-verifier is the single best Era-1 architecture ... clear
+of the HIGH-consensus cluster (Tier 2)". Neither clause is supported by the
+artefact's own pairwise tests.
+
+**The deeper problem, which is why the fix is not a patch.** Tiers built from
+pairwise non-significance are not a well-defined object, because non-significance
+is not transitive: A indistinguishable from B and B from C does not make A
+indistinguishable from C. Every tiering scheme inherits this, clique-based or
+sequential, and the order-dependence above is a symptom rather than the disease.
+Measured across the boards, the sequential rule is **not biased in one
+direction** — against the replacement instrument it runs too narrow on two
+boards, too wide on three, identical on one, and on `min-vs-high-thinking-pv`
+produces a set that is neither a subset nor a superset (adding one condition
+while dropping two). No uniform adjustment can repair that.
+
+**Resolution**: `tie_set` is now the **Hsu multiple-comparisons-with-the-best
+(MCB) admissible set** at simultaneous 95 % confidence — the conditions that
+cannot be ruled out as *the* best. MCB is the canonical instrument for that
+question, is simultaneous by construction rather than by correction, and does not
+condition on the empirical winner, which is itself a noisy draw. The critical
+value is obtained by tile-level bootstrap rather than from Dunnett's table,
+because Dunnett assumes normal homoscedastic means and the statistics here are
+micro-F1 and tile-MCC over correlated tiles.
+
+| Board | Metric | Candidates | Published `tie_set` | Revised (Hsu MCB) |
+|---|---|---:|---:|---:|
+| `era1-leaderboard` | F1 | 82 | **1** | **10** |
+| `era1-single-pass-baseline-matrix` | F1 | 36 | 20 | 15 |
+| `h12-v2-hp-hn-ratio` | F1 | 6 | 3 | 6 |
+| `pass-budget-pareto` | F1 | 5 | 5 | 3 |
+| `pass-budget-pareto-v2` | F1 | 7 | 7 | 6 |
+| `min-vs-high-thinking-pv` | F1 | 7 | 6 | 5 |
+| `flash35-model-roles` | F1 | 5 | 2 | 3 |
+| `verifier-robustness-matrix` | F1 | 6 | 5 | 5 |
+
+**Six boards are NOT revised**, and the reason is a capability limit rather than
+a judgement. `n1-baseline-matrix-384` and `diversity-dividend-384` contain cells
+whose evaluations declare neither `detections` nor `detections_dir`, so their
+per-tile counts cannot be reproduced from the committed record. The four 55-map
+boards (`55map-canonical-leaderboard-50m`, `55map-standardised-leaderboard-50m`
+and their MCC siblings) are adapter-written Track-2 corrected-F1 evaluations whose
+ground truth is a composite of an adjudication CSV and a reviewed GeoJSON rather
+than a single loadable reference, so re-scoring them needs the Track-2 pipeline,
+not the generic scorer. Their tie sets remain on the superseded instrument and
+should be read with this entry.
+
+**Tiers below the first are retained**, on the Principal Investigator's direction
+(2026-08-19), because showing what did not work is part of the result. They are
+relabelled **descriptive rank bands**: orderings by point estimate that carry no
+claim of statistical separation. Only the first group changes status, from an
+inferential tier to the MCB admissible set.
+
+**Tile-level MCC** was computed alongside F1 wherever the inputs support it. The
+derivation reproduces a committed `tile_classification` block exactly — confusion
+counts and MCC alike — before being used, and drops the thirteen conditions whose
+MCC is undefined rather than reading them as `0.0` (erratum E81).
+
+**Protocol impact**: no registered hypothesis outcome changes, because no
+hypothesis is stated in terms of tier membership. Decision 10's significance rule
+is untouched: it is defined on a difference interval, and the pairwise tests
+underlying every board are unchanged. What must change is paper wording anywhere
+a sole leader, a tier boundary, or an architecture ranking is asserted; those
+sentences are flagged in `docs/paper/results-draft.md` for revision rather than
+rewritten here, since the Results prose is still gated on the Discussion outline.
+The superseded `greedy_clique_tiers` is retained rather than deleted so the
+published boards remain reproducible as published.
+
+**Reference artefacts**:
+
+- Defect record: `reports/defect-register-2026-08-18.md` D20
+- Instruments and measured comparison: `results/selection-aware/findings.md`;
+  `scripts/selection_aware_intervals.py`
+- Clique audit across every tiering artefact: `scripts/audit_tier1_cliques.py`;
+  `results/selection-aware/tier1-clique-audit.json`
+- Reporting policy: `docs/methodology/inference-instrument-policy.md`
+- Method: Hsu (1984), *Annals of Statistics* 12(3); Edwards & Hsu (1983)
+
+---
