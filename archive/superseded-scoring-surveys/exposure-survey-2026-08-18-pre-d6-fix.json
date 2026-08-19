@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-19T01:42:53.070418+00:00",
+  "generated_at_utc": "2026-08-18T06:21:08.345836+00:00",
   "manifest": "/home/shawn/Code/map-reader-llm/results/conditions-manifest.json",
   "dedup_radius_metres": 20.0,
   "exposure_threshold": 0.01,
@@ -2452,14 +2452,12 @@
       "architecture": "single-pass",
       "aggregation": "none",
       "detection_paths": [
-        "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson",
-        "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_2/detections-library_plus-hp-3.1-pro-2026-06-03.geojson",
-        "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_3/detections-library_plus-hp-3.1-pro-2026-06-03.geojson"
+        "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson"
       ],
-      "n_artefacts_read": 3,
-      "n_features": 1675,
-      "n_features_within_dedup_radius": 366,
-      "duplicate_fraction": 0.21850746268656718,
+      "n_artefacts_read": 1,
+      "n_features": 587,
+      "n_features_within_dedup_radius": 132,
+      "duplicate_fraction": 0.22487223168654175,
       "dedup_exposed": true,
       "tiebreak_exposed": false,
       "f1_20": 0.6555,
@@ -2497,14 +2495,12 @@
       "architecture": "single-pass",
       "aggregation": "none",
       "detection_paths": [
-        "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
-        "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_2/detections-detect_brief-text-3.1-pro-2026-06-03.geojson",
-        "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_3/detections-detect_brief-text-3.1-pro-2026-06-03.geojson"
+        "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson"
       ],
-      "n_artefacts_read": 3,
-      "n_features": 1356,
-      "n_features_within_dedup_radius": 309,
-      "duplicate_fraction": 0.22787610619469026,
+      "n_artefacts_read": 1,
+      "n_features": 446,
+      "n_features_within_dedup_radius": 95,
+      "duplicate_fraction": 0.21300448430493274,
       "dedup_exposed": true,
       "tiebreak_exposed": false,
       "f1_20": 0.7921,

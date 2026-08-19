@@ -1,8 +1,9 @@
 # Deduplication correction worklist: full blast radius and a prioritised remediation plan
 
-> **Last revised**: 2026-08-18 (original publication — the S136 blast-radius
-> trace and correction worklist for the missing within-pass deduplication).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-19 (D11 closed — the exposure survey re-run after
+> the D6 fix, so the two Pro-baseline `duplicate_fraction` figures are now
+> three-run rather than single-run). See [§ Changelog](#changelog) for revision
+> history.
 
 **Date**: 2026-08-18 (Session 136)
 **Author**: Claude Code (Opus 5), amd-tower; all measurement executed on sapphire
@@ -92,8 +93,13 @@ value; the probe scored only the 0.7764 run.
 
 Consequences, all actionable at $0:
 
-- the two conditions' `duplicate_fraction` (0.2130 and 0.2249) is a
-  single-run figure;
+- the two conditions' `duplicate_fraction` was a single-run figure. **Resolved
+  2026-08-19 (D11)**: the survey was re-run after the D6 fix and now reads all
+  three passes. Text moves 0.2130 → **0.2279** (446 → 1,356 features, 95 → 309
+  within radius); image moves 0.2249 → **0.2185** (587 → 1,675 features, 132 →
+  366). The two move in opposite directions and both stay near 22 %, so the
+  single pass was representative of its pool even though the recorded numbers
+  were wrong;
 - the deduplicated estimate quoted for a **Tier-1 member of both
   `diversity-dividend-384` and `n1-baseline-matrix-384`** (0.8211 at 20 m) is a
   single-run figure and is not comparable with the board's three-run mean;
@@ -639,6 +645,34 @@ committed; each is a thin wrapper over committed library code:
 ---
 
 ## Changelog
+
+### 2026-08-19 — D11 closed: exposure survey re-run on the full pools
+
+**Trigger**: `results/scoring-sensitivity-2026-08-18/exposure-survey.json` was
+produced while the D6 filename under-read was live, so
+`pv-diag-384::baseline-pro-{text,image}-medium-t-0-0` were surveyed on one pass
+of three. The survey was re-run at $0 on sapphire against the fixed resolver.
+
+| Condition | Field | Before | After |
+|---|---|---:|---:|
+| `baseline-pro-text-medium-t-0-0` | artefacts read | 1 | 3 |
+| | features | 446 | 1,356 |
+| | within dedup radius | 95 | 309 |
+| | `duplicate_fraction` | 0.2130 | **0.2279** |
+| `baseline-pro-image-medium-t-0-0` | artefacts read | 1 | 3 |
+| | features | 587 | 1,675 |
+| | within dedup radius | 132 | 366 |
+| | `duplicate_fraction` | 0.2249 | **0.2185** |
+
+**What did NOT change**: every exposure classification and every summary count
+is identical — 333 conditions surveyed, 0 unresolved, 155 dedup-exposed
+(proposer-verifier 26, consensus 6, single-pass 123), 123 tie-break-exposed, 6
+exposed to both, and the per-run breakdown unchanged in all 16 runs. Only the two
+conditions named above moved, and only in their per-cell counts. The prioritised
+worklist below is therefore unaffected.
+
+The superseded survey is archived at
+`archive/superseded-scoring-surveys/exposure-survey-2026-08-18-pre-d6-fix.json`.
 
 ### 2026-08-18 — Original publication
 

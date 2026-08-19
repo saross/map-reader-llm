@@ -50,7 +50,7 @@ artefact that carries the evidence rather than restating it.
 |---|---|---|---|
 | D9 | H13 cost-efficiency figures are reported on the UNDISCOUNTED basis. Gemini real-time flex carries a 50 % discount, so `$5.7488` total and the F1-per-dollar values (0.4069 / 0.2975 / 0.1007) are about 2× actual. Ratios and the "every additional dollar buys negative F1" conclusion are unaffected, because all arms share one basis. | `results/h13-overlap-2026-08-18/findings.md` § Analysis 2 | Halve the dollar figures, state the basis explicitly, add a changelog entry. |
 | D16 | **WAS blocked by D15, now unblocked** (the code fix landed in `122104b8a`). Writing the row still needs per-cell evaluations generated at B=10,000 per the 2026-08-19 PI ruling. **D15 blocks the grid's register row.** `results/grid-2026-08-18/` has no per-cell `evaluation.json` (its metrics are computed directly in `grid_analysis.py`), so its four cells cannot be registered as conditions — and the analyses schema requires a non-empty `conditions_compared`. Generating those evaluations means running `evaluate_detections.py`, which always computes bootstrap CIs with no option to skip them, so it would write four fresh intervals already known to be 1.7-5.4x too narrow. Recording the row was attempted and reverted to keep the register valid. | `results/grid-2026-08-18/`, `results/run-analyses.json` | OPEN — unblocks the moment D15 is fixed; no other dependency |
-| D11 | `results/scoring-sensitivity-2026-08-18/exposure-survey.json` was produced while the under-read was live, so `pv-diag-384::baseline-pro-{text,image}-medium-t-0-0` were scored on 1 pass of 3. Re-running now resolves 3 each. The exposure classifications are unchanged, but the recorded per-cell numbers for those two conditions are wrong. | `results/scoring-sensitivity-2026-08-18/` | OPEN — $0 re-run; feeds the dedup correction campaign |
+| D11 | `results/scoring-sensitivity-2026-08-18/exposure-survey.json` was produced while the under-read was live, so `pv-diag-384::baseline-pro-{text,image}-medium-t-0-0` were scored on 1 pass of 3. Re-running now resolves 3 each. The exposure classifications are unchanged, but the recorded per-cell numbers for those two conditions are wrong. | `results/scoring-sensitivity-2026-08-18/` | **FIXED 2026-08-19** — survey re-run at $0 on sapphire against the D6-fixed resolver. Both conditions now read 3 artefacts: text 446 → 1,356 features, `duplicate_fraction` 0.2130 → **0.2279**; image 587 → 1,675, 0.2249 → **0.2185**. **Every exposure classification and summary count is unchanged** (155 dedup-exposed, 123 tie-break, 6 both, 0 unresolved), so the correction worklist is unaffected. Superseded survey archived to `archive/superseded-scoring-surveys/`. |
 | D10 | The grid runs' auto-written `experiment_intent.md` records hypothesis `H1` and "factor being varied: `include_example_images`", inherited from `detect_brief-text.json`. Wrong for a geometry grid, and it lands in provenance. | `outputs/grid-2026-08-18/**/experiment_intent.md` | Correct in the register row and post-run report rather than forking the config. |
 
 ## Near-misses
@@ -78,7 +78,7 @@ artefact that carries the evidence rather than restating it.
 
 ## Changelog
 
-### 2026-08-19 (latest) — E82 filed; D15 fixed and disclosed; D17, D18, D19 added
+### 2026-08-19 (latest) — E82 filed; D11 and D15 fixed; D17, D18, D19 added
 
 **Trigger**: filing erratum E82 for the bootstrap deviations, which required an
 independent recount of the committed corpus and surfaced two further defects in
@@ -91,6 +91,7 @@ the manifest generator.
 | D17 | not known | **FIXED** — 49 conditions published `n_iter: 10000` against a source declaring 1,000 |
 | D18 | not known | **FIXED** — committed conditions-manifest failed its own schema on 26 counts; regeneration reverted E81 |
 | D19 | not known | RECORDED via E82 — BCa and 10,000 iterations both depart from Decision 10 |
+| D11 | OPEN — $0 re-run | **FIXED** — survey re-run on the full pools; per-cell counts corrected, every exposure classification unchanged |
 
 **What did NOT change**: no point estimate, no F1, precision, recall, or tile-MCC
 value moved. Regeneration after the D17/D18 fixes reproduces every committed
