@@ -92,6 +92,16 @@ Re-checked 2026-08-19 across every flagged buffer-row in the manifest:
 Sparseness itself remains real and worth disclosing — containment of the point
 estimate is necessary for a usable interval, not sufficient, and a cell where most
 tiles are empty carries genuinely less information than its tile count suggests.
+**Fixed in code 2026-08-19.** `evaluate_detections.assess_ci_reliability` now
+decides the flag from two measured grounds — the interval actually excluding its
+own point estimate, or E72 partial coverage, where the point estimate is wrong
+too. `sparse_cross_grid` no longer sets it. Evaluations gain `ci_excludes_point`,
+`sparse_coverage`, and `ci_flag_basis`, the last so an artefact is readable
+without knowing its vintage: files written before this date carry no
+`ci_flag_basis` and used the superseded rule. Committed evaluations were **not**
+re-emitted, so the corpus is mixed-vintage on this field by design; the basis key
+is how a consumer tells which rule applied. Six tier-1 tests pin the behaviour.
+
 The reporting rule therefore changes from suppression to disclosure:
 
 1. **Do not suppress or asterisk** a flagged interval on the strength of this flag.

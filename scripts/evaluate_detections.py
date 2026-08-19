@@ -628,6 +628,54 @@ def find_detection_files(
 
 # ── Evaluation ────────────────────────────────────────────────────────
 
+def assess_ci_reliability(
+    ci: dict, f1: float, precision: float, recall: float, coverage_status: str,
+) -> tuple[bool, bool]:
+    """Decide whether a buffer's confidence intervals are untrustworthy.
+
+    Two independent grounds, both measured rather than inferred:
+
+    * **The interval excludes its own point estimate.** This is the pathology
+      "Mitigation 3" was introduced for in 2026999ad, when the percentile method
+      could produce a 2.5-97.5 range that did not contain the all-data estimate.
+      It is now tested for directly instead of being predicted from a
+      zero-count-tile heuristic.
+    * **Partial coverage (E72).** A detection set that does not cover its
+      evaluation bounds manufactures false negatives on every unprocessed
+      mound-bearing tile, so the point estimate is wrong too, not just the
+      interval.
+
+    ``sparse_cross_grid`` deliberately does NOT set the flag. It did until
+    2026-08-19, when a re-check across all 1,041 flagged buffer-rows in the
+    committed manifest found 1,041 containing their point estimate and none
+    excluding it: the BCa migration in the same commit that added the heuristic
+    had already fixed what the heuristic was watching for, and it had reached 91
+    of 337 conditions at the 20 m headline. Sparseness is still reported, as
+    ``sparse_coverage`` and ``coverage.zero_fraction``, because a mostly-empty
+    scope genuinely carries less information than its tile count suggests — but
+    that is a fact for the reader, not a reliability verdict.
+
+    Args:
+        ci: The per-metric CI block, keyed ``f1`` / ``precision`` / ``recall``.
+        f1: All-data F1 point estimate.
+        precision: All-data precision point estimate.
+        recall: All-data recall point estimate.
+        coverage_status: This buffer's coverage status.
+
+    Returns:
+        ``(ci_unreliable, ci_excludes_point)``.
+    """
+    excludes = any(
+        (block := ci.get(metric, {})).get("ci_lower") is not None
+        and block.get("ci_upper") is not None
+        and not (block["ci_lower"] <= point <= block["ci_upper"])
+        for metric, point in (
+            ("f1", f1), ("precision", precision), ("recall", recall),
+        )
+    )
+    return (coverage_status == COVERAGE_STATUS_PARTIAL or excludes), excludes
+
+
 def evaluate_single_run(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
@@ -704,8 +752,29 @@ def evaluate_single_run(
         coverage_status = coverage.get(
             "coverage_status", COVERAGE_STATUS_NORMAL,
         )
-        ci_unreliable = coverage_status in (
-            COVERAGE_STATUS_SPARSE, COVERAGE_STATUS_PARTIAL,
+        # ``ci_unreliable`` is MEASURED, not inferred from sparseness alone
+        # (revised 2026-08-19).
+        #
+        # Until this revision the flag fired on ``sparse_cross_grid`` as well,
+        # a >50 % zero-count-tile heuristic introduced in 2026999ad to catch a
+        # percentile-method pathology: bootstrap distributions whose 2.5-97.5
+        # range EXCLUDED the all-data point estimate. The same commit replaced
+        # the percentile method with BCa, which fixed that pathology, and the
+        # heuristic was never re-evaluated against the corrected intervals.
+        # Re-checked across all 1,041 flagged buffer-rows in the committed
+        # manifest: 1,041 contain their point estimate and 0 exclude it. The
+        # heuristic reached 91 of 337 conditions at the 20 m headline buffer,
+        # including the paper's gold-standard cell, so it was warning about a
+        # defect that no longer occurs.
+        #
+        # The pathology is now tested for directly, and E72's partial coverage
+        # still flags unconditionally: an uncovered evaluation bound produces
+        # artificial false negatives on every unprocessed mound-bearing tile,
+        # so there BOTH the interval and the point estimate are untrustworthy.
+        # Sparseness remains real and is reported descriptively rather than as
+        # a reliability verdict — see docs/methodology/inference-instrument-policy.md.
+        ci_unreliable, ci_excludes_point = assess_ci_reliability(
+            ci, f1, precision, recall, coverage_status,
         )
         buffer_results.append({
             "buffer_metres": buffer_m,
@@ -727,6 +796,13 @@ def evaluate_single_run(
             "coverage": coverage,
             "coverage_status": coverage_status,
             "ci_unreliable": ci_unreliable,
+            "ci_excludes_point": ci_excludes_point,
+            "sparse_coverage": coverage_status == COVERAGE_STATUS_SPARSE,
+            # Which rule produced ci_unreliable, so an artefact is readable
+            # without knowing its vintage. Evaluations written before
+            # 2026-08-19 lack this key and used the superseded rule, where
+            # sparse coverage alone set the flag.
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage",
         })
 
         logger.info(
@@ -742,7 +818,7 @@ def evaluate_single_run(
                 else (
                     f" [sparse coverage: "
                     f"{coverage.get('zero_fraction', 0):.1%} zero-tiles]"
-                    if ci_unreliable else ""
+                    if coverage_status == COVERAGE_STATUS_SPARSE else ""
                 )
             ),
         )

@@ -895,3 +895,75 @@ class TestBootstrapCiIntegration:
             n_iterations=10, random_seed=42,
         )
         assert ci == {}
+
+
+# --- ci_unreliable is measured, not inferred from sparseness (2026-08-19) -----
+#
+# The flag used to fire on `sparse_cross_grid`, a >50 % zero-count-tile
+# heuristic introduced to catch percentile-method intervals that excluded their
+# own point estimate. BCa fixed that pathology in the same commit and the
+# heuristic was never revisited, so it ended up warning about a defect that no
+# longer occurs — on 91 of 337 conditions at the 20 m headline, including the
+# gold-standard cell. These tests pin the corrected rule.
+
+_CI = {
+    "f1": {"ci_lower": 0.70, "ci_upper": 0.80},
+    "precision": {"ci_lower": 0.60, "ci_upper": 0.90},
+    "recall": {"ci_lower": 0.60, "ci_upper": 0.90},
+}
+
+
+@pytest.mark.tier1
+def test_sparse_coverage_alone_does_not_mark_ci_unreliable():
+    """A mostly-empty scope is a fact about the scope, not a broken interval."""
+    from scripts.evaluate_detections import assess_ci_reliability
+
+    unreliable, excludes = assess_ci_reliability(
+        _CI, 0.75, 0.70, 0.70, "sparse_cross_grid")
+    assert unreliable is False
+    assert excludes is False
+
+
+@pytest.mark.tier1
+def test_partial_coverage_still_marks_ci_unreliable():
+    """E72 is untouched: uncovered bounds break the point estimate too."""
+    from scripts.evaluate_detections import assess_ci_reliability
+
+    unreliable, excludes = assess_ci_reliability(
+        _CI, 0.75, 0.70, 0.70, "partial_coverage")
+    assert unreliable is True
+    assert excludes is False, "partial coverage is a separate ground"
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(
+    ("f1", "precision", "recall"),
+    [(0.95, 0.70, 0.70), (0.75, 0.20, 0.70), (0.75, 0.70, 0.99)],
+)
+def test_interval_excluding_its_point_estimate_marks_ci_unreliable(
+    f1, precision, recall
+):
+    """The actual pathology, tested on each metric that carries an interval."""
+    from scripts.evaluate_detections import assess_ci_reliability
+
+    unreliable, excludes = assess_ci_reliability(
+        _CI, f1, precision, recall, "normal")
+    assert excludes is True
+    assert unreliable is True
+
+
+@pytest.mark.tier1
+def test_healthy_dense_case_is_not_flagged():
+    from scripts.evaluate_detections import assess_ci_reliability
+
+    assert assess_ci_reliability(_CI, 0.75, 0.70, 0.70, "normal") == (False, False)
+
+
+@pytest.mark.tier1
+def test_absent_bounds_do_not_flag():
+    """A metric with no interval cannot exclude its point estimate."""
+    from scripts.evaluate_detections import assess_ci_reliability
+
+    ci = {"f1": {"ci_lower": None, "ci_upper": None},
+          "precision": {}, "recall": {}}
+    assert assess_ci_reliability(ci, 0.75, 0.70, 0.70, "normal") == (False, False)
