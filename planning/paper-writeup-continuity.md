@@ -8,6 +8,36 @@ project state.
 
 ---
 
+## 🔍 FIRST, IF YOU ARE FABLE ON 2026-08-20 — AUDIT SESSION 137
+
+> **The PI has asked for an adversarial audit of Session 137 before the work is
+> built on.** The brief is written and self-contained:
+> **`planning/session-137-audit-brief.md`**. Read it first and follow it; do not
+> resume the write-up until the audit is reported.
+>
+> **Why**: Session 137 changed the inferential instrument behind fourteen
+> leaderboards, re-ran 49 committed evaluations, retracted a published sole-leader
+> claim, retired a reliability flag affecting 91 of 337 conditions, and
+> materialised two ground-truth references — eighteen commits,
+> `2907713f3`..`a4abdb7ed` on top of `3abec641a`. Several of the corrections were
+> themselves corrected mid-session. The brief was written by the instance that
+> did the work, which is stated in it as the reason to distrust it.
+>
+> **The main deliverable is not re-checking my conclusions.** § 2 of the brief
+> lists thirteen *classes* of error found during the session — a hard-coded
+> constant published as a measurement, a hand-applied correction that
+> regeneration reverted, a validation that never validated the committed
+> artefact, a docstring promising a property the code does not compute, a stale
+> flag, an inverted sign in a summary, a default parameter wrong for a subset, a
+> loader gap making committed data unreproducible, one field with two shapes, an
+> identifier that is not one, a mixed-format numeric column, a cross-scope
+> comparison, and a derivation that reproduced nothing. **Each was found once and
+> is likely present elsewhere. Hunting the classes is the job.**
+>
+> § 3 records where I am least confident, § 4 what I did NOT check, and § 5 what
+> a finished report looks like. The audit should produce a report for the PI, not
+> register rows or errata edits.
+
 ## ⚠️ STANDING ITEM — AWAITING EXTERNAL STATISTICAL REVIEW (opened 2026-08-19)
 
 > **The MCB critical value is the one unverified step under fourteen register
