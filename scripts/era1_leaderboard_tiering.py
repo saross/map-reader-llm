@@ -134,7 +134,15 @@ def read_tile_mcc(eval_path: Path) -> float | None:
         The tile-level MCC point estimate, or ``None`` if absent.
     """
     summary = json.loads(eval_path.read_text())["summary"]
-    return summary.get("tile_classification", {}).get("mcc", {}).get("point")
+    # `tile_classification.mcc` has TWO committed shapes. evaluate_detections.py
+    # writes a block ({point, mean, ci_lower, ci_upper, ...}); the Track-2
+    # adapters write a bare float. Reading only the block shape raises on every
+    # adapter-written cell, which is one of the reasons the 55-map boards were
+    # unloadable. Both are accepted here; a null stays null (erratum E81).
+    mcc = summary.get("tile_classification", {}).get("mcc")
+    if isinstance(mcc, dict):
+        return mcc.get("point")
+    return mcc
 
 
 def load_board_refs(analyses_path: Path, analysis_id: str) -> list[str]:
@@ -205,6 +213,7 @@ def _per_tile_one_set(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     tile_order: list[str],
+    buffer_metres: int = HEADLINE_BUFFER_M,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Per-tile TP/FP/FN for ONE detection set, aligned to ``tile_order``.
 
@@ -223,7 +232,7 @@ def _per_tile_one_set(
         Tuple ``(tp, fp, fn)`` of float arrays, length ``len(tile_order)``.
     """
     tile_metrics = compute_per_tile_tp_fp_fn(
-        gdf_det, gdf_ref, gdf_bounds, buffer_metres=HEADLINE_BUFFER_M
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres
     )
     tile_index = {name: i for i, name in enumerate(tile_order)}
     n_tiles = len(tile_order)
@@ -245,6 +254,7 @@ def cell_per_tile(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     tile_order: list[str],
+    buffer_metres: int = HEADLINE_BUFFER_M,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, int]:
     """Reproduce a cell's per-tile TP/FP/FN exactly as its eval scored it.
 
@@ -299,7 +309,8 @@ def cell_per_tile(
             )
         )
         gdf_det = assign_source_tiles(gdf_det, gdf_bounds)
-        tp, fp, fn = _per_tile_one_set(gdf_det, gdf_ref, gdf_bounds, tile_order)
+        tp, fp, fn = _per_tile_one_set(gdf_det, gdf_ref, gdf_bounds, tile_order,
+                                       buffer_metres)
         return tp, fp, fn, 1
 
     if det_dir:
@@ -323,7 +334,7 @@ def cell_per_tile(
         for pass_file in pass_files:
             gdf_det = assign_source_tiles(_read_detections_gdf(pass_file), gdf_bounds)
             tp_i, fp_i, fn_i = _per_tile_one_set(
-                gdf_det, gdf_ref, gdf_bounds, tile_order
+                gdf_det, gdf_ref, gdf_bounds, tile_order, buffer_metres
             )
             tp_sum += tp_i
             fp_sum += fp_i
@@ -343,6 +354,7 @@ def load_cells(
     analysis_id: str,
     bounds_override: Path | None,
     gt_override: Path | None,
+    buffer_metres: int = HEADLINE_BUFFER_M,
 ) -> tuple[list[dict], gpd.GeoDataFrame, gpd.GeoDataFrame, list[str]]:
     """Load every board cell with per-tile stats, F1 and MCC.
 
@@ -376,7 +388,15 @@ def load_cells(
         cond = resolve_condition(conditions_path, ref)
         eval_path = BASE_DIR / cond["eval_path"]
         meta = json.loads(eval_path.read_text())["_metadata"]
-        cli = dict(meta["cli_args"])
+        # Adapter-written evaluations (the Track-2 55-map cells) carry no
+        # `cli_args` at all — they were not produced by evaluate_detections.py —
+        # but they do record `input_files`. Start from whatever exists and fill
+        # the rest below, so an adapter cell is loadable given a --ground-truth
+        # override naming a materialised reference.
+        cli = dict(meta.get("cli_args") or {})
+        inf = meta.get("input_files") or {}
+        cli.setdefault("bounds", inf.get("bounds"))
+        cli.setdefault("ground_truth", inf.get("ground_truth"))
         # Batch-mode fallback. `--batch` records the BATCH-level invocation in
         # cli_args, so `detections` and `detections_dir` are both null there and
         # the per-cell input lives in `_metadata.input_files.detections` instead.
@@ -418,14 +438,15 @@ def load_cells(
     cells: list[dict] = []
     for r in resolved:
         cond, eval_path, cli = r["cond"], r["eval_path"], r["cli"]
-        tp, fp, fn, n_passes = cell_per_tile(cli, gdf_ref, gdf_bounds, tile_order)
+        tp, fp, fn, n_passes = cell_per_tile(cli, gdf_ref, gdf_bounds, tile_order,
+                                             buffer_metres)
         # Kind label: distinguish the three Era-1 architectures so the board
         # does not mislabel proposer-verifier cells as single-pass.
         kind = {
             "consensus": "consensus",
             "proposer-verifier": "verified-PV",
         }.get(cond.get("architecture"), "single-pass")
-        eval_f1 = board_f1_at_20m(eval_path)
+        eval_f1 = board_f1_at_20m(eval_path, buffer_metres)
         observed = micro_f1(tp.sum(), fp.sum(), fn.sum())
         cells.append(
             {

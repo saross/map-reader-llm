@@ -4799,7 +4799,8 @@ micro-F1 and tile-MCC over correlated tiles.
 | `n1-baseline-matrix-384` | F1 | 18 | 2 | 4 |
 | `diversity-dividend-384` | F1 | 22 | 3 | 3 |
 
-**Ten boards revised; four are not.** The first attempt could revise only eight.
+**All fourteen boards are now on the MCB instrument: ten revised, four confirmed
+unchanged.** The first attempt could revise only eight.
 `n1-baseline-matrix-384` and `diversity-dividend-384` failed because 18 of their
 cells were scored through `--batch`, where `cli_args` records the batch-level
 invocation and leaves `detections` and `detections_dir` null while the per-cell
@@ -4807,7 +4808,7 @@ input sits in `_metadata.input_files.detections`. That was a loader gap, not a
 data loss (defect D22): an additive fallback recovers all 18, each reproducing
 its committed evaluation F1 to within 0.0005, and both boards are now revised.
 
-The remaining four are the 55-map boards (`55map-canonical-leaderboard-50m`, `55map-standardised-leaderboard-50m`
+The last four are the 55-map boards (`55map-canonical-leaderboard-50m`, `55map-standardised-leaderboard-50m`
 and their MCC siblings). Their ground truth was a composite of an adjudication
 CSV and a reviewed GeoJSON rather than a single loadable reference, so
 `evaluate_detections.py --ground-truth`, which takes one path, could not score
@@ -4826,11 +4827,20 @@ It remains a **best-possible reference, not a gold standard** (ruling 21b): moun
 that both the students and every model missed are absent, and the two-directional
 biases documented in the source README apply unchanged.
 
-What is still needed to re-tier those four boards: re-score each board's
-conditions against the merged reference on the 55-map bounds, confirm the result
-reproduces the committed corrected-F1 numbers to the usual gate, then apply MCB.
-Until that runs, their tie sets remain on the superseded instrument and should be
-read with this entry.
+**Those four are now re-tiered.** Each was scored at its own 50 m buffer against
+the matching materialised reference, every cell reproducing its committed F1 to
+0.0000, and **all four return a tie set identical to the published one** (2, 1, 2
+and 1 members respectively). The sequential rule and MCB agree here, so no 55-map
+claim changes — including the two MCC boards' *sole* Tier-1 cell, which survives
+the simultaneous procedure where `era1-leaderboard`'s sole-leader claim did not.
+
+Reaching them required three further fixes, each a loader gap rather than a data
+problem: adapter-written evaluations carry no `cli_args` at all (they were not
+produced by `evaluate_detections.py`); `tile_classification.mcc` has two committed
+shapes, a block from the scorer and a bare float from the adapters; and the
+reproduction gate read a fixed 20 m buffer, which on a 50 m board compared the
+recomputation against a different quantity and turned the gate into noise. All
+three are fixed and the buffer is now an explicit parameter.
 
 **Tiers below the first are retained**, on the Principal Investigator's direction
 (2026-08-19), because showing what did not work is part of the result. They are

@@ -222,20 +222,28 @@ def load_baseline_cells(conditions_path: Path, analyses_path: Path) -> list[dict
     return cells
 
 
-def board_f1_at_20m(eval_path: Path) -> float:
-    """Read a cell's headline board F1@20 m (mean over replicate passes).
+def board_f1_at_20m(eval_path: Path, buffer_metres: int = HEADLINE_BUFFER_M) -> float:
+    """Read a cell's headline board F1 at ``buffer_metres`` (mean over passes).
 
-    This is the metric the leaderboard ranks by, and the value the
-    permutation's micro-F1-of-the-mean is cross-checked against.
+    This is the metric the leaderboard ranks by, and the value the permutation's
+    micro-F1-of-the-mean is cross-checked against. The buffer is a parameter
+    because not every board is a 20 m board: the four 55-map boards are scored at
+    50 m, and reading 20 m there would compare the recomputation against a
+    different quantity, turning the reproduction gate into noise. The name is
+    kept for its callers.
 
     Args:
         eval_path: Path to the cell's evaluation.json.
+        buffer_metres: Matching radius to read.
 
     Returns:
-        The F1 at the 20 m buffer from ``summary.buffers``.
+        The F1 at ``buffer_metres`` from ``summary.buffers``.
+
+    Raises:
+        StopIteration: if the evaluation carries no row at that buffer.
     """
     summary = json.loads(eval_path.read_text())["summary"]
-    buf = next(b for b in summary["buffers"] if b["buffer_metres"] == HEADLINE_BUFFER_M)
+    buf = next(b for b in summary["buffers"] if b["buffer_metres"] == buffer_metres)
     return float(buf["f1"])
 
 

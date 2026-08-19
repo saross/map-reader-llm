@@ -403,6 +403,9 @@ def run(
 
 def build_board_tile_counts(
     analysis_id: str,
+    gt_override: Path | None = None,
+    bounds_override: Path | None = None,
+    buffer_metres: int = BUFFER_M,
 ) -> tuple[list[dict[str, Any]], np.ndarray, np.ndarray]:
     """Load a registered leaderboard's cells as per-tile TP/FP/FN.
 
@@ -421,7 +424,7 @@ def build_board_tile_counts(
     cells, gdf_ref, gdf_bounds, tile_order = load_cells(
         PROJECT_ROOT / "results/run-conditions.json",
         PROJECT_ROOT / "results/run-analyses.json",
-        analysis_id, None, None,
+        analysis_id, bounds_override, gt_override, buffer_metres,
     )
     specs = [{"ref": c["ref"], "label": c["label"], "eval_f1": c["eval_f1"]}
              for c in cells]
@@ -507,6 +510,16 @@ def main() -> int:
     ap.add_argument("--tag", default=None, help="Output filename stem for --evals.")
     ap.add_argument("--metric", choices=("f1", "mcc"), default="f1",
                     help="Detection-level micro-F1, or registered tile-level MCC.")
+    ap.add_argument("--ground-truth", type=Path, default=None,
+                    help="Reference override; required for adapter-written boards "
+                         "whose evals record a composite ground truth rather than "
+                         "a loadable path (the Track-2 55-map boards).")
+    ap.add_argument("--bounds", type=Path, default=None, help="Bounds override.")
+    ap.add_argument("--buffer", type=int, default=BUFFER_M,
+                    help="Matching radius in metres. MUST match the board's own "
+                         "headline buffer — the 55-map boards are 50 m boards, and "
+                         "tiering them at the 20 m default would silently produce a "
+                         "tie set for a different question.")
     ap.add_argument("--K", type=int, default=10)
     ap.add_argument("--bootstrap", type=int, default=10000)
     ap.add_argument("--m-frac", type=float, default=1.0,
@@ -524,7 +537,8 @@ def main() -> int:
         tag = args.tag or "evals"
         res_meta = {"evals_glob": args.evals}
     elif args.board:
-        specs, counts, has_mounds = build_board_tile_counts(args.board)
+        specs, counts, has_mounds = build_board_tile_counts(
+            args.board, args.ground_truth, args.bounds, args.buffer)
         tag = args.board
         res_meta = {"board": args.board}
     else:
@@ -543,7 +557,7 @@ def main() -> int:
               has_mounds=has_mounds, metric=args.metric)
     res.update(res_meta)
     res.update({"m_frac": args.m_frac, "candidates": specs, "seed": SEED,
-                "buffer_metres": BUFFER_M})
+                "buffer_metres": args.buffer})
 
     kept = res["kept_indices"]
     specs = [specs[i] for i in kept]
@@ -576,6 +590,8 @@ def main() -> int:
                     res["mcb_theta"][i], res["mcb_lower"][i], res["mcb_upper"][i])
 
     suffix = "" if args.metric == "f1" else f"_{args.metric}"
+    if args.buffer != BUFFER_M:
+        suffix += f"_b{args.buffer}"
     out = args.out / f"{tag}{suffix}_m{args.m_frac:g}.json"
     out.write_text(json.dumps(res, indent=2))
     logger.info("wrote %s", out)

@@ -1,0 +1,146 @@
+{
+  "metric": "f1",
+  "n_candidates": 8,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "n_tiles": 8541,
+  "m_out_of_n": 8541,
+  "bootstrap": 10000,
+  "selected_index": 0,
+  "apparent_f1": 0.8393343419062027,
+  "optimism": 0.0013553791112172328,
+  "optimism_mcse": 4.3107497227216336e-05,
+  "optimism_spread_p2_5_p97_5": [
+    -0.007090565689470862,
+    0.009660131867988007
+  ],
+  "corrected_f1": 0.8379789627949855,
+  "naive_ci": [
+    0.8304154122606565,
+    0.8478868455094826
+  ],
+  "selection_aware_ci": [
+    0.8290600331494393,
+    0.8465314663982654
+  ],
+  "argmax_stability": 0.5725,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.011459340533771605,
+  "mcb_theta": [
+    0.0006246644868478368,
+    -0.008992461564322318,
+    -0.0006246644868478368,
+    -0.022460568197896658,
+    -0.02848279706822232,
+    -0.05601039824423093,
+    -0.03830235016213668,
+    -0.011461115996481253
+  ],
+  "mcb_lower": [
+    -0.010834676046923768,
+    -0.020451802098093923,
+    -0.012084005020619442,
+    -0.033919908731668266,
+    -0.03994213760199393,
+    -0.06746973877800254,
+    -0.04976169069590829,
+    -0.022920456530252858
+  ],
+  "mcb_upper": [
+    0.012084005020619442,
+    0.002466878969449287,
+    0.010834676046923768,
+    -0.011001227664125052,
+    -0.017023456534450716,
+    -0.04455105771045932,
+    -0.026843009628365073,
+    -1.775462709647374e-06
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2
+  ],
+  "hsu_w_upper": 0.008825325782583798,
+  "hsu_w_lower": 0.011106714535979372,
+  "hsu_lower": [
+    -0.010482050049131535,
+    -0.02009917610030169,
+    -0.011731379022827209,
+    -0.03356728273387603,
+    -0.039589511604201696,
+    -0.0671171127802103,
+    -0.049409064698116054,
+    -0.022567830532460625
+  ],
+  "hsu_upper": [
+    0.009449990269431635,
+    0.0,
+    0.008200661295735961,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    2
+  ],
+  "hsu_vs_band_delta": -1,
+  "board": "55map-standardised-leaderboard-50m",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt",
+      "label": "verified-k3-standardised-gt",
+      "eval_f1": 0.839334
+    },
+    {
+      "ref": "55maps-text-high-t0-3-generalisation::verified-k4-standardised-gt",
+      "label": "verified-k4-standardised-gt",
+      "eval_f1": 0.830342
+    },
+    {
+      "ref": "55maps-text-high-generalisation::verified-k3-standardised-gt",
+      "label": "verified-k3-standardised-gt",
+      "eval_f1": 0.83871
+    },
+    {
+      "ref": "55maps-text-high-generalisation::verified-k4-standardised-gt",
+      "label": "verified-k4-standardised-gt",
+      "eval_f1": 0.816874
+    },
+    {
+      "ref": "55maps-text-min-generalisation::verified-k3-standardised-gt",
+      "label": "verified-k3-standardised-gt",
+      "eval_f1": 0.810852
+    },
+    {
+      "ref": "55maps-text-min-generalisation::verified-k4-standardised-gt",
+      "label": "verified-k4-standardised-gt",
+      "eval_f1": 0.783324
+    },
+    {
+      "ref": "55maps-image-generalisation::verified-k3-standardised-gt",
+      "label": "verified-k3-standardised-gt",
+      "eval_f1": 0.801032
+    },
+    {
+      "ref": "55maps-text-min-n10-uplift::verified-5of10-standardised-gt",
+      "label": "verified-5of10-standardised-gt",
+      "eval_f1": 0.827873
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 50
+}

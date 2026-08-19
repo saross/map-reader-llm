@@ -1,0 +1,145 @@
+{
+  "metric": "f1",
+  "n_candidates": 8,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "n_tiles": 8541,
+  "m_out_of_n": 8541,
+  "bootstrap": 10000,
+  "selected_index": 0,
+  "apparent_f1": 0.8476058017087225,
+  "optimism": 0.0003993044380619065,
+  "optimism_mcse": 4.3619205311675095e-05,
+  "optimism_spread_p2_5_p97_5": [
+    -0.00827893717357163,
+    0.008807335586290444
+  ],
+  "corrected_f1": 0.8472064972706606,
+  "naive_ci": [
+    0.8388377778083633,
+    0.855946800162468
+  ],
+  "selection_aware_ci": [
+    0.8384384733703014,
+    0.8555474957244061
+  ],
+  "argmax_stability": 0.9339,
+  "n_distinct_argmax": 2,
+  "mcb_critical_width": 0.011396788257892658,
+  "mcb_theta": [
+    0.00514073686505101,
+    -0.00514073686505101,
+    -0.011731550841305838,
+    -0.018578286480829154,
+    -0.03237791967118897,
+    -0.03489393730194279,
+    -0.04890648253384189,
+    -0.06453467385585299
+  ],
+  "mcb_lower": [
+    -0.006256051392841648,
+    -0.016537525122943667,
+    -0.023128339099198494,
+    -0.02997507473872181,
+    -0.04377470792908163,
+    -0.04629072555983545,
+    -0.060303270791734545,
+    -0.07593146211374564
+  ],
+  "mcb_upper": [
+    0.016537525122943667,
+    0.006256051392841648,
+    -0.0003347625834131795,
+    -0.007181498222936495,
+    -0.020981131413296314,
+    -0.023497149044050133,
+    -0.03750969427594923,
+    -0.05313788559796033
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1
+  ],
+  "hsu_w_upper": 0.009899554355713115,
+  "hsu_w_lower": 0.0103980136110279,
+  "hsu_lower": [
+    -0.00525727674597689,
+    -0.01553875047607891,
+    -0.022129564452333737,
+    -0.028976300091857053,
+    -0.04277593328221687,
+    -0.04529195091297069,
+    -0.05930449614486979,
+    -0.07493268746688089
+  ],
+  "hsu_upper": [
+    0.015040291220764125,
+    0.004758817490662105,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "55map-canonical-leaderboard-50m",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt",
+      "label": "verified-k3-canonical-gt",
+      "eval_f1": 0.847606
+    },
+    {
+      "ref": "55maps-text-high-generalisation::verified-k3-canonical-gt",
+      "label": "verified-k3-canonical-gt",
+      "eval_f1": 0.842465
+    },
+    {
+      "ref": "55maps-text-high-t0-3-generalisation::verified-k4-canonical-gt",
+      "label": "verified-k4-canonical-gt",
+      "eval_f1": 0.835874
+    },
+    {
+      "ref": "55maps-text-min-n10-uplift::verified-5of10-canonical-gt",
+      "label": "verified-5of10-canonical-gt",
+      "eval_f1": 0.829028
+    },
+    {
+      "ref": "55maps-text-high-generalisation::verified-k4-canonical-gt",
+      "label": "verified-k4-canonical-gt",
+      "eval_f1": 0.815228
+    },
+    {
+      "ref": "55maps-text-min-generalisation::verified-k3-canonical-gt",
+      "label": "verified-k3-canonical-gt",
+      "eval_f1": 0.812712
+    },
+    {
+      "ref": "55maps-image-generalisation::verified-k3-canonical-gt",
+      "label": "verified-k3-canonical-gt",
+      "eval_f1": 0.798699
+    },
+    {
+      "ref": "55maps-text-min-generalisation::verified-k4-canonical-gt",
+      "label": "verified-k4-canonical-gt",
+      "eval_f1": 0.783071
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 50
+}

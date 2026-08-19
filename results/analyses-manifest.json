@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T10:19:00Z",
+  "generated_at": "2026-08-19T11:02:11Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -937,7 +937,7 @@
         "55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt",
         "55maps-text-high-generalisation::verified-k3-canonical-gt"
       ],
-      "outcome": "5 tiers, 24/28 pairs significant after BH-FDR. Board (F1@50, tier): T03-k3 (oracle) 0.8476 (T1); TH7-k3 0.8425 (T1); T03-k4 0.8359 (T2); TM-n10-k5 (uplift) 0.8290 (T2); TH7-k4 (carry-forward) 0.8152 (T3); TM-k3 0.8127 (T3); IM-k3 0.7987 (T4); TM-k4 0.7831 (T5). The uplift (TM-n10-k5) confirms Obs 364 on the full board: pass count closes about half the deployment thinking gap \u2014 significantly above TM-k3, significantly below TH7-k3 \u2014 making minimal-thinking deployment a priced cost/quality trade rather than a tie.",
+      "outcome": "5 tiers, 24/28 pairs significant after BH-FDR. Board (F1@50, tier): T03-k3 (oracle) 0.8476 (T1); TH7-k3 0.8425 (T1); T03-k4 0.8359 (T2); TM-n10-k5 (uplift) 0.8290 (T2); TH7-k4 (carry-forward) 0.8152 (T3); TM-k3 0.8127 (T3); IM-k3 0.7987 (T4); TM-k4 0.7831 (T5). The uplift (TM-n10-k5) confirms Obs 364 on the full board: pass count closes about half the deployment thinking gap \u2014 significantly above TM-k3, significantly below TH7-k3 \u2014 making minimal-thinking deployment a priced cost/quality trade rather than a tie. [TIE SET RE-VERIFIED 2026-08-19, erratum E83] Re-tiered under the Hsu multiple-comparisons-with-the-best (MCB) admissible set at simultaneous 95 %, scored at the board's own 50 m buffer against the materialised reference (`inputs/vectors/references/canonical-gt-55maps-r50.geojson`), every cell reproducing its committed F1 to 0.0000. **Membership is IDENTICAL to the published tie set** \u2014 the sequential rule and MCB agree here, so nothing changes. Recorded so the whole register sits on one instrument. Remaining tiers are descriptive rank bands, carrying no claim of separation.",
       "paper_section": "Results",
       "output_path": "results/55map-leaderboard",
       "working_notes_obs": [
@@ -951,7 +951,7 @@
           "results/run-analyses.json",
           "results/55map-leaderboard"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-19T11:02:11Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -976,7 +976,7 @@
       "tie_set": [
         "55maps-image-generalisation::verified-k3-canonical-gt"
       ],
-      "outcome": "5 tiers, 20/28 pairs significant after BH-FDR. Board (tile-MCC@50, tier): IM-k3 0.7104 (T1, SOLE leader); T03-k3 (oracle) 0.6903 (T2); TH7-k3 0.6796 (T2); TM-n10-k5 (uplift) 0.6725 (T3); T03-k4 0.6711 (T3); TH7-k4 (carry-forward) 0.6666 (T3); TM-k3 0.6580 (T4); TM-k4 0.6411 (T5). IM-k3 is the SOLE Tier-1 cell \u2014 all seven of its pairwise comparisons are significant, including against the F1 oracle T03-k3 (\u0394MCC +0.0201, BH p=0.0056). The tier order INVERTS the F1 board at the top (the F1 Tier-4 cell is the MCC sole leader; the F1 oracle drops to MCC T2; only bottom-ranked TM-k4 is invariant), while within the text family MCC still respects the F1 ordering (every k3-above-k4 difference significant) \u2014 so the inversion is a MODALITY effect, not noise: the cheap two-call image+verifier stack is the resolved best tile-level discriminator while sitting outside the coordinate-F1 frontier (Obs 369/370). Gate: rebuilt per-tile confusion reproduces the committed Track-2 evaluations exactly, 8/8. 95% CIs are the Track-2 engine's BCa bootstrap MCC CIs.",
+      "outcome": "5 tiers, 20/28 pairs significant after BH-FDR. Board (tile-MCC@50, tier): IM-k3 0.7104 (T1, SOLE leader); T03-k3 (oracle) 0.6903 (T2); TH7-k3 0.6796 (T2); TM-n10-k5 (uplift) 0.6725 (T3); T03-k4 0.6711 (T3); TH7-k4 (carry-forward) 0.6666 (T3); TM-k3 0.6580 (T4); TM-k4 0.6411 (T5). IM-k3 is the SOLE Tier-1 cell \u2014 all seven of its pairwise comparisons are significant, including against the F1 oracle T03-k3 (\u0394MCC +0.0201, BH p=0.0056). The tier order INVERTS the F1 board at the top (the F1 Tier-4 cell is the MCC sole leader; the F1 oracle drops to MCC T2; only bottom-ranked TM-k4 is invariant), while within the text family MCC still respects the F1 ordering (every k3-above-k4 difference significant) \u2014 so the inversion is a MODALITY effect, not noise: the cheap two-call image+verifier stack is the resolved best tile-level discriminator while sitting outside the coordinate-F1 frontier (Obs 369/370). Gate: rebuilt per-tile confusion reproduces the committed Track-2 evaluations exactly, 8/8. 95% CIs are the Track-2 engine's BCa bootstrap MCC CIs. [TIE SET RE-VERIFIED 2026-08-19, erratum E83] Re-tiered under the Hsu multiple-comparisons-with-the-best (MCB) admissible set at simultaneous 95 %, scored at the board's own 50 m buffer against the materialised reference (`inputs/vectors/references/canonical-gt-55maps-r50.geojson`), every cell reproducing its committed F1 to 0.0000. **Membership is IDENTICAL to the published tie set** \u2014 the sequential rule and MCB agree here, so nothing changes. Recorded so the whole register sits on one instrument. Remaining tiers are descriptive rank bands, carrying no claim of separation.",
       "paper_section": "Results",
       "output_path": "results/metric-leaderboards",
       "working_notes_obs": [
@@ -989,7 +989,7 @@
           "results/run-analyses.json",
           "results/metric-leaderboards"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-19T11:02:11Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1183,7 +1183,7 @@
         "55maps-text-high-t0-3-generalisation::verified-k3-standardised-gt",
         "55maps-text-high-generalisation::verified-k3-standardised-gt"
       ],
-      "outcome": "Tier structure IDENTICAL to the legacy board: T1={T03-k3, TH7-k3}, T2={T03-k4, TM-n10-k5}, T3={TH7-k4, TM-k3}, T4={IM-k3}, T5={TM-k4}; 24/28 pairs significant on both references, with one pair swapping significance (IM-k3/TM-k3 out, T03-k4/TH7-k3 in) without touching any tier boundary. The T03-k3-vs-TH7-k3 pair stays non-significant and the tie deepens: delta 0.0051 p=0.127 (legacy) -> delta 0.0006 p=0.857 (standardised). The reference standardisation is fully rank- and tier-preserving on F1.",
+      "outcome": "Tier structure IDENTICAL to the legacy board: T1={T03-k3, TH7-k3}, T2={T03-k4, TM-n10-k5}, T3={TH7-k4, TM-k3}, T4={IM-k3}, T5={TM-k4}; 24/28 pairs significant on both references, with one pair swapping significance (IM-k3/TM-k3 out, T03-k4/TH7-k3 in) without touching any tier boundary. The T03-k3-vs-TH7-k3 pair stays non-significant and the tie deepens: delta 0.0051 p=0.127 (legacy) -> delta 0.0006 p=0.857 (standardised). The reference standardisation is fully rank- and tier-preserving on F1. [TIE SET RE-VERIFIED 2026-08-19, erratum E83] Re-tiered under the Hsu multiple-comparisons-with-the-best (MCB) admissible set at simultaneous 95 %, scored at the board's own 50 m buffer against the materialised reference (`inputs/vectors/references/best-available-gt-55maps.geojson`), every cell reproducing its committed F1 to 0.0000. **Membership is IDENTICAL to the published tie set** \u2014 the sequential rule and MCB agree here, so nothing changes. Recorded so the whole register sits on one instrument. Remaining tiers are descriptive rank bands, carrying no claim of separation.",
       "paper_section": "Results",
       "output_path": "results/55map-leaderboard",
       "working_notes_obs": [
@@ -1197,7 +1197,7 @@
           "results/run-analyses.json",
           "results/55map-leaderboard"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-19T11:02:11Z",
         "extractor_version": "0.7.1"
       }
     },
@@ -1222,7 +1222,7 @@
       "tie_set": [
         "55maps-image-generalisation::verified-k3-standardised-gt"
       ],
-      "outcome": "Tier structure AND significant-pair set IDENTICAL to the legacy MCC board (20/28 significant, 5 tiers): IM-k3 stays SOLE Tier 1 on tile-MCC (0.7120) while sitting Tier 4 on F1 \u2014 the Obs 280 divergence at tier grain, now on the shared reference; T2={T03-k3, TH7-k3}, T3={TM-n10-k5, T03-k4, TH7-k4}, T4={TM-k3}, T5={TM-k4}.",
+      "outcome": "Tier structure AND significant-pair set IDENTICAL to the legacy MCC board (20/28 significant, 5 tiers): IM-k3 stays SOLE Tier 1 on tile-MCC (0.7120) while sitting Tier 4 on F1 \u2014 the Obs 280 divergence at tier grain, now on the shared reference; T2={T03-k3, TH7-k3}, T3={TM-n10-k5, T03-k4, TH7-k4}, T4={TM-k3}, T5={TM-k4}. [TIE SET RE-VERIFIED 2026-08-19, erratum E83] Re-tiered under the Hsu multiple-comparisons-with-the-best (MCB) admissible set at simultaneous 95 %, scored at the board's own 50 m buffer against the materialised reference (`inputs/vectors/references/best-available-gt-55maps.geojson`), every cell reproducing its committed F1 to 0.0000. **Membership is IDENTICAL to the published tie set** \u2014 the sequential rule and MCB agree here, so nothing changes. Recorded so the whole register sits on one instrument. Remaining tiers are descriptive rank bands, carrying no claim of separation.",
       "paper_section": "Results",
       "output_path": "results/metric-leaderboards",
       "working_notes_obs": [
@@ -1235,7 +1235,7 @@
           "results/run-analyses.json",
           "results/metric-leaderboards"
         ],
-        "last_extracted_at": "2026-08-17T00:20:30Z",
+        "last_extracted_at": "2026-08-19T11:02:11Z",
         "extractor_version": "0.7.1"
       }
     },

@@ -1,8 +1,12 @@
 # The 55-map generalisation runs — identities, relationships, and assessment coverage
 
-**Last updated**: 2026-06-07 (Session 105 — added the **two-reference (Track 1 /
-Track 2) framing** and the **canonical extended-GT re-score**; see
-§ "Two evaluation references"). Prior: 2026-06-02 (Session 95 follow-up).
+> **Last revised**: 2026-08-19 (Session 137 — **Track 3, the standardised
+> reference, documented at last**; both references materialised as single
+> scorable artefacts; all four 55-map boards re-tiered under Hsu MCB; two data
+> hazards recorded). See [§ Changelog](#changelog) for revision history.
+
+**Prior updates**: 2026-06-07 (Session 105 — the two-reference Track 1 / Track 2
+framing and the canonical extended-GT re-score); 2026-06-02 (Session 95 follow-up).
 **Purpose**: a single legible map of the five `55maps-*-generalisation` run
 directories — what each one is, how they relate (one is a superseded original of
 another), and which performance assessments each carries — so a reader (or
@@ -69,10 +73,11 @@ cf. the image track at 0.18–0.27 — see Obs 269/277 and `protocol-errata.md` 
 4. **Verifier-vs-human 2×2 crosstab** (`crosstab_verifier_vs_human.py`):
    verifier probability vs the human label — the calibration check.
 
-## Two evaluation references — Track 1 (historical) and Track 2 (canonical)
+## Three evaluation references — Track 1 (historical), Track 2 (canonical), Track 3 (standardised)
 
-Added Session 105 (2026-06-07). The 55-map deployment is reported against **two
-ground-truth references, side by side**:
+Added Session 105 (2026-06-07) with two tracks; a third was created 2026-08-14
+and is documented here from 2026-08-19. The 55-map deployment is reported against
+**three ground-truth references**:
 
 - **Track 1 — historical / as-measured.** The bare **reviewed student GT**
   (`student-mounds-55maps-reviewed.geojson`, 4,746 features). The honest "what a
@@ -90,7 +95,68 @@ ground-truth references, side by side**:
   per-run corrections (`human-reviewed-corrected/`, `cleaned-gt-evaluation/`) are
   **folded into the canonical and superseded** — not reported as a third column.
 
-Both tracks use **one trusted engine** (`evaluate_detections` /
+- **Track 3 — standardised / best-available (the current reference).** Created
+  2026-08-14 by applying PI ruling 21
+  (`scripts/materialise_standardised_reference.py`,
+  `results/deployment-oracle-2026-06-06/canonical-gt/standardised/`). Two layers:
+  the student digitisation **standardised** (4,731 = 4,746 − 4 false positives −
+  1 contradicted merge − 12 duplicates + 2 restored pre-merge originals) and an
+  **extension** layer of 279 confirmed mounds the students missed (278 of the 773
+  reviewed candidates that survived, plus one marking-pass extra), all at marked
+  centres.
+
+  Two properties matter for reuse. It is **buffer-invariant** — marked centres
+  with no ring gate, so the same records are correct at every radius, unlike
+  Track 2 — and it is explicitly a **best-possible reference, not a gold
+  standard** (ruling 21b): mounds that both the students and every model missed
+  are absent, because recovering them needs a fresh survey of the sheets. Its
+  two-directional biases (≈370 residual long-range duplicates deflating recall;
+  joint student+model false negatives inflating it ≈ 2.4–2.7 %) are set out in
+  the layer README and must travel with any number computed against it.
+
+### One-file references (added 2026-08-19)
+
+Until Session 137 no reference existed as a **single scorable artefact**. Track 2
+was a student GeoJSON plus an adjudication CSV to be gated per buffer; Track 3
+was two layers in two formats. Since `evaluate_detections.py --ground-truth`
+takes one path, neither could be scored through the generic engine, which is why
+the four 55-map register boards could not be re-tiered under erratum E83 on the
+first attempt.
+
+`scripts/materialise_best_available_gt.py` now emits both, in GeoJSON and CSV:
+
+| Artefact | Records | Vintage | Buffer |
+|---|---:|---|---|
+| `inputs/vectors/references/best-available-gt-55maps.{geojson,csv}` | **5,010** | Track 3 standardised (4,731 student + 279 extension) | invariant |
+| `inputs/vectors/references/canonical-gt-55maps-r50.{geojson,csv}` | **5,161** | Track 2 canonical (4,746 student + 415 phantoms at ring ≤ 50 m) | **50 m only** |
+
+Each record carries `gt_id`, `layer`, `symbol_code`, `source_map`, `symbol_type`,
+`confidence_grade`, `position_source` and `provenance`, so provenance survives the
+merge and a consumer can filter by positional quality without rejoining sources.
+The canonical file is radius-stamped in its name because that vintage is
+buffer-gated: a copy at 50 m is not valid at 75 m.
+
+**Verified** against the committed boards before use: scoring
+`55maps-text-high-t0.3-generalisation` k3 through the generic engine gives
+F1@50 m = 0.8393 / MCC 0.689 against the standardised reference and 0.8476 /
+0.690 against the canonical one, reproducing both committed cells exactly.
+
+### Two hazards for anyone reusing these layers
+
+- **`uuid` is a symbol code, not an identifier.** In the student layer 4,746
+  records carry only 839 distinct `uuid` values, one repeated 1,152 times,
+  because the field encodes the map-symbol type — every feature drawn with the
+  same symbol shares a value. Geometries are all distinct, so nothing is corrupt,
+  but any join or de-duplication keyed on `uuid` silently collapses rows. First
+  flagged by the 2026-08-04 reference census; recorded as defect D21. The merged
+  artefacts above key on `gt_id` and expose the field under its real name,
+  `symbol_code`.
+- **`buffer_metres` in `canonical-review.csv` is mixed-format** — both `"50"` and
+  `"50.0"` occur. Parsing it with `int()` raises on the decimal rows, and
+  catching that exception silently drops 33 of the 773 records. Parse through
+  `float`.
+
+Tracks 1 and 2 use **one trusted engine** (`evaluate_detections` /
 `compute_corrected_f1_multi_buffer` — shared `calculate_f1_internal` and
 `calculate_tile_classification`); **only the GT differs**, which is the clean
 experimental control. Below 50 m the two tracks coincide exactly (no phantom has
@@ -163,3 +229,41 @@ manifest** as `<run>::verified-{k4,k3}-canonical-gt` (e.g. the oracle
   provenance / calibration).
 - Obs 260 (student-GT jitter), Obs 269 + 277 (image-track verifier miscalibration).
 - `planning/paper-writeup-continuity.md` Session 95 carry-forward to-dos.
+
+## Board tiering under erratum E83 (2026-08-19)
+
+All four 55-map register boards were re-tiered under the Hsu
+multiple-comparisons-with-the-best admissible set, replacing the sequential
+greedy-clique rule that defect D20 showed to be order-dependent. Each was scored
+at its own **50 m** buffer against the matching materialised reference above,
+with every cell reproducing its committed F1 to 0.0000.
+
+| Board | Metric | Published tie set | Hsu MCB | Result |
+|---|---|---:|---:|---|
+| `55map-standardised-leaderboard-50m` | F1 | 2 | 2 | identical |
+| `55map-standardised-leaderboard-mcc-50m` | MCC | 1 | 1 | identical |
+| `55map-canonical-leaderboard-50m` | F1 | 2 | 2 | identical |
+| `55map-canonical-leaderboard-mcc-50m` | MCC | 1 | 1 | identical |
+
+**Membership is identical on all four**, so no published 55-map claim changes.
+Notably the two MCC boards' **sole** Tier-1 cell survives the simultaneous
+procedure, which the Era-1 leaderboard's sole-leader claim did not. Selection
+optimism across the four is between +0.0000 and +0.0014, negligible against the
+effects reported.
+
+## Changelog
+
+### 2026-08-19 — Track 3 documented; one-file references; boards re-tiered
+
+**Trigger**: erratum E83 could not re-tier the 55-map boards because no reference
+existed as a single scorable artefact, and the standardised reference created
+2026-08-14 had never been documented here at all — this file still described the
+corpus as a two-track study more than two months after it became three.
+
+Added: Track 3 (standardised / best-available); the one-file references and their
+verification against committed cells; the `uuid` symbol-code hazard (D21) and the
+mixed-format `buffer_metres` hazard; the E83 tiering outcome for all four boards.
+
+**What did NOT change**: no number in the Track-1 or Track-2 sections, no board
+membership, no registered outcome. The tiering instrument changed and agreed with
+what was published.
