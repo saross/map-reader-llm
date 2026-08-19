@@ -4796,16 +4796,41 @@ micro-F1 and tile-MCC over correlated tiles.
 | `flash35-model-roles` | F1 | 5 | 2 | 3 |
 | `verifier-robustness-matrix` | F1 | 6 | 5 | 5 |
 
-**Six boards are NOT revised**, and the reason is a capability limit rather than
-a judgement. `n1-baseline-matrix-384` and `diversity-dividend-384` contain cells
-whose evaluations declare neither `detections` nor `detections_dir`, so their
-per-tile counts cannot be reproduced from the committed record. The four 55-map
-boards (`55map-canonical-leaderboard-50m`, `55map-standardised-leaderboard-50m`
-and their MCC siblings) are adapter-written Track-2 corrected-F1 evaluations whose
-ground truth is a composite of an adjudication CSV and a reviewed GeoJSON rather
-than a single loadable reference, so re-scoring them needs the Track-2 pipeline,
-not the generic scorer. Their tie sets remain on the superseded instrument and
-should be read with this entry.
+| `n1-baseline-matrix-384` | F1 | 18 | 2 | 4 |
+| `diversity-dividend-384` | F1 | 22 | 3 | 3 |
+
+**Ten boards revised; four are not.** The first attempt could revise only eight.
+`n1-baseline-matrix-384` and `diversity-dividend-384` failed because 18 of their
+cells were scored through `--batch`, where `cli_args` records the batch-level
+invocation and leaves `detections` and `detections_dir` null while the per-cell
+input sits in `_metadata.input_files.detections`. That was a loader gap, not a
+data loss (defect D22): an additive fallback recovers all 18, each reproducing
+its committed evaluation F1 to within 0.0005, and both boards are now revised.
+
+The remaining four are the 55-map boards (`55map-canonical-leaderboard-50m`, `55map-standardised-leaderboard-50m`
+and their MCC siblings). Their ground truth was a composite of an adjudication
+CSV and a reviewed GeoJSON rather than a single loadable reference, so
+`evaluate_detections.py --ground-truth`, which takes one path, could not score
+them at all.
+
+**That blocker is now removed**, though the boards are not yet re-tiered.
+`scripts/materialise_best_available_gt.py` merges the two standardised layers
+into one artefact — `inputs/vectors/references/best-available-gt-55maps.{geojson,csv}`,
+**5,010 records** (4,731 standardised student + 279 confirmed extension), in
+EPSG:32635, with per-record `layer`, `confidence_grade`, `position_source` and
+`provenance` retained. It is buffer-invariant, because the standardised layers
+are marked centres with no ring gate, which is what makes a single static
+reference possible where the earlier per-buffer-gated extended GT did not.
+
+It remains a **best-possible reference, not a gold standard** (ruling 21b): mounds
+that both the students and every model missed are absent, and the two-directional
+biases documented in the source README apply unchanged.
+
+What is still needed to re-tier those four boards: re-score each board's
+conditions against the merged reference on the 55-map bounds, confirm the result
+reproduces the committed corrected-F1 numbers to the usual gate, then apply MCB.
+Until that runs, their tie sets remain on the superseded instrument and should be
+read with this entry.
 
 **Tiers below the first are retained**, on the Principal Investigator's direction
 (2026-08-19), because showing what did not work is part of the result. They are

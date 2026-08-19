@@ -1,0 +1,259 @@
+{
+  "metric": "f1",
+  "n_candidates": 18,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 200,
+  "selected_index": 15,
+  "apparent_f1": 0.8045540796963947,
+  "optimism": 0.0012328173735100616,
+  "optimism_mcse": 0.0011725505077551318,
+  "optimism_spread_p2_5_p97_5": [
+    -0.031159891916961047,
+    0.029817396491399438
+  ],
+  "corrected_f1": 0.8033212623228846,
+  "naive_ci": [
+    0.7673093309396166,
+    0.8341622152083389
+  ],
+  "selection_aware_ci": [
+    0.7660765135661065,
+    0.8329293978348288
+  ],
+  "argmax_stability": 0.875,
+  "n_distinct_argmax": 2,
+  "mcb_critical_width": 0.06396285574517838,
+  "mcb_theta": [
+    -0.30622035885628013,
+    -0.20506212372687738,
+    -0.2511307997165072,
+    -0.41777626214069136,
+    -0.28498592854929616,
+    -0.316371926703479,
+    -0.21374445168764222,
+    -0.14952052264941484,
+    -0.0595099637344374,
+    -0.01237068999327584,
+    -0.20619111046128324,
+    -0.21148170571723368,
+    -0.3053265361077829,
+    -0.13879136783198776,
+    -0.20953531476974863,
+    0.01237068999327584,
+    -0.04899852414083916,
+    -0.3014849925865606
+  ],
+  "mcb_lower": [
+    -0.37018321460145853,
+    -0.2690249794720557,
+    -0.31509365546168555,
+    -0.48173911788586976,
+    -0.3489487842944745,
+    -0.38033478244865737,
+    -0.27770730743282057,
+    -0.21348337839459322,
+    -0.12347281947961578,
+    -0.07633354573845422,
+    -0.2701539662064616,
+    -0.27544456146241203,
+    -0.3692893918529613,
+    -0.20275422357716613,
+    -0.273498170514927,
+    -0.051592165751902536,
+    -0.11296137988601754,
+    -0.36544784833173893
+  ],
+  "mcb_upper": [
+    -0.24225750311110175,
+    -0.141099267981699,
+    -0.18716794397132883,
+    -0.35381340639551295,
+    -0.2210230728041178,
+    -0.2524090709583007,
+    -0.14978159594246385,
+    -0.08555766690423647,
+    0.0044528920107409775,
+    0.051592165751902536,
+    -0.14222825471610487,
+    -0.1475188499720553,
+    -0.2413636803626045,
+    -0.07482851208680938,
+    -0.14557245902457025,
+    0.07633354573845422,
+    0.014964331604339215,
+    -0.2375221368413822
+  ],
+  "mcb_not_ruled_out": [
+    8,
+    9,
+    15,
+    16
+  ],
+  "hsu_w_upper": 0.05991135921847767,
+  "hsu_w_lower": 0.05354948706605493,
+  "hsu_lower": [
+    -0.3597698459223351,
+    -0.2586116107929323,
+    -0.30468028678256215,
+    -0.4713257492067463,
+    -0.3385354156153511,
+    -0.36992141376953397,
+    -0.26729393875369717,
+    -0.2030700097154698,
+    -0.11305945080049233,
+    -0.06592017705933077,
+    -0.2597405975273382,
+    -0.2650311927832886,
+    -0.3588760231738378,
+    -0.1923408548980427,
+    -0.2630848018358036,
+    -0.04117879707277909,
+    -0.1025480112068941,
+    -0.35503447965261553
+  ],
+  "hsu_upper": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.000401395484040272,
+    0.04754066922520183,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.07228204921175352,
+    0.01091283507763851,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    8,
+    9,
+    15,
+    16
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "n1-baseline-matrix-384",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::baseline-flash-image-high-t-0-7",
+      "label": "baseline-flash-image-high-t-0-7",
+      "eval_f1": 0.4986
+    },
+    {
+      "ref": "pv-diag-384::baseline-flash-image-minimal-t-0-0",
+      "label": "baseline-flash-image-minimal-t-0-0",
+      "eval_f1": 0.5995
+    },
+    {
+      "ref": "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+      "label": "baseline-flash-image-minimal-t-0-7",
+      "eval_f1": 0.5534
+    },
+    {
+      "ref": "pv-diag-384::baseline-flash-text-high-t-0-7",
+      "label": "baseline-flash-text-high-t-0-7",
+      "eval_f1": 0.3871
+    },
+    {
+      "ref": "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
+      "label": "baseline-flash-text-minimal-t-0-0-pv-baseline",
+      "eval_f1": 0.5196
+    },
+    {
+      "ref": "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+      "label": "baseline-flash-text-minimal-t-0-7",
+      "eval_f1": 0.4883
+    },
+    {
+      "ref": "pv-diag-384::baseline-pro-image-high-t-0-7",
+      "label": "baseline-pro-image-high-t-0-7",
+      "eval_f1": 0.5908
+    },
+    {
+      "ref": "pv-diag-384::baseline-pro-image-medium-t-0-0",
+      "label": "baseline-pro-image-medium-t-0-0",
+      "eval_f1": 0.6555
+    },
+    {
+      "ref": "pv-diag-384::baseline-pro-text-high-t-0-7",
+      "label": "baseline-pro-text-high-t-0-7",
+      "eval_f1": 0.745
+    },
+    {
+      "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+      "label": "baseline-pro-text-medium-t-0-0",
+      "eval_f1": 0.7921
+    },
+    {
+      "ref": "n1-outstanding-384::baseline-flash-image-minimal-t-0-0-487-tiles",
+      "label": "baseline-flash-image-minimal-t-0-0-487-tiles",
+      "eval_f1": 0.5984
+    },
+    {
+      "ref": "n1-outstanding-384::baseline-flash-image-minimal-t-0-3",
+      "label": "baseline-flash-image-minimal-t-0-3",
+      "eval_f1": 0.5931
+    },
+    {
+      "ref": "n1-outstanding-384::baseline-flash-text-minimal-t-0-3",
+      "label": "baseline-flash-text-minimal-t-0-3",
+      "eval_f1": 0.4992
+    },
+    {
+      "ref": "n1-pro-rerun-384::baseline-pro-image-high-t-0-0",
+      "label": "baseline-pro-image-high-t-0-0",
+      "eval_f1": 0.6658
+    },
+    {
+      "ref": "n1-pro-rerun-384::baseline-pro-image-medium-t-0-7",
+      "label": "baseline-pro-image-medium-t-0-7",
+      "eval_f1": 0.595
+    },
+    {
+      "ref": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+      "label": "baseline-pro-text-high-t-0-0",
+      "eval_f1": 0.8045
+    },
+    {
+      "ref": "n1-pro-rerun-384::baseline-pro-text-medium-t-0-7",
+      "label": "baseline-pro-text-medium-t-0-7",
+      "eval_f1": 0.7555
+    },
+    {
+      "ref": "retest-h11-single-pass-384-t0::baseline-flash-text-minimal-t-0-0",
+      "label": "baseline-flash-text-minimal-t-0-0",
+      "eval_f1": 0.5031
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

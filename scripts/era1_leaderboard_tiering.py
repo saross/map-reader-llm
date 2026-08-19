@@ -375,7 +375,22 @@ def load_cells(
     for ref in refs:
         cond = resolve_condition(conditions_path, ref)
         eval_path = BASE_DIR / cond["eval_path"]
-        cli = json.loads(eval_path.read_text())["_metadata"]["cli_args"]
+        meta = json.loads(eval_path.read_text())["_metadata"]
+        cli = dict(meta["cli_args"])
+        # Batch-mode fallback. `--batch` records the BATCH-level invocation in
+        # cli_args, so `detections` and `detections_dir` are both null there and
+        # the per-cell input lives in `_metadata.input_files.detections` instead.
+        # Without this, every cell scored through a batch YAML is unreproducible
+        # from the committed record — 18 cells across n1-baseline-matrix-384 and
+        # diversity-dividend-384, which is why neither board could be re-tiered
+        # under E83 on the first attempt. The fallback is additive: it fires only
+        # where cell_per_tile would otherwise raise.
+        if not (cli.get("detections") or cli.get("detections_dir")):
+            fallback = (meta.get("input_files") or {}).get("detections")
+            if isinstance(fallback, str):
+                cli["detections_dir"] = fallback
+            elif isinstance(fallback, list) and fallback:
+                cli["detections"] = fallback
         gts.add(cli["ground_truth"])
         boundss.add(cli["bounds"])
         resolved.append({"ref": ref, "cond": cond, "eval_path": eval_path, "cli": cli})
