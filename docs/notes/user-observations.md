@@ -745,3 +745,43 @@ every interval in the study is a sequencing decision, not an
 implementation one. The general shape: act on prior approvals and
 correct what is demonstrably wrong, but do not commit the PI to an
 ordering they have not chosen.
+
+## S137 candidates (2026-08-19, pending review)
+
+Drafted at handoff; accept / edit / discard / replace. Unanswered candidates
+hold over — silence never discards.
+
+- **Candidate 1 — I offered one option where my own instructions say to
+  survey.** You had to ask "should we review-implementation of the
+  selection-aware intervals decision, or are you comfortable with it?" before I
+  checked my own proposal, and the review then rejected it. Your global
+  instruction already says the first working solution is likely suboptimal in
+  domains outside your expertise and that I should proactively flag better
+  alternatives. Is single-option proposing something you notice recurring, and
+  would you want an explicit "options I did not consider" line attached by
+  default to any method choice — or is that noise on the many occasions the
+  first option is right?
+
+- **Candidate 2 — five self-corrections in one session.** You watched me reverse
+  the overlap sign in a register row I had written hours earlier, flip the MCB
+  relation from superset to subset once I ran the real construction, discard a
+  tile-MCC derivation that reproduced nothing, replace a diagnosis that merely
+  restated an error message, and catch a buffer default that had scored four
+  boards at the wrong radius. Every one was caught by a gate rather than by
+  rereading, which is the design working — but the rate is high. Did that read
+  as rigour or as unreliability, and does it change how much of my unverified
+  output you would act on?
+
+- **Candidate 3 — the pace against your ability to track it.** This was a long
+  session that changed fourteen published tie sets, re-ran 49 evaluations, and
+  retracted a headline claim. I reported at each landing, but the volume was
+  large and much of it was corrective. Was the cadence legible enough to tell
+  what was being decided from what was merely executed, or would fewer, larger
+  checkpoints have served you better?
+
+- **Candidate 4 — I wrote the brief for my own audit.** You asked for something
+  to hand Fable, and the instance under audit specified the audit. I flagged the
+  conflict inside the brief and structured it around error *classes* rather than
+  my conclusions to blunt it, but the choice of what to list as uncertain was
+  still mine. Did the flagging help, or would you rather the next audit brief be
+  a bare diff and commit range with no framing from me at all?

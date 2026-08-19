@@ -27421,7 +27421,50 @@ dissolved once the comparison was made properly); **Obs 351** and
 **Obs 352**, which carry the 256 px verifier reading that case 4 puts
 back in play.
 
-## Candidates pending review — none outstanding
+## Candidates pending review (drafted 2026-08-19, Session 137)
+
+Accept / edit / discard. Unanswered candidates hold over — silence never
+discards.
+
+- **Candidate A — selection optimism is governed by how correlated the candidates
+  are, not how many there are.** Every "best cell" in this study is an argmax
+  taken on the evaluation set, so each is optimistically biased. Measured across
+  eighteen candidate sets the bias ran −0.0008 to +0.0137 F1, an order of
+  magnitude below the nearest published analogue (SIREN, arXiv 2605.05973, +0.42
+  to +3.70 percentage points on adaptive LLM benchmarking), and it tracked argmax
+  stability almost deterministically (1.000 → −0.0008; 0.646 → +0.0132). The
+  mechanism is that our sweeps are nested — a higher vote threshold's accepted set
+  is a subset of a lower one's — so thirty nominal candidates behave like a
+  handful of effective ones. The sharp instance is a falsified prediction: the E56
+  verifier threshold curve, expected to be the worst case because it is flat
+  (≤ 0.022 F1 across the plateau), was the best measured (+0.0004, stability
+  0.906). **Flatness of a curve and instability of its argmax are different
+  properties; what connects them is the variance of the differences, not their
+  size.** Paper-relevant because it justifies reporting the correction as
+  negligible rather than omitting it.
+
+- **Candidate B — a tier built from pairwise non-significance is not a
+  well-defined object.** Non-significance is not transitive: A indistinguishable
+  from B and B from C does not make A indistinguishable from C, so any partition
+  assembled from pairwise tests depends on the order it is assembled in. Measured
+  against Hsu MCB, the study's sequential rule ran too narrow on two boards, too
+  wide on three, identical on one, and on `min-vs-high-thinking-pv` produced a set
+  that was neither subset nor superset — no uniform adjustment repairs that. The
+  defensible object is "which configurations cannot be ruled out as *the* best",
+  which MCB answers directly and simultaneously. Recorded because the temptation
+  to tier a leaderboard is strong and the failure is invisible on most boards.
+
+- **Candidate C — detections and references are booked to tiles by different
+  rules, and the resulting tile-MCC error is silent.** Detections go to exactly
+  one tile (nearest centroid among those intersected, the E79 rule); references
+  count for **every** tile they intersect, so with overlapping tilings one mound
+  can make several tiles reference-populated. Deriving reference occupancy from
+  the detection-level false-negative column instead — the natural assumption —
+  gives a confusion matrix of 185/278/14/10 where the truth is 188/247/11/41, and
+  an MCC of 0.898 against a committed 0.790. The predicted-positive total is right
+  either way (199), which is what makes it plausible enough to publish.
+  **Re-derivations of a committed metric should be gated on reproducing a
+  committed value, not on looking reasonable.**
 
 The five Session-136 candidates were approved in-session on
 2026-08-19 and minted above as Observations 416–420; the
