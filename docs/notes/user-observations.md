@@ -676,62 +676,72 @@ subsections, so the correction was cheap to honour — but it was
 Shawn who had to make it; Claude should have proposed the outline
 walk before drafting M.x, not after.
 
-## S135 candidates (2026-08-18, pending review)
+## Session 135 — 2026-08-18 (reviewed 2026-08-19)
 
-Drafted at handoff; accept / edit / discard / replace. Unanswered
-candidates hold over — silence never discards.
+**Candidate 1 — rationale-before-ruling: it depends on reversibility.**
+On the H6 classification Shawn declined to rule on a compressed
+recommendation and asked for the full argument; the written rationale
+(four arguments plus the counter-case) got "agree, in full". The rule
+is not "always expand" or "always compress" but **expand first when the
+decision is hard to undo or externally visible** — a registration
+classification, anything that lands in the lodged record, anything a
+reader outside the project will see. Recommendation-first stays correct
+for calls that can be revisited cheaply.
 
-- **Candidate 1 — the rationale-before-ruling exchange.** On the H6
-  classification you declined to rule on a recommendation label and
-  asked for the full argument; the written rationale (four arguments
-  plus the counter-case) got "agree, in full". Was the initial
-  compressed presentation an under-serve for a call of that weight,
-  or is recommendation-first-then-expand the right default with
-  expansion on demand?
-- **Candidate 2 — the AFK block's decision-deferral.** You returned
-  from AFK to a completed, blind-verified five-analysis batch with
-  every PI-facing call queued as PROPOSED rather than made (classes,
-  counting rule, sign-offs). Did that division — full execution
-  autonomy, zero decision autonomy — land where you want it, or was
-  anything queued that Claude should have just decided (or vice
-  versa)?
-- **Candidate 3 — the cost-overrun flagging.** The H13 run came in
-  31 % over the gated figure and Claude led with that fact in the
-  report and commit rather than absorbing a ~$1.40 difference.
-  Useful calibration, or noise at this dollar scale? (The underlying
-  process error is logged as claude-obs 58 either way.)
+**Candidate 2 — the AFK block deferred too much.** Shawn returned to a
+completed, blind-verified five-analysis batch with every PI-facing call
+queued as PROPOSED. The verdict: **too cautious**. Full execution
+autonomy is right, but zero decision autonomy is not — the mechanical
+calls should have been decided and reported, with PROPOSED reserved for
+genuinely contestable ones (classifications, anything touching the
+registration). Queueing everything converts unattended progress into a
+review backlog and spends the PI's attention on items that had one
+defensible answer.
 
-## S136 candidates (2026-08-19, pending review)
+**Candidate 3 — the cost-overrun flagging was noise at this scale.**
+The H13 run came in 31 % over its gate (~$5.74 against ~$4.37) and
+Claude led with it in both the report and the commit. At a ~$1.40
+difference that prominence is **over-weighted**; absorb it and note it
+in passing. The underlying process error is logged as claude-obs 58,
+which is where it belongs. (Not a licence to stop tracking overruns —
+the judgement is about placement and prominence, not about whether the
+gate is checked.)
 
-Drafted at handoff; accept / edit / discard / replace. Unanswered
-candidates hold over — silence never discards. **The S135 candidates
-above (2026-08-18) are also still unanswered and hold over.**
+## Session 136 — 2026-08-19 (reviewed 2026-08-19)
 
-- **Candidate 1 — the two pushbacks that changed the record.** Twice
-  you challenged a finding rather than acting on it: "I thought we'd
-  been careful about excluding calibration tiles (please re-check)",
-  and "have an agent probe that [BCa error] and make sure we
-  understand it correctly". Both retracted or materially corrected a
-  claim I had reported with confidence — the first was wrong outright,
-  the second right in mechanism but wrong in three consequences. Is
-  that hit rate telling you something about when to trust my findings
-  unverified, and should I be volunteering the adversarial pass rather
-  than waiting to be asked?
-- **Candidate 2 — the question that reframed a headline.** "As for the
-  512px beating 384px, that's still without the verifier, correct?"
-  One sentence, and it converted a stated finding into a conditional
-  one — the grid's whole result is "512 px wins when nothing prunes
-  false positives", which is not the same claim. Did that land as a
-  routine check, or had I over-stated the result in a way worth
-  correcting in how I report?
-- **Candidate 3 — nine agents, one working tree.** The session ran
-  substantial concurrent delegation with per-brief file-ownership
-  partitions. It worked (two benign collisions), and the agents caught
-  four things I had missed including a defect in my own resolver. Was
-  the volume legible to you, or did the reporting cadence make it hard
-  to track what was actually being decided versus executed?
-- **Candidate 4 — the overnight autonomy shape.** You went to bed with
-  "get as far as possible", and I ran three agents, corrected published
-  numbers, retired a register row on your prior approval, and left D15
-  deliberately unfixed as a decision for you. Was that the right line
-  between doing and deferring, or was anything on the wrong side of it?
+**Candidate 1 — volunteer the adversarial pass on load-bearing
+findings.** Twice Shawn challenged a finding rather than acting on it
+("I thought we'd been careful about excluding calibration tiles", and
+"have an agent probe that [BCa error]"). The first was wrong outright;
+the second was right in mechanism but wrong in three of its stated
+consequences. The rule adopted: **any finding that would change
+published numbers, retract a claim, or trigger an erratum gets an
+adversarial re-check before it reaches Shawn** — run unprompted, with
+both passes reported. The hit rate says the second pass is worth its
+cost precisely on the findings that carry consequences.
+
+**Candidate 2 — the verifier question was a routine check, not a
+correction.** "As for the 512px beating 384px, that's still without the
+verifier, correct?" read as normal verification of a result Shawn was
+about to reason from; the condition was already documented. No change
+to how results are reported. (Recorded because the alternative reading
+— that the claim had been over-stated — was plausible and was
+considered and rejected.)
+
+**Candidate 3 — use worktree isolation beyond a few agents.** Nine
+concurrent agents ran in one working tree under per-brief file-ownership
+partitions. It worked (two benign collisions) and the agents caught four
+things Claude had missed, including a defect in Claude's own resolver —
+but declared ownership is too fragile at that scale. **Isolate agents in
+worktrees rather than relying on partitions**, which is what Obs 353
+recommended after the Session 108 near-miss and which this session's
+volume now confirms.
+
+**Candidate 4 — the overnight line was drawn correctly.** Running three
+agents, correcting published numbers, and retiring a register row on
+prior approval were all in scope unattended; **leaving D15 deliberately
+unfixed was right**, because a defect whose correction moves essentially
+every interval in the study is a sequencing decision, not an
+implementation one. The general shape: act on prior approvals and
+correct what is demonstrably wrong, but do not commit the PI to an
+ordering they have not chosen.
