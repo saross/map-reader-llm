@@ -195,6 +195,32 @@ Run only if Phases 0-2 leave (b)/(c) open:
 - These are **post-hoc (E41-class)** extensions. They need their own register
   rows and must not be reported under a registered hypothesis.
 
+## Machine state this programme depends on
+
+Phase 0 and any re-scoring need the tile trees, which are **untracked and
+machine-local on sapphire** (regenerable, but not for free):
+
+| Tree | Geometry | PNGs |
+|---|---|---:|
+| `inputs/tiles` | 512 px / 12.5 % | 360 |
+| `inputs/tiles_384` | 384 px / 12.5 % | 611 |
+| `inputs/tiles_512_ov128` | 512 px / 25 % | 440 |
+| `inputs/tiles_512_ov256` | 512 px / 50 % | 1,020 |
+| `inputs/tiles_384_ov192` | 384 px / 50 % | 1,760 |
+| `inputs/tiles_256` | 256 px | — |
+
+**Do not clean these**, and note the specific hazard: `git stash -u` and
+`git clean -fd` both sweep them, because they are untracked by design.
+`inputs/tiles_384_ov192` was swept exactly this way during Session 136 and
+recovered from `stash@{0}^3`; the restored tree was verified to reproduce
+`inputs/grid-2026-08-18/grid_384_ov192_manifest.json` exactly (1,398 of
+1,760 tiles, identical set). Regeneration if ever needed:
+
+```bash
+python scripts/preprocess_tiling.py --tile-size 384 --overlap 192 \
+    --output-dir inputs/tiles_384_ov192
+```
+
 ## Blocking dependency
 
 **D15 (the BCa axis defect) should be resolved before any inference here is

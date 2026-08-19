@@ -28,6 +28,15 @@ project state.
 > $0) are in `reports/bca-axis-defect-2026-08-18.md`. It also **blocks the
 > grid's register row** (D16).
 >
+> **HELD-OVER GATES (no silent discard)**: user-observation candidates
+> from **S135 and S136** are both unanswered in
+> `docs/notes/user-observations.md` (pending-review sections dated
+> 2026-08-18 and 2026-08-19). Re-surface at the next `/handoff` or
+> `/recap`. Machine-state note: the untracked tile trees on sapphire are
+> inputs Phase 0 needs — `inputs/tiles_384_ov192` was swept by a
+> `git stash -u` this session and recovered; inventory and the hazard are
+> in `planning/recall-levers-programme-2026-08-19.md` § Machine state.
+>
 > **PI RULING (2026-08-19) — E82 AND THE 10k STANDARDISATION.** File
 > erratum **E82** carrying THREE disclosures, then re-run everything that
 > needs re-running at **10,000 iterations**:

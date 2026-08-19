@@ -50,6 +50,12 @@ artefact that carries the evidence rather than restating it.
 | D11 | `results/scoring-sensitivity-2026-08-18/exposure-survey.json` was produced while the under-read was live, so `pv-diag-384::baseline-pro-{text,image}-medium-t-0-0` were scored on 1 pass of 3. Re-running now resolves 3 each. The exposure classifications are unchanged, but the recorded per-cell numbers for those two conditions are wrong. | `results/scoring-sensitivity-2026-08-18/` | OPEN — $0 re-run; feeds the dedup correction campaign |
 | D10 | The grid runs' auto-written `experiment_intent.md` records hypothesis `H1` and "factor being varied: `include_example_images`", inherited from `detect_brief-text.json`. Wrong for a geometry grid, and it lands in provenance. | `outputs/grid-2026-08-18/**/experiment_intent.md` | Correct in the register row and post-run report rather than forking the config. |
 
+## Near-misses
+
+| # | Event | Outcome |
+|---|---|---|
+| N1 | `git stash -u` on sapphire swept the untracked `inputs/tiles_384_ov192` tile tree (5,284 files) — the input the grid's 384/50 % cell cannot be re-scored without. Untracked-by-design trees are invisible to the usual safety habits, and `git clean -fd` would do the same. | **RECOVERED** from `stash@{0}^3` during the session-close residue sweep; verified to reproduce the committed manifest exactly (1,398 of 1,760 tiles, identical set). Tree inventory and the hazard now recorded in `planning/recall-levers-programme-2026-08-19.md` § Machine state. |
+
 ## Cleared — investigated, not defects
 
 | # | Suspicion | Outcome |

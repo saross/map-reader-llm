@@ -700,3 +700,38 @@ candidates hold over — silence never discards.
   report and commit rather than absorbing a ~$1.40 difference.
   Useful calibration, or noise at this dollar scale? (The underlying
   process error is logged as claude-obs 58 either way.)
+
+## S136 candidates (2026-08-19, pending review)
+
+Drafted at handoff; accept / edit / discard / replace. Unanswered
+candidates hold over — silence never discards. **The S135 candidates
+above (2026-08-18) are also still unanswered and hold over.**
+
+- **Candidate 1 — the two pushbacks that changed the record.** Twice
+  you challenged a finding rather than acting on it: "I thought we'd
+  been careful about excluding calibration tiles (please re-check)",
+  and "have an agent probe that [BCa error] and make sure we
+  understand it correctly". Both retracted or materially corrected a
+  claim I had reported with confidence — the first was wrong outright,
+  the second right in mechanism but wrong in three consequences. Is
+  that hit rate telling you something about when to trust my findings
+  unverified, and should I be volunteering the adversarial pass rather
+  than waiting to be asked?
+- **Candidate 2 — the question that reframed a headline.** "As for the
+  512px beating 384px, that's still without the verifier, correct?"
+  One sentence, and it converted a stated finding into a conditional
+  one — the grid's whole result is "512 px wins when nothing prunes
+  false positives", which is not the same claim. Did that land as a
+  routine check, or had I over-stated the result in a way worth
+  correcting in how I report?
+- **Candidate 3 — nine agents, one working tree.** The session ran
+  substantial concurrent delegation with per-brief file-ownership
+  partitions. It worked (two benign collisions), and the agents caught
+  four things I had missed including a defect in my own resolver. Was
+  the volume legible to you, or did the reporting cadence make it hard
+  to track what was actually being decided versus executed?
+- **Candidate 4 — the overnight autonomy shape.** You went to bed with
+  "get as far as possible", and I ran three agents, corrected published
+  numbers, retired a register row on your prior approval, and left D15
+  deliberately unfixed as a decision for you. Was that the right line
+  between doing and deferring, or was anything on the wrong side of it?
