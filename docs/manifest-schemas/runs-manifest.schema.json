@@ -54,9 +54,9 @@
           "description": "Coarse architecture family. 'mixed' where the run's conditions span architectures (the precise architecture lives on each condition)."
         },
         "tile_size_px": {
-          "type": "integer",
-          "enum": [256, 384, 512],
-          "description": "The run's evaluation grid."
+          "type": ["integer", "null"],
+          "enum": [256, 384, 512, null],
+          "description": "The run's evaluation grid. Null ONLY where tile size is a factor the run varies across its own conditions, in which case each condition carries its own value and no single run-level figure is true; every fixed-geometry run must state its integer."
         },
         "corpus": {
           "type": "string",

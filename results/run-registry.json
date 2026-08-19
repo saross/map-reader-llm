@@ -189,6 +189,12 @@
    "notes": "Run B (Session 112-113, ~$60 flex, Shawn-approved): the min11 deployment uplift — 10 gemini-3-flash MINIMAL-thinking T=0.7 detect_brief-text proposer passes over the 55-map corpus (8,541 tiles), the >=3-of-10 band cropped (16,482 candidates) + the carry-forward n=1 verifier. Answers Obs 362's open question: pass count closes about HALF the deployment thinking gap (Obs 364). Scored vs the canonical extended GT at 50 m (results/55map-leaderboard/min11_uplift_cell.json; Track-2 eval results/55maps-extended-gt-2026-06-07/TM-n10-k5/)."
   },
   {
+   "run_id": "grid-2026-08-18",
+   "directory_path": "outputs/grid-2026-08-18",
+   "status": "active",
+   "notes": "Post-hoc (E41-class) 2x2 tile-size x overlap grid: 512/384 px crossed with 12.5/50 % overlap, detect_brief-text, gemini-3-flash-preview, MINIMAL thinking, T=0.7, 10 passes per cell, 30,130 calls, $18.53 billed. Proposer stage only, consensus-only aggregation, NO verifier stage — both headline findings are conditional on that. Six parse-failed tiles recovered as additive one-tile passes and merged at preparation. Scoring chain: outputs/grid-2026-08-18/scoring/ (common four-way tile-union intersection carried on the era-2-487 grid) -> results/grid-2026-08-18/."
+  },
+  {
    "run_id": "h13",
    "directory_path": "outputs/h13",
    "status": "active",

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T01:31:09Z",
+  "generated_at": "2026-08-19T02:02:01Z",
   "generator_version": "0.7.1",
   "analyses": [
     {
@@ -1609,6 +1609,38 @@
           "results/h6-registered-analyses"
         ],
         "last_extracted_at": "2026-08-17T13:02:34Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "analysis_id": "grid-tilesize-overlap-2026-08-18",
+      "type": "comparison",
+      "conditions_compared": [
+        "grid-2026-08-18::g512-ov064-k10-c1-k8",
+        "grid-2026-08-18::g512-ov256-k10-c2-k8",
+        "grid-2026-08-18::g384-ov048-k10-c1-k10",
+        "grid-2026-08-18::g384-ov192-k10-c2-k10"
+      ],
+      "hypothesis_refs": [],
+      "preregistered": "post-hoc",
+      "deviations": [
+        "E41",
+        "E82"
+      ],
+      "predicted_outcome": null,
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "Post-hoc (E41-class) 2x2 tile-size x overlap grid, proposer stage only, consensus-only aggregation, 10 passes per cell, one configuration throughout (detect_brief-text, gemini-3-flash-preview, MINIMAL, T=0.7; 30,130 calls, $18.53 billed). Scored on the four-way tile-union intersection carried on the era-2-487 grid (487 carrier tiles, 20 m buffer), with the preregistered 20 m within-pass deduplication applied to every pass so denser tilings are not penalised for cross-tile duplicates. Best cell per configuration at K=10: 512 px / 12.5 % F1 0.6759 [0.6239,0.7237] MCC 0.5383; 512 px / 50 % F1 0.7518 [0.7026,0.7938] MCC 0.5897; 384 px / 12.5 % F1 0.6475 [0.5935,0.6966] MCC 0.3137; 384 px / 50 % F1 0.7205 [0.6749,0.7618] MCC 0.4909. TWO STANDING PRIORS OVERTURNED. (1) 512 px wins at every overlap and every K, so the 384 px sweet spot does NOT reproduce under one footprint at T=0.7: tile-size effect -0.0824 at 12.5 % [-0.1243,-0.0429] and -0.0972 at 50 % [-0.1196,-0.0753], both excluding zero. (2) Passes do NOT substitute for overlap: one pass of 512/50 % beats ten passes of either 12.5 % cell on union recall per dollar. Overlap helps at both tile sizes (+0.1200 at 512 px, +0.1348 at 384 px, both excluding zero), and the interaction is UNRESOLVED: difference-of-differences -0.0148 [-0.0552,+0.0268], p=0.4902, spanning zero. ALL OF THIS IS CONDITIONAL ON THE ABSENCE OF A PRECISION STAGE: no verifier has run over any grid cell, so whether the tile-size ranking and the overlap effect survive verification is untested (recall-levers programme Phase 1, $6.33). Bootstrap intervals here are at B=10,000 per the 2026-08-19 PI ruling (erratum E82), not the 1,000 Decision 10 pre-specified; the paired contrasts use the analysis script's own resampler, which was never on the D15 defective path, so re-running them at 10,000 moved every delta by 0.00000, every CI width by under 5 %, and no significance verdict. Two of 228 swept cells have an undefined tile MCC, reported as null and never as 0.0 (E81). Artefacts: results/grid-2026-08-18/{grid_analysis.json,sweep.csv,findings.md} and the four per-cell evaluations under results/grid-2026-08-18/conditions/; scripts grid_prepare_scoring.py, grid_analysis.py, grid_materialise_conditions.py.",
+      "paper_section": "Results",
+      "output_path": "results/grid-2026-08-18",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/grid-2026-08-18"
+        ],
+        "last_extracted_at": "2026-08-19T02:02:01Z",
         "extractor_version": "0.7.1"
       }
     },

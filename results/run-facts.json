@@ -768,6 +768,31 @@
     "outputs/55maps-text-min-n10-uplift/proposer-all/ is an untracked symlink farm (regenerable merge scaffolding) — deliberate"
    ]
   },
+  "grid-2026-08-18": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H13"
+   ],
+   "purpose": "Post-hoc (E41-class) 2x2 crossing tile size (512/384 px) with tile overlap (12.5/50 %), proposer stage only, ten passes per cell, one configuration throughout. Tests whether the 384 px sweet spot reproduces under a single footprint, and whether extra passes substitute for extra overlap.",
+   "tile_size_px": null,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "grid-common-487",
+    "bounds_path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": "grid-2026-08-18::g512-ov256-k10-c2-k8",
+   "headline_rationale": "Best F1@20 m of the four cells at K=10 (0.7518, tile-MCC 0.5897). Conditional on the absence of a precision stage: no verifier has run over any grid cell, so neither the tile-size ranking nor the overlap effect is unconditional until Phase 1 of the recall-levers programme executes.",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "Tile size varies BETWEEN cells, so the run-level tile_size_px is null by design; each condition carries its own."
+   ]
+  },
   "h13": {
    "primary_hypothesis": "H13",
    "also_informs": [],

@@ -1,0 +1,118 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-08-19T01:46:16.968610+00:00",
+  "summary": {
+    "label": "detections",
+    "n_detections": 488,
+    "buffers": [
+      {
+        "buffer_metres": 20,
+        "f1": 0.7205,
+        "f1_point": 0.7205,
+        "f1_ci_lower": 0.6749,
+        "f1_ci_upper": 0.7618,
+        "f1_ci_method": "BCa",
+        "precision": 0.6762,
+        "p_point": 0.6762,
+        "p_ci_lower": 0.6161,
+        "p_ci_upper": 0.7309,
+        "p_ci_method": "BCa",
+        "recall": 0.771,
+        "r_point": 0.771,
+        "r_ci_lower": 0.7177,
+        "r_ci_upper": 0.8166,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 487,
+          "n_zero_count_tiles": 194,
+          "zero_fraction": 0.39835728952772076,
+          "threshold": 0.5,
+          "coverage_status": "normal",
+          "coverage_source": "processed_tiles",
+          "n_processed_tiles": 487,
+          "n_unprocessed_tiles": 0,
+          "coverage_detail": null
+        },
+        "coverage_status": "normal",
+        "ci_unreliable": false
+      }
+    ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal",
+    "tile_classification": {
+      "confusion": {
+        "tp": 187,
+        "tn": 172,
+        "fp": 90,
+        "fn": 38
+      },
+      "mcc": {
+        "point": 0.4909,
+        "mean": 0.4907,
+        "ci_lower": 0.4117,
+        "ci_upper": 0.5634,
+        "method": "BCa"
+      },
+      "sensitivity": {
+        "point": 0.8311,
+        "mean": 0.8311,
+        "ci_lower": 0.7783,
+        "ci_upper": 0.8761,
+        "method": "BCa"
+      },
+      "specificity": {
+        "point": 0.6565,
+        "mean": 0.6564,
+        "ci_lower": 0.5992,
+        "ci_upper": 0.714,
+        "method": "BCa"
+      }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.2",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "fe7f6d648",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-08-19T01:46:15.147600+00:00",
+    "cli_args": {
+      "detections": [
+        "results/grid-2026-08-18/conditions/g384_ov192/detections.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": null,
+      "buffers": [
+        20
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/grid-2026-08-18/conditions/g384_ov192/eval",
+      "label": null,
+      "mcc": true,
+      "workers": 1
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
+    },
+    "input_files": {
+      "detections": [
+        "results/grid-2026-08-18/conditions/g384_ov192/detections.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+    },
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
+    }
+  }
+}

@@ -1374,6 +1374,30 @@
    "manually_verified_at": "2026-08-17T13:02:16Z"
   },
   {
+   "analysis_id": "grid-tilesize-overlap-2026-08-18",
+   "type": "comparison",
+   "_note": "S136 executed the grid; S137 made it registrable. The four cells had no per-cell evaluation.json because grid_analysis.py computes its metrics in-process, and the analyses schema requires a non-empty conditions_compared (defect D16). Registration was additionally blocked by D15 until 122104b8a fixed the BCa axis defect. scripts/grid_materialise_conditions.py rebuilds each cell's published best-F1@20 m operating point at K=10 from the prepared deduplicated passes, writes it with E79 nearest-centroid tile assignment against the common carrier, and scores it at B=10,000. All four reproduce their published sweep F1 to under 5e-4, which is the registration's reproduction gate.",
+   "conditions_compared": [
+    "grid-2026-08-18::g512-ov064-k10-c1-k8",
+    "grid-2026-08-18::g512-ov256-k10-c2-k8",
+    "grid-2026-08-18::g384-ov048-k10-c1-k10",
+    "grid-2026-08-18::g384-ov192-k10-c2-k10"
+   ],
+   "hypothesis_refs": [],
+   "preregistered": "post-hoc",
+   "deviations": [
+    "E41",
+    "E82"
+   ],
+   "predicted_outcome": null,
+   "tie_set": [],
+   "outcome": "Post-hoc (E41-class) 2x2 tile-size x overlap grid, proposer stage only, consensus-only aggregation, 10 passes per cell, one configuration throughout (detect_brief-text, gemini-3-flash-preview, MINIMAL, T=0.7; 30,130 calls, $18.53 billed). Scored on the four-way tile-union intersection carried on the era-2-487 grid (487 carrier tiles, 20 m buffer), with the preregistered 20 m within-pass deduplication applied to every pass so denser tilings are not penalised for cross-tile duplicates. Best cell per configuration at K=10: 512 px / 12.5 % F1 0.6759 [0.6239,0.7237] MCC 0.5383; 512 px / 50 % F1 0.7518 [0.7026,0.7938] MCC 0.5897; 384 px / 12.5 % F1 0.6475 [0.5935,0.6966] MCC 0.3137; 384 px / 50 % F1 0.7205 [0.6749,0.7618] MCC 0.4909. TWO STANDING PRIORS OVERTURNED. (1) 512 px wins at every overlap and every K, so the 384 px sweet spot does NOT reproduce under one footprint at T=0.7: tile-size effect -0.0824 at 12.5 % [-0.1243,-0.0429] and -0.0972 at 50 % [-0.1196,-0.0753], both excluding zero. (2) Passes do NOT substitute for overlap: one pass of 512/50 % beats ten passes of either 12.5 % cell on union recall per dollar. Overlap helps at both tile sizes (+0.1200 at 512 px, +0.1348 at 384 px, both excluding zero), and the interaction is UNRESOLVED: difference-of-differences -0.0148 [-0.0552,+0.0268], p=0.4902, spanning zero. ALL OF THIS IS CONDITIONAL ON THE ABSENCE OF A PRECISION STAGE: no verifier has run over any grid cell, so whether the tile-size ranking and the overlap effect survive verification is untested (recall-levers programme Phase 1, $6.33). Bootstrap intervals here are at B=10,000 per the 2026-08-19 PI ruling (erratum E82), not the 1,000 Decision 10 pre-specified; the paired contrasts use the analysis script's own resampler, which was never on the D15 defective path, so re-running them at 10,000 moved every delta by 0.00000, every CI width by under 5 %, and no significance verdict. Two of 228 swept cells have an undefined tile MCC, reported as null and never as 0.0 (E81). Artefacts: results/grid-2026-08-18/{grid_analysis.json,sweep.csv,findings.md} and the four per-cell evaluations under results/grid-2026-08-18/conditions/; scripts grid_prepare_scoring.py, grid_analysis.py, grid_materialise_conditions.py.",
+   "paper_section": "Results",
+   "output_path": "results/grid-2026-08-18",
+   "working_notes_obs": [],
+   "manually_verified_at": null
+  },
+  {
    "analysis_id": "h13-overlap-2026-08-18",
    "type": "comparison",
    "_note": "S136. The registered three-arm H13 overlap contrast, executed at last (arms B and C ran 2026-08-17/18; arm A re-scored from its committed Phase 2a brief-text detections). All three arms scored under ONE uniform rule: preregistered within-pass 20 m deduplication (S8.5 Step 1) and a common A-intersect-B-intersect-C evaluation footprint (1637.5 km2, 538 mounds) carried on the arm-A grid. Both hazards were caught at gates, not in the data: the missing scorer dedup at the S135 phase gate, the divergent per-arm footprints in S136 scoring. CLASSIFICATION IS CONTESTED AND AWAITS THE PI. The S135 plan (planning/h13-arms-bc-plan-2026-08-17.md S7) proposed 'post-hoc per the discharge principle'; this row proposes 'registered-exploratory' instead, on the ground that the arms, their overlap values and all three analyses are the registered ones (osf/preregistration.md:1014-1048), so the row discharges a registered obligation rather than extending a registered method to unregistered material. If the PI prefers the plan's reading, relabel to post-hoc and cite E75 alone. SUPERSESSION (2026-08-18, PI-approved): this row now carries H13's disposition outright. The former not-executed row h13-overlap-stride is archived at archive/superseded-register-rows/h13-overlap-stride-2026-08-18.json; its presence had forced the hypothesis-outcome table to render H13 'partially executed'.",

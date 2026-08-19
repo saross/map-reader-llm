@@ -1,7 +1,8 @@
 # Tile size × overlap: a clean 2×2 at the proposer stage
 
-> **Last revised**: 2026-08-18 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-19 (bootstrap standardised to B = 10,000 per the
+> PI ruling in erratum E82; four cells registered as conditions, closing D16).
+> See [§ Changelog](#changelog) for revision history.
 
 **What this is.** A post-hoc (E41-class) 2 × 2 crossing tile size
 (384 px, 512 px) with tile overlap (12.5 %, 50 %), n = 10 proposer
@@ -51,8 +52,13 @@ Read as a 2 × 2 on F1:
 
 Per-tile TP/FP/FN averaged over each cell's ten passes, then a paired
 tile bootstrap — one resampled index set applied to both arms of a
-contrast, seed 42, percentile CI95, B = 1,000, two-sided
-p = max(2 · min tail, 1/B) (Decision 10).
+contrast, seed 42, percentile CI95, **B = 10,000**, two-sided
+p = max(2 · min tail, 1/B). The count follows the 2026-08-19 PI ruling
+(erratum E82), which standardises the study on 10,000 rather than the
+1,000 Decision 10 pre-specified. This resampler is the script's own and
+was never on the D15 defective path, so the change is a reduction in
+Monte Carlo noise and nothing more: every Δ is identical to five decimal
+places, every CI width moves by under 5 %, and no verdict changes.
 
 | Contrast | ΔF1 | CI95 | p | Excludes 0 |
 |---|---:|---|---:|---|
@@ -363,9 +369,10 @@ production tiling.
   cell pools about 17,000 points and the pure-Python path is O(n²).
   Equivalence was checked, not assumed (see
   [§ Verification](#verification)).
-- **Bootstrap**: Decision 10 — per-tile resampling on the common carrier
-  grid, seed 42, percentile CI95, B = 1,000, paired draws. The
-  interaction is a difference-of-differences on the same paired draw.
+- **Bootstrap**: per-tile resampling on the common carrier grid, seed 42,
+  percentile CI95, **B = 10,000**, paired draws. The interaction is a
+  difference-of-differences on the same paired draw. The resampling unit
+  and method follow Decision 10; the iteration count follows erratum E82.
 
 ## Verification
 
@@ -435,9 +442,55 @@ pooled point estimate, and recovery of a constructed interaction).
   E72 — the partial-coverage guard the recovery merge exists to satisfy.
   E80 — missing within-pass deduplication in the scoring path.
   E81 — undefined tile MCC must not be published as 0.0.
-  Decision 10 — tile-level resampling, percentile CI95, B = 1,000.
+  Decision 10 — tile-level resampling, percentile CI95.
+  E82 — bootstrap iteration count standardised at 10,000.
 
 ## Changelog
+
+### 2026-08-19 — B = 10,000 standardisation and condition registration
+
+**Trigger**: the 2026-08-19 PI ruling (erratum E82) standardises the study on
+10,000 bootstrap iterations, and defect D16 required per-cell evaluations before
+the grid could take a register row.
+
+**Bootstrap re-run at B = 10,000.** `grid_analysis.py` implements its own paired
+resampler and was never on the D15 defective path, so this is a precision change,
+not a correction.
+
+| Quantity | B = 1,000 | B = 10,000 |
+|---|---|---|
+| overlap @ 512 px | +0.12001 [+0.08538, +0.15263] | +0.12001 [+0.08722, +0.15313] |
+| overlap @ 384 px | +0.13482 [+0.10577, +0.16493] | +0.13482 [+0.10576, +0.16358] |
+| tile size @ 12.5 % | −0.08239 [−0.12405, −0.04520] | −0.08239 [−0.12429, −0.04287] |
+| tile size @ 50 % | −0.09719 [−0.12048, −0.07401] | −0.09719 [−0.11963, −0.07529] |
+| interaction | −0.01481 [−0.05495, +0.02690] | −0.01481 [−0.05520, +0.02684] |
+
+**What did NOT change**: every Δ is identical, every point estimate across the
+228-row sweep is identical, all four contrasts still exclude zero, and the
+interaction still spans zero (p 0.488 → 0.4902, a resolution artefact of 1/B).
+CI widths move by 0.954× to 1.033×. Both headline claims stand unaltered. The
+superseded B = 1,000 artefacts are archived at
+`archive/superseded-grid-analyses/`.
+
+**Condition registration (D16 closed)**: each cell's published best-F1@20 m
+operating point at K = 10 was rebuilt from the prepared deduplicated passes by
+`scripts/grid_materialise_conditions.py`, written with E79 nearest-centroid tile
+assignment against the common carrier, and scored by `evaluate_detections.py` at
+B = 10,000. All four reproduce their published sweep F1 to under 5 × 10⁻⁴. The
+run now carries four registered conditions and the analysis row
+`grid-tilesize-overlap-2026-08-18`.
+
+| Cell | Operating point | F1@20 m | CI95 (BCa, B = 10,000) | Tile MCC |
+|---|---|---:|---|---:|
+| 512 px / 12.5 % | c ≥ 1, k ≥ 8 | 0.6759 | [0.6239, 0.7237] | 0.5383 |
+| 512 px / 50 % | c ≥ 2, k ≥ 8 | **0.7518** | [0.7026, 0.7938] | 0.5897 |
+| 384 px / 12.5 % | c ≥ 1, k ≥ 10 | 0.6475 | [0.5935, 0.6966] | 0.3137 |
+| 384 px / 50 % | c ≥ 2, k ≥ 10 | 0.7205 | [0.6749, 0.7618] | 0.4909 |
+
+These single-condition intervals are not the significance instrument. Decision 10
+defines significance on a *difference* CI, which is what the paired contrasts
+above supply; the per-cell intervals are reported because the register requires
+each condition to carry its own metrics.
 
 ### 2026-08-18 — Original publication
 
