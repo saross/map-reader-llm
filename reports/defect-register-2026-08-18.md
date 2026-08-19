@@ -57,7 +57,7 @@ artefact that carries the evidence rather than restating it.
 
 | # | Event | Outcome |
 |---|---|---|
-| N1 | `git stash -u` on sapphire swept the untracked `inputs/tiles_384_ov192` tile tree (5,284 files) — the input the grid's 384/50 % cell cannot be re-scored without. Untracked-by-design trees are invisible to the usual safety habits, and `git clean -fd` would do the same. | **RECOVERED** from `stash@{0}^3` during the session-close residue sweep; verified to reproduce the committed manifest exactly (1,398 of 1,760 tiles, identical set). Tree inventory and the hazard now recorded in `planning/recall-levers-programme-2026-08-19.md` § Machine state. |
+| N1 | `git stash -u` on sapphire swept the untracked `inputs/tiles_384_ov192` tile tree (5,284 files) — the input the grid's 384/50 % cell cannot be re-scored without. Untracked-by-design trees are invisible to the usual safety habits, and `git clean -fd` would do the same. | **RECOVERED** from `stash@{0}^3` during the session-close residue sweep; verified to reproduce the committed manifest exactly (1,398 of 1,760 tiles, identical set). **UPDATE 2026-08-19 (N1b)**: an inventory taken while running Phase 0.3 found the hazard had already fired twice more, unrecorded. `inputs/tiles_512_ov128` and `inputs/tiles_512_ov256` hold **zero PNGs** on sapphire — the directories survive carrying only manifests (3 files and 1 file respectively). Neither is needed for Phase 0, so nothing this session was affected, but **Phase 2 of the recall-levers programme cannot run until they are regenerated** ($0, deterministic, then checked against `inputs/grid-2026-08-18/grid_512_ov*_manifest.json`). Inventory and regeneration commands are in `planning/recall-levers-programme-2026-08-19.md` § Machine state. |
 
 ## Cleared — investigated, not defects
 
@@ -92,6 +92,7 @@ the manifest generator.
 | D18 | not known | **FIXED** — committed conditions-manifest failed its own schema on 26 counts; regeneration reverted E81 |
 | D19 | not known | RECORDED via E82 — BCa and 10,000 iterations both depart from Decision 10 |
 | D11 | OPEN — $0 re-run | **FIXED** — survey re-run on the full pools; per-cell counts corrected, every exposure classification unchanged |
+| N1 | one tree swept, recovered | **N1b added** — two more untracked tile trees found empty on sapphire (`tiles_512_ov128`, `tiles_512_ov256`); blocks recall-levers Phase 2 until regenerated |
 
 **What did NOT change**: no point estimate, no F1, precision, recall, or tile-MCC
 value moved. Regeneration after the D17/D18 fixes reproduces every committed

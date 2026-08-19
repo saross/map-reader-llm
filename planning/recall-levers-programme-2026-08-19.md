@@ -124,6 +124,33 @@ common footprint, following `scripts/h13_tilesize_overlap_grid.py`.
 **Why first**: if the 256 px deficit shrinks or vanishes on a common footprint,
 the premise motivating caution about high recall weakens, and (c) opens up.
 
+**EXECUTED 2026-08-19** — `results/phase0-recall-levers/tilesize-premise/findings.md`,
+script `scripts/phase0_3_tilesize_common_footprint.py`, $0 on sapphire.
+
+The gap **survives and widens slightly**: +0.0277 published cross-scope becomes
++0.0311 on the 256 px carrier and +0.0360 on the 384 px carrier, stable with or
+without uniform 20 m deduplication. The intersection is 1,274.8 km² and both
+carriers scope the same 420 reference mounds, so the denominator is genuinely
+common.
+
+**But the named mechanism is not supported, and that is the finding that matters
+for this design.** Swamping predicts recall bought at the cost of precision. The
+256 px cell is worse on *both* margins under both carriers (P 0.8831 against
+0.9257, R 0.8095 against 0.8310) while emitting slightly *more* surviving
+detections, 385 against 377. That is not a trade-off; it is a weaker cell.
+
+**Consequences for this programme**:
+
+- Restate the premise as "256 px is modestly weaker, by about 0.03 F1, on a
+  contrast that also varies pass count" rather than "256 px swamps the verifier".
+- Because the deficit is not a precision failure, it is weak grounds for
+  constraining the high-recall direction. **Treat (c) as open.**
+- The contrast is **not clean**: the cells share a verifier but differ in passes
+  and vote threshold (5-of-5 over 5 passes against 6-of-10 over 10). Isolating
+  tile size still needs Phase 2.
+- This used already-verified sets, so it says nothing about how a verifier
+  behaves on a common footprint. Phase 1 remains the instrument for that.
+
 ## Phase 1 — verifier on the existing grid (~$6.33, gated)
 
 Run the standard verifier (v1, `verify_adversarial.md`,
@@ -200,14 +227,37 @@ Run only if Phases 0-2 leave (b)/(c) open:
 Phase 0 and any re-scoring need the tile trees, which are **untracked and
 machine-local on sapphire** (regenerable, but not for free):
 
-| Tree | Geometry | PNGs |
-|---|---|---:|
-| `inputs/tiles` | 512 px / 12.5 % | 360 |
-| `inputs/tiles_384` | 384 px / 12.5 % | 611 |
-| `inputs/tiles_512_ov128` | 512 px / 25 % | 440 |
-| `inputs/tiles_512_ov256` | 512 px / 50 % | 1,020 |
-| `inputs/tiles_384_ov192` | 384 px / 50 % | 1,760 |
-| `inputs/tiles_256` | 256 px | — |
+| Tree | Geometry | PNGs | Verified 2026-08-19 |
+|---|---|---:|---|
+| `inputs/tiles` | 512 px / 12.5 % | 360 | present |
+| `inputs/tiles_384` | 384 px / 12.5 % | 611 | present |
+| `inputs/tiles_512_ov128` | 512 px / 25 % | 440 | **ABSENT — 0 PNGs** |
+| `inputs/tiles_512_ov256` | 512 px / 50 % | 1,020 | **ABSENT — 0 PNGs** |
+| `inputs/tiles_384_ov192` | 384 px / 50 % | 1,760 | present |
+| `inputs/tiles_256` | 256 px | 1,292 | present |
+
+**Correction, 2026-08-19.** The two 512 px overlap trees are gone. The
+directories survive but hold only manifests — three JSON files in
+`tiles_512_ov128`, one in `tiles_512_ov256`, and no imagery at all. The PNG
+counts above are what this plan recorded on 2026-08-19 and are retained as the
+regeneration target, not as a statement of what is on disk. The `inputs/tiles_256`
+count is measured rather than left blank.
+
+This is the N1 hazard having already fired twice more than recorded. Neither tree
+is needed for Phase 0, which is why Phase 0.3 ran without noticing, but **Phase 2
+depends on 512 px tiling and must regenerate first**:
+
+```bash
+python scripts/preprocess_tiling.py --tile-size 512 --overlap 128 \
+    --output-dir inputs/tiles_512_ov128
+python scripts/preprocess_tiling.py --tile-size 512 --overlap 256 \
+    --output-dir inputs/tiles_512_ov256
+```
+
+Regeneration is $0 and deterministic, but it is not instant, and a regenerated
+tree must be checked against `inputs/grid-2026-08-18/grid_512_ov*_manifest.json`
+before any scoring leans on it — the check that validated the `tiles_384_ov192`
+recovery.
 
 **Do not clean these**, and note the specific hazard: `git stash -u` and
 `git clean -fd` both sweep them, because they are untracked by design.
@@ -222,6 +272,11 @@ python scripts/preprocess_tiling.py --tile-size 384 --overlap 192 \
 ```
 
 ## Blocking dependency
+
+**RESOLVED 2026-08-19.** D15's fix landed in `122104b8a`, the deviation is
+disclosed as erratum **E82**, and the PI ruling standardises the study on
+**B = 10,000**. Anything routed through `evaluate_detections.py` may now proceed,
+at 10,000 iterations. The original statement of the blocker follows.
 
 **D15 (the BCa axis defect) should be resolved before any inference here is
 trusted.** Session 136 measured BCa-path intervals as 1.66x too narrow at
