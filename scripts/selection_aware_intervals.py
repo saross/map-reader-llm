@@ -235,13 +235,37 @@ def run(counts: np.ndarray, b: int, m_frac: float, seed: int) -> dict[str, Any]:
     naive_lo, naive_hi = np.percentile(boot_f1[:, k_star], [2.5, 97.5])
     shifted = (float(naive_lo - opt), float(naive_hi - opt))
 
-    # Bootstrap MCB: one critical width from the distribution of the maximum
-    # absolute deviation, so coverage is simultaneous across candidates.
-    dev = np.abs(boot_theta - theta_full[None, :])
-    crit = float(np.percentile(dev.max(axis=1), 95))
+    # --- MCB, two ways -------------------------------------------------------
+    #
+    # Both target Hsu's quantity theta_i = F1_i - max_{j != i} F1_j and both use
+    # the same decision rule (a candidate is ruled out as best only when its
+    # simultaneous UPPER bound falls at or below zero). They differ in the
+    # critical value, and the difference is the point of running both.
+    #
+    # (a) Two-sided max-|deviation| band. One common width for every candidate,
+    #     taken from the distribution of the largest absolute deviation. Simple
+    #     and assumption-light, but it spends confidence on the lower tail that
+    #     the admissibility question never uses, so it is CONSERVATIVE.
+    #
+    # (b) Hsu's constrained one-sided form. The critical value comes from the
+    #     one-sided distribution of the largest deviation in the direction that
+    #     actually decides exclusion, and the bounds are truncated at zero
+    #     because no candidate can beat the best by construction. This is the
+    #     published instrument; the bootstrap replaces Dunnett's tabulated
+    #     critical value, which assumes normal homoscedastic means that micro-F1
+    #     on correlated tiles does not satisfy.
+    dev_signed_up = boot_theta - theta_full[None, :]
+    crit = float(np.percentile(np.abs(dev_signed_up).max(axis=1), 95))
     mcb_lo = theta_full - crit
     mcb_hi = theta_full + crit
     not_ruled_out = [i for i in range(n_cand) if mcb_hi[i] >= 0]
+
+    w_upper = float(np.percentile(dev_signed_up.max(axis=1), 95))
+    w_lower = float(np.percentile((-dev_signed_up).max(axis=1), 95))
+    hsu_lo = np.minimum(0.0, theta_full - w_lower)
+    hsu_hi = np.maximum(0.0, theta_full + w_upper)
+    hsu_not_ruled_out = [i for i in range(n_cand)
+                         if theta_full[i] + w_upper > 0]
 
     sel_counts = np.bincount(sel, minlength=n_cand)
     return {
@@ -264,6 +288,12 @@ def run(counts: np.ndarray, b: int, m_frac: float, seed: int) -> dict[str, Any]:
         "mcb_lower": [float(x) for x in mcb_lo],
         "mcb_upper": [float(x) for x in mcb_hi],
         "mcb_not_ruled_out": not_ruled_out,
+        "hsu_w_upper": w_upper,
+        "hsu_w_lower": w_lower,
+        "hsu_lower": [float(x) for x in hsu_lo],
+        "hsu_upper": [float(x) for x in hsu_hi],
+        "hsu_not_ruled_out": hsu_not_ruled_out,
+        "hsu_vs_band_delta": len(hsu_not_ruled_out) - len(not_ruled_out),
     }
 
 
@@ -300,6 +330,62 @@ def build_board_tile_counts(analysis_id: str) -> tuple[list[dict[str, Any]], np.
     return specs, counts
 
 
+def build_evals_tile_counts(pattern: str) -> tuple[list[dict[str, Any]], np.ndarray]:
+    """Load an arbitrary set of committed evaluations as per-tile TP/FP/FN.
+
+    For candidate sets that are not a registered board — the verifier
+    probability-threshold curve of erratum E56, for instance, whose operating
+    points are separate evaluation directories rather than register conditions.
+
+    Each evaluation is reproduced through
+    ``era1_leaderboard_tiering.cell_per_tile``, which dispatches on the eval's own
+    ``cli_args``, so the candidate scored here is the candidate that eval scored.
+    Every evaluation must declare the same bounds and ground truth; a mismatch
+    raises rather than silently mixing scopes.
+
+    Args:
+        pattern: Glob matching the ``evaluation.json`` files to load.
+
+    Returns:
+        ``(specs, counts)`` with ``counts`` shaped ``(n_evals, n_tiles, 3)``.
+    """
+    import glob as _glob  # noqa: PLC0415
+
+    from scripts.era1_leaderboard_tiering import cell_per_tile  # noqa: PLC0415
+
+    paths = sorted(_glob.glob(pattern))
+    if not paths:
+        raise ValueError(f"no evaluations matched {pattern!r}")
+
+    metas = [(p, json.loads(Path(p).read_text())["_metadata"]) for p in paths]
+    scopes = {(m["cli_args"]["bounds"], m["cli_args"]["ground_truth"]) for _, m in metas}
+    if len(scopes) != 1:
+        raise ValueError(f"evaluations disagree on scope: {scopes}")
+    bounds_rel, gt_rel = scopes.pop()
+
+    gdf_bounds = gpd.read_file(PROJECT_ROOT / bounds_rel).to_crs("EPSG:32635")
+    gdf_ref = gpd.read_file(PROJECT_ROOT / gt_rel).to_crs("EPSG:32635")
+    tile_order = list(gdf_bounds["tile_name"])
+
+    specs, rows = [], []
+    for path, meta in metas:
+        tp, fp, fn, _n = cell_per_tile(meta["cli_args"], gdf_ref, gdf_bounds, tile_order)
+        rows.append(np.column_stack([tp, fp, fn]).astype(float))
+        doc = json.loads(Path(path).read_text())
+        b20 = next((b for b in doc["summary"]["buffers"]
+                    if b["buffer_metres"] == BUFFER_M), {})
+        parent = Path(path).parent
+        rel = (parent.relative_to(PROJECT_ROOT)
+               if parent.is_absolute() and parent.is_relative_to(PROJECT_ROOT)
+               else parent)
+        specs.append({"ref": str(rel),
+                      "label": parent.name,
+                      "eval_f1": b20.get("f1")})
+    logger.info("evals %s: %d candidates over %d tiles", pattern, len(specs),
+                len(tile_order))
+    return specs, np.stack(rows)
+
+
 def main() -> int:
     """Run the pilot on one cell and report both instruments."""
     ap = argparse.ArgumentParser(
@@ -308,6 +394,9 @@ def main() -> int:
                     help="Grid cell whose (corroboration x vote) sweep to analyse.")
     ap.add_argument("--board", default=None,
                     help="Analysis id of a registered leaderboard to analyse instead.")
+    ap.add_argument("--evals", default=None,
+                    help="Glob of evaluation.json files forming the candidate set.")
+    ap.add_argument("--tag", default=None, help="Output filename stem for --evals.")
     ap.add_argument("--K", type=int, default=10)
     ap.add_argument("--bootstrap", type=int, default=10000)
     ap.add_argument("--m-frac", type=float, default=1.0,
@@ -315,11 +404,16 @@ def main() -> int:
     ap.add_argument("--out", type=Path,
                     default=PROJECT_ROOT / "results/selection-aware")
     args = ap.parse_args()
-    if bool(args.cell) == bool(args.board):
-        ap.error("give exactly one of --cell or --board")
+    given = [bool(args.cell), bool(args.board), bool(args.evals)]
+    if sum(given) != 1:
+        ap.error("give exactly one of --cell, --board or --evals")
     args.out.mkdir(parents=True, exist_ok=True)
 
-    if args.board:
+    if args.evals:
+        specs, counts = build_evals_tile_counts(args.evals)
+        tag = args.tag or "evals"
+        res_meta = {"evals_glob": args.evals}
+    elif args.board:
         specs, counts = build_board_tile_counts(args.board)
         tag = args.board
         res_meta = {"board": args.board}
@@ -351,11 +445,14 @@ def main() -> int:
     logger.info("selection-aware CI95   : [%.4f, %.4f]", *res["selection_aware_ci"])
     logger.info("argmax stability       : %.3f (%d distinct winners across resamples)",
                 res["argmax_stability"], res["n_distinct_argmax"])
-    logger.info("MCB: %d of %d candidates cannot be ruled out as best "
-                "(simultaneous 95%%, critical width %.4f)",
+    logger.info("MCB two-sided band : %d of %d admissible (w=%.4f)",
                 len(res["mcb_not_ruled_out"]), res["n_candidates"],
                 res["mcb_critical_width"])
-    for i in res["mcb_not_ruled_out"]:
+    logger.info("MCB Hsu constrained: %d of %d admissible "
+                "(w_upper=%.4f, w_lower=%.4f)",
+                len(res["hsu_not_ruled_out"]), res["n_candidates"],
+                res["hsu_w_upper"], res["hsu_w_lower"])
+    for i in res["hsu_not_ruled_out"]:
         c = specs[i]
         name = c.get("label") or f"c>={c.get('min_corroboration')} k>={c.get('min_votes')}"
         logger.info("    %-38s theta=%+.4f  [%+.4f, %+.4f]", name,

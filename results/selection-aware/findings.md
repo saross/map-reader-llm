@@ -1,8 +1,8 @@
 # Selection-aware uncertainty: pilot on the tile-size × overlap grid
 
-> **Last revised**: 2026-08-19 (extended from the grid pilot to five registered
-> boards; the extension surfaced defect D20). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-08-19 (Hsu's constrained one-sided construction added
+> and compared against the provisional band; one earlier conclusion is corrected
+> below). See [§ Changelog](#changelog) for revision history.
 
 **Classification**: POST-HOC (E41-class), a methodological re-analysis of
 committed detections. Not a registered test.
@@ -169,13 +169,64 @@ marginal result sits at rank 2, which is why it went unnoticed.
 Recorded as **D20**, left OPEN: the code fix is mechanical, but it changes a
 published headline claim and the correction scope is a PI decision.
 
-**Caveat on the MCB implementation.** The critical value used here is a bootstrap
-max-deviation band — one common two-sided width applied to every candidate — which
-is an adaptation, not Hsu's constrained one-sided construction. It is therefore
-**conservative**: the true MCB set is likely smaller than the figures above,
-though on `era1-leaderboard` it cannot plausibly shrink to one, since the clique
-argument reaches 6 without any MCB machinery. This construction should be checked
-by a statistician before it carries a paper claim.
+**Caveat on the MCB implementation, now partly discharged.** The first pass used
+a two-sided band, an adaptation rather than Hsu's construction, and predicted it
+would run conservative. Hsu's constrained one-sided form is now computed
+alongside it and confirms that prediction — see
+[§ Hsu's constrained construction](#hsus-constrained-construction-and-a-correction).
+What remains unverified is the bootstrap critical value itself as a substitute
+for Dunnett's tabulated one; the substitution is necessary here because the
+normality and homoscedasticity Dunnett assumes do not hold for micro-F1 on
+correlated tiles, but a statistician should check it before it carries a paper
+claim.
+
+## Hsu's constrained construction, and a correction
+
+The first pass used a bootstrap **two-sided max-|deviation| band**, flagged at
+the time as an adaptation that would run conservative. Hsu's published
+construction is **one-sided and constrained**: the critical value comes from the
+one-sided distribution of the largest deviation in the direction that decides
+exclusion, and the bounds are truncated at zero because no candidate can beat the
+best by construction. A candidate is ruled out only when its simultaneous upper
+bound falls at or below zero. Both are now computed; the bootstrap replaces
+Dunnett's tabulated critical value, which assumes normal homoscedastic means that
+micro-F1 on correlated tiles does not satisfy.
+
+Hsu's critical value is smaller in every candidate set tested, as expected, and
+the admissible sets are correspondingly tighter:
+
+| Candidate set | Cells | Two-sided band | **Hsu** | Register `tie_set` | Relation of Hsu to register |
+|---|---:|---:|---:|---:|---|
+| `era1-leaderboard` | 82 | 15 | **10** | **1** | strict superset — register **9 too few** |
+| `era1-single-pass-baseline-matrix` | 36 | 23 | **15** | **20** | strict subset — register **5 too many** |
+| `min-vs-high-thinking-pv` | 7 | 6 | 5 | 6 | **neither** — overlap only, +1 / −2 |
+| `pass-budget-pareto-v2` | 7 | 6 | 6 | 7 | strict subset — register 1 too many |
+| `verifier-robustness-matrix` | 6 | 5 | 5 | 5 | identical |
+| E56 consensus-PV threshold | 8 | 5 | 5 | — | — |
+| grid 512 / 50 % | 30 | 9 | 9 | — | — |
+| grid 512 / 12.5 % | 30 | 7 | 7 | — | — |
+| grid 384 / 50 % | 30 | 10 | 8 | — | — |
+| grid 384 / 12.5 % | 30 | 4 | 4 | — | — |
+
+**Correction.** The previous revision reported that MCB was a strict superset of
+the register's tie set on `era1-single-pass-baseline-matrix` (23 against 20) and
+concluded the register was anti-conservative there by three cells. Under Hsu's
+construction the relation **reverses**: the admissible set is 15, a strict subset,
+and the register's 20 is **five too many**. The earlier reading was an artefact of
+the conservative two-sided band and should not be relied on.
+
+**D20 is unaffected and strengthened.** On `era1-leaderboard` Hsu still gives 10
+against the register's 1, so the sole-Tier-1-leader claim does not survive the
+proper construction either. It never depended on MCB in any case: the clique
+argument reaches six using only the artefact's own pairwise tests.
+
+**The most important row is `min-vs-high-thinking-pv`**, where Hsu's set is
+neither a subset nor a superset of the register's — it adds one condition and
+drops two. The sequential tiering is therefore **not biased in a single
+direction**: on these six candidate sets it runs too narrow once, too wide twice,
+identical once, and simply *different* once. That rules out any correction by a
+uniform adjustment, and is the strongest argument for replacing the instrument
+rather than tuning it.
 
 ## Recommendation
 
@@ -188,7 +239,7 @@ by a statistician before it carries a paper claim.
 3. Do **not** apply either instrument to fixed-operating-point contrasts.
 4. **Settle D20 before any board claim goes into the paper.** The
    `era1-leaderboard` headline is the one materially affected.
-5. E56's verifier threshold curve is the remaining untested flat case.
+5. E56's verifier threshold curve has now been tested; see below.
 
 ## Reproducing
 
@@ -229,3 +280,26 @@ nested rather than independent, and that the substantive change comes from MCB:
 4–10 of 30 candidates per cell cannot be ruled out as best, with corroboration
 resolved and vote threshold not. Written after a `/review-implementation` pass
 that rejected the originally proposed single-instrument approach.
+
+## E56's threshold curve: flat does not mean unstable
+
+The verifier probability-threshold sweep was expected to be the hard case,
+because E56 records the curve as flat (≤ 0.022 F1 across the plateau) and
+flatness was assumed to imply an unstable argmax. **It does not.** Across the
+eight `consensus-PV-4of5` operating points, argmax stability is **0.906** and
+optimism is **+0.0004** — the smallest of any candidate set tested.
+
+The reason is that these candidates are the *same detection set* at different
+probability thresholds, so they nest: a higher threshold's accepted set is a
+subset of a lower one's. Under a tile resample the candidates move together
+almost exactly, and it is the variance of the *differences*, not the size of the
+differences, that determines whether the argmax moves. A flat curve made of
+strongly nested candidates has a stable argmax; a flat curve made of independent
+candidates would not.
+
+Practically, this vindicates E56's reporting rule from a second direction. E56
+argued the in-sample optimum and the fixed reference are interchangeable because
+the curve is flat (0.15: 0.8641 against 0.20: 0.8610). The selection analysis
+adds that the optimum is also barely optimistic, so quoting it costs almost
+nothing. MCB puts **5 of 8** thresholds in the admissible set (0.15 through 0.40),
+which is the honest statement of how well the threshold is resolved.

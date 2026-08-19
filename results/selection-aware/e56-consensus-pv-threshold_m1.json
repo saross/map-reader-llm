@@ -1,0 +1,139 @@
+{
+  "n_candidates": 8,
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 2,
+  "apparent_f1": 0.8640776699029126,
+  "optimism": 0.0004441270008379241,
+  "optimism_mcse": 0.00015710238609123445,
+  "optimism_spread_p2_5_p97_5": [
+    -0.0307443365695792,
+    0.030039977155911002
+  ],
+  "corrected_f1": 0.8636335429020746,
+  "naive_ci": [
+    0.8329466357308585,
+    0.8938159240531858
+  ],
+  "selection_aware_ci": [
+    0.8325025087300205,
+    0.8933717970523478
+  ],
+  "argmax_stability": 0.9056,
+  "n_distinct_argmax": 3,
+  "mcb_critical_width": 0.028691831447206276,
+  "mcb_theta": [
+    -0.08026510334274217,
+    -0.03656921443504335,
+    0.003102060146815022,
+    -0.003102060146815022,
+    -0.01657766990291254,
+    -0.01657766990291254,
+    -0.018020097937956336,
+    -0.03031807911007367
+  ],
+  "mcb_lower": [
+    -0.10895693478994845,
+    -0.06526104588224962,
+    -0.025589771300391254,
+    -0.031793891594021295,
+    -0.04526950135011881,
+    -0.04526950135011881,
+    -0.04671192938516261,
+    -0.05900991055727994
+  ],
+  "mcb_upper": [
+    -0.0515732718955359,
+    -0.007877382987837075,
+    0.031793891594021295,
+    0.025589771300391254,
+    0.012114161544293737,
+    0.012114161544293737,
+    0.01067173350924994,
+    -0.0016262476628673937
+  ],
+  "mcb_not_ruled_out": [
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "hsu_w_upper": 0.02250942673203079,
+  "hsu_w_lower": 0.025990293206622897,
+  "hsu_lower": [
+    -0.10625539654936507,
+    -0.06255950764166625,
+    -0.022888233059807875,
+    -0.02909235335343792,
+    -0.04256796310953544,
+    -0.04256796310953544,
+    -0.04401039114457923,
+    -0.05630837231669657
+  ],
+  "hsu_upper": [
+    0.0,
+    0.0,
+    0.02561148687884581,
+    0.019407366585215767,
+    0.00593175682911825,
+    0.00593175682911825,
+    0.004489328794074453,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "hsu_vs_band_delta": 0,
+  "evals_glob": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt*/evaluation.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.05",
+      "label": "consensus-PV-4of5-pt0.05",
+      "eval_f1": 0.7838
+    },
+    {
+      "ref": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.10",
+      "label": "consensus-PV-4of5-pt0.10",
+      "eval_f1": 0.8275
+    },
+    {
+      "ref": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.15",
+      "label": "consensus-PV-4of5-pt0.15",
+      "eval_f1": 0.8641
+    },
+    {
+      "ref": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.20",
+      "label": "consensus-PV-4of5-pt0.20",
+      "eval_f1": 0.861
+    },
+    {
+      "ref": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.25",
+      "label": "consensus-PV-4of5-pt0.25",
+      "eval_f1": 0.8475
+    },
+    {
+      "ref": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.30",
+      "label": "consensus-PV-4of5-pt0.30",
+      "eval_f1": 0.8475
+    },
+    {
+      "ref": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.40",
+      "label": "consensus-PV-4of5-pt0.40",
+      "eval_f1": 0.8461
+    },
+    {
+      "ref": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.50",
+      "label": "consensus-PV-4of5-pt0.50",
+      "eval_f1": 0.8338
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}
