@@ -1907,6 +1907,19 @@ levels; (c) N = 5 and N = 10 consensus threshold sweeps at each cell.
 | Commit | TBD |
 | Impact | None (preregistered methodology unchanged) |
 
+**Correction (2026-08-19) — the iteration-count claim below is superseded by E82.**
+This entry states that the scripts evaluating preregistered conditions "use 1 000
+iterations, matching the preregistration", and frames 10 000 iterations as a
+selective post-hoc choice. A census of the committed artefacts contradicts that
+split: of 1 749 git-tracked `evaluation.json` files, **1 583 declare B = 10 000
+against 114 at B = 1 000**. The Principal Investigator ruled 2026-08-19 to
+standardise on 10 000 rather than revert, and to disclose the deviation. E54 is
+left standing rather than rewritten so the earlier reading remains legible; read
+it with E82. E82 additionally discloses that the *method* named below — percentile
+(2.5th/97.5th) — was replaced by BCa in commit `2026999ad` (2026-04-30) without
+disclosure, so the "percentile method" wording here describes Decision 10 rather
+than the code that produced the artefacts.
+
 **Description** (attribution corrected 2026-07-28, D17 audit U1): the registered text specifies 95% bootstrapped CIs (Section 3.5); the **1 000-iteration** count, percentile method (2.5th / 97.5th), and tile-level resampling unit were fixed pre-lodgement in **Decision 10** (`decisions-log.md:337`) and do not appear in the lodged registration. They are pre-specified analysis parameters, not registered ones. All scripts that evaluate preregistered conditions — `evaluate_detections.py`, `compute-pairwise-effect-sizes.py`, `evaluate_pv_results.py`, `compare_wbf_vs_greedy.py`, `analyse_secondary_effects_text.py`, and the shared `lib_advanced_metrics.bootstrap_ci` default — use 1 000 iterations, matching the preregistration.
 
 Several **post-hoc** analyses (not specified in the preregistration) use **10 000 iterations** instead. These analyses are characterised by narrow effect sizes where CI precision at 2-3 decimal places is material for narrative clarity:
@@ -4546,5 +4559,151 @@ with E81 for exactly the reason this erratum gives for keeping E79, E80, and
 E81 separate: fixing it would move essentially every published confidence
 interval, and that delta must be attributable on its own. It needs its own
 erratum and its own PI decision.
+
+---
+
+### E82: Bootstrap confidence intervals depart from Decision 10 on both method and iteration count — BCa replaced the registered percentile method undisclosed, its vectorised adapter transposed its axes until 2026-08-19, and the corpus runs at 10 000 iterations where E54 records 1 000
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-19 |
+| Type | Deviation (undisclosed method substitution) + Correction (implementation defect, fixed) + Correction (supersedes a factual claim in E54) |
+| Commit | `122104b8a` (the axis fix and its five regression tests); this entry lands separately and re-emits nothing |
+| Files | `scripts/lib_advanced_metrics.py` — `_bca_ci_from_indices` (:299, the transposing wrapper), `bootstrap_ci` (:1278), `bootstrap_tile_classification_ci` (:2107), `_compute_bca_ci` (:521, the unaffected hand-rolled helper); `scripts/evaluate_detections.py:214` and `:710-730` (the `f1_ci_method` / `p_ci_method` / `r_ci_method` and `tile_classification.<metric>.method` write sites), `:539` (`_metadata.bootstrap.method`, a hard-coded literal); `docs/methodology/preregistration/decisions-log.md:345` (Decision 10); the BCa migration `2026999ad` (2026-04-30); this register's E54 (:1901) |
+| Impact | Medium. **No point estimate and no published significance verdict changes** — Decision 10's rule is defined on *difference* CIs, and no difference CI in this study reaches the defective wrapper. What changes is the width of single-condition intervals, in both directions, across essentially the whole corpus; and the study's stated statistical method no longer matches the one it ran |
+
+**Description**: Decision 10 fixes the confidence-interval procedure as
+"Bootstrap resampling (tile-level) | 1000 iterations, percentile method
+(2.5th/97.5th)" (`decisions-log.md:345`). The study as executed matches neither
+half of that specification, and the implementation of the substituted method was
+defective for sixteen weeks. Three separate disclosures follow. They are grouped
+here because a reader auditing any one of them needs the other two to interpret
+it, and because the corrective ruling is common to all three.
+
+#### Disclosure 1 — BCa is an unregistered method substitution
+
+On 2026-04-30, commit `2026999ad` ("replace percentile method with BCa") moved
+every interval-producing function in `lib_advanced_metrics` from the percentile
+method to bias-corrected and accelerated (BCa) bootstrap, via
+`scipy.stats.bootstrap(method='BCa')`. The change was made for a defensible
+statistical reason, recorded in the commit body: on evaluation scopes where
+roughly 80 % of tiles carry zero true positives, false positives, and false
+negatives, the percentile interval systematically excluded the all-data point
+estimate. The migration was planned
+(`planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md`), tagged for rollback
+(`pre-bca-mit3-2026-04-29`), and tested.
+
+It was never disclosed. The string `BCa` occurs **zero** times in
+`decisions-log.md` and **zero** times in the lodged registration
+(`osf/preregistration.md`), and until this entry it occurred in this register
+only inside E81's flag of the defect below, never as a disclosure of the method
+itself. A reader following Decision 10 to the artefacts would expect percentile
+intervals and find, in 1 691 of 1 749 git-tracked `evaluation.json` files, 76 404
+intervals labelled `BCa`.
+
+The corpus is in fact mixed-method, which the disclosure has to state plainly.
+Alongside the BCa intervals sit 224 intervals labelled `percentile`, in 16 files
+under `results/55maps-extended-gt-2026-06-07/` and
+`results/55maps-standardised-ref-2026-08-14/`. These are not a pre-migration
+residue: they are adapter-written Track-2 corrected-F1 cells whose statistics come
+from `compute_corrected_f1_multi_buffer.py`, which does its own percentile
+resampling and never enters the BCa path. A further 166 intervals record
+`percentile_fallback` (BCa attempted, jackknife degenerate, correct percentile
+resampler used instead) and 35 record `undefined`.
+
+#### Disclosure 2 — the vectorised BCa adapter transposed its axes (D15)
+
+`_bca_ci_from_indices` adapts a per-tile statistic to
+`scipy.stats.bootstrap(vectorized=True)`. scipy's contract is that the statistic is
+computed *along* the passed axis, which is then consumed, so every remaining axis
+enumerates independent resamples. The wrapper applied `np.moveaxis(idx_array, axis,
+0)` and iterated the result, which walks the observation axis instead. On a
+340-tile scope at 10 000 iterations the "bootstrap distribution" was therefore 340
+statistics of 10 000 draws each, where it should have been 10 000 statistics of 340
+draws each.
+
+A statistic's spread falls as the inverse square root of its sample size, so the
+interval width was rescaled by `sqrt(n / B)`. **The error changes sign at `B = n`**,
+and both regimes occur in this study: of the BCa intervals whose `n` and `B` can
+both be read from the artefact, 69 663 sit at `B > n` and are **too narrow**, while
+840 sit at `B < n` and are **too wide**, chiefly the 55-map cells at n = 8 541
+evaluated at B = 1 000, where the interval is roughly 2.9 times wider than it should
+be. A further 5 901 could not be classified because one or both quantities are
+absent from the file. Measured on real committed per-tile counts (n = 340, seed 42),
+the defective-to-corrected width ratio is 0.592 at B = 1 000 and 0.182 at B = 10 000,
+against `sqrt(n/B)` values of 0.583 and 0.184.
+
+Two consequences bound the damage. Point estimates are untouched: `f1`, `precision`,
+and `recall` are written from `calculate_f1_internal`, which does no resampling.
+And **no published significance verdict changes**. The registered rule is that a
+95 % CI *for a difference* excludes zero, every difference interval in the library
+is produced by the hand-rolled `_compute_bca_ci` over a distribution the caller
+resampled itself, and that helper never touches scipy's vectorised path. The
+defective wrapper is reachable only from single-condition intervals, which the
+registered rule does not adjudicate.
+
+The fix landed in `122104b8a` with five tier-1 regression tests, validated to
+floating-point equality against `scipy.stats.bootstrap(vectorized=False)`. No
+committed interval has been re-emitted. Full working, refutation attempts, and the
+verified scope census are in `reports/bca-axis-defect-2026-08-18.md`.
+
+#### Disclosure 3 — E54's factual claim about the iteration count does not hold
+
+E54 (:1901) states that the scripts evaluating preregistered conditions "use 1 000
+iterations, matching the preregistration", and frames 10 000 iterations as a
+selective post-hoc choice confined to five named narrow-effect analyses. A census
+of the committed artefacts contradicts this. Across the 1 749 git-tracked
+`evaluation.json` files, **1 583 declare B = 10 000 and 114 declare B = 1 000**,
+with 52 declaring no iteration count. The 10 000-iteration setting is not the
+exception in this corpus. It is the rule, and E54's split has been inverted since
+well before it was written. The library default remains 1 000, so the divergence
+was introduced at the call sites rather than by a change of default.
+
+#### The ruling (Principal Investigator, 2026-08-19)
+
+Standardise on 10 000 iterations rather than reverting to the pre-specified 1 000,
+re-run what needs re-running at that count, and disclose the deviation here. This
+supersedes E54's post-hoc-only framing, which is corrected by reference rather than
+rewritten, so that the earlier reading stays legible.
+
+The practical consequence is uniform and worth stating in advance: at B = 10 000
+against evaluation scopes of 340 to 487 tiles, `B > n` throughout, so **every
+re-emitted interval widens** relative to the committed value. Re-running is a
+correction towards conservatism, not towards stronger claims.
+
+**Protocol impact**: the deviation is a methodological one and does not touch any
+registered hypothesis outcome. Reported intervals are wider than published for the
+dominant regime and narrower for the 55-map B = 1 000 cells, and the statistical
+method reported in any paper text must read BCa at 10 000 tile-level iterations,
+with the percentile-method cells identified where they occur.
+
+**Remediation**:
+
+1. The axis fix is landed (`122104b8a`). The `evaluate_detections.py` path now
+   produces correct BCa intervals at whatever `B` it is given.
+2. Re-emission of committed intervals proceeds by campaign rather than in bulk, so
+   that each wave's delta stays attributable, by the same reasoning that kept E79,
+   E80, E81, and this entry separate. Tile-MCC needs no separate wave: E81's landed
+   re-emission already delivers the corrected intervals for that metric family as a
+   by-product, because the defective wrapper made the tile-MCC jackknife undefined
+   and diverted those calls to the correct percentile fallback.
+3. Paper-facing text must not quote a committed interval width until the cell
+   behind it has been re-emitted at B = 10 000 under the fixed wrapper.
+
+**Reference artefacts**:
+
+- Registered specification: `docs/methodology/preregistration/decisions-log.md:345`
+- Migration to BCa: commit `2026999ad` (2026-04-30), plan
+  `planning/pairwise-bootstrap-ci-fix-plan-2026-04-29.md`, rollback tag
+  `pre-bca-mit3-2026-04-29`
+- Defect analysis, refutation attempts, and fix: `reports/bca-axis-defect-2026-08-18.md`;
+  fix commit `122104b8a`
+- Defect register entries D15 (the axis defect) and D16 (the grid register row it
+  blocked): `reports/defect-register-2026-08-18.md`
+- Superseded framing: E54 (:1901), corrected by reference
+- Method-label evidence lives in `f1_ci_method` / `p_ci_method` / `r_ci_method`
+  (`scripts/evaluate_detections.py:214`) and `tile_classification.<metric>.method`
+  (`:710-730`). `_metadata.bootstrap.method` (`:539`) is written unconditionally as a
+  literal and is not evidence of the path taken
 
 ---
