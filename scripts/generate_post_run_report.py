@@ -240,6 +240,13 @@ def utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
+#: Stamp written into ``provenance.e81_correction`` for any condition whose tile
+#: MCC carries the erratum-E81 re-derivation. Held as a constant so the string is
+#: identical to the one E81 landed by hand, which regeneration would otherwise
+#: silently drop (D18).
+E81_CORRECTION_STAMP = "2026-08-18: tile MCC re-derived; see erratum E81"
+
+
 def build_provenance(source_files: list[str], extracted_at: str | None = None) -> dict[str, Any]:
     """Build a ``provenance`` object for an extracted row.
 
@@ -643,14 +650,17 @@ def _normalise_detections_path(path: str) -> str:
     )
 
 
-def _build_eval_index() -> dict[str, list[tuple[str, dict, str | None]]]:
+def _build_eval_index() -> dict[str, list[tuple[str, dict, str | None, dict]]]:
     """Index every ``results/**/evaluation.json`` by the detections it scored.
 
-    Returns a map ``normalised-detections-path → [(eval_path, summary, bounds), …]``.
+    Returns a map
+    ``normalised-detections-path → [(eval_path, summary, bounds, bootstrap), …]``.
     The eval→condition link is read from ``_metadata.input_files.detections`` (and
-    its ``cli_args`` bounds), never inferred — anti-confabulation.
+    its ``cli_args`` bounds), never inferred — anti-confabulation. ``bootstrap`` is
+    the source ``_metadata.bootstrap`` block, carried so the emitted CI parameters
+    describe the run that actually happened rather than the project standard (D17).
     """
-    index: dict[str, list[tuple[str, dict, str | None]]] = {}
+    index: dict[str, list[tuple[str, dict, str | None, dict]]] = {}
     for eval_file in (REPO_ROOT / "results").rglob("evaluation.json"):
         try:
             doc = _load_json(eval_file)
@@ -664,7 +674,8 @@ def _build_eval_index() -> dict[str, list[tuple[str, dict, str | None]]]:
         bounds = inf.get("bounds") or (meta.get("cli_args") or {}).get("bounds")
         for det in dets:
             index.setdefault(_normalise_detections_path(det), []).append(
-                (_repo_rel(eval_file), doc.get("summary", {}), bounds)
+                (_repo_rel(eval_file), doc.get("summary", {}), bounds,
+                 meta.get("bootstrap") or {})
             )
     return index
 
@@ -674,15 +685,26 @@ def _point(value: Any) -> Any:
     return value.get("point") if isinstance(value, dict) else value
 
 
-def _metrics_from_eval(summary: dict, n_iter: int = 10000, seed: int = 42) -> dict:
+def _metrics_from_eval(summary: dict, bootstrap: dict | None = None) -> dict:
     """Transform an ``evaluation.json`` summary into the schema's ``metrics`` shape.
 
     Produces the two-part block: per-buffer detection metrics (keyed by buffer
     radius in metres, each with an F1 bootstrap CI) plus the buffer-agnostic
     tile-classification block (MCC + confusion counts). The eval stores its CI
-    bounds as ``f1_ci_lower``/``f1_ci_upper``; the bootstrap parameters
-    (n_iter/seed/resampling) are the project standard, recorded explicitly.
+    bounds as ``f1_ci_lower``/``f1_ci_upper``.
+
+    The bootstrap parameters are read from the source evaluation's
+    ``_metadata.bootstrap`` block rather than assumed. Before the D17 fix this
+    function defaulted ``n_iter`` to 10 000 and its only caller never overrode it,
+    so 49 of 333 conditions whose source ran at B = 1 000 were published as though
+    they had run at the project standard. ``None`` is emitted when the source does
+    not declare a value, because an absent parameter is not evidence of a standard
+    one.
     """
+    bootstrap = bootstrap or {}
+    n_iter = bootstrap.get("n_iterations")
+    seed = bootstrap.get("seed")
+    resampling_unit = bootstrap.get("resampling_unit")
     per_buffer: dict[str, dict] = {}
     for b in summary.get("buffers", []):
         ci = None
@@ -691,10 +713,18 @@ def _metrics_from_eval(summary: dict, n_iter: int = 10000, seed: int = 42) -> di
                 "low": b["f1_ci_lower"],
                 "high": b["f1_ci_upper"],
                 "method": b.get("f1_ci_method", "BCa"),
-                "n_iter": n_iter,
-                "seed": seed,
-                "resampling": "tile-level",
             }
+            # Emit a bootstrap parameter only where the source evaluation records
+            # one. An absent key reads as "not declared by the source", which is
+            # the truth; filling it with the project standard is what D17 was.
+            if n_iter is not None:
+                ci["n_iter"] = n_iter
+            if seed is not None:
+                ci["seed"] = seed
+            if resampling_unit is not None:
+                ci["resampling"] = (
+                    "tile-level" if resampling_unit == "tile_level" else resampling_unit
+                )
         per_buffer[str(b["buffer_metres"])] = {
             "f1": b.get("f1"),
             "precision": b.get("precision"),
@@ -714,7 +744,51 @@ def _metrics_from_eval(summary: dict, n_iter: int = 10000, seed: int = 42) -> di
         "fp": conf.get("fp"),
         "fn": conf.get("fn"),
     }
+    # E81 provenance, carried from the source rather than hand-applied (D18).
+    # A published tile MCC that is `null`, or that averages defined and
+    # undefined passes, has to say so where a reader meets it. These fields were
+    # written into the manifest by hand when E81 landed and were reverted by the
+    # next regeneration, because the generator did not know about them.
+    mcc_block = tc.get("mcc")
+    if isinstance(mcc_block, dict):
+        if mcc_block.get("n_runs") is not None:
+            tile["mcc_n_runs"] = mcc_block["n_runs"]
+        if mcc_block.get("n_runs_defined") is not None:
+            tile["mcc_n_runs_defined"] = mcc_block["n_runs_defined"]
+    if tile["mcc"] is None and any(
+        conf.get(k) is not None for k in ("tp", "tn", "fp", "fn")
+    ):
+        tile["mcc_undefined_reason"] = _mcc_undefined_reason(conf)
     return {"per_buffer": per_buffer, "tile_classification": tile}
+
+
+def _mcc_undefined_reason(conf: dict) -> str:
+    """Name the vanishing marginal behind an undefined tile MCC (erratum E81).
+
+    MCC's denominator is √((TP+FP)(TP+FN)(TN+FP)(TN+FN)), so it vanishes when any
+    row or column marginal is zero. Across the committed corpus the vanishing
+    marginal is always TN + FN, but the reason is derived here rather than
+    assumed, so a future scope with a different degeneracy is described correctly.
+    """
+    tp, tn = conf.get("tp") or 0, conf.get("tn") or 0
+    fp, fn = conf.get("fp") or 0, conf.get("fn") or 0
+    marginals = {
+        "TN + FN = 0": (tn + fn, "every evaluation tile was predicted populated"),
+        "TP + FP = 0": (tp + fp, "no evaluation tile was predicted populated"),
+        "TP + FN = 0": (tp + fn, "no evaluation tile is reference-populated"),
+        "TN + FP = 0": (tn + fp, "no evaluation tile is reference-empty"),
+    }
+    zero = [(name, why) for name, (total, why) in marginals.items() if total == 0]
+    if not zero:
+        return (
+            "tile MCC undefined at source; the committed confusion matrix is "
+            "non-degenerate, so the cause is upstream of this manifest — erratum E81"
+        )
+    name, why = zero[0]
+    return (
+        f"degenerate tile confusion matrix ({name}): {why}, so the MCC "
+        "denominator vanishes — erratum E81"
+    )
 
 
 #: Keys every condition spec must carry before the extractor reads them — a missing
@@ -780,7 +854,9 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
                     f"condition '{spec['label']}' in run '{run_id}': "
                     f"eval_path {spec['eval_path']} does not exist"
                 )
-            summary = _load_json(eval_file).get("summary", {})
+            _eval_doc = _load_json(eval_file)
+            summary = _eval_doc.get("summary", {})
+            eval_bootstrap = (_eval_doc.get("_metadata") or {}).get("bootstrap") or {}
             eval_sources = [spec["eval_path"]]
         else:
             if index is None:
@@ -797,7 +873,9 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
                     file=sys.stderr,
                 )
                 continue
-            eval_path, summary, _bounds = max(chosen, key=lambda c: len(c[1].get("buffers", [])))
+            eval_path, summary, _bounds, eval_bootstrap = max(
+                chosen, key=lambda c: len(c[1].get("buffers", []))
+            )
             # provenance cites the normalised detections path (what the match used),
             # not the raw spec path, so it always names a file that exists on disk
             eval_sources = [eval_path, det_norm]
@@ -813,12 +891,19 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
             "prob_threshold": spec.get("prob_threshold"),
             "verifier_config": spec.get("verifier_config"),
             "scope_override": spec.get("scope_override"),
-            "metrics": _metrics_from_eval(summary),
+            "metrics": _metrics_from_eval(summary, eval_bootstrap),
             "n_detections": summary.get("n_detections"),
             "n_candidates": spec.get("n_candidates"),
             "n_reference_mounds": spec.get("n_reference_mounds"),
             "provenance": build_provenance(eval_sources, at),
         })
+        # E81 correction stamp, derived from the row rather than hand-applied
+        # (D18). The tile-MCC fields above are the signature: their presence
+        # means the source evaluation carries the E81 re-derivation.
+        tile = rows[-1]["metrics"].get("tile_classification") or {}
+        if any(k in tile for k in
+               ("mcc_n_runs_defined", "mcc_undefined_reason")):
+            rows[-1]["provenance"]["e81_correction"] = E81_CORRECTION_STAMP
     return rows
 
 
@@ -2026,7 +2111,7 @@ def draft_run(run_id: str) -> dict:
     for det_path, evals in sorted(_build_eval_index().items()):
         if not det_path.startswith(dir_prefix):
             continue
-        for eval_rel, summary, bounds in evals:
+        for eval_rel, summary, bounds, _bootstrap in evals:
             candidates.append({
                 "detections": det_path,
                 "eval_path": eval_rel,

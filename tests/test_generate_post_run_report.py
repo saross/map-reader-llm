@@ -32,6 +32,7 @@ import pytest
 
 from scripts.generate_post_run_report import (
     PLANNED_STALE_DAYS,
+    _metrics_from_eval,
     VERIFIER_N_TILES_NULL_REASON,
     _carry_timestamps,
     _stabilise_timestamps,
@@ -1504,3 +1505,144 @@ def test_multi_meta_pass_unions_completed_deterministically(tmp_path, monkeypatc
     (row,) = gpr.extract_passes(ctx)
     assert row["n_tiles_processed"] == 3  # union of {t2} and {t0, t1}
     assert row["status"] == "ok"  # the primary-round failure was recovered
+
+
+# --- D17: bootstrap CI parameters must describe the run, not the standard -------
+#
+# `_metrics_from_eval` used to take `n_iter: int = 10000` as a default that its
+# only caller never overrode, so every condition was stamped with the project
+# standard whatever its source evaluation actually ran. 49 of 333 committed
+# conditions were published at 10,000 when their source declared 1,000. These
+# tests pin the parameters to the source and pin absence to absence.
+
+_EVAL_SUMMARY = {
+    "buffers": [
+        {
+            "buffer_metres": 20,
+            "f1": 0.8558,
+            "precision": 0.8959,
+            "recall": 0.819,
+            "f1_ci_lower": 0.821,
+            "f1_ci_upper": 0.8857,
+            "f1_ci_method": "BCa",
+        }
+    ],
+    "tile_classification": {},
+}
+
+
+@pytest.mark.tier1
+def test_ci_params_are_read_from_the_source_bootstrap_block():
+    """A source that ran at B=1000 must not be published as B=10000."""
+    metrics = _metrics_from_eval(
+        _EVAL_SUMMARY,
+        {"n_iterations": 1000, "seed": 42, "resampling_unit": "tile_level"},
+    )
+    ci = metrics["per_buffer"]["20"]["ci"]
+    assert ci["n_iter"] == 1000, "n_iter must come from the source, not a default"
+    assert ci["seed"] == 42
+    assert ci["resampling"] == "tile-level"
+    assert ci["method"] == "BCa"
+
+
+@pytest.mark.tier1
+def test_ci_params_track_a_ten_thousand_iteration_source():
+    """The other regime, so the test cannot pass by hard-coding 1000 either."""
+    metrics = _metrics_from_eval(_EVAL_SUMMARY, {"n_iterations": 10000, "seed": 7})
+    ci = metrics["per_buffer"]["20"]["ci"]
+    assert ci["n_iter"] == 10000
+    assert ci["seed"] == 7
+
+
+@pytest.mark.tier1
+def test_undeclared_ci_params_are_omitted_not_invented(registry):
+    """An adapter-written eval with no bootstrap block yields no bootstrap keys.
+
+    Omission is what the schema wants: `n_iter` and `seed` are optional, but must
+    be integers when present, so emitting the project standard here would assert
+    something the source does not record.
+    """
+    for bootstrap in ({}, None):
+        metrics = _metrics_from_eval(_EVAL_SUMMARY, bootstrap)
+        ci = metrics["per_buffer"]["20"]["ci"]
+        assert "n_iter" not in ci
+        assert "seed" not in ci
+        assert "resampling" not in ci
+        assert set(ci) == {"low", "high", "method"}
+
+
+# --- D18: E81's corrections must regenerate from source, not be hand-applied ---
+#
+# E81 wrote its tile-MCC corrections directly into the generated manifests and
+# taught neither the generator nor the schema about them. The result was a
+# committed conditions-manifest that failed its own schema on 26 counts, and a
+# correction that the next `--all --write` silently reverted. These tests pin
+# both halves: the fields are derived from the source evaluation, and the
+# committed artefacts actually validate.
+
+@pytest.mark.tier1
+def test_undefined_mcc_carries_its_reason_not_a_bare_null():
+    """A null MCC must name the vanishing marginal (E81), derived from the matrix."""
+    summary = {
+        "buffers": [],
+        "tile_classification": {
+            "mcc": {"point": None, "n_runs": 3, "n_runs_defined": 0},
+            "sensitivity": {"point": 1.0},
+            "specificity": {"point": 0.0},
+            "confusion": {"tp": 204, "tn": 0, "fp": 136, "fn": 0},
+        },
+    }
+    tile = _metrics_from_eval(summary, {})["tile_classification"]
+    assert tile["mcc"] is None
+    assert tile["mcc_n_runs"] == 3
+    assert tile["mcc_n_runs_defined"] == 0
+    assert "TN + FN = 0" in tile["mcc_undefined_reason"]
+    assert "E81" in tile["mcc_undefined_reason"]
+
+
+@pytest.mark.tier1
+def test_undefined_mcc_reason_names_the_marginal_that_actually_vanished():
+    """The reason is derived, so a different degeneracy is described correctly."""
+    summary = {
+        "buffers": [],
+        "tile_classification": {
+            "mcc": {"point": None},
+            "confusion": {"tp": 0, "tn": 100, "fp": 0, "fn": 40},
+        },
+    }
+    tile = _metrics_from_eval(summary, {})["tile_classification"]
+    assert "TP + FP = 0" in tile["mcc_undefined_reason"]
+
+
+@pytest.mark.tier1
+def test_defined_mcc_carries_no_undefined_reason():
+    summary = {
+        "buffers": [],
+        "tile_classification": {
+            "mcc": {"point": 0.7448},
+            "confusion": {"tp": 230, "tn": 693, "fp": 24, "fn": 85},
+        },
+    }
+    tile = _metrics_from_eval(summary, {})["tile_classification"]
+    assert tile["mcc"] == 0.7448
+    assert "mcc_undefined_reason" not in tile
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(
+    "manifest",
+    ["conditions", "runs", "passes", "analyses"],
+)
+def test_committed_manifest_validates_against_its_schema(registry, manifest):
+    """The committed artefact, not just a freshly-extracted one.
+
+    The generator reports ALL VALID over rows it has just built, so a hand-edit
+    to a written manifest is invisible to it. That is how E81's additions sat in
+    a schema-invalid conditions-manifest without anything noticing (D18).
+    """
+    path = Path(__file__).resolve().parents[1] / "results" / f"{manifest}-manifest.json"
+    obj = json.loads(path.read_text())
+    errors = validate_manifest(manifest, obj, registry)
+    assert errors == [], (
+        f"committed {path.name} fails its schema:\n  " + "\n  ".join(errors[:10])
+    )

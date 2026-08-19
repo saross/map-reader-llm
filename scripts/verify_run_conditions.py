@@ -282,7 +282,7 @@ def verify_completeness(directory_path: str, conditions: list[dict],
     for det_path, evals in sorted(index.items()):
         if not det_path.startswith(dir_prefix):
             continue
-        for eval_rel, summary, _bounds in evals:
+        for eval_rel, summary, _bounds, _bootstrap in evals:
             if eval_rel in claimed or eval_rel in ignored_evals or det_path in auto_dets:
                 continue
             discs.append(_disc(WARN, "unclaimed-eval",
@@ -359,7 +359,7 @@ def classify_run(run_id: str, registry_obj: dict, index: dict) -> dict:
         if not det_path.startswith(dir_prefix):
             continue
         fc = _geojson_feature_count(det_path)
-        for eval_rel, summary, _bounds in evs:
+        for eval_rel, summary, _bounds, _bootstrap in evs:
             has_full, has_mcc = _eval_completeness(summary)
             n_det = summary.get("n_detections")
             reasons: list[str] = []

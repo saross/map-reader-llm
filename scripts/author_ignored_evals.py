@@ -76,7 +76,7 @@ def unclaimed_for_run(directory_path: str, conditions: list[dict],
     for det_path, evals in index.items():
         if not det_path.startswith(dir_prefix):
             continue
-        for eval_rel, _summary, _bounds in evals:
+        for eval_rel, _summary, _bounds, _bootstrap in evals:
             if eval_rel in claimed or det_path in auto_dets:
                 continue
             unclaimed.add(eval_rel)

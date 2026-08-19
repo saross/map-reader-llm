@@ -1,7 +1,7 @@
 # Defect register — Session 136 (2026-08-18)
 
-> **Last revised**: 2026-08-18 (D8 cleared; D7 fixed; D12–D14 added). See
-> [§ Changelog](#changelog).
+> **Last revised**: 2026-08-19 (D17 and D18 added and fixed, both found while
+> filing E82; E82 filed). See [§ Changelog](#changelog).
 
 **What this is.** A single tracked list of every defect surfaced during
 Session 136, with status and the fix each one needs. The session produced
@@ -23,12 +23,13 @@ artefact that carries the evidence rather than restating it.
 | D1 | Order-dependent tile assignment: `evaluate_detections.py` books a detection to the FIRST intersecting bounds tile, which depends on row order. ~0.01 F1 on 123 conditions. | E79 | RECORDED — fix is a PI decision |
 | D2 | No within-pass deduplication in the scoring path, so two scoring paths coexist; 155 of 333 conditions affected. Preregistration-compliant, but cross-path comparisons are confounded. | E80 | RECORDED — correction campaign in `dedup-correction-worklist-2026-08-18.md` |
 | D3 | Undefined tile-level MCC published as `0.0` (9 conditions), plus 4 more depressed by averaging an undefined pass into a mean. Originates in a mathematically false registered claim at `preregistration.md:392`. | E81 | RECORDED — correction OPEN, see D4/D5 |
+| D19 | Bootstrap CIs depart from Decision 10 on **method** (BCa substituted for the registered percentile method in `2026999ad`, 2026-04-30, undisclosed) and on **iteration count** (1,583 evaluations at B=10,000 against 114 at B=1,000, inverting E54's recorded split). PI ruled 2026-08-19 to standardise on 10,000 and disclose. | E82 | RECORDED — re-emission proceeds by campaign; E54 carries a correction block pointing at E82 |
 
 ## Open code defects
 
 | # | Defect | Location | Fix needed |
 |---|---|---|---|
-| **D15** | **CRITICAL — the BCa bootstrap wrapper transposes its axes**, computing `n` statistics of `B` draws each instead of `B` statistics of `n` draws. Every interval on the BCa path is too narrow by roughly `sqrt(B/n)`: measured **1.66×** at B=1,000 and **5.50×** at B=10,000 on a real published cell. 1,520 committed evaluations used B=10,000. Point estimates are unaffected; the `percentile_fallback` path, permutation tests, and this session's paired bootstraps are all unaffected. Because the registered significance rule is "the 95 % CI excludes zero", the error runs towards **false positives**. | `lib_advanced_metrics.py`, `_bca_ci_from_indices` (the `np.moveaxis` in the vectorised wrapper) | VERIFIED, NOT FIXED — full working and remediation options in `reports/bca-axis-defect-2026-08-18.md`. Needs its own erratum and a PI decision on re-emission scope. |
+| **D15** | **CRITICAL — the BCa bootstrap wrapper transposes its axes**, computing `n` statistics of `B` draws each instead of `B` statistics of `n` draws. Every interval on the BCa path is too narrow by roughly `sqrt(B/n)`: measured **1.66×** at B=1,000 and **5.50×** at B=10,000 on a real published cell. 1,520 committed evaluations used B=10,000. Point estimates are unaffected; the `percentile_fallback` path, permutation tests, and this session's paired bootstraps are all unaffected. Because the registered significance rule is "the 95 % CI excludes zero", the error runs towards **false positives**. | `lib_advanced_metrics.py`, `_bca_ci_from_indices` (the `np.moveaxis` in the vectorised wrapper) | **FIXED and DISCLOSED 2026-08-19** — code fix `122104b8a`; disclosed as E82 disclosure 2. Corrected characterisation: width is rescaled by `sqrt(n/B)`, so intervals are too narrow only when `B > n` (69,663 intervals); **840 sit at `B < n` and are too WIDE**. **Zero published significance verdicts change** — Decision 10's rule is on *difference* CIs, and the defective wrapper is reachable only from single-condition ones. Re-emission of committed intervals remains OPEN, by campaign. Full working in `reports/bca-axis-defect-2026-08-18.md`. |
 | D4 | `_safe_round` returns `0.0` for an undefined MCC; `aggregate_runs` averages those zeros into multi-run means. | `evaluate_detections.py:533-535`, `:752-788` | Emit `null`, and average over defined passes only. Re-emit the 13 affected conditions. |
 | D5 | `bootstrap_tile_classification_ci` documents degenerate resamples as "treated as `NaN` and skipped" but returns `0.0`. Every tile-MCC CI lower bound of exactly `0.0000` on the affected cells is that substitution, not a percentile. | `lib_advanced_metrics.py:2034-2036` (docstring) vs `:2087-2091` (code) | Make code and docstring agree; skip degenerate resamples. |
 | D6 | Two detection-file naming conventions coexist. Any `detections_*` glob silently under-reads a mixed pool. | `evaluate_detections.py`; `scoring_sensitivity_survey.py`; 24 further sites | **FIXED** — `scripts/lib_detection_paths.py` + 30 sites migrated (`6b1cb87af`, `4c44e3fd6`, `6fa658877`, `8e59c9555`). Repo guard green; tier-1 suite 1,479 passed. |
@@ -40,6 +41,8 @@ artefact that carries the evidence rather than restating it.
 | D12 | `execution_stats.parse_failures` reads `0` and `finish_reason_counts` records unbroken success on the six 2026-08-18 grid passes that each lost a tile to a JSON-parse failure. The counter was driven by whether the API *envelope* parsed, not the JSON body. `items_failed` and the `.tiles.json` `failed` array are the reliable record. | `lib_llm_metadata.py`; `4_detect_mounds_batch.py` | **FIXED** in the writer — `log_failure` now takes a category and attributes to the right counter (`d0a709059`). **RECORDED** for historical metadata, which still carries it: read `<pass>.tiles.json` `failed` and `execution_stats.items_failed`, never `parse_failures`, when auditing pre-`d0a709059` runs. |
 | D13 | Recorded `cost_estimate` blocks are at **list price** and overstate actual billing by ~2×: Gemini real-time flex carries the same 50 % discount as the async Batch API, but only the batch path applied one. Metadata therefore disagreed with the audited `pareto_v2.json` model by exactly 2× with nothing in either artefact to say which was right. | `lib_llm_metadata.py:1079` (`FLEX_DISCOUNT`), `:1084` (`BATCH_API_DISCOUNT`) | **FIXED** in the writer — the discount is now a parameter of the cost model; `total_cost_usd` records the billed amount alongside `list_total_cost_usd` and an explicit `cost_basis` (`d0a709059`). **RECORDED** for historical metadata: absence of `cost_basis` marks the old list-price convention. All 46 `outputs/grid-2026-08-18/**/*.meta.json` blocks are on it — a recorded $37.06 is ≈ $18.53 billed. Never re-derive a spend figure from pre-`d0a709059` metadata without halving it. |
 | D14 | Crop manifests record `source_geojson` as a bare mutable path with no content hash, commit, or timestamp, so a source regenerated after extraction leaves the manifest silently describing an artefact that no longer exists at that path. Three cells corpus-wide are affected: `pro-medium-image-baseline` (519→587), `pro-medium-text-baseline` (430→446, same commit `c07c57766`), and `flash-high-image-n5/image-t0.0/verified-v1-n10` (802→889, `f6116cba0`/`77bb342b4`). This is what made D8 look like corruption. | `extract_candidates.py:396-410` | Anchor the manifest to its source (content hash or git commit). Until then, annotate the affected cells' provenance. Sweep basis: 203 manifests, 104 exact, 91 k-of-N by design, 4 anomalies, 4 dangling — `provenance-d8-2026-08-18.md` § 6. |
+| D17 | **FOUND AND FIXED 2026-08-19.** `_metrics_from_eval` took `n_iter: int = 10000` as a default and its only caller never overrode it, so every manifest condition was stamped with the project standard whatever its source ran. **49 of 333 conditions published `n_iter: 10000` where the source evaluation declared 1,000**, and 16 adapter-written cells with no bootstrap block were stamped too. Same class as the hard-coded `_metadata.bootstrap.method` literal D15 flagged: a recorded parameter that is not evidence of anything. Point estimates untouched. | `scripts/generate_post_run_report.py:677` (`_metrics_from_eval`), `:816` (caller) | **FIXED** — parameters now read from the source `_metadata.bootstrap`; undeclared parameters are omitted rather than filled. 647 intervals corrected 10000→1000 across 49 conditions, 224 omitted across 16. Three tier-1 regression tests. The 49 are also the re-run worklist for E82's 10k standardisation. |
+| D18 | **FOUND AND FIXED 2026-08-19.** E81's corrections were hand-applied to the generated manifests and taught to neither the generator nor the schema. Two consequences. (a) The committed `results/conditions-manifest.json` **failed its own schema on 26 counts across 13 conditions** (`mcc_n_runs`, `mcc_n_runs_defined`, `mcc_undefined_reason`, `provenance.e81_correction` all forbidden by `additionalProperties: false`). (b) Regeneration silently **reverted** every one of them, including the `[REVISED … erratum E81]` outcome text in the analyses manifest, whose hand-authored source `run-analyses.json` never carried it. Nothing caught this because the generator reports ALL VALID over rows it has just built, never over the committed artefact. | `docs/manifest-schemas/{conditions-manifest,common-defs}.schema.json`; `scripts/generate_post_run_report.py`; `results/run-analyses.json` | **FIXED** — schema extended for the four fields; generator derives them from the source evaluation (the reason string names the marginal that actually vanished rather than assuming TN+FN); E81's outcome text ported into `run-analyses.json`. Regeneration is now idempotent and reproduces E81 exactly: 0 drift in tile-classification, provenance, and point estimates. Four tier-1 tests, including one that validates each **committed** manifest against its schema, closing the gap that hid this. |
 
 ## Open documentation and reporting defects
 
@@ -75,7 +78,28 @@ artefact that carries the evidence rather than restating it.
 
 ## Changelog
 
-### 2026-08-18 (latest) — D8 cleared; D7 fixed; D12–D14 added
+### 2026-08-19 (latest) — E82 filed; D15 fixed and disclosed; D17, D18, D19 added
+
+**Trigger**: filing erratum E82 for the bootstrap deviations, which required an
+independent recount of the committed corpus and surfaced two further defects in
+the manifest generator.
+
+| Row | Before | After |
+|---|---|---|
+| D15 | VERIFIED, NOT FIXED; "every BCa interval too narrow" | FIXED (`122104b8a`) and disclosed as E82; too narrow only where `B > n` (69,663), **too wide** where `B < n` (840); zero published verdicts change |
+| D16 | blocked by D15 | unblocked; still needs per-cell evaluations at B = 10,000 |
+| D17 | not known | **FIXED** — 49 conditions published `n_iter: 10000` against a source declaring 1,000 |
+| D18 | not known | **FIXED** — committed conditions-manifest failed its own schema on 26 counts; regeneration reverted E81 |
+| D19 | not known | RECORDED via E82 — BCa and 10,000 iterations both depart from Decision 10 |
+
+**What did NOT change**: no point estimate, no F1, precision, recall, or tile-MCC
+value moved. Regeneration after the D17/D18 fixes reproduces every committed
+tile-classification block and every provenance block exactly; only the 871 CI
+parameter blocks D17 was mis-stamping differ.
+
+**Commits**: E82 `2907713f3`; D17/D18 fixes in the following commit.
+
+### 2026-08-18 — D8 cleared; D7 fixed; D12–D14 added
 
 **D8 is CLEARED.** The 519-versus-587 gap on `pro-medium-image-baseline` is
 the signature of recovery commit `c07c57766` (2026-06-03, disclosed at the

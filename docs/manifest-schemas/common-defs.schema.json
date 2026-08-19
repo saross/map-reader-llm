@@ -29,6 +29,10 @@
           "type": "string",
           "description": "Semantic version of the generator script that wrote the row (tracks the script, NOT the manifest format — the manifest format is the top-level schema_version).",
           "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "e81_correction": {
+          "type": "string",
+          "description": "Correction stamp where erratum E81 re-derived a row's tile MCC. Row-specific by design: a generic corrections array would generalise better, but this is the key E81 wrote into the committed manifest."
         }
       },
       "required": ["source_files", "last_extracted_at", "extractor_version"],

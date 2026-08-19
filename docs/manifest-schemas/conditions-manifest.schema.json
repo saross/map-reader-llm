@@ -151,7 +151,7 @@
     },
     "tileClassification": {
       "type": "object",
-      "description": "Buffer-agnostic tile-level classification. MCC ALWAYS present (per standing preference), even where cross-scope tile-matching gymnastics are required.",
+      "description": "Buffer-agnostic tile-level classification. MCC is reported wherever it is defined; where the tile confusion matrix is degenerate it is null with mcc_undefined_reason set, never 0.0 (erratum E81).",
       "properties": {
         "mcc": { "type": ["number", "null"], "minimum": -1, "maximum": 1 },
         "sensitivity": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
@@ -159,7 +159,10 @@
         "tp": { "type": "integer", "minimum": 0 },
         "tn": { "type": "integer", "minimum": 0 },
         "fp": { "type": "integer", "minimum": 0 },
-        "fn": { "type": "integer", "minimum": 0 }
+        "fn": { "type": "integer", "minimum": 0 },
+        "mcc_n_runs": { "type": "integer", "minimum": 1, "description": "Passes averaged into the reported MCC (erratum E81)." },
+        "mcc_n_runs_defined": { "type": "integer", "minimum": 0, "description": "Of mcc_n_runs, how many had a defined MCC. Below mcc_n_runs means the reported value averages fewer passes than the condition ran; 0 means the MCC is null (erratum E81)." },
+        "mcc_undefined_reason": { "type": "string", "description": "Present only where mcc is null: names the vanishing confusion-matrix marginal, so a null is never read as a zero (erratum E81)." }
       },
       "required": ["mcc", "tp", "tn", "fp", "fn"],
       "additionalProperties": false
