@@ -28,6 +28,36 @@ project state.
 > $0) are in `reports/bca-axis-defect-2026-08-18.md`. It also **blocks the
 > grid's register row** (D16).
 >
+> **PI RULING (2026-08-19) — E82 AND THE 10k STANDARDISATION.** File
+> erratum **E82** carrying THREE disclosures, then re-run everything that
+> needs re-running at **10,000 iterations**:
+>
+> 1. **BCa is unregistered.** Decision 10 (`decisions-log.md:345`)
+>    registers "1000 iterations, **percentile method** (2.5th/97.5th)".
+>    `BCa` appears **zero** times in the decisions log or the lodged
+>    registration; the 2026-04-29 migration to BCa was never disclosed.
+> 2. **The axis defect (D15)** — the vectorised adapter transposed its
+>    axes, rescaling interval width by `sqrt(n/B)`. Fixed in `122104b8a`,
+>    validated to floating-point equality against
+>    `scipy.stats.bootstrap(vectorized=False)`. NOTE the corrected
+>    characterisation: intervals are too NARROW only when `B > n`; **840
+>    committed intervals sit at `B < n` and are too WIDE**. **Zero
+>    published significance verdicts change** — Decision 10's rule is on
+>    *difference* CIs, and the defective wrapper is reachable only from
+>    single-condition ones.
+> 3. **E54's factual claim no longer holds.** It states that scripts
+>    evaluating preregistered conditions "use 1 000 iterations, matching
+>    the preregistration". The corpus says otherwise: **1,583 evaluations
+>    at B=10,000 against 114 at B=1,000**. The project standardised on
+>    10,000 early and E54 was never updated.
+>
+> **The ruling**: embrace 10,000 as the standard rather than reverting to
+> the preregistered 1,000, re-run everything that needs re-running at that
+> count, and disclose the deviation in E82. This supersedes E54's
+> post-hoc-only framing. Practical note: at B=10,000 against n=340–487
+> tiles, `B > n` throughout, so every re-run interval WIDENS relative to
+> what is committed.
+>
 > **THE PROGRAMME**: the recall-levers research plan is written out in
 > full at `planning/recall-levers-programme-2026-08-19.md` — PI-approved
 > 2026-08-19, with Phase 0 ($0) to run immediately and later phases gated.
