@@ -1,0 +1,143 @@
+{
+  "generated_at_utc": "2026-08-19T01:37:19.643828+00:00",
+  "classification": "POST-HOC (E41-class) \u2014 a re-scoring of committed detections on a corrected footprint, not a registered test.",
+  "question": "Does the 0.028 F1 gap between the 256 px and 384 px proposer-verifier cells survive a common evaluation footprint?",
+  "scope": {
+    "name": "256 px corpus INTERSECT 384 px corpus",
+    "area_km2": 1274.7884387144504,
+    "buffer_metres": 20,
+    "dedup_metres": 20.0,
+    "carriers": {
+      "256": {
+        "tiles": 1032,
+        "reference_mounds": 420
+      },
+      "384": {
+        "tiles": 481,
+        "reference_mounds": 420
+      }
+    }
+  },
+  "cells": [
+    {
+      "cell": "256px-pv-consensus-5of5",
+      "condition": "pv-diag-256::verified-adv-text-consensus-5of5",
+      "tile_px": 256,
+      "carrier_px": 256,
+      "uniform_dedup_20m": false,
+      "n_detections": 385,
+      "n_detections_booked": 385,
+      "n_reference_in_scope": 420,
+      "precision": 0.8831168831168831,
+      "recall": 0.8095238095238095,
+      "f1": 0.84472049689441,
+      "published_f1_at_20m": 0.8558,
+      "published_scope": "px256-1032"
+    },
+    {
+      "cell": "256px-pv-consensus-5of5",
+      "condition": "pv-diag-256::verified-adv-text-consensus-5of5",
+      "tile_px": 256,
+      "carrier_px": 384,
+      "uniform_dedup_20m": false,
+      "n_detections": 385,
+      "n_detections_booked": 385,
+      "n_reference_in_scope": 420,
+      "precision": 0.8727272727272727,
+      "recall": 0.8,
+      "f1": 0.8347826086956521,
+      "published_f1_at_20m": 0.8558,
+      "published_scope": "px256-1032"
+    },
+    {
+      "cell": "256px-pv-consensus-5of5",
+      "condition": "pv-diag-256::verified-adv-text-consensus-5of5",
+      "tile_px": 256,
+      "carrier_px": 256,
+      "uniform_dedup_20m": true,
+      "n_detections": 385,
+      "n_detections_booked": 385,
+      "n_reference_in_scope": 420,
+      "precision": 0.8831168831168831,
+      "recall": 0.8095238095238095,
+      "f1": 0.84472049689441,
+      "published_f1_at_20m": 0.8558,
+      "published_scope": "px256-1032"
+    },
+    {
+      "cell": "256px-pv-consensus-5of5",
+      "condition": "pv-diag-256::verified-adv-text-consensus-5of5",
+      "tile_px": 256,
+      "carrier_px": 384,
+      "uniform_dedup_20m": true,
+      "n_detections": 385,
+      "n_detections_booked": 385,
+      "n_reference_in_scope": 420,
+      "precision": 0.8727272727272727,
+      "recall": 0.8,
+      "f1": 0.8347826086956521,
+      "published_f1_at_20m": 0.8558,
+      "published_scope": "px256-1032"
+    },
+    {
+      "cell": "384px-pv-min-6of10",
+      "condition": "pv-diag-384::verified-adv-text-min-6of10",
+      "tile_px": 384,
+      "carrier_px": 256,
+      "uniform_dedup_20m": false,
+      "n_detections": 377,
+      "n_detections_booked": 377,
+      "n_reference_in_scope": 420,
+      "precision": 0.9257294429708223,
+      "recall": 0.830952380952381,
+      "f1": 0.8757841907151819,
+      "published_f1_at_20m": 0.8835,
+      "published_scope": "era-2-487"
+    },
+    {
+      "cell": "384px-pv-min-6of10",
+      "condition": "pv-diag-384::verified-adv-text-min-6of10",
+      "tile_px": 384,
+      "carrier_px": 384,
+      "uniform_dedup_20m": false,
+      "n_detections": 377,
+      "n_detections_booked": 377,
+      "n_reference_in_scope": 420,
+      "precision": 0.9204244031830239,
+      "recall": 0.8261904761904761,
+      "f1": 0.8707653701380176,
+      "published_f1_at_20m": 0.8835,
+      "published_scope": "era-2-487"
+    },
+    {
+      "cell": "384px-pv-min-6of10",
+      "condition": "pv-diag-384::verified-adv-text-min-6of10",
+      "tile_px": 384,
+      "carrier_px": 256,
+      "uniform_dedup_20m": true,
+      "n_detections": 376,
+      "n_detections_booked": 376,
+      "n_reference_in_scope": 420,
+      "precision": 0.9281914893617021,
+      "recall": 0.830952380952381,
+      "f1": 0.8768844221105527,
+      "published_f1_at_20m": 0.8835,
+      "published_scope": "era-2-487"
+    },
+    {
+      "cell": "384px-pv-min-6of10",
+      "condition": "pv-diag-384::verified-adv-text-min-6of10",
+      "tile_px": 384,
+      "carrier_px": 384,
+      "uniform_dedup_20m": true,
+      "n_detections": 376,
+      "n_detections_booked": 376,
+      "n_reference_in_scope": 420,
+      "precision": 0.9228723404255319,
+      "recall": 0.8261904761904761,
+      "f1": 0.871859296482412,
+      "published_f1_at_20m": 0.8835,
+      "published_scope": "era-2-487"
+    }
+  ]
+}
