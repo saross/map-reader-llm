@@ -1,0 +1,376 @@
+{
+  "n_artefacts": 11,
+  "n_understated": 3,
+  "note": "Tier 1 understates the leader's clique when a marginally significant condition sits immediately below the leader and closes the tier before lower-ranked, non-separable conditions are considered.",
+  "artefacts": [
+    {
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-dd384-control-none-evalf1.json",
+      "analysis_id": null,
+      "n_cells": 22,
+      "tier1_size": 3,
+      "leader_clique_size": 3,
+      "clique_violations": 0,
+      "understated": false,
+      "leader": "consensus-flash-high-text-26of30",
+      "clique": [
+        {
+          "ref": "consensus-flash-high-text-26of30",
+          "f1": 0.814118
+        },
+        {
+          "ref": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+          "f1": 0.804554
+        },
+        {
+          "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+          "f1": 0.792183
+        }
+      ],
+      "missing_from_tier1": []
+    },
+    {
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-dd384-control-none-microf1.json",
+      "analysis_id": null,
+      "n_cells": 22,
+      "tier1_size": 3,
+      "leader_clique_size": 3,
+      "clique_violations": 0,
+      "understated": false,
+      "leader": "consensus-flash-high-text-26of30",
+      "clique": [
+        {
+          "ref": "consensus-flash-high-text-26of30",
+          "f1": 0.814118
+        },
+        {
+          "ref": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+          "f1": 0.804554
+        },
+        {
+          "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+          "f1": 0.792183
+        }
+      ],
+      "missing_from_tier1": []
+    },
+    {
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-dd384-dedup-all.json",
+      "analysis_id": null,
+      "n_cells": 22,
+      "tier1_size": 2,
+      "leader_clique_size": 2,
+      "clique_violations": 0,
+      "understated": false,
+      "leader": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+      "clique": [
+        {
+          "ref": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+          "f1": 0.854494
+        },
+        {
+          "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+          "f1": 0.841517
+        }
+      ],
+      "missing_from_tier1": []
+    },
+    {
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-dd384-dedup-singlepass.json",
+      "analysis_id": null,
+      "n_cells": 22,
+      "tier1_size": 2,
+      "leader_clique_size": 2,
+      "clique_violations": 0,
+      "understated": false,
+      "leader": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+      "clique": [
+        {
+          "ref": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+          "f1": 0.854494
+        },
+        {
+          "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+          "f1": 0.841517
+        }
+      ],
+      "missing_from_tier1": []
+    },
+    {
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-era1-leaderboard-control.json",
+      "analysis_id": null,
+      "n_cells": 82,
+      "tier1_size": 1,
+      "leader_clique_size": 6,
+      "clique_violations": 0,
+      "understated": true,
+      "leader": "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+      "clique": [
+        {
+          "ref": "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+          "f1": 0.792453
+        },
+        {
+          "ref": "retest-phase3a-high::text-high-t0.3-n30-23of30",
+          "f1": 0.774443
+        },
+        {
+          "ref": "retest-phase3a-high::text-high-t0.7-n30-22of30",
+          "f1": 0.772861
+        },
+        {
+          "ref": "retest-phase3a-high::text-high-t1.0-n10-8of10",
+          "f1": 0.772177
+        },
+        {
+          "ref": "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+          "f1": 0.770538
+        },
+        {
+          "ref": "retest-phase2b::verified-adv-text-t0.0",
+          "f1": 0.770291
+        }
+      ],
+      "missing_from_tier1": [
+        "retest-phase3a-high::text-high-t0.3-n30-23of30",
+        "retest-phase3a-high::text-high-t0.7-n30-22of30",
+        "retest-phase3a-high::text-high-t1.0-n10-8of10",
+        "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+        "retest-phase2b::verified-adv-text-t0.0"
+      ]
+    },
+    {
+      "artefact": "results/dedup-metric-impact-2026-08-18/tiering-era1-leaderboard-dedup.json",
+      "analysis_id": null,
+      "n_cells": 82,
+      "tier1_size": 2,
+      "leader_clique_size": 3,
+      "clique_violations": 0,
+      "understated": true,
+      "leader": "retest-phase2b::verified-adv-text-t0.0",
+      "clique": [
+        {
+          "ref": "retest-phase2b::verified-adv-text-t0.0",
+          "f1": 0.812831
+        },
+        {
+          "ref": "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+          "f1": 0.792453
+        },
+        {
+          "ref": "retest-phase3a-high::text-high-t0.3-n30-23of30",
+          "f1": 0.774443
+        }
+      ],
+      "missing_from_tier1": [
+        "retest-phase3a-high::text-high-t0.3-n30-23of30"
+      ]
+    },
+    {
+      "artefact": "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+      "analysis_id": "diversity-dividend-consensus-vs-baseline-384",
+      "n_cells": 22,
+      "tier1_size": 3,
+      "leader_clique_size": 3,
+      "clique_violations": 0,
+      "understated": false,
+      "leader": "consensus-flash-high-text-26of30",
+      "clique": [
+        {
+          "ref": "consensus-flash-high-text-26of30",
+          "f1": 0.814118
+        },
+        {
+          "ref": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+          "f1": 0.804554
+        },
+        {
+          "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+          "f1": 0.792183
+        }
+      ],
+      "missing_from_tier1": []
+    },
+    {
+      "artefact": "results/diversity-dividend-384/tiering-with-deployable/tiering_20m.json",
+      "analysis_id": "diversity-dividend-consensus-vs-baseline-384",
+      "n_cells": 26,
+      "tier1_size": 3,
+      "leader_clique_size": 3,
+      "clique_violations": 0,
+      "understated": false,
+      "leader": "consensus-flash-high-text-26of30",
+      "clique": [
+        {
+          "ref": "consensus-flash-high-text-26of30",
+          "f1": 0.814118
+        },
+        {
+          "ref": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+          "f1": 0.804554
+        },
+        {
+          "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+          "f1": 0.792183
+        }
+      ],
+      "missing_from_tier1": []
+    },
+    {
+      "artefact": "results/era1-leaderboard/tiering_20m.json",
+      "analysis_id": "era1-leaderboard",
+      "n_cells": 82,
+      "tier1_size": 1,
+      "leader_clique_size": 6,
+      "clique_violations": 0,
+      "understated": true,
+      "leader": "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+      "clique": [
+        {
+          "ref": "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+          "f1": 0.792453
+        },
+        {
+          "ref": "retest-phase3a-high::text-high-t0.3-n30-23of30",
+          "f1": 0.774443
+        },
+        {
+          "ref": "retest-phase3a-high::text-high-t0.7-n30-22of30",
+          "f1": 0.772861
+        },
+        {
+          "ref": "retest-phase3a-high::text-high-t1.0-n10-8of10",
+          "f1": 0.772177
+        },
+        {
+          "ref": "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+          "f1": 0.770538
+        },
+        {
+          "ref": "retest-phase2b::verified-adv-text-t0.0",
+          "f1": 0.770291
+        }
+      ],
+      "missing_from_tier1": [
+        "retest-phase3a-high::text-high-t0.3-n30-23of30",
+        "retest-phase3a-high::text-high-t0.7-n30-22of30",
+        "retest-phase3a-high::text-high-t1.0-n10-8of10",
+        "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+        "retest-phase2b::verified-adv-text-t0.0"
+      ]
+    },
+    {
+      "artefact": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+      "analysis_id": "n1-baseline-matrix-384",
+      "n_cells": 18,
+      "tier1_size": 2,
+      "leader_clique_size": 2,
+      "clique_violations": 0,
+      "understated": false,
+      "leader": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+      "clique": [
+        {
+          "ref": "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+          "f1": 0.804554
+        },
+        {
+          "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+          "f1": 0.792183
+        }
+      ],
+      "missing_from_tier1": []
+    },
+    {
+      "artefact": "results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.json",
+      "analysis_id": "era1-single-pass-baseline-matrix",
+      "n_cells": 36,
+      "tier1_size": 20,
+      "leader_clique_size": 20,
+      "clique_violations": 0,
+      "understated": false,
+      "leader": "retest-phase2e::canonical-last",
+      "clique": [
+        {
+          "ref": "retest-phase2e::canonical-last",
+          "f1": 0.63142
+        },
+        {
+          "ref": "retest-phase2c::text-scale-4",
+          "f1": 0.60943
+        },
+        {
+          "ref": "retest-phase2c::text-scale-8",
+          "f1": 0.607042
+        },
+        {
+          "ref": "retest-phase2b::text-t0.3",
+          "f1": 0.606476
+        },
+        {
+          "ref": "retest-phase2e::config-default",
+          "f1": 0.605732
+        },
+        {
+          "ref": "retest-phase2b::text-t0.0",
+          "f1": 0.605479
+        },
+        {
+          "ref": "retest-phase2d::image-terse",
+          "f1": 0.605183
+        },
+        {
+          "ref": "retest-phase2c::text-pure-positive-canon",
+          "f1": 0.604488
+        },
+        {
+          "ref": "retest-phase2c::text-canonical",
+          "f1": 0.604457
+        },
+        {
+          "ref": "retest-phase2d::image-verbose",
+          "f1": 0.602654
+        },
+        {
+          "ref": "retest-phase2c::image-plus-hp",
+          "f1": 0.598473
+        },
+        {
+          "ref": "retest-phase2c::image-exploratory-pure-positive-4hp",
+          "f1": 0.598473
+        },
+        {
+          "ref": "retest-phase2e::canonical-first",
+          "f1": 0.598473
+        },
+        {
+          "ref": "retest-phase2d::text-terse",
+          "f1": 0.598436
+        },
+        {
+          "ref": "retest-phase2c::text-plus-hp",
+          "f1": 0.59691
+        },
+        {
+          "ref": "retest-phase2c::image-scale-8",
+          "f1": 0.586707
+        },
+        {
+          "ref": "retest-phase2b::image-t0.0",
+          "f1": 0.586172
+        },
+        {
+          "ref": "retest-phase2b::text-t0.7",
+          "f1": 0.584163
+        },
+        {
+          "ref": "retest-phase2c::image-scale-4",
+          "f1": 0.583704
+        },
+        {
+          "ref": "retest-phase2d::text-verbose",
+          "f1": 0.583396
+        }
+      ],
+      "missing_from_tier1": []
+    }
+  ]
+}

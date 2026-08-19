@@ -1,7 +1,8 @@
 # Selection-aware uncertainty: pilot on the tile-size × overlap grid
 
-> **Last revised**: 2026-08-19 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-19 (extended from the grid pilot to five registered
+> boards; the extension surfaced defect D20). See [§ Changelog](#changelog) for
+> revision history.
 
 **Classification**: POST-HOC (E41-class), a methodological re-analysis of
 committed detections. Not a registered test.
@@ -118,6 +119,64 @@ its critical width inflates with the smaller sample, which is a further argument
 for treating MCB as the primary instrument and the optimism correction as
 secondary.
 
+## Extension to the registered boards, and what it found
+
+The grid was the stable case. Applying the same two instruments to the
+registered leaderboards, where argmax stability is lower by construction:
+
+| Board | Cells | Selected | Apparent | Optimism | Corrected | Stability | MCB | Register `tie_set` |
+|---|---:|---|---:|---:|---:|---:|---:|---:|
+| `era1-single-pass-baseline-matrix` | 36 | canonical-last | 0.6314 | **+0.0132** | 0.6183 | 0.646 | 23 | 20 |
+| `era1-leaderboard` | 82 | verified-adv-text-high-t1.0-n30-23of30 | 0.7925 | +0.0067 | 0.7857 | 0.738 | **15** | **1** |
+| `verifier-robustness-matrix` | 6 | verified-384-ge3of5-t0-3-high-n5 | 0.8764 | +0.0027 | 0.8737 | 0.545 | 5 | 5 |
+| `pass-budget-pareto-v2` | 7 | verified-384-16of30-t0-3-n5-opmax | 0.8951 | +0.0050 | 0.8902 | 0.672 | 6 | 7 |
+| `min-vs-high-thinking-pv` | 7 | verified-384-16of30-t0-3-n5-opmax | 0.8951 | +0.0048 | 0.8903 | 0.679 | 6 | 6 |
+
+Optimism is larger here than in the grid, up to **+0.0132** on the single-pass
+board, and again tracks argmax stability. It remains small in absolute terms. MCB
+mostly agrees with the register's tie sets, is slightly wider on the single-pass
+board (23 against 20, a strict superset adding three image cells just below the
+published Tier-1 floor), and is slightly **tighter** on `pass-budget-pareto-v2`
+(6 against 7), so it is not uniformly more conservative.
+
+### The exception, which is a defect: `era1-leaderboard`
+
+The register publishes a **sole** Tier-1 leader there, `tie_set` of one, with the
+outcome reading "proposer-verifier is the single best Era-1 architecture ... clear
+of the HIGH-consensus cluster (Tier 2)". MCB puts **15 of 82** cells in the
+admissible set. That gap was large enough to be worth chasing to its cause, and
+the cause is not a disagreement between methods.
+
+`greedy_clique_tiers` walks conditions in F1-descending order and closes the
+current tier at the **first** condition significant against any current member.
+On this board the rank-2 cell is significant at **BH p = 0.048** — marginal — and
+closes Tier 1 immediately. Five lower-ranked cells are non-significant against the
+leader and, checked pairwise, mutually non-significant: **all 15 pairs within
+{leader + those five} are non-significant**. The leader's true clique therefore has
+**6** members, verified with zero violating pairs. The function's own docstring
+promises that `tiers[0]` is "the leader's clique"; on this board it is not.
+
+Three independent instruments agree the published claim is too strong, and they
+bracket it: the artefact's own pairwise tests say at least 6, the true clique says
+6, and MCB at simultaneous 95 % says 15.
+
+`scripts/audit_tier1_cliques.py` checks every committed tiering artefact. **3 of
+11 understate Tier 1, and all three are this board** (the main artefact and its two
+dedup-impact variants). The other eight agree exactly, including the 36-cell board
+whose Tier 1 of 20 reproduces its clique of 20. The defect fires only when a
+marginal result sits at rank 2, which is why it went unnoticed.
+
+Recorded as **D20**, left OPEN: the code fix is mechanical, but it changes a
+published headline claim and the correction scope is a PI decision.
+
+**Caveat on the MCB implementation.** The critical value used here is a bootstrap
+max-deviation band — one common two-sided width applied to every candidate — which
+is an adaptation, not Hsu's constrained one-sided construction. It is therefore
+**conservative**: the true MCB set is likely smaller than the figures above,
+though on `era1-leaderboard` it cannot plausibly shrink to one, since the clique
+argument reaches 6 without any MCB machinery. This construction should be checked
+by a statistician before it carries a paper claim.
+
 ## Recommendation
 
 1. Report the **MCB admissible set** wherever the paper currently reports a best
@@ -127,10 +186,9 @@ secondary.
    grid the correction is ≤ 0.004 F1 and can be stated as negligible, but it
    should be stated, not omitted.
 3. Do **not** apply either instrument to fixed-operating-point contrasts.
-4. Extend to the flat-plateau selections next — the Era-1 single-pass board
-   carries a 20-of-36 tie set and is where MCB should bite hardest, and E56's
-   verifier threshold curve is flat by measurement. The grid was the stable case;
-   these are not.
+4. **Settle D20 before any board claim goes into the paper.** The
+   `era1-leaderboard` headline is the one materially affected.
+5. E56's verifier threshold curve is the remaining untested flat case.
 
 ## Reproducing
 
@@ -148,6 +206,18 @@ Run on sapphire, $0 API. One JSON per cell under `results/selection-aware/`.
 - `results/grid-2026-08-18/findings.md` (the selection-free contrasts)
 
 ## Changelog
+
+### 2026-08-19 (later) — Extended to five registered boards; D20 found
+
+Applied both instruments to `era1-single-pass-baseline-matrix`,
+`era1-leaderboard`, `verifier-robustness-matrix`, `pass-budget-pareto-v2`, and
+`min-vs-high-thinking-pv`. Optimism rises to +0.0132 on the single-pass board and
+still tracks argmax stability. MCB broadly corroborates the register's tie sets
+except on `era1-leaderboard`, where chasing a 1-against-15 gap surfaced **D20**:
+`greedy_clique_tiers` closes a tier at the first significant condition, so a
+marginal BH p = 0.048 at rank 2 published a sole Tier-1 leader where the leader's
+true clique has six members. 3 of 11 tiering artefacts affected, all this board.
+Audit script `scripts/audit_tier1_cliques.py` added.
 
 ### 2026-08-19 — Original publication
 

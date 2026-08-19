@@ -49,7 +49,12 @@ severity is visible rather than assumed.
 
 Usage::
 
+    # a grid cell's (corroboration x vote) sweep
     python scripts/selection_aware_intervals.py --cell g512_ov256 --K 10 \\
+        --bootstrap 10000 --out results/selection-aware/
+
+    # any registered leaderboard, by analysis id
+    python scripts/selection_aware_intervals.py --board era1-single-pass-baseline-matrix \\
         --bootstrap 10000 --out results/selection-aware/
 
 Notes:
@@ -262,11 +267,47 @@ def run(counts: np.ndarray, b: int, m_frac: float, seed: int) -> dict[str, Any]:
     }
 
 
+def build_board_tile_counts(analysis_id: str) -> tuple[list[dict[str, Any]], np.ndarray]:
+    """Load a registered leaderboard's cells as per-tile TP/FP/FN.
+
+    Reuses ``era1_leaderboard_tiering.load_cells``, which resolves each cell from
+    its own committed evaluation and reproduces the per-tile counts that eval
+    scored, so the candidate set here is exactly the board the register reports.
+
+    Args:
+        analysis_id: The analysis whose ``conditions_compared`` defines the board.
+
+    Returns:
+        ``(specs, counts)`` with ``counts`` shaped ``(n_cells, n_tiles, 3)``.
+    """
+    from scripts.era1_leaderboard_tiering import load_cells  # noqa: PLC0415
+
+    cells, _gdf_ref, _bounds, tile_order = load_cells(
+        PROJECT_ROOT / "results/run-conditions.json",
+        PROJECT_ROOT / "results/run-analyses.json",
+        analysis_id, None, None,
+    )
+    specs = [{"ref": c["ref"], "label": c["label"], "eval_f1": c["eval_f1"]}
+             for c in cells]
+    counts = np.stack([
+        np.column_stack([np.asarray(c["tp"], dtype=float),
+                         np.asarray(c["fp"], dtype=float),
+                         np.asarray(c["fn"], dtype=float)])
+        for c in cells
+    ])
+    logger.info("board %s: %d cells over %d tiles", analysis_id, len(specs),
+                len(tile_order))
+    return specs, counts
+
+
 def main() -> int:
     """Run the pilot on one cell and report both instruments."""
     ap = argparse.ArgumentParser(
         description="Selection-aware intervals for an in-sample-optimised argmax.")
-    ap.add_argument("--cell", default="g512_ov256")
+    ap.add_argument("--cell", default=None,
+                    help="Grid cell whose (corroboration x vote) sweep to analyse.")
+    ap.add_argument("--board", default=None,
+                    help="Analysis id of a registered leaderboard to analyse instead.")
     ap.add_argument("--K", type=int, default=10)
     ap.add_argument("--bootstrap", type=int, default=10000)
     ap.add_argument("--m-frac", type=float, default=1.0,
@@ -274,21 +315,33 @@ def main() -> int:
     ap.add_argument("--out", type=Path,
                     default=PROJECT_ROOT / "results/selection-aware")
     args = ap.parse_args()
+    if bool(args.cell) == bool(args.board):
+        ap.error("give exactly one of --cell or --board")
     args.out.mkdir(parents=True, exist_ok=True)
 
-    bounds = gpd.read_file(COMMON_BOUNDS)
-    gdf_ref = gpd.read_file(GROUND_TRUTH)
-    specs, counts = build_candidate_tile_counts(args.cell, args.K, bounds, gdf_ref)
-    logger.info("%s K=%d: %d candidates over %d carrier tiles",
-                CELL_LABEL.get(args.cell, args.cell), args.K, len(specs), len(bounds))
+    if args.board:
+        specs, counts = build_board_tile_counts(args.board)
+        tag = args.board
+        res_meta = {"board": args.board}
+    else:
+        bounds = gpd.read_file(COMMON_BOUNDS)
+        gdf_ref = gpd.read_file(GROUND_TRUTH)
+        specs, counts = build_candidate_tile_counts(args.cell, args.K, bounds, gdf_ref)
+        logger.info("%s K=%d: %d candidates over %d carrier tiles",
+                    CELL_LABEL.get(args.cell, args.cell), args.K, len(specs),
+                    len(bounds))
+        tag = f"{args.cell}_K{args.K}"
+        res_meta = {"cell": args.cell, "label": CELL_LABEL.get(args.cell, args.cell),
+                    "K": args.K}
 
     res = run(counts, args.bootstrap, args.m_frac, SEED)
-    res.update({"cell": args.cell, "label": CELL_LABEL.get(args.cell, args.cell),
-                "K": args.K, "m_frac": args.m_frac,
-                "candidates": specs, "seed": SEED, "buffer_metres": BUFFER_M})
+    res.update(res_meta)
+    res.update({"m_frac": args.m_frac, "candidates": specs, "seed": SEED,
+                "buffer_metres": BUFFER_M})
 
     s = specs[res["selected_index"]]
-    logger.info("selected: c>=%d k>=%d", s["min_corroboration"], s["min_votes"])
+    logger.info("selected: %s", s.get("label") or
+                f"c>={s.get('min_corroboration')} k>={s.get('min_votes')}")
     logger.info("apparent F1            : %.4f", res["apparent_f1"])
     logger.info("optimism (selection)   : %+.4f  (MC s.e. %.5f; per-resample "
                 "spread [%+.4f, %+.4f])", res["optimism"], res["optimism_mcse"],
@@ -304,11 +357,11 @@ def main() -> int:
                 res["mcb_critical_width"])
     for i in res["mcb_not_ruled_out"]:
         c = specs[i]
-        logger.info("    c>=%d k>=%2d  theta=%+.4f  [%+.4f, %+.4f]",
-                    c["min_corroboration"], c["min_votes"], res["mcb_theta"][i],
-                    res["mcb_lower"][i], res["mcb_upper"][i])
+        name = c.get("label") or f"c>={c.get('min_corroboration')} k>={c.get('min_votes')}"
+        logger.info("    %-38s theta=%+.4f  [%+.4f, %+.4f]", name,
+                    res["mcb_theta"][i], res["mcb_lower"][i], res["mcb_upper"][i])
 
-    out = args.out / f"{args.cell}_K{args.K}_m{args.m_frac:g}.json"
+    out = args.out / f"{tag}_m{args.m_frac:g}.json"
     out.write_text(json.dumps(res, indent=2))
     logger.info("wrote %s", out)
     return 0

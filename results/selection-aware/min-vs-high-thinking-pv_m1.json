@@ -1,0 +1,102 @@
+{
+  "n_candidates": 7,
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 6,
+  "apparent_f1": 0.8951048951048951,
+  "optimism": 0.004767612197896332,
+  "optimism_mcse": 0.00012800698465149262,
+  "optimism_spread_p2_5_p97_5": [
+    -0.020500957339868404,
+    0.029360107900633568
+  ],
+  "corrected_f1": 0.8903372829069988,
+  "naive_ci": [
+    0.8677494199535963,
+    0.919487221447477
+  ],
+  "selection_aware_ci": [
+    0.8629818077557,
+    0.9147196092495806
+  ],
+  "argmax_stability": 0.6788,
+  "n_distinct_argmax": 7,
+  "mcb_critical_width": 0.02915530524902065,
+  "mcb_theta": [
+    -0.01671056216510758,
+    -0.02425618661781026,
+    -0.011609749473827091,
+    -0.031027225201982533,
+    -0.018199854073242094,
+    -0.0049041867223685864,
+    0.0049041867223685864
+  ],
+  "mcb_lower": [
+    -0.04586586741412823,
+    -0.05341149186683091,
+    -0.04076505472284774,
+    -0.060182530451003184,
+    -0.047355159322262745,
+    -0.03405949197138924,
+    -0.024251118526652064
+  ],
+  "mcb_upper": [
+    0.012444743083913072,
+    0.00489911863121039,
+    0.01754555577519356,
+    -0.0018719199529618827,
+    0.010955451175778556,
+    0.024251118526652064,
+    0.03405949197138924
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "board": "min-vs-high-thinking-pv",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::verified-adv-text-min-true-3of5",
+      "label": "verified-adv-text-min-true-3of5",
+      "eval_f1": 0.8784
+    },
+    {
+      "ref": "pv-diag-384::verified-adv-text-min-n30lineage-4of5",
+      "label": "verified-adv-text-min-n30lineage-4of5",
+      "eval_f1": 0.8708
+    },
+    {
+      "ref": "pv-diag-384::verified-adv-text-min-6of10",
+      "label": "verified-adv-text-min-6of10",
+      "eval_f1": 0.8835
+    },
+    {
+      "ref": "pv-diag-384::verified-adv-text-4of5",
+      "label": "verified-adv-text-4of5",
+      "eval_f1": 0.8641
+    },
+    {
+      "ref": "pv-diag-384::verified-adv-text-6of10",
+      "label": "verified-adv-text-6of10",
+      "eval_f1": 0.8769
+    },
+    {
+      "ref": "pv-diag-384::verified-adv-text-consensus-16of30",
+      "label": "verified-adv-text-consensus-16of30",
+      "eval_f1": 0.8902
+    },
+    {
+      "ref": "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
+      "label": "verified-384-16of30-t0-3-n5-opmax",
+      "eval_f1": 0.8951
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}
