@@ -382,7 +382,15 @@ anti-conservative direction) **never fires**: 0 of 10,000 resamples on the reach
 candidates from that resample's max — empirically dominated by the conservative coverage in
 Part B. (d) `mcc_tiering_55map.py` writes its gate verdict "8/8 (exact)" as a fixed string
 decoupled from `len(CELLS)` — substance verified real (16/16 cells reproduce from committed
-confusion matrices, max |Δ| = 0).
+confusion matrices, max |Δ| = 0). (e) **Found via the tier-2 run**: the Obs 280 tier-2 test
+invokes `analyse_obs280_shared_reference.py`, which writes its output **into the committed
+results directory** (`:307`), so any tier-2 run mutates a tracked artefact — and the current
+generator emits four fields the committed file lacks (`mcc_undefined_standardised`,
+`n_board_cells`, `excluded_mcc_undefined`, `mcc_undefined_legacy_extended`), i.e. the committed
+artefact is one generator-vintage stale (class 2). The registered values themselves are
+unchanged by regeneration (rho 0.476, leaders, `divergence_survives` all identical); the
+finding is the in-place write and the schema lag, and it is the probable mechanism of the flaky
+failure noted in Part D. The mutation was caught by a post-run `git status` and restored.
 
 ---
 
