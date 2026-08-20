@@ -53,8 +53,8 @@ def _fixture_inputs(tmp_path: Path) -> None:
 
 
 def _no_frozen(monkeypatch) -> None:
-    """Disable the frozen-vintage fallback for tests targeting attempt 1."""
-    monkeypatch.setattr(rc, "freeze_inputs", lambda *a, **k: None)
+    """Disable the vintage fallback for tests targeting attempt 1."""
+    monkeypatch.setattr(rc, "vintage_assignments", lambda *a, **k: [])
 
 
 def _fake_replay(monkeypatch, produce):
@@ -220,9 +220,12 @@ def test_frozen_fallback_accepts_and_normalises_provenance(monkeypatch, tmp_path
         (out / "evaluation.csv").write_text("csv")
 
     _fake_replay(monkeypatch, produce)
+    monkeypatch.setattr(rc, "vintage_assignments",
+                        lambda *a, **k: [{"gt.geojson": "abc"}])
     monkeypatch.setattr(
         rc, "freeze_inputs",
-        lambda recipe, as_of, work: (dict(recipe), {"gt.geojson": "abc123def"}))
+        lambda recipe, assignment, work: (dict(recipe),
+                                          {"gt.geojson": "abc123def"}))
 
     row = rc.process_one("cell/evaluation.json")
     assert row["status"] == "ok"
@@ -315,3 +318,57 @@ def test_dry_run_reports_named_skips(monkeypatch, tmp_path, caplog):
     assert code == 0
     assert any("skip (no recipe): b/evaluation.json" in r.message
                for r in caplog.records)
+
+
+def test_vintage_assignments_order_and_cap(monkeypatch):
+    """Baseline first, then single flips, then all-after; capped (audit B1)."""
+    cands = {"det.geojson": ["B1", "A1"], "gt.geojson": ["B2", "A2"],
+             "bounds.geojson": ["B3"]}
+    monkeypatch.setattr(rc, "adjacent_commits",
+                        lambda path, as_of: cands[path])
+    recipe = {"detections": ["det.geojson"], "ground_truth": "gt.geojson",
+              "bounds": "bounds.geojson"}
+    plans = rc.vintage_assignments(recipe, "2026-05-03T00:00:00+00:00")
+    assert plans[0] == {"det.geojson": "B1", "gt.geojson": "B2",
+                        "bounds.geojson": "B3"}
+    assert {"det.geojson": "A1", "gt.geojson": "B2",
+            "bounds.geojson": "B3"} in plans
+    assert {"det.geojson": "B1", "gt.geojson": "A2",
+            "bounds.geojson": "B3"} in plans
+    assert plans[-1] == {"det.geojson": "A1", "gt.geojson": "A2",
+                         "bounds.geojson": "B3"}
+    assert len(plans) <= 6
+
+
+def test_vintage_search_rescues_after_frozen_fails(monkeypatch, tmp_path):
+    """The mixed-vintage state (pilot signature) is found by the search."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    committed = _doc("1.2")
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    _fixture_inputs(tmp_path)
+
+    moved = json.loads(json.dumps(committed))
+    moved["summary"]["buffers"][0]["f1"] = 0.51
+    good = json.loads(json.dumps(committed))
+    good["_metadata"]["metadata_version"] = "1.3"
+    good["summary"]["buffers"][0]["f1_ci_lower"] = 0.3
+    good["summary"]["buffers"][0]["f1_ci_upper"] = 0.7
+
+    def produce(out, n):
+        # current fails, frozen (all-before) fails, first flip passes
+        payload = moved if n <= 2 else good
+        (out / "evaluation.json").write_text(json.dumps(payload))
+
+    _fake_replay(monkeypatch, produce)
+    monkeypatch.setattr(rc, "vintage_assignments",
+                        lambda *a, **k: [{"det.geojson": "BBB"},
+                                         {"det.geojson": "AAA"}])
+    monkeypatch.setattr(
+        rc, "freeze_inputs",
+        lambda recipe, assignment, work: (dict(recipe),
+                                          {k: v[:9] for k, v
+                                           in assignment.items()}))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "ok"
+    assert row["attempt"] == "vintage-search-1"
+    assert row["input_vintage"] == {"det.geojson": "AAA"}

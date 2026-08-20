@@ -93,10 +93,15 @@ report before item E's erratum note is written.
 1. **Input-vintage rule (audit B1; PI ruling 2026-08-20).** ~324 cells were
    scored against inputs later changed in git (defect D40 carries the
    machine-readable list). Each cell is replayed against current inputs
-   first; if the point gate fails, once more against the inputs AS OF its
-   own `generated_at_utc`, materialised from git history, with the frozen
-   commits recorded in `_metadata.e82_input_vintage` and the recorded input
-   paths normalised back to repo-relative. Reference-vintage reconciliation
+   first; if the point gate fails, against a BOUNDED PLAN of committed input
+   vintages adjacent to its own `generated_at_utc` — the all-before
+   baseline, then single-input flips to the first-after commit, then
+   all-after (cap 6) — because evaluations are sometimes scored against a
+   working tree committed minutes later (measured on the pilot: a
+   detections commit landed 2 minutes after its evals, "propagate +1
+   candidate"). Pinned commits are recorded in
+   `_metadata.e82_input_vintage` and the recorded input paths normalised
+   back to repo-relative. Reference-vintage reconciliation
    is deliberately NOT bundled here (the E81/E82 lesson); the Track-3
    best-available-GT completeness sweep is queued as its own item.
 2. **Any point estimate moves > 1e-9** on the accepted attempt → the file is
@@ -236,6 +241,15 @@ measured vs 5.42× predicted; an already-corrected cell at exactly 1.0000×);
 $0 API by import graph; runtime ≈ 16–38 CPU-h → 1.6–3.8 h at 10 workers.
 
 ## Changelog
+
+### 2026-08-20 (later still) — Adjacent-vintage search after the first pilot
+
+The first pilot (15 files, 4 workers) passed 13 and failed 2 — both 55-map
+image cells whose consumed state mixed the before-vintage GT with a
+detections state committed 2 minutes AFTER scoring. The frozen fallback
+alone cannot reach mixed states, so § 3.1 now specifies the bounded
+adjacent-vintage plan (implemented and unit-tested; 15 tier-1 tests). The
+pilot re-runs before the corpus.
 
 ### 2026-08-20 (later) — Audit adjudication amendments
 

@@ -15,10 +15,15 @@ metadata 1.3, which is also the resume criterion.
 **Input-vintage rule (audit blocker B1; PI ruling 2026-08-20).** ~324 cells
 were scored against inputs that later changed (defect D40). The campaign's
 invariant is that ONLY the bootstrap effort moves, so each cell is replayed
-against current inputs first and, if the point gate fails, replayed once more
-against the inputs AS OF its own ``generated_at_utc``, materialised from git
-history. A frozen replay that passes has its recorded input paths normalised
-back to the repo-relative originals, with the frozen commits recorded in
+against current inputs first and, if the point gate fails, against a bounded
+plan of committed input vintages ADJACENT to its own ``generated_at_utc`` —
+the all-before baseline, then single-input flips to the first-after commit,
+then all-after (cap 6) — materialised from git history. Evaluations are
+sometimes scored against a working tree committed minutes later, so the
+before-vintage alone is not always the consumed state (measured on the
+pilot: a detections commit landed 2 minutes after its evals). A passing
+replay has its recorded input paths normalised back to the repo-relative
+originals, with the pinned commits recorded in
 ``_metadata.e82_input_vintage``. Reference-vintage reconciliation is a
 separate, deliberately unbundled decision (the E81/E82 lesson).
 
@@ -164,25 +169,67 @@ def _recipe_input_paths(recipe: dict[str, Any]) -> list[str]:
     return [str(p) for p in paths]
 
 
+def adjacent_commits(path: str, as_of: str) -> list[str]:
+    """The committed vintages an eval at ``as_of`` could have consumed.
+
+    Returns up to two commits: the last at or before the timestamp, and the
+    first after it. The second exists because evaluations are sometimes
+    scored against a working tree committed minutes later — the pilot's two
+    55-map image cells consumed a detections state committed 2 minutes
+    after their own ``generated_at_utc`` ("propagate +1 candidate").
+    """
+    out: list[str] = []
+    before = subprocess.run(
+        ["git", "rev-list", "-1", f"--before={as_of}", "HEAD", "--", path],
+        capture_output=True, text=True, cwd=PROJECT_ROOT).stdout.strip()
+    if before:
+        out.append(before)
+    after = subprocess.run(
+        ["git", "rev-list", f"--after={as_of}", "--reverse", "HEAD",
+         "--", path],
+        capture_output=True, text=True, cwd=PROJECT_ROOT).stdout.split()
+    if after:
+        out.append(after[0])
+    return out
+
+
+def vintage_assignments(
+    recipe: dict[str, Any], as_of: str, cap: int = 6,
+) -> list[dict[str, str]]:
+    """Ordered per-input commit assignments to try, all-before first.
+
+    Single-input flips to the after-vintage follow the all-before baseline;
+    the all-after combination comes last. Bounded at ``cap`` assignments.
+    """
+    paths = _recipe_input_paths(recipe)
+    cands = {p: adjacent_commits(p, as_of) for p in paths}
+    if any(not c for c in cands.values()):
+        return []
+    base = {p: c[0] for p, c in cands.items()}
+    flippable = [p for p, c in cands.items() if len(c) > 1]
+    assignments = [dict(base)]
+    for p in flippable:
+        flipped = dict(base)
+        flipped[p] = cands[p][1]
+        assignments.append(flipped)
+    if len(flippable) > 1:
+        assignments.append({p: cands[p][-1] for p in paths})
+    return assignments[:cap]
+
+
 def freeze_inputs(
-    recipe: dict[str, Any], as_of: str, workdir: Path,
+    recipe: dict[str, Any], assignment: dict[str, str], workdir: Path,
 ) -> tuple[dict[str, Any], dict[str, str]] | None:
-    """Materialise the recipe's inputs as of ``as_of`` from git history.
+    """Materialise the recipe's inputs at the assigned commits.
 
     Returns the rewritten recipe (paths under ``workdir``) plus a map of
-    repo path → short commit, or ``None`` when any input has no committed
-    vintage at or before the timestamp (the cell was scored on data that
-    was never committed in that state — a genuine failure, not a fallback).
+    repo path → short commit, or ``None`` when materialisation fails.
     """
     frozen: dict[str, str] = {}
     out = dict(recipe)
 
-    def commit_before(path: str) -> str | None:
-        res = subprocess.run(
-            ["git", "rev-list", "-1", f"--before={as_of}", "HEAD", "--", path],
-            capture_output=True, text=True, cwd=PROJECT_ROOT)
-        sha = res.stdout.strip()
-        return sha or None
+    def commit_for(path: str) -> str | None:
+        return assignment.get(str(path))
 
     def materialise(sha: str, path: str) -> Path | None:
         dest = workdir / "frozen" / path
@@ -195,7 +242,7 @@ def freeze_inputs(
         return dest
 
     for key in ("ground_truth", "bounds"):
-        sha = commit_before(str(recipe[key]))
+        sha = commit_for(str(recipe[key]))
         if sha is None:
             return None
         dest = materialise(sha, str(recipe[key]))
@@ -209,7 +256,7 @@ def freeze_inputs(
         det_list = det if isinstance(det, list) else [det]
         new_list = []
         for p in det_list:
-            sha = commit_before(str(p))
+            sha = commit_for(str(p))
             if sha is None:
                 return None
             dest = materialise(sha, str(p))
@@ -220,7 +267,7 @@ def freeze_inputs(
         out["detections"] = new_list
     elif recipe.get("detections_dir"):
         d = str(recipe["detections_dir"])
-        sha = commit_before(d)
+        sha = commit_for(d)
         if sha is None:
             return None
         listing = subprocess.run(
@@ -367,22 +414,25 @@ def process_one(rel: str) -> dict[str, Any]:
         with tempfile.TemporaryDirectory() as td:
             work = Path(td)
             attempts: list[dict[str, Any]] = []
-            for attempt in ("current", "frozen"):
+            as_of = (before.get("_metadata") or {}).get("generated_at_utc")
+            plan: list[tuple[str, dict[str, str] | None]] = [("current", None)]
+            if as_of:
+                for i, asg in enumerate(
+                        vintage_assignments(original_recipe, as_of)):
+                    name = "frozen" if i == 0 else f"vintage-search-{i}"
+                    plan.append((name, asg))
+            for attempt, assignment in plan:
                 frozen_map: dict[str, str] | None = None
-                if attempt == "frozen":
-                    as_of = (before.get("_metadata") or {}).get(
-                        "generated_at_utc")
-                    if not as_of:
-                        attempts.append({"attempt": attempt,
-                                         "reason": "no generated_at_utc"})
-                        break
+                if assignment is not None:
                     shutil.rmtree(work / "out", ignore_errors=True)
-                    frozen_result = freeze_inputs(original_recipe, as_of, work)
+                    shutil.rmtree(work / "frozen", ignore_errors=True)
+                    frozen_result = freeze_inputs(
+                        original_recipe, assignment, work)
                     if frozen_result is None:
                         attempts.append({"attempt": attempt,
-                                         "reason": "no committed vintage "
-                                                   "at/before timestamp"})
-                        break
+                                         "reason": "vintage materialisation "
+                                                   "failed"})
+                        continue
                     recipe, frozen_map = frozen_result
                 cmd = build_command(before, recipe, work)
                 try:
