@@ -36,6 +36,17 @@ Guards (all fatal):
    ``per_run`` entry must be byte-identical before and after.
 3. The pass count must match.
 
+**Recipe recovery.** The re-emission needs each cell's ground truth,
+bounds, and detection inputs. It used to subscript ``_metadata.cli_args``
+directly, which raised a bare ``KeyError`` on the 40 committed
+evaluations that carry no ``cli_args`` and a ``ValueError`` on the 22
+batch-scored cells whose per-cell detection input lives in
+``_metadata.input_files`` instead. Both are now read through the D22
+fallback chain (:func:`recover_recipe`), and a cell that genuinely
+records neither fails with a message naming the file, the missing field,
+the two places searched, and the operator's options (defect D33, audit
+finding F9).
+
 Usage::
 
     # Re-emit every condition listed in the E81 worklist
@@ -119,6 +130,92 @@ def _strip_tile_classification(block: dict[str, Any]) -> dict[str, Any]:
     return stripped
 
 
+#: Fields this script needs from an evaluation's recorded recipe, mapped
+#: to the ``_metadata.input_files`` key that carries the same value on
+#: cells that record no ``cli_args``.
+_INPUT_FILE_ALIASES = {
+    "ground_truth": "ground_truth",
+    "bounds": "bounds",
+}
+
+
+def recover_recipe(metadata: dict[str, Any]) -> dict[str, Any]:
+    """Return an evaluation's effective recipe, D22 fallback applied.
+
+    ``_metadata.cli_args`` is not present on every committed evaluation
+    and is incomplete on others, so subscripting it directly (which this
+    function replaces) raised ``KeyError`` on the 40 adapter-written
+    cells that carry no ``cli_args`` at all, and ``ValueError`` on the 22
+    batch-scored cells whose per-cell detection input lives in
+    ``_metadata.input_files`` instead. Both families record enough in
+    ``input_files`` to be re-scored (defect D33, audit finding F9).
+
+    This mirrors the fallback chain in
+    ``scripts/era1_leaderboard_tiering.py`` ``load_cells``. It is a
+    mirror rather than a shared import because the two scripts have no
+    common module today; if one is introduced, both copies belong in it.
+    The same mirror exists in ``scripts/build_bca_migration_queue.py``.
+
+    Args:
+        metadata: The ``_metadata`` block of an ``evaluation.json``.
+
+    Returns:
+        A new dict — the recorded ``cli_args`` plus whatever
+        ``input_files`` could supply. Never mutates the input.
+    """
+    cli_args = dict(metadata.get("cli_args") or {})
+    input_files = metadata.get("input_files") or {}
+
+    for cli_key, file_key in _INPUT_FILE_ALIASES.items():
+        if not cli_args.get(cli_key) and input_files.get(file_key):
+            cli_args[cli_key] = input_files[file_key]
+
+    if not (cli_args.get("detections") or cli_args.get("detections_dir")):
+        fallback = input_files.get("detections")
+        if isinstance(fallback, str) and fallback:
+            cli_args["detections_dir"] = fallback
+        elif isinstance(fallback, list) and fallback:
+            cli_args["detections"] = fallback
+    return cli_args
+
+
+def _require_input(
+    eval_path: Path,
+    cli_args: dict[str, Any],
+    field: str,
+) -> str:
+    """Return one required input path, or fail with an actionable message.
+
+    Args:
+        eval_path: The evaluation being re-scored (named in the error).
+        cli_args: The recovered recipe from :func:`recover_recipe`.
+        field: ``"ground_truth"`` or ``"bounds"``.
+
+    Returns:
+        The recorded path, relative to the project root.
+
+    Raises:
+        ValueError: When neither ``cli_args`` nor ``input_files`` names
+            the field. The message says which file is unusable, which
+            field is missing, which two places were searched, and what
+            the operator can do about it — a bare ``KeyError`` said none
+            of that.
+    """
+    value = cli_args.get(field)
+    if isinstance(value, str) and value:
+        return value
+    raise ValueError(
+        f"{eval_path}: no {field} recorded. Searched "
+        f"_metadata.cli_args.{field} and "
+        f"_metadata.input_files.{_INPUT_FILE_ALIASES[field]}, and neither "
+        f"names a path. This cell cannot be re-scored from its own "
+        f"metadata (defect D33 — 54 committed evaluations carry no usable "
+        f"recipe). Either re-run the scorer with an explicit --{field.replace('_', '-')} "
+        f"and re-commit the evaluation, or exclude this cell from the "
+        f"worklist."
+    )
+
+
 def recompute_cell(
     eval_path: Path,
     project_root: Path,
@@ -142,12 +239,12 @@ def recompute_cell(
     """
     document = json.loads(eval_path.read_text(encoding="utf-8"))
     metadata = document.get("_metadata") or {}
-    cli_args = metadata.get("cli_args") or {}
+    cli_args = recover_recipe(metadata)
 
     n_bootstrap = int(cli_args.get("bootstrap") or 1000)
     seed = cli_args.get("seed")
-    gt_path = cli_args["ground_truth"]
-    bounds_path = cli_args["bounds"]
+    gt_path = _require_input(eval_path, cli_args, "ground_truth")
+    bounds_path = _require_input(eval_path, cli_args, "bounds")
 
     gdf_ref = load_geojson(project_root / gt_path)
     gdf_bounds = load_geojson(project_root / bounds_path)
@@ -156,10 +253,22 @@ def recompute_cell(
     # (multi-pass cells) and a single ``--detections`` file. Both appear
     # among the E81 cells — the duplicate single-buffer root at
     # ``results/paper-eval/mcc/512px/`` was written the second way.
+    declared = metadata.get("cli_args") or {}
+    recovered_source = not (
+        declared.get("detections") or declared.get("detections_dir")
+    )
     det_dir = cli_args.get("detections_dir")
     det_file = cli_args.get("detections")
     if det_dir:
-        glob_pattern = cli_args.get("glob") or "*.geojson"
+        if recovered_source:
+            # The source came from ``input_files``, so the recorded
+            # ``glob`` describes a different (batch-level) invocation and
+            # is an argparse default — the same defect as the buffer list
+            # in build_bca_migration_queue.py. ``None`` hands resolution
+            # to the canonical two-convention resolver (D6).
+            glob_pattern = None
+        else:
+            glob_pattern = cli_args.get("glob") or "*.geojson"
         det_files = find_detection_files(project_root / det_dir, glob_pattern)
         source = det_dir
     elif det_file:
@@ -170,8 +279,14 @@ def recompute_cell(
         source = ", ".join(str(p) for p in listed)
     else:
         raise ValueError(
-            f"{eval_path}: neither detections_dir nor detections in "
-            "_metadata.cli_args",
+            f"{eval_path}: no detection input recorded. Searched "
+            "_metadata.cli_args.detections, _metadata.cli_args."
+            "detections_dir, and _metadata.input_files.detections, and "
+            "none names a file or directory. This cell cannot be "
+            "re-scored from its own metadata (defect D33 — 54 committed "
+            "evaluations carry no usable recipe). Either re-run the "
+            "scorer with an explicit --detections-dir and re-commit the "
+            "evaluation, or exclude this cell from the worklist.",
         )
     if not det_files or not all(p.exists() for p in det_files):
         raise ValueError(f"{eval_path}: detection files missing under {source}")

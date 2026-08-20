@@ -254,6 +254,28 @@ def _load_cell_inputs(track2_dir: Path) -> tuple[gpd.GeoDataFrame, dict]:
     return gdf_det, row50["tile_classification"]
 
 
+#: Cardinal numbers spelled out for the board's prose. Anything larger
+#: falls back to digits — a board of thirteen cells should read "13",
+#: not silently keep saying "eight".
+_NUMBER_WORDS = {
+    1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six",
+    7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven",
+    12: "twelve",
+}
+
+
+def count_word(n: int) -> str:
+    """Spell a small cardinal for prose; fall back to digits.
+
+    Args:
+        n: The count to render.
+
+    Returns:
+        ``"eight"`` for 8, ``"13"`` for 13.
+    """
+    return _NUMBER_WORDS.get(n, str(n))
+
+
 def render_md(out: dict) -> str:
     """Render the board markdown from the results dict (== the committed JSON).
 
@@ -278,6 +300,17 @@ def render_md(out: dict) -> str:
     """
     n_sig, n_pairs = out["n_significant"], out["n_pairs"]
     standardised = out.get("reference") == "standardised"
+    # Board size and gate tally are DERIVED, never asserted. Both used to
+    # be the fixed strings "the eight" and "(8/8)", so adding or removing
+    # a cell in CELLS would have left the committed board claiming a
+    # verification it never performed (defect D37, audit finding F17d).
+    # ``gate_cells_*`` are written by the compute path; a JSON from an
+    # older vintage (``--rebuild-md``) falls back to the cell list, every
+    # member of which passed the gate — the compute path exits on the
+    # first failure, so a cell in ``cells`` is a cell that reproduced.
+    n_cells = len(out["cells"])
+    gate_verified = out.get("gate_cells_verified", n_cells)
+    gate_total = out.get("gate_cells_total", n_cells)
     title = (
         "# 55-map standardised board — tile-MCC permutation tiering"
         if standardised else
@@ -290,7 +323,8 @@ def render_md(out: dict) -> str:
     md = [
         title,
         "",
-        f"> Alternate-metric (tile-MCC) statistical tiering for the eight"
+        f"> Alternate-metric (tile-MCC) statistical tiering for the"
+        f" {count_word(n_cells)}"
         f" {cells_desc}: round-robin tile-swap permutation on the MCC"
         f" statistic ({out['n_permutations'] // 1000}k, seed {out['seed']},"
         " two-sided) + BH-FDR q=0.05 + greedy-clique tiers — the same machinery"
@@ -299,7 +333,7 @@ def render_md(out: dict) -> str:
         f"{'scoring' if standardised else 'Track-2'} engine's BCa"
         " bootstrap CIs, carried from `summary.json`. Gate: rebuilt"
         " per-tile confusion matrices reproduce the committed evaluations"
-        " exactly (8/8).",
+        f" exactly ({gate_verified}/{gate_total}).",
         "",
         "| rank | cell | tier | MCC | 95% CI | sens | spec | tp/fp/fn/tn |",
         "|---:|---|---:|---:|---|---:|---:|---|",
@@ -381,6 +415,11 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
 
     cell_base = TRACK2_STD if standardised else TRACK2
     cells: list[dict] = []
+    # Names whose rebuilt confusion matrix matched the committed one.
+    # Counted rather than assumed: the gate verdict published in the JSON
+    # and the markdown is derived from this list and from ``CELLS``, so
+    # the claim cannot decouple from the cell set (D37 / F17d).
+    gate_verified: list[str] = []
     truth: np.ndarray | None = None
     for name, dirname in CELLS.items():
         gdf_det, committed = _load_cell_inputs(cell_base / dirname)
@@ -400,6 +439,7 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
               flush=True)
         if not ok:
             sys.exit(f"GATE FAIL: {name} rebuilt confusion != committed summary.json")
+        gate_verified.append(name)
         cells.append({
             "name": name,
             "condition_dir": str((cell_base / dirname).relative_to(BASE_DIR)),
@@ -447,7 +487,12 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical") -> int:
             ("Track-2 summary.json tile_classification.mcc_CI "
              "(BCa, 10k bootstrap, seed 42 — computed by the engine at scoring time)")
         ),
-        "gate": "rebuilt per-tile confusion == committed summary.json (exact), 8/8",
+        "gate": (
+            "rebuilt per-tile confusion == committed summary.json (exact), "
+            f"{len(gate_verified)}/{len(CELLS)}"
+        ),
+        "gate_cells_verified": len(gate_verified),
+        "gate_cells_total": len(CELLS),
         "cells": [{k: v for k, v in c.items() if k != "pred"}
                   | {"tier": tier_of[c["name"]]} for c in ordered],
         "pairwise": pairs,

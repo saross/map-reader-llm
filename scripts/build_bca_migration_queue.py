@@ -18,10 +18,33 @@ Migration scope (Session 81 close-out, planning/paper-writeup-continuity.md item
 * Excludes verifier-t-pilot/* (different pipeline)
 * Excludes any cell already at ``_metadata.bootstrap.method == "BCa"``
 
-The queue is built directly from each cell's own ``_metadata.cli_args``
-block — this is more robust than the daylight-sweep builder's four-pattern
-metadata recovery because every cell's command shape is captured
-authoritatively at evaluation time.
+The queue is built from each cell's own ``_metadata`` block. That block is
+NOT uniformly authoritative, and two of its fields lie for batch-scored
+cells — the Session 137 audit (finding F9, defects D33/D37) found the
+queue unexecutable as a result, on all 22 rows:
+
+* ``cli_args.buffers`` records the unoverridden argparse default
+  ``[20]`` whenever the buffers came from a ``--batch`` YAML, so the
+  queue asked for a one-buffer re-score of cells that actually ran the
+  14-buffer standard. The buffers that RAN are recoverable from the
+  cell's own ``summary.buffers``, and that is what is used here.
+* ``cli_args.detections`` / ``detections_dir`` are both null for batch
+  cells (the batch-level invocation is what got serialised), leaving the
+  detection-source columns empty. The per-cell input survives in
+  ``_metadata.input_files.detections``; the same D22 fallback chain that
+  ``scripts/era1_leaderboard_tiering.py`` ``load_cells`` applies is
+  mirrored below. It is mirrored rather than shared because the two
+  scripts have no common import today; see :func:`recover_recipe`.
+
+A cell whose detection input is recovered that way is rewritten as a
+PER-CELL invocation (``--batch`` dropped, ``--output-dir`` pointed at the
+cell's own directory, ``--label`` taken from ``summary.label``) — a row
+carrying both ``batch`` and ``detections_dir`` would be ambiguous, and
+the batch-level ``output_dir`` would write one directory too high.
+
+The queue has never been executed (verified by the audit: the target
+tree's ``git diff`` is empty), so no committed artefact depends on the
+pre-fix rows.
 
 The migration is deterministic: F1, P, R, MCC, sensitivity, and
 specificity ``point`` estimates do not depend on the bootstrap
@@ -96,29 +119,140 @@ def needs_migration(eval_path: Path) -> tuple[bool, str]:
     if not md:
         return False, "no_metadata"
     script = md.get("script_path") or md.get("script") or ""
+    method = (md.get("bootstrap") or {}).get("method")
+    if not script:
+        # 40 committed cells record no generating script at all (24 under
+        # results/verifier-t-pilot/, 16 adapter-written 55-map cells).
+        # Reporting them as "not_evaluate_detections" asserted knowledge
+        # the artefact does not carry, and hid two facts a reader needs:
+        # they are ALSO recipe-less (no cli_args, no input_files — the
+        # D33 reproducibility gap), and they are NOT known to be BCa, so
+        # a future migration still owes them an answer. Both go in the
+        # label (defect D33, audit finding F9).
+        has_recipe = bool(md.get("cli_args") or md.get("input_files"))
+        return False, (
+            f"script_not_recorded(bootstrap_method={method or 'unrecorded'}"
+            f", recipe={'yes' if has_recipe else 'none'})"
+        )
     if "evaluate_detections" not in script:
         return False, "not_evaluate_detections"
-    method = (md.get("bootstrap") or {}).get("method")
     if method == "BCa":
         return False, "already_bca"
     return True, "needs_migration"
 
 
-def make_row(eval_path: Path, cli_args: dict[str, Any]) -> dict[str, str]:
-    """Construct a queue-CSV row from a cell's recorded ``cli_args``.
+def recover_recipe(document: dict[str, Any]) -> dict[str, Any]:
+    """Return a cell's effective ``cli_args`` with the D22 fallback applied.
+
+    Mirrors ``scripts/era1_leaderboard_tiering.py`` ``load_cells``: an
+    evaluation's recorded ``cli_args`` is incomplete for two families,
+    and ``_metadata.input_files`` carries the missing pieces.
+
+    * ADAPTER-written cells have no ``cli_args`` at all; ``input_files``
+      is the only recipe they have.
+    * BATCH-scored cells serialise the batch-level invocation, so
+      ``detections`` and ``detections_dir`` are both null while the
+      per-cell input sits in ``input_files.detections``.
+
+    This is a mirror, not a shared helper: ``era1_leaderboard_tiering``
+    and this builder have no common import today, and introducing one
+    would mean editing a third script. If a future change gives them a
+    shared module, both copies should move into it — the defect register
+    tracks this under D22 / D33.
+
+    The mirror is slightly hardened: it replaces falsy values rather than
+    only absent keys, so a recorded ``"bounds": null`` is filled in too.
+
+    Args:
+        document: The parsed ``evaluation.json``.
+
+    Returns:
+        A new dict — the recorded ``cli_args`` plus whatever
+        ``input_files`` could supply. Never mutates the input.
+    """
+    metadata = document.get("_metadata") or {}
+    cli = dict(metadata.get("cli_args") or {})
+    input_files = metadata.get("input_files") or {}
+
+    for key in ("bounds", "ground_truth"):
+        if not cli.get(key) and input_files.get(key):
+            cli[key] = input_files[key]
+
+    if not (cli.get("detections") or cli.get("detections_dir")):
+        fallback = input_files.get("detections")
+        if isinstance(fallback, str) and fallback:
+            cli["detections_dir"] = fallback
+        elif isinstance(fallback, list) and fallback:
+            cli["detections"] = fallback
+    return cli
+
+
+def buffers_that_ran(
+    document: dict[str, Any], cli_args: dict[str, Any],
+) -> list[int]:
+    """Return the buffer list the evaluation ACTUALLY scored.
+
+    ``cli_args.buffers`` is the argparse namespace as parsed, so for a
+    ``--batch`` invocation it holds the unoverridden default ``[20]``
+    while the batch YAML supplied the real grain — a default published
+    as a measurement, the D17 class on a new field (audit finding F9).
+    The cell's own ``summary.buffers`` is a measurement: one row per
+    buffer that was scored.
+
+    Args:
+        document: The parsed ``evaluation.json``.
+        cli_args: The recovered recipe (see :func:`recover_recipe`),
+            used only as a fallback when no summary rows exist.
+
+    Returns:
+        Buffer sizes in metres, in recorded order, duplicates removed.
+    """
+    rows = (document.get("summary") or {}).get("buffers")
+    measured: list[int] = []
+    if isinstance(rows, list):
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            value = row.get("buffer_metres")
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                continue
+            measured.append(int(value))
+    if not measured:
+        declared = cli_args.get("buffers") or []
+        measured = [
+            int(b) for b in declared
+            if not isinstance(b, bool) and isinstance(b, (int, float))
+        ]
+    return list(dict.fromkeys(measured))
+
+
+def make_row(eval_path: Path, document: dict[str, Any]) -> dict[str, str]:
+    """Construct a queue-CSV row from a cell's own evaluation document.
+
+    The whole document is taken (not just ``cli_args``) because two of
+    the row's columns are only recoverable from elsewhere in it: the
+    buffer grain from ``summary.buffers`` and, for batch-scored cells,
+    the detection input from ``_metadata.input_files`` and the label
+    from ``summary.label``. See the module docstring for why the
+    recorded ``cli_args`` cannot be trusted on its own.
 
     Args:
         eval_path: Absolute path to the cell's ``evaluation.json``.
-        cli_args: The ``_metadata.cli_args`` dict from that file.
+        document: The parsed contents of that file.
 
     Returns:
         Dict in the schema expected by ``run_bootstrap_10k.py``.
     """
+    cli_args = recover_recipe(document)
+    summary = document.get("summary") or {}
     rel_eval = str(eval_path.relative_to(REPO_ROOT))
-    output_dir = cli_args.get("output_dir") or str(eval_path.parent.relative_to(REPO_ROOT))
+    cell_dir = str(eval_path.parent.relative_to(REPO_ROOT))
+    output_dir = cli_args.get("output_dir") or cell_dir
 
     # Detection source: list-of-files OR detections_dir OR batch.
     det_list = cli_args.get("detections") or []
+    if isinstance(det_list, str):
+        det_list = [det_list]
     detections_field = "|".join(det_list) if det_list else ""
     det_dir = cli_args.get("detections_dir") or ""
     batch = cli_args.get("batch") or ""
@@ -126,11 +260,32 @@ def make_row(eval_path: Path, cli_args: dict[str, Any]) -> dict[str, str]:
 
     bounds = cli_args.get("bounds") or ""
     gt = cli_args.get("ground_truth") or ""
-    buffers_list = cli_args.get("buffers") or []
-    buffers = " ".join(str(b) for b in buffers_list)
+    buffers = " ".join(str(b) for b in buffers_that_ran(document, cli_args))
     seed = str(cli_args.get("seed") or 42)
     label = cli_args.get("label") or ""
     mcc = "1" if cli_args.get("mcc") else "0"
+
+    # A batch cell whose per-cell detection input was recovered becomes a
+    # PER-CELL invocation. Leaving ``batch`` set alongside the recovered
+    # source would hand the runner two contradictory inputs, and the
+    # batch-level ``output_dir`` is the PARENT of the cell directory
+    # (batch mode appends ``slugify(label)``), so re-running with it
+    # would write one level too high. ``summary.label`` is the label the
+    # batch YAML supplied, and its slug is the cell directory name.
+    if batch and (detections_field or det_dir):
+        batch = ""
+        output_dir = cell_dir
+        label = label or summary.get("label") or ""
+        # ``cli_args.glob`` is an argparse default here too — the same
+        # defect as ``buffers``. Four of these cells recorded the
+        # convention-A (underscore) pattern while their batch YAML
+        # supplied the convention-B (hyphen) one, so the recorded
+        # pattern resolves ZERO files against their pools. Blanking the
+        # column hands the decision to ``evaluate_detections.py``'s
+        # canonical resolver, which matches both per-pass filename
+        # conventions (defect D6, lib_detection_paths.resolve_pool_passes)
+        # instead of the batch-written shape alone.
+        glob = ""
 
     return {
         "status": "queued",
@@ -255,11 +410,14 @@ def build_queue() -> tuple[list[dict[str, str]], dict[str, int]]:
         except Exception as e:
             skipped[f"reload_failed:{e!s}"] += 1
             continue
-        cli_args = (d.get("_metadata") or {}).get("cli_args") or {}
-        if not cli_args:
-            skipped["no_cli_args"] += 1
+        # ``recover_recipe`` is the D22 fallback chain: a cell with no
+        # ``cli_args`` is still queueable if ``input_files`` names its
+        # inputs. Only a cell with neither is genuinely unqueueable.
+        recipe = recover_recipe(d)
+        if not recipe:
+            skipped["no_recipe(no cli_args, no input_files)"] += 1
             continue
-        rows.append(make_row(eval_path, cli_args))
+        rows.append(make_row(eval_path, d))
     return rows, dict(skipped)
 
 
@@ -295,7 +453,7 @@ def main() -> int:
     if skipped:
         print("  Skipped:")
         for reason, n in sorted(skipped.items()):
-            print(f"    {reason:35s} {n:4d}")
+            print(f"    {reason:62s} {n:4d}")
         print()
 
     # Per-group breakdown for the per-group commit later.

@@ -203,8 +203,56 @@ def _f1_at(summary: dict, buffer_m: int) -> float | None:
 
 
 def _mcc(summary: dict) -> float | None:
-    """Tile-level MCC point estimate, or ``None`` when absent."""
-    return ((summary.get("tile_classification") or {}).get("mcc") or {}).get("point")
+    """Tile-level MCC point estimate, or ``None`` when absent.
+
+    Five ``tile_classification.mcc`` shapes exist across the committed
+    corpus, and the previous one-line ``or {}`` chain mishandled two of
+    them (defect D37, audit finding F15b):
+
+    * a dict WITH ``point`` (the modern scorer, plus CI bounds and mean)
+      — the point estimate is returned;
+    * a dict WITHOUT ``point`` (45 committed evaluations carry only
+      ``ci_lower``/``ci_upper``/``mean``) — ``None``, deliberately. The
+      posterior ``mean`` is a different statistic from the point
+      estimate; silently substituting it would let gate 5 compare a mean
+      against a point at 1e-9 tolerance. The caller (gate 2) reports the
+      absence and refuses to write, which is the correct outcome;
+    * a BARE FLOAT (16 committed evaluations written by the Track-2
+      adapters) — returned as-is; the old chain raised
+      ``AttributeError`` because a float has no ``.get``;
+    * ``mcc`` absent or ``None`` — ``None``;
+    * ``tile_classification`` absent or not a dict — ``None``.
+
+    An MCC of exactly ``0.0`` is preserved as ``0.0``. The retired
+    ``or {}`` / ``or None`` idiom coerced that legitimate value to
+    ``None`` — the falsy-zero defect erratum E81 removed elsewhere in
+    this codebase, and the reason the branching below is explicit
+    ``isinstance`` tests rather than truthiness.
+
+    Args:
+        summary: The ``summary`` block of an ``evaluation.json``.
+
+    Returns:
+        The MCC point estimate as a float, or ``None`` when the
+        evaluation records no point estimate.
+    """
+    tile_classification = summary.get("tile_classification")
+    if not isinstance(tile_classification, dict):
+        return None
+    mcc = tile_classification.get("mcc")
+    if isinstance(mcc, bool):
+        # ``bool`` is a subclass of ``int``; a boolean here is corrupt
+        # metadata, not a measurement.
+        return None
+    if isinstance(mcc, (int, float)):
+        return float(mcc)
+    if isinstance(mcc, dict):
+        point = mcc.get("point")
+        if isinstance(point, bool):
+            return None
+        if isinstance(point, (int, float)):
+            return float(point)
+    return None
 
 
 def _feature_count(path: Path) -> int:

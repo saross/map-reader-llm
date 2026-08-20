@@ -26,17 +26,23 @@ are lifted from:
   same detection inputs as the board cells).
 
 Outputs ``obs280-shared-reference.json`` beside the board artefacts and
-prints the comparison tables.
+prints the comparison tables. That committed location is the DEFAULT, so
+a bare invocation reproduces the registered artefact in place; pass
+``--out`` to write somewhere else (defect D38 — the tier-2 test does
+exactly this so it can compare against the committed file rather than
+overwrite it).
 
 Usage::
 
     python scripts/analyse_obs280_shared_reference.py
+    python scripts/analyse_obs280_shared_reference.py --out /tmp/check.json
 
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -50,6 +56,14 @@ from score_55maps_standardised_reference import CELLS, REPO  # noqa: E402
 
 STD_BASE = REPO / "results/55maps-standardised-ref-2026-08-14"
 LEGACY_BASE = REPO / "results/55maps-extended-gt-2026-06-07"
+
+#: The committed artefact this script maintains. It is the DEFAULT
+#: output, not a hard-coded one: writing straight into the tracked
+#: results directory meant the tier-2 test that invokes this script
+#: mutated a committed artefact on every run (defect D38), which is the
+#: probable mechanism of the flaky tier-2 failure the Session 137 audit
+#: observed. Callers that must not touch the tree pass ``--out``.
+DEFAULT_OUT = STD_BASE / "obs280-shared-reference.json"
 
 # The four config cells Obs 292 / mcc-v2 compared (deployment operating
 # points, one per configuration), in mcc-v2 § 2 row order.
@@ -190,8 +204,37 @@ def fmt(val: float | None, width: int = 8, digits: int = 4) -> str:
     return f"{val:{width}.{digits}f}"
 
 
-def main() -> None:
-    """Compute the re-measurement and write the JSON artefact."""
+def build_arg_parser() -> argparse.ArgumentParser:
+    """CLI surface: one optional output override.
+
+    Returns:
+        The parser. ``--out`` defaults to the committed artefact path so
+        a bare invocation reproduces the registered file in place, which
+        is what a reproducibility check wants. Anything that must not
+        touch the tracked tree — the tier-2 test above all — passes its
+        own path (defect D38).
+    """
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "--out", type=Path, default=DEFAULT_OUT,
+        help=(
+            "Where to write obs280-shared-reference.json "
+            f"(default: {DEFAULT_OUT.relative_to(REPO)})"
+        ),
+    )
+    return parser
+
+
+def main(argv: list[str] | None = None) -> None:
+    """Compute the re-measurement and write the JSON artefact.
+
+    Args:
+        argv: Optional argument vector (``None`` reads ``sys.argv``).
+    """
+    args = build_arg_parser().parse_args(argv)
     std = {c["label"]: std_cell(c["label"]) for c in CELLS}
     legacy = {lb: legacy_cell(lb) for lb in CARRIED}
     a1 = {lb: a1_cell(lb) for lb in CARRIED}
@@ -304,9 +347,14 @@ def main() -> None:
         },
         "strongest_contrast": strongest,
     }
-    out = STD_BASE / "obs280-shared-reference.json"
+    out = args.out
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2))
-    print(f"Wrote {out.relative_to(REPO)}\n")
+    try:
+        shown = out.relative_to(REPO)
+    except ValueError:
+        shown = out
+    print(f"Wrote {shown}\n")
 
     print("Carried cells — F1@50 / MCC by reference:")
     print(f"{'cell':8s} {'F1 std':>8s} {'F1 A1':>8s} "

@@ -436,6 +436,43 @@ def tile_to_map(tile_name: str) -> str:
     return tile_name
 
 
+def failed_item_name(entry: Any) -> str | None:
+    """Return the tile name recorded by one ``failed_items[]`` entry.
+
+    ``execution_stats.failed_items[]`` carries two shapes across the
+    committed corpus. The canonical schema written by
+    ``4_detect_mounds_batch.py`` and ``run_pv.py`` is a dict —
+    ``{"item_id": ..., "reason": ..., "timestamp": ...}`` — while older
+    and edge-case metas store the bare tile name as a string. Counting
+    only the string shape (the behaviour before defect D37 / audit
+    finding F15c was fixed) silently dropped every dict entry from the
+    per-map attribution while ``execution_stats.items_failed`` kept
+    counting it, so the committed 55-map report published two failure
+    totals that disagreed by one tile out of 7,833.
+
+    ``item_id`` is the canonical key; the three aliases mirror the
+    shapes ``rederive_manifest_fields.py`` already tolerates, so the two
+    readers of this field agree about what a failure entry is.
+
+    Args:
+        entry: One element of ``execution_stats.failed_items``.
+
+    Returns:
+        The tile name, or ``None`` when the entry carries no usable
+        identifier — an unattributable failure is left out of the
+        per-map totals rather than attributed to a fabricated map, and
+        the caller records it as a fallback warning.
+    """
+    if isinstance(entry, str):
+        return entry or None
+    if isinstance(entry, dict):
+        for key in ("item_id", "item", "filename", "tile"):
+            value = entry.get(key)
+            if isinstance(value, str) and value:
+                return value
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Stage runners — thin subprocess wrappers around existing scripts
 # ---------------------------------------------------------------------------
@@ -1207,6 +1244,13 @@ def aggregate_cost_manifest(
     per_map_tile_count: dict[str, int] = {}
     per_map_failed: dict[str, int] = {}
 
+    # Failure entries that carry no usable item identifier. They are
+    # counted in the stage-level ``tiles_failed`` (which comes from
+    # ``items_failed``) but cannot be attributed to a map, so the gap is
+    # published rather than left for a reader to discover by summing the
+    # per-map column. Empty list = every recorded failure was attributed.
+    unattributed_failed_items: list[str] = []
+
     # Provenance: list of meta-backup paths that were summed into the
     # aggregation. Surfaced on the output ``cost_manifest._metadata`` so
     # auditors can see whether a recovery's pre-overwrite backup was
@@ -1281,10 +1325,24 @@ def aggregate_cost_manifest(
         for tile_name in completed_items:
             m = tile_to_map(tile_name)
             per_map_tile_count[m] = per_map_tile_count.get(m, 0) + 1
-        for tile_name in exec_stats.get("failed_items", []):
-            if isinstance(tile_name, str):
-                m = tile_to_map(tile_name)
-                per_map_failed[m] = per_map_failed.get(m, 0) + 1
+        # Both failure totals must be built from the same entries: the
+        # run-level ``tiles_failed`` above counts every ``failed_items``
+        # entry via ``items_failed``, so the per-map attribution has to
+        # read the dict shape too (D37 / F15c).
+        n_unattributed = 0
+        for entry in exec_stats.get("failed_items", []):
+            tile_name = failed_item_name(entry)
+            if tile_name is None:
+                n_unattributed += 1
+                continue
+            m = tile_to_map(tile_name)
+            per_map_failed[m] = per_map_failed.get(m, 0) + 1
+        if n_unattributed:
+            unattributed_failed_items.append(
+                f"proposer/{run_dir.name}: {n_unattributed} failed_items "
+                "entr(y/ies) carry no item identifier — counted in "
+                "tiles_failed but not attributable to a map",
+            )
 
         per_pass.append({
             "pass": _parse_pass_index(run_dir.name),
@@ -1491,6 +1549,10 @@ def aggregate_cost_manifest(
         # successfully recovered the lost cost from a sibling backup.
         "_metadata": {
             "cleanup_recovery_metas_merged": cleanup_recovery_metas_merged,
+            # Reconciliation guard for the two failure totals (D37): an
+            # empty list means the per-map ``tiles_failed`` column sums
+            # to the stage-level ``tiles_failed``.
+            "unattributed_failed_items": unattributed_failed_items,
             "pricing": (
                 {
                     "pricing_tier": pricing_tier,

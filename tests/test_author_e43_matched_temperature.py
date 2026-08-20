@@ -21,7 +21,10 @@ Asserts:
   the write-once prediction field;
 - applying the change twice is a no-op the second time (idempotency);
 - the hand-authored sidecars keep their on-disk JSON formatting (indent 1, no
-  trailing newline), so a four-line edit stays a four-line diff.
+  trailing newline), so a four-line edit stays a four-line diff;
+- ``_mcc`` reads every ``tile_classification.mcc`` shape in the committed
+  corpus without raising, and preserves a legitimate MCC of 0.0 (defect D37 /
+  audit finding F15b — the bare-float AttributeError and the E81 falsy-zero).
 """
 
 from __future__ import annotations
@@ -38,6 +41,7 @@ from scripts.author_e43_matched_temperature import (
     CELLS,
     RUN_ID,
     _json_style,
+    _mcc,
     apply,
     build_analysis_spec,
     check_gates,
@@ -172,3 +176,101 @@ def test_apply_is_idempotent(tmp_path: Path) -> None:
     # The first apply is the one that did the work (unless the tree already
     # carried the filing, in which case both runs are no-ops).
     assert first["analysis"] in {"add", "skip"}
+
+
+# ---------------------------------------------------------------------------
+# _mcc — the MCC-block shape guard (defect D37 / audit finding F15b)
+# ---------------------------------------------------------------------------
+# Five ``tile_classification.mcc`` shapes exist across the committed corpus.
+# The retired one-line ``or {}`` chain raised ``AttributeError`` on the bare
+# float the Track-2 adapters write, and coerced a legitimate MCC of 0.0 to
+# ``None`` — the falsy-zero defect erratum E81 removed elsewhere.
+
+
+@pytest.mark.tier1
+def test_mcc_reads_the_point_from_the_modern_dict_shape() -> None:
+    """The 1,357-cell majority shape: dict with point + CI + mean."""
+    summary = {"tile_classification": {"mcc": {
+        "point": 0.7104, "mean": 0.7099,
+        "ci_lower": 0.697, "ci_upper": 0.723, "method": "BCa",
+    }}}
+    assert _mcc(summary) == pytest.approx(0.7104)
+
+
+@pytest.mark.tier1
+def test_mcc_returns_none_for_a_dict_without_a_point() -> None:
+    """45 committed evaluations carry CI + mean but no point estimate.
+
+    ``mean`` must NOT stand in: it is a different statistic, and gate 5
+    compares reproduction against sibling at 1e-9. Returning ``None``
+    lets gate 2 report the absence and refuse to write.
+    """
+    summary = {"tile_classification": {"mcc": {
+        "mean": 0.7099, "ci_lower": 0.697, "ci_upper": 0.723,
+    }}}
+    assert _mcc(summary) is None
+
+
+@pytest.mark.tier1
+def test_mcc_accepts_the_bare_float_adapter_shape() -> None:
+    """16 committed evaluations store the MCC as a bare float.
+
+    The regression: ``(... or {}).get("point")`` raised AttributeError.
+    """
+    assert _mcc({"tile_classification": {"mcc": 0.6903}}) == pytest.approx(
+        0.6903
+    )
+
+
+@pytest.mark.tier1
+def test_mcc_preserves_a_legitimate_zero_in_both_shapes() -> None:
+    """MCC = 0.0 is a measurement (no better than chance), not absence."""
+    assert _mcc({"tile_classification": {"mcc": 0.0}}) == 0.0
+    assert _mcc({"tile_classification": {"mcc": {"point": 0.0}}}) == 0.0
+    # And it must be distinguishable from a missing block.
+    assert _mcc({"tile_classification": {"mcc": {"point": 0.0}}}) is not None
+
+
+@pytest.mark.tier1
+def test_mcc_preserves_a_legitimate_negative_value() -> None:
+    """Negative MCC (anti-correlated predictions) survives the guard."""
+    assert _mcc({"tile_classification": {"mcc": -0.25}}) == pytest.approx(-0.25)
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("summary", [
+    {},                                                   # no block
+    {"tile_classification": None},                        # null block
+    {"tile_classification": "not measured"},              # prose block
+    {"tile_classification": {}},                          # no mcc key
+    {"tile_classification": {"mcc": None}},               # null mcc
+    {"tile_classification": {"mcc": "undefined"}},        # sentinel string
+    {"tile_classification": {"mcc": {"point": None}}},    # null point
+    {"tile_classification": {"mcc": {"point": "n/a"}}},   # non-numeric point
+    {"tile_classification": {"mcc": True}},               # corrupt boolean
+    {"tile_classification": {"mcc": {"point": False}}},   # corrupt boolean
+])
+def test_mcc_returns_none_for_unusable_shapes(summary: dict) -> None:
+    """Every unusable shape degrades to ``None`` — never an exception."""
+    assert _mcc(summary) is None
+
+
+@pytest.mark.tier1
+def test_mcc_handles_every_shape_in_the_committed_corpus() -> None:
+    """Sweep the real evaluations: no exception, and a float or None.
+
+    A shape census tripwire — if a sixth shape lands in ``results/``,
+    this fails here rather than in a gate that publishes an artefact.
+    """
+    seen_float = seen_none = 0
+    for path in sorted((REPO / "results").rglob("evaluation.json")):
+        try:
+            summary = json.loads(path.read_text(encoding="utf-8"))["summary"]
+        except (json.JSONDecodeError, KeyError):  # pragma: no cover
+            continue
+        value = _mcc(summary)
+        assert value is None or isinstance(value, float), path
+        seen_float += value is not None
+        seen_none += value is None
+    # Both branches are genuinely exercised by the committed corpus.
+    assert seen_float > 0 and seen_none > 0
