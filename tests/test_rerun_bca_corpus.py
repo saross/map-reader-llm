@@ -372,3 +372,66 @@ def test_vintage_search_rescues_after_frozen_fails(monkeypatch, tmp_path):
     assert row["status"] == "ok"
     assert row["attempt"] == "vintage-search-1"
     assert row["input_vintage"] == {"det.geojson": "AAA"}
+
+
+def _multirun_doc() -> dict:
+    """A multi-run cell with the D41 mis-aggregation: summary = run 1's point."""
+    doc = _doc("1.2")
+    doc["summary"]["tile_classification"] = {
+        "mcc": {"point": 0.3065, "mean": 0.3053},
+        "confusion": {"tp": 227, "tn": 52, "fp": 206, "fn": 2},
+    }
+    doc["per_run"] = [
+        {"tile_classification": {"mcc": {"point": 0.3065}}},
+        {"tile_classification": {"mcc": {"point": 0.2934}}},
+        {"tile_classification": {"mcc": {"point": 0.316}}},
+    ]
+    return doc
+
+
+def test_d41_reaggregation_accepted_when_per_run_reproduces(monkeypatch, tmp_path):
+    """Summary tile point moves to the defined-pass mean -> accepted, flagged."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    committed = _multirun_doc()
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    replayed = json.loads(json.dumps(committed))
+    replayed["_metadata"]["metadata_version"] = "1.3"
+    replayed["summary"]["tile_classification"]["mcc"]["point"] = 0.3053
+    replayed["summary"]["buffers"][0]["f1_ci_lower"] = 0.3
+    replayed["summary"]["buffers"][0]["f1_ci_upper"] = 0.7
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "ok"
+    assert row["summary_tile_point_reaggregated"] == {"mcc": [0.3065, 0.3053]}
+
+
+def test_d41_exception_requires_per_run_reproduction(monkeypatch, tmp_path):
+    """A moved PER-RUN point is a real failure, never re-aggregation."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    committed = _multirun_doc()
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    replayed = json.loads(json.dumps(committed))
+    replayed["per_run"][1]["tile_classification"]["mcc"]["point"] = 0.30
+    replayed["summary"]["tile_classification"]["mcc"]["point"] = 0.3088
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "failed"
+    assert "run1/mcc" in str(row["attempts"][0]["moved"])
+
+
+def test_d41_exception_requires_the_exact_defined_pass_mean(monkeypatch, tmp_path):
+    """A summary point moving to anything BUT the mean stays a failure."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    committed = _multirun_doc()
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    replayed = json.loads(json.dumps(committed))
+    replayed["summary"]["tile_classification"]["mcc"]["point"] = 0.3100
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "failed"

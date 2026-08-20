@@ -332,17 +332,69 @@ def tile_point_table(doc: dict) -> dict[str, Any]:
     return out
 
 
-def gate(before: dict, after: dict) -> dict[str, Any] | None:
-    """Point-identity gate; returns a diagnostics dict on failure, else None."""
+def per_run_tile_points(doc: dict) -> list[dict[str, Any]]:
+    """Each run's observed tile points — the actual measurements."""
+    out = []
+    for run in doc.get("per_run") or []:
+        tc = (run or {}).get("tile_classification") or {}
+        row = {}
+        for metric in TILE_METRICS:
+            block = tc.get(metric)
+            if isinstance(block, dict) and block.get("point") is not None:
+                row[metric] = block["point"]
+            elif isinstance(block, (int, float)):
+                row[metric] = block
+        out.append(row)
+    return out
+
+
+def _reaggregated_mean(before: dict, metric: str) -> float | None:
+    """The defined-pass mean of the COMMITTED per-run points (E81)."""
+    vals = [r[metric] for r in per_run_tile_points(before) if metric in r]
+    return round(sum(vals) / len(vals), 4) if vals else None
+
+
+def gate(
+    before: dict, after: dict,
+) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    """Point-identity gate, anchored to the per-run measurements.
+
+    Returns ``(failure_diagnostics_or_None, reaggregations)``. A summary tile
+    point that moves is tolerated ONLY when every per-run tile point
+    reproduces exactly AND the replayed summary equals the defined-pass mean
+    of the committed per-run points: 19 multi-run `paper-eval/mcc` cells
+    committed run 1's point as the cell summary (a superseded aggregation,
+    defect D41; PI-accepted correction 2026-08-20). Anything else fails.
+    """
     pb, pa = point_table(before), point_table(after)
     moved = {f"{k[0]}m/{k[1]}": (pb[k], pa[k]) for k in pb
              if k in pa and abs(pb[k] - pa[k]) > TOLERANCE}
     missing = sorted(f"{k[0]}m/{k[1]}" for k in set(pb) - set(pa))
+
+    run_b, run_a = per_run_tile_points(before), per_run_tile_points(after)
+    runs_moved = {}
+    if len(run_b) != len(run_a):
+        runs_moved["n_runs"] = (len(run_b), len(run_a))
+    else:
+        for i, (rb, ra) in enumerate(zip(run_b, run_a)):
+            for metric, v in rb.items():
+                if ra.get(metric) != v:
+                    runs_moved[f"run{i}/{metric}"] = (v, ra.get(metric))
+
     tb, ta = tile_point_table(before), tile_point_table(after)
     tile_moved = {k: (tb[k], ta.get(k)) for k in tb if tb[k] != ta.get(k)}
-    if moved or missing or tile_moved:
-        return {"moved": {**moved, **tile_moved}, "missing": missing}
-    return None
+    reaggregated: dict[str, Any] = {}
+    if tile_moved and not runs_moved:
+        for metric in list(tile_moved):
+            if metric == "confusion":
+                continue
+            if ta.get(metric) == _reaggregated_mean(before, metric):
+                reaggregated[metric] = list(tile_moved.pop(metric))
+
+    if moved or missing or tile_moved or runs_moved:
+        return ({"moved": {**moved, **tile_moved, **runs_moved},
+                 "missing": missing}, {})
+    return None, reaggregated
 
 
 def width_check(before: dict, after: dict) -> tuple[float | None, str | None]:
@@ -444,7 +496,7 @@ def process_one(rel: str) -> dict[str, Any]:
                                      "detail": (exc.stderr or "")[-400:]})
                     continue
                 after = json.loads((work / "out/evaluation.json").read_text())
-                diag = gate(before, after)
+                diag, reaggregated = gate(before, after)
                 if diag is not None:
                     attempts.append({"attempt": attempt,
                                      "reason": "point estimates moved",
@@ -460,6 +512,8 @@ def process_one(rel: str) -> dict[str, Any]:
                 return {"evaluation": rel, "status": "ok",
                         "attempt": attempt,
                         "input_vintage": frozen_map,
+                        **({"summary_tile_point_reaggregated": reaggregated}
+                           if reaggregated else {}),
                         "bootstrap_before":
                             (before["_metadata"].get("bootstrap") or {})
                             .get("n_iterations"),
@@ -588,6 +642,8 @@ def main() -> int:
             "n_ok": len(ok), "n_failed": failures,
             "n_pinned_vintage": sum(1 for r in ok
                                     if r.get("attempt") != "current"),
+            "n_reaggregated": sum(
+                1 for r in ok if r.get("summary_tile_point_reaggregated")),
             "n_no_ci": sum(1 for r in ok if r.get("no_ci")),
             "width_ratio_median": median, "rows": rows,
         })
