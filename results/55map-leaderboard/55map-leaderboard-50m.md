@@ -16,7 +16,7 @@
 ## Reading this board
 
 **Confidence intervals vs significance.** The 95% intervals in the board table
-are *marginal* per-cell BCa bootstrap intervals; the significance tests are
+are *marginal* per-cell percentile bootstrap intervals; the significance tests are
 *paired* tile-swap permutations over the same tiles. Overlapping intervals are
 therefore consistent with a significant paired difference — the paired test
 removes between-tile variance that the marginal intervals retain. Read the
