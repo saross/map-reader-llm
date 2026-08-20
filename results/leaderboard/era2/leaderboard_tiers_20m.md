@@ -5,16 +5,31 @@
 **Updated**: 2026-04-24 — gold-standard-v2 scope-unified to Era 2 (487-tile)
 inserted at F1 rank. Existing rows and their pairwise tier assignments are
 unchanged; earlier tiers are renumbered to accommodate the new solitary Tier 1.
+**Updated**: 2026-08-20 — the gold-standard-v2 row's F1, 95% CI, P, and R
+refreshed to the current committed evaluation (defect D34). The point
+estimates moved (F1 0.854 → 0.866) because those detections were re-evaluated
+after the recovery campaign; the intervals are BCa and post-E82-correction.
+Rank and tier assignment are unchanged.
+**Hand edit**: the `gold-standard-v2-greedy-v1-487` row is inserted by hand and
+is not reproducible from this board's sibling `leaderboard_tiers_20m.json` —
+regenerating this board would drop it. Declared `hand_edited: true` under rule
+`gen-era2-lb20-handedit` in `reports/verification/apparatus/generator-map.json`.
 
-## Tier 1 (F1: 0.854–0.854)
+## Tier 1 (F1: 0.866–0.866)
 
 | # | Condition | Era | Track | K | t | F1 | 95% CI | P | R |
 |--:|-----------|:---:|:-----:|--:|--:|---:|:------:|---:|---:|
-| 1 | gold-standard-v2-greedy-v1-487 | 2 | text | 5 | 4 | 0.854 | n/a[^gs2ci] | 0.927 | 0.791 |
+| 1 | gold-standard-v2-greedy-v1-487 | 2 | text | 5 | 4 | 0.866 | [0.832, 0.894][^gs2ci] | 0.929 | 0.811 |
 
-[^gs2ci]: Bootstrap CI not emitted by `score_leaderboard_cells.py` for the
-    gold-standard-v2 Era 2 cell; see the Q1 Era 2 sweep for CIs at the same
-    scope. The Era 3 (327-tile) scope-pair sibling
+[^gs2ci]: Point estimates from
+    `results/leaderboard/cells/gold-standard-v2-greedy-v1-487tile.json`
+    (`sweep`, vote_t = 4, prob_t = 0.15, n = 380); 95% CI from
+    `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` (BCa,
+    10,000 iterations, seed 42, re-emitted 2026-08-20 with the corrected —
+    wider — intervals). This cell is scored outside
+    `score_leaderboard_cells.py`, so its interval is not the 1,000-iteration
+    bootstrap this board's generator computes for the other rows. The Era 3
+    (327-tile) scope-pair sibling
     (`results/leaderboard/cells/gold-standard-v2-greedy-v1-327tile.json`) is
     intentionally preserved for comparability with the Era 3 h8-v2 / h10-v2 /
     h12-v2 library-design artefacts.

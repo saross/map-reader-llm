@@ -1,9 +1,9 @@
 # Leaderboard — Era 2, Single-pass + PV, 40 m buffer
 
-**Generated**: 2026-05-06T00:25:57.079557+00:00
+**Generated**: 2026-08-20T06:34:06.357679+00:00
 **Source tier JSON**: `results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_20m.json`
 **Git commit**: `ef3ec4fe`
-**Conditions**: 8 in 1 tier(s). Bounds: `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson`.
+**Conditions**: 8 in 1 tier(s). Bounds: `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`.
 
 Tiering at 20 m: greedy-clique BH-FDR on tile-level paired permutation tests (10,000 permutations, seed 42) at q=0.05. Bootstrap 95% CIs (1,000 iterations) recomputed per buffer.
 
