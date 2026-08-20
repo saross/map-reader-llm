@@ -15,7 +15,10 @@
         "p_ci_upper": 0.4536,
         "recall": 0.7134,
         "r_ci_lower": 0.1959,
-        "r_ci_upper": 0.2531
+        "r_ci_upper": 0.2531,
+        "ci_unreliable": true,
+        "ci_excludes_point": true,
+        "ci_flag_basis": "measured-exclusion-only"
       },
       {
         "buffer_metres": 30,
@@ -27,7 +30,10 @@
         "p_ci_upper": 0.5117,
         "recall": 0.7969,
         "r_ci_lower": 0.2839,
-        "r_ci_upper": 0.3524
+        "r_ci_upper": 0.3524,
+        "ci_unreliable": true,
+        "ci_excludes_point": true,
+        "ci_flag_basis": "measured-exclusion-only"
       }
     ]
   },
@@ -97,7 +103,10 @@
             "coverage_status": "sparse_cross_grid"
           },
           "coverage_status": "sparse_cross_grid",
-          "ci_unreliable": true
+          "ci_unreliable": true,
+          "ci_excludes_point": true,
+          "sparse_coverage": true,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         },
         {
           "buffer_metres": 30,
@@ -124,7 +133,10 @@
             "coverage_status": "sparse_cross_grid"
           },
           "coverage_status": "sparse_cross_grid",
-          "ci_unreliable": true
+          "ci_unreliable": true,
+          "ci_excludes_point": true,
+          "sparse_coverage": true,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
       "ci_unreliable_any_buffer": true,
@@ -159,7 +171,10 @@
             "coverage_status": "sparse_cross_grid"
           },
           "coverage_status": "sparse_cross_grid",
-          "ci_unreliable": true
+          "ci_unreliable": true,
+          "ci_excludes_point": true,
+          "sparse_coverage": true,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         },
         {
           "buffer_metres": 30,
@@ -186,7 +201,10 @@
             "coverage_status": "sparse_cross_grid"
           },
           "coverage_status": "sparse_cross_grid",
-          "ci_unreliable": true
+          "ci_unreliable": true,
+          "ci_excludes_point": true,
+          "sparse_coverage": true,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
       "ci_unreliable_any_buffer": true,
@@ -221,7 +239,10 @@
             "coverage_status": "sparse_cross_grid"
           },
           "coverage_status": "sparse_cross_grid",
-          "ci_unreliable": true
+          "ci_unreliable": true,
+          "ci_excludes_point": true,
+          "sparse_coverage": true,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         },
         {
           "buffer_metres": 30,
@@ -248,7 +269,10 @@
             "coverage_status": "sparse_cross_grid"
           },
           "coverage_status": "sparse_cross_grid",
-          "ci_unreliable": true
+          "ci_unreliable": true,
+          "ci_excludes_point": true,
+          "sparse_coverage": true,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
       "ci_unreliable_any_buffer": true,

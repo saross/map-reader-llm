@@ -15,7 +15,10 @@
         "p_ci_upper": 0.5425,
         "recall": 0.7792,
         "r_ci_lower": 0.7711,
-        "r_ci_upper": 0.7868
+        "r_ci_upper": 0.7868,
+        "ci_unreliable": false,
+        "ci_excludes_point": false,
+        "ci_flag_basis": "measured-exclusion-only"
       }
     ]
   },
@@ -84,7 +87,10 @@
             "coverage_status": "normal"
           },
           "coverage_status": "normal",
-          "ci_unreliable": false
+          "ci_unreliable": false,
+          "ci_excludes_point": false,
+          "sparse_coverage": false,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
       "ci_unreliable_any_buffer": false,
@@ -119,7 +125,10 @@
             "coverage_status": "normal"
           },
           "coverage_status": "normal",
-          "ci_unreliable": false
+          "ci_unreliable": false,
+          "ci_excludes_point": false,
+          "sparse_coverage": false,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
       "ci_unreliable_any_buffer": false,
@@ -154,7 +163,10 @@
             "coverage_status": "normal"
           },
           "coverage_status": "normal",
-          "ci_unreliable": false
+          "ci_unreliable": false,
+          "ci_excludes_point": false,
+          "sparse_coverage": false,
+          "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
       "ci_unreliable_any_buffer": false,
