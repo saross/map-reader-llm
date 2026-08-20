@@ -440,8 +440,8 @@ def build_board_tile_counts(
 
 
 def build_evals_tile_counts(
-    pattern: str,
-) -> tuple[list[dict[str, Any]], np.ndarray, np.ndarray]:
+    pattern: str, buffer_metres: int = BUFFER_M,
+) -> tuple[list[dict[str, Any]], np.ndarray, np.ndarray, dict[str, str]]:
     """Load an arbitrary set of committed evaluations as per-tile TP/FP/FN.
 
     For candidate sets that are not a registered board — the verifier
@@ -454,11 +454,23 @@ def build_evals_tile_counts(
     Every evaluation must declare the same bounds and ground truth; a mismatch
     raises rather than silently mixing scopes.
 
+    ``buffer_metres`` is threaded through to BOTH the per-tile scoring and the
+    ``eval_f1`` read. Until 2026-08-20 this path scored at the hard-coded 20 m
+    default whatever ``--buffer`` said, while the buffer was still stamped into
+    the output filename and metadata — the exact ambiguity the stamp exists to
+    prevent (Session 137 audit, finding F17a). No committed artefact was
+    affected (the only ``--evals`` artefact is a 20 m curve), but the path now
+    honours the parameter it advertises.
+
     Args:
         pattern: Glob matching the ``evaluation.json`` files to load.
+        buffer_metres: Matching radius for scoring and for the headline read.
 
     Returns:
-        ``(specs, counts)`` with ``counts`` shaped ``(n_evals, n_tiles, 3)``.
+        ``(specs, counts, has_mounds, scope)`` with ``counts`` shaped
+        ``(n_evals, n_tiles, 3)`` and ``scope`` recording the shared ``bounds``
+        and ``ground_truth`` paths, so the output artefact is reproducible from
+        its own metadata.
     """
     import glob as _glob  # noqa: PLC0415
 
@@ -480,21 +492,24 @@ def build_evals_tile_counts(
 
     specs, rows = [], []
     for path, meta in metas:
-        tp, fp, fn, _n = cell_per_tile(meta["cli_args"], gdf_ref, gdf_bounds, tile_order)
+        tp, fp, fn, _n = cell_per_tile(meta["cli_args"], gdf_ref, gdf_bounds,
+                                       tile_order, buffer_metres)
         rows.append(np.column_stack([tp, fp, fn]).astype(float))
         doc = json.loads(Path(path).read_text())
-        b20 = next((b for b in doc["summary"]["buffers"]
-                    if b["buffer_metres"] == BUFFER_M), {})
+        brow = next((b for b in doc["summary"]["buffers"]
+                     if b["buffer_metres"] == buffer_metres), {})
         parent = Path(path).parent
         rel = (parent.relative_to(PROJECT_ROOT)
                if parent.is_absolute() and parent.is_relative_to(PROJECT_ROOT)
                else parent)
         specs.append({"ref": str(rel),
                       "label": parent.name,
-                      "eval_f1": b20.get("f1")})
+                      "eval_f1": brow.get("f1")})
     logger.info("evals %s: %d candidates over %d tiles", pattern, len(specs),
                 len(tile_order))
-    return specs, np.stack(rows), reference_occupancy(gdf_ref, gdf_bounds, tile_order)
+    scope = {"bounds": bounds_rel, "ground_truth": gt_rel}
+    return (specs, np.stack(rows),
+            reference_occupancy(gdf_ref, gdf_bounds, tile_order), scope)
 
 
 def main() -> int:
@@ -533,14 +548,25 @@ def main() -> int:
     args.out.mkdir(parents=True, exist_ok=True)
 
     if args.evals:
-        specs, counts, has_mounds = build_evals_tile_counts(args.evals)
+        specs, counts, has_mounds, scope = build_evals_tile_counts(
+            args.evals, args.buffer)
         tag = args.tag or "evals"
-        res_meta = {"evals_glob": args.evals}
+        res_meta = {"evals_glob": args.evals, **scope}
     elif args.board:
         specs, counts, has_mounds = build_board_tile_counts(
             args.board, args.ground_truth, args.bounds, args.buffer)
         tag = args.board
         res_meta = {"board": args.board}
+        # Record the overrides the run actually used. Adapter-written boards
+        # (the Track-2 55-map cells) CANNOT be loaded without --ground-truth,
+        # so an artefact that omits it is not reproducible from its own
+        # metadata — the class-8 gap the Session 137 audit found on all four
+        # 55-map artefacts (finding F9). Absent overrides are omitted, because
+        # there the board self-describes from its cells' own evaluations.
+        if args.ground_truth is not None:
+            res_meta["ground_truth_override"] = str(args.ground_truth)
+        if args.bounds is not None:
+            res_meta["bounds_override"] = str(args.bounds)
     else:
         bounds = gpd.read_file(COMMON_BOUNDS)
         gdf_ref = gpd.read_file(GROUND_TRUTH)
