@@ -143,7 +143,12 @@
         "ci_unreliable": {
           "type": "boolean",
           "default": false,
-          "description": "Flag set when sparse coverage makes the CI untrustworthy."
+          "description": "Reliability verdict on the CI. Since 2026-08-20 (defect D28 migration) this is MEASURED: true only when the interval excludes its own point estimate or coverage is partial (erratum E72). Before that it fired on a sparse-coverage heuristic retired in Session 137."
+        },
+        "ci_flag_basis": {
+          "type": "string",
+          "enum": ["measured-exclusion-or-partial-coverage", "measured-exclusion-only"],
+          "description": "Which rule produced ci_unreliable, copied from the source evaluation so the register is readable without knowing the artefact's vintage. 'measured-exclusion-only' marks adapter-written rows whose committed fields carry no coverage status, so the E72 partial-coverage ground was unevaluable."
         }
       },
       "required": ["f1", "precision", "recall"],

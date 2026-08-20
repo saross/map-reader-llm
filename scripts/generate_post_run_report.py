@@ -733,6 +733,13 @@ def _metrics_from_eval(summary: dict, bootstrap: dict | None = None) -> dict:
             "coverage": None,  # eval records a coverage dict, not the scalar this field wants
             "ci_unreliable": bool(b.get("ci_unreliable", False)),
         }
+        # Vintage marker for the flag (defect D28): copied, never assumed —
+        # an absent basis is not evidence of any rule, so the key is omitted
+        # rather than filled (the D17 principle).
+        if b.get("ci_flag_basis") is not None:
+            per_buffer[str(b["buffer_metres"])]["ci_flag_basis"] = (
+                b["ci_flag_basis"]
+            )
     tc = summary.get("tile_classification", {})
     conf = tc.get("confusion", {})
     tile = {

@@ -105,6 +105,7 @@ def adapt_one(label: str, det_rel: str) -> Path:
     headline_tc: dict | None = None
     for row in summary["results"]:
         r = row["R_m"]
+        excludes = not (row["F1_CI"][0] <= row["F1"] <= row["F1_CI"][1])
         buffers.append({
             "buffer_metres": r,
             "f1": row["F1"],
@@ -113,7 +114,12 @@ def adapt_one(label: str, det_rel: str) -> Path:
             "f1_ci_lower": row["F1_CI"][0],
             "f1_ci_upper": row["F1_CI"][1],
             "f1_ci_method": "percentile",
-            "ci_unreliable": False,
+            # MEASURED, not asserted (defect D37/D28): the flag is the
+            # exclusion test on the one CI this adapter carries. Coverage is
+            # not evaluable from the Track-2 summary, so the basis says so.
+            "ci_unreliable": excludes,
+            "ci_excludes_point": excludes,
+            "ci_flag_basis": "measured-exclusion-only",
         })
         if r == HEADLINE_BUFFER:
             tc = row.get("tile_classification", {})
