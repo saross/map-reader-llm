@@ -1,7 +1,8 @@
 # Session 137 audit report
 
-> **Last revised**: 2026-08-20 (original publication). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-08-20 (evening: remediation campaign recorded — every Part F item
+> and all register-facing findings executed same day; see the Changelog). Original
+> publication earlier the same day.
 
 **Auditor**: Claude (Fable 5), Session 138, 2026-08-20, working from the self-contained brief
 `planning/session-137-audit-brief.md` written by the Session 137 instance. Four parallel
@@ -525,6 +526,32 @@ if operational practice runs only the tiered selections they are never exercised
    generated-file registry.
 
 ## Changelog
+
+### 2026-08-20 (evening) — Remediation campaign executed
+
+The PI approved a same-day remediation campaign covering every finding in this
+report, with four scoping rulings (full `ci_unreliable` migration; an E83
+correction block; `symbol_code` → `source_id_lossy`; full-corpus re-emission
+for the mean-vs-point layer). Executed across eight phases (coordinator plus
+three Opus subagents; ~30 commits; tier-1 grew 1,593 → 1,713+ tests, all
+green). Register-facing outcomes: the F1 board correction landed (the
+`n1-baseline-matrix-384` tie set is 3 at B = 10,000, register and E83
+corrected); the register's 1,041 stale reliability flags are retired with a
+vintage basis on every row (F4); the `symbol_code` semantic is corrected in
+both references (F5); the CSV/MD layer publishes observed points corpus-wide
+(F6; 2,165 files); the E83 flag set is complete and the banner true (F2); the
+five contradicted register outcomes carry inline revision markers (F3); the
+counting drift is reconciled in E83's correction block (F7); the D24 brief is
+corrected (F8); recipes are loadable for every register-backing cell (F9).
+Two corrections to this report's own figures, found during execution: the
+method-silent manifest cells number **619 across 47 conditions** (F12 quoted
+308/22, one family's slice), and one register-backing cell
+(`gold-standard-extended-buffer-sweep-era2`) carried pre-fix D15-defective
+intervals that the F9 re-emission corrected (~4.6× wider, points identical).
+Defect register rows D25–D39 track per-finding status; still open there: the
+E82 corpus-wide re-emission campaign (~1,520 pre-fix B = 10,000 evaluations,
+sapphire-scale), the legacy leaderboard family's re-ranking decision, and D24
+itself (external review, now with the coverage evidence in Part B).
 
 ### 2026-08-20 — Original publication
 
