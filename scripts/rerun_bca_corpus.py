@@ -586,15 +586,15 @@ def main() -> int:
             "pilot": args.pilot, "workers": args.workers,
             "aborted": bool(aborted), "abort_reason": abort_reason,
             "n_ok": len(ok), "n_failed": failures,
-            "n_frozen_vintage": sum(1 for r in ok
-                                    if r.get("attempt") == "frozen"),
+            "n_pinned_vintage": sum(1 for r in ok
+                                    if r.get("attempt") != "current"),
             "n_no_ci": sum(1 for r in ok if r.get("no_ci")),
             "width_ratio_median": median, "rows": rows,
         })
         args.report_out.write_text(json.dumps(existing, indent=2) + "\n")
-        logger.info("ok %d / failed %d / frozen-vintage %d; report -> %s",
+        logger.info("ok %d / failed %d / pinned-vintage %d; report -> %s",
                     len(ok), failures,
-                    sum(1 for r in ok if r.get("attempt") == "frozen"),
+                    sum(1 for r in ok if r.get("attempt") != "current"),
                     args.report_out)
 
     if aborted:
