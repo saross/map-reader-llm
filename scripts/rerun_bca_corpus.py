@@ -3,36 +3,58 @@
 
 Executes the campaign specified in
 ``planning/e82-corpus-reemission-2026-08-20.md`` (pre-run-review contract,
-PI-approved 2026-08-20): every git-tracked, non-archive evaluation whose
-metadata vintage is 1.1 or 1.2 — the BCa era, selected by VINTAGE rather than
-by declared method so the 22 method-silent register-backing cells are included
-without assuming what they ran (the D17 principle) — is replayed from its own
+PI-approved 2026-08-20, amended same day after the fresh-context pre-launch
+audit). Every git-tracked, non-archive ``evaluation.json`` whose metadata
+vintage is 1.1 or 1.2 — the BCa era, selected by VINTAGE rather than declared
+method so the 22 method-silent register-backing cells are included without
+assuming what they ran (the D17 principle) — is replayed from its own
 recovered recipe with only the bootstrap effort standardised, through the
 fixed wrapper (``122104b8a``) and the current writer. Re-emitted files land at
-metadata 1.3, which is also the resume criterion: a restart processes exactly
-the remainder.
+metadata 1.3, which is also the resume criterion.
 
-Guards, per the contract's stop states:
+**Input-vintage rule (audit blocker B1; PI ruling 2026-08-20).** ~324 cells
+were scored against inputs that later changed (defect D40). The campaign's
+invariant is that ONLY the bootstrap effort moves, so each cell is replayed
+against current inputs first and, if the point gate fails, replayed once more
+against the inputs AS OF its own ``generated_at_utc``, materialised from git
+history. A frozen replay that passes has its recorded input paths normalised
+back to the repo-relative originals, with the frozen commits recorded in
+``_metadata.e82_input_vintage``. Reference-vintage reconciliation is a
+separate, deliberately unbundled decision (the E81/E82 lesson).
 
-* **Point gate** — F1/precision/recall per buffer, the observed tile points,
-  and the confusion counts must reproduce exactly (1e-9); a moving point
-  leaves the committed file untouched and counts as a failure.
-* **Width tripwire** — a 20 m F1 interval that NARROWS below 0.8x on replay
-  is impossible under the D15 model and is treated as a failure.
-* **Systematic-failure abort** — more than 5 failures aborts the run.
-* Recipes are recovered via the D22 fallback chain
-  (``build_bca_migration_queue.recover_recipe``); buffers and the MCC flag
-  come from what the evaluation MEASURED (``summary``), not from the recorded
-  argparse namespace; batch-vintage globs are dropped so the canonical
-  resolver applies (defect D6).
+Guards, per the amended contract:
+
+* **Point gate** — F1/precision/recall per buffer, observed tile points, and
+  confusion counts must reproduce exactly (1e-9) on whichever attempt is
+  accepted; otherwise the committed file is untouched and the cell fails.
+* **Width tripwire** — on the widest buffer row carrying intervals in both
+  vintages: a ratio below 0.8 or above 8, or a replay interval that collapses
+  to zero/absent width where the committed one existed, is a failure. Cells
+  with no committed interval anywhere are recorded ``no_ci``, never silently
+  "ok".
+* **Systematic-failure abort** — more than 5 failures stops submission; every
+  already-dispatched worker is drained and RECORDED before the report is
+  written (audit M2), and a worker exception becomes a failure row rather
+  than destroying the record (audit M1).
+* **Running-median guard** — once 200 ratio samples exist, a running median
+  outside [1.05, 6] aborts (audit M4); the band is also checked at completion
+  on full runs (pilots are too small and too skewed for a median claim).
+* **Skip-list freeze** — the census must find exactly the expected number of
+  no-recipe cells (default 13, named in the report); a different count means
+  this checkout resolves different inputs (for instance sapphire retaining
+  untracked leftovers) and the run refuses to start (audit M7).
+* Pilots are a SEEDED RANDOM SAMPLE of the worklist (audit B2), optionally
+  with forced includes for known-interesting cells.
 
 Usage::
 
-    python scripts/rerun_bca_corpus.py --dry-run          # census only
-    python scripts/rerun_bca_corpus.py --pilot 10 --workers 4
+    python scripts/rerun_bca_corpus.py --dry-run
+    python scripts/rerun_bca_corpus.py --pilot 12 \\
+        --include outputs/55maps-image-generalisation/evaluation/evaluation.json
     python scripts/rerun_bca_corpus.py --workers 10
 
-$0 API. Run on sapphire (contract § 3.4). Created 2026-08-20 (Session 138).
+$0 API. Run on sapphire (contract § 3.4). Created 2026-08-20 (Session 138);
+revised same day per the pre-launch audit adjudication.
 """
 
 from __future__ import annotations
@@ -40,11 +62,13 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
+import random
 import shutil
 import subprocess
 import sys
 import tempfile
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from pathlib import Path
 from typing import Any
 
@@ -56,7 +80,6 @@ from scripts.build_bca_migration_queue import (  # noqa: E402
     recover_recipe,
 )
 from scripts.rerun_evals_at_10k import (  # noqa: E402
-    SIBLINGS,
     TARGET_B,
     TOLERANCE,
     point_table,
@@ -69,18 +92,34 @@ REPORT_PATH = PROJECT_ROOT / "results/e82-corpus-reemission-2026-08-20.json"
 SELECT_VINTAGES = ("1.1", "1.2")
 DONE_VINTAGE = "1.3"
 MAX_FAILURES = 5
-MIN_WIDTH_RATIO = 0.8
+WIDTH_RATIO_BAND = (0.8, 8.0)
 MEDIAN_BAND = (1.05, 6.0)
+MEDIAN_GUARD_MIN_SAMPLES = 200
+EXPECTED_SKIPS = 13
+PILOT_SEED = 20260820
 TILE_METRICS = ("mcc", "sensitivity", "specificity")
+# Copy order is deliberate: the JSON carries the 1.3 vintage stamp that marks
+# a cell complete, so it lands LAST — a kill mid-cell leaves the cell still
+# selected on resume (audit m1). Each sibling is staged in the destination
+# directory and os.replace()d, so no committed file is ever truncated.
+SIBLINGS = ("evaluation.csv", "evaluation.md", "evaluation.json")
 
 
-def select_targets(tracked: list[str]) -> tuple[list[str], dict[str, int]]:
-    """Partition tracked evaluations into the worklist and skip census."""
+def select_targets(
+    tracked: list[str],
+) -> tuple[list[str], dict[str, int], list[str]]:
+    """Partition tracked evaluations into worklist, census, and named skips."""
     worklist: list[str] = []
+    skips: list[str] = []
     census: dict[str, int] = {"selected": 0, "done_1.3": 0, "other_vintage": 0,
                               "unparseable": 0, "no_recipe": 0}
     for rel in tracked:
-        if rel.startswith("archive/"):
+        # Canonical basenames only: a dozen tracked files merely END in
+        # "evaluation.json" ("phase2a-evaluation.json"); replaying one would
+        # write a NEW evaluation.json beside it and never mark the source
+        # done (audit m6). None is currently selectable; the filter makes
+        # that a property of the code rather than of today's data.
+        if rel.startswith("archive/") or Path(rel).name != "evaluation.json":
             continue
         try:
             doc = json.loads((PROJECT_ROOT / rel).read_text())
@@ -94,14 +133,13 @@ def select_targets(tracked: list[str]) -> tuple[list[str], dict[str, int]]:
         if ver not in SELECT_VINTAGES:
             census["other_vintage"] += 1
             continue
-        recipe = recover_recipe(doc)
-        paths_ok = _recipe_paths_exist(recipe)
-        if not paths_ok:
+        if not _recipe_paths_exist(recover_recipe(doc)):
             census["no_recipe"] += 1
+            skips.append(rel)
             continue
         census["selected"] += 1
         worklist.append(rel)
-    return worklist, census
+    return worklist, census, skips
 
 
 def _recipe_paths_exist(recipe: dict[str, Any]) -> bool:
@@ -114,6 +152,89 @@ def _recipe_paths_exist(recipe: dict[str, Any]) -> bool:
     return (all((PROJECT_ROOT / d).exists() for d in dets)
             and (PROJECT_ROOT / str(gt)).exists()
             and (PROJECT_ROOT / str(bounds)).exists())
+
+
+def _recipe_input_paths(recipe: dict[str, Any]) -> list[str]:
+    """Every repo-relative input path a recipe names (dirs included)."""
+    det = recipe.get("detections")
+    paths = list(det) if isinstance(det, list) else ([det] if det else [])
+    if recipe.get("detections_dir"):
+        paths.append(recipe["detections_dir"])
+    paths += [recipe["ground_truth"], recipe["bounds"]]
+    return [str(p) for p in paths]
+
+
+def freeze_inputs(
+    recipe: dict[str, Any], as_of: str, workdir: Path,
+) -> tuple[dict[str, Any], dict[str, str]] | None:
+    """Materialise the recipe's inputs as of ``as_of`` from git history.
+
+    Returns the rewritten recipe (paths under ``workdir``) plus a map of
+    repo path → short commit, or ``None`` when any input has no committed
+    vintage at or before the timestamp (the cell was scored on data that
+    was never committed in that state — a genuine failure, not a fallback).
+    """
+    frozen: dict[str, str] = {}
+    out = dict(recipe)
+
+    def commit_before(path: str) -> str | None:
+        res = subprocess.run(
+            ["git", "rev-list", "-1", f"--before={as_of}", "HEAD", "--", path],
+            capture_output=True, text=True, cwd=PROJECT_ROOT)
+        sha = res.stdout.strip()
+        return sha or None
+
+    def materialise(sha: str, path: str) -> Path | None:
+        dest = workdir / "frozen" / path
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        blob = subprocess.run(["git", "show", f"{sha}:{path}"],
+                              capture_output=True, cwd=PROJECT_ROOT)
+        if blob.returncode != 0:
+            return None
+        dest.write_bytes(blob.stdout)
+        return dest
+
+    for key in ("ground_truth", "bounds"):
+        sha = commit_before(str(recipe[key]))
+        if sha is None:
+            return None
+        dest = materialise(sha, str(recipe[key]))
+        if dest is None:
+            return None
+        frozen[str(recipe[key])] = sha[:9]
+        out[key] = str(dest)
+
+    if recipe.get("detections"):
+        det = recipe["detections"]
+        det_list = det if isinstance(det, list) else [det]
+        new_list = []
+        for p in det_list:
+            sha = commit_before(str(p))
+            if sha is None:
+                return None
+            dest = materialise(sha, str(p))
+            if dest is None:
+                return None
+            frozen[str(p)] = sha[:9]
+            new_list.append(str(dest))
+        out["detections"] = new_list
+    elif recipe.get("detections_dir"):
+        d = str(recipe["detections_dir"])
+        sha = commit_before(d)
+        if sha is None:
+            return None
+        listing = subprocess.run(
+            ["git", "ls-tree", "-r", "--name-only", sha, "--", d],
+            capture_output=True, text=True, cwd=PROJECT_ROOT)
+        files = [f for f in listing.stdout.split() if f]
+        if not files:
+            return None
+        for f in files:
+            if materialise(sha, f) is None:
+                return None
+        frozen[d] = sha[:9]
+        out["detections_dir"] = str(workdir / "frozen" / d)
+    return out, frozen
 
 
 def build_command(doc: dict, recipe: dict[str, Any], workdir: Path) -> list[str]:
@@ -136,7 +257,7 @@ def build_command(doc: dict, recipe: dict[str, Any], workdir: Path) -> list[str]
             "--bounds", str(recipe["bounds"]),
             "--bootstrap", str(TARGET_B),
             "--seed", str(recipe.get("seed", 42)),
-            "--output-dir", str(workdir)]
+            "--output-dir", str(workdir / "out")]
     buffers = buffers_that_ran(doc, recipe)
     if buffers:
         cmd += ["--buffers"] + [str(b) for b in buffers]
@@ -164,135 +285,273 @@ def tile_point_table(doc: dict) -> dict[str, Any]:
     return out
 
 
-def ci20_width(doc: dict) -> float | None:
-    """The 20 m F1 interval width, where present."""
-    for b in (doc.get("summary") or {}).get("buffers", []):
-        if b.get("buffer_metres") == 20:
-            lo, hi = b.get("f1_ci_lower"), b.get("f1_ci_upper")
-            return (hi - lo) if lo is not None and hi is not None else None
+def gate(before: dict, after: dict) -> dict[str, Any] | None:
+    """Point-identity gate; returns a diagnostics dict on failure, else None."""
+    pb, pa = point_table(before), point_table(after)
+    moved = {f"{k[0]}m/{k[1]}": (pb[k], pa[k]) for k in pb
+             if k in pa and abs(pb[k] - pa[k]) > TOLERANCE}
+    missing = sorted(f"{k[0]}m/{k[1]}" for k in set(pb) - set(pa))
+    tb, ta = tile_point_table(before), tile_point_table(after)
+    tile_moved = {k: (tb[k], ta.get(k)) for k in tb if tb[k] != ta.get(k)}
+    if moved or missing or tile_moved:
+        return {"moved": {**moved, **tile_moved}, "missing": missing}
     return None
 
 
-def process_one(rel: str) -> dict[str, Any]:
-    """Replay one evaluation and gate it; runs in a worker process.
+def width_check(before: dict, after: dict) -> tuple[float | None, str | None]:
+    """Width ratio on the widest common-interval buffer, plus a verdict.
 
-    Returns a row dict with ``status`` in {ok, failed}; on ``ok`` the
-    committed siblings have been replaced.
+    Returns ``(ratio, failure_reason)``; ratio ``None`` with no failure means
+    the committed cell carries no interval anywhere (recorded ``no_ci``).
     """
+    def widths(doc: dict) -> dict[int, float]:
+        out = {}
+        for b in (doc.get("summary") or {}).get("buffers", []):
+            lo, hi = b.get("f1_ci_lower"), b.get("f1_ci_upper")
+            if lo is not None and hi is not None:
+                out[b["buffer_metres"]] = hi - lo
+        return out
+
+    wb, wa = widths(before), widths(after)
+    if not wb:
+        return None, None
+    # The widest committed interval is the most informative comparator and
+    # exists for every family, 20 m boards and 30 m-only boards alike
+    # (audit M3: 91 cells have no 20 m row).
+    buf = max(wb, key=lambda k: wb[k])
+    if wb[buf] == 0:
+        # Degenerate committed interval; nothing to ratio against. Recorded,
+        # not silently passed.
+        return None, None
+    if buf not in wa or wa[buf] == 0:
+        return None, (f"replay interval at {buf} m collapsed or vanished "
+                      f"(committed width {wb[buf]:.4f})")
+    ratio = wa[buf] / wb[buf]
+    if not (WIDTH_RATIO_BAND[0] <= ratio <= WIDTH_RATIO_BAND[1]):
+        return ratio, (f"width ratio {ratio:.3f} at {buf} m outside "
+                       f"{WIDTH_RATIO_BAND}")
+    return ratio, None
+
+
+def _accept(work_out: Path, path: Path, recipe: dict[str, Any],
+            frozen: dict[str, str] | None) -> None:
+    """Stage-and-replace the siblings atomically, JSON (vintage stamp) last."""
+    if frozen:
+        doc = json.loads((work_out / "evaluation.json").read_text())
+        cli = doc["_metadata"].get("cli_args") or {}
+        # A frozen replay ran against temp materialisations; the committed
+        # artefact must record the repo-relative inputs it logically scored,
+        # with the vintage pinned separately (audit B1 / provenance).
+        for key in ("ground_truth", "bounds", "detections", "detections_dir"):
+            if recipe.get(key) is not None and key in cli:
+                cli[key] = recipe[key]
+        doc["_metadata"]["e82_input_vintage"] = frozen
+        (work_out / "evaluation.json").write_text(
+            json.dumps(doc, indent=2) + "\n")
+    for name in SIBLINGS:
+        src = work_out / name
+        if not src.exists():
+            continue
+        staged = path.parent / f".{name}.e82tmp"
+        shutil.copy2(src, staged)
+        os.replace(staged, path.parent / name)
+
+
+def process_one(rel: str) -> dict[str, Any]:
+    """Replay one evaluation (current inputs, then frozen) and gate it."""
     path = PROJECT_ROOT / rel
-    before = json.loads(path.read_text())
-    recipe = recover_recipe(before)
-    with tempfile.TemporaryDirectory() as td:
-        work = Path(td)
-        cmd = build_command(before, recipe, work)
-        try:
-            subprocess.run(cmd, check=True, cwd=PROJECT_ROOT,
-                           capture_output=True, text=True)
-        except subprocess.CalledProcessError as exc:
-            return {"evaluation": rel, "status": "failed",
-                    "reason": "replay error",
-                    "detail": (exc.stderr or "")[-500:]}
-        after = json.loads((work / "evaluation.json").read_text())
+    try:
+        before = json.loads(path.read_text())
+        recipe = recover_recipe(before)
+        original_recipe = dict(recipe)
+        with tempfile.TemporaryDirectory() as td:
+            work = Path(td)
+            attempts: list[dict[str, Any]] = []
+            for attempt in ("current", "frozen"):
+                frozen_map: dict[str, str] | None = None
+                if attempt == "frozen":
+                    as_of = (before.get("_metadata") or {}).get(
+                        "generated_at_utc")
+                    if not as_of:
+                        attempts.append({"attempt": attempt,
+                                         "reason": "no generated_at_utc"})
+                        break
+                    shutil.rmtree(work / "out", ignore_errors=True)
+                    frozen_result = freeze_inputs(original_recipe, as_of, work)
+                    if frozen_result is None:
+                        attempts.append({"attempt": attempt,
+                                         "reason": "no committed vintage "
+                                                   "at/before timestamp"})
+                        break
+                    recipe, frozen_map = frozen_result
+                cmd = build_command(before, recipe, work)
+                try:
+                    subprocess.run(cmd, check=True, cwd=PROJECT_ROOT,
+                                   capture_output=True, text=True)
+                except subprocess.CalledProcessError as exc:
+                    attempts.append({"attempt": attempt,
+                                     "reason": "replay error",
+                                     "detail": (exc.stderr or "")[-400:]})
+                    continue
+                after = json.loads((work / "out/evaluation.json").read_text())
+                diag = gate(before, after)
+                if diag is not None:
+                    attempts.append({"attempt": attempt,
+                                     "reason": "point estimates moved",
+                                     **diag})
+                    continue
+                ratio, width_fail = width_check(before, after)
+                if width_fail:
+                    attempts.append({"attempt": attempt,
+                                     "reason": width_fail,
+                                     "width_ratio": ratio})
+                    continue
+                _accept(work / "out", path, original_recipe, frozen_map)
+                return {"evaluation": rel, "status": "ok",
+                        "attempt": attempt,
+                        "input_vintage": frozen_map,
+                        "bootstrap_before":
+                            (before["_metadata"].get("bootstrap") or {})
+                            .get("n_iterations"),
+                        "bootstrap_after": TARGET_B,
+                        "width_ratio": ratio,
+                        "no_ci": ratio is None}
+        # The FIRST attempt's reason is the substantive diagnosis (a gate or
+        # width failure on current inputs); later entries usually explain why
+        # the frozen fallback was unavailable.
+        return {"evaluation": rel, "status": "failed",
+                "reason": attempts[0]["reason"] if attempts else "unknown",
+                "attempts": attempts}
+    except Exception as exc:  # noqa: BLE001 — a worker must never lose the row
+        return {"evaluation": rel, "status": "failed",
+                "reason": f"worker exception: {type(exc).__name__}: {exc}"}
 
-        pb, pa = point_table(before), point_table(after)
-        moved = {f"{k[0]}m/{k[1]}": (pb[k], pa[k]) for k in pb
-                 if k in pa and abs(pb[k] - pa[k]) > TOLERANCE}
-        missing = sorted(f"{k[0]}m/{k[1]}" for k in set(pb) - set(pa))
-        tb, ta = tile_point_table(before), tile_point_table(after)
-        tile_moved = {k: (tb[k], ta.get(k)) for k in tb if tb[k] != ta.get(k)}
-        if moved or missing or tile_moved:
-            return {"evaluation": rel, "status": "failed",
-                    "reason": "point estimates moved",
-                    "moved": {**moved, **tile_moved}, "missing": missing}
 
-        wb, wa = ci20_width(before), ci20_width(after)
-        ratio = (wa / wb) if (wb and wa) else None
-        if ratio is not None and ratio < MIN_WIDTH_RATIO:
-            return {"evaluation": rel, "status": "failed",
-                    "reason": f"width ratio {ratio:.3f} < {MIN_WIDTH_RATIO}",
-                    "width_ratio": ratio}
-
-        for name in SIBLINGS:
-            src = work / name
-            if src.exists():
-                shutil.copy2(src, path.parent / name)
-    return {"evaluation": rel, "status": "ok",
-            "bootstrap_before": (before["_metadata"].get("bootstrap") or {})
-            .get("n_iterations"),
-            "width_ratio": ratio}
+def running_median(ratios: list[float]) -> float | None:
+    """Median of the collected ratios, once enough samples exist."""
+    if len(ratios) < MEDIAN_GUARD_MIN_SAMPLES:
+        return None
+    s = sorted(ratios)
+    return s[len(s) // 2]
 
 
 def main() -> int:
     """Census, pilot, or full corpus run with the contract's tripwires."""
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--dry-run", action="store_true",
-                    help="Census the worklist; write nothing.")
+    ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--pilot", type=int, default=None,
-                    help="Process only the first N files.")
+                    help="Seeded RANDOM sample of N files (>= 1).")
+    ap.add_argument("--include", action="append", default=[],
+                    help="Force-include a file (repo-relative); repeatable.")
     ap.add_argument("--workers", type=int, default=1)
+    ap.add_argument("--expect-skips", type=int, default=EXPECTED_SKIPS,
+                    help="Refuse to run unless the no-recipe census matches.")
     ap.add_argument("--report-out", type=Path, default=REPORT_PATH)
     args = ap.parse_args()
+    if args.pilot is not None and args.pilot < 1:
+        ap.error("--pilot must be >= 1")
 
     tracked = subprocess.run(["git", "ls-files", "*evaluation.json"],
                              capture_output=True, text=True, check=True,
                              cwd=PROJECT_ROOT).stdout.split()
-    worklist, census = select_targets(tracked)
+    worklist, census, skips = select_targets(tracked)
     logger.info("census: %s", census)
+    if census["no_recipe"] != args.expect_skips:
+        logger.error(
+            "no-recipe census %d != expected %d — this checkout resolves "
+            "different inputs than the contract froze (contract § 4); "
+            "refusing to run", census["no_recipe"], args.expect_skips)
+        return 3
     if args.dry_run:
+        for s in skips:
+            logger.info("skip (no recipe): %s", s)
         return 0
+
     if args.pilot:
-        worklist = sorted(worklist)[:args.pilot]
+        rng = random.Random(PILOT_SEED)
+        sample = rng.sample(sorted(worklist), min(args.pilot, len(worklist)))
+        forced = [p for p in args.include if p in worklist]
+        worklist = sorted(set(sample) | set(forced))
     logger.info("processing %d file(s) with %d worker(s)",
                 len(worklist), args.workers)
 
     rows: list[dict[str, Any]] = []
+    ratios: list[float] = []
     failures = 0
-    aborted = False
-    with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        pending = {pool.submit(process_one, rel): rel for rel in worklist}
-        for i, fut in enumerate(as_completed(pending), 1):
-            row = fut.result()
-            rows.append(row)
-            if row["status"] == "failed":
-                failures += 1
-                logger.error("[%d/%d] FAILED %s: %s", i, len(worklist),
-                             row["evaluation"], row["reason"])
-                if failures > MAX_FAILURES:
-                    aborted = True
-                    logger.error("aborting: > %d failures (contract § 3.1)",
-                                 MAX_FAILURES)
-                    for f in pending:
-                        f.cancel()
+    aborted = abort_reason = None
+    queue = list(worklist)
+    try:
+        with ProcessPoolExecutor(max_workers=args.workers) as pool:
+            pending: set = set()
+            while queue or pending:
+                while queue and len(pending) < args.workers * 2 and not aborted:
+                    pending.add(pool.submit(process_one, queue.pop(0)))
+                if not pending:
                     break
-            elif i % 25 == 0 or i == len(worklist):
-                logger.info("[%d/%d] ok (latest ratio %.2fx)", i,
-                            len(worklist), row.get("width_ratio") or 0)
+                done, pending = wait(pending, return_when=FIRST_COMPLETED)
+                for fut in done:
+                    try:
+                        row = fut.result()
+                    except Exception as exc:  # noqa: BLE001
+                        row = {"evaluation": "unknown", "status": "failed",
+                               "reason": f"future error: {exc}"}
+                    rows.append(row)
+                    if row["status"] == "failed":
+                        failures += 1
+                        logger.error("[%d] FAILED %s: %s", len(rows),
+                                     row["evaluation"], row["reason"])
+                        if failures > MAX_FAILURES and not aborted:
+                            aborted = True
+                            abort_reason = (f"> {MAX_FAILURES} failures "
+                                            "(contract § 3.1)")
+                            queue.clear()
+                    else:
+                        if row.get("width_ratio"):
+                            ratios.append(row["width_ratio"])
+                        if len(rows) % 25 == 0:
+                            logger.info("[%d/%d] ok", len(rows),
+                                        len(worklist))
+                        med = running_median(ratios)
+                        if (med is not None and not aborted
+                                and not (MEDIAN_BAND[0] <= med
+                                         <= MEDIAN_BAND[1])):
+                            aborted = True
+                            abort_reason = (f"running median {med:.3f} "
+                                            f"outside {MEDIAN_BAND} "
+                                            "(contract § 3.2)")
+                            queue.clear()
+            # The executor context drains dispatched workers; every drained
+            # row is recorded above before the report writes (audit M2).
+    finally:
+        ok = [r for r in rows if r["status"] == "ok"]
+        srt = sorted(ratios)
+        median = srt[len(srt) // 2] if srt else None
+        existing = (json.loads(args.report_out.read_text())
+                    if args.report_out.exists() else {"runs": []})
+        existing.setdefault(
+            "contract", "planning/e82-corpus-reemission-2026-08-20.md")
+        existing["census"] = census
+        existing["skips_no_recipe"] = skips
+        existing["runs"].append({
+            "pilot": args.pilot, "workers": args.workers,
+            "aborted": bool(aborted), "abort_reason": abort_reason,
+            "n_ok": len(ok), "n_failed": failures,
+            "n_frozen_vintage": sum(1 for r in ok
+                                    if r.get("attempt") == "frozen"),
+            "n_no_ci": sum(1 for r in ok if r.get("no_ci")),
+            "width_ratio_median": median, "rows": rows,
+        })
+        args.report_out.write_text(json.dumps(existing, indent=2) + "\n")
+        logger.info("ok %d / failed %d / frozen-vintage %d; report -> %s",
+                    len(ok), failures,
+                    sum(1 for r in ok if r.get("attempt") == "frozen"),
+                    args.report_out)
 
-    ratios = sorted(r["width_ratio"] for r in rows
-                    if r["status"] == "ok" and r.get("width_ratio"))
-    median = ratios[len(ratios) // 2] if ratios else None
-    ok = [r for r in rows if r["status"] == "ok"]
-    logger.info("ok %d / failed %d; width ratio min %.3f median %.3f max %.3f",
-                len(ok), failures,
-                ratios[0] if ratios else float("nan"),
-                median if median else float("nan"),
-                ratios[-1] if ratios else float("nan"))
-
-    existing = (json.loads(args.report_out.read_text())
-                if args.report_out.exists() else {"runs": []})
-    existing.setdefault("contract",
-                        "planning/e82-corpus-reemission-2026-08-20.md")
-    existing["runs"].append({
-        "pilot": args.pilot, "workers": args.workers, "aborted": aborted,
-        "n_ok": len(ok), "n_failed": failures,
-        "width_ratio_median": median, "rows": rows,
-    })
-    args.report_out.write_text(json.dumps(existing, indent=2) + "\n")
-    logger.info("report -> %s", args.report_out)
-
-    if aborted or failures > MAX_FAILURES:
+    if aborted:
+        logger.error("ABORTED: %s", abort_reason)
         return 1
-    if median is not None and not (MEDIAN_BAND[0] <= median <= MEDIAN_BAND[1]):
+    if (args.pilot is None and median is not None
+            and not (MEDIAN_BAND[0] <= median <= MEDIAN_BAND[1])):
         logger.error("median width ratio %.3f outside %s (contract § 3.2)",
                      median, MEDIAN_BAND)
         return 2
