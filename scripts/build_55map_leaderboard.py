@@ -45,7 +45,7 @@ sys.path.insert(0, str(BASE_DIR / "scripts"))
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
     ATTRIBUTION_RESOLUTION_NOTE,
-    PAIRED_CI_NOTE,
+    PAIRED_CI_NOTE_PERCENTILE,
     STANDARDISED_ATTRIBUTION_NOTE,
     build_extended_gt,
     load_standardised_extension,
@@ -171,7 +171,12 @@ def render_md(payload: dict) -> str:
         md.append(f"| {i} | {c['name']} | {tier_of[c['name']]} | {c['f1_50']:.4f} "
                   f"| [{c['ci'][0]:.4f}, {c['ci'][1]:.4f}] | {c['precision_50']:.4f} "
                   f"| {c['recall_50']:.4f} | {mcc} | {c['n_detections']} |")
-    md += ["", "## Reading this board", "", PAIRED_CI_NOTE, "", ref_note]
+    # D36: this board's per-cell intervals are the committed evaluations'
+    # ``f1_ci_lower`` / ``f1_ci_upper``, which the Track-2 adapters computed
+    # by the percentile bootstrap and record as ``"f1_ci_method":
+    # "percentile"``. The shared note used to call them BCa.
+    md += ["", "## Reading this board", "", PAIRED_CI_NOTE_PERCENTILE, "",
+           ref_note]
     return "\n".join(md)
 
 

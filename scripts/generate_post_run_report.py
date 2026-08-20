@@ -700,6 +700,11 @@ def _metrics_from_eval(summary: dict, bootstrap: dict | None = None) -> dict:
     they had run at the project standard. ``None`` is emitted when the source does
     not declare a value, because an absent parameter is not evidence of a standard
     one.
+
+    The CI ``method`` follows the same rule since defect D36: copied from the
+    source's ``f1_ci_method`` where present, omitted where absent (it used to
+    default to ``"BCa"``, asserting the project standard on 308 per-buffer cells
+    from 22 method-silent conditions).
     """
     bootstrap = bootstrap or {}
     n_iter = bootstrap.get("n_iterations")
@@ -712,8 +717,14 @@ def _metrics_from_eval(summary: dict, bootstrap: dict | None = None) -> dict:
             ci = {
                 "low": b["f1_ci_lower"],
                 "high": b["f1_ci_upper"],
-                "method": b.get("f1_ci_method", "BCa"),
             }
+            # Defect D36: the method is copied where the source declares one and
+            # OMITTED where it does not. The old ``"BCa"`` default published a
+            # method claim on 308 per-buffer cells (22 conditions) whose source
+            # evaluations record none — the same D17 principle as the bootstrap
+            # parameters below: an absent parameter is not evidence.
+            if b.get("f1_ci_method") is not None:
+                ci["method"] = b["f1_ci_method"]
             # Emit a bootstrap parameter only where the source evaluation records
             # one. An absent key reads as "not declared by the source", which is
             # the truth; filling it with the project standard is what D17 was.

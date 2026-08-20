@@ -163,13 +163,47 @@ duplicates deflate F1 ≈ −0.03 and absent joint student+model misses
 inflate it ≈ +0.011–0.012 (net ≈ −0.017, rank-preserving to first
 order) — see the reference README and Obs 396."""
 
-PAIRED_CI_NOTE = """\
+def paired_ci_note(ci_method: str) -> str:
+    """Render the CI-vs-significance note for a board, naming its CI method.
+
+    Defect D36 (Session 137 audit, finding F12): this note was a single
+    constant asserting "BCa" and was shared by four committed boards. It
+    is true of the two MCC boards, whose intervals the Track-2 scoring
+    engine computes by the bias-corrected and accelerated (BCa) method,
+    and false of the two 55-map F1 boards, whose per-cell intervals come
+    from the plain percentile bootstrap in :func:`pct_ci` — as the
+    adapters themselves record (``"f1_ci_method": "percentile"``).
+
+    Args:
+        ci_method: The method that actually produced the board's per-cell
+            intervals, rendered verbatim into the sentence — ``"BCa"`` or
+            ``"percentile"``.
+
+    Returns:
+        The note as a markdown paragraph (no trailing newline).
+
+    Examples:
+        >>> paired_ci_note("percentile").splitlines()[1]
+        'are *marginal* per-cell percentile bootstrap intervals; the significance tests are'
+    """
+    return f"""\
 **Confidence intervals vs significance.** The 95% intervals in the board table
-are *marginal* per-cell BCa bootstrap intervals; the significance tests are
+are *marginal* per-cell {ci_method} bootstrap intervals; the significance tests are
 *paired* tile-swap permutations over the same tiles. Overlapping intervals are
 therefore consistent with a significant paired difference — the paired test
 removes between-tile variance that the marginal intervals retain. Read the
 BH-adjusted pairwise table below, not interval overlap, for significance."""
+
+
+#: For boards whose intervals the Track-2 engine computed by BCa — the two
+#: 55-map MCC boards (``mcc_tiering_55map.py``), where the assertion is true.
+PAIRED_CI_NOTE = paired_ci_note("BCa")
+
+#: For boards whose per-cell intervals come from the percentile bootstrap —
+#: the two 55-map F1 boards (``build_55map_leaderboard.py``), which read
+#: ``f1_ci_lower`` / ``f1_ci_upper`` from adapter-written evaluations whose
+#: own ``f1_ci_method`` is ``"percentile"``.
+PAIRED_CI_NOTE_PERCENTILE = paired_ci_note("percentile")
 
 
 @dataclass(frozen=True)

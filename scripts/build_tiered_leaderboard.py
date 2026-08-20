@@ -162,8 +162,8 @@ def _fmt_metric(val: float | None, digits: int = 3) -> str:
         ``None``. A genuine zero still renders as ``'0.000'``.
 
     Examples:
-        >>> _fmt_metric(0.0665)
-        '0.066'
+        >>> _fmt_metric(0.0665)  # nearest double is above the halfway point
+        '0.067'
         >>> _fmt_metric(0.0)
         '0.000'
         >>> _fmt_metric(None)
@@ -208,8 +208,10 @@ class SelectedCondition:
     evaluations: dict  # buffer_metres -> evaluation result dict
     condition_id: str = ""
     # Tile-level MCC (buffer-invariant in this codebase). Populated
-    # from the evaluation result's ``tile_classification.mcc.mean``
-    # field by ``select_best_thresholds()`` when MCC was computed.
+    # from the evaluation result's ``tile_classification.mcc.point``
+    # field — the OBSERVED statistic, not the bootstrap resample mean
+    # this used to read (defect D30) — by ``select_best_thresholds()``
+    # when MCC was computed.
     # ``None`` means *undefined*: either MCC was not computed for this
     # condition, or the 2 x 2 tile confusion matrix is degenerate so
     # the coefficient has no value (erratum E81). The default is
@@ -217,6 +219,48 @@ class SelectedCondition:
     # "random" (§ 4.2 of the preregistration), so defaulting to it
     # would publish a chance-level measurement that was never made.
     tile_mcc: float | None = None
+
+
+def lift_tile_mcc(evaluation: dict) -> float | None:
+    """Read the OBSERVED tile-level MCC out of one evaluation result.
+
+    Defect D30 (Session 137 audit, finding F6): this lift used to take
+    ``tile_classification.mcc.mean`` — the mean of the bootstrap resample
+    distribution — and :func:`get_condition_score` RANKS the MCC boards on
+    the value it returns, so the boards were ordered by a resample
+    artefact rather than by the statistic their header names. Re-ranking
+    the committed ``combined/era1`` MCC board on the observed value moves
+    18 of 86 positions, including a rank-4/5 swap.
+
+    Erratum E81: the value may be present and ``None`` (undefined MCC —
+    degenerate tile confusion matrix), and it may be absent (MCC not
+    computed). Both map to ``None``; neither maps to ``0.0``, which on
+    this scale means "random".
+
+    Args:
+        evaluation: One evaluation result dict (the shape written into
+            ``evaluation.json`` under ``summary``).
+
+    Returns:
+        The observed MCC as a float, or ``None`` when it is undefined or
+        absent. ``mean`` is consulted ONLY for blocks that predate the
+        ``point`` key.
+
+    Examples:
+        >>> lift_tile_mcc({"tile_classification":
+        ...                {"mcc": {"point": 0.61, "mean": 0.60}}})
+        0.61
+        >>> lift_tile_mcc({"tile_classification": {"mcc": {"mean": 0.60}}})
+        0.6
+        >>> lift_tile_mcc({}) is None
+        True
+    """
+    block = (evaluation.get("tile_classification") or {}).get("mcc", {})
+    if isinstance(block, dict):
+        value = block["point"] if "point" in block else block.get("mean")
+    else:
+        value = block
+    return None if value is None else float(value)
 
 
 def get_condition_score(
@@ -925,16 +969,7 @@ def select_best_thresholds(
 
         # Extract tile-level MCC if available (populated when
         # _evaluate_single_threshold ran with compute_mcc=True).
-        # Erratum E81: ``mean`` may be present and ``None`` (undefined
-        # MCC — degenerate tile confusion matrix), and it may be
-        # absent (MCC not computed). Both map to ``None``; neither
-        # maps to 0.0.
-        mcc_mean = (
-            best_eval.get("tile_classification", {})
-            .get("mcc", {})
-            .get("mean")
-        )
-        tile_mcc = None if mcc_mean is None else float(mcc_mean)
+        tile_mcc = lift_tile_mcc(best_eval)
 
         # Find the GeoJSON path for the best threshold
         try:

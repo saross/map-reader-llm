@@ -68,16 +68,20 @@
     },
     "confidenceInterval": {
       "type": "object",
-      "description": "A bootstrap confidence interval. Project standard: BCa via scipy.stats.bootstrap, tile-level resampling, seed 42, 1000 or 10000 iterations.",
+      "description": "A bootstrap confidence interval. Project standard: BCa via scipy.stats.bootstrap, tile-level resampling, seed 42, 1000 or 10000 iterations. Every parameter is OPTIONAL and is emitted only where the source evaluation records it: an absent key means the source did not declare the parameter, which is not evidence that the standard one was used (defects D17, D36).",
       "properties": {
         "low": { "type": "number" },
         "high": { "type": "number" },
-        "method": { "type": "string", "enum": ["BCa", "percentile"], "default": "BCa" },
+        "method": {
+          "type": "string",
+          "enum": ["BCa", "percentile", "percentile_fallback"],
+          "description": "The method that produced THIS interval, copied from the source evaluation's per-metric method field. Omitted when the source records none — before defect D36 was fixed the generator defaulted the key to 'BCa', which asserted the project standard on 308 per-buffer cells (22 conditions) whose sources were silent. 'percentile_fallback' is what the BCa helper reports when the acceleration is undefined for a metric."
+        },
         "n_iter": { "type": "integer", "enum": [1000, 10000] },
         "seed": { "type": "integer", "default": 42 },
         "resampling": { "type": "string", "enum": ["tile-level", "detection-level"], "default": "tile-level" }
       },
-      "required": ["low", "high", "method"],
+      "required": ["low", "high"],
       "additionalProperties": false
     }
   }

@@ -513,12 +513,19 @@ def test_batch_summary_renders_undefined_without_crashing(
         line for line in markdown.splitlines() if "defined-cell" in line
         and "undefined-cell" not in line
     )
-    assert "0.081" in defined_row
+    # Defect D30: the MCC column carries the OBSERVED statistic (0.0665,
+    # rendered at 3 d.p.), not the bootstrap resample mean (0.081) this
+    # assertion used to expect.
+    assert "0.067" in defined_row
+    assert "0.081" not in defined_row
 
     with open(tmp_path / "batch_summary.csv", encoding="utf-8") as handle:
         rows = {r["label"]: r for r in csv.DictReader(handle)}
     assert rows["undefined-cell"]["mcc"] == ""
-    assert rows["defined-cell"]["mcc"] == "0.081"
+    assert rows["defined-cell"]["mcc"] == "0.0665"
+    # The resample mean is not lost — it moves to its own column (D30).
+    assert rows["defined-cell"]["mcc_boot_mean"] == "0.081"
+    assert rows["undefined-cell"]["mcc_boot_mean"] == ""
 
 
 # =========================================================================

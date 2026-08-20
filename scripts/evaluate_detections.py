@@ -108,6 +108,51 @@ def _worst_coverage_status(statuses: list[str]) -> str:
 UNDEFINED_DISPLAY = "undefined"
 
 
+def _observed_metric(block: Any) -> float | None:
+    """Return the OBSERVED tile statistic from a ``tile_classification`` block.
+
+    Defect D30 (Session 137 audit, finding F6): the CSV and Markdown
+    writers used to publish ``block["mean"]`` — the mean of the bootstrap
+    resample distribution — under the bare names ``mcc`` /
+    ``sensitivity`` / ``specificity``. Those names denote the statistic
+    computed on the observed tile confusion matrix, which the block keeps
+    separately as ``point``. The two differ in the third or fourth
+    decimal place (the corpus maximum measured on 2026-08-20 was 0.0151),
+    so the published column was a different quantity from the one its
+    header named.
+
+    Args:
+        block: One metric block of a ``tile_classification`` dict, i.e.
+            ``{"point": …, "mean": …, "ci_lower": …, …}``. A bare float
+            (a legacy adapter shape) and ``None`` are tolerated.
+
+    Returns:
+        The observed statistic, or ``None`` when it is undefined
+        (degenerate tile confusion matrix — errata E81). ``mean`` is used
+        ONLY when the block carries no ``point`` key at all, which marks a
+        pre-``point`` in-memory shape; a ``point`` that is present and
+        ``None`` is an undefined measurement and is returned as ``None``,
+        never silently replaced by the resample mean.
+
+    Examples:
+        >>> _observed_metric({"point": 0.6924, "mean": 0.6925})
+        0.6924
+        >>> _observed_metric({"point": None, "mean": 0.31}) is None
+        True
+        >>> _observed_metric({"mean": 0.6925})
+        0.6925
+    """
+    if block is None:
+        return None
+    if isinstance(block, (int, float)):
+        return float(block)
+    if not isinstance(block, dict):
+        return None
+    if "point" in block:
+        return block["point"]
+    return block.get("mean")
+
+
 def _csv_metric(val: float | None) -> float | str:
     """Render a possibly-undefined metric for a CSV cell.
 
@@ -211,7 +256,9 @@ def build_tile_classification_block(
             "mean": _safe_round(ci["mean"]),
             "ci_lower": _safe_round(ci["ci_lower"]),
             "ci_upper": _safe_round(ci["ci_upper"]),
-            "method": ci.get("method", "BCa"),
+            # D36: measured, never defaulted — see the buffer-row comment
+            # in :func:`evaluate_single_run`.
+            "method": ci.get("method"),
         }
     return block
 
@@ -522,8 +569,13 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
         # ``metadata_version``: 1.1 (2026-04-29) added BCa + the Mitigation 3
         # sparse-coverage flag; 1.2 (2026-05-31) added the ``spatial`` block recording
         # the evaluation CRS explicitly (after the missing-crs F1=0 bug). Downstream
-        # consumers should treat 1.0 outputs as percentile-method and 1.1+ as BCa.
-        "metadata_version": "1.2",
+        # consumers should treat 1.0 outputs as percentile-method and 1.1+ as
+        # BCa-requested. 1.3 (2026-08-20, defect D36) split the single
+        # ``bootstrap.method`` literal into ``method_requested`` (what the code
+        # asked for) and a ``method`` derived from what the run actually
+        # measured — the literal was contradicted by 162 per-metric ``method``
+        # values inside 58 committed files.
+        "metadata_version": "1.3",
         "script_path": _SCRIPT_RELATIVE_PATH,
         "script_git_commit": _git_short_hash(PROJECT_ROOT),
         "script_git_status": _git_status(PROJECT_ROOT),
@@ -533,10 +585,14 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
             "n_iterations": int(getattr(args, "bootstrap", DEFAULT_BOOTSTRAP)),
             "seed": int(getattr(args, "seed", DEFAULT_SEED)),
             "resampling_unit": "tile_level",
-            # Bootstrap method recorded so that downstream consumers can
-            # distinguish BCa-from-1.1 outputs from the legacy percentile
-            # outputs without having to read the script source.
-            "method": "BCa",
+            # D36: what the code ASKS the CI helper for. The helper falls
+            # back to the percentile method per metric whenever the BCa
+            # acceleration is undefined, so this is an intent, not an
+            # observation — the observed ``method`` key is added by
+            # :func:`write_outputs`, which can see what was measured.
+            # Downstream consumers that need the method of a specific
+            # interval should read the per-metric ``*_ci_method`` fields.
+            "method_requested": "BCa",
             "library": "scipy.stats.bootstrap",
         },
         "input_files": {
@@ -782,17 +838,21 @@ def evaluate_single_run(
             "f1_point": round(f1, 4),  # Same as ``f1`` — alias for clarity
             "f1_ci_lower": round(ci["f1"]["ci_lower"], 4),
             "f1_ci_upper": round(ci["f1"]["ci_upper"], 4),
-            "f1_ci_method": ci["f1"].get("method", "BCa"),
+            # D36: the measured method, or ``None`` when the CI helper did
+            # not report one. A ``"BCa"`` default here would assert a
+            # method nothing measured (the D17 principle: an absent
+            # parameter is not evidence of the standard one).
+            "f1_ci_method": ci["f1"].get("method"),
             "precision": round(precision, 4),
             "p_point": round(precision, 4),
             "p_ci_lower": round(ci["precision"]["ci_lower"], 4),
             "p_ci_upper": round(ci["precision"]["ci_upper"], 4),
-            "p_ci_method": ci["precision"].get("method", "BCa"),
+            "p_ci_method": ci["precision"].get("method"),
             "recall": round(recall, 4),
             "r_point": round(recall, 4),
             "r_ci_lower": round(ci["recall"]["ci_lower"], 4),
             "r_ci_upper": round(ci["recall"]["ci_upper"], 4),
-            "r_ci_method": ci["recall"].get("method", "BCa"),
+            "r_ci_method": ci["recall"].get("method"),
             "coverage": coverage,
             "coverage_status": coverage_status,
             "ci_unreliable": ci_unreliable,
@@ -1058,10 +1118,12 @@ def evaluate_multi_run_mean(
 
         mcc_block = avg_mcc.get("mcc", {})
         logger.info(
+            # D30: the observed statistic, averaged over the defined
+            # passes — not the mean of the bootstrap distributions.
             "  Mean MCC across %d/%d defined runs: %s [%s, %s]",
             mcc_block.get("n_runs_defined", len(mcc_results)),
             len(mcc_results),
-            _fmt_metric(mcc_block.get("mean")),
+            _fmt_metric(_observed_metric(mcc_block)),
             _fmt_metric(mcc_block.get("ci_lower")),
             _fmt_metric(mcc_block.get("ci_upper")),
         )
@@ -1070,6 +1132,92 @@ def evaluate_multi_run_mean(
 
 
 # ── Output ────────────────────────────────────────────────────────────
+
+def collect_ci_methods(
+    results: dict,
+    run_results: list[dict] | None = None,
+) -> set[str]:
+    """Census the CI methods a run actually measured.
+
+    Reads the per-metric ``method`` strings the CI helpers recorded:
+    ``f1_ci_method`` / ``p_ci_method`` / ``r_ci_method`` on every buffer
+    row, and ``method`` on every ``tile_classification`` metric block.
+    Values are whatever :func:`lib_advanced_metrics._bca_ci_from_indices`
+    reported — ``"BCa"``, ``"percentile_fallback"``, or ``"undefined"``.
+
+    Args:
+        results: The summary results dict.
+        run_results: Optional per-run results dicts (multi-run mode).
+
+    Returns:
+        The set of distinct measured method strings (empty when the run
+        recorded none).
+    """
+    methods: set[str] = set()
+    for block in [results, *(run_results or [])]:
+        if not isinstance(block, dict):
+            continue
+        for buf in block.get("buffers") or []:
+            if not isinstance(buf, dict):
+                continue
+            for key in ("f1_ci_method", "p_ci_method", "r_ci_method"):
+                value = buf.get(key)
+                if value is not None:
+                    methods.add(str(value))
+        tile = block.get("tile_classification") or {}
+        if isinstance(tile, dict):
+            for metric in ("mcc", "sensitivity", "specificity"):
+                metric_block = tile.get(metric)
+                if isinstance(metric_block, dict):
+                    value = metric_block.get("method")
+                    if value is not None:
+                        methods.add(str(value))
+    return methods
+
+
+def with_measured_bootstrap_method(
+    metadata: dict[str, Any],
+    results: dict,
+    run_results: list[dict] | None = None,
+) -> dict[str, Any]:
+    """Return a copy of ``metadata`` whose bootstrap method is measured.
+
+    Defect D36 (Session 137 audit, finding F12): ``_metadata.bootstrap``
+    carried the literal ``"method": "BCa"``, written before any interval
+    was computed. Across 58 committed files that literal is contradicted
+    by 162 per-metric ``method`` values (``percentile_fallback`` ×127,
+    ``undefined`` ×35) sitting in the same document. The intent now lives
+    in ``method_requested`` (written by :func:`_build_metadata`) and this
+    function adds the observation.
+
+    ``method`` becomes the single measured method when the run used only
+    one, ``"mixed"`` when several were used, and is omitted entirely when
+    the run measured none — an absent key is the honest record of "not
+    observed", which is what D17 taught. ``methods_measured`` lists the
+    census so a reader never has to trust the summary word.
+
+    The input dict is never mutated: in batch mode one metadata block is
+    shared by every condition, and each condition measures its own
+    methods.
+
+    Args:
+        metadata: The provenance block from :func:`_build_metadata`.
+        results: The summary results dict for THIS condition.
+        run_results: Optional per-run results dicts.
+
+    Returns:
+        A copy of ``metadata`` with its ``bootstrap`` sub-dict replaced.
+    """
+    methods = collect_ci_methods(results, run_results)
+    bootstrap = dict(metadata.get("bootstrap") or {})
+    bootstrap.pop("method", None)
+    if methods:
+        bootstrap["method"] = (
+            next(iter(methods)) if len(methods) == 1 else "mixed"
+        )
+        bootstrap["methods_measured"] = sorted(methods)
+    return {**metadata, "bootstrap": bootstrap}
+
 
 def write_outputs(
     results: dict,
@@ -1087,9 +1235,20 @@ def write_outputs(
             evaluation was generated (bootstrap config, git provenance,
             CLI args, input files). When provided, it is written as a
             top-level ``_metadata`` key in ``evaluation.json`` so the
-            JSON output is self-documenting.
+            JSON output is self-documenting. Its ``bootstrap.method`` is
+            replaced by what this condition actually measured (D36); the
+            caller's dict is left untouched.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    # D36: reconcile the requested bootstrap method with the measured one
+    # before the block is published. Done here rather than in
+    # ``_build_metadata`` because the methods are only known once the
+    # intervals have been computed.
+    if metadata is not None:
+        metadata = with_measured_bootstrap_method(
+            metadata, results, run_results,
+        )
 
     # JSON — key order preserves backward compatibility: existing
     # consumers that look up ``version`` / ``summary`` continue to work,
@@ -1139,6 +1298,12 @@ def write_outputs(
         fieldnames.extend([
             "mcc", "mcc_ci_lower", "mcc_ci_upper",
             "sensitivity", "specificity",
+            # D30: the resample means, published under their own names so
+            # the bootstrap-distribution centre stays available to any
+            # consumer that wants it. Appended after the historical five
+            # so existing column positions do not move.
+            "mcc_boot_mean", "sensitivity_boot_mean",
+            "specificity_boot_mean",
         ])
     if has_coverage:
         fieldnames.extend([
@@ -1165,12 +1330,18 @@ def write_outputs(
                 # rather than left to that default — a ``0`` in this
                 # column is a claim about the model, and only a measured
                 # zero may make it.
+                # D30: the bare names carry the OBSERVED statistic
+                # (``point``); the resample means ride alongside in the
+                # ``*_boot_mean`` columns.
                 row.update({
-                    "mcc": _csv_metric(mcc.get("mean")),
+                    "mcc": _csv_metric(_observed_metric(mcc)),
                     "mcc_ci_lower": _csv_metric(mcc.get("ci_lower")),
                     "mcc_ci_upper": _csv_metric(mcc.get("ci_upper")),
-                    "sensitivity": _csv_metric(sens.get("mean")),
-                    "specificity": _csv_metric(spec.get("mean")),
+                    "sensitivity": _csv_metric(_observed_metric(sens)),
+                    "specificity": _csv_metric(_observed_metric(spec)),
+                    "mcc_boot_mean": _csv_metric(mcc.get("mean")),
+                    "sensitivity_boot_mean": _csv_metric(sens.get("mean")),
+                    "specificity_boot_mean": _csv_metric(spec.get("mean")),
                 })
             if has_coverage:
                 cov = buf.get("coverage", {}) or {}
@@ -1256,11 +1427,16 @@ def write_outputs(
                     mcc_ci_cell = UNDEFINED_DISPLAY
                 else:
                     mcc_ci_cell = _ci(mcc_lo, mcc_hi, ci_unreliable)
+                # D30: the MCC / Sens / Spec columns carry the OBSERVED
+                # statistic. The resample mean is a bootstrap diagnostic
+                # and belongs in the CSV's ``*_boot_mean`` columns and
+                # the JSON, not under a column header that names the
+                # statistic itself.
                 mcc_cells = (
-                    f"| {_fmt_metric(mcc.get('mean'))} "
+                    f"| {_fmt_metric(_observed_metric(mcc))} "
                     f"| {mcc_ci_cell} "
-                    f"| {_fmt_metric(sens.get('mean'))} "
-                    f"| {_fmt_metric(spec.get('mean'))} "
+                    f"| {_fmt_metric(_observed_metric(sens))} "
+                    f"| {_fmt_metric(_observed_metric(spec))} "
                 )
                 f.write(row_body + mcc_cells + "|\n")
             else:
@@ -1467,12 +1643,17 @@ def write_batch_summary(
                 # E81: preserve ``None`` (undefined) all the way to the
                 # renderers — the batch summary must not be the place
                 # where an undefined MCC quietly becomes a zero.
+                # D30: the bare names carry the OBSERVED statistic; the
+                # resample means ride alongside under their own names.
                 row.update({
-                    "mcc": mcc.get("mean"),
+                    "mcc": _observed_metric(mcc),
                     "mcc_ci_lower": mcc.get("ci_lower"),
                     "mcc_ci_upper": mcc.get("ci_upper"),
-                    "sensitivity": sens.get("mean"),
-                    "specificity": spec.get("mean"),
+                    "sensitivity": _observed_metric(sens),
+                    "specificity": _observed_metric(spec),
+                    "mcc_boot_mean": mcc.get("mean"),
+                    "sensitivity_boot_mean": sens.get("mean"),
+                    "specificity_boot_mean": spec.get("mean"),
                 })
             flat_rows.append(row)
 
@@ -1491,6 +1672,10 @@ def write_batch_summary(
         fieldnames.extend([
             "mcc", "mcc_ci_lower", "mcc_ci_upper",
             "sensitivity", "specificity",
+            # D30, as in the per-condition CSV: the resample means keep
+            # their own columns, appended so existing positions hold.
+            "mcc_boot_mean", "sensitivity_boot_mean",
+            "specificity_boot_mean",
         ])
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)

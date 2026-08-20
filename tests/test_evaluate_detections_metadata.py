@@ -88,17 +88,19 @@ class TestBuildMetadataSchema:
         assert expected.issubset(meta.keys())
 
     def test_metadata_version_literal(self) -> None:
-        """Schema version is pinned at 1.1 for downstream consumers.
+        """Schema version is pinned for downstream consumers.
 
         Bumped 2026-04-29 with the introduction of the BCa bootstrap
         method and the Mitigation 3 sparse-coverage flag (commit
         ``feat(bootstrap): replace percentile method with BCa``).
         Downstream consumers should treat 1.0 outputs as percentile-method
-        and 1.1+ as BCa.
+        and 1.1+ as BCa-requested.
         """
         meta = _build_metadata(_make_args())
         # 1.2 (2026-05-31) added the ``spatial`` block recording the evaluation CRS.
-        assert meta["metadata_version"] == "1.2"
+        # 1.3 (2026-08-20, defect D36) split ``bootstrap.method`` into the
+        # requested method and a measured one added at write time.
+        assert meta["metadata_version"] == "1.3"
 
     def test_script_path_is_relative(self) -> None:
         """Script path is the stable repo-relative location."""
@@ -106,10 +108,16 @@ class TestBuildMetadataSchema:
         assert meta["script_path"] == "scripts/evaluate_detections.py"
 
     def test_bootstrap_block(self) -> None:
-        """Bootstrap block records iteration count, seed, unit, and method.
+        """Bootstrap block records iteration count, seed, unit, and intent.
 
-        Schema 1.1 adds ``method`` and ``library`` keys recording the
-        BCa upgrade from the legacy percentile method.
+        Schema 1.1 added ``method`` and ``library`` keys recording the
+        BCa upgrade from the legacy percentile method. Schema 1.3
+        (defect D36) renamed the literal to ``method_requested``: what
+        the code asks the CI helper for is an intent, and the helper
+        falls back to the percentile method per metric whenever the BCa
+        acceleration is undefined. The observed ``method`` is added by
+        ``write_outputs`` once the intervals exist, so it is deliberately
+        ABSENT here.
         """
         args = _make_args(bootstrap=500, seed=7)
         meta = _build_metadata(args)
@@ -117,9 +125,10 @@ class TestBuildMetadataSchema:
             "n_iterations": 500,
             "seed": 7,
             "resampling_unit": "tile_level",
-            "method": "BCa",
+            "method_requested": "BCa",
             "library": "scipy.stats.bootstrap",
         }
+        assert "method" not in meta["bootstrap"]
 
     def test_input_files_single_mode(self) -> None:
         """Single-mode detections are captured as a list of strings."""
