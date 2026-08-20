@@ -1,8 +1,8 @@
 # Selection-aware uncertainty: pilot on the tile-size × overlap grid
 
-> **Last revised**: 2026-08-19 (Hsu's constrained one-sided construction added
-> and compared against the provisional band; one earlier conclusion is corrected
-> below). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-20 (audit remediation: `n1-baseline-matrix-384`
+> re-tiered at the standard B = 10,000 — admissible set 3, not 4; overrides now
+> recorded in artefacts). See [§ Changelog](#changelog) for revision history.
 
 **Classification**: POST-HOC (E41-class), a methodological re-analysis of
 committed detections. Not a registered test.
@@ -257,6 +257,24 @@ Run on sapphire, $0 API. One JSON per cell under `results/selection-aware/`.
 - `results/grid-2026-08-18/findings.md` (the selection-free contrasts)
 
 ## Changelog
+
+### 2026-08-20 — Session 137 audit remediation: artefact re-emissions
+
+Trigger: the Session 137 audit (`reports/session-137-audit-report-2026-08-20.md`)
+and erratum E83's 2026-08-20 correction block. Instrument fixes
+(`scripts/selection_aware_intervals.py` now records `--ground-truth`/`--bounds`
+overrides in its output and threads `--buffer` through the `--evals` path) and
+re-emissions: `n1-baseline-matrix-384` was found to have been tiered at
+**B = 200** — at the standard B = 10,000 its admissible set is **3, not 4**
+(`w_upper` 0.0599 → 0.0571; the +0.0004 knife-edge cell is excluded at every
+seed tested); the supplementary `verifier-robustness-matrix` MCC artefact
+(B = 2,000) re-emitted at 10,000 with membership unchanged; all four 55-map
+artefacts re-emitted with their mandatory ground-truth overrides recorded,
+reproducing with zero change to any shared value; the two pre-Hsu m-out-of-n
+artefacts re-emitted at the current code vintage (band values identical, Hsu
+fields added, filenames now buffer-stamped) with the originals archived to
+`archive/superseded-selection-aware/`. No claim in this document changes; the
+m-out-of-n table below quotes the two-sided band, which is unchanged.
 
 ### 2026-08-19 (later) — Extended to five registered boards; D20 found
 
