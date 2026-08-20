@@ -1,7 +1,8 @@
 # Open methodological question: the MCB critical value
 
-> **Last revised**: 2026-08-19 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-20 (three factual corrections from the Session 137
+> audit; one board re-emitted at the standard bootstrap count; coverage-check
+> evidence added). See [§ Changelog](#changelog) for revision history.
 
 **Status: OPEN.** Recorded as defect **D24**. This is a self-contained brief for
 a statistician; it assumes no knowledge of the wider study.
@@ -30,7 +31,7 @@ table of the same tiles.
 |---|---|
 | Configurations *k* | 5 to 82 |
 | Tiles *n* | 327 to 8,541 |
-| Statistic | micro-F1 (10 boards) or tile MCC (4 boards) |
+| Statistic | micro-F1 (12 boards) or tile MCC (2 boards) |
 | Resampling unit | the tile, fixed by the study's pre-registration |
 
 Two features matter and both push against the textbook setting.
@@ -106,7 +107,7 @@ everywhere, as theory predicts, and the admissible set correspondingly tighter.
 | `era1-leaderboard` | F1 | 82 | 340 | 0.0582 | 0.0689 | 10 |
 | `era1-single-pass-baseline-matrix` | F1 | 36 | 340 | 0.0435 | 0.0608 | 15 |
 | `diversity-dividend-384` | F1 | 22 | 487 | 0.0523 | 0.0651 | 3 |
-| `n1-baseline-matrix-384` | F1 | 18 | 487 | 0.0599 | 0.0640 | 4 |
+| `n1-baseline-matrix-384` | F1 | 18 | 487 | 0.0571 | 0.0661 | 3 |
 | `min-vs-high-thinking-pv` | F1 | 7 | 487 | 0.0234 | 0.0292 | 5 |
 | `pass-budget-pareto-v2` | F1 | 7 | 487 | 0.0229 | 0.0285 | 6 |
 | `h12-v2-hp-hn-ratio` | F1 | 6 | 327 | 0.0415 | 0.0574 | 6 |
@@ -122,6 +123,20 @@ The two-sided band is strictly more conservative and brackets the Hsu result fro
 above, so if the bootstrap substitution turns out anti-conservative, the band
 gives a fallback that is wrong in the safe direction.
 
+**A first empirical read on questions 1 and 2** (2026-08-20, not a substitute
+for your review): an empirically calibrated Monte Carlo check — population =
+the empirical joint per-tile count distribution of a real board, truth = its
+full-data statistics, S = 400 simulated datasets of n tiles drawn iid, the
+procedure above run on each — finds the substitution **conservative** on the
+three boards tested: P(true best retained in the admissible set) = 0.995 ±
+0.007 (`h12-v2-hp-hn-ratio`), 1.000 (`era1-single-pass-baseline-matrix`), and
+1.000 (`era1-leaderboard`) against the nominal 0.95, robust to the inner
+bootstrap count (B = 1,000 and 10,000). The simultaneous two-bound statement
+sits at 0.983 / 0.930 ± 0.025 / 0.980. Being a within-model check under iid
+tile resampling, it cannot test the exchangeability assumption itself — which
+is much of why we still want your eyes on it. Design and results:
+`reports/session-137-audit-report-2026-08-20.md`, Part B.
+
 ## What is at stake
 
 The MCB set replaced a sequential greedy-clique tiering rule that was
@@ -133,8 +148,8 @@ do not turn on it — no registered hypothesis is stated in terms of tie-set
 membership. What turns on it is how wide the published "indistinguishable from
 best" sets are, which is a claim the paper makes fourteen times.
 
-Ten of the fourteen boards changed membership under MCB; four returned exactly
-what was published.
+Eight of the fourteen boards changed membership under MCB; six returned exactly
+the membership that was published.
 
 ## What we can provide
 
@@ -159,6 +174,23 @@ what was published.
   *JASA* 78, 965–971
 
 ## Changelog
+
+### 2026-08-20 — Audit corrections and coverage evidence
+
+Trigger: the Session 137 audit (`reports/session-137-audit-report-2026-08-20.md`,
+findings F1 and F8) and erratum E83's 2026-08-20 correction block.
+
+| Claim | Before | After |
+|---|---|---|
+| Statistic split across boards | micro-F1 (10) / MCC (4) | micro-F1 (12) / MCC (2) |
+| Boards changing membership | ten of fourteen | eight of fourteen |
+| `n1-baseline-matrix-384` row | `w_upper` 0.0599, two-sided 0.0640, admissible 4 (computed at B = 200) | `w_upper` 0.0571, two-sided 0.0661, admissible 3 (re-emitted at B = 10,000) |
+
+What did NOT change: every other table row, the construction, and the four
+questions. The B = 10,000 statement in § What we implemented is now true for
+all fourteen boards (it was false for one when written). Added: a Monte Carlo
+coverage read on questions 1–2 (conservative on three boards tested), clearly
+marked as not a substitute for external review.
 
 ### 2026-08-19 — Original publication
 

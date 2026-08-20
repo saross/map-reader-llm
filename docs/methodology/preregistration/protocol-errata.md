@@ -4873,4 +4873,57 @@ published boards remain reproducible as published.
 - Reporting policy: `docs/methodology/inference-instrument-policy.md`
 - Method: Hsu (1984), *Annals of Statistics* 12(3); Edwards & Hsu (1983)
 
+**Correction (2026-08-20) — one revised tie set was computed at a non-standard
+bootstrap count and shrinks from 4 to 3 members at the standard count; counting
+clarifications; reproducibility metadata added.** Found by the Session 137 audit
+(`reports/session-137-audit-report-2026-08-20.md`, findings F1 and F7–F9).
+
+1. **`n1-baseline-matrix-384` is 3 members, not 4.** The 2026-08-19 re-tiering
+   of this board ran at **B = 200** bootstrap resamples — every other board ran
+   at the E82-standard 10,000 — and its fourth member,
+   `pv-diag-384::baseline-pro-text-high-t-0-7`, cleared admissibility by
+   +0.0004 on a critical value that was the 190th of 200 order statistics.
+   Re-emitted at B = 10,000 the admissible set is
+   `{n1-pro-rerun-384::baseline-pro-text-high-t-0-0,
+   n1-pro-rerun-384::baseline-pro-text-medium-t-0-7,
+   pv-diag-384::baseline-pro-text-medium-t-0-0}` — **3 members**, stable across
+   three seeds (`w_upper` 0.0599 → 0.0571); the knife-edge cell is excluded at
+   every seed. The register row's `tie_set` now carries the 3-member set, with
+   an inline correction note. Note the corrected set still spans both
+   temperatures, so the row's original "T = 0.0 beats T = 0.7 (Tier 1 vs
+   Tier 2)" reading survives only as a point-estimate ordering plus the single
+   exclusion, and is marked accordingly. The table above retains the as-filed
+   "2 → 4" for the record; the correct revision is **2 → 3**.
+2. **The supplementary `verifier-robustness-matrix` tile-MCC artefact ran at
+   B = 2,000**; re-emitted at 10,000, its admissible set is unchanged (5 of 6,
+   identical membership). No register field depends on it.
+3. **Counting, reconciled.** Across the fourteen boards, **eight changed
+   membership** (`era1-leaderboard` 1→10; `era1-single-pass-baseline-matrix`
+   20→15; `h12-v2-hp-hn-ratio` 3→6; `pass-budget-pareto` 5→3;
+   `pass-budget-pareto-v2` 7→6; `min-vs-high-thinking-pv` 6→5;
+   `flash35-model-roles` 2→3; `n1-baseline-matrix-384` 2→3 after item 1) and
+   **six returned member-identical sets** (`verifier-robustness-matrix` 5→5,
+   `diversity-dividend-384` 3→3, and the four 55-map boards). This entry's
+   header ("eight boards' tie sets revised") reflects the first landing wave;
+   the body's "ten revised" counts boards re-tiered under the new instrument,
+   including two whose membership did not change. Derived summaries stating
+   that "ten of fourteen" tie sets were wrong or changed are incorrect; the
+   Impact field's "eight of fourteen" is the accurate count.
+4. **Reproducibility metadata.** The four 55-map artefacts (and all future
+   `--board` runs) now record the mandatory `--ground-truth` override that
+   loading an adapter-written board requires — canonical boards:
+   `inputs/vectors/references/canonical-gt-55maps-r50.geojson`; standardised
+   boards: `inputs/vectors/references/best-available-gt-55maps.geojson`. All
+   four were re-emitted and reproduce with **zero change to any shared value**
+   (same seed and resample stream), confirming the identification. Inline
+   `[REVISED … erratum E83]` markers were added to the five register outcomes
+   whose body prose contradicted their revised tie sets, matching the E81
+   marker precedent.
+5. **Coverage evidence for D24.** An empirically calibrated Monte Carlo
+   coverage check (audit report, Part B) finds the bootstrap critical value
+   **conservative** on the three boards tested — the true best is retained in
+   the admissible set with probability 0.995–1.000 against the nominal 0.95 —
+   robust to the inner bootstrap count. This is a within-model check and does
+   not close D24, which remains open pending external statistical review.
+
 ---
