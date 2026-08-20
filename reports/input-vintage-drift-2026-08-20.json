@@ -1,0 +1,3633 @@
+{
+  "defect": "D40",
+  "generated": "2026-08-20",
+  "description": "Worklist cells whose recipe inputs carry a commit LATER than the evaluation's own generated_at_utc \u2014 the input-vintage drift surfaced by the E82 pre-launch audit (finding B1). A listed cell is not necessarily wrong: the E82 campaign's vintage-frozen fallback preserves its points; this list is the population for any future reference-vintage decision.",
+  "n_worklist": 1655,
+  "n_drifted": 324,
+  "cells": [
+    {
+      "evaluation": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+      "scored_at": "2026-05-03T02:42:58.458072+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+          "last_commit": "8699f456b",
+          "committed_at": "2026-05-03T02:45:24+00:00"
+        },
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/55maps-image-generalisation/extended-buffer-eval/evaluation.json",
+      "scored_at": "2026-05-03T02:43:03.261343+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+          "last_commit": "8699f456b",
+          "committed_at": "2026-05-03T02:45:24+00:00"
+        },
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json",
+      "scored_at": "2026-05-03T02:43:01.017157+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+          "last_commit": "8699f456b",
+          "committed_at": "2026-05-03T02:45:24+00:00"
+        },
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/55maps-text-high-generalisation/evaluation/evaluation.json",
+      "scored_at": "2026-05-03T00:39:14.117035+00:00",
+      "stale_inputs": [
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json",
+      "scored_at": "2026-05-03T00:41:31.048947+00:00",
+      "stale_inputs": [
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json",
+      "scored_at": "2026-05-03T00:40:19.429921+00:00",
+      "stale_inputs": [
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/55maps-text-min-generalisation/evaluation/evaluation.json",
+      "scored_at": "2026-05-03T02:03:51.608388+00:00",
+      "stale_inputs": [
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json",
+      "scored_at": "2026-05-03T02:08:00.143620+00:00",
+      "stale_inputs": [
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json",
+      "scored_at": "2026-05-03T02:05:25.849307+00:00",
+      "stale_inputs": [
+        {
+          "input": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+          "last_commit": "2e075eb99",
+          "committed_at": "2026-05-03T15:28:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/256-consensus-text-5of5/eval_t0.1/evaluation.json",
+      "scored_at": "2026-06-08T11:47:53.192088+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/256-consensus-text-5of5/pass_1/accepted_t0.1.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/256-consensus-text-5of5/eval_t0.15/evaluation.json",
+      "scored_at": "2026-06-08T11:48:07.959670+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/256-consensus-text-5of5/pass_1/accepted_t0.15.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/256-consensus-text-5of5/eval_t0.2/evaluation.json",
+      "scored_at": "2026-06-08T11:48:21.097611+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/256-consensus-text-5of5/pass_1/accepted_t0.2.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/256-consensus-text-5of5/eval_t0.3/evaluation.json",
+      "scored_at": "2026-06-08T11:48:34.208774+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/256-consensus-text-5of5/pass_1/accepted_t0.3.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/256-consensus-text-5of5/eval_t0.5/evaluation.json",
+      "scored_at": "2026-06-08T11:48:46.939328+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/256-consensus-text-5of5/pass_1/accepted_t0.5.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.1/evaluation.json",
+      "scored_at": "2026-06-09T01:27:29.366467+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.1.geojson",
+          "last_commit": "48b56fdd6",
+          "committed_at": "2026-06-09T11:32:45+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.15/evaluation.json",
+      "scored_at": "2026-06-09T01:27:43.400187+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.15.geojson",
+          "last_commit": "48b56fdd6",
+          "committed_at": "2026-06-09T11:32:45+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+      "scored_at": "2026-06-09T01:27:56.365137+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson",
+          "last_commit": "48b56fdd6",
+          "committed_at": "2026-06-09T11:32:45+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.3/evaluation.json",
+      "scored_at": "2026-06-09T01:28:09.244920+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.3.geojson",
+          "last_commit": "48b56fdd6",
+          "committed_at": "2026-06-09T11:32:45+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.5/evaluation.json",
+      "scored_at": "2026-06-09T01:28:21.513045+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.5.geojson",
+          "last_commit": "48b56fdd6",
+          "committed_at": "2026-06-09T11:32:45+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-image/eval_t0.1/evaluation.json",
+      "scored_at": "2026-06-08T11:50:09.145741+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-image/pass_1/accepted_t0.1.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-image/eval_t0.15/evaluation.json",
+      "scored_at": "2026-06-08T11:50:25.392201+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-image/pass_1/accepted_t0.15.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-image/eval_t0.2/evaluation.json",
+      "scored_at": "2026-06-08T11:50:40.579488+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-image/pass_1/accepted_t0.2.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-image/eval_t0.3/evaluation.json",
+      "scored_at": "2026-06-08T11:50:55.585225+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-image/pass_1/accepted_t0.3.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-image/eval_t0.5/evaluation.json",
+      "scored_at": "2026-06-08T11:51:10.343037+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-image/pass_1/accepted_t0.5.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-text-high/eval_t0.1/evaluation.json",
+      "scored_at": "2026-06-08T11:48:59.225945+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-text-high/pass_1/accepted_t0.1.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-text-high/eval_t0.15/evaluation.json",
+      "scored_at": "2026-06-08T11:49:14.064077+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-text-high/pass_1/accepted_t0.15.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-text-high/eval_t0.2/evaluation.json",
+      "scored_at": "2026-06-08T11:49:28.238068+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-text-high/pass_1/accepted_t0.2.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-text-high/eval_t0.3/evaluation.json",
+      "scored_at": "2026-06-08T11:49:42.207375+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-text-high/pass_1/accepted_t0.3.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-consensus-text-high/eval_t0.5/evaluation.json",
+      "scored_at": "2026-06-08T11:49:55.748089+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-consensus-text-high/pass_1/accepted_t0.5.geojson",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-image-t0.0/eval_t0.1/evaluation.json",
+      "scored_at": "2026-06-08T11:55:55.968227+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.1_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-image-t0.0/eval_t0.15/evaluation.json",
+      "scored_at": "2026-06-08T11:56:57.209066+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-image-t0.0/eval_t0.2/evaluation.json",
+      "scored_at": "2026-06-08T11:57:54.187888+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.2_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-image-t0.0/eval_t0.3/evaluation.json",
+      "scored_at": "2026-06-08T11:58:50.453790+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.3_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-image-t0.0/eval_t0.5/evaluation.json",
+      "scored_at": "2026-06-08T11:59:43.473092+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.5_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-text-t0.0/eval_t0.1/evaluation.json",
+      "scored_at": "2026-06-08T11:51:25.315632+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.1_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-text-t0.0/eval_t0.15/evaluation.json",
+      "scored_at": "2026-06-08T11:52:24.439905+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.15_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-text-t0.0/eval_t0.2/evaluation.json",
+      "scored_at": "2026-06-08T11:53:19.547191+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-text-t0.0/eval_t0.3/evaluation.json",
+      "scored_at": "2026-06-08T11:54:13.560861+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.3_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "outputs/era1-pv-stage-d/512-single-text-t0.0/eval_t0.5/evaluation.json",
+      "scored_at": "2026-06-08T11:55:04.878691+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.5_passes",
+          "last_commit": "7d6c46672",
+          "committed_at": "2026-06-08T22:01:51+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t1/evaluation.json",
+      "scored_at": "2026-06-06T13:54:18.131952+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/postverif_t1.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t2/evaluation.json",
+      "scored_at": "2026-06-06T13:54:22.515354+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/postverif_t2.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t3/evaluation.json",
+      "scored_at": "2026-06-06T13:54:23.283205+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/postverif_t3.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t4/evaluation.json",
+      "scored_at": "2026-06-06T13:54:23.533836+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/postverif_t4.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t5/evaluation.json",
+      "scored_at": "2026-06-06T13:54:23.770058+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/postverif_t5.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t1/evaluation.json",
+      "scored_at": "2026-06-06T13:54:18.306892+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/postverif_t1.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t2/evaluation.json",
+      "scored_at": "2026-06-06T13:54:18.279731+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/postverif_t2.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t3/evaluation.json",
+      "scored_at": "2026-06-06T13:54:18.261786+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/postverif_t3.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t4/evaluation.json",
+      "scored_at": "2026-06-06T13:54:18.139735+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/postverif_t4.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t5/evaluation.json",
+      "scored_at": "2026-06-06T13:54:18.348114+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/postverif_t5.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/t1/evaluation.json",
+      "scored_at": "2026-06-06T13:54:24.076294+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/postverif_t1.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/t2/evaluation.json",
+      "scored_at": "2026-06-06T13:54:24.388873+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/postverif_t2.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/t3/evaluation.json",
+      "scored_at": "2026-06-06T13:54:28.173313+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/postverif_t3.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/t4/evaluation.json",
+      "scored_at": "2026-06-06T13:54:28.267952+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/postverif_t4.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/t5/evaluation.json",
+      "scored_at": "2026-06-06T13:54:28.600698+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/min-t0.7/postverif_t5.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-image-generalisation/t4/evaluation.json",
+      "scored_at": "2026-06-06T01:40:52.596547+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-image-generalisation/t4/filtered.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-image-generalisation/t5/evaluation.json",
+      "scored_at": "2026-06-06T01:40:52.591146+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-image-generalisation/t5/filtered.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-text-high-generalisation/t5/evaluation.json",
+      "scored_at": "2026-06-06T01:40:52.596112+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-text-high-generalisation/t5/filtered.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-text-high-t0.3-generalisation/t5/evaluation.json",
+      "scored_at": "2026-06-06T01:40:52.630157+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-text-high-t0.3-generalisation/t5/filtered.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-text-min-generalisation/t5/evaluation.json",
+      "scored_at": "2026-06-06T01:40:52.626838+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/deployment-oracle-2026-06-06/postverifier-eval/55maps-text-min-generalisation/t5/filtered.geojson",
+          "last_commit": "0aa689355",
+          "committed_at": "2026-06-06T14:24:55+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/grid-2026-08-18/conditions/g384_ov048/eval/evaluation.json",
+      "scored_at": "2026-08-19T01:46:12.450629+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/grid-2026-08-18/conditions/g384_ov048/detections.geojson",
+          "last_commit": "01f0932a1",
+          "committed_at": "2026-08-19T12:16:43+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/grid-2026-08-18/conditions/g384_ov192/eval/evaluation.json",
+      "scored_at": "2026-08-19T01:46:15.147600+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/grid-2026-08-18/conditions/g384_ov192/detections.geojson",
+          "last_commit": "01f0932a1",
+          "committed_at": "2026-08-19T12:16:43+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/grid-2026-08-18/conditions/g512_ov064/eval/evaluation.json",
+      "scored_at": "2026-08-19T01:46:07.286459+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/grid-2026-08-18/conditions/g512_ov064/detections.geojson",
+          "last_commit": "01f0932a1",
+          "committed_at": "2026-08-19T12:16:43+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/grid-2026-08-18/conditions/g512_ov256/eval/evaluation.json",
+      "scored_at": "2026-08-19T01:46:09.854129+00:00",
+      "stale_inputs": [
+        {
+          "input": "results/grid-2026-08-18/conditions/g512_ov256/detections.geojson",
+          "last_commit": "01f0932a1",
+          "committed_at": "2026-08-19T12:16:43+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h12-v2/wbf-mcc/r1-hn-heavy/evaluation.json",
+      "scored_at": "2026-06-04T04:40:02.186049+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h12-v2/wbf/r1-hn-heavy/wbf_vote4.geojson",
+          "last_commit": "cee75dcb4",
+          "committed_at": "2026-06-04T14:41:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h12-v2/wbf-mcc/r2-balanced/evaluation.json",
+      "scored_at": "2026-06-04T04:40:03.945062+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h12-v2/wbf/r2-balanced/wbf_vote4.geojson",
+          "last_commit": "cee75dcb4",
+          "committed_at": "2026-06-04T14:41:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h12-v2/wbf-mcc/r3-hp-heavy/evaluation.json",
+      "scored_at": "2026-06-04T04:40:05.689498+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h12-v2/wbf/r3-hp-heavy/wbf_vote4.geojson",
+          "last_commit": "cee75dcb4",
+          "committed_at": "2026-06-04T14:41:57+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h13-overlap-2026-08-18/native/armA/evaluation.json",
+      "scored_at": "2026-08-18T00:36:11.784003+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h13/scoring/native/armA/run_1/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/native/armA/run_2/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/native/armA/run_3/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/bounds/h13_armA_bounds.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h13-overlap-2026-08-18/native/armB/evaluation.json",
+      "scored_at": "2026-08-18T00:36:18.828248+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h13/scoring/native/armB/run_1/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/native/armB/run_2/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/native/armB/run_3/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/bounds/h13_armB_bounds.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h13-overlap-2026-08-18/native/armC/evaluation.json",
+      "scored_at": "2026-08-18T00:36:27.212992+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h13/scoring/native/armC/run_1/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/native/armC/run_2/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/native/armC/run_3/detections_dedup.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        },
+        {
+          "input": "outputs/h13/scoring/bounds/h13_armC_bounds.geojson",
+          "last_commit": "faff43dd4",
+          "committed_at": "2026-08-18T00:42:41+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h8-v2/wbf-mcc/canonical/evaluation.json",
+      "scored_at": "2026-06-04T04:21:38.043629+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h8-v2/wbf/canonical/wbf_vote4.geojson",
+          "last_commit": "dd2ebe9fb",
+          "committed_at": "2026-06-04T14:33:29+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h8-v2/wbf-mcc/plus-hp/evaluation.json",
+      "scored_at": "2026-06-04T04:21:39.823549+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h8-v2/wbf/plus-hp/wbf_vote4.geojson",
+          "last_commit": "dd2ebe9fb",
+          "committed_at": "2026-06-04T14:33:29+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h8-v2/wbf-mcc/pure-positive-canon/evaluation.json",
+      "scored_at": "2026-06-04T04:21:41.596585+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h8-v2/wbf/pure-positive-canon/wbf_vote4.geojson",
+          "last_commit": "dd2ebe9fb",
+          "committed_at": "2026-06-04T14:33:29+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h8-v2/wbf-mcc/scale-16/evaluation.json",
+      "scored_at": "2026-06-04T04:21:46.942281+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h8-v2/wbf/scale-16/wbf_vote4.geojson",
+          "last_commit": "dd2ebe9fb",
+          "committed_at": "2026-06-04T14:33:29+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h8-v2/wbf-mcc/scale-32/evaluation.json",
+      "scored_at": "2026-06-04T04:21:48.714066+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h8-v2/wbf/scale-32/wbf_vote4.geojson",
+          "last_commit": "dd2ebe9fb",
+          "committed_at": "2026-06-04T14:33:29+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h8-v2/wbf-mcc/scale-4/evaluation.json",
+      "scored_at": "2026-06-04T04:21:43.397809+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h8-v2/wbf/scale-4/wbf_vote4.geojson",
+          "last_commit": "dd2ebe9fb",
+          "committed_at": "2026-06-04T14:33:29+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/h8-v2/wbf-mcc/scale-8/evaluation.json",
+      "scored_at": "2026-06-04T04:21:45.171552+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h8-v2/wbf/scale-8/wbf_vote4.geojson",
+          "last_commit": "dd2ebe9fb",
+          "committed_at": "2026-06-04T14:33:29+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/mcc/384px/flash-image-high-t-0-7/evaluation.json",
+      "scored_at": "2026-04-30T06:53:38.241112+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7",
+          "last_commit": "c6b5e6b10",
+          "committed_at": "2026-05-06T17:12:17+08:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/mcc/384px/flash-text-high-t-0-7/evaluation.json",
+      "scored_at": "2026-04-30T06:53:41.933855+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
+          "last_commit": "414ee8a4b",
+          "committed_at": "2026-05-03T15:08:17+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/mcc/384px/pro-image-high-t-0-0/evaluation.json",
+      "scored_at": "2026-04-30T06:53:43.339103+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-image-high-t0",
+          "last_commit": "d01ea4412",
+          "committed_at": "2026-07-30T18:27:07+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/mcc/384px/pro-image-medium-t-0-0/evaluation.json",
+      "scored_at": "2026-04-30T06:53:47.296003+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson",
+          "last_commit": "c07c57766",
+          "committed_at": "2026-06-03T22:28:41+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/mcc/384px/pro-text-high-t-0-0/evaluation.json",
+      "scored_at": "2026-04-30T06:53:53.361607+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-text-high-t0",
+          "last_commit": "d01ea4412",
+          "committed_at": "2026-07-30T18:27:07+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/mcc/384px/pro-text-medium-t-0-0/evaluation.json",
+      "scored_at": "2026-04-30T06:53:54.916638+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
+          "last_commit": "c07c57766",
+          "committed_at": "2026-06-03T22:28:41+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json",
+      "scored_at": "2026-06-02T07:05:20.098698+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-image-high-t0",
+          "last_commit": "d01ea4412",
+          "committed_at": "2026-07-30T18:27:07+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json",
+      "scored_at": "2026-06-03T12:36:36.693949+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-pro-rerun-384/pro-image-high-t0",
+          "last_commit": "1dd68f1ee",
+          "committed_at": "2026-08-17T09:47:11+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+      "scored_at": "2026-06-03T12:36:36.693949+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-pro-rerun-384/pro-text-high-t0",
+          "last_commit": "1dd68f1ee",
+          "committed_at": "2026-08-17T09:47:11+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json",
+      "scored_at": "2026-06-02T07:05:20.098698+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-text-high-t0",
+          "last_commit": "d01ea4412",
+          "committed_at": "2026-07-30T18:27:07+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-all-buffers/flash-image-high-t-0-7/evaluation.json",
+      "scored_at": "2026-04-30T06:54:32.511767+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7",
+          "last_commit": "c6b5e6b10",
+          "committed_at": "2026-05-06T17:12:17+08:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-all-buffers/flash-text-high-t-0-7/evaluation.json",
+      "scored_at": "2026-04-30T06:54:35.208346+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
+          "last_commit": "414ee8a4b",
+          "committed_at": "2026-05-03T15:08:17+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-all-buffers/pro-image-high-t-0-0/evaluation.json",
+      "scored_at": "2026-04-30T06:54:51.786003+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-image-high-t0",
+          "last_commit": "d01ea4412",
+          "committed_at": "2026-07-30T18:27:07+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-all-buffers/pro-image-medium-t-0-0/evaluation.json",
+      "scored_at": "2026-04-30T06:55:01.699988+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson",
+          "last_commit": "c07c57766",
+          "committed_at": "2026-06-03T22:28:41+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-all-buffers/pro-text-high-t-0-0/evaluation.json",
+      "scored_at": "2026-04-30T06:55:06.469428+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-text-high-t0",
+          "last_commit": "d01ea4412",
+          "committed_at": "2026-07-30T18:27:07+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/n1/384px-all-buffers/pro-text-medium-t-0-0/evaluation.json",
+      "scored_at": "2026-04-30T06:55:13.871673+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
+          "last_commit": "c07c57766",
+          "committed_at": "2026-06-03T22:28:41+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/paper-eval/single-pass-n1-high/evaluation.json",
+      "scored_at": "2026-04-30T06:57:14.194965+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
+          "last_commit": "414ee8a4b",
+          "committed_at": "2026-05-03T15:08:17+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-1of10/evaluation.json",
+      "scored_at": "2026-04-30T06:57:14.754454+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-2of10/evaluation.json",
+      "scored_at": "2026-04-30T06:57:15.519781+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t2.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-3of10/evaluation.json",
+      "scored_at": "2026-04-30T06:57:15.511650+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t3.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/phase3a-text-matrix/high-t0.0/n3/high-t0-0-1of3/evaluation.json",
+      "scored_at": "2026-04-30T06:58:59.013167+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/phase3a-text-matrix/high-t0.0/n3/high-t0-0-2of3/evaluation.json",
+      "scored_at": "2026-04-30T06:58:59.370027+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/phase3a-text-matrix/high-t0.0/n3/high-t0-0-3of3/evaluation.json",
+      "scored_at": "2026-04-30T06:58:59.310154+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t3.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+      "scored_at": "2026-07-30T08:27:53.503022+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+      "scored_at": "2026-07-30T08:28:18.282992+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t3.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/evaluation.json",
+      "scored_at": "2026-05-31T12:43:23.380462+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+          "last_commit": "99ae28ec4",
+          "committed_at": "2026-07-30T15:25:26+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_1/evaluation.json",
+      "scored_at": "2026-05-31T12:43:57.367411+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+          "last_commit": "99ae28ec4",
+          "committed_at": "2026-07-30T15:25:26+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_2/evaluation.json",
+      "scored_at": "2026-05-31T12:44:02.521737+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+          "last_commit": "99ae28ec4",
+          "committed_at": "2026-07-30T15:25:26+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_3/evaluation.json",
+      "scored_at": "2026-05-31T12:44:02.889149+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+          "last_commit": "d01ea4412",
+          "committed_at": "2026-07-30T18:27:07+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_1/evaluation.json",
+      "scored_at": "2026-05-31T12:44:04.867785+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+          "last_commit": "d01ea4412",
+          "committed_at": "2026-07-30T18:27:07+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_2/evaluation.json",
+      "scored_at": "2026-05-31T12:44:05.297613+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+          "last_commit": "99ae28ec4",
+          "committed_at": "2026-07-30T15:25:26+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_3/evaluation.json",
+      "scored_at": "2026-05-31T12:44:06.558063+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+          "last_commit": "99ae28ec4",
+          "committed_at": "2026-07-30T15:25:26+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+      "scored_at": "2026-06-05T06:52:06.626731+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t2/evaluation.json",
+      "scored_at": "2026-06-05T06:52:06.632272+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t2.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t3/evaluation.json",
+      "scored_at": "2026-06-05T06:52:06.632272+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t3.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t1/evaluation.json",
+      "scored_at": "2026-06-05T06:53:40.127654+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t2/evaluation.json",
+      "scored_at": "2026-06-05T06:53:45.646026+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+      "scored_at": "2026-06-05T06:53:45.699375+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t3.geojson",
+          "last_commit": "77bb342b4",
+          "committed_at": "2026-07-30T08:28:38+00:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:46:33.394799+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:46:47.054877+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:46:35.554732+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:46:36.171389+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:46:37.023004+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:46:42.852029+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:46:44.917837+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:46:46.182396+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:46:46.816134+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:46:47.081409+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:46:24.561795+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:46:24.534110+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:46:24.882861+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:46:25.826975+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:46:30.672056+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:48:18.424588+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:48:26.372165+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:48:18.998706+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:48:18.997642+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:48:19.436010+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:48:19.857442+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:48:20.049326+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:48:23.658042+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:48:23.878364+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:48:26.099378+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:48:05.398137+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:48:06.668022+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:48:08.570996+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:48:12.475496+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:48:15.425524+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:50:10.167951+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:50:17.608278+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:50:11.453779+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:50:12.102994+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:50:14.004087+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:50:13.894145+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:50:15.361812+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:50:15.907453+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:50:16.089423+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:50:16.649417+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:49:58.618910+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:50:01.465833+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:50:03.606653+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:50:05.062905+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:50:05.517539+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:52:04.615452+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:52:11.399149+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:52:04.962082+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:52:04.946426+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:52:06.082421+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:52:07.179904+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:52:07.648548+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:52:08.272055+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:52:08.902113+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:52:10.608175+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:51:52.139682+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:52:00.425589+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:52:02.568981+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:52:03.396861+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:52:03.882486+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/high/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:54:06.679126+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:54:17.527181+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:54:07.466512+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:54:08.224714+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:54:08.704361+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:54:08.928630+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:54:11.059071+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:54:13.241282+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:54:14.910302+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:54:15.595552+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:54:04.208203+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:54:06.617114+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:54:06.496199+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:54:06.580199+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:54:06.577841+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a-replication/minimal/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.805962+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:38:06.041876+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.754270+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.834481+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.755088+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.805986+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.925597+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.755098+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:38:06.030943+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.807511+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.832645+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.838956+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:38:06.040843+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.951466+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:38:05.773486+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.3/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:39:21.930885+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:39:36.693001+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:39:22.187551+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:39:25.906412+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:39:26.145708+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:39:26.647100+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:39:27.813968+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:39:31.012898+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:39:33.772888+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:39:36.356218+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:39:16.658278+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:39:17.162410+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:39:17.704302+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:39:20.983341+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:39:22.019484+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T0.7/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:40:46.868821+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:40:58.794018+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:40:47.806126+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:40:52.318172+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:40:53.991736+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:40:54.673246+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:40:55.094857+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:40:55.879842+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:40:57.296643+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:40:57.836425+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:40:39.635877+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:40:40.241632+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:40:42.466679+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:40:44.128208+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:40:46.558684+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track1-image/T1.0/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:42:14.345095+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:42:18.401791+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:42:14.661122+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:42:15.216734+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:42:15.876879+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:42:16.151562+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:42:16.326036+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:42:16.381019+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:42:17.367614+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:42:17.365423+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:42:04.961132+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:42:08.226979+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:42:11.097394+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:42:11.858733+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:42:12.885256+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.3/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:43:33.808050+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:43:54.442039+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:43:34.860311+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:43:40.990259+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:43:41.538464+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:43:42.613453+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:43:49.496590+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:43:52.430605+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:43:52.878195+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:43:53.525831+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:43:28.587503+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:43:29.017907+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:43:29.317777+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:43:31.774800+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:43:33.026921+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T0.7/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:45:02.379436+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t10/evaluation.json",
+      "scored_at": "2026-06-07T13:45:19.766090+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t10.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:45:03.157775+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:45:10.183383+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:45:12.808673+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:45:13.136004+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t6/evaluation.json",
+      "scored_at": "2026-06-07T13:45:15.681257+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t6.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t7/evaluation.json",
+      "scored_at": "2026-06-07T13:45:16.945945+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t7.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t8/evaluation.json",
+      "scored_at": "2026-06-07T13:45:16.947788+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t8.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t9/evaluation.json",
+      "scored_at": "2026-06-07T13:45:17.729890+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t9.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n5__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:44:57.289121+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n5/consensus_t1.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n5__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:44:57.058472+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n5/consensus_t2.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n5__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:44:57.539684+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n5/consensus_t3.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n5__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:44:58.957318+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n5/consensus_t4.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n5__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:45:02.155908+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3a/track2-text/T1.0/consensus-n5/consensus_t5.geojson",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__A__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.640070+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__A__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.652088+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__A__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.624838+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__A__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.691142+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__A__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.524492+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__B__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.533104+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__B__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.624106+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__B__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.519957+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__B__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.488676+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__B__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.664394+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__C__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.423349+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/C",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__C__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.524518+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/C",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__C__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.664574+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/C",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__C__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.463183+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/C",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__C__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.503109+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/C",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__D__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.453288+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__D__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.659299+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__D__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.463780+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__D__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.438216+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__D__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:56:58.539942+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__E__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:58:07.706380+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__E__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:58:12.737767+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__E__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:58:19.407218+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__E__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:58:40.304432+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__E__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:58:44.683647+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track1-image/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__A__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:58:46.847249+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__A__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:58:51.043505+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__A__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:59:19.306390+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__A__t4/evaluation.json",
+      "scored_at": "2026-06-07T13:59:29.621079+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__A__t5/evaluation.json",
+      "scored_at": "2026-06-07T13:59:40.094323+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/A",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__B__t1/evaluation.json",
+      "scored_at": "2026-06-07T13:59:48.307316+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__B__t2/evaluation.json",
+      "scored_at": "2026-06-07T13:59:54.906701+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__B__t3/evaluation.json",
+      "scored_at": "2026-06-07T13:59:54.938578+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__B__t4/evaluation.json",
+      "scored_at": "2026-06-07T14:00:08.147037+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__B__t5/evaluation.json",
+      "scored_at": "2026-06-07T14:00:12.383041+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/B",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__D__t1/evaluation.json",
+      "scored_at": "2026-06-07T14:00:21.528490+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__D__t2/evaluation.json",
+      "scored_at": "2026-06-07T14:00:40.511019+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__D__t3/evaluation.json",
+      "scored_at": "2026-06-07T14:00:40.463179+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__D__t4/evaluation.json",
+      "scored_at": "2026-06-07T14:00:45.944937+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__D__t5/evaluation.json",
+      "scored_at": "2026-06-07T14:01:41.947509+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/D",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t1/evaluation.json",
+      "scored_at": "2026-06-07T14:01:51.151052+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t2/evaluation.json",
+      "scored_at": "2026-06-07T14:01:58.719930+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t3/evaluation.json",
+      "scored_at": "2026-06-07T14:02:34.082947+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t4/evaluation.json",
+      "scored_at": "2026-06-07T14:02:36.179207+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    },
+    {
+      "evaluation": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t5/evaluation.json",
+      "scored_at": "2026-06-07T14:02:38.590251+00:00",
+      "stale_inputs": [
+        {
+          "input": "outputs/retest/phase3c/diversity-consensus/track2-text/E",
+          "last_commit": "fca7f888b",
+          "committed_at": "2026-06-08T00:10:44+10:00"
+        }
+      ]
+    }
+  ]
+}
