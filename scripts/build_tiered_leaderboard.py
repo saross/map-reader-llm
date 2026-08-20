@@ -66,6 +66,18 @@ re-render from the per-buffer JSONs (see
 ``scripts/regenerate_per_arch_md_from_json.py``) or invoke this
 script again with a different ``--primary-buffer``.
 
+Markdown ownership (defect D35, Phase 6): the per-architecture
+``leaderboard_tiers_<buffer>m.md`` boards under
+``results/leaderboard/per-architecture/`` are owned by
+``scripts/enrich_per_arch_markdown.py``, which renders the same tier
+JSONs with a provenance header and metadata columns. Both scripts used
+to write those paths, so whichever ran last won — the seven 20 m boards
+were committed in this script's bare format, silently dropping the
+owner's header and columns (audit finding F11). ``write_leaderboard_markdown``
+now refuses such destinations; this script still writes the sibling
+JSON there (which the owner consumes) and the ``_mcc`` / ``_q01``
+per-architecture boards, which the owner does not render.
+
 Exit Codes:
     0 - Success
     1 - Some conditions failed evaluation (partial)
@@ -1553,11 +1565,60 @@ def apply_fdr_and_tier(
 # ---------------------------------------------------------------------------
 
 
+#: Owner of the per-architecture ``leaderboard_tiers_<buffer>m.md`` boards
+#: (defect D35). Named in the refusal message so an operator who hits the
+#: guard knows which generator to run instead.
+PER_ARCH_OWNER = "scripts/enrich_per_arch_markdown.py"
+
+#: Directory prefix, as an ordered path-part tuple, under which the owner's
+#: boards live. Matched against ``Path.parts`` so it is independent of the
+#: absolute prefix and of the platform separator.
+PER_ARCH_MD_ROOT_PARTS = ("results", "leaderboard", "per-architecture")
+
+#: Basenames the owner renders: the F1, q=0.05 board at each buffer. The
+#: ``_mcc`` and ``_q01`` variants under the same tree are NOT rendered by the
+#: owner and remain this script's to write.
+PER_ARCH_OWNED_BASENAME_RE = re.compile(r"^leaderboard_tiers_\d+m\.md$")
+
+
+class PerArchitectureOwnershipError(RuntimeError):
+    """Raised when a non-owner tries to write an owner-held board.
+
+    Guards the per-architecture ``leaderboard_tiers_<buffer>m.md`` family
+    against the last-writer collision that left the seven 20 m boards
+    committed in the bare format (audit finding F11 / defect D35).
+    """
+
+
+def is_per_architecture_owned_markdown(output_path: Path) -> bool:
+    """Report whether a destination belongs to the per-architecture owner.
+
+    Args:
+        output_path: Prospective markdown destination (need not exist).
+
+    Returns:
+        True when the path lies under ``results/leaderboard/per-architecture/``
+        and its basename is one the owner renders. Paths outside the
+        repository — a temporary render target, for instance — never match,
+        so verification tooling can render freely into scratch space.
+    """
+    parts = Path(output_path).resolve().parts
+    n = len(PER_ARCH_MD_ROOT_PARTS)
+    under_root = any(
+        parts[i:i + n] == PER_ARCH_MD_ROOT_PARTS
+        for i in range(max(0, len(parts) - n + 1))
+    )
+    if not under_root:
+        return False
+    return bool(PER_ARCH_OWNED_BASENAME_RE.match(Path(output_path).name))
+
+
 def write_leaderboard_markdown(
     tiers: list[list[SelectedCondition]],
     buffer_metres: int,
     output_path: Path,
     metadata: dict,
+    allow_per_architecture: bool = False,
 ) -> None:
     """Write Markdown leaderboard table grouped by tier.
 
@@ -1570,7 +1631,23 @@ def write_leaderboard_markdown(
         buffer_metres: Buffer distance for displayed metrics.
         output_path: Output .md file path.
         metadata: Leaderboard metadata. Must include ``metric``.
+        allow_per_architecture: Escape hatch for the ownership guard. Leave
+            False; it exists only so a deliberate, documented migration can
+            override, and no production caller sets it.
+
+    Raises:
+        PerArchitectureOwnershipError: When ``output_path`` is one of the
+            per-architecture boards owned by ``PER_ARCH_OWNER`` and
+            ``allow_per_architecture`` is False.
     """
+    if not allow_per_architecture and is_per_architecture_owned_markdown(output_path):
+        raise PerArchitectureOwnershipError(
+            f"refusing to write {output_path}: per-architecture "
+            f"leaderboard_tiers_<buffer>m.md boards are owned by "
+            f"{PER_ARCH_OWNER} (defect D35). Run that generator instead; "
+            f"the sibling tier JSON it consumes is still written here."
+        )
+
     metric = metadata.get("metric", METRIC_F1)
     fdr_q = metadata.get("fdr_q", DEFAULT_FDR_Q)
     metric_label = metric.upper()
@@ -2230,9 +2307,20 @@ def main() -> int:
         / f"leaderboard_tiers{metric_infix}{fdr_infix}_"
         f"{args.primary_buffer}m.md"
     )
-    write_leaderboard_markdown(
-        tiers, args.primary_buffer, out_md, metadata,
-    )
+    # Ownership guard (defect D35): the per-architecture F1 boards belong to
+    # ``enrich_per_arch_markdown.py``. Skip loudly rather than abort — the
+    # tier JSON written below is this script's genuine deliverable there, and
+    # it is what the owner consumes.
+    try:
+        write_leaderboard_markdown(
+            tiers, args.primary_buffer, out_md, metadata,
+        )
+    except PerArchitectureOwnershipError as exc:
+        logger.error("MARKDOWN SKIPPED — %s", exc)
+        logger.error(
+            "Run: python %s --root %s  (then re-check the board)",
+            PER_ARCH_OWNER, out_md.parent,
+        )
 
     out_json = (
         args.output_dir

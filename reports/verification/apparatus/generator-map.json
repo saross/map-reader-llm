@@ -126,7 +126,17 @@
    "source_rule": "sibling:leaderboard_tiers_20m.json",
    "hand_edited": true,
    "write_site": "4c3b70d7c:scripts/build_tiered_leaderboard.py:1363-1368",
-   "notes": "Hand-added Updated paragraph + gold-standard-v2 row (commit 7ab7d7fa1)"
+   "notes": "Hand-added Updated paragraph + gold-standard-v2 row (commit 7ab7d7fa1); values refreshed to the current committed evaluation 2026-08-20 (defect D34)"
+  },
+  {
+   "rule_id": "gen-era2-lb-handedit-siblings",
+   "match": "^results/leaderboard/era2/leaderboard_tiers_(30|40|50)m\\.md$",
+   "scope": "results/leaderboard/era2/",
+   "generator": "scripts/build_tiered_leaderboard.py",
+   "source_rule": "sibling:leaderboard_tiers_20m.json",
+   "hand_edited": true,
+   "write_site": "4c3b70d7c:scripts/build_tiered_leaderboard.py:1363-1368",
+   "notes": "Defect D34: the same hand-added gold-standard-v2 Tier-1 row as gen-era2-lb20-handedit. The 30 m and 50 m boards received it at commit 7ab7d7fa1 but were classified generator-owned, so regeneration would have silently reverted them; the 40 m board never received it at all and disagreed with its three siblings (19-in-6 against 20-in-7). All four boards now carry the row, declare the hand edit in their headers, and are declared hand_edited here"
   },
   {
    "rule_id": "gen-ds-results-handedit",
@@ -743,6 +753,15 @@
    "generator": "scripts/analyse_pv_buffer_sensitivity.py",
    "source_rule": "sibling:buffer_sensitivity_summary.csv",
    "write_site": "scripts/analyse_pv_buffer_sensitivity.py:40-41 (docstring; md written beside csv at :248)"
+  },
+  {
+   "rule_id": "gen-h13-tier0-sweep",
+   "match": "^results/h13-overlap-2026-08-18/tier0-aggregation/tier0_sweep\\.md$",
+   "scope": "results/h13-overlap-2026-08-18/",
+   "generator": "scripts/h13_aggregation_sweep.py",
+   "source_rule": "sibling:tier0_sweep.json",
+   "write_site": "99a7eff23:scripts/h13_aggregation_sweep.py:289",
+   "notes": "Session 137 artefact. Generated but carries no generation marker, so the Phase 0 heuristic stratified it as hand-written; this rule attributes it"
   },
   {
    "rule_id": "gen-hypothesis-outcome-table",

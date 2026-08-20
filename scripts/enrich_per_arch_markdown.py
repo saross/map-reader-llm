@@ -15,6 +15,14 @@ with the required columns:
 Also writes a README-adjacent summary JSON per stratum:
     leaderboard_rows_enriched.json
 
+**Ownership** (defect D35, Phase 6): this script is the sole owner of the
+per-architecture ``leaderboard_tiers_<buffer>m.md`` boards. The bare-format
+writer in ``build_tiered_leaderboard.py`` refuses those paths — see
+``build_tiered_leaderboard.PER_ARCH_OWNER`` and
+``PerArchitectureOwnershipError``. Before that guard existed the two
+generators contested the same seven 20 m paths and the last writer won,
+leaving those boards committed in the bare format (audit finding F11).
+
 Usage:
     .venv/bin/python scripts/enrich_per_arch_markdown.py \\
         --root results/leaderboard/per-architecture \\
@@ -74,6 +82,89 @@ STRATUM_NOTES = {
         "in the inventory."
     ),
 }
+
+
+# Timestamp stabilisation — keep no-op regenerations byte-identical.
+#
+# Mirrors the idea in ``generate_post_run_report.py`` (§ "Timestamp
+# stabilisation"): a field stamped to "now" on every run is carried forward
+# from the on-disk artefact whenever the *substantive* content is unchanged,
+# so a regeneration that corrects one line touches only that line instead of
+# re-stamping every board. Without it a no-op re-run rewrites all 60 boards
+# and destroys git diff/blame legibility on this family.
+_MD_TIMESTAMP_PREFIX = "**Generated**: "
+
+#: Placeholder written into the render before stabilisation decides whether
+#: to keep the on-disk stamp or mint a fresh one. Never reaches disk.
+_TS_PLACEHOLDER = "\x00TIMESTAMP\x00"
+
+
+def _strip_md_timestamp(text: str) -> str:
+    """Blank the ``**Generated**:`` line so two renders compare on content.
+
+    Args:
+        text: Full markdown body.
+
+    Returns:
+        The body with the generation stamp replaced by a constant.
+    """
+    return "\n".join(
+        _MD_TIMESTAMP_PREFIX + _TS_PLACEHOLDER
+        if line.startswith(_MD_TIMESTAMP_PREFIX)
+        else line
+        for line in text.split("\n")
+    )
+
+
+def _existing_md_timestamp(path: Path) -> str | None:
+    """Return the ``**Generated**:`` value already on disk, if any.
+
+    Args:
+        path: Candidate markdown file (may not exist).
+
+    Returns:
+        The timestamp string, or None when the file is absent or carries
+        no generation stamp.
+    """
+    if not path.is_file():
+        return None
+    try:
+        for line in path.read_text(encoding="utf-8").split("\n")[:10]:
+            if line.startswith(_MD_TIMESTAMP_PREFIX):
+                return line[len(_MD_TIMESTAMP_PREFIX):].strip()
+    except OSError:
+        return None
+    return None
+
+
+def stabilise_markdown(body: str, out_md: Path, now: str,
+                       stabilise: bool = True) -> str:
+    """Resolve the timestamp placeholder in a rendered board.
+
+    Carries the on-disk stamp forward when the new render is
+    content-identical to what is already committed; otherwise mints
+    ``now``. This is the markdown analogue of
+    ``generate_post_run_report._stabilise_timestamps``.
+
+    Args:
+        body: Rendered markdown containing ``_TS_PLACEHOLDER``.
+        out_md: Destination path (read, never written, by this function).
+        now: Fresh ISO-8601 stamp to use when content changed.
+        stabilise: When False, always mint ``now`` (``--fresh-timestamps``).
+
+    Returns:
+        The markdown with the placeholder replaced.
+    """
+    if stabilise and out_md.is_file():
+        old = _existing_md_timestamp(out_md)
+        try:
+            old_body = out_md.read_text(encoding="utf-8")
+        except OSError:
+            old_body = None
+        if old is not None and old_body is not None:
+            if _strip_md_timestamp(old_body) == body:
+                return body.replace(_TS_PLACEHOLDER, old)
+    return body.replace(_TS_PLACEHOLDER, now)
 
 
 def load_inventory(path: Path) -> dict[str, dict]:
@@ -192,12 +283,33 @@ def write_enriched_markdown(
     out_md: Path,
     out_rows_json: Path,
     git_commit: str,
+    repo_root: Path | None = None,
+    stabilise: bool = True,
 ) -> int:
     """Read a tier JSON and write the enriched markdown table.
 
-    Returns the number of rows written (0 if the input has no tiers /
-    no conditions — the caller then writes a stub instead).
+    Args:
+        tier_json_path: Source ``leaderboard_tiers_20m.json`` for the stratum.
+        buffer_metres: Buffer whose per-buffer metrics fill the score columns.
+        era: Era number, for the board heading.
+        arch: Architecture key, for the board heading.
+        inventory: Condition-inventory lookup from :func:`load_inventory`.
+        out_md: Destination board.
+        out_rows_json: Destination machine-readable row dump.
+        git_commit: Commit hash recorded in the provenance header.
+        repo_root: Root the provenance paths are expressed relative to.
+            Defaults to the real repository root; overridden by
+            ``--repo-root`` so the generator can be exercised against a
+            scratch tree without the provenance strings changing.
+        stabilise: Carry an unchanged board's existing ``**Generated**``
+            stamp forward instead of re-stamping it (see
+            :func:`stabilise_markdown`).
+
+    Returns:
+        The number of rows written (0 if the input has no tiers /
+        no conditions — the caller then writes a stub instead).
     """
+    root = repo_root or REPO_ROOT
     data = json.loads(tier_json_path.read_text())
     tiers = data.get("tiers", [])
     metadata = data.get("metadata", {})
@@ -211,7 +323,7 @@ def write_enriched_markdown(
             inv_row = inventory.get(cond["label"], {})
             row = build_row(rank, cond, inv_row, buffer_metres, tier_idx)
             row["source_tier_json"] = str(
-                tier_json_path.relative_to(REPO_ROOT)
+                tier_json_path.relative_to(root)
             )
             row["source_git_commit"] = git_commit
             enriched_rows.append(row)
@@ -219,24 +331,32 @@ def write_enriched_markdown(
     if not enriched_rows:
         return 0
 
+    now = datetime.now(tz=timezone.utc).isoformat()
+
     # Write enriched rows as machine-readable JSON (one file per buffer).
+    # The ``generated`` stamp is carried forward when the row payload is
+    # unchanged, for the same diff-legibility reason as the markdown.
+    rows_payload = {
+        "script": "enrich_per_arch_markdown.py",
+        "generated": now,
+        "era": era,
+        "architecture": arch,
+        "buffer_m": buffer_metres,
+        "source_tier_json": str(tier_json_path.relative_to(root)),
+        "source_git_commit": git_commit,
+        "n_rows": len(enriched_rows),
+        "rows": enriched_rows,
+    }
+    if stabilise and out_rows_json.is_file():
+        try:
+            old_rows = json.loads(out_rows_json.read_text())
+        except (OSError, json.JSONDecodeError):
+            old_rows = None
+        if isinstance(old_rows, dict):
+            if {**old_rows, "generated": now} == rows_payload:
+                rows_payload["generated"] = old_rows.get("generated", now)
     out_rows_json.parent.mkdir(parents=True, exist_ok=True)
-    out_rows_json.write_text(
-        json.dumps(
-            {
-                "script": "enrich_per_arch_markdown.py",
-                "generated": datetime.now(tz=timezone.utc).isoformat(),
-                "era": era,
-                "architecture": arch,
-                "buffer_m": buffer_metres,
-                "source_tier_json": str(tier_json_path.relative_to(REPO_ROOT)),
-                "source_git_commit": git_commit,
-                "n_rows": len(enriched_rows),
-                "rows": enriched_rows,
-            },
-            indent=2,
-        )
-    )
+    out_rows_json.write_text(json.dumps(rows_payload, indent=2))
 
     # Write enriched markdown.
     arch_display = ARCH_DISPLAY.get(arch, arch)
@@ -245,10 +365,8 @@ def write_enriched_markdown(
         f"# Leaderboard — Era {era}, {arch_display}, {buffer_metres} m buffer"
     )
     lines.append("")
-    lines.append(
-        f"**Generated**: {datetime.now(tz=timezone.utc).isoformat()}"
-    )
-    lines.append(f"**Source tier JSON**: `{tier_json_path.relative_to(REPO_ROOT)}`")
+    lines.append(f"{_MD_TIMESTAMP_PREFIX}{_TS_PLACEHOLDER}")
+    lines.append(f"**Source tier JSON**: `{tier_json_path.relative_to(root)}`")
     lines.append(f"**Git commit**: `{git_commit}`")
     lines.append(
         f"**Conditions**: {len(enriched_rows)} in {len(tiers)} tier(s). "
@@ -341,19 +459,31 @@ def write_enriched_markdown(
     lines.append("")
 
     out_md.parent.mkdir(parents=True, exist_ok=True)
-    out_md.write_text("\n".join(lines))
+    out_md.write_text(
+        stabilise_markdown("\n".join(lines), out_md, now, stabilise=stabilise)
+    )
     return len(enriched_rows)
 
 
 def write_stub_markdown(
-    era: int, arch: str, buffer_metres: int, out_md: Path, reason: str
+    era: int, arch: str, buffer_metres: int, out_md: Path, reason: str,
+    stabilise: bool = True,
 ) -> None:
-    """Emit a placeholder markdown for empty strata."""
+    """Emit a placeholder markdown for empty strata.
+
+    Args:
+        era: Era number.
+        arch: Architecture key.
+        buffer_metres: Buffer the stub stands in for.
+        out_md: Destination path.
+        reason: Sparsity explanation shown under the heading.
+        stabilise: Carry an unchanged stub's existing stamp forward.
+    """
     arch_display = ARCH_DISPLAY.get(arch, arch)
     lines = [
         f"# Leaderboard — Era {era}, {arch_display}, {buffer_metres} m buffer",
         "",
-        f"**Generated**: {datetime.now(tz=timezone.utc).isoformat()}",
+        f"{_MD_TIMESTAMP_PREFIX}{_TS_PLACEHOLDER}",
         "",
         "## No conditions",
         "",
@@ -361,7 +491,14 @@ def write_stub_markdown(
         "",
     ]
     out_md.parent.mkdir(parents=True, exist_ok=True)
-    out_md.write_text("\n".join(lines))
+    out_md.write_text(
+        stabilise_markdown(
+            "\n".join(lines),
+            out_md,
+            datetime.now(tz=timezone.utc).isoformat(),
+            stabilise=stabilise,
+        )
+    )
 
 
 def main() -> int:
@@ -383,8 +520,27 @@ def main() -> int:
         default="(uncommitted)",
         help="Git commit hash to record in the row provenance.",
     )
+    parser.add_argument(
+        "--repo-root",
+        type=Path,
+        default=REPO_ROOT,
+        help=(
+            "Root that provenance paths are expressed relative to. Override "
+            "only to exercise the generator against a scratch tree."
+        ),
+    )
+    parser.add_argument(
+        "--fresh-timestamps",
+        action="store_true",
+        help=(
+            "Re-stamp every board even when its content is unchanged "
+            "(default: carry the on-disk stamp forward, so a no-op "
+            "regeneration is byte-identical)."
+        ),
+    )
     args = parser.parse_args()
 
+    stabilise = not args.fresh_timestamps
     inventory = load_inventory(args.inventory)
 
     summary_rows: list[dict] = []
@@ -409,7 +565,9 @@ def main() -> int:
                             "contains no matching entries."
                         ),
                     )
-                    write_stub_markdown(era, arch, buf, out_md, reason)
+                    write_stub_markdown(
+                        era, arch, buf, out_md, reason, stabilise=stabilise
+                    )
                     summary_rows.append(
                         {
                             "era": era,
@@ -430,6 +588,8 @@ def main() -> int:
                     out_md,
                     out_rows_json,
                     args.git_commit,
+                    repo_root=args.repo_root,
+                    stabilise=stabilise,
                 )
                 summary_rows.append(
                     {
@@ -444,18 +604,23 @@ def main() -> int:
                     f"  era{era}/{arch}/buffer={buf}m: {n} rows → {out_md.name}"
                 )
 
-    # Write overall enrichment summary
+    # Write overall enrichment summary (timestamp stabilised, as above).
     summary_path = args.root / "enrichment_summary.json"
-    summary_path.write_text(
-        json.dumps(
-            {
-                "script": "enrich_per_arch_markdown.py",
-                "generated": datetime.now(tz=timezone.utc).isoformat(),
-                "strata": summary_rows,
-            },
-            indent=2,
-        )
-    )
+    now = datetime.now(tz=timezone.utc).isoformat()
+    summary_payload = {
+        "script": "enrich_per_arch_markdown.py",
+        "generated": now,
+        "strata": summary_rows,
+    }
+    if stabilise and summary_path.is_file():
+        try:
+            old_summary = json.loads(summary_path.read_text())
+        except (OSError, json.JSONDecodeError):
+            old_summary = None
+        if isinstance(old_summary, dict):
+            if {**old_summary, "generated": now} == summary_payload:
+                summary_payload["generated"] = old_summary.get("generated", now)
+    summary_path.write_text(json.dumps(summary_payload, indent=2))
     print(f"\nSummary: {summary_path}")
     return 0
 

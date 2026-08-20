@@ -330,7 +330,13 @@ def main(argv: list[str] | None = None) -> int:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(registry, indent=1, ensure_ascii=False) + "\n",
                         encoding="utf-8")
-    print(f"wrote {args.out.relative_to(REPO_ROOT)}: {counts['total']} files — "
+    # ``--out`` may point outside the repository (a preview build in scratch
+    # space); fall back to the absolute path rather than raising.
+    try:
+        shown = args.out.relative_to(REPO_ROOT)
+    except ValueError:
+        shown = args.out
+    print(f"wrote {shown}: {counts['total']} files — "
           f"{counts['generated']} generated ({counts['generated_unattributed']} unattributed), "
           f"{counts['hand_written']} hand-written")
     if counts["generated_unattributed"]:
