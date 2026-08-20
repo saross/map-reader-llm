@@ -1,7 +1,9 @@
 # Inference instruments: which one answers which question
 
-> **Last revised**: 2026-08-19 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-20 (added § MCB membership is candidate-set
+> relative, from Session 137 audit finding F14; the `ci_unreliable` section
+> now reflects the executed D28 migration). See [§ Changelog](#changelog) for
+> revision history.
 
 **What this is.** A reporting policy for the study's uncertainty claims. The
 project computes several different interval and test procedures, and they answer
@@ -114,6 +116,30 @@ The reporting rule therefore changes from suppression to disclosure:
    (`coverage_source: zero_fraction_heuristic`), not a threshold with inferential
    standing.
 
+## MCB membership is a property of the candidate set, not the condition
+
+Hsu's critical value grows with the number of candidates, so the same
+condition can be admissible on one board and ruled out on another that
+contains it. This is correct behaviour for a simultaneous procedure, not a
+contradiction, and the register carries a live instance:
+`verified-384-ge3of5-t0-3-n5` is excluded from `pass-budget-pareto` (five
+candidates, margin −0.00059) and admitted to `pass-budget-pareto-v2` (seven
+candidates, margin +0.00177). Three reporting rules follow.
+
+1. A tie-set claim is always stated with its board ("cannot be ruled out as
+   best among the k candidates of board X"), never as a property of the
+   condition alone.
+2. Cross-board comparisons of membership are not meaningful; compare point
+   estimates or per-pair tests instead.
+3. Knife-edge margins deserve stating. Two register boards currently sit
+   within 0.001 of a different set (`55map-standardised-leaderboard-50m`
+   excludes its third cell by 0.00017, seed-stable across five seeds;
+   `min-vs-high-thinking-pv` excludes one cell by 0.00087), and the
+   `n1-baseline-matrix-384` correction (E83 correction block, 2026-08-20)
+   shows what a knife-edge membership computed at a non-standard bootstrap
+   count costs. Where a margin is within roughly the Monte Carlo noise of
+   the critical value, say so beside the set.
+
 ## Reporting both uncorrected and FDR-corrected p-values
 
 Registered § 3.5 requires both. The computation is present — the tiering artefacts
@@ -151,6 +177,15 @@ visible.
 - `reports/defect-register-2026-08-18.md` D20 (tier construction)
 
 ## Changelog
+
+### 2026-08-20 — Set-relativity section added
+
+Trigger: Session 137 audit finding F14. Added § MCB membership is a property
+of the candidate set, with the live pareto in/out instance, the knife-edge
+margins on two register boards, and three reporting rules. Note the D28
+migration (2026-08-20) executed what the `ci_unreliable` section describes:
+the committed corpus and register now carry the measured flag and
+`ci_flag_basis` throughout.
 
 ### 2026-08-19 — Original publication
 

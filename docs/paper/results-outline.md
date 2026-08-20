@@ -153,7 +153,10 @@ The known repeat-offenders, with their assigned homes:
   statistical machinery, so each later result can be read correctly.
 - **Claims**: two-instrument framing; headline metric = buffered F1 at an
   empirical working precision + tile-MCC; tile-swap permutation + BH-FDR +
-  greedy-clique tiering throughout. Anchor: §R0 of the zero-draft.
+  greedy-clique tiering throughout. Anchor: §R0 of the zero-draft. <!-- [E83]
+  Tie sets are now the Hsu MCB admissible set; the greedy-clique rule is
+  superseded (defect D20). This methods claim must change with the sibling
+  sentence already flagged in results-draft.md §R2. -->
 - **Now also carries** the two-headline stub (per D2) and a pointer to the
   preregistration status statement (per D16).
 - **✅ D5 SETTLED = A** (PI, Session 133, 2026-08-15): trim —
@@ -196,11 +199,15 @@ The known repeat-offenders, with their assigned homes:
 - **Claims**:
   - Floor: 36 single-pass cells → 4 tiers, a broad 20-cell Tier-1 tie
     (F1 0.583–0.631); the GS set cannot separate the stronger configs
-    (`era1-single-pass-baseline-matrix`). **Load-bearing.**
+    (`era1-single-pass-baseline-matrix`). **Load-bearing.** <!-- [E83]
+    20 → 15 under MCB. -->
   - Modality: no clean F1 win, but drives the F1↔MCC trade (text→F1,
     image→MCC). **This is the home of the D3 thread.**
   - Temperature: T=0.0 > T=0.7, a clean Tier-1/Tier-2 split
-    (`n1-baseline-matrix-384`, Pro).
+    (`n1-baseline-matrix-384`, Pro). <!-- [E83] The clean split does not
+    exist: the MCB set at B = 10,000 is 3 of 18 and spans both temperatures
+    (only high-T0.7 excluded; E83 correction block 2026-08-20). Restate as a
+    point-estimate ordering plus one exclusion. -->
   - Inert: prompt elaboration (H1), ordering (H4), negative-text (H5),
     example-library (H8) — all inside the tie.
   - Signpost: thinking level is inert-to-harmful at single pass; its effect
@@ -231,10 +238,16 @@ The known repeat-offenders, with their assigned homes:
 
 ### R4 — Proposer–verifier is the best architecture on every tile size
 
+<!-- [E83] "the best" rests on the retracted sole-leader claim; under MCB it
+is "among the 10 admissible of 82", with PV the point-estimate leader. -->
+
 - **Purpose**: the key architectural move (H2) and the study's GS headline.
 - **Claims**:
   - PV is the sole Tier-1 Era-1 leader; the verifier's lift breaks the
-    consensus tie (`era1-leaderboard`). **Load-bearing.**
+    consensus tie (`era1-leaderboard`). **Load-bearing.** <!-- [E83] RETRACTED
+    as stated: MCB admits 10 of 82, including all six HIGH-consensus cells;
+    the leader's own clique has 6 (D20). PV remains the point-estimate
+    leader; "sole" and "breaks the tie" must go. -->
   - Cheap PV (minimal single-pass + verifier, 2 calls/tile) reaches the
     30-call HIGH tier, beating it on MCC (→ D3 callback).
   - Tile size × verifier (H11): architecture-dependent optimum; verifier
@@ -275,7 +288,8 @@ The known repeat-offenders, with their assigned homes:
   result**.
 - **Claims**: audited flex re-pricing collapses the frontier to four rungs;
   all seven rungs one F1 tier on GS (`pass-budget-pareto-v2`). Anchor: §R6
-  front half. **Cost basis = audited (token-load audit); cite audited dollars
+  front half. <!-- [E83] 6 of 7 admissible under MCB; verified-adv-text-4of5
+  is ruled out as best. --> **Cost basis = audited (token-load audit); cite audited dollars
   only, Pareto v2 only.**
 - **Per D4**: the transfer table, the reversal, and the buyable gap are **not**
   here — they are R7. R6 closes on the one-clause bridge into the seam.
