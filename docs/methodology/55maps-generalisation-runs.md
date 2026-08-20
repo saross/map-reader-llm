@@ -1,9 +1,9 @@
 # The 55-map generalisation runs — identities, relationships, and assessment coverage
 
-> **Last revised**: 2026-08-19 (Session 137 — **Track 3, the standardised
-> reference, documented at last**; both references materialised as single
-> scorable artefacts; all four 55-map boards re-tiered under Hsu MCB; two data
-> hazards recorded). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-20 (the `uuid` hazard's rationale corrected — the
+> field is float64-mangled record identifiers, not a symbol code; the merged
+> references' column renamed `symbol_code` → `source_id_lossy`, values
+> unchanged; defect D29). See [§ Changelog](#changelog) for revision history.
 
 **Prior updates**: 2026-06-07 (Session 105 — the two-reference Track 1 / Track 2
 framing and the canonical extended-GT re-score); 2026-06-02 (Session 95 follow-up).
@@ -130,7 +130,7 @@ first attempt.
 | `inputs/vectors/references/best-available-gt-55maps.{geojson,csv}` | **5,010** | Track 3 standardised (4,731 student + 279 extension) | invariant |
 | `inputs/vectors/references/canonical-gt-55maps-r50.{geojson,csv}` | **5,161** | Track 2 canonical (4,746 student + 415 phantoms at ring ≤ 50 m) | **50 m only** |
 
-Each record carries `gt_id`, `layer`, `symbol_code`, `source_map`, `symbol_type`,
+Each record carries `gt_id`, `layer`, `source_id_lossy`, `source_map`, `symbol_type`,
 `confidence_grade`, `position_source` and `provenance`, so provenance survives the
 merge and a consumer can filter by positional quality without rejoining sources.
 The canonical file is radius-stamped in its name because that vintage is
@@ -143,14 +143,21 @@ F1@50 m = 0.8393 / MCC 0.689 against the standardised reference and 0.8476 /
 
 ### Two hazards for anyone reusing these layers
 
-- **`uuid` is a symbol code, not an identifier.** In the student layer 4,746
-  records carry only 839 distinct `uuid` values, one repeated 1,152 times,
-  because the field encodes the map-symbol type — every feature drawn with the
-  same symbol shares a value. Geometries are all distinct, so nothing is corrupt,
-  but any join or de-duplication keyed on `uuid` silently collapses rows. First
-  flagged by the 2026-08-04 reference census; recorded as defect D21. The merged
-  artefacts above key on `gt_id` and expose the field under its real name,
-  `symbol_code`.
+- **`uuid` is a record identifier destroyed by float64 precision loss, not an
+  identifier that still identifies — and not a symbol code.** In the student
+  layer 4,746 records carry only 839 distinct `uuid` values, one repeated 1,152
+  times. The symbol-code explanation this bullet previously gave was falsified
+  by the Session 137 audit (finding F5; defect D29): 421 of 2,054 intact
+  19-digit uuids in the raw `MapMoundsDigitised` exports round-trip through
+  float64 exactly onto the published values; the largest buckets are float
+  rounding tiers spanning several distinct `MapSymbol` values (the actual
+  symbol field, 6 distinct values); and `build_student_mounds_gs4.py` had the
+  correct diagnosis all along. Any join or de-duplication keyed on `uuid`
+  still silently collapses rows — the operational rule is unchanged. First
+  flagged by the 2026-08-04 reference census; recorded as defect D21, its
+  rationale corrected under D29. The merged artefacts above key on `gt_id` and
+  expose the field under an honest name, `source_id_lossy` (renamed from
+  `symbol_code` on 2026-08-20; values unchanged).
 - **`buffer_metres` in `canonical-review.csv` is mixed-format** — both `"50"` and
   `"50.0"` occur. Parsing it with `int()` raises on the decimal rows, and
   catching that exception silently drops 33 of the 773 records. Parse through
@@ -252,6 +259,18 @@ optimism across the four is between +0.0000 and +0.0014, negligible against the
 effects reported.
 
 ## Changelog
+
+### 2026-08-20 — D29: the uuid diagnosis corrected; column renamed
+
+Trigger: the Session 137 audit (finding F5) falsified the symbol-code
+explanation for the non-unique `uuid` field. It is the upstream record
+identifier after float64 precision loss (421 of 2,054 intact upstream uuids
+round-trip exactly onto the published values; the real symbol field,
+`MapSymbol`, has 6 distinct values). Both merged references regenerated with
+the column renamed `symbol_code` → `source_id_lossy` — byte-identical
+otherwise (verified by diff after name normalisation; 5,010 and 5,161 records
+unchanged). The operational rule is unchanged: key on `gt_id`, match on
+coordinates. Defect register: D21 (rationale corrected), D29 (FIXED).
 
 ### 2026-08-19 — Track 3 documented; one-file references; boards re-tiered
 

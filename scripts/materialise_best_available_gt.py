@@ -82,27 +82,34 @@ CRS = "EPSG:32635"
 #: raising otherwise. Naming it what the scorer expects is what makes this
 #: artefact usable through `evaluate_detections.py --ground-truth` at all, which
 #: is the whole point of merging the layers.
-COMMON = ["gt_id", "layer", "symbol_code", "source_map", "symbol_type",
+COMMON = ["gt_id", "layer", "source_id_lossy", "source_map", "symbol_type",
           "confidence_grade", "position_source", "provenance"]
 
 
 def load_student() -> gpd.GeoDataFrame:
     """Load the standardised student layer, normalised to the common columns."""
     g = gpd.read_file(STUDENT).to_crs(CRS).reset_index(drop=True)
-    # The upstream field named `uuid` is a SYMBOL CODE, not an identifier: it
-    # encodes the map-symbol type, so every feature drawn with the same symbol
-    # shares a value. 4,731 records carry 836 distinct codes, one of them 1,149
-    # times (4,746 over 839 in the pre-standardisation layer). Nothing is corrupt
-    # and there is nothing to repair — the field does its job under a misleading
-    # name, and the census of 2026-08-04 already ruled "do not use `uuid` as a
-    # key; match on coordinates".
+    # The upstream field named `uuid` holds the digitisation's RECORD
+    # IDENTIFIERS after float64 precision loss, not a symbol code. The Session
+    # 137 audit falsified the symbol-code diagnosis this comment previously
+    # carried (audit report F5; defect D29): of 2,054 intact 19-digit uuids in
+    # the raw `MapMoundsDigitised` exports, 421 round-trip through float64
+    # exactly onto the values published here; the five largest buckets are
+    # float rounding tiers, each spanning several distinct `MapSymbol` values
+    # (the actual symbol field, 6 distinct values); and one upstream export
+    # carries uuid = 1.00E+18 on every row while its sibling `ID` column is
+    # fully unique. `build_student_mounds_gs4.py` had the correct diagnosis
+    # all along ("uuid in the raw shapefile is float64 … lost precision").
     #
-    # It is emitted here as `symbol_code`, which is what it is, so the trap
-    # cannot be walked into from this artefact. `gt_id` is the actual key.
+    # The field is emitted as `source_id_lossy`, which is what it is: a lossy
+    # trace back towards the upstream record, unusable as a key (4,731 records
+    # over 836 distinct values) but sometimes recoverable via the intact
+    # upstream identifiers should provenance ever need it. `gt_id` is the
+    # actual key; the 2026-08-04 census ruling stands — match on coordinates.
     out = gpd.GeoDataFrame({
         "gt_id": [f"student:{i:05d}" for i in range(len(g))],
         "layer": "student_standardised",
-        "symbol_code": g["uuid"].astype(str),
+        "source_id_lossy": g["uuid"].astype(str),
         "source_map": g["source_map"],
         "symbol_type": g.get("std_symbol_type", g.get("FeatureType")),
         "confidence_grade": g.get("std_confidence_grade"),
@@ -118,8 +125,8 @@ def load_extension() -> gpd.GeoDataFrame:
     return gpd.GeoDataFrame({
         "gt_id": [f"extension:{r['candidate_id']}" for r in rows],
         "layer": "extension_standardised",
-        # The extension layer has no symbol code; its candidate_id IS unique.
-        "symbol_code": [None for _ in rows],
+        # The extension layer has no upstream identifier; its candidate_id IS unique.
+        "source_id_lossy": [None for _ in rows],
         "source_map": [r["map_name"] for r in rows],
         "symbol_type": [r.get("symbol_type") for r in rows],
         "confidence_grade": [r.get("confidence_grade") for r in rows],
@@ -145,7 +152,7 @@ def load_canonical(radius: int) -> gpd.GeoDataFrame:
     student = gpd.GeoDataFrame({
         "gt_id": [f"student:{i:05d}" for i in range(len(g))],
         "layer": "student_reviewed",
-        "symbol_code": g["uuid"].astype(str),
+        "source_id_lossy": g["uuid"].astype(str),
         "source_map": g["source_map"],
         "symbol_type": g.get("FeatureType"),
         "confidence_grade": "as_digitised",
@@ -163,7 +170,7 @@ def load_canonical(radius: int) -> gpd.GeoDataFrame:
     phantom = gpd.GeoDataFrame({
         "gt_id": [f"phantom:{r['candidate_id']}" for r in rows],
         "layer": "phantom_canonical",
-        "symbol_code": [None for _ in rows],
+        "source_id_lossy": [None for _ in rows],
         "source_map": [r["map_name"] for r in rows],
         "symbol_type": [None for _ in rows],
         "confidence_grade": "directly_reviewed",
@@ -217,7 +224,7 @@ def main() -> int:
         w = csv.writer(fh)
         w.writerow([*COMMON, "x", "y"])
         for row in merged.itertuples():
-            w.writerow([row.gt_id, row.layer, row.symbol_code, row.source_map,
+            w.writerow([row.gt_id, row.layer, row.source_id_lossy, row.source_map,
                         row.symbol_type, row.confidence_grade,
                         row.position_source, row.provenance,
                         f"{row.geometry.x:.3f}", f"{row.geometry.y:.3f}"])
