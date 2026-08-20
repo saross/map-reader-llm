@@ -2,7 +2,7 @@
   "_metadata": {
     "adapter": "scripts/register_standardised_gt_conditions.py",
     "source_summary": "results/55maps-standardised-ref-2026-08-14/TM-k3/summary.json",
-    "gt_reference": "results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson (4,731) + extension-mounds-standardised.csv (279 marked centres, included whole at every R \u2014 ruling 21)",
+    "gt_reference": "inputs/vectors/references/best-available-gt-55maps.geojson",
     "metric": "corrected-F1 @ R (extended-GT Hungarian, standardised reference), tile-MCC on the SAME reference",
     "tile_classification_buffer_metres": 50,
     "tile_classification_note": "Under the standardised reference the extended GT is identical at every R (marked centres, no ring gate), so tile MCC is buffer-invariant by construction \u2014 the single block is exact at every buffer, not a 50 m pin.",
@@ -34,7 +34,12 @@
         "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson"
       ],
       "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-      "ground_truth": "results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson (4,731) + extension-mounds-standardised.csv (279 marked centres, included whole at every R \u2014 ruling 21)"
+      "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
+      "ground_truth_sources": [
+        "results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+        "results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv"
+      ],
+      "ground_truth_note": "scored against the two standardised layers (4,731 student + 279 extension marked centres, included whole at every R \u2014 ruling 21); the merged best-available reference reproduces every cell"
     }
   },
   "summary": {

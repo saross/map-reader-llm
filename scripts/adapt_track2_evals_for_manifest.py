@@ -77,11 +77,22 @@ HEADLINE_BUFFER = 50  # the 55-map deployment headline (jitter-matched, Obs 260)
 # Rendered wherever a tile-level metric is not computable
 # (erratum E81). Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
 UNDEFINED_DISPLAY = "undefined"
-GT_REFERENCE = (
-    "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv "
-    "(773 phantoms, per-buffer gated) + "
-    "inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4,746)"
-)
+# The canonical reference is BUFFER-GATED (a phantom enters the GT at radius
+# R only if its min-ring buffer_metres <= R; the 200 m sentinels never enter),
+# so no single file equals it at every radius. The materialised r50 file
+# equals the composite at exactly 50 m — the headline radius and the only one
+# the register boards use — and is recorded as the loadable path with its
+# validity radius stated (defect D33: the previous prose sentence here made 8
+# register conditions unreproducible from their own metadata).
+GT_REFERENCE = "inputs/vectors/references/canonical-gt-55maps-r50.geojson"
+GT_VALID_AT_M = 50
+GT_SOURCES = [
+    "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+]
+GT_NOTE = ("per-buffer gated composite (773 reviewed phantoms + 4,746 student "
+           "records); rows at radii other than 50 m were scored against the "
+           "composite gated at that radius, not against the r50 file")
 
 
 def adapt_one(label: str, det_rel: str) -> Path:
@@ -159,6 +170,9 @@ def adapt_one(label: str, det_rel: str) -> Path:
                 "detections": [det_rel],
                 "bounds": BOUNDS_REL,
                 "ground_truth": GT_REFERENCE,
+                "ground_truth_valid_at_m": GT_VALID_AT_M,
+                "ground_truth_sources": GT_SOURCES,
+                "ground_truth_note": GT_NOTE,
             },
         },
         "summary": {

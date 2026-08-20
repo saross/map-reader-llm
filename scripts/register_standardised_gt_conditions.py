@@ -58,12 +58,21 @@ HEADLINE_BUFFER = 50  # the 55-map deployment headline (Obs 260)
 # Rendered wherever a tile-level metric is not computable
 # (erratum E81). Matches ``evaluate_detections.UNDEFINED_DISPLAY``.
 UNDEFINED_DISPLAY = "undefined"
-GT_REFERENCE = (
+# The reference the cells were scored against, recorded as a LOADABLE path
+# (defect D33: the previous prose sentence here made 8 register conditions
+# unreproducible from their own metadata). The merged single-file reference is
+# buffer-invariant and reproduces every cell exactly (E83 re-tiering gate,
+# gap 0.0000); the two source layers it merges are kept alongside.
+GT_REFERENCE = "inputs/vectors/references/best-available-gt-55maps.geojson"
+GT_SOURCES = [
     "results/deployment-oracle-2026-06-06/canonical-gt/standardised/"
-    "student-mounds-55maps-standardised.geojson (4,731) + "
-    "extension-mounds-standardised.csv (279 marked centres, included "
-    "whole at every R — ruling 21)"
-)
+    "student-mounds-55maps-standardised.geojson",
+    "results/deployment-oracle-2026-06-06/canonical-gt/standardised/"
+    "extension-mounds-standardised.csv",
+]
+GT_NOTE = ("scored against the two standardised layers (4,731 student + 279 "
+           "extension marked centres, included whole at every R — ruling 21); "
+           "the merged best-available reference reproduces every cell")
 
 # cell label → (run family, canonical label to clone, new label)
 REGISTRATIONS = {
@@ -176,6 +185,8 @@ def adapt_one(label: str, det_rel: str) -> Path:
                 "detections": [det_rel],
                 "bounds": BOUNDS_REL,
                 "ground_truth": GT_REFERENCE,
+                "ground_truth_sources": GT_SOURCES,
+                "ground_truth_note": GT_NOTE,
             },
         },
         "summary": {

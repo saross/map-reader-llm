@@ -2,7 +2,7 @@
   "_metadata": {
     "adapter": "scripts/adapt_track2_evals_for_manifest.py",
     "source_summary": "results/55maps-extended-gt-2026-06-07/TM-k4/summary.json",
-    "gt_reference": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv (773 phantoms, per-buffer gated) + inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4,746)",
+    "gt_reference": "inputs/vectors/references/canonical-gt-55maps-r50.geojson",
     "metric": "corrected-F1 @ R (extended-GT-at-R Hungarian), tile-MCC",
     "tile_classification_buffer_metres": 50,
     "tile_classification_note": "MCC is reported at the 50 m deployment headline; it varies with R via the per-buffer gated extended GT \u2014 see the Track-2 summary.json / consolidated-track2.csv for the full per-buffer MCC.",
@@ -34,7 +34,13 @@
         "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson"
       ],
       "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-      "ground_truth": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv (773 phantoms, per-buffer gated) + inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4,746)"
+      "ground_truth": "inputs/vectors/references/canonical-gt-55maps-r50.geojson",
+      "ground_truth_valid_at_m": 50,
+      "ground_truth_sources": [
+        "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+        "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
+      ],
+      "ground_truth_note": "per-buffer gated composite (773 reviewed phantoms + 4,746 student records); rows at radii other than 50 m were scored against the composite gated at that radius, not against the r50 file"
     }
   },
   "summary": {
