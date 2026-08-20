@@ -1,0 +1,57 @@
+{
+  "buffer_metres": 40,
+  "f1": 0.728,
+  "f1_point": 0.728,
+  "f1_ci_lower": 0.7009,
+  "f1_ci_upper": 0.758,
+  "f1_ci_method": "BCa",
+  "precision": 0.6238,
+  "p_point": 0.6238,
+  "p_ci_lower": 0.5925,
+  "p_ci_upper": 0.6637,
+  "p_ci_method": "BCa",
+  "recall": 0.8738,
+  "r_point": 0.8738,
+  "r_ci_lower": 0.8503,
+  "r_ci_upper": 0.8969,
+  "r_ci_method": "BCa",
+  "coverage": {
+    "n_tiles": 340,
+    "n_zero_count_tiles": 64,
+    "zero_fraction": 0.18823529411764706,
+    "threshold": 0.5,
+    "coverage_status": "normal"
+  },
+  "coverage_status": "normal",
+  "ci_unreliable": false,
+  "n_detections": 755,
+  "__tile_classification__": {
+    "confusion": {
+      "tp": 186,
+      "tn": 52,
+      "fp": 84,
+      "fn": 18
+    },
+    "mcc": {
+      "point": 0.3563,
+      "mean": 0.3596,
+      "ci_lower": 0.2947,
+      "ci_upper": 0.4134,
+      "method": "BCa"
+    },
+    "sensitivity": {
+      "point": 0.9118,
+      "mean": 0.9122,
+      "ci_lower": 0.8847,
+      "ci_upper": 0.9301,
+      "method": "BCa"
+    },
+    "specificity": {
+      "point": 0.3824,
+      "mean": 0.3851,
+      "ci_lower": 0.3413,
+      "ci_upper": 0.4315,
+      "method": "BCa"
+    }
+  }
+}
