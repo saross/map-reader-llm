@@ -7541,3 +7541,41 @@ the same reassuring output as a genuine one, and I had *already* been bitten thi
 session by a buffer default that silently scored those same boards at the wrong
 radius. I recorded the unease in the audit brief rather than resolving it, which
 is second-best.
+
+## Session 138 — 2026-08-20/21 (a clean context finds what no amount of care in the dirty one can; subagents correcting the coordinator is the system working; a strict gate is a discovery instrument; the naive-reviewer stance generalises from prose to campaigns)
+
+**A clean context finds what care cannot.** The fresh-context pre-launch
+audit of the E82 campaign returned two blockers against a contract that had
+just been through an interactive pre-run review with the operator — including
+the fact that ~20 % of the corpus would fail the point gate for reasons
+nobody had imagined (input-vintage drift). The drafting instance had
+literally written the census that contained the evidence and did not see it.
+Third demonstration in this project (Phase-C PoC, D3 audit, now E82) that
+the yield comes from the missing stake, not from extra intelligence: same
+model class, zero drafting context, live fault-injection instead of reading.
+
+**Subagents correcting the coordinator is the system working.** Two Opus
+agents caught wrong numbers in the briefs I wrote for them (619 method-silent
+cells, not my 308; 12 + 1 skips, not "13 deployment-oracle"). The
+coordinator's compression is subject to exactly the summary-drift class the
+S137 audit indicted ("ten of fourteen"). Practical rule now in the
+scratchpad: briefs should hand subagents source pointers and mark derived
+counts as unverified, and a subagent that re-derives a briefed number and
+disagrees should say so — both of these did, unprompted, which is worth
+noting as a capability observation about Opus-class agents on this task
+shape.
+
+**A strict gate is a discovery instrument.** The E82 replay gate was built
+to protect point estimates; its refusals diagnosed three corpus defects
+(D40 drift, mixed working-tree vintages, D41 mis-aggregation) that no
+planned analysis was looking for. Each refusal carried enough diagnostics
+(both attempts' moved-field tables) that the mechanism fell out in minutes.
+The design lesson: record WHY a gate refused, per item, in machine-readable
+form — the diagnostics are where the discoveries live.
+
+**The naive-reviewer stance generalises.** The same stance that fixes prose
+(ask the obvious question; open the artefact, not the summary) ran a
+compute campaign: "does the pilot sample the population it claims to
+protect?" is the question that found B2, and it is askable only by someone
+who does not already believe the answer.
+

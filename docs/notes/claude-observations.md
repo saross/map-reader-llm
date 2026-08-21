@@ -1662,3 +1662,63 @@ step asking what would produce that same output if the check were broken — wro
 scope, wrong buffer, wrong reference vintage, stale artefact. I recorded the
 unease in the audit brief instead of resolving it, which is second-best; the
 first-best was two minutes of verification at the time.
+
+## claude-obs 68 — 2026-08-21 (Session 138): Shawn's decision rule is "fix everything, or flag it so citation triggers the fix" — and he holds it under cost
+
+**Pattern.** Every scope ruling this session took the same shape: full
+ci_unreliable migration over minimal marking; whole-BCa-corpus re-emission
+over the pre-fix subset; archive the defective legacy family rather than
+document it in place; and he stated the rule explicitly — "we need to
+either fix everything OR make sure unfixed things are very clearly
+documented/flagged so that if we end up citing one, we know to fix it."
+When cost was the worry he asked for the cost to be restructured (Opus
+fan-out) rather than the scope reduced.
+
+**Lesson.** The middle options I keep drafting (partial fixes, mixed
+vintages, defect-noted-but-live) are not on his menu; they survive only as
+transitional states inside a campaign, never as end states.
+
+**How to apply.** Present remediation proposals as the two poles he actually
+chooses between — complete fix with its true cost, or unmissable flag with
+its citation tripwire — and put engineering effort into making the complete
+fix cheap, not into designing the compromise.
+
+## claude-obs 69 — 2026-08-21 (Session 138): self-critique — my briefs propagated the exact summary-drift class the audit indicted, and the subagents caught it
+
+**Pattern.** The S137 audit's finding F7 was a count that drifted as it
+passed through summaries ("ten of fourteen"). Same session, my Phase 5
+brief asserted 308 method-silent cells (the true count was 619) and my E82
+contract said "13 deployment-oracle skips" (12 + 1). Both were corrected by
+the Opus subagents re-deriving from source — the direction of correction
+running subagent → coordinator, opposite to the review flow I default to.
+
+**Lesson.** Coordinator compression is not exempt from the failure class it
+coordinates fixes for. A number I place in a brief is a claim like any
+other, and the audit's own rule applies to me: re-derive or mark unverified.
+
+**How to apply.** Briefs hand subagents source pointers plus my derived
+counts explicitly labelled as unverified expectations; instruct agents to
+re-derive and report disagreement (both did so unprompted — treat that as
+the expected behaviour, and thank it in the adjudication record).
+
+## claude-obs 70 — 2026-08-21 (Session 138): thinking-aloud questions want an assessment, not an implementation — and the three-track answer landed because it named his own prior design
+
+**Pattern.** Mid-campaign Shawn asked "if we're rescoring anyway, shouldn't
+everything be judged against the best-available GT? Does that make sense?
+Are there complications?" — a genuine question, not a directive. The answer
+that worked did three things: honoured the instinct ("it's already the
+project's direction of travel"), named the complications concretely (the
+three-track structure is load-bearing; the paper uses the between-reference
+contrast as a finding), and showed his own earlier design already implements
+the instinct safely (add Track-3 scores beside historical cells, never
+overwrite). He adopted the split immediately and later called the exchange
+"helpful clarification / advice".
+
+**Lesson.** When Shawn thinks aloud, the deliverable is a decision-shaped
+assessment that treats his existing architecture as the strongest evidence —
+not agreement, and not a launched implementation.
+
+**How to apply.** For "does that make sense?" questions: answer the question
+first, enumerate complications with anchors, and where possible show that
+the safe version of the instinct already exists in his own prior rulings
+before proposing anything new.

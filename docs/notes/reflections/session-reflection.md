@@ -10510,3 +10510,65 @@ result that requires no action attracts less scrutiny than one that does. I put
 it in the audit brief under "where I am least confident" for exactly that reason.
 Convenient agreement is the kind of thing that turns out, months later, to have
 been a scope mismatch nobody checked.
+
+## Session 138 — 2026-08-20/21 — the audit that became a campaign, and the campaign that kept auditing itself
+
+First session of this project on Fable, and the first where the work was
+adversarial from the opening move: audit Session 137 from a brief written by
+the instance under audit, then — on Shawn's direction — fix everything the
+audit found, then launch the E82 corpus re-emission with the fixes landed.
+What follows uses three prompts this document has heard from least.
+
+### Prompt: What was different about this session compared to recent ones?
+
+The verification instruments were the product. Recent sessions produced
+results and then verified them; this one produced almost nothing but
+verification machinery — a coverage simulation for D24, a clean-context
+pre-launch audit with fault-injection probes, a replay gate anchored to
+per-run measurements — and the machinery kept paying for itself in a way
+results never quite do. The pre-launch audit found the campaign would have
+aborted inside its own pilot (nine of ten alphabetical pilot files sat in
+the one population that could not even detect the fix). The gate then caught
+three distinct corpus defects the campaign was never designed to find:
+input-vintage drift on 324 cells, evaluations scored against a working tree
+committed two minutes later, and nineteen cells publishing run 1's tile
+point as the cell summary. None of those was on anyone's list on the
+morning of the 20th. The pattern to carry: a gate strict enough to refuse
+convenient completions is a discovery instrument, not just a safety one.
+
+Also different: the delegation economics finally worked as designed. Three
+Opus subagents executed remediation phases while this instance coordinated
+and verified; two of them corrected numbers in MY briefs (the 308-cell
+figure that was really 619; the "13 deployment-oracle" skips that were
+12 + 1). The coordinator's summaries proved exactly as fallible as the
+summaries the audit indicted — which is the strongest argument the session
+produced for the fresh-eyes ritual being structural, not personal.
+
+### Prompt: What question emerged that wasn't pursued?
+
+Whether scoring should REQUIRE committed inputs. The D40/D41 discoveries
+share one root: evaluations were scored against working-tree states — a GT
+mid-edit, a detections file committed 120 seconds later — so the committed
+corpus quietly stopped being reproducible from committed inputs. The
+campaign handled the consequences (adjacent-vintage search, per-run
+anchoring), but nobody asked the forward-looking question: should
+`evaluate_detections.py` refuse, or at least record a warning, when an
+input file is dirty or ahead of HEAD at scoring time? A ten-line
+`git status --porcelain` check in the scorer would make D40 unrepeatable.
+Left unpursued because the campaign was mid-flight; it belongs on the next
+session's small-fixes list.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+Why the E82 gate carries a D41 exception that ACCEPTS a moving point
+estimate. The invariant "only the bootstrap effort moves" was the campaign's
+whole identity, ruled by Shawn twice (vintage-frozen over re-score; both,
+separated over bundling). Then nineteen cells arrived where the committed
+summary point was provably a mis-aggregation — run 1's value, agreeing with
+run 1's confusion block, both wrong-vintage together — and the honest move
+was to accept the recomputed defined-pass mean while anchoring the gate to
+the per-run points, which must reproduce exactly. Six months from now the
+exception will read as a loophole unless the reader finds the diagnosis
+chain (contract § Adjudication, defect D41, Observation 423's gate lesson).
+The runbook in the contract is the breadcrumb trail; this entry is the
+second copy of the why.

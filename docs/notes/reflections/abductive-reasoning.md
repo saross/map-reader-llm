@@ -7302,3 +7302,92 @@ Not a claim that selection bias is generally small in LLM evaluation. SIREN's
 measurements stand for its setting, and the mechanism identified here explains
 why the two differ rather than contradicting either. Our correction being ≤ 0.004
 is a fact about *nested sweeps on shared units*, not about argmax selection.
+
+## 2026-08-21 (Session 138, map-reader-llm): The evaluation that matched no committed vintage, until the timeline was read in UTC
+
+**Session:** 0061dc18-38da-4c8d-8f3a-7d138c457507
+**Instance:** primary
+
+### Surprising fact
+
+Two committed 55-map evaluations failed the E82 replay gate against BOTH
+current inputs and inputs frozen to their own timestamps — with opposite
+one-tile signatures (current: FP→TP; frozen: TP→FN). The committed
+confusion (tp = 2394) sat strictly between the two committed ground-truth
+vintages (2393 and 2395). First belief: the cells were scored against a
+never-committed working-tree state and are irreproducible full stop.
+
+### Probe
+
+Read the input's commit timeline in UTC rather than local time: the "second"
+GT commit (baf1497a7, 10:32 +10:00) is actually 00:32 UTC — SEVEN MINUTES
+BEFORE the evaluations (00:39–02:43 UTC), not twelve hours after. So the GT
+vintage was committed and reachable; rev-list confirmed the freeze had
+selected it. The TP→FN signature therefore had to come from another input:
+the detections file's next commit ("propagate +1 candidate", 8699f456b)
+landed at 02:45 UTC — two minutes AFTER the evaluations.
+
+### Belief revision
+
+Not "never-committed state" but "MIXED adjacent vintages": ground truth at
+the commit before the timestamp, detections at the commit immediately after
+(scored from a working tree mid-pipeline, committed moments later). A
+bounded search over adjacent committed vintages, flipping one input at a
+time, reproduced both cells exactly (vintage-search-1: GT@baf1497a7 +
+detections@8699f456b) with the predicted 1.08× width ratio.
+
+### What would change this belief
+
+If the adjacent-vintage search had failed on those cells, the
+never-committed hypothesis would have stood and the cells would have been
+named permanent failures. The search passing on the FIRST single-flip, with
+per-input commit pins recorded, is what makes the mixed-vintage account a
+measurement rather than a story.
+
+### Implications for practice
+
+Timezone normalisation is a probe step, not a formality — the initial
+"never-committed" conclusion rested entirely on misreading +10:00 commit
+stamps against UTC evaluation stamps. And gates should record diagnostics
+rich enough to distinguish failure MECHANISMS (which fields moved, in which
+direction, on which attempt): the FP→TP vs TP→FN asymmetry was the entire
+case.
+
+## 2026-08-21 (Session 138, map-reader-llm): The self-consistent file that was consistently wrong
+
+**Session:** 0061dc18-38da-4c8d-8f3a-7d138c457507
+**Instance:** primary
+
+### Surprising fact
+
+Nineteen replayed cells moved ONLY their summary tile points (~0.001) while
+every buffer metric and the confusion matrix reproduced exactly. Checking a
+failing cell's internal consistency proved the committed file AGREED with
+itself: summary point 0.3065 = MCC computed from its own confusion block,
+exactly. Yet the deterministic replay produced 0.3053 from identical inputs.
+
+### Probe
+
+Open the per-run blocks instead of the summary: per-run points 0.3065,
+0.2934, 0.3160 — whose defined-pass mean is 0.3053, the replay's value. The
+committed summary point equals RUN 1's point; the confusion block is,
+by documented design, run 1's matrix. The two wrong-vintage fields agree
+with each other, which is what made the file look self-consistent.
+
+### Belief revision
+
+From "the replay is producing inconsistent output" to "the committed
+summary carries a superseded aggregation (run 1's point published as the
+cell's), and its apparent self-consistency was two fields sharing the same
+wrong provenance". The gate was re-anchored to the per-run points — the
+actual measurements — and accepts a summary equal to the recomputed
+defined-pass mean, each acceptance flagged (defect D41, PI-accepted).
+
+### What this is not
+
+Not an instance of D40 input drift (both attempts failed identically, so
+input vintage was irrelevant), and not a replay bug (the replay was the
+internally consistent side). It is Observation 423's lesson inverted:
+internal consistency is not validation either — two fields can corroborate
+each other because they inherit the same defect.
+

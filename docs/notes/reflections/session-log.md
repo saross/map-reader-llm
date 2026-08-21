@@ -8758,3 +8758,46 @@ a closed defect. Tiers below the first were retained on explicit PI direction
 them. Committed evaluations were deliberately not re-emitted when
 `ci_unreliable` semantics changed, leaving the corpus mixed-vintage on that
 field with `ci_flag_basis` recording which rule applied.
+
+## Session 138 — 2026-08-20/21 (zbook, away from network both ends; US$0.00 API)
+
+**The Session 137 audit** (planning/session-137-audit-brief.md): four Opus
+subagent class-hunters plus coordinator re-derivations; 17 ranked findings
+(reports/session-137-audit-report-2026-08-20.md, artifact republished);
+D24 coverage simulation — the bootstrap MCB critical value errs CONSERVATIVE
+on all three boards tested (0.995–1.000 true-best retention). Headline
+finding: the n1-baseline-matrix-384 tie set was computed at B = 200 and is
+3 members at B = 10,000, not 4.
+
+**The remediation campaign** (same day, PI-approved, eight phases, ~30
+commits): register tie-set corrected with E83 correction block; the
+ci_unreliable migration (1,710 files, register 1,041 → 0 stale flags);
+symbol_code → source_id_lossy with the corrected float64 diagnosis; the E83
+flag set completed in the paper docs; observed-point mcc corpus-wide (2,165
+CSV/MD files + 141 backfilled points + 4 rebuilt roll-ups); leaderboard
+family hygiene then ARCHIVAL of results/leaderboard/** (PI ruling); six
+small-defect fixes; defect register D25–D39; tier-1 1,593 → 1,764+ tests.
+
+**E82 corpus re-emission** (PI rulings: whole BCa corpus; vintage-frozen
+points; both-separated from the Track-3 question): pre-run-review contract
+(planning/e82-corpus-reemission-2026-08-20.md) → clean-context pre-launch
+audit (2 blockers, 7 majors adjudicated; engine revised with 18
+fault-injection tests) → pilot 2 passed 14/14 with the adjacent-vintage
+search validated → full run processed 223/1,628 before the D41 abort
+(204 ok, 8 vintage-pinned, 19 mis-aggregated cells diagnosed; correction
+PI-accepted, gate re-anchored to per-run points). D40 (input-vintage drift,
+324 cells) and D41 registered. Campaign PAUSED — sapphire off-network
+(travel); resume runbook banked in the contract.
+
+**Close-out**: all seven S137 handoff candidates dispositioned
+(Observations 421–423 minted; four user-obs answers recorded, including the
+standing options-not-considered preference); the Track-3 gap cell scored
+(IM-k4 vs best-available GT: F1@50 0.801, MCC 0.712; registration deferred
+to the post-campaign manifest pass).
+
+**Contextual assumptions.** Both ends of the session ran on zbook away from
+the home network — sapphire unreachable at the audit (all $0 analysis local)
+and again at the campaign pause (Shawn travelling; back same evening).
+Sapphire holds ~231 re-emitted evaluations + the campaign report
+UNCOMMITTED; its untracked tile trees remain protected (N1). The DD1–DD10
+Discussion walk was deliberately deferred to a fresh session at 84 % context.
