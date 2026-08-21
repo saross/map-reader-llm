@@ -1722,3 +1722,69 @@ not agreement, and not a launched implementation.
 first, enumerate complications with anchors, and where possible show that
 the safe version of the instinct already exists in his own prior rulings
 before proposing anything new.
+
+## claude-obs 71 — 2026-08-22 (Session 139): Shawn's anti-hype corrections make claims sharper, not softer — draft conservative-first and let his edits add teeth
+
+**Pattern.** His five corrections to the Obs 425 claim draft each
+replaced a vague superlative with a more defensible *and more
+precise* statement: "no training" became the annotation-budget
+contrast (20 tiles vs 10,000 patches, zero gradient updates); the
+buffer caveat gained "conservative and field-usable, so not a laxer
+standard"; "one symbol type" became "a family of variant renderings";
+and he spotted that our tile-MCC enables a like-for-like comparison
+the draft had left as a gesture — which became a derived, registered
+metric within hours.
+
+**Lesson.** For this collaborator, conservatism is not claim-shrinking
+— it is claim-hardening. The strongest version of a result survives
+his qualifiers because the qualifiers are load-bearing, not apologetic.
+
+**How to apply.** Draft headline claims at the most matter-of-fact
+register available, surface them for correction BEFORE committing to
+append-only stores, and treat each of his qualifiers as a candidate
+derivation task (the tile-F1 metric existed because a qualifier
+implied it).
+
+## claude-obs 72 — 2026-08-22 (Session 139): self-critique — I banked an overnight inference as a finding, and my own inspection agent falsified it
+
+**Pattern.** At the E82 abort I wrote "the defect extends beyond the
+diagnosed 19" into the contract from the shape of the failure
+messages, without inspecting a cell. The morning inspection showed the
+six new failures carried *correct* summaries — a pass-order replay
+artefact — and the register now holds my correction beside the claim.
+This after a day spent documenting exactly this failure class
+(Obs 424) in other systems' output.
+
+**Lesson.** A failure message names the gate that fired, not the
+mechanism that tripped it. Status-labelling discipline (decided /
+inferred / observed — the 2026-08-19 scratchpad rule) applies with
+MOST force when writing into contracts at the end of long sessions,
+because that is when pattern-matching feels most like knowledge.
+
+**How to apply.** Overnight or end-of-session writes into controlling
+documents state inferences as inferences with the planned probe named;
+the correction cost me eleven lines only because stop-and-inspect had
+prevented anything being built on it.
+
+## claude-obs 73 — 2026-08-22 (Session 139): rulings interleaved with running agents was the day's productive mode — keep decisions small, mid-turn, and non-blocking
+
+**Pattern.** Shawn steered five times mid-turn while agents ran (the
+foregrounding concern, the preprint-preservation rule, the TRAP
+question, the collection-variable clarification, the naming deferral),
+and each ruling was absorbed into the running pipeline without a
+restart. Thirteen outline decisions, an E82 ruling, and a registration
+ruling all landed as small structured choices at the moment the
+evidence existed — never as big blocking reviews.
+
+**Lesson.** The effective division of labour today: agents produce
+verified evidence in the background; Shawn's attention is spent only
+at genuine decision points, presented with pre-argued options; the
+coordinator's job is converting his short answers into committed
+structure fast enough that the next pipeline stage starts before the
+conversation moves on.
+
+**How to apply.** When a decision is his, prepare it as options with a
+recommendation and the evidence one click away; when he answers
+mid-turn, treat the running work plan as amendable in place — the
+restart cost of "wait until the current thing finishes" is almost
+always higher than the merge cost.

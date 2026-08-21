@@ -10572,3 +10572,45 @@ exception will read as a loophole unless the reader finds the diagnosis
 chain (contract § Adjudication, defect D41, Observation 423's gate lesson).
 The runbook in the contract is the breadcrumb trail; this entry is the
 second copy of the why.
+
+## Session 139 — 2026-08-21/22 — the day the literature arrived, and the night my own inference was overturned
+
+**What context from this session will be hardest to reconstruct in six
+months?** Not the artefacts — they are unusually well banked — but the
+*sequencing logic* that made them cheap. The Discussion walk settled
+thirteen decisions in under an hour because the outline carried
+pre-argued leans; the foregrounding amendment (Seeds 8–11, the two-part
+core) happened the same morning because Shawn's five headline outcomes
+arrived as a list I could convert to structure while two lit-scouts were
+already running; and by evening every parity number in Seed 8 was
+underwritten by a verifier pass that had existed for hours, not weeks.
+A future reader will see fourteen commits of literature apparatus and
+may assume a methodical fortnight. It was one day, and the reason it
+held together was that verification ran as a pipeline behind the
+conversation rather than as a phase after it. The DIGMAPPER
+displacement is the piece that will look inevitable in retrospect and
+was not: the old report's "does not report point-specific F1" survived
+five months and two readers precisely because it was a *negation* —
+nobody re-checks an absence — and it fell only because a resolve-batch
+was told to distrust descriptions categorically.
+
+**What decision made today will look arbitrary without this session's
+context?** Deferring the D.9 naming ruling. On paper it reads as
+indecision; in fact it was the day's most register-respecting move —
+the term is append-only once it enters the paper's vocabulary, Gould et
+al. is months old with zero citations, and Shawn wanted to read the
+one paper that decides whether "just-in-time preregistration" marks a
+real distinction or a cosmetic one. The banked decision brief is the
+context that keeps the deferral legible.
+
+**What would I do differently on replay?** The overnight E82 note. I
+wrote "the defect extends beyond the diagnosed 19" into the contract as
+a finding, and my own inspection agent falsified it ten hours later:
+the six new failures were pass-*order* replay artefacts, not
+mis-aggregation, plus a rounding-boundary bug in the rescue helper
+itself. The stop-and-inspect discipline contained the error — nothing
+was built on it — but the sentence should have been written as an
+inference pending inspection, because that is exactly what it was. The
+session spent all day proving that distortions of true things are the
+failure mode that survives; then, tired and at 2 a.m. equivalent, I
+manufactured one.

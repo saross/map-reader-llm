@@ -8801,3 +8801,59 @@ and again at the campaign pause (Shawn travelling; back same evening).
 Sapphire holds ~231 re-emitted evaluations + the campaign report
 UNCOMMITTED; its untracked tile trees remain protected (N1). The DD1–DD10
 Discussion walk was deliberately deferred to a fresh session at 84 % context.
+
+## Session 139 — 2026-08-21/22 (amd-tower; home network from evening; US$0.00 Gemini API)
+
+- **Discussion outline settled**: DD1–DD10 walked and ruled (nine as
+  recommended; DD8 inventory + cross-family tests and benchmark/eval);
+  foregrounding amendment same day — Seeds 8–11 drafted, two-part core
+  (Part I what-the-study-shows / Part II lessons-for-survey-practice),
+  sections renumbered D.0–D.11, DD11–DD13 settled; prose deferred until
+  earlier paper sections are written. Commits `528ba9483`→`fe3a2a7bf`.
+- **Results draft**: all eight E83 tie-set flags rewritten to MCB
+  values, each re-verified against the register (`511f09a5a`).
+- **Literature programme**: four lit-scout proposer runs + five
+  verifier passes, 570 claims, 1 FAIL (name boundary, corrected).
+  Verified reports + Zotero manifests under
+  `docs/methodology/research/lit-scout-*-2026-08-21.md`. Headline:
+  DIGMAPPER reports point-F1 0.82/0.89 (verified at source),
+  displacing Saxton 0.73; Kirsanova narrows the strand-3 absence
+  claim; Gould et al. 2026 "adaptive preregistration" = near prior art
+  with the LLM-support element the clean novelty. D.9 naming DEFERRED
+  to prose time (brief: `reports/d9-naming-decision-brief-2026-08-21.md`).
+- **Zotero**: TRAP write key minted; canonical collection
+  `TRAP > vlm-burial-mound-detection` (BTKV5ZIF) built to 104 items +
+  `vlm-adjacent-reference` (7GCK5VQ8) 8 items, topic-tagged; staging
+  collections deleted, items trashed; chapter records harmonised in
+  two group libraries (two blocked by per-group permissions).
+- **Observations**: Obs 424 (distortion-not-fabrication, `a6588fb55`)
+  and Obs 425 (the paper's most reasonable claim, five PI corrections,
+  `349cdd1b6`). Seed 8 parity language corrected to the
+  annotation-budget formulation (`df94b68f6`, `9e479ea08`).
+- **Tile-level F1**: derived from committed confusion matrices, 10/10
+  MCC-reproduction gate, 17 tier-1 tests (`43d066a64`); REGISTERED as
+  analysis row 38 on PI ruling — ALL VALID, zero drift (`bd6e94784`);
+  agent also fixed a 1:25k-for-1:50k slip (claude-obs 5 class).
+- **E82**: resumed per runbook (census exact: 1424/13; guard held);
+  588 ok + 21 pinned + 18/19 D41 rescued; ABORTED >5 failures;
+  inspection (`a50638832`) overturned the wider-defect inference —
+  six failures are pass-ORDER replay artefacts, one a rounding-boundary
+  bug in the rescue helper; **PI ruling: C1 + D** (label-keyed gate
+  comparison + np.mean fix; counts 19/6; two regression tests) —
+  implement and resume next session (`941a01e80`, `d75b3a1f1`).
+  Sapphire tree uncommitted pending Item D's single data commit.
+- **Provenance**: DRAFT `docs/notes/obs-model-provenance.md`
+  (`c1268a0b7`) — seven model eras incl. Gemini/Antigravity Obs 1–47,
+  13-commit trailer corruption, three "first Fable" conflicts;
+  corrected same night (`cbcd7abd5`): the 12-week transcript hole was
+  a wrong-store artefact (canonical archive healthy per infra-session
+  audit; .gz migration + stale repo docs produced the false alarm).
+  obs-writer trailer template fixed (derive, never hardcode).
+- **Infra**: AB+ located (paper-b `scripts/ab_plus/` + workflow);
+  adoption plan for map-reader noted, not run.
+
+**Contextual assumptions**: first half away from network (sapphire
+unreachable — lit programme deliberately chosen for it); Shawn ruled
+interleaved with running agents throughout; wound down at low context
+with E82 C1+D implementation, Item D/E, the Gould read, and the
+O'Hara/GMFS full-text checks as the explicit next-session queue.

@@ -7579,3 +7579,41 @@ compute campaign: "does the pilot sample the population it claims to
 protect?" is the question that found B2, and it is askable only by someone
 who does not already believe the answer.
 
+
+## Session 139 — 2026-08-21/22 (deep-research output distorts, never invents — and existence checks cannot see it; verifier value concentrates in analytical spot-checks, not metadata tables; the coordinator repeats the class it polices when it infers without inspecting; contract gates convert surprises into enumerable work)
+
+**Distortion, not fabrication, is the survivable error.** Across four
+proposer runs and five verifier passes (570 claims), Guard A produced
+zero confabulated identifiers and one name-boundary mis-parse; the two
+pre-scout claude.ai reports contained zero fake papers but at least
+eight material distortions of real ones — a mis-negation, an invented
+figure, a quantified qualitative result, a splice, a conflation, a
+confabulated author, a wrong journal, two mis-transfers. Every
+distortion pointed at something real, which is why nothing short of
+claim-level re-derivation plus full-text spot-checks caught them.
+(Obs 424 is the register entry; the DIGMAPPER mis-negation alone
+reframed the paper's parity claim.)
+
+**Where verifiers actually earn their spend.** All five metadata
+tables came back near-clean; the catches that mattered were analytical
+— UniBias's "17%" absent from its paper, MMICES's ablation qualitative,
+Kirsanova's exemplar count wrong in kind, Sterzinger's "10-shot"
+conflation, the SVG-coordinate grep trap. The lesson for briefs:
+metadata verification is now cheap insurance; the instruction that buys
+findings is "spot-check the characterisations against the full text".
+
+**The coordinator is not exempt.** Hours after documenting the
+distortion profile, I banked "defect wider than diagnosed" in the E82
+contract from failure-message pattern-matching, without inspecting a
+single cell. The inspection agent showed the six cells' summaries were
+*correct* — the gate was comparing permuted indices — and that the one
+genuine D41 re-failure was the rescue helper's own sum()/len()-vs-
+np.mean rounding at a 4 dp half-boundary. Same shape as Obs 423's
+wrong-but-plausible derivations; same cure (reproduce before assert).
+
+**Gates make surprises cheap.** Every shock today arrived pre-bounded:
+the MCC-reproduction gate ran 10/10 before any tile-F1 was published;
+the E82 abort tripwire stopped at seven failures with the report
+written; the drift check held the register at ALL VALID through a
+same-day registration. The pattern worth exporting: a surprise inside
+a gated system is a work item; outside one it is a crisis.

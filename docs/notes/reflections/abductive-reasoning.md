@@ -7391,3 +7391,92 @@ internally consistent side). It is Observation 423's lesson inverted:
 internal consistency is not validation either — two fields can corroborate
 each other because they inherit the same defect.
 
+
+## 2026-08-22 (Session 139, map-reader-llm): The wider defect that was a sorting order
+
+**Session:** 0a563a1d-fef9-4bab-a982-7a32ad83a8a0
+**Instance:** primary
+
+### Surprising fact
+
+The resumed E82 campaign aborted with six "point estimates moved"
+failures in `results/paper-eval/n1/384px-14buf-mcc/` — a tree with
+zero failures in the first run — sharing config names with the
+diagnosed D41 cells. I inferred, and banked in the contract, that the
+D41 mis-aggregation defect was wider than its diagnosed 19 cells.
+
+### Probe
+
+A read-only inspection agent checked the mechanism per cell rather
+than trusting the failure message: for all six, the committed summary
+tile point equalled the *correct* defined-pass mean, not run 1's value
+— the D41 signature was absent. What differed was the committed
+`per_run[*].label` order (`run01, run10, run02…`, lexicographic) versus
+the replay's numeric resolution, so the gate's index-wise comparison
+read a permutation of identical measurements as eight moved values.
+The predictive rule — canonical-resolver replay ∧ ≥ 10 runs — selected
+exactly the six observed cells with no false positives corpus-wide.
+The one genuinely-D41 cell that re-failed had a third cause: the
+rescue helper's `sum()/len()` disagreeing with the writer's `np.mean`
+at a 4 dp half-boundary.
+
+### Belief revision
+
+From "one defect, wider than diagnosed" to "three small defects, each
+exactly enumerated": D41 is precisely 19 cells as the contract states;
+the ordering artefact is precisely 6; the rounding boundary exposes 2.
+The meta-revision is sharper: a failure *message* names the gate that
+fired, not the mechanism that tripped it, and inferring mechanism from
+message is the same wrong-but-plausible move Obs 423 documents in
+derivations. The contract's stop-and-inspect rule is what converted my
+false inference into an eleven-line correction instead of a wrong fix.
+
+### What would change this belief
+
+If the enumeration scan had found signature-positive or order-permuted
+cells in the ~829 unreached files (it found none), the "exactly
+enumerated" claim would fall and the wider-defect framing would
+partially revive.
+
+## 2026-08-22 (Session 139, map-reader-llm): The twelve-week transcript hole that was a glob and a wrong store
+
+**Session:** 0a563a1d-fef9-4bab-a982-7a32ad83a8a0
+**Instance:** primary
+
+### Surprising fact
+
+The model-provenance agent reported that the transparency spec's
+`archive/cc-sessions/` store does not exist and that the live
+transcript store has a 12-week hole (2026-05-13 → 08-06) — implying
+permanent evidence loss for the "Opus 4.8" era.
+
+### Probe
+
+Shawn ran an independent audit from his infrastructure session: the
+canonical archive (`~/cc-archives` / rpi-server) holds ~850 sessions
+per machine with zero missing; from ~Feb 2026 transcripts are stored
+as `.jsonl.gz`, so any count globbing `*.jsonl` alone manufactures a
+hole "beginning at exactly the right time to be believable" — his
+session nearly reported a seven-month one. My agent had never reached
+that store: it followed the repo's own (stale) archive documentation,
+found the path absent, and fell back to the per-machine live store —
+a partial population by construction, since sessions run on other
+machines are simply not there.
+
+### Belief revision
+
+No data was lost; the hole was an artefact of consulting the wrong
+store after stale documentation redirected the search. Two durable
+rules fell out: provenance and audit work reads the canonical archive,
+never a live store; and a compressed-format migration is a standing
+trap for any presence check written before it. The near-symmetry of
+the two sessions' errors — both one command from reporting a plausible
+hole with a credible start date — is the instructive part: absence
+evidence inherits every assumption of the enumeration that produced
+it.
+
+### Implications for practice
+
+The map-reader repo's CLAUDE.md and transparency spec still point at
+the non-existent repo-local path; until repointed, any agent following
+project documentation reproduces the wrong turn.
