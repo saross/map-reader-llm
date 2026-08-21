@@ -826,3 +826,28 @@ hold over — silence never discards.
   per the contract and the compute rule. You then explained the travel
   context. Was hold-and-report right here, and is it the right default
   whenever an environment assumption breaks mid-run?
+
+## Pending review — Session 139 candidates (2026-08-22, drafted at handoff)
+
+**S139-C1 (in-the-moment reaction, relayed per the exception rule).**
+On the Obs 425 claim draft: "Otherwise I am quite happy with your
+framing, and it is in the correct tone/style/register. It matches my
+intent." — the conservative-first, qualifiers-intact drafting register
+landed exactly; candidate: drafting headline claims matter-of-fact and
+letting Shawn's corrections sharpen them is the right division of
+labour for claim language.
+
+**S139-C2.** Five mid-turn steers while agents ran (foregrounding
+concern, preprint preservation, TRAP question, collection-variable
+clarification, naming deferral) were each absorbed into the running
+pipeline without restart. Candidate: the interleaved-rulings-over-
+running-agents mode was helpful — decisions arrived as small structured
+choices at the moment evidence existed, never as blocking reviews.
+
+**S139-C3 (possible negative).** The provenance agent's "12-week
+transcript hole" claim triggered an infra-session audit that proved it
+a wrong-store artefact. The correction chain worked, but the alarm
+reached Shawn stated more confidently than its evidence base (a
+fallback store) warranted. Candidate: absence claims should arrive
+pre-caveated with the enumeration that produced them ("no transcripts
+IN STORE X globbed as Y") before any "hole" framing.
