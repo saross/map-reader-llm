@@ -1,6 +1,7 @@
 # Tile-level precision, recall, and F1: a protocol-matched comparison with the only published VLM archaeological detection study
 
-> **Last revised**: 2026-08-21 (original publication). See
+> **Last revised**: 2026-08-22 (registered as a first-class analysis by
+> Principal Investigator ruling; map-scale error corrected). See
 > [§ Changelog](#changelog) for revision history.
 
 **Date**: 2026-08-21
@@ -185,7 +186,7 @@ easier, which is the direction that flatters them. Neither correction can be
 applied post hoc from the published counts.
 
 **Caveat 2 — task domain.** Their three experiments are satellite imagery
-(castles, temples) and LiDAR hillshade (hillforts); ours is scanned 1:25,000
+(castles, temples) and LiDAR hillshade (hillforts); ours is scanned 1:50,000
 Soviet-series topographic map sheets. Detecting a symbol a surveyor deliberately
 drew is a materially different perceptual problem from detecting an eroded
 earthwork in a digital elevation model or an overgrown site in optical imagery,
@@ -225,15 +226,46 @@ rather than of head-to-head performance.
 
 ## 6. Registration status
 
-**Not registered.** Neither these derived metrics nor the derivation itself has
-been entered in `results/analyses-manifest.md` or
-`results/conditions-manifest.md`. First-class registration of tile-level
-precision/recall/F1 as a project metric is a decision for the Principal
-Investigator: it would add a third axis to the boards, would need its own
-confidence intervals and tiering instrument to be usable for comparison rather
-than description, and would need an explicit position on how it relates to the
-registered § 4.2 MCC. Until that decision is taken, this directory is a
-supplemental artefact cited by path, not a registered analysis.
+**Registered.** The Principal Investigator ruled on 2026-08-22 that these
+derived metrics should be registered, and the analysis was entered in the
+project register the same day.
+
+| Register field | Value |
+|---|---|
+| `analysis_id` | `tile-level-f1` |
+| `type` | `comparison` — the artefact's own framing (§ 4.1: a discrimination-grain comparison, not a leaderboard) |
+| `preregistered` | `post-hoc` — no registered hypothesis is adjudicated |
+| `conditions_compared` | 10 (the two gold-standard cells and the eight 55-map canonical-board cells) |
+| `paper_section` | Results |
+| `output_path` | `results/tile-level-f1` |
+| Source of truth | `results/run-analyses.json`, rendered by `scripts/generate_post_run_report.py` into `results/analyses-manifest.json` and `.md` |
+
+Three things the ruling did **not** change. First, **no new conditions were
+minted**: the ten cells were already registered conditions, so
+`results/conditions-manifest.json` is untouched and this document's numbers hang
+off existing condition identifiers. Second, the metric remains **supplemental**
+— it does not displace the registered § 4.2 MCC or the object-level F1 that
+carries the study's primary claim, and it still lacks the confidence intervals
+and tiering instrument that would make its orderings comparative rather than
+descriptive. Third, the classification is `post-hoc` on the S134 sorting rule:
+§ 4.2 registers tile-level MCC and tile-level *sensitivity* — which is exactly
+the tile-recall column in § 3 — but tile-level precision and tile-level F1 are
+not in the registered analysis plan, and neither the 55-map corpus, the 50 m
+board, nor the Landauer & Klassen comparison is a registered construct.
+
+The row is also **confidence-interval-independent**: every value here is a point
+estimate over four confusion-matrix integers, so the erratum E82 bootstrap
+re-emission campaign, in flight at the time of registration, cannot move any
+number in it.
+
+One residual, recorded so it is not lost: the JSON artefact
+[`tile_level_f1.json`](tile_level_f1.json) still carries the pre-ruling string
+`"Not registered … deferred to a Principal Investigator decision"` in its
+`registration` field. That string is emitted by
+`scripts/derive_tile_level_f1.py` and asserted by
+`tests/test_derive_tile_level_f1.py`, so refreshing it is a script-plus-test
+change and is pending; the register and this section are the current authority
+until it lands.
 
 ## 7. Reproducing
 
@@ -266,6 +298,44 @@ The script exits non-zero if any registered cell fails the MCC reproduction gate
 | `scripts/lib_advanced_metrics.py` (`calculate_tile_classification`) | Canonical tile-classification and MCC implementation |
 
 ## Changelog
+
+### 2026-08-22 — Registered as a first-class analysis; map scale corrected
+
+**Trigger**: the Principal Investigator ruled ("we should register them",
+2026-08-22) on the registration question § 6 had deferred. The analysis
+was entered in the project register as `tile-level-f1` — type `comparison`, ten
+conditions compared, class `post-hoc`, destination Results, `output_path`
+`results/tile-level-f1` — by appending a spec to the hand-authored
+`results/run-analyses.json` and regenerating `results/analyses-manifest.json`
+and `.md` with `scripts/generate_post_run_report.py --all --write`. The
+downstream projection `results/hypothesis-outcome-table/` was regenerated in the
+same pass, which lists `tile-level-f1` among the rows carrying no hypothesis
+reference. The register validates ALL VALID at 33 runs, 337 conditions, 1,138
+passes, and 38 analyses, with no registry-to-facts drift warnings.
+
+**Numerical claims that moved**: one, and it is not a metric. Caveat 2 in § 4.1
+described this project's corpus as scanned **1:25,000** Soviet-series
+topographic map sheets; the corpus is **1:50,000**
+(`docs/methodology/preregistration/osf/preregistration.md` § 1.1 Background and
+its "Data Sources" block;
+`docs/methodology/reports/tile-selection-methodology.md` § Data Sources).
+Corrected in place. This is a recurrence of a documented error pattern for this
+corpus — `docs/notes/claude-observations.md`, `claude-obs 5` (2026-07-28),
+records the same 1:25,000-for-1:50,000 slip surviving four agent passes over the
+documentation and being settled by the GeoTIFF graticule — not a new mistake,
+and it has no bearing on any count, gate, or derived statistic in this document.
+
+**What did NOT change**: every confusion matrix, every derived tile-level P/R/F1,
+the 10/10 MCC reproduction gate, the comparator table, and both governing
+caveats stand exactly as published on 2026-08-21. No condition was minted or
+altered, and `results/conditions-manifest.json` is untouched. Section 6 was
+rewritten from "Not registered" to the register row's field values, with the
+`post-hoc` rationale, the supplemental status, the CI-independence note, and the
+one residual (the JSON artefact's stale `registration` string, pending a
+script-plus-test refresh) all stated.
+
+**Commit**: see `git log -- results/run-analyses.json results/tile-level-f1/findings.md`
+for the landing commit; the derivation itself landed at `43d066a64`.
 
 ### 2026-08-21 — Original publication
 
