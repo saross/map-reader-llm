@@ -1,8 +1,8 @@
 # Discussion — seed paragraphs
 
 > **Last revised**: 2026-08-21 (Seeds 8–11 added — the PI's five
-> headline outcomes foregrounded: the bitter lesson, run
-> characteristics, cost/expertise, crowdsourcing interoperability).
+> headline outcomes foregrounded — and Seed 7 augmented with the
+> lit-scout novelty finding and the PI's response).
 > See [§ Changelog](#changelog) for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
@@ -292,6 +292,41 @@ confirmatory hypotheses; leave operational parameters to disclosed,
 rule-governed selection (cf. Seed 6's plateau rule, which is such a
 rule).
 
+**The S139 lit-scout finding and the PI's response (2026-08-21;
+verification pending).** The novelty check returned adjacent prior
+art: Gould et al. (2026, *Methods in Ecology and Evolution*,
+10.1111/2041-210x.70311) name "adaptive preregistration" — decision
+trees plus interim registrations at analysis phases — and the
+clinical-trials statistical-analysis-plan tradition supplies mature
+outcome-blind analysis-level registration. The PI reads this as a
+**good outcome, on two grounds**. First, the parallel literature is
+very recent (Gould et al. published months before the check, zero
+citations at query time): convergent, independent recognition that
+something is driving this need — plausibly the same tooling shift.
+Second, the LLM/AI element is underplayed across all prior art (the
+scout found no work proposing models as registration *authors*),
+and that is the paper's opening. The friction argument, in the
+PI's articulation: LLM assistance dramatically reduces the friction
+of producing **and** updating a preregistration — automated OSF
+updates alone save perhaps half an hour of pure interface overhead
+per amendment ("click through the UI, copy-paste, and double-check
+everything" time, after all text is composed), and composition
+itself is largely automated. Low friction is the mechanism that
+makes registration at the analysis grain practicable at all — it
+ties the LLM claim to the unit-shrinkage claim rather than leaving
+them as separate observations. **The PI's genre-appropriateness
+position, for drafting**: preregistration is a genre where
+AI-generated text is appropriate — with a style guide to intercept
+the most unwelcome tics and impose an appropriate register —
+because a registration document is a procedural instrument whose
+value lies in commitment and verifiability, not authorial voice; he
+is less comfortable with AI-generated text for journal articles or
+blog/Substack posts. The retrospective can state that boundary
+plainly. **Gates**: the reframe (qualified novelty vs
+endorsement-with-citation; naming — the scout suggests
+"just-in-time preregistration" over coining "micro-registration")
+waits on the verifier report and a PI naming ruling.
+
 **The LLM-support point cuts both ways — and that is the Discussion
 claim.** LLM assistance collapsed the drafting cost of registration,
 which is precisely what enabled the fifteen-hypothesis over-bake
@@ -469,6 +504,19 @@ comparison economics are retrospective, and the complementarity
 claim rests on the workflow analysis, not a head-to-head trial.
 
 ## Changelog
+
+### 2026-08-21 (later) — Seed 7 augmented with the lit-scout finding and the PI's response
+
+The micro-registration novelty check (S139) returned
+adjacent-but-distinct prior art (Gould et al. 2026 "adaptive
+preregistration"; the SAP tradition) with the LLM-support element as
+the one empty cell. The PI's articulation added to Seed 7: the
+recency-as-convergence reading; the two-component friction argument
+(composition + update/revision, including ~30 minutes of OSF
+interface overhead saved per amendment); and the
+genre-appropriateness position (AI-generated text appropriate for
+preregistrations with a style guide, not for articles or posts).
+Reframe and naming gated on the verifier report and a PI ruling.
 
 ### 2026-08-21 — Seeds 8–11 added (S139, PI foregrounding direction)
 
