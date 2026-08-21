@@ -290,6 +290,17 @@ diagnosed set (`flash-image-minimal-t-0-7`, `pro-text-high-t-0-7`,
 `flash-text-minimal-t-0-7`, `flash-text-high-t-0-7`). **The D41
 mis-aggregation defect therefore extends beyond the diagnosed 19**,
 and per this contract's own rule that is a STOP-AND-INSPECT state.
+*[CORRECTED 2026-08-22 by the inspection
+(`reports/e82-d41-widening-inspection-2026-08-22.md`, commit
+a50638832): the wider-defect inference is FALSE. The six n1-tree
+cells are NOT D41 — their summaries are correct; they fail on
+pass-ORDER replay fidelity (lexicographic committed labels vs
+numeric canonical-resolver replay, biting only at ≥ 10 runs on
+batch-recovered cells). The one re-failed original-19 cell hit a
+rounding-boundary bug in the exception helper (sum()/len() vs
+np.mean at a 4 dp half-boundary). D41 population corpus-wide is
+exactly the 19; ordering-defect population exactly 6, none
+unreached; the contract's n_reaggregated = 19 stands as written.]*
 No further action taken overnight: engine idle, sapphire working tree
 untouched (re-emitted files still awaiting the single post-completion
 data commit per Item D).
