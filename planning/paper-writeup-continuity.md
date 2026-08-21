@@ -8,35 +8,36 @@ project state.
 
 ---
 
-## 🔍 FIRST, IF YOU ARE FABLE ON 2026-08-20 — AUDIT SESSION 137
+## 🔍 START HERE (Session 139) — RESUME E82 IF HOME, THEN THE DISCUSSION WALK IN THIS FRESH CONTEXT
 
-> **The PI has asked for an adversarial audit of Session 137 before the work is
-> built on.** The brief is written and self-contained:
-> **`planning/session-137-audit-brief.md`**. Read it first and follow it; do not
-> resume the write-up until the audit is reported.
+> **The Session 137 audit is DONE and its remediation campaign is EXECUTED**
+> (report: `reports/session-137-audit-report-2026-08-20.md`; defect register
+> D25–D41). One thing is IN FLIGHT and one thing is NEXT:
 >
-> **Why**: Session 137 changed the inferential instrument behind fourteen
-> leaderboards, re-ran 49 committed evaluations, retracted a published sole-leader
-> claim, retired a reliability flag affecting 91 of 337 conditions, and
-> materialised two ground-truth references — eighteen commits,
-> `2907713f3`..`a4abdb7ed` on top of `3abec641a`. Several of the corrections were
-> themselves corrected mid-session. The brief was written by the instance that
-> did the work, which is stated in it as the reason to distrust it.
+> 1. **IF on the home network: resume the E82 corpus re-emission.** The
+>    controlling contract is `planning/e82-corpus-reemission-2026-08-20.md`
+>    — its **§ Resume runbook** has the one-command resume, the expected
+>    census (selected ≈ 1,424, no_recipe = 13 enforced), the
+>    `n_reaggregated = 19` check, and the item D/E checklists (post-run
+>    gates, ONE data commit from sapphire, manifest regeneration, IM-k4
+>    registration, the E82 execution note). Sapphire holds ~231 re-emitted
+>    evaluations + the campaign report UNCOMMITTED; its untracked
+>    `inputs/tiles_*` trees remain protected (N1 — never stash -u/clean).
+> 2. **The Discussion outline walk (DD1–DD10)** — deferred through FIVE
+>    sessions now, deliberately parked at S138's close for a fresh context.
+>    `docs/paper/discussion-outline.md`. Seeds → prose stays gated on it.
+>    The ground is stable: tie sets corrected, flags complete, register
+>    clean.
 >
-> **The main deliverable is not re-checking my conclusions.** § 2 of the brief
-> lists thirteen *classes* of error found during the session — a hard-coded
-> constant published as a measurement, a hand-applied correction that
-> regeneration reverted, a validation that never validated the committed
-> artefact, a docstring promising a property the code does not compute, a stale
-> flag, an inverted sign in a summary, a default parameter wrong for a subset, a
-> loader gap making committed data unreproducible, one field with two shapes, an
-> identifier that is not one, a mixed-format numeric column, a cross-scope
-> comparison, and a derivation that reproduced nothing. **Each was found once and
-> is likely present elsewhere. Hunting the classes is the job.**
->
-> § 3 records where I am least confident, § 4 what I did NOT check, and § 5 what
-> a finished report looks like. The audit should produce a report for the PI, not
-> register rows or errata edits.
+> **Queued behind those**: the `[E83]`-flagged sentence REWRITES in
+> `docs/paper/results-draft.md` (the flag set is now complete and the
+> corrected numbers final — note the n1-384 set is 3 members at B = 10,000,
+> spanning both temperatures, so the H7 sentence needs the weaker framing);
+> Methods scaffold conversions (§§ 1–4, § 6); the queued small fix from
+> S138's residue sweep — a dirty-input guard in `evaluate_detections.py`
+> (warn/refuse when a recipe input is uncommitted or ahead of HEAD at
+> scoring time; ten lines that make defect D40 unrepeatable); and the ~103
+> tests carrying neither tier marker (audit report Part D).
 
 ## ⚠️ STANDING ITEM — AWAITING EXTERNAL STATISTICAL REVIEW (opened 2026-08-19)
 
@@ -44,6 +45,14 @@ project state.
 > boards.** Shawn is seeking a statistician to review it. **Remind him if this is
 > still open at any later session close, and do not let it be quietly dropped:
 > it is the only known methodological gap that reaches paper-facing claims.**
+>
+> **S138 update (2026-08-20/21)**: the brief's three factual errors are
+> corrected (12/2 statistic split; eight-of-fourteen; the n1-384 row at
+> B = 10,000) and it now carries Monte Carlo coverage evidence — the
+> substitution errs CONSERVATIVE on all three boards tested (true-best
+> retention 0.995–1.000 vs nominal 0.95; audit report Part B). Within-model
+> evidence only; the external review is still wanted, and the brief is now
+> safe to send.
 >
 > The brief is written and self-contained for someone outside the project:
 > **`docs/methodology/mcb-critical-value-open-question.md`**. Defect **D24**.
@@ -101,6 +110,8 @@ project state.
 > `git stash -u`** (N1). **If working from zbook away from the home network,
 > sapphire is unreachable**: it has a working venv and 144 GB free, so $0 analysis
 > can run locally, but the CLAUDE.md compute rule assumes sapphire is available.
+
+**Session 138 (2026-08-20/21, zbook away from network both ends, US$0.00 API; first Fable session)** ran the Session 137 audit and then, on PI direction, executed the full remediation same-day. **The audit** (four Opus class-hunters + coordinator re-derivations): 17 ranked findings — headline: the `n1-baseline-matrix-384` tie set was computed at **B = 200** and is **3 members at B = 10,000**; plus the ci_unreliable retirement never reached artefacts, the `symbol_code` diagnosis falsified (float64-mangled record ids), bootstrap means published as `mcc`, the "ten of fourteen" count drift, and incomplete `[E83]` flags. The **D24 coverage simulation**: conservative on all three boards tested. **Remediation** (~30 commits): register corrected with an E83 correction block; 1,710-file measured-flag migration (register 1,041 → 0 stale flags); `source_id_lossy` rename; flags completed + set-relativity policy section; observed-point mcc corpus-wide (2,165 files, 141 backfilled points, 4 roll-ups rebuilt); legacy `results/leaderboard/**` ARCHIVED (PI ruling); six small fixes; D25–D41; tier-1 1,593 → 1,764+. **E82 corpus re-emission** launched under a `/pre-run-review` contract + clean-context pre-launch audit (2 blockers fixed pre-spend, incl. a pilot that would have aborted); pilots validated the adjacent-vintage search (evals scored against working trees committed minutes later — D40, 324 cells); the full run processed 223/1,628 before the D41 abort correctly caught 19 cells publishing run 1's tile point as the summary (correction PI-accepted; gate re-anchored to per-run points); **campaign PAUSED, sapphire off-network — resume via the contract's § Resume runbook**. Close-out: all seven S137 candidates dispositioned (Obs 421–423; four user-obs answers incl. the standing "options-not-considered by default" preference); Track-3 gap cell scored (IM-k4 vs best-available: F1@50 0.801, MCC 0.712, registration deferred); reflections + claude-obs 68–70. Commits `319709934`→`349891ad1`, all pushed. **Held-over working-notes candidates (no verdict yet — silence never discards)**: (a) input-vintage drift as a corpus phenomenon (19.6 % of BCa-era cells; the dirty-input scoring guard as the forward fix); (b) empirically calibrated coverage simulation as a cheap standing instrument once per-tile counts are loadable (400 sims in seconds via the board loaders).
 
 **Session 137 (2026-08-19, amd-tower + sapphire, US$0.00 API)** began by filing an
 erratum and ended having changed the inferential instrument behind fourteen
