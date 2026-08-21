@@ -327,6 +327,25 @@ endorsement-with-citation; naming — the scout suggests
 "just-in-time preregistration" over coining "micro-registration")
 waits on the verifier report and a PI naming ruling.
 
+**The first-person anchor (PI, 2026-08-21).** The PI co-authored an
+early advocacy chapter introducing preregistration to archaeology —
+Ross and Ballsun-Stanton (2022), "Introducing Preregistration of
+Research Design to Archaeology", University Press of Florida,
+10.5744/florida/9780813069302.003.0002 (SocArXiv preprint 2021,
+10.31235/osf.io/sbwcq) — which argues the *why* for the discipline.
+His framing for the retrospective: at that time the friction was
+high, and only in roughly the last year has the tooling existed to
+*realise* that ambition. This closes the retrospective's loop in
+first person: the advocacy predated practicability; the LLM-era
+friction collapse (this seed, above) is what converts the 2022
+argument into routine practice; and the over-bake → grain-not-volume
+→ just-in-time arc is the lived learning between the two points.
+Drafting benefit: D.9 can cite the prior chapter for the rationale
+and spend its own space entirely on the retrospective evidence.
+[Housekeeping: Zotero holds six near-duplicate records of this
+chapter with inconsistent years (2020/2021/2022); only key UI6SLPNY
+carries the DOI — flag for dedup before citation export.]
+
 **The LLM-support point cuts both ways — and that is the Discussion
 claim.** LLM assistance collapsed the drafting cost of registration,
 which is precisely what enabled the fifteen-hypothesis over-bake
@@ -516,6 +535,9 @@ recency-as-convergence reading; the two-component friction argument
 interface overhead saved per amendment); and the
 genre-appropriateness position (AI-generated text appropriate for
 preregistrations with a style guide, not for articles or posts).
+Also added the first-person anchor: Ross and Ballsun-Stanton (2022,
+10.5744/florida/9780813069302.003.0002) argued the why at high
+friction; the LLM friction collapse realises it (PI framing).
 Reframe and naming gated on the verifier report and a PI ruling.
 
 ### 2026-08-21 — Seeds 8–11 added (S139, PI foregrounding direction)
