@@ -305,7 +305,19 @@ No further action taken overnight: engine idle, sapphire working tree
 untouched (re-emitted files still awaiting the single post-completion
 data commit per Item D).
 
-**Next-session inspection plan**: (1) confirm the mechanism on one
+**PI RULING (2026-08-22): C1 + D adopted** — key per-run gate
+comparisons by run label rather than index (order-permuted pools
+pass with zero tolerance loss; changed pools still fail as
+label-set mismatches), and fix `_reaggregated_mean` to
+`round(float(np.mean(vals)), 4)` so the exception helper agrees
+with the writer. Expected counts: `n_reaggregated` stays **19**;
+new expected order-normalisations **6**. Two regression tests
+required (a ≥ 10-run lexicographic-label pool; a per-run mean on a
+4 dp half-boundary). Implement, test, and resume next session;
+runbook command unchanged. Evidence:
+`reports/e82-d41-widening-inspection-2026-08-22.md` (a50638832).
+
+**Superseded next-session inspection plan** (executed 2026-08-22): (1) confirm the mechanism on one
 n1-tree cell (does its summary tile point equal run 1's per-run tile
 point?); (2) enumerate the full same-symptom population corpus-wide
 with a cheap read-only scan, rather than discovering it five failures
