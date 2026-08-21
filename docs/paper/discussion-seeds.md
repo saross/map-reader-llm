@@ -1,8 +1,9 @@
 # Discussion — seed paragraphs
 
-> **Last revised**: 2026-08-16 (Seeds 6–7 added — the plateau rule
-> and its decision tree; the preregistration retrospective from the
-> D16 rider). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-21 (Seeds 8–11 added — the PI's five
+> headline outcomes foregrounded: the bitter lesson, run
+> characteristics, cost/expertise, crowdsourcing interoperability).
+> See [§ Changelog](#changelog) for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
 section, capturing the three argument lines that fell out of Session
@@ -307,7 +308,180 @@ shrinking the unit of preregistration from *the project* to *the
 analysis*. The retrospective can present this as the resolution of
 its own first-half over-bake, evidenced from the paper's own record.
 
+## Seed 8 (S139 addendum). The bitter lesson arrives at map-symbol extraction
+
+PI-directed (2026-08-21): the paper's headline interpretive frame.
+Sutton's bitter lesson (2019) holds that general methods leveraging
+computation ultimately beat approaches built on hand-encoded domain
+knowledge. Humphries' analysis of handwritten text recognition (HTR)
+supplies the adjacent-domain precedent the PI flagged: Gemini 3 Pro,
+a generalist model with no task-specific fine-tuning, reached CER
+1.67 % / WER 4.42 % under strict scoring (0.69 % / 1.33 % excluding
+formatting) against 3–8 % CER for fine-tuned specialist systems such
+as Transkribus, at roughly one cent per page ("Gemini 3 Solves
+Handwriting Recognition and it's a Bitter Lesson", Generative
+History, 2025-11-25,
+<https://generativehistory.substack.com/p/gemini-3-solves-handwriting-recognition>).
+This study is the map-symbol-extraction instance of the same
+pattern: a generalist VLM with no fine-tuning, no task-specific
+training corpus, and no bespoke architecture reaches F1@20 m 0.890
+on the gold-standard instrument and corrected-F1@50 m 0.815 at
+55-map deployment (headline pair, D.0). The parity leg — that these
+numbers sit within the range "good" bespoke CV/ML pipelines report
+on comparable tasks — is **gated on the detection-baselines lit
+pass** (launched S139) and must respect its protocol-comparability
+caveats. Two disciplines keep the claim honest. First, the
+engineering did not disappear; it moved up a level — consensus
+voting, proposer–verifier decomposition, and the calibration
+protocol are workflow engineering, authored in natural language and
+orchestration scripts rather than in model training — so the bitter
+lesson here is about *where* effort goes, not its elimination
+(bridge to Seed 10). Second, per DD3, the demonstrated case is one
+symbol type on one map series with one model family; the claim that
+map-symbol extraction generally is entering its bitter-lesson phase
+is advanced as an interpretation the HTR parallel makes plausible,
+not as a demonstrated result. The trajectory rider favours the
+generalist route: VLM capability improves with each model
+generation at no cost to this workflow, while a bespoke pipeline
+improves only with new bespoke work.
+
+## Seed 9 (S139 addendum). What a high-performing extraction run looks like
+
+PI-directed (2026-08-21): assemble the configuration profile of the
+study's best runs as a headline outcome in its own right, with
+mechanisms and one-clause Results callbacks (anti-double-telling:
+every number keeps its Results home). Four characteristics:
+
+1. **Text specification beats few-shot image examples for the
+   proposer — the surprising one.** Describing the symbol verbally
+   outperformed showing example images of it, across eras and
+   instruments (pilot: adversarial-verified text F1 0.796 vs image
+   0.711, `results/phase3d-pilot-results.md`; deployment oracle is
+   a text configuration at corrected-F1 0.848 on the canonical
+   reference). For a visual detection task this inverts the obvious
+   prior. Boundary: the registered few-shot-library manipulations
+   (H10 pool size, H12 HP:HN ratio) were not executed as intended
+   (E48), so *why* image examples underperform is only partially
+   characterised — the finding is the robust ordering, not a
+   mechanism.
+2. **Diversity helps only in specific forms.** The diversity
+   taxonomy (built across Phases 2–3d) found parametric diversity
+   (prompt variants, scaffolding, ensemble verifiers) generates
+   correlated errors and buys nothing, while reasoning-budget and
+   temperature diversity feed consensus pools effectively (the
+   HIGH-thinking diversity dividend: consensus over HIGH-thinking
+   passes ≈ 0.77 vs ≈ 0.69 over minimal-thinking passes on the
+   Era-1 instrument), and structural diversity — task decomposition
+   and cross-modal union — contributes independent error profiles.
+3. **Consensus voting converts pool diversity into precision**, and
+   its vote threshold is the one dial that must be re-tuned at
+   deployment (the plateau rule, Seed 6 — the threshold is a
+   property of the pipeline–corpus encounter, and re-tuning is
+   cheap by construction).
+4. **The proposer–verifier architecture is the largest single
+   structural gain** (pilot ΔF1 +0.086 to +0.138 over unverified
+   baselines; the verified consensus stack leads every instrument),
+   and the production verifier is deliberately minimal — single
+   pass, T = 0.0, minimal thinking — a configuration the
+   robustness sweeps vindicated against costlier alternatives.
+
+The synthesis: the study's recipe is a text-specified proposer,
+pool diversity from temperature and reasoning budget, k-of-N
+consensus, and an adversarial text verifier. The honest boundary is
+the recall ceiling: Experiment E showed the missed mounds are
+invisible to the model rather than rejected at its decision
+threshold, so the recipe's remaining errors are perceptual, not
+configurational.
+
+## Seed 10 (S139 addendum). Cost and expertise: the generalist route is accessible to the researchers who need it
+
+PI-directed (2026-08-21), building on the team's own prior work.
+The foil is Sobotkova, Kristensen-McLachlan, Mallon, and Ross
+(2024, *Journal of Documentation*, 10.1108/JD-05-2022-0096), which
+detected the same feature class in the same region with a
+pre-trained CNN and was written explicitly to balance the
+"disproportionately optimistic" ML-prospection literature — its
+core message was the time, effort, expertise, and resources ML
+demands, so that researchers can choose between ML and manual
+inspection with open eyes. This study answers that paper's
+cautionary question in a new register: the entire pipeline was
+built and operated by a domain expert working conversationally with
+LLM agents — no software developers, computer-vision specialists,
+or model training — and its deployment-scale detection campaign
+across 55 sheets (8,541 tiles) cost ≈ $722 in API spend (Obs 367 /
+token-load audit callbacks), with no GPU or training
+infrastructure. The expertise profile shifts rather than vanishes:
+what the workflow demands is domain knowledge (symbol semantics,
+landscape context, ground-truth adjudication), research-methods
+literacy (calibration design, error analysis), and facility in
+directing LLMs — the profile of a "typical tech-savvy researcher"
+— not ML engineering. Two boundaries keep this honest. The effort
+did not disappear: calibration, verification infrastructure, and
+statistical validation consumed substantial researcher time across
+the project's sessions, and the claim is about *who can do it*, not
+*how quickly*. And the pipeline's code layer, while LLM-authored
+under domain-expert direction, still exists — the claim is that
+authoring it no longer requires a software team, which is itself an
+instance of Seed 8's argument that the engineering moved from model
+training to natural-language workflow orchestration.
+
+## Seed 11 (S139 addendum). Crowdsourcing and participatory mapping: comparison, interoperability, and mutual quality assurance
+
+PI-directed (2026-08-21), building on Sobotkova, Ross,
+Nassif-Haynes, and Ballsun-Stanton (2023, *Applied Geography*,
+10.1016/j.apgeog.2023.102967): a FAIMS Mobile customisation with
+which novice volunteers digitised 10,827 mound features from Soviet
+military topographic maps in 241 person-hours (57 staff, 184
+volunteer), at an error rate under 6 %, with crowdsourcing
+estimated most efficient for projects of 10,000–60,000 features.
+Three moves:
+
+1. **Comparison**: crowdsourcing and VLM extraction are the two
+   demonstrated routes to unlocking historical-map data at scale,
+   and the paper can now price both from its own record — 241
+   person-hours plus platform customisation against ≈ $722 API and
+   days of wall-clock. The error profiles differ in kind: novice
+   digitisation errs by omission and misplacement; the VLM pipeline
+   errs with a characterised FP/FN structure and per-candidate
+   confidence scores that support downstream filtering.
+2. **Interoperability, demonstrated in-study**: the deployment
+   reference layer is itself a student-digitised product hardened
+   by targeted review (methods § reference construction)
+   [unverified: whether the 55-map student layer descends from the
+   2023 campaign's dataset — PI to confirm], so the study already
+   operates the loop it recommends — crowdsourced data validating a
+   VLM pipeline at scale, while the pipeline's error-structure
+   apparatus (R8) quantifies residual incompleteness in the
+   crowdsourced layer in return. If the lineage is confirmed, the
+   mutual-QA framing sharpens: each method independently estimates
+   the other's error rate.
+3. **The hybrid workflow**: Seed 5's tile-triage-plus-pinpointing
+   is a participatory task specification — a tile-MCC-optimal stack
+   produces the shortlist, and volunteers (on exactly the 2023
+   platform pattern) supply precision localisation and edge
+   adjudication. Crowdsourcing and VLM extraction are complements,
+   not substitutes; the planned pinpoint-correction app is the
+   instrument, and the prospective test belongs to future work
+   (D.7 pointer, one clause).
+
+Boundary: no prospective hybrid deployment ran in this study — the
+comparison economics are retrospective, and the complementarity
+claim rests on the workflow analysis, not a head-to-head trial.
+
 ## Changelog
+
+### 2026-08-21 — Seeds 8–11 added (S139, PI foregrounding direction)
+
+The PI identified five headline outcomes the Discussion must
+foreground: the bitter lesson arriving at map-symbol extraction
+(Seed 8, with the Humphries HTR parallel and the parity leg gated
+on the detection-baselines lit pass); the configuration profile of
+high-performing runs (Seed 9); cost/expertise accessibility against
+the team's own 2024 CNN paper (Seed 10); and
+comparison/interoperability with the team's 2023 crowdsourcing
+paper (Seed 11). Anchors verified at write time: pilot F1s from
+`results/phase3d-pilot-results.md`; both prior-paper citations and
+abstracts from Zotero; Humphries numbers from the post itself.
 
 ### 2026-08-17 — Seed 7 augmented with the PI's fuller articulation
 
