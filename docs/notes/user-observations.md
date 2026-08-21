@@ -746,10 +746,10 @@ implementation one. The general shape: act on prior approvals and
 correct what is demonstrably wrong, but do not commit the PI to an
 ordering they have not chosen.
 
-## S137 candidates (2026-08-19, pending review)
+## S137 candidates (2026-08-19, reviewed 2026-08-21)
 
-Drafted at handoff; accept / edit / discard / replace. Unanswered candidates
-hold over — silence never discards.
+Drafted at the S137 handoff; reviewed by Shawn during the S138 close-out.
+Dispositions recorded per candidate below.
 
 - **Candidate 1 — I offered one option where my own instructions say to
   survey.** You had to ask "should we review-implementation of the
@@ -785,3 +785,21 @@ hold over — silence never discards.
   my conclusions to blunt it, but the choice of what to list as uncertain was
   still mine. Did the flagging help, or would you rather the next audit brief be
   a bare diff and commit range with no framing from me at all?
+
+### Dispositions (Shawn, 2026-08-21)
+
+1. **Single-option proposing — yes, attach an alternatives line by default.**
+   Method choices should carry a one-line "options I did not consider" note
+   as standard; the review machinery exists because first proposals go
+   unchecked. Recorded as a standing working preference.
+2. **Five self-corrections — read as rigour.** The correction rate read as
+   the verification design doing its job; trust attaches to gated output,
+   not to any single draft claim.
+3. **Pacing — the cadence was legible.** Per-landing reports worked; keep
+   the rhythm for heavy corrective sessions.
+4. **Self-authored audit briefs — keep them.** The S138 audit validated the
+   class-structured brief empirically: the classes recurred and were
+   findable, the auditor's independence handled the framing risk (it audited
+   the brief itself, found its headline count wrong, and its two largest
+   findings came from outside the brief's framing). The flagged conflict
+   plus an independent auditor beats an unframed diff.

@@ -27470,3 +27470,53 @@ The five Session-136 candidates were approved in-session on
 2026-08-19 and minted above as Observations 416–420; the
 Session-135 candidate was approved on 2026-08-17 at the L4 walk and
 minted as Observation 415.
+
+## Observation 421: Selection optimism is governed by candidate correlation, not candidate count (Session 137, 2026-08-19; accepted 2026-08-21)
+
+Thirty nominal candidates on a nested sweep behave like a handful of
+effective ones: measured optimism across the grid cells and registered boards
+ranges −0.0008 to +0.0137 and tracks argmax stability almost perfectly, an
+order of magnitude below the nearest published analogue (SIREN's +0.42 to
++3.70 points), whose candidates are near-independent. The sharp instance is
+erratum E56's verifier threshold curve, predicted to be the unstable worst
+case because it is flat and measured as the MOST stable candidate set
+(optimism +0.0004, argmax stability 0.906): nested candidates move together
+under a tile resample, and it is the variance of the differences, not the
+size of the differences, that moves an argmax. Boundary: correlation is the
+mechanism, so the reassurance does not transfer to independent candidate
+sets (prompt search, model sweeps), where published optimism is large. The
+Session 138 coverage simulation strengthened the reading — the MCB critical
+value errs conservative on all three boards tested, for the same structural
+reason. Sources: `results/selection-aware/findings.md`;
+`reports/session-137-audit-report-2026-08-20.md` Part B.
+
+## Observation 422: A tier built from pairwise non-significance is not a well-defined object (Session 137, 2026-08-19; accepted 2026-08-21)
+
+Non-significance is not transitive, so ANY rule that partitions conditions
+into tiers from pairwise tests is choosing among inconsistent partitions;
+`greedy_clique_tiers`' order-dependence (defect D20) was a symptom, not the
+disease. Measured against Hsu MCB across the boards, the sequential rule ran
+too narrow on some boards, too wide on others, and on one produced a set
+neither a subset nor a superset of the replacement's — no uniform correction
+existed, which is why erratum E83 replaced the instrument rather than
+patching it. The general lesson for the Discussion: when a published object
+is derived from pairwise tests, ask whether the object is well-defined
+before asking whether the code computes it correctly. Boundary: descriptive
+rank bands below the first group remain legitimate BECAUSE they claim no
+statistical separation. Sources: E83;
+`docs/methodology/inference-instrument-policy.md`.
+
+## Observation 423: Wrong-but-plausible derivations, and the reproduce-a-committed-value gate that catches them (Session 137, 2026-08-19; accepted 2026-08-21)
+
+Detections book to ONE carrier tile (nearest centroid, E79) while references
+book to EVERY tile they intersect, so reference occupancy cannot be derived
+from the detection-level FN column — and a derivation that ignored this
+reproduced a plausible tile-MCC of 0.898 against a committed 0.790. Nothing
+about 0.898 looks wrong; only the discipline of reproducing a committed
+value before using a derivation caught it. The same gate later caught the
+B = 200 tie-set defect (audit finding F1) and anchored every Session 138
+re-emission. The rule worth keeping: a re-derivation is not validated by
+plausibility or by internal consistency, only by reproducing a committed
+number it did not consume. Sources: `docs/methodology/tile-mcc-explained.md`
+(both worked examples re-verified exactly by the S138 audit); defect D23.
+
