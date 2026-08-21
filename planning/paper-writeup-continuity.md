@@ -8,7 +8,49 @@ project state.
 
 ---
 
-## 🔍 START HERE (Session 139) — RESUME E82 IF HOME, THEN THE DISCUSSION WALK IN THIS FRESH CONTEXT
+## 🔍 START HERE (Session 140) — E82: IMPLEMENT C1+D, RESUME, THEN ITEM D/E
+
+> **The one blocking chain**: the E82 resume aborted on two NEWLY
+> DIAGNOSED small defects (not D41 — see the corrected outcome note in
+> `planning/e82-corpus-reemission-2026-08-20.md` and the inspection at
+> `reports/e82-d41-widening-inspection-2026-08-22.md`). **PI ruled
+> C1 + D (2026-08-22)**: key per-run gate comparisons by run LABEL, and
+> fix `_reaggregated_mean` to `round(float(np.mean(vals)), 4)`;
+> expected counts n_reaggregated = 19 and order-normalisations = 6;
+> two regression tests required (≥ 10-run lexicographic pool; 4 dp
+> half-boundary mean). Implement → tier-1 → resume via the unchanged
+> runbook command → Item D (ONE data commit from sapphire — its tree
+> holds ~700 modified files deliberately uncommitted; NEVER stash/clean,
+> N1) → Item E after PI sign-off. Also: kill the stale monitor loop on
+> sapphire (`pkill -f "e2-corpus" style pattern matches itself` — a
+> leftover ssh while-pgrep loop from S139 self-matches and never exits).
+>
+> **Then, queued (S139 leftovers)**: (1) PI reads Gould et al. → the
+> D.9 naming discussion (`reports/d9-naming-decision-brief-2026-08-21.md`);
+> (2) O'Hara full-text check (Zotero TXAD8SMF: 90.8 vs 98.2) and GMFS F1
+> (0.86 vs 0.87); (3) provenance finalisation — upgrade MEDIUM/LOW eras
+> from the canonical `~/cc-archives` .gz transcripts (NOT any live
+> store) + repoint CLAUDE.md § Session Archiving and the transparency
+> spec at the real archive location; (4) two Zotero chapter copies
+> blocked on group permissions (Arch-repro `SRI3YFK5`: add DOI, clear
+> bogus volume; HAVI `MMHTRQTA`: add DOI/series/url) — manual or new
+> keys; (5) symbol-diameter check (is 20–30 m within the printed mound
+> symbol's ground footprint at 1:50k?) for Seed 8/Obs 425 prose; (6)
+> clear the disclosed residual in `results/tile-level-f1/tile_level_f1.json`
+> ("registration deferred" string — script+test touch); (7) the S138
+> queue unchanged: Methods scaffold conversions (§§ 1–4, § 6), the
+> dirty-input guard in `evaluate_detections.py`, ~103 unmarked tests.
+>
+> **Discussion status**: outline FULLY SETTLED (DD1–DD13, two-part
+> core, D.0–D.11); Seeds 1–11 drafted and lit-grounded; BOTH lit gates
+> discharged (five verified reports under
+> `docs/methodology/research/lit-scout-*-2026-08-21.md`); Obs 424/425
+> carry the day's headline claims; **prose stays deferred until the
+> earlier paper sections are written (PI ruling)**. TRAP Zotero
+> collections built: `vlm-burial-mound-detection` 104 items,
+> `vlm-adjacent-reference` 8.
+
+## 🎯 PREVIOUS (S139 beacon, executed) — RESUME E82 IF HOME, THEN THE DISCUSSION WALK IN THIS FRESH CONTEXT
 
 > **The Session 137 audit is DONE and its remediation campaign is EXECUTED**
 > (report: `reports/session-137-audit-report-2026-08-20.md`; defect register
@@ -110,6 +152,8 @@ project state.
 > `git stash -u`** (N1). **If working from zbook away from the home network,
 > sapphire is unreachable**: it has a working venv and 144 GB free, so $0 analysis
 > can run locally, but the CLAUDE.md compute rule assumes sapphire is available.
+
+**Session 139 (2026-08-21/22, amd-tower, home network from evening; US$0.00 Gemini API; Fable 5)** — the Discussion structure closed and the literature arrived, verified. (1) **DD1–DD13 ALL SETTLED**: the walk (nine as recommended) plus the PI's same-day foregrounding amendment — five headline outcomes, Seeds 8–11 drafted, two-part core (Part I what-the-study-shows / Part II lessons-for-survey-practice), sections D.0–D.11; old D.4 dissolved into D.1; **prose deferred until earlier sections are written (PI)**. (2) **All eight E83 flags rewritten** to register-verified MCB values (`511f09a5a`). (3) **Literature programme**: four lit-scouts + five verifiers, 570 claims, 1 FAIL (name boundary, corrected); five verified reports + import manifests banked. Headlines: **DIGMAPPER point-F1 0.82/0.89 (confirmed at arXiv source) displaces Saxton 0.73** — Seed 8 reframed to near-parity-at-20-tile-annotation-budget; Kirsanova narrows the strand-3 absence claim to "across the map face"; **Gould et al. 2026 "adaptive preregistration" = near prior art, LLM-support the clean novelty** — D.9 naming DEFERRED pending the PI's Gould read (decision brief banked). Old-report figures UniBias "17%" and MMICES "1.2–1.5" proven absent from their papers. (4) **Zotero**: TRAP write key + canonical collections built (104 + 8 items, topic-tagged); staging cleaned; obs-writer trailer template fixed (derive, never hardcode) after a 13-commit stale-trailer corruption was mapped. (5) **Obs 424** (distortion-not-fabrication, 1/570 pipeline error rate) and **Obs 425** (the most reasonable claim, five PI corrections: annotation budget, conservative buffers, symbol family, tolerance alignment, tile-level comparability). (6) **Tile-level F1** derived (10/10 MCC-reproduction gate) and REGISTERED as analysis row 38 on PI ruling (ALL VALID, 0 drift, `bd6e94784`). (7) **E82 resumed → aborted correctly**: census exact, 588 ok + 21 pinned + 18/19 D41 rescued; inspection (`a50638832`) OVERTURNED the overnight wider-defect inference — six failures are pass-ORDER replay artefacts, one a rounding-boundary bug in the rescue helper; **PI ruling C1 + D**, implement next session; sapphire tree deliberately uncommitted. (8) **Model-provenance DRAFT** (`docs/notes/obs-model-provenance.md`): seven eras incl. Gemini/Antigravity Obs 1–47; the "12-week transcript hole" corrected same night as a wrong-store artefact (canonical archive healthy; live stores are partial populations — rule recorded). Reflections + claude-obs 71–73 committed. ~30 commits `528ba9483`→session end, all pushed. **Held over for verdicts (silence never discards)**: S138's two working-notes candidates (input-vintage drift as corpus phenomenon; calibrated coverage simulation as standing instrument) and its three user-obs candidates remain pending; S139 adds one working-notes candidate (pass-order replay artefact + rounding boundary — write after the C1+D fix verifies) and three user-obs candidates (in file, pending review).
 
 **Session 138 (2026-08-20/21, zbook away from network both ends, US$0.00 API; first Fable session)** ran the Session 137 audit and then, on PI direction, executed the full remediation same-day. **The audit** (four Opus class-hunters + coordinator re-derivations): 17 ranked findings — headline: the `n1-baseline-matrix-384` tie set was computed at **B = 200** and is **3 members at B = 10,000**; plus the ci_unreliable retirement never reached artefacts, the `symbol_code` diagnosis falsified (float64-mangled record ids), bootstrap means published as `mcc`, the "ten of fourteen" count drift, and incomplete `[E83]` flags. The **D24 coverage simulation**: conservative on all three boards tested. **Remediation** (~30 commits): register corrected with an E83 correction block; 1,710-file measured-flag migration (register 1,041 → 0 stale flags); `source_id_lossy` rename; flags completed + set-relativity policy section; observed-point mcc corpus-wide (2,165 files, 141 backfilled points, 4 roll-ups rebuilt); legacy `results/leaderboard/**` ARCHIVED (PI ruling); six small fixes; D25–D41; tier-1 1,593 → 1,764+. **E82 corpus re-emission** launched under a `/pre-run-review` contract + clean-context pre-launch audit (2 blockers fixed pre-spend, incl. a pilot that would have aborted); pilots validated the adjacent-vintage search (evals scored against working trees committed minutes later — D40, 324 cells); the full run processed 223/1,628 before the D41 abort correctly caught 19 cells publishing run 1's tile point as the summary (correction PI-accepted; gate re-anchored to per-run points); **campaign PAUSED, sapphire off-network — resume via the contract's § Resume runbook**. Close-out: all seven S137 candidates dispositioned (Obs 421–423; four user-obs answers incl. the standing "options-not-considered by default" preference); Track-3 gap cell scored (IM-k4 vs best-available: F1@50 0.801, MCC 0.712, registration deferred); reflections + claude-obs 68–70. Commits `319709934`→`349891ad1`, all pushed. **Held-over working-notes candidates (no verdict yet — silence never discards)**: (a) input-vintage drift as a corpus phenomenon (19.6 % of BCa-era cells; the dirty-input scoring guard as the forward fix); (b) empirically calibrated coverage simulation as a cheap standing instrument once per-tile counts are loadable (400 sims in seconds via the board loaders).
 
