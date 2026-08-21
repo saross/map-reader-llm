@@ -525,11 +525,16 @@ session's foregrounding amendment (PI, 2026-08-21).
 "adaptive preregistration" is near prior art, the LLM-support
 element is the clean novelty;
 `docs/methodology/research/lit-scout-micro-registration-2026-08-21.md`);
-**what remains before D.9 prose is the PI naming/reframe ruling**
-(adopt/contrast "adaptive preregistration" vs coin "just-in-time
-preregistration" vs "micro-registration") plus a full read of Gould
-et al. The detection-baseline lit pass (**launched S139, verifier
-in flight**) gates D.1 prose. `academic-prose` loads before any
-Seeds→prose conversion. **Prose scheduling (PI, S139)**: all
-Discussion prose waits until the earlier sections of the paper are
-written.
+**what remains before D.9 prose is the PI naming/reframe ruling —
+DEFERRED to prose time (PI, S139)**, to follow a full read of Gould
+et al. and discussion; the decision inputs are banked at
+`reports/d9-naming-decision-brief-2026-08-21.md`. The
+detection-baseline lit pass is also **COMPLETE AND VERIFIED S139**
+(185/185 claims pass;
+`docs/methodology/research/lit-scout-detection-baselines-2026-08-21.md`)
+— D.1's gate is discharged, with the report's own to-do noted (full-
+text metric extraction for the nine [not retrieved] comparators and
+the Tier-1 reads before D.1 prose reaches a reviewer).
+`academic-prose` loads before any Seeds→prose conversion. **Prose
+scheduling (PI, S139)**: all Discussion prose waits until the
+earlier sections of the paper are written.

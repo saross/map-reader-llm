@@ -325,10 +325,10 @@ because a registration document is a procedural instrument whose
 value lies in commitment and verifiability, not authorial voice; he
 is less comfortable with AI-generated text for journal articles or
 blog/Substack posts. The retrospective can state that boundary
-plainly. **Gates**: the reframe (qualified novelty vs
-endorsement-with-citation; naming — the scout suggests
-"just-in-time preregistration" over coining "micro-registration")
-waits on the verifier report and a PI naming ruling.
+plainly. **Gates**: verification is complete (31/31 pass); the naming/reframe
+ruling is **DEFERRED to prose time** (PI, S139) pending a full read
+of Gould et al. and discussion — decision inputs banked at
+`reports/d9-naming-decision-brief-2026-08-21.md`.
 
 **The first-person anchor (PI, 2026-08-21).** The PI co-authored an
 early advocacy chapter introducing preregistration to archaeology —
