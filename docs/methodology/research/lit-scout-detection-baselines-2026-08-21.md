@@ -242,6 +242,19 @@ Rows 7–14 (area/line features) as a contrast class; rows 19–24, 28–30 for 
 
 ## Synthesis: where does 0.815–0.890 sit?
 
+> **Superseded in part (2026-08-21, later same day)**: the old-report
+> resolve batch (`lit-scout-oldreport-resolve-2026-08-21.md`, verified
+> 45/45 with the key figures confirmed against the arXiv full text)
+> found that **DIGMAPPER (Duan et al. 2025) reports point-specific
+> F1 0.82 overall / 0.89 on its Excellent subset** under a
+> 2×10⁻⁴ × map-diagonal match buffer — displacing Saxton et al.'s
+> 0.73 as the strongest published point-detection result on degraded
+> historical maps. Statements below that call 0.73 "the strongest
+> published point-feature result" or place 0.815–0.890 "clearly
+> above the cluster" read accordingly: against DIGMAPPER the
+> comparison is close (with heavy supervision on their side and a
+> different match protocol), not distant.
+
 **Against the most similar task — object-level detection of mound symbols on a historical topographic map series — 0.815 to 0.890 sits at or slightly above the top of the published held-out cluster.** The only directly comparable held-out numbers are Berganzo-Besga et al. (2023): F1 0.642–0.724 for hachure mounds and 0.706–0.938 for form-line mounds on their low-density test set, the spread driven by how similar the test maps were to the training maps. The paper's 0.890 exceeds every point on the hachure curve and sits in the upper half of the form-line curve; 0.815 sits above the whole hachure curve and mid-range on form-line. Garcia‐Molsosa et al. (2021) imply higher figures still (P ≈ 0.88–0.97 with R ≈ 0.96–1.00), but against manual re-reading of a small set of similar sheets rather than a held-out generalisation test.
 
 **Against point-feature extraction on degraded historical cartography more broadly, 0.815–0.890 sits clearly above the cluster.** Saxton et al. (2024) report median F1 0.73 for point features with abundant annotated training data; the AI4CMA competition median was 0.35 (Goldman et al. 2025). Vassányi & Gede (2021) report 90% accuracy on point symbols, but on a cleaner map series with an unspecified metric definition.
