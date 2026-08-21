@@ -395,9 +395,26 @@ number — F1 0.82 overall / 0.89 on its Excellent subset — from a
 fully supervised YOLOv8 module with synthetic training data and a
 map-diagonal-scaled match buffer.** The honest parity claim is
 therefore "at or above the best published held-out results,
-including near-parity with the best fully supervised system, at
-zero training examples" — not the superseded "23 points clear of
-0.73" framing from the pre-scout groundwork. The strand-3 absence
+including near-parity with the best fully supervised system, with
+no model training or fine-tuning" — the pipeline's total annotated
+input was the 20-tile calibration set plus its mined example crops
+(prompt calibration, symbol-description drafting, and the image
+track's few-shot library), an annotation budget two to three orders
+of magnitude below the supervised comparators', with zero gradient
+updates — not the superseded "23 points clear of 0.73" framing
+from the pre-scout groundwork. Two protocol notes strengthen rather
+than weaken the comparison: DIGMAPPER's buffer is described by its
+authors as approximately the point-symbol size, and 20 m at
+1:50,000 is 0.4 mm at map scale — the same order as a printed
+point symbol — so both criteria tolerate roughly symbol-scale
+displacement, making GS@20 m the protocol-nearest cell; and the
+20 m/50 m tolerances are conservative for survey purposes (a
+position within 50 m relocates a mound in the field), so the
+buffer's uniqueness is not a laxer standard. Against the only
+prior VLM attempt, a like-for-like tile-level comparison is
+additionally derivable at $0 from the committed tile confusion
+matrices (their tile-level F1 0.41–0.67 at constructed prevalence;
+our tile-MCC 0.710 at deployment, to 0.889 on GS cells). The strand-3 absence
 claim narrows per Kirsanova et al. (2025, 10.1145/3764920.3770590):
 VLM bounding-box prediction on historical map scans exists for the
 cropped legend region, so the paper's claim is "no published VLM
