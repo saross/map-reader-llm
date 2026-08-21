@@ -27520,3 +27520,71 @@ plausibility or by internal consistency, only by reproducing a committed
 number it did not consume. Sources: `docs/methodology/tile-mcc-explained.md`
 (both worked examples re-verified exactly by the S138 audit); defect D23.
 
+## Observation 424: Research-mode chatbot output distorts real sources rather than inventing them — and claim-level re-derivation catches what existence checks cannot (Session 139, 2026-08-21)
+
+Session 139 ran the literature programme's verification discipline at
+full scale: 570 bibliographic claims re-derived across four lit-scout
+proposer runs and five adversarial verifier passes (155
+micro-registration + 185 detection-baselines + 45 old-report resolve +
+40 adjacent-cluster + 145 prompt-techniques). Guard A — citation
+columns built mechanically from registry JSON (`lit-search.py
+metadata`, CrossRef, arXiv/DataCite), never from model memory —
+produced **zero confabulated identifiers** across all four proposer
+runs. The single FAIL in 570 claims was a family-name boundary
+mis-parse: the metadata chain returned the unsplit display string
+"Folco Bertini Baldassini", and the proposer chose the wrong
+family/given boundary, producing "Bertini Baldassini et al." where
+CrossRef, DataCite, and DBLP all agree the family name is Baldassini —
+an encoding artefact, not confabulation (right paper, right person),
+corrected in place across all eight occurrences.
+
+By contrast, the two pre-scout claude.ai research-mode reports
+(`claude-comparison-with-other-research.md`,
+`claude-optimising-symbol-detection-benchmarks.md`) invented no
+papers — every DOI they cite resolves — but the same verifier passes
+found at least eight materially distorted claims about real ones:
+
+| # | Distortion | Chatbot claim | Verified reality |
+| :--- | :--- | :--- | :--- |
+| 1 | Mis-negation | DIGMAPPER "does not report point-specific F1" | F1 0.82 overall / 0.89 on the Excellent subset, confirmed verbatim against the arXiv full text |
+| 2 | Invented figure | UniBias "17% bias reduction" | Paper reports average-accuracy gains of 3.39% and 2.97%; "17%" appears nowhere |
+| 3 | Quantified qualitative result | MMICES "1.2–1.5 point drop" | The ablation is reported qualitatively; no such figures exist |
+| 4 | Mis-attribution (splice) | PEACE's GPT-4o score of 0.369 attributed to CartoMapQA (Ung et al.) | 0.369 is PEACE's own figure (Huang et al. 2025); the CartoMapQA attribution is a splice, unverified and unsupported |
+| 5 | Conflation | Sterzinger F1 0.827 labelled "10-shot" | §4.1 confirms a single-training-image regime; the 10-shot/5-shot figures are relative-mIoU gains on a different dataset |
+| 6 | Confabulated author | "Mårtensson et al." | The paper is Ståhl & Weimann (2022); no Mårtensson appears on the record |
+| 7 | Wrong journal | GMFS placed in *Developments in the Built Environment* | Correct venue is the *Journal of Infrastructure Intelligence and Resilience* |
+| 8 | Topic mis-transfer | VisRAG's "20–40% gains" cited for few-shot example selection; RICES endorsed | VisRAG is document-corpus retrieval, not example selection; RICES is directly undercut by Baldassini et al. — no better than majority voting |
+
+The implication: the characteristic failure mode of deep-research
+chatbot output is **distortion of real sources, not invention** —
+invisible to an existence check (every identifier resolves) and
+caught only by claim-level re-derivation plus full-text spot-checks.
+This is direct within-project evidence for the Seed 7 LLM-support
+claim (`docs/paper/discussion-seeds.md`): the compensating machinery —
+proposer/verifier separation, Guard A, adversarial re-derivation —
+worked, ran same-day at zero Gemini API spend, and its measured error
+rate (1/570, 0.18%) sits orders of magnitude below the distortion rate
+of the material it replaced (≥8 material distortions across roughly
+thirty described works).
+
+Rider worth preserving: the O'Hara publisher-block interstitial
+"contains" the figure 90.8 only as SVG path coordinates behind an
+HTTP 403 wall — a careless grep would have "confirmed" a number from
+noise. The verifier caught the trap and left the 90.8%↔98.2%
+relationship flagged PARTIAL pending the PDF (Zotero key `TXAD8SMF`),
+rather than laundering a search-engine summary into a checked fact.
+
+Sources: `docs/methodology/research/lit-scout-micro-registration-2026-08-21.md`
+(`10f913957`, 155/155 pass); `lit-scout-detection-baselines-2026-08-21.md`
+(`01976a5b7`, 185/185 pass); `lit-scout-oldreport-resolve-2026-08-21.md`
+(`c310dba41`, 45/45 pass); `lit-scout-adjacent-cluster-2026-08-21.md`
+(`ea0726d17`, 39/40 pass, 1 partial); `lit-scout-prompt-techniques-2026-08-21.md`
+(`e23480cc1`, 137/145 pass, 7 partial, 1 fail corrected); pre-scout
+reports `docs/methodology/research/claude-comparison-with-other-research.md`
+and `claude-optimising-symbol-detection-benchmarks.md`. Related:
+**Obs 423** (wrong-but-plausible re-derivations caught only by
+reproducing a committed value — the same distortion-not-invention
+shape on the code side); **Obs 235** (the H10/H12 retraction —
+config-intent verification before write-up, the failure that
+motivated this project's verification-first discipline).
+
