@@ -520,8 +520,16 @@ session's foregrounding amendment (PI, 2026-08-21).
 | DD13 | D.7 | Seed 11: own subsection vs folded into D.6 | ✅ SETTLED = own subsection; student-GT lineage to the 2023 campaign PI-confirmed |
 
 **Gates independent of these rulings**: Seed 7 `/lit-scout`
-(micro-registration novelty; **launched S139**) before D.9 prose;
-the detection-baseline lit pass (**launched S139**) before D.1
-prose; `academic-prose` loads before any Seeds→prose conversion.
-**Prose scheduling (PI, S139)**: all Discussion prose waits until
-the earlier sections of the paper are written.
+(micro-registration novelty) — **COMPLETE AND VERIFIED S139**
+(31/31 rows pass; verdict ADJACENT BUT DISTINCT — Gould et al. 2026
+"adaptive preregistration" is near prior art, the LLM-support
+element is the clean novelty;
+`docs/methodology/research/lit-scout-micro-registration-2026-08-21.md`);
+**what remains before D.9 prose is the PI naming/reframe ruling**
+(adopt/contrast "adaptive preregistration" vs coin "just-in-time
+preregistration" vs "micro-registration") plus a full read of Gould
+et al. The detection-baseline lit pass (**launched S139, verifier
+in flight**) gates D.1 prose. `academic-prose` loads before any
+Seeds→prose conversion. **Prose scheduling (PI, S139)**: all
+Discussion prose waits until the earlier sections of the paper are
+written.

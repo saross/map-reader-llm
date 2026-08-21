@@ -293,7 +293,10 @@ rule-governed selection (cf. Seed 6's plateau rule, which is such a
 rule).
 
 **The S139 lit-scout finding and the PI's response (2026-08-21;
-verification pending).** The novelty check returned adjacent prior
+verification COMPLETE same day — 31/31 rows, 155/155 claims pass,
+no corrections; two advisory cautions: the Ioannidis per-step
+characterisation is uncorroborated pending a PDF read, and
+citation counts are CrossRef-flavoured/conservative).** The novelty check returned adjacent prior
 art: Gould et al. (2026, *Methods in Ecology and Evolution*,
 10.1111/2041-210x.70311) name "adaptive preregistration" — decision
 trees plus interim registrations at analysis phases — and the
