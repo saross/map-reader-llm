@@ -209,6 +209,62 @@ note and register rows land with their changelog entries in one commit each
 8. B's test re-pointing rule: archive-affected tests are re-pointed, never
    deleted.
 
+## Resume runbook (state as of 2026-08-21, zbook away from network)
+
+**Where the campaign stands.** Two pilots passed (14/14 second pilot, the
+adjacent-vintage search validated on the two known mixed-state cells). The
+full run processed 223 of 1,628 before the D41 abort fired exactly as
+designed: 204 ok (8 vintage-pinned) re-emitted, 19 failed on the
+mis-aggregated summary tile points. The D41 gate exception is implemented,
+tested (18 tier-1 tests), committed, and PUSHED; sapphire has NOT yet pulled
+it. Sapphire's working tree holds ~231 re-emitted evaluation files plus the
+campaign report, UNCOMMITTED. Nothing further runs until sapphire is back on
+the network.
+
+**To resume (one command each, from zbook, when home):**
+
+```bash
+ssh sapphire 'cd ~/Code/map-reader-llm && git pull --ff-only && \
+  nohup .venv/bin/python scripts/rerun_bca_corpus.py --workers 10 \
+  >> /tmp/e82-corpus-run.log 2>&1 < /dev/null & echo resumed'
+```
+
+The engine resumes by vintage stamp (1.3 = done): expect the census to show
+roughly selected ≈ 1,424, done_1.3 ≈ 245, no_recipe = 13 (the `--expect-skips`
+guard enforces the 13). The 19 D41 cells re-enter the worklist and should
+re-emit with `summary_tile_point_reaggregated` flags; `n_reaggregated` in the
+report must read 19 — more means the defect is wider than diagnosed (stop,
+inspect), fewer means some failed again (inspect their attempts).
+
+**Item D checklist (after the run exits 0):**
+
+1. On sapphire: `git status` review; commit the corpus as ONE data commit
+   (explicit pathspecs: `results/ outputs/` evaluation siblings + the report
+   JSON), message citing this contract; verify `0 behind`, push.
+2. On zbook: pull; run the three zero-dry-runs
+   (`migrate_ci_flag_basis --dry-run`, `migrate_csv_mcc_point --dry-run`,
+   `backfill_tile_point_estimates --dry-run` — each must report 0);
+   `rerun_bca_corpus.py --dry-run` must show selected = 0 / no_recipe = 13.
+3. Regenerate manifests (`generate_post_run_report.py --all --write`); the
+   scripted manifest diff must confine changes to `ci` blocks (+
+   `last_extracted_at`, and the 19 D41 cells' summary tile points); ALL
+   VALID required.
+4. Register the Track-3 gap cell minted 2026-08-21
+   (`results/55maps-standardised-ref-2026-08-14/IM-k4/`, F1@50 0.801, MCC
+   0.712) as a condition beside its adapter siblings.
+5. Full tier-1 + tier-2 + unmarked suites on zbook; tier-1 on sapphire.
+
+**Item E checklist (after operator sign-off on the campaign report):**
+
+1. E82 gains a dated EXECUTION note (counts from the report JSON: n_ok,
+   n_pinned_vintage, n_reaggregated, width-ratio median vs the √(B/n)
+   model, the 13 named skips, the D40/D41 stories).
+2. Defect register: D15's "re-emission OPEN by campaign" closed; D19 row
+   annotated; D41 marked executed; changelog entry.
+3. `reports/` MD summary written from the report JSON (the § 1 promise).
+4. This contract's changelog closed with the final numbers; the audit
+   report's changelog gains a completion line; republish the artifact.
+
 ## Pre-launch audit adjudication (2026-08-20)
 
 The codified clean-context pass (one fresh-context Opus agent, 13 live
