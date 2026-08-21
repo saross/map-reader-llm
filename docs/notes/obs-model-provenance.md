@@ -8,6 +8,23 @@ audience: "researchers and future instances"
 # Observation Register — Model Provenance Record
 
 > **⚠ DRAFT — attribution boundaries pending PI confirmation against release dates.**
+>
+> **Correction (2026-08-22)**: this draft's "12-week transcript hole
+> (2026-05-13 → 08-06)" and "no corroborating API model id for Opus
+> 4.8" claims are artefacts of consulting the WRONG STORE. The agent
+> followed this repo's (stale) archive documentation to the absent
+> `archive/cc-sessions/` path and fell back to the per-machine LIVE
+> transcript store, which is a partial population (sessions run on
+> other machines are absent). The canonical archive
+> (`~/cc-archives` / rpi-server) is healthy — ~850 sessions per
+> machine, gzipped transcripts from ~Feb 2026, 0 missing (infra
+> session audit, 2026-08-22). Consequences: the Opus 4.8 era and all
+> MEDIUM/LOW-confidence attributions are upgradeable from the
+> archived `.gz` transcripts; no data was lost; NO BACKFILL is
+> needed or safe. Rule going forward: provenance work reads the
+> canonical archive, never a live store. The repo's archive docs
+> (CLAUDE.md § Session Archiving; transparency spec) need updating
+> to the actual archive location.
 > Every switch boundary below is *derived from repository evidence only* (session transcripts,
 > explicit prose statements, and git trailers). No model release date has been asserted from an
 > instance's own background knowledge, because several of these releases post-date model training
