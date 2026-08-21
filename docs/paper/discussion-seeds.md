@@ -383,11 +383,33 @@ This study is the map-symbol-extraction instance of the same
 pattern: a generalist VLM with no fine-tuning, no task-specific
 training corpus, and no bespoke architecture reaches F1@20 m 0.890
 on the gold-standard instrument and corrected-F1@50 m 0.815 at
-55-map deployment (headline pair, D.0). The parity leg — that these
-numbers sit within the range "good" bespoke CV/ML pipelines report
-on comparable tasks — is **gated on the detection-baselines lit
-pass** (launched S139) and must respect its protocol-comparability
-caveats. Two disciplines keep the claim honest. First, the
+55-map deployment (headline pair, D.0). **The parity leg is now
+grounded in the verified S139 lit passes** (detection-baselines
+185/185; old-report resolve 45/45 with the key figures confirmed
+against the arXiv full text). The comparator set: Berganzo-Besga et
+al. (2023, 10.1038/s41598-023-38190-x) is the like-for-like held-out
+benchmark (mound symbols on a map series, F1 0.64–0.72 hachure /
+0.71–0.94 form-line); **DIGMAPPER (Duan et al. 2025,
+10.1145/3748636.3764602) is the closest published point-detection
+number — F1 0.82 overall / 0.89 on its Excellent subset — from a
+fully supervised YOLOv8 module with synthetic training data and a
+map-diagonal-scaled match buffer.** The honest parity claim is
+therefore "at or above the best published held-out results,
+including near-parity with the best fully supervised system, at
+zero training examples" — not the superseded "23 points clear of
+0.73" framing from the pre-scout groundwork. The strand-3 absence
+claim narrows per Kirsanova et al. (2025, 10.1145/3764920.3770590):
+VLM bounding-box prediction on historical map scans exists for the
+cropped legend region, so the paper's claim is "no published VLM
+detection of point symbols across the map face". The field-prior
+contrast (Ung et al.; PEACE's GPT-4o 0.369; BlueprintSymVL's
+best-model 50.5 % EMR with hallucination and clutter failures)
+stands, with the caveat that those benchmarks test general-purpose
+application without task-specific workflow engineering — the very
+variable this study manipulates. Protocol-comparability caveats
+remain load-bearing: no comparator uses a metre-buffer criterion,
+corrected-F1 has no published analogue, and class prevalence must
+be stated for both corpora. Two disciplines keep the claim honest. First, the
 engineering did not disappear; it moved up a level — consensus
 voting, proposer–verifier decomposition, and the calibration
 protocol are workflow engineering, authored in natural language and
@@ -449,6 +471,49 @@ the recall ceiling: Experiment E showed the missed mounds are
 invisible to the model rather than rejected at its decision
 threshold, so the recipe's remaining errors are perceptual, not
 configurational.
+
+**S139 literature mapping (verified — prompt-techniques report,
+137/145 pass with the one FAIL corrected).** Five of the seven
+findings have independent published corroboration; two run against
+the grain, and those two need the more careful drafting. Verified
+anchors, by finding: (1) text-over-image demonstrations — Baldassini
+et al. 2024 (multimodal ICL "primarily relies on text-driven
+mechanisms") and Chen et al. 2023 (the actual source of the
+text-dominance claim; MMICES is that paper's *method*), with Chen et
+al. 2025 as the forward-looking caveat that text-dominance is a
+model deficiency being repaired — draft as "works better *given
+current models*". (2) consensus — the self-consistency canon plus
+Chen et al. 2024's non-monotone calls curve, which is the citation
+for permissive-beats-unanimity; Consensus Entropy extends
+agreement-as-confidence into vision. (5) propose→verify — Liu & Hu
+2025 is a near-exact architectural analogue (per-candidate binary
+verification "reduces cross-box interference"); Huang et al. 2023
+(no reliable self-correction) supports reading the gain as
+architectural separation; and Wu & Xie's V* is the counter-case
+requiring the coarse-to-fine failure to be claimed locally (unguided
+crop sweeps discard disambiguating cartographic context; guided
+search works). (6) reasoning liberalisation — the best-supported:
+Liu et al. 2025 (attention drifts from visual tokens as chains
+lengthen), Tian et al. 2025, Li et al. 2025 give the Obs 155 /
+Experiment E pattern a published mechanism. (7) calibration — claim
+the acceptance probabilities are *monotone enough to threshold on*,
+never *calibrated* (Groot & Valdenegro-Toro; Xuan et al.); the
+consensus signal and verbalised probability are complementary
+uncertainty measures — a small original point. **Against the
+grain**: (3) the parametric-diversity null contradicts Naik et al.
+2023 and may be a genuinely novel finding (no published work tests
+prompt-variant vs temperature diversity as competing ensemble
+sources in a detection task); (4) the H4 ordering null contradicts
+the order-sensitivity canon (Lu et al.; Zhao et al.; UniBias) and
+should be drafted as a regime claim — ordering sensitivity
+attenuates in the many-shot, multimodal regime (Agarwal et al.;
+Jiang et al. 2024 on Gemini 1.5 Pro) — flagged explicitly as an
+inferential reconciliation, since neither paper tests
+ordering-by-shot-count directly. **Figures discipline**: the old
+internal report's UniBias "17 %" and MMICES "1.2–1.5 point" figures
+do not exist in those papers (verified against full texts — UniBias
+reports 3.39 %/2.97 %; the MMICES ablation is qualitative), and its
+VisRAG and RICES claims are mis-transfers; none may be cited.
 
 ## Seed 10 (S139 addendum). Cost and expertise: the generalist route is accessible to the researchers who need it
 
@@ -526,6 +591,21 @@ comparison economics are retrospective, and the complementarity
 claim rests on the workflow analysis, not a head-to-head trial.
 
 ## Changelog
+
+### 2026-08-21 (evening) — Seeds 8 and 9 consolidated against the verified lit passes
+
+Seed 8's parity leg de-gated and grounded: DIGMAPPER (verified at
+source) is the closest published point-detection number (F1 0.82 /
+0.89 Excellent, fully supervised), so the claim reframes from
+"23 points clear of 0.73" to near-parity-at-zero-training; the
+strand-3 absence claim narrows per Kirsanova et al. (legend-region
+VLM detection exists). Seed 9 gains the verified per-finding
+literature mapping: five findings corroborated (reasoning
+liberalisation best-supported, with a published attention-drift
+mechanism), two against the grain (parametric-diversity null
+possibly novel; H4 ordering null drafted as an inferential
+many-shot regime claim), plus the figures-discipline note (UniBias
+"17 %" and MMICES "1.2–1.5" do not exist in their papers).
 
 ### 2026-08-21 (later) — Seed 7 augmented with the lit-scout finding and the PI's response
 
