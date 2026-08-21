@@ -803,3 +803,26 @@ Dispositions recorded per candidate below.
    the brief itself, found its headline count wrong, and its two largest
    findings came from outside the brief's framing). The flagged conflict
    plus an independent auditor beats an unframed diff.
+
+## S138 candidates (2026-08-21, pending review)
+
+Drafted at handoff; accept / edit / discard / replace. Unanswered candidates
+hold over — silence never discards.
+
+- **Candidate 1 — the structured-question cadence.** Today carried eleven
+  scope rulings through option-card questions (audit dispositions, E82 scope,
+  B1 policy, the 19-cell correction, the close-out sequence). Did that format
+  serve you better than prose proposals for decision-dense sessions — and is
+  there a density past which it becomes railroading rather than steering?
+
+- **Candidate 2 — the context-budget call was yours, not mine.** You caught
+  the 84 % context mark and proposed deferring the Discussion walk; I had not
+  raised it and was about to start a ten-decision collaborative task in a
+  nearly-full context. Should Claude flag context burn proactively at a
+  threshold (say 70 %), with a recommendation about what still fits?
+
+- **Candidate 3 — pausing versus falling back.** When sapphire dropped
+  mid-campaign I reported and held rather than falling back to zbook,
+  per the contract and the compute rule. You then explained the travel
+  context. Was hold-and-report right here, and is it the right default
+  whenever an environment assumption breaks mid-run?
