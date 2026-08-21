@@ -265,6 +265,43 @@ inspect), fewer means some failed again (inspect their attempts).
 4. This contract's changelog closed with the final numbers; the audit
    report's changelog gains a completion line; republish the artifact.
 
+## Resume attempt outcome (2026-08-21 evening → 2026-08-22, S139 overnight)
+
+**Resumed per the runbook command, verbatim.** Pre-flight: sapphire 26
+behind / 0 ahead, zero pull conflicts, engine idle; pull
+fast-forwarded `9c82d3fa0..349cdd1b6`. Census exactly on contract:
+`{selected: 1424, done_1.3: 233, other_vintage: 42, unparseable: 0,
+no_recipe: 13}` — the `--expect-skips` guard held.
+
+**ABORTED at > 5 failures (§ 3.1) at item ~595/1424.** Run record
+(report JSON, `runs[-1]`): n_ok **588**, n_pinned_vintage **21**,
+n_reaggregated **18**, n_no_ci 2, width_ratio_median 4.66 (inside the
+[0.8, 8] band). Cumulative corpus progress ≈ 842 of 1,424 selected;
+vintage stamps preserve it for the next resume.
+
+**Diagnosis.** The D41 gate exception worked as designed for **18 of
+the 19** diagnosed cells; one re-failed
+(`results/paper-eval/mcc/384px/flash-image-minimal-t-0-7`). The other
+**six failures are NEW same-symptom cells** ("point estimates moved")
+in `results/paper-eval/n1/384px-14buf-mcc/` — a tree with zero
+failures in the first run — sharing config lineages with the
+diagnosed set (`flash-image-minimal-t-0-7`, `pro-text-high-t-0-7`,
+`flash-image-high-t-0-7`, `flash-text-minimal-t-0-0`,
+`flash-text-minimal-t-0-7`, `flash-text-high-t-0-7`). **The D41
+mis-aggregation defect therefore extends beyond the diagnosed 19**,
+and per this contract's own rule that is a STOP-AND-INSPECT state.
+No further action taken overnight: engine idle, sapphire working tree
+untouched (re-emitted files still awaiting the single post-completion
+data commit per Item D).
+
+**Next-session inspection plan**: (1) confirm the mechanism on one
+n1-tree cell (does its summary tile point equal run 1's per-run tile
+point?); (2) enumerate the full same-symptom population corpus-wide
+with a cheap read-only scan, rather than discovering it five failures
+at a time; (3) widen the D41 exception and the expected-reaggregation
+set accordingly (PI ruling; contract changelog entry); (4) resume —
+the runbook command is unchanged.
+
 ## Pre-launch audit adjudication (2026-08-20)
 
 The codified clean-context pass (one fresh-context Opus agent, 13 live
