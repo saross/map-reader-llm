@@ -1,23 +1,19 @@
 # Results — working draft
 
-> **[E83 REVISION FLAG — 2026-08-19; corrected and completed 2026-08-20]**
-> Tier-1 membership on ALL FOURTEEN boards is now the Hsu MCB admissible set;
-> the sequential greedy-clique rule that produced the published tie sets was
-> order-dependent (defect D20). Eight boards changed membership, six returned
-> member-identical sets (this banner previously said six boards were never
-> recomputed, which was wrong — a stale snapshot of the first landing wave).
-> Note also E83's 2026-08-20 correction block: the `n1-baseline-matrix-384`
-> set is **3 members at the standard B = 10,000**, not the 4 first published.
-> **Every sentence below that asserts a sole leader, a Tier-1 membership
-> count, or a tier boundary needs revision before submission.** The affected
-> lines are marked inline with `[E83]`; the flag set was swept to completeness
-> by the Session 137 audit (2026-08-20). Point estimates, pairwise p-values,
-> and registered hypothesis verdicts are unchanged. Prose is not rewritten
-> here because the Results draft is gated on the Discussion outline.
+> **[E83 REVISION — flags resolved 2026-08-21, Session 139]** Tier-1
+> membership on all fourteen boards is the Hsu multiple-comparisons-with-
+> the-best (MCB) admissible set (erratum E83; defect D20); tiers below the
+> first are descriptive rank bands. All eight `[E83]`-flagged sentences in
+> this draft were rewritten to the corrected register values on 2026-08-21
+> — see the Changelog entry of that date. Point estimates, pairwise
+> p-values, and registered hypothesis verdicts are unchanged throughout.
 
 ---
 
-> **Last revised**: 2026-08-18 (Session 136: erratum E81 — the § R2
+> **Last revised**: 2026-08-21 (Session 139: the eight E83-flagged
+> tie-set sentences rewritten — MCB admissible sets replace
+> greedy-clique Tier-1 claims). Prior: 2026-08-18 (Session 136:
+> erratum E81 — the § R2
 > "near-zero MCC" clause corrected, because that near-zero was an
 > imputation for an undefined metric). Prior: 2026-08-17 (Session
 > 134: post-reconciliation
@@ -69,12 +65,15 @@ Headline metrics are buffered F1 at an empirically derived **working
 precision** per instrument (§ R1), reported alongside tile-level Matthews
 correlation coefficient (MCC) wherever the inputs support it. Statistical
 comparison uses one machinery throughout: paired tile-swap micro-F1
-permutation tests (10,000 permutations, seed 42, two-sided),
-Benjamini–Hochberg false-discovery-rate (FDR) correction at q = 0.05, and
-greedy-clique tiering, so that "Tier 1" always means "statistically
-inseparable from the board leader". <!-- [E83] This is exactly the claim the
-greedy-clique rule does not support; Tier 1 is now the Hsu MCB admissible set.
-Rewrite this methodological sentence first — several claims below inherit it. --> Tile sets differ by instrument and tile
+permutation tests (10,000 permutations, seed 42, two-sided) with
+Benjamini–Hochberg false-discovery-rate (FDR) correction at q = 0.05 for
+pairwise claims, and Hsu's multiple comparisons with the best (MCB) for
+tie-set membership, so that "Tier 1" always means "the admissible set:
+the configurations that cannot be ruled out as best at simultaneous 95 %
+confidence" (erratum E83; the critical value is a tile-level bootstrap
+analogue of Dunnett's, Methods § M.x). Tiers below the first are
+descriptive rank bands ordered by point estimate and carry no claim of
+statistical separation. Tile sets differ by instrument and tile
 size (GS 512 px: 340 tiles; GS 384 px: 487; GS 256 px: 1,032; 55-map:
 8,541), so cross-era comparison is descriptive while within-era tiers carry
 the statistics.
@@ -142,10 +141,9 @@ pattern, not any single-factor effect, is the finding. [Resolved 2026-06-13: boa
 Changelog.]
 
 No single-pass configuration separates from the pack. On the Era-1 board
-(512 px, 340 tiles, curator GT, F1@20 m) the 36 single-pass cells resolve
-into only four tiers, and Tier 1 is a 20-cell statistical tie spanning <!-- [E83] 20 -> 15 under MCB; the published 20 was five too many. -->
-F1 0.583–0.631, led numerically by a few-shot-ordering variant
-(`canonical-last`, F1 0.631, MCC 0.213; analysis
+(512 px, 340 tiles, curator GT, F1@20 m) the Tier-1 admissible set spans
+15 of the 36 single-pass cells, led numerically by a few-shot-ordering
+variant (`canonical-last`, F1 0.631, MCC 0.213; analysis
 `era1-single-pass-baseline-matrix`, 227/630 pairs significant). The
 single-factor manipulations the study preregistered — modality and prompt
 elaboration (H1), example ordering (H4), negative-text treatment (H5),
@@ -180,15 +178,14 @@ rejects (adjusted p = 0.00233, from the registered five-level Phase 2b
 sweep: single-pass text track, F1, +0.072 at FDR p = 0.004), and
 it rejects against its own registered expectation, which was that the
 vendor-recommended T = 1.0 would be optimal with lower temperatures
-degrading performance. The reverse held: on the single-pass Pro
-384 px board (F1), the two Tier-1 cells run at T = 0.0 and the two
-Tier-2 cells at T = 0.7, so low temperature won at a factor level the
-registration listed but did not predict (`n1-baseline-matrix-384`). <!-- [E83]
-The Tier-1/Tier-2 split this sentence rests on does not exist under MCB: at
-B = 10,000 (E83 correction block, 2026-08-20) the admissible set is 3 of 18 —
-high-T0.0, medium-T0.0, AND medium-T0.7 — spanning both temperatures, with only
-high-T0.7 excluded. Restate H7 as a point-estimate ordering plus that single
-exclusion, not a tier separation. -->
+degrading performance. The reverse held, though at single-pass Pro
+384 px only as a point-estimate ordering: the four leading cells put
+T = 0.0 above T = 0.7 (F1 0.804 and 0.792 against 0.755 and 0.745),
+but the admissible set — three members at the standard B = 10,000 —
+spans both temperatures, and only the trailing T = 0.7 cell is
+excluded (`n1-baseline-matrix-384`, E83 correction block). Low
+temperature leads at a factor level the registration listed but did
+not predict; it does not separate as a tier there.
 Temperature claims in this study do not generalise across metric or
 corpus, so each is stated with its instrument, corpus, and metric
 attached. Single-pass performance, at best ~0.63 F1, is the floor
@@ -237,8 +234,9 @@ characterisation.*
 
 Adding an adversarial verification stage (H2) — an independent
 text-prompted pass that re-examines a crop around each candidate and
-assigns an acceptance probability — is the single best architectural move <!-- [E83] "single best" rests on the sole-Tier-1 reading above; restate as "among the admissible best". -->
-in the study, on every tile size tested.
+assigns an acceptance probability — is, by point estimate, the best
+architectural move in the study on every tile size tested, and its
+cells sit among the admissible best on every board that carries them.
 
 The registration predicted the opposite. H2's registered prediction
 was that neither two-stage architecture would improve on single-stage
@@ -254,13 +252,16 @@ to the coarse-to-fine proposer–verifier architecture rather than to
 two-stage designs generally.
 
 On the Era-1 definitive board (82 cells: 36 single-pass + 42 consensus + 4
-clean PV cells), the sole Tier-1 leader is HIGH-thinking text consensus <!-- [E83] NOT SOLE. MCB admits 10 of 82; the leader's own clique has 6. This claim must go. -->
-*plus* the adversarial verifier (F1 0.792, MCC 0.676), statistically clear
-of everything below — the verifier's lift (0.775 → 0.792) is what breaks
-the old six-way consensus tie (analysis `era1-leaderboard`, 2,351/3,321
-pairs significant, 10 tiers). Just as consequentially for budgets, a
-MINIMAL single-pass plus verifier — two calls per tile — reaches the same
-tier as the 30-call HIGH-thinking consensus (0.770), beating it on MCC.
+clean PV cells), the point-estimate leader is HIGH-thinking text consensus
+*plus* the adversarial verifier (F1 0.792, MCC 0.676). Its Tier-1
+admissible set has 10 members and includes all six HIGH-consensus cells
+(erratum E83), so the verifier's lift over the consensus champion
+(0.775 → 0.792) puts the verified cell at the top of the board without
+separating it from the strongest consensus-only configurations (analysis
+`era1-leaderboard`, 2,351/3,321 pairs significant). Just as
+consequentially for budgets, a MINIMAL single-pass plus verifier — two
+calls per tile — matches the 30-call HIGH-thinking consensus on F1
+(0.770) and beats it on tile-level MCC.
 
 The verifier also interacts strongly with tile size (H11, a
 registered-exploratory hypothesis whose trigger, 512 px performance
@@ -291,12 +292,7 @@ of all 18 never-swept proposer pools later confirmed this is the global
 optimum of the 30-pass union, not an artefact of the operating points
 swept (analysis `unswept-pools-completeness`, Obs 363).
 
-## R5. Verifier robustness: every cheaper option ties, so the cheap stack wins
-
-<!-- [E83] "every cheaper option ties" needs narrowing: pass-budget-pareto's
-MCB set is 3 of 5 (two cheaper rungs are ruled out as best), and
-pass-budget-pareto-v2's is 6 of 7. The cost conclusion may survive but the
-universal "ties" claim does not. -->
+## R5. Verifier robustness: nothing dearer is measurably better, so the cheap stack wins
 
 *Registration status: post-hoc throughout. The robustness programme extends the registered proposer–verifier contingency beyond its registered parameters (E56, E62); no registered hypothesis is adjudicated in this subsection.*
 
@@ -305,7 +301,13 @@ time) stress-tested every parameter
 of the production verifier (gemini-3-flash, adversarial text, minimal
 thinking, T = 0.0, n = 1). The summary is uniform: **nothing more expensive
 is measurably better** (citable home:
-`results/verifier-robustness/verifier-robustness-findings.md`).
+`results/verifier-robustness/verifier-robustness-findings.md`). One scope
+note (erratum E83): the tie statements below are pairwise. The MCB
+instrument asks a different question — what cannot be ruled out as *the
+best* — and returns narrower sets (three of five rungs on
+`pass-budget-pareto`; six of seven on `pass-budget-pareto-v2`, § R6), so
+some cheap rungs are excluded as the best even though no dearer rung
+beats them pairwise. The cost conclusion rests on the pairwise evidence.
 
 - **Determinism / n = 1.** Five-fold verifier replication shows single-run
   SD of 0.0025–0.0072 F1 with consensus ≈ mean — the n = 1 production
@@ -329,13 +331,12 @@ is measurably better** (citable home:
   Flash 3.5 wins any role. Pro is a genuinely better *bare* proposer but a
   worse PV partner — its near-deterministic sampling caps pool recall. The
   Flash 3.5 2×2×2 (proposer × verifier × n; ~$34) ties bare (0.6196 vs
-  0.6204), loses as PV proposer (−0.0355, p = 0.035 — the one
-  statistically resolved role gap), and ties as verifier at 3× the price
+  0.6204), loses as PV proposer (−0.0355, targeted pairwise p = 0.035 —
+  though the board's three-member admissible set still admits the cell,
+  so the gap is pairwise-resolved but not simultaneous; erratum E83), and
+  ties as verifier at 3× the price
   (p = 0.17 / 0.10), so the cost rule decides against it (analysis
-  `flash35-model-roles`). <!-- [E83] The board's MCB set is 3 of 5 and ADMITS
-  the Flash-3.5-as-PV-proposer cell (margin +0.0046), so "the one statistically
-  resolved role gap" is not resolved under the current instrument; the pairwise
-  p = 0.035 stands but simultaneous admissibility does not exclude the cell. -->
+  `flash35-model-roles`).
 
 These results crystallised into the programme's meta-rule: **on a
 within-noise tie, take the cheaper configuration** (Obs 357) — and on the
@@ -369,10 +370,9 @@ Re-pricing the pass ladder in dollars (per-item token metadata at June
 2026 flex rates, thinking tokens billed at the output rate; a
 HIGH-thinking deployment pass costs ~8.6× a minimal one — token-load
 audit, 2026-06-12) collapses the frontier onto four rungs (analysis
-`pass-budget-pareto-v2`; all seven rungs remain one statistical F1 tier,
-0/21 pairs): <!-- [E83] Under MCB 6 of the 7 rungs are admissible;
-verified-adv-text-4of5 (0.8641) is ruled out as best. Pairwise
-non-significance and MCB admissibility answer different questions — restate. -->
+`pass-budget-pareto-v2`; no pairwise F1 separation anywhere on the
+ladder, 0/21 pairs, though the MCB admissible set is six of the seven
+rungs — the 0.8641 rung is ruled out as best; erratum E83):
 
 | rung | F1@20 m (GS) | GS run cost | 55-map production (est.) | frontier |
 |---|---:|---:|---:|---|
@@ -599,6 +599,38 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-08-21 — Erratum E83: the eight flagged tie-set sentences rewritten (Session 139)
+
+**Refresh trigger**: erratum E83 replaced greedy-clique Tier-1 membership
+with the Hsu MCB admissible set on all fourteen boards (defect D20:
+the sequential rule was order-dependent); the Session 137 audit swept the
+draft's flag set to completeness and finalised the corrected numbers,
+including the `n1-baseline-matrix-384` re-tier at the standard
+B = 10,000. All eight inline `[E83]` flags are now resolved and removed.
+Every replacement value was re-verified this session against the
+corrected register (`results/analyses-manifest.md`) and the Hsu
+construction table in `results/selection-aware/findings.md`.
+
+**Before → after**:
+
+| Claim | Before | After |
+|---|---|---|
+| § R0 "Tier 1" definition | greedy-clique, "statistically inseparable from the board leader" | Hsu MCB admissible set at simultaneous 95 %; lower tiers descriptive rank bands |
+| § R2 single-pass Tier 1 | 20-cell tie, F1 0.583–0.631 | 15-cell admissible set (span dropped — it described the 20) |
+| § R2 H7 at Pro 384 px | T = 0.0 Tier 1 vs T = 0.7 Tier 2 | point-estimate ordering (0.804/0.792 vs 0.755/0.745); 3-member set spans both temperatures, only trailing T = 0.7 cell excluded |
+| § R4 architecture claim | "the single best architectural move" | best by point estimate; cells among the admissible best |
+| § R4 era1-leaderboard | sole Tier-1 leader, "statistically clear of everything below", "breaks the old six-way consensus tie" | point-estimate leader; 10-member admissible set including all six HIGH-consensus cells |
+| § R4 two-call cell | "reaches the same tier as" the 30-call consensus | matches on F1, beats on MCC (tier co-membership claim dropped) |
+| § R5 heading + scope | "every cheaper option ties" | "nothing dearer is measurably better" + explicit pairwise-vs-MCB scope note (pareto sets 3/5 and 6/7) |
+| § R5 Flash 3.5 role gap | "the one statistically resolved role gap" | pairwise-resolved (p = 0.035) but admitted by the 3-member set — not simultaneous |
+| § R6 ladder | "all seven rungs remain one statistical F1 tier" | 0/21 pairwise separations, but MCB set 6 of 7 (0.8641 rung ruled out as best) |
+
+**What did not change**: every point estimate, pairwise p-value,
+confidence interval, and registered hypothesis verdict; the H7 family
+rejection (adjusted p = 0.00233) and its registered-expectation reversal;
+the H2 and H3 family rejections; the 0.890/0.815 headline pair; the
+tile-size ordering and its S137-audit F16 caveat, which remains open.
 
 ### 2026-08-18 — Erratum E81: the § R2 "near-zero MCC" clause (Session 136)
 
