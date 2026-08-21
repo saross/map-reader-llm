@@ -27588,3 +27588,99 @@ shape on the code side); **Obs 235** (the H10/H12 retraction —
 config-intent verification before write-up, the failure that
 motivated this project's verification-first discipline).
 
+## Observation 425: The paper's most reasonable claim — near-parity with fully supervised map-symbol detectors at a 20-tile annotation budget, held conservatively (Session 139, 2026-08-21)
+
+A generalist VLM pipeline — no model training, no fine-tuning, and no
+bespoke architecture — reaches F1@20 m 0.890 on the four-sheet
+gold-standard instrument and corrected-F1@50 m 0.815 across the
+55-sheet unseen deployment corpus, for object-level
+burial-mound-symbol detection on scanned Soviet 1:50,000 maps
+(headline pair, `docs/paper/discussion-seeds.md` D.0). Configuration
+development — prompt calibration, symbol-description drafting, and
+the image track's few-shot example mining — drew on the 20-tile
+annotated calibration set (`inputs/tiles/tile_selection_metadata.json`,
+`calibration.total_tiles` = 20) plus mined example crops: an
+annotation budget two to three orders of magnitude below the
+supervised comparators', with zero gradient updates anywhere.
+Against the verified S139 baselines (**Obs 424**), this sits at or
+above the like-for-like held-out benchmark — Berganzo-Besga et al.
+(2023, 10.1038/s41598-023-38190-x): F1 0.64–0.72 hachure, 0.71–0.94
+form-line on Survey-of-India mound symbols — and at near-parity with
+the strongest fully supervised point-symbol system's clean-map
+subset: DIGMAPPER (Duan et al. 2025, 10.1145/3748636.3764602), F1
+0.82 overall / 0.89 on its Excellent subset, from a YOLOv8 module
+trained on 10,000 synthetic patches plus human annotations from 100
+USGS maps.
+
+The comparison is protocol-checked, not assumed. DIGMAPPER's match
+buffer is 2×10⁻⁴ × map diagonal, described by its own authors as
+approximately the point-symbol size; 20 m at 1:50,000 is 0.4 mm at
+map scale — the same order as a printed point symbol — so both
+criteria tolerate roughly symbol-scale displacement, making the
+GS@20 m figure the protocol-nearest cell. Against the only prior
+published VLM detection attempt — Landauer & Klassen (2025,
+10.3390/geomatics5040052), tile-level binary classification after
+the authors abandoned bounding-box scoring, F1 0.41–0.67 at a
+constructed 1:3–1:10 prevalence — a like-for-like tile-level
+comparison is derivable at $0 from this project's own committed
+tile confusion matrices: tile-MCC 0.710 at deployment (IM-k3), up
+to 0.889 on GS cells. The prevalence mismatch (constructed vs
+natural tiling) is the caveat that keeps this comparison honest
+rather than decisive.
+
+None of the following qualifiers are optional. (1) No comparator
+uses a metre-buffer matching criterion, so cross-study comparisons
+are directional, not exact — though the 20 m/50 m tolerances are
+conservative for survey purposes (a position within 50 m is
+operationally sufficient to relocate a mound in the field), so the
+protocol's uniqueness is not a laxer standard. (2) Corrected-F1 has
+no published analogue and must always be reported beside raw F1.
+(3) The result covers one symbol class (burial mounds), realised as
+a family of variant renderings — colour and form variants
+(orange-brown circles for burial and settlement mounds, black
+triangles and squares for triangulation and benchmark mounds;
+`prompts/system-instructions/detect_brief-text.md`) extracted and
+used during calibration — on one map series, with one model family:
+Gemini (Flash 3 primary; Pro and Flash 3.5 tested in role
+permutations), and cross-family generalisation is untested (H14,
+cross-model consistency, and H15, cross-model consensus voting —
+both registered as deferred at lodgement, not silently dropped;
+`reports/d17-inventory/unexecuted-register.md` E-08/E-09 — deferred
+to future work). (4) Class prevalence must accompany any cross-study
+number cited from this Obs. (5) The deployment figure is the number
+most published comparators never report — the field norm is
+curated-set reporting, and the curated-to-landscape collapse
+documented in the comparator literature (Trier et al. 2021: F1 ≈
+0.81 on curated tiles that each contain a target, falling to F1 ≈
+0.17 for grave mounds across 67 km² of real landscape) is why the
+0.815 carries more evidential weight than the 0.890.
+
+The bitter-lesson framing is earned, not asserted. The result has
+the signature — a general method matching bespoke supervised
+engineering — and it replicates the handwriting-recognition
+precedent (a generalist Gemini 3 model against fine-tuned specialist
+systems, in an adjacent document-analysis domain) against a
+published field prior that VLMs handle cartographic symbology
+poorly (Ung et al.; PEACE's GPT-4o 0.369; BlueprintSymVL). Two
+asymmetries keep the framing honest rather than rhetorical. First,
+the engineering that remains — consensus voting, adversarial
+verification, and the calibration protocol — is domain-general and
+natural-language-authored, so it transfers to the next model
+generation at no cost; the bitter lesson is about where effort goes,
+not its disappearance. Second, because only one model family was
+tested, these results are best read as a floor, not a ceiling: the
+direction of travel, not the specific numbers, is the durable
+finding.
+
+Sources: `docs/paper/discussion-seeds.md` Seeds 8 and 10 (S139
+consolidation, `9e479ea08`, `df94b68f6`);
+`docs/methodology/research/lit-scout-detection-baselines-2026-08-21.md`
+(`01976a5b7`, 185/185 pass); `lit-scout-oldreport-resolve-2026-08-21.md`
+(`c310dba41`, 45/45 pass); `inputs/tiles/tile_selection_metadata.json`
+(20-tile calibration set). Related: **Obs 424** (the verification
+pass underwriting every comparator number quoted here); **Obs 361**
+(GT double-miss epistemics — the measured recall upper bound behind
+corrected-F1); **Obs 362** (GS resolving power — why an instrument's
+limited resolution qualifies its evidential weight, the same logic
+used here to rank 0.815 above 0.890).
+
