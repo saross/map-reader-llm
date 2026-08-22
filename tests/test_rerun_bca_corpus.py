@@ -435,3 +435,136 @@ def test_d41_exception_requires_the_exact_defined_pass_mean(monkeypatch, tmp_pat
                  (out / "evaluation.json").write_text(json.dumps(replayed)))
     row = rc.process_one("cell/evaluation.json")
     assert row["status"] == "failed"
+
+
+# ── C1 label-keyed comparison + D writer-exact mean (PI ruling 2026-08-22;
+#    evidence: reports/e82-d41-widening-inspection-2026-08-22.md) ──────────
+
+# The real 10-pass pool behind inspection § 1.5 (outputs/h11/pv-diag-384/
+# image-n5/image-t0.7): its per-run mcc mean sits on a 4 dp half-boundary,
+# so np.mean (pairwise summation) rounds to 0.3295 in lexicographic order
+# and 0.3296 in numeric order, while a naive sum()/len() gives 0.3296 in
+# both — the defect PI ruling D fixes.
+_BOUNDARY_POOL = {
+    "run1": 0.3232, "run2": 0.3430, "run3": 0.3396, "run4": 0.3396,
+    "run5": 0.3267, "run6": 0.3151, "run7": 0.3232, "run8": 0.3257,
+    "run9": 0.3302, "run10": 0.3292,
+}
+# An order-insensitive pool for the pure-permutation cases: mean 0.55 in
+# any order, nowhere near a rounding boundary.
+_STABLE_POOL = {f"run{i}": round(0.1 * i, 1) for i in range(1, 11)}
+
+_LEX = sorted(_BOUNDARY_POOL)                          # run1, run10, run2, ...
+_NUM = sorted(_BOUNDARY_POOL, key=lambda s: int(s[3:]))  # run1, run2, ... run10
+
+
+def _labelled_pool_doc(pool: dict, order: list, summary_mcc: float) -> dict:
+    """A >= 10-run cell whose labelled per_run blocks sit in a given order."""
+    doc = _doc("1.2")
+    doc["summary"]["tile_classification"] = {
+        "mcc": {"point": summary_mcc},
+        "confusion": {"tp": 227, "tn": 52, "fp": 206, "fn": 2},
+    }
+    doc["per_run"] = [
+        {"label": lab, "tile_classification": {"mcc": {"point": pool[lab]}}}
+        for lab in order
+    ]
+    return doc
+
+
+def test_c1_lexicographic_pool_normalised_by_label(monkeypatch, tmp_path):
+    """A >= 10-run pool committed in lexicographic order passes when the
+    canonical resolver replays it numerically: same labelled measurements,
+    permuted indices (PI ruling C1 regression test 1)."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    committed = _labelled_pool_doc(_STABLE_POOL, _LEX, 0.55)
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    replayed = _labelled_pool_doc(_STABLE_POOL, _NUM, 0.55)
+    replayed["_metadata"]["metadata_version"] = "1.3"
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "ok"
+    assert row["per_run_order_normalised"]["per_run_labels"] == {
+        "committed": _LEX, "replayed": _NUM}
+    assert "summary_tile_point" not in row["per_run_order_normalised"]
+    assert "summary_tile_point_reaggregated" not in row
+
+
+def test_c1_moved_measurement_fails_by_its_own_label(monkeypatch, tmp_path):
+    """Label-keying loosens nothing: a genuinely moved measurement in a
+    permuted pool still fails, attributed to its label."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    committed = _labelled_pool_doc(_STABLE_POOL, _LEX, 0.55)
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    replayed = _labelled_pool_doc(dict(_STABLE_POOL, run7=0.71), _NUM, 0.55)
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "failed"
+    assert "run7/mcc" in str(row["attempts"][0]["moved"])
+
+
+def test_c1_changed_pool_fails_as_label_set_mismatch(monkeypatch, tmp_path):
+    """A replay that resolves a DIFFERENT pool fails on the label sets."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    committed = _labelled_pool_doc(_STABLE_POOL, _LEX, 0.55)
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    swapped = {("run11" if k == "run10" else k): v
+               for k, v in _STABLE_POOL.items()}
+    replayed = _labelled_pool_doc(
+        swapped, sorted(swapped, key=lambda s: int(s[3:])), 0.55)
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "failed"
+    moved = row["attempts"][0]["moved"]
+    assert moved["labels"] == [["run10"], ["run11"]] or \
+        moved["labels"] == (["run10"], ["run11"])
+
+
+def test_d_reaggregated_mean_matches_writer_at_half_boundary(monkeypatch, tmp_path):
+    """The exception helper must agree with the writer's np.mean at a 4 dp
+    half-boundary (PI ruling D regression test 2): the real D41 cell
+    mcc/384px/flash-image-minimal-t-0-7 re-failed because sum()/len() gave
+    0.3296 where the writer emitted 0.3295."""
+    lex_doc = _labelled_pool_doc(_BOUNDARY_POOL, _LEX, 0.3232)
+    num_doc = _labelled_pool_doc(_BOUNDARY_POOL, _NUM, 0.3232)
+    assert rc._reaggregated_mean(lex_doc, "mcc") == 0.3295
+    assert rc._reaggregated_mean(num_doc, "mcc") == 0.3296
+
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    _materialise(tmp_path, "cell/evaluation.json", lex_doc)  # D41: summary = run 1
+    replayed = _labelled_pool_doc(_BOUNDARY_POOL, _LEX, 0.3295)
+    replayed["_metadata"]["metadata_version"] = "1.3"
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "ok"
+    assert row["summary_tile_point_reaggregated"] == {"mcc": [0.3232, 0.3295]}
+    assert "per_run_order_normalised" not in row
+
+
+def test_order_artefact_summary_shift_filed_as_order_not_d41(monkeypatch, tmp_path):
+    """The n1-tree twin of the boundary cell: BOTH summaries are correct
+    writer means of identical measurements, differing only through
+    summation order. Accepted as an order artefact — never counted as a
+    D41 re-aggregation, so the contract's n_reaggregated = 19 stays exact."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    committed = _labelled_pool_doc(_BOUNDARY_POOL, _LEX, 0.3295)
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    replayed = _labelled_pool_doc(_BOUNDARY_POOL, _NUM, 0.3296)
+    replayed["_metadata"]["metadata_version"] = "1.3"
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "ok"
+    assert "summary_tile_point_reaggregated" not in row
+    norm = row["per_run_order_normalised"]
+    assert norm["per_run_labels"] == {"committed": _LEX, "replayed": _NUM}
+    assert norm["summary_tile_point"] == {"mcc": [0.3295, 0.3296]}

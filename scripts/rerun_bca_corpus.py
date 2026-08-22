@@ -32,6 +32,13 @@ Guards, per the amended contract:
 * **Point gate** — F1/precision/recall per buffer, observed tile points, and
   confusion counts must reproduce exactly (1e-9) on whichever attempt is
   accepted; otherwise the committed file is untouched and the cell fails.
+  Per-run tile points are compared by run LABEL, not list index (PI ruling
+  C1, 2026-08-22), so pools the canonical resolver replays in a different
+  order than the original batch glob consumed them (>= 10 runs) pass with
+  zero tolerance loss and are counted in ``n_order_normalised`` (expected
+  6 corpus-wide); the D41 re-aggregation exception (expected 19
+  corpus-wide, cumulative) predicts the writer's mean with
+  ``round(float(np.mean(vals)), 4)`` (PI ruling D).
 * **Width tripwire** — on the widest buffer row carrying intervals in both
   vintages: a ratio below 0.8 or above 8, or a replay interval that collapses
   to zero/absent width where the committed one existed, is a failure. Cells
@@ -76,6 +83,8 @@ import tempfile
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from pathlib import Path
 from typing import Any
+
+import numpy as np
 
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -348,23 +357,64 @@ def per_run_tile_points(doc: dict) -> list[dict[str, Any]]:
     return out
 
 
-def _reaggregated_mean(before: dict, metric: str) -> float | None:
-    """The defined-pass mean of the COMMITTED per-run points (E81)."""
-    vals = [r[metric] for r in per_run_tile_points(before) if metric in r]
-    return round(sum(vals) / len(vals), 4) if vals else None
+def per_run_labels(doc: dict) -> list[Any]:
+    """Each run's ``label`` (the source filename stem), in document order."""
+    return [(run or {}).get("label") for run in doc.get("per_run") or []]
+
+
+def _reaggregated_mean(doc: dict, metric: str) -> float | None:
+    """The defined-pass mean of a document's per-run points (E81).
+
+    Mirrors the writer's aggregation EXACTLY —
+    ``aggregate_tile_classification`` in ``scripts/evaluate_detections.py``
+    uses ``round(float(np.mean(vals)), 4)`` — because ``np.mean`` (pairwise
+    summation) and a naive ``sum()/len()`` can land on opposite sides of a
+    4 dp half-boundary (PI ruling D, 2026-08-22; two cells corpus-wide,
+    enumerated in ``reports/e82-d41-widening-inspection-2026-08-22.md``
+    § 1.5). The mean is order-sensitive at such a boundary, so callers pass
+    the document whose aggregation they are predicting.
+    """
+    vals = [r[metric] for r in per_run_tile_points(doc) if metric in r]
+    return round(float(np.mean(vals)), 4) if vals else None
 
 
 def gate(
     before: dict, after: dict,
-) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+) -> tuple[dict[str, Any] | None, dict[str, Any], dict[str, Any]]:
     """Point-identity gate, anchored to the per-run measurements.
 
-    Returns ``(failure_diagnostics_or_None, reaggregations)``. A summary tile
-    point that moves is tolerated ONLY when every per-run tile point
-    reproduces exactly AND the replayed summary equals the defined-pass mean
-    of the committed per-run points: 19 multi-run `paper-eval/mcc` cells
-    committed run 1's point as the cell summary (a superseded aggregation,
-    defect D41; PI-accepted correction 2026-08-20). Anything else fails.
+    Returns ``(failure_diagnostics_or_None, reaggregations,
+    order_normalisations)``.
+
+    Per-run tile points are compared by run LABEL when labels are present
+    and unique on both sides, falling back to list index otherwise (PI
+    ruling C1, 2026-08-22): the original batch glob consumed passes in
+    lexicographic order while the canonical resolver replays them
+    numerically, so at >= 10 runs the ``per_run`` blocks are permuted even
+    though every measurement is identical. Label-keying compares each
+    measurement to ITSELF rather than to whichever pass sits at the same
+    index; a changed pool still fails as a label-set mismatch, and a
+    genuinely moved measurement still fails on its own label. Cells that
+    needed the normalisation are recorded, never silently passed.
+
+    A summary tile point that moves is tolerated ONLY when every per-run
+    tile point reproduces exactly AND the replayed summary equals the
+    writer's aggregation of the replayed run order (``_reaggregated_mean``,
+    mirroring ``aggregate_tile_classification``). Two forgivable cases,
+    recorded separately:
+
+    * **D41 re-aggregation** — the committed summary was NOT the mean of
+      its own per-run points: 19 multi-run ``paper-eval/mcc`` cells
+      committed run 1's point as the cell summary (a superseded
+      aggregation; PI-accepted correction 2026-08-20).
+    * **Order artefact** — committed and replayed summaries are BOTH
+      correct writer aggregations of identical measurements, differing
+      only through ``np.mean``'s pairwise summation order at a 4 dp
+      rounding boundary. Reachable only on an order-permuted pool; filed
+      under order_normalisations, not D41, so the contract's
+      ``n_reaggregated = 19`` census stays exact.
+
+    Anything else fails.
     """
     pb, pa = point_table(before), point_table(after)
     moved = {f"{k[0]}m/{k[1]}": (pb[k], pa[k]) for k in pb
@@ -372,9 +422,32 @@ def gate(
     missing = sorted(f"{k[0]}m/{k[1]}" for k in set(pb) - set(pa))
 
     run_b, run_a = per_run_tile_points(before), per_run_tile_points(after)
-    runs_moved = {}
+    lab_b, lab_a = per_run_labels(before), per_run_labels(after)
+    runs_moved: dict[str, Any] = {}
+    order_normalised: dict[str, Any] = {}
+    label_keyed = (
+        len(run_b) == len(run_a)
+        and all(isinstance(lab, str) and lab for lab in lab_b + lab_a)
+        and len(set(lab_b)) == len(lab_b)
+        and len(set(lab_a)) == len(lab_a)
+    )
     if len(run_b) != len(run_a):
         runs_moved["n_runs"] = (len(run_b), len(run_a))
+    elif label_keyed and set(lab_b) != set(lab_a):
+        # A differing label set means a different pool was scored — a real
+        # failure, reported as such rather than as index-wise value noise.
+        runs_moved["labels"] = (sorted(set(lab_b) - set(lab_a)),
+                                sorted(set(lab_a) - set(lab_b)))
+    elif label_keyed:
+        by_label = dict(zip(lab_a, run_a))
+        for label, rb in zip(lab_b, run_b):
+            ra = by_label[label]
+            for metric, v in rb.items():
+                if ra.get(metric) != v:
+                    runs_moved[f"{label}/{metric}"] = (v, ra.get(metric))
+        if not runs_moved and lab_b != lab_a:
+            order_normalised["per_run_labels"] = {
+                "committed": lab_b, "replayed": lab_a}
     else:
         for i, (rb, ra) in enumerate(zip(run_b, run_a)):
             for metric, v in rb.items():
@@ -388,13 +461,19 @@ def gate(
         for metric in list(tile_moved):
             if metric == "confusion":
                 continue
-            if ta.get(metric) == _reaggregated_mean(before, metric):
+            if ta.get(metric) != _reaggregated_mean(after, metric):
+                continue  # not the writer's aggregate of the reproduced runs
+            if (order_normalised.get("per_run_labels")
+                    and tb[metric] == _reaggregated_mean(before, metric)):
+                order_normalised.setdefault("summary_tile_point", {})[
+                    metric] = list(tile_moved.pop(metric))
+            else:
                 reaggregated[metric] = list(tile_moved.pop(metric))
 
     if moved or missing or tile_moved or runs_moved:
         return ({"moved": {**moved, **tile_moved, **runs_moved},
-                 "missing": missing}, {})
-    return None, reaggregated
+                 "missing": missing}, {}, {})
+    return None, reaggregated, order_normalised
 
 
 def width_check(before: dict, after: dict) -> tuple[float | None, str | None]:
@@ -496,7 +575,7 @@ def process_one(rel: str) -> dict[str, Any]:
                                      "detail": (exc.stderr or "")[-400:]})
                     continue
                 after = json.loads((work / "out/evaluation.json").read_text())
-                diag, reaggregated = gate(before, after)
+                diag, reaggregated, order_norm = gate(before, after)
                 if diag is not None:
                     attempts.append({"attempt": attempt,
                                      "reason": "point estimates moved",
@@ -514,6 +593,8 @@ def process_one(rel: str) -> dict[str, Any]:
                         "input_vintage": frozen_map,
                         **({"summary_tile_point_reaggregated": reaggregated}
                            if reaggregated else {}),
+                        **({"per_run_order_normalised": order_norm}
+                           if order_norm else {}),
                         "bootstrap_before":
                             (before["_metadata"].get("bootstrap") or {})
                             .get("n_iterations"),
@@ -644,6 +725,8 @@ def main() -> int:
                                     if r.get("attempt") != "current"),
             "n_reaggregated": sum(
                 1 for r in ok if r.get("summary_tile_point_reaggregated")),
+            "n_order_normalised": sum(
+                1 for r in ok if r.get("per_run_order_normalised")),
             "n_no_ci": sum(1 for r in ok if r.get("no_ci")),
             "width_ratio_median": median, "rows": rows,
         })

@@ -358,6 +358,25 @@ $0 API by import graph; runtime ≈ 16–38 CPU-h → 1.6–3.8 h at 10 workers.
 
 ## Changelog
 
+### 2026-08-22 — C1 + D implemented (Session 140)
+
+The PI's C1 + D ruling is implemented in `scripts/rerun_bca_corpus.py`:
+per-run gate comparisons are keyed by run LABEL (index fallback when
+labels are absent or non-unique; a changed pool fails as a label-set
+mismatch), and `_reaggregated_mean` mirrors the writer's
+`round(float(np.mean(vals)), 4)` exactly. The pure order/rounding
+artefact on the n1-tree boundary cell (committed and replayed summaries
+BOTH correct writer means, split only by summation order at a 4 dp
+half-boundary) is filed under a new `n_order_normalised` report counter,
+never as a D41 re-aggregation, so `n_reaggregated = 19` stays exact as
+written. Five regression tests added — the two the ruling required (a
+>= 10-run lexicographic-label pool; a 4 dp half-boundary mean) plus
+moved-measurement-in-permuted-pool, changed-pool label-set, and
+order-artefact-classification cases. Tier-1 green at 1,786. Expected
+resumed-leg counts: `n_reaggregated` = 1 (19 cumulative),
+`n_order_normalised` = 6 — more of either is stop-and-inspect. Runbook
+command unchanged.
+
 ### 2026-08-20 (later still) — Adjacent-vintage search after the first pilot
 
 The first pilot (15 files, 4 workers) passed 13 and failed 2 — both 55-map
