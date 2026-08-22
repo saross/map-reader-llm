@@ -358,6 +358,34 @@ $0 API by import graph; runtime ≈ 16–38 CPU-h → 1.6–3.8 h at 10 workers.
 
 ## Changelog
 
+### 2026-08-22 (later) — Buffer-mean order artefacts: a third boundary layer
+
+The C1 + D resume surfaced ONE further, previously masked layer of the
+same mechanism: `evaluate_multi_run_mean` aggregates the summary BUFFER
+table (f1/precision/recall per buffer) with the identical
+order-sensitive `round(float(np.mean(vals)), 4)`, so an order-permuted
+pool can flip a summary buffer value by one 4 dp step. Observed live
+(leg of 2026-08-22, items 82 and 98: `n1/.../flash-image-minimal-t-0-7`
+25 m precision + tile mcc; `n1/.../flash-text-minimal-t-0-0` 40/45/50 m
+f1, raw mean exactly 0.52045); the corpus-wide enumeration finds
+**eight shifted summary values across four of the six order-permuted
+cells** and nowhere else (the widening inspection's § 1.5 sweep scanned
+tile-metric blocks only, so this layer was outside its enumeration).
+The gate now forgives a moved summary buffer point ONLY when the pool
+is order-permuted, every labelled per-run buffer measurement reproduces
+exactly, and both committed and replayed values equal the writer's
+aggregation over their own run order — filed under
+`per_run_order_normalised.summary_buffer_points`, never D41. Two
+regression tests added (25 total green; tier-1 1,788). The 2026-08-22
+leg therefore ends with those four cells failed (below the abort
+threshold) and still at vintage 1.2; **one further resume via the
+unchanged runbook command clears them**. Live validation from the same
+leg: the 19th D41 cell (`mcc/384px/flash-image-minimal-t-0-7`)
+re-emitted correctly under fix D (tile mcc 0.3295, stamped 1.3) —
+cumulative `n_reaggregated` = 19 exactly as required. Expected final
+order-normalisation count stays 6 (2 from the 2026-08-22 leg, 4 from
+the clearing resume).
+
 ### 2026-08-22 — C1 + D implemented (Session 140)
 
 The PI's C1 + D ruling is implemented in `scripts/rerun_bca_corpus.py`:

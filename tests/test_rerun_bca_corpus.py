@@ -458,8 +458,14 @@ _LEX = sorted(_BOUNDARY_POOL)                          # run1, run10, run2, ...
 _NUM = sorted(_BOUNDARY_POOL, key=lambda s: int(s[3:]))  # run1, run2, ... run10
 
 
-def _labelled_pool_doc(pool: dict, order: list, summary_mcc: float) -> dict:
-    """A >= 10-run cell whose labelled per_run blocks sit in a given order."""
+def _labelled_pool_doc(pool: dict, order: list, summary_mcc: float,
+                       buffer_f1: dict | None = None,
+                       summary_buffer_f1: float | None = None) -> dict:
+    """A >= 10-run cell whose labelled per_run blocks sit in a given order.
+
+    ``buffer_f1`` optionally maps label -> per-run f1 at the 20 m buffer,
+    with ``summary_buffer_f1`` the summary 20 m f1 (the writer's mean).
+    """
     doc = _doc("1.2")
     doc["summary"]["tile_classification"] = {
         "mcc": {"point": summary_mcc},
@@ -469,6 +475,12 @@ def _labelled_pool_doc(pool: dict, order: list, summary_mcc: float) -> dict:
         {"label": lab, "tile_classification": {"mcc": {"point": pool[lab]}}}
         for lab in order
     ]
+    if buffer_f1 is not None:
+        for run in doc["per_run"]:
+            run["buffers"] = [
+                {"buffer_metres": 20, "f1": buffer_f1[run["label"]]}]
+    if summary_buffer_f1 is not None:
+        doc["summary"]["buffers"][0]["f1"] = summary_buffer_f1
     return doc
 
 
@@ -547,6 +559,68 @@ def test_d_reaggregated_mean_matches_writer_at_half_boundary(monkeypatch, tmp_pa
     assert row["status"] == "ok"
     assert row["summary_tile_point_reaggregated"] == {"mcc": [0.3232, 0.3295]}
     assert "per_run_order_normalised" not in row
+
+
+# The real per-run f1@20m-equivalent pool behind the live 2026-08-22
+# failure of n1/384px-14buf-mcc/flash-text-minimal-t-0-0 (its 40 m
+# buffer): raw mean 0.52045 — np.mean rounds to 0.5204 in lexicographic
+# order and 0.5205 in numeric order.
+_BUFFER_F1_POOL = {
+    "run1": 0.5236, "run2": 0.5162, "run3": 0.5129, "run4": 0.5233,
+    "run5": 0.5236, "run6": 0.5185, "run7": 0.5205, "run8": 0.5256,
+    "run9": 0.5236, "run10": 0.5167,
+}
+
+
+def test_order_artefact_buffer_mean_shift_forgiven(monkeypatch, tmp_path):
+    """A summary BUFFER value that flips one 4 dp step purely through the
+    replay's pass order is forgiven and filed under order-normalisation:
+    evaluate_multi_run_mean aggregates buffer metrics with the same
+    order-sensitive np.mean as the tile block (live failure 2026-08-22)."""
+    lex_doc = _labelled_pool_doc(_STABLE_POOL, _LEX, 0.55,
+                                 buffer_f1=_BUFFER_F1_POOL,
+                                 summary_buffer_f1=0.5204)
+    num_doc = _labelled_pool_doc(_STABLE_POOL, _NUM, 0.55,
+                                 buffer_f1=_BUFFER_F1_POOL,
+                                 summary_buffer_f1=0.5205)
+    assert rc._buffer_mean(lex_doc, (20, "f1")) == 0.5204
+    assert rc._buffer_mean(num_doc, (20, "f1")) == 0.5205
+
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    _materialise(tmp_path, "cell/evaluation.json", lex_doc)
+    replayed = json.loads(json.dumps(num_doc))
+    replayed["_metadata"]["metadata_version"] = "1.3"
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "ok"
+    norm = row["per_run_order_normalised"]
+    assert norm["summary_buffer_points"] == {"20m/f1": [0.5204, 0.5205]}
+    assert "summary_tile_point_reaggregated" not in row
+
+
+def test_buffer_forgiveness_requires_per_run_buffer_reproduction(
+        monkeypatch, tmp_path):
+    """A genuinely moved per-run BUFFER measurement blocks the buffer-mean
+    forgiveness even when the summary values match their own means."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    lex_doc = _labelled_pool_doc(_STABLE_POOL, _LEX, 0.55,
+                                 buffer_f1=_BUFFER_F1_POOL,
+                                 summary_buffer_f1=0.5204)
+    _materialise(tmp_path, "cell/evaluation.json", lex_doc)
+    doctored = dict(_BUFFER_F1_POOL, run7=0.5301)  # a real measurement moved
+    replayed = _labelled_pool_doc(
+        _STABLE_POOL, _NUM, 0.55, buffer_f1=doctored,
+        summary_buffer_f1=rc._buffer_mean(
+            _labelled_pool_doc(_STABLE_POOL, _NUM, 0.55, buffer_f1=doctored),
+            (20, "f1")))
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "failed"
+    assert "20m/f1" in str(row["attempts"][0]["moved"])
 
 
 def test_order_artefact_summary_shift_filed_as_order_not_d41(monkeypatch, tmp_path):

@@ -378,6 +378,32 @@ def _reaggregated_mean(doc: dict, metric: str) -> float | None:
     return round(float(np.mean(vals)), 4) if vals else None
 
 
+def _per_run_buffer_table(doc: dict) -> list[dict[tuple, Any]]:
+    """Each run's buffer-level f1/precision/recall, keyed ``(buffer, metric)``."""
+    out = []
+    for run in doc.get("per_run") or []:
+        row: dict[tuple, Any] = {}
+        for entry in (run or {}).get("buffers") or []:
+            for metric in ("f1", "precision", "recall"):
+                if metric in entry:
+                    row[(entry.get("buffer_metres"), metric)] = entry[metric]
+        out.append(row)
+    return out
+
+
+def _buffer_mean(doc: dict, key: tuple) -> float | None:
+    """The writer's summary buffer aggregation over a document's run order.
+
+    ``evaluate_multi_run_mean`` computes each summary buffer metric as
+    ``round(float(np.mean(values)), 4)`` over the per-run values in
+    consumption order — the same order-sensitive expression as the tile
+    aggregation, and equally capable of flipping a 4 dp half-boundary when
+    the replay consumes an order-permuted pool.
+    """
+    vals = [r[key] for r in _per_run_buffer_table(doc) if key in r]
+    return round(float(np.mean(vals)), 4) if vals else None
+
+
 def gate(
     before: dict, after: dict,
 ) -> tuple[dict[str, Any] | None, dict[str, Any], dict[str, Any]]:
@@ -414,13 +440,19 @@ def gate(
       under order_normalisations, not D41, so the contract's
       ``n_reaggregated = 19`` census stays exact.
 
+    The same order-artefact forgiveness applies to the summary BUFFER
+    table: ``evaluate_multi_run_mean`` aggregates each buffer's
+    f1/precision/recall with the identical order-sensitive expression, so
+    an order-permuted pool can flip a summary buffer value by one 4 dp
+    step (observed live on 2026-08-22: four of the six order-permuted
+    cells carry such boundaries — eight shifted values corpus-wide, fully
+    enumerated). A moved buffer point is forgiven ONLY when the pool is
+    order-permuted, every labelled per-run buffer measurement reproduces
+    exactly, and both committed and replayed values equal the writer's
+    aggregation over their own run order.
+
     Anything else fails.
     """
-    pb, pa = point_table(before), point_table(after)
-    moved = {f"{k[0]}m/{k[1]}": (pb[k], pa[k]) for k in pb
-             if k in pa and abs(pb[k] - pa[k]) > TOLERANCE}
-    missing = sorted(f"{k[0]}m/{k[1]}" for k in set(pb) - set(pa))
-
     run_b, run_a = per_run_tile_points(before), per_run_tile_points(after)
     lab_b, lab_a = per_run_labels(before), per_run_labels(after)
     runs_moved: dict[str, Any] = {}
@@ -453,6 +485,26 @@ def gate(
             for metric, v in rb.items():
                 if ra.get(metric) != v:
                     runs_moved[f"run{i}/{metric}"] = (v, ra.get(metric))
+
+    pb, pa = point_table(before), point_table(after)
+    moved_keys = {k: (pb[k], pa[k]) for k in pb
+                  if k in pa and abs(pb[k] - pa[k]) > TOLERANCE}
+    missing = sorted(f"{k[0]}m/{k[1]}" for k in set(pb) - set(pa))
+    if (moved_keys and not runs_moved
+            and order_normalised.get("per_run_labels")):
+        # Buffer-mean order artefacts are forgivable only when every
+        # labelled per-run buffer measurement reproduces exactly.
+        by_label_a = dict(zip(lab_a, _per_run_buffer_table(after)))
+        buffers_reproduce = all(
+            by_label_a.get(lab) == rb
+            for lab, rb in zip(lab_b, _per_run_buffer_table(before)))
+        if buffers_reproduce:
+            for k in list(moved_keys):
+                if (pb[k] == _buffer_mean(before, k)
+                        and pa[k] == _buffer_mean(after, k)):
+                    order_normalised.setdefault("summary_buffer_points", {})[
+                        f"{k[0]}m/{k[1]}"] = list(moved_keys.pop(k))
+    moved = {f"{k[0]}m/{k[1]}": v for k, v in moved_keys.items()}
 
     tb, ta = tile_point_table(before), tile_point_table(after)
     tile_moved = {k: (tb[k], ta.get(k)) for k in tb if tb[k] != ta.get(k)}
