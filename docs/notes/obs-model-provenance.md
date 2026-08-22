@@ -23,8 +23,13 @@ audience: "researchers and future instances"
 > archived `.gz` transcripts; no data was lost; NO BACKFILL is
 > needed or safe. Rule going forward: provenance work reads the
 > canonical archive, never a live store. The repo's archive docs
-> (CLAUDE.md § Session Archiving; transparency spec) need updating
-> to the actual archive location.
+> were repointed at the real location on 2026-08-22 (`703c28afc`).
+> **The upgrade itself was EXECUTED on 2026-08-23 (Session 140) —
+> see [§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)**:
+> 357 of 428 headings now carry transcript-grade archive
+> confirmation, the 15 LOW entries all upgrade, and two evidence
+> conflicts surfaced for PI ruling (the 4.6→4.7 era boundary; six
+> writing-versus-finding session divergences).
 > Every switch boundary below is *derived from repository evidence only* (session transcripts,
 > explicit prose statements, and git trailers). No model release date has been asserted from an
 > instance's own background knowledge, because several of these releases post-date model training
@@ -136,6 +141,46 @@ Confidence grades follow the brief:
 
 Basis breakdown: 151 headings rest on a transcript model id, 59 on an explicit prose statement,
 203 on trailers, 15 on interpolation.
+
+> **Superseded by [§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)** — the table above
+> records the 2026-08-21 state, graded from the (machine-partial) live store. The canonical-archive
+> re-grading below reaches 357 HIGH / 48 MEDIUM / 0 LOW outright, with 23 headings pending the two
+> PI rulings it raises.
+
+### 4.1 Archive-based re-grading (2026-08-23, Session 140)
+
+**Method.** Every non-agent `session.meta.json` in both archive names
+(`~/cc-archives/map-reader-llm`, 204 entries; `~/cc-archives/vlm-burial-mound-detection`, 49) was
+read into a session-span → `model_id` timeline; meta-versus-transcript agreement was verified on
+8 sampled sessions spanning 2025-12 → 2026-08 (**8/8 exact**, single distinct assistant-turn model
+each, subagent `progress` events correctly excluded). Each of the 428 Observation headings was
+dated by `git blame` to its introducing commit (the file's 2026-05-29 rename is followed; the
+duplicate-number renumberings surface as late dates and are handled below), then joined against the
+timeline — at day grain first, and by commit **instant** against exact session spans on the five
+model-transition days. Evidence artefacts:
+`reports/provenance-archive-daymap-2026-08-23.md` (the day-map, verification table, and anomalies),
+`reports/provenance-archive-timeline-2026-08-23.json` (253 records), and
+`reports/provenance-obs-coverage-2026-08-23.json` (the per-heading join). The partition is exact —
+357 + 15 + 8 + 48 = 428:
+
+| Finding | Headings | Meaning |
+|---|---|---|
+| **archive-confirmed** | **357** | The introducing commit falls inside archived session span(s) of exactly one model, and that model agrees with the era table's attribution. Upgrade to **HIGH** (basis: archived transcript-grade model id). **All 15 LOW entries are in this set** — every one of their six dates (2026-03-25, 04-15, 04-24, 04-27, 04-28, 06-07) resolves to a single unambiguous model. |
+| archive-conflict | 15 | The archive disagrees with the table's attribution for the WRITING session: Obs 249–257 (the era-boundary conflict, [§ 6.6](#66-the-4647-era-boundary-is-nine-observations-early)) and Obs 398–400, 421–423 (the draft-then-accept divergence already documented in [§ 6.5](#65-other-trailer-versus-evidence-discrepancies-benign), now transcript-corroborated — attribution to the producing session stands per § 1.1). Pending PI ruling on § 6.6; tiers unchanged meanwhile. |
+| prior-evidence-stands | 8 | Obs 388–395: committed while Fable 5 and Opus 5 sessions ran **concurrently** (2026-08-04/06, the credit-exhaustion window), so the instant test cannot separate them. The session-log prose ("first session of the 48-hour Opus window") remains the operative HIGH evidence. |
+| pre-archive | 48 | Obs 1–47 (Antigravity/Gemini 3): the archive starts 2025-12-22, after the era closed. MEDIUM stands on the manifest evidence. |
+
+**Boundaries confirmed by the archive**: 4.5→4.6 at Obs 102 (2026-02-06, an abutting handover
+06:24/06:25 UTC — Obs 102–108's commit instants all fall on the 4.6 side); 4.8→Fable 5 at Obs 357
+(2026-06-10); and — resolving [§ 6.3](#63-opus-48-has-no-corroborating-api-model-id) — the whole
+Opus 4.8 era 2026-05-30 → 06-09 is covered **unbroken** by `claude-opus-4-8` transcripts, so
+"Opus 4.8" is corroborated by authoritative API model ids after all (the earlier "no coverage"
+claim was the wrong-store artefact).
+
+**Resulting census, outright** (before the two PI rulings): **HIGH 357 · MEDIUM 48 · LOW 0**, with
+23 headings graded per their prior evidence pending ruling (8 prose-HIGH concurrent-window, 9
+boundary-conflict, 6 divergence). If the PI accepts § 6.6's boundary correction and § 6.7's
+finding-session attributions, the census closes at **HIGH 380 · MEDIUM 48 · LOW 0**.
 
 **The 15 LOW entries**, all bracketed by anchored sessions on both sides:
 
@@ -295,6 +340,13 @@ store has **no coverage at all** between 2026-05-13 and 2026-08-06, and no `clau
 occurs anywhere in the reachable evidence. The label rests entirely on self-report.
 `[PI to confirm: that "Opus 4.8" names a real model he used, and its release date]`
 
+**RESOLVED 2026-08-23** ([§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)): the
+"no coverage" premise was the wrong-store artefact this draft's header corrects. The canonical
+archive covers 2026-05-30 → 06-09 unbroken with `claude-opus-4-8` API model ids
+(meta-and-transcript verified on `2026-06-07T05-16_establish-two-reference-generalisation`), with
+clean transition days on 05-29 (from 4.7) and 06-10 (to Fable 5). "Opus 4.8" is a real model id,
+not a self-report — only the release-date confirmation remains for the PI.
+
 ### 6.4 Three duplicated Observation numbers
 
 `working-notes.md` contains 428 `## Observation N` headings but only 425 distinct numbers.
@@ -321,10 +373,34 @@ covered by the E48/Obs 235 retraction, and Obs 45 already carries a 2026-06-05 e
   *committed* in later Fable sessions — Obs 421–423 are explicitly headed "(Session 137, 2026-08-19;
   accepted 2026-08-21)". This is the register's normal draft-then-accept workflow: **produced by one
   model, minted by another**. The table attributes to the producing session, per § 1.1.
+  *Archive corroboration (2026-08-23)*: the introducing commits (`bc7301fac` 2026-08-14,
+  `dc869b24f` 2026-08-21) fall inside `claude-fable-5` archived sessions, transcript-grade —
+  exactly as this bullet inferred. The producing-session attribution stands.
 - **Obs 1–47** were committed by `Shawn Ross` with a second human contributor (`adivea`) also active
   on 2025-12-17. The register is not a single-agent artefact even in its earliest layer.
 
 ---
+
+### 6.6 The 4.6→4.7 era boundary is nine Observations early
+
+**Surfaced by the 2026-08-23 archive re-grading** ([§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)).
+The era table starts Opus 4.7 at Obs 249, "2026-04-17 (from ~20:20 AEST)" — a timestamp that turns
+out to be the **commit clock of `09fe46a7f`** (2026-04-17T20:20:23+10:00), the commit introducing
+Obs 249–252 under the ambiguous `Claude Opus 4 (1M context)` trailer that § 6.5 read as an
+incomplete self-name on the new model. The canonical archive contradicts that reading: at that
+instant (10:20 UTC) — and at `857d5f714`'s (Obs 253–255, 14:17 UTC), and at the commit instants of
+Obs 256–257 early on 04-18 — the **only archived session running is
+`2026-04-16T05-56_b089991e`, `claude-opus-4-6` throughout** (span 04-16T05:56 → 04-18T14:04 UTC).
+The first `claude-opus-4-7` session starts 2026-04-18T00:17 UTC, and the first headings whose
+commit instants fall in 4.7-exclusive time are **Obs 258–259**. On the archive's evidence the
+trailer changed BEFORE the model did, and the corrected boundary is: **Opus 4.6 era extends
+through Obs 257; Opus 4.7 begins at Obs 258** (first 4.7 session 2026-04-18T00:17 UTC =
+10:17 AEST). Nine headings (249–257) would move 4.7 → 4.6, each then transcript-grade HIGH.
+
+*Caveat*: this assumes the introducing commits came from an archived session of this project — the
+archive audit reports 0 missing sessions, and no 4.7 session exists anywhere in either archive name
+before 04-18T00:17Z, but a session archived under an unrelated project name would be invisible to
+the sweep. `[PI to confirm: adopt the Obs 258 boundary]`
 
 ## 7. How to finalise
 
@@ -335,15 +411,19 @@ covered by the E48/Obs 235 retraction, and Obs 45 already carries a 2026-06-05 e
 2. **PI adjudicates the three "first Fable session" claims** ([§ 6.1](#61-three-mutually-exclusive-first-fable-session-claims)).
    Because the register and the reflections set are append-only, the correction belongs in a
    *new* rider entry — not an edit to the three original statements.
-3. **PI rules on "Opus 4.8"** ([§ 6.3](#63-opus-48-has-no-corroborating-api-model-id)).
-4. **Drop the DRAFT banner** and replace it with a `**Last revised**` line once 1–3 are settled.
-5. **Optionally mint a closing Observation** recording the attribution exercise itself — the
+3. **PI rules on "Opus 4.8"** ([§ 6.3](#63-opus-48-has-no-corroborating-api-model-id)) — as of
+   2026-08-23 only the release-date half remains; the model id is archive-corroborated.
+4. **PI rules on the corrected 4.6→4.7 boundary** ([§ 6.6](#66-the-4647-era-boundary-is-nine-observations-early)):
+   adopting Obs 258 re-attributes Obs 249–257 to Opus 4.6 at transcript-grade confidence and
+   closes the census at HIGH 380 · MEDIUM 48 · LOW 0 ([§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)).
+5. **Drop the DRAFT banner** and replace it with a `**Last revised**` line once 1–4 are settled.
+6. **Optionally mint a closing Observation** recording the attribution exercise itself — the
    findings worth carrying are that a nine-month register spans seven authoring configurations
    including a non-Claude one; that commit trailers were the sole evidence for 47 % of entries and
    are demonstrably corrupt in 12 of the 215 Obs-introducing commits (5.6 %); and that the specified
    `archive/cc-sessions/` model metadata was never materialised, leaving an unversioned, rotating
    transcript store as the only authoritative source.
-6. **Consider a forward fix**: the archiving specification already requires `model.model_version` per
+7. **Consider a forward fix**: the archiving specification already requires `model.model_version` per
    session. Materialising even a minimal `session.meta.json` per session — model id, date, session
    number — would make this record cheap to maintain and would not depend on trailers at all.
 
