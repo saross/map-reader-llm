@@ -41,6 +41,8 @@ from scripts.lib_llm_metadata import (  # noqa: E402
     merge_meta_into_existing,
 )
 
+pytestmark = pytest.mark.tier1
+
 
 # =========================================================================
 # FIXTURE BUILDERS

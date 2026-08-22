@@ -25,6 +25,8 @@ from analyse_h2_pilot_extensions import (  # noqa: E402
     find_optimal_f1,
 )
 
+pytestmark = pytest.mark.tier1
+
 
 # ---------------------------------------------------------------------------
 # Fixtures: synthetic geometries for spatial matching

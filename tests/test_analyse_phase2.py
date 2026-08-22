@@ -60,6 +60,8 @@ from scripts.lib_advanced_metrics import (
     compute_per_tile_tp_fp_fn,
 )
 
+pytestmark = pytest.mark.tier1
+
 
 @pytest.mark.tier1
 class TestApplyFdrCorrection:

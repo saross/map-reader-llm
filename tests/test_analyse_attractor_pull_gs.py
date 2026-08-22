@@ -40,6 +40,9 @@ from scripts.analyse_attractor_pull_gs import (  # noqa: E402
     randomise_within_tile,
     shell_rates_from_distances,
 )
+import pytest
+
+pytestmark = pytest.mark.tier1
 
 
 # =========================================================================

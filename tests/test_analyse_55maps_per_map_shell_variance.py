@@ -43,6 +43,8 @@ from scripts.analyse_55maps_per_map_shell_variance import (  # noqa: E402
     summarise_distribution,
 )
 
+pytestmark = pytest.mark.tier1
+
 
 # =========================================================================
 # 1. per_map_shell_rates — KDTree binning into (50, 75]

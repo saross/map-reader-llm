@@ -30,6 +30,8 @@ from analyse_dawid_skene import (  # noqa: E402
     load_detections,
 )
 
+pytestmark = pytest.mark.tier1
+
 
 # ---------------------------------------------------------------------------
 # Fixtures
