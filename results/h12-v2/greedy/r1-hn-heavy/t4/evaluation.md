@@ -1,14 +1,12 @@
 # Evaluation: r1-hn-heavy-greedy-t4
 
-**Generated**: 2026-04-30T06:52:32.306587+00:00  
+**Generated**: 2026-08-20T13:11:32.815932+00:00  
 **Detections**: 240  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |
 |---|---|---|---|---|---|---|
-| 20m | 0.584 | N/A * | 0.821 | N/A * | 0.453 | N/A * |
-| 30m | 0.634 | N/A * | 0.892 | N/A * | 0.492 | N/A * |
-| 40m | 0.643 | N/A * | 0.904 | N/A * | 0.499 | N/A * |
-| 50m | 0.643 | N/A * | 0.904 | N/A * | 0.499 | N/A * |
-
-\* Bootstrap CI suppressed for sparse-coverage buffers (57.1%, 57.1%, 57.1%, 57.1% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
+| 20m | 0.584 | [0.521, 0.642] | 0.821 | [0.763, 0.868] | 0.453 | [0.388, 0.515] |
+| 30m | 0.634 | [0.570, 0.690] | 0.892 | [0.846, 0.927] | 0.492 | [0.424, 0.557] |
+| 40m | 0.643 | [0.581, 0.699] | 0.904 | [0.860, 0.939] | 0.499 | [0.431, 0.563] |
+| 50m | 0.643 | [0.581, 0.699] | 0.904 | [0.860, 0.939] | 0.499 | [0.431, 0.563] |
 

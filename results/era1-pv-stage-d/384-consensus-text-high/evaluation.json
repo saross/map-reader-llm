@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-19T05:03:02.440910+00:00",
+  "timestamp": "2026-08-20T13:10:13.058490+00:00",
   "summary": {
     "label": "accepted_t0.2",
     "n_detections": 412,
@@ -515,11 +515,11 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.2",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "fe7f6d648",
+    "script_git_commit": "9c82d3fa0",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-19T05:02:46.587200+00:00",
+    "generated_at_utc": "2026-08-20T13:09:54.201054+00:00",
     "cli_args": {
       "detections": [
         "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson"
@@ -547,8 +547,8 @@
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "/home/shawn/cc-scratch/tmp/tmputoz166k",
-      "label": null,
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpyz1qbgx7/out",
+      "label": "accepted_t0.2",
       "mcc": true,
       "workers": 1
     },
@@ -556,8 +556,12 @@
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
       "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "methods_measured": [
+        "BCa"
+      ]
     },
     "input_files": {
       "detections": [

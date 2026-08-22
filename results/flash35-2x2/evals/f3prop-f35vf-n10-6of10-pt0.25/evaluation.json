@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-19T05:04:42.113081+00:00",
+  "timestamp": "2026-08-20T13:11:00.634551+00:00",
   "summary": {
     "label": "f3prop-f35vf-n10-6of10-pt0.25",
     "n_detections": 389,
@@ -515,11 +515,11 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.2",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "fe7f6d648",
+    "script_git_commit": "9c82d3fa0",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-19T05:04:27.287822+00:00",
+    "generated_at_utc": "2026-08-20T13:10:42.090513+00:00",
     "cli_args": {
       "detections": [
         "results/flash35-2x2/best-op-sets/f3prop-f35vf-n10-6of10-pt0.25.geojson"
@@ -547,7 +547,7 @@
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "/home/shawn/cc-scratch/tmp/tmphix8z0wd",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpcsjyhdl0/out",
       "label": "f3prop-f35vf-n10-6of10-pt0.25",
       "mcc": true,
       "workers": 1
@@ -556,8 +556,12 @@
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
       "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "methods_measured": [
+        "BCa"
+      ]
     },
     "input_files": {
       "detections": [

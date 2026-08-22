@@ -1,5 +1,5 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-HIGH-t0.7-8of10,20,0.7291,0.7207,0.7382,0.8256,0.8157,0.8352,0.6529,0.6421,0.6644,0.6788,0.6648,0.6948,0.7511,0.9147,sparse_cross_grid,True,0.5400410677618069,487
-HIGH-t0.7-8of10,30,0.7779,0.7701,0.7855,0.8808,0.8728,0.8895,0.6966,0.6855,0.7078,0.6788,0.6648,0.6948,0.7511,0.9147,sparse_cross_grid,True,0.5400410677618069,487
-HIGH-t0.7-8of10,40,0.7882,0.7799,0.7962,0.8924,0.8845,0.9006,0.7057,0.6951,0.7171,0.6788,0.6648,0.6948,0.7511,0.9147,sparse_cross_grid,True,0.5400410677618069,487
-HIGH-t0.7-8of10,50,0.7882,0.7799,0.7962,0.8924,0.8845,0.9006,0.7057,0.6951,0.7171,0.6788,0.6648,0.6948,0.7511,0.9147,sparse_cross_grid,True,0.5400410677618069,487
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,mcc_boot_mean,sensitivity_boot_mean,specificity_boot_mean,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+HIGH-t0.7-8of10,20,0.7291,0.6838,0.7693,0.8256,0.7769,0.8667,0.6529,0.5976,0.7032,0.6788,0.6113,0.7384,0.7511,0.9147,0.6782,0.7505,0.9147,sparse_cross_grid,False,0.5400410677618069,487,zero_fraction_heuristic,
+HIGH-t0.7-8of10,30,0.7779,0.7367,0.8137,0.8808,0.8374,0.9144,0.6966,0.6424,0.7472,0.6788,0.6113,0.7384,0.7511,0.9147,0.6782,0.7505,0.9147,sparse_cross_grid,False,0.5400410677618069,487,zero_fraction_heuristic,
+HIGH-t0.7-8of10,40,0.7882,0.7478,0.8231,0.8924,0.849,0.9248,0.7057,0.6518,0.7557,0.6788,0.6113,0.7384,0.7511,0.9147,0.6782,0.7505,0.9147,sparse_cross_grid,False,0.5400410677618069,487,zero_fraction_heuristic,
+HIGH-t0.7-8of10,50,0.7882,0.7478,0.8231,0.8924,0.849,0.9248,0.7057,0.6518,0.7557,0.6788,0.6113,0.7384,0.7511,0.9147,0.6782,0.7505,0.9147,sparse_cross_grid,False,0.5400410677618069,487,zero_fraction_heuristic,

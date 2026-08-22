@@ -1,10 +1,12 @@
 # Evaluation: P2b Image T=0.0
 
-**Generated**: 2026-04-30T06:55:51.193115+00:00  
+**Generated**: 2026-08-21T13:39:20.823604+00:00  
 **Runs**: 3  
 **Detections**: —  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |
 |---|---|---|---|---|---|---|
-| 30m | 0.654 | [0.647, 0.661] | 0.555 | [0.547, 0.563] | 0.795 | [0.788, 0.802] |
+| 30m | 0.654 | N/A * | 0.555 | N/A * | 0.795 | N/A * |
+
+\* **Partial coverage** — the detection set does not cover the evaluation bounds it is scored against (tile-level detail not retained in this aggregation). Ground-truth mounds on unprocessed tiles are counted as artificial false negatives, so the POINT ESTIMATE is deflated as well as the interval; neither is comparable with a full-coverage cell. Re-score both arms against bounds the data actually covers. See erratum E72 in `docs/methodology/preregistration/protocol-errata.md` and `results/evaluation-scopes.md` § 12.
 

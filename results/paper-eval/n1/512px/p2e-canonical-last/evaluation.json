@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-30T06:56:09.940355+00:00",
+  "timestamp": "2026-08-21T13:39:33.991225+00:00",
   "summary": {
     "label": "P2e Canonical last",
     "n_detections": 785,
@@ -9,25 +9,29 @@
         "buffer_metres": 30,
         "f1": 0.6858,
         "f1_point": 0.6858,
-        "f1_ci_lower": 0.6784,
-        "f1_ci_upper": 0.6934,
+        "f1_ci_lower": 0.6423,
+        "f1_ci_upper": 0.727,
         "f1_ci_method": "BCa",
         "precision": 0.5783,
         "p_point": 0.5783,
-        "p_ci_lower": 0.5691,
-        "p_ci_upper": 0.5873,
+        "p_ci_lower": 0.5307,
+        "p_ci_upper": 0.6261,
         "p_ci_method": "BCa",
         "recall": 0.8423,
         "r_point": 0.8423,
-        "r_ci_lower": 0.8348,
-        "r_ci_upper": 0.8506,
+        "r_ci_lower": 0.7896,
+        "r_ci_upper": 0.8802,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 340,
           "n_zero_count_tiles": 10,
           "zero_fraction": 0.029411764705882353,
           "threshold": 0.5,
-          "coverage_status": "normal"
+          "coverage_status": "normal",
+          "coverage_source": "processed_tiles",
+          "n_processed_tiles": 340,
+          "n_unprocessed_tiles": 0,
+          "coverage_detail": null
         },
         "coverage_status": "normal",
         "ci_unreliable": false,
@@ -40,18 +44,18 @@
     "coverage_status": "normal"
   },
   "_metadata": {
-    "metadata_version": "1.1",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "66272391",
+    "script_git_commit": "349cdd1b6",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-30T06:56:06.714543+00:00",
+    "generated_at_utc": "2026-08-21T13:39:31.389339+00:00",
     "cli_args": {
       "detections": [
         "outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.geojson"
       ],
       "detections_dir": null,
       "batch": null,
-      "glob": "*/detections_*.geojson",
+      "glob": null,
       "buffers": [
         30
       ],
@@ -59,16 +63,21 @@
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/paper-eval/n1/512px/p2e-canonical-last",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmp627_il8t/out",
       "label": "P2e Canonical last",
-      "mcc": false
+      "mcc": false,
+      "workers": 1
     },
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
       "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "methods_measured": [
+        "BCa"
+      ]
     },
     "input_files": {
       "detections": [
@@ -76,6 +85,12 @@
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    },
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
     }
   }
 }

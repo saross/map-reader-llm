@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-30T06:55:51.189427+00:00",
+  "timestamp": "2026-08-21T13:39:20.823156+00:00",
   "summary": {
     "label": "P2b Image T=0.0",
     "n_runs": 3,
@@ -8,26 +8,32 @@
       {
         "buffer_metres": 30,
         "f1": 0.6538,
-        "f1_ci_lower": 0.6473,
-        "f1_ci_upper": 0.6608,
+        "f1_point": 0.6538,
+        "f1_ci_lower": 0.6123,
+        "f1_ci_upper": 0.6949,
         "precision": 0.555,
-        "p_ci_lower": 0.5467,
-        "p_ci_upper": 0.563,
+        "p_point": 0.555,
+        "p_ci_lower": 0.5085,
+        "p_ci_upper": 0.6025,
         "recall": 0.7953,
-        "r_ci_lower": 0.7878,
-        "r_ci_upper": 0.8017,
-        "ci_unreliable": false,
-        "ci_excludes_point": false,
-        "ci_flag_basis": "measured-exclusion-only"
+        "r_point": 0.7953,
+        "r_ci_lower": 0.7516,
+        "r_ci_upper": 0.8362,
+        "coverage_status": "partial_coverage",
+        "ci_unreliable": true,
+        "ci_zero_fraction": 0.014706,
+        "ci_n_tiles": 340
       }
-    ]
+    ],
+    "ci_unreliable_any_buffer": true,
+    "coverage_status": "partial_coverage"
   },
   "_metadata": {
-    "metadata_version": "1.1",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "66272391",
+    "script_git_commit": "349cdd1b6",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-30T06:55:42.851248+00:00",
+    "generated_at_utc": "2026-08-21T13:39:14.020885+00:00",
     "cli_args": {
       "detections": null,
       "detections_dir": "outputs/retest/phase2b/track1-image/T0.0",
@@ -40,21 +46,32 @@
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/paper-eval/n1/512px/p2b-image-t-0-0",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmp1huzf4ny/out",
       "label": "P2b Image T=0.0",
-      "mcc": false
+      "mcc": false,
+      "workers": 1
     },
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
       "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "methods_measured": [
+        "BCa"
+      ]
     },
     "input_files": {
       "detections": "outputs/retest/phase2b/track1-image/T0.0",
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    },
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
     }
   },
   "per_run": [
@@ -66,35 +83,39 @@
           "buffer_metres": 30,
           "f1": 0.6505,
           "f1_point": 0.6505,
-          "f1_ci_lower": 0.6438,
-          "f1_ci_upper": 0.6578,
+          "f1_ci_lower": 0.6086,
+          "f1_ci_upper": 0.6923,
           "f1_ci_method": "BCa",
           "precision": 0.5508,
           "p_point": 0.5508,
-          "p_ci_lower": 0.5419,
-          "p_ci_upper": 0.5589,
+          "p_ci_lower": 0.5033,
+          "p_ci_upper": 0.5992,
           "p_ci_method": "BCa",
           "recall": 0.7941,
           "r_point": 0.7941,
-          "r_ci_lower": 0.7867,
-          "r_ci_upper": 0.8006,
+          "r_ci_lower": 0.7505,
+          "r_ci_upper": 0.835,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 340,
             "n_zero_count_tiles": 5,
             "zero_fraction": 0.014705882352941176,
             "threshold": 0.5,
-            "coverage_status": "normal"
+            "coverage_status": "partial_coverage",
+            "coverage_source": "processed_tiles",
+            "n_processed_tiles": 339,
+            "n_unprocessed_tiles": 1,
+            "coverage_detail": "partial: 1/340 tiles unprocessed"
           },
-          "coverage_status": "normal",
-          "ci_unreliable": false,
+          "coverage_status": "partial_coverage",
+          "ci_unreliable": true,
           "ci_excludes_point": false,
           "sparse_coverage": false,
           "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
-      "ci_unreliable_any_buffer": false,
-      "coverage_status": "normal"
+      "ci_unreliable_any_buffer": true,
+      "coverage_status": "partial_coverage"
     },
     {
       "label": "detections_T0.0_run02",
@@ -104,35 +125,39 @@
           "buffer_metres": 30,
           "f1": 0.6555,
           "f1_point": 0.6555,
-          "f1_ci_lower": 0.6491,
-          "f1_ci_upper": 0.6624,
+          "f1_ci_lower": 0.6141,
+          "f1_ci_upper": 0.696,
           "f1_ci_method": "BCa",
           "precision": 0.5571,
           "p_point": 0.5571,
-          "p_ci_lower": 0.5489,
-          "p_ci_upper": 0.5648,
+          "p_ci_lower": 0.511,
+          "p_ci_upper": 0.6042,
           "p_ci_method": "BCa",
           "recall": 0.7959,
           "r_point": 0.7959,
-          "r_ci_lower": 0.7883,
-          "r_ci_upper": 0.8022,
+          "r_ci_lower": 0.7522,
+          "r_ci_upper": 0.8367,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 340,
             "n_zero_count_tiles": 5,
             "zero_fraction": 0.014705882352941176,
             "threshold": 0.5,
-            "coverage_status": "normal"
+            "coverage_status": "partial_coverage",
+            "coverage_source": "processed_tiles",
+            "n_processed_tiles": 338,
+            "n_unprocessed_tiles": 2,
+            "coverage_detail": "partial: 2/340 tiles unprocessed"
           },
-          "coverage_status": "normal",
-          "ci_unreliable": false,
+          "coverage_status": "partial_coverage",
+          "ci_unreliable": true,
           "ci_excludes_point": false,
           "sparse_coverage": false,
           "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
-      "ci_unreliable_any_buffer": false,
-      "coverage_status": "normal"
+      "ci_unreliable_any_buffer": true,
+      "coverage_status": "partial_coverage"
     },
     {
       "label": "detections_T0.0_run03",
@@ -142,35 +167,39 @@
           "buffer_metres": 30,
           "f1": 0.6555,
           "f1_point": 0.6555,
-          "f1_ci_lower": 0.6491,
-          "f1_ci_upper": 0.6623,
+          "f1_ci_lower": 0.6143,
+          "f1_ci_upper": 0.6963,
           "f1_ci_method": "BCa",
           "precision": 0.5571,
           "p_point": 0.5571,
-          "p_ci_lower": 0.5492,
-          "p_ci_upper": 0.5654,
+          "p_ci_lower": 0.5113,
+          "p_ci_upper": 0.604,
           "p_ci_method": "BCa",
           "recall": 0.7959,
           "r_point": 0.7959,
-          "r_ci_lower": 0.7884,
-          "r_ci_upper": 0.8022,
+          "r_ci_lower": 0.7522,
+          "r_ci_upper": 0.8369,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 340,
             "n_zero_count_tiles": 5,
             "zero_fraction": 0.014705882352941176,
             "threshold": 0.5,
-            "coverage_status": "normal"
+            "coverage_status": "partial_coverage",
+            "coverage_source": "processed_tiles",
+            "n_processed_tiles": 338,
+            "n_unprocessed_tiles": 2,
+            "coverage_detail": "partial: 2/340 tiles unprocessed"
           },
-          "coverage_status": "normal",
-          "ci_unreliable": false,
+          "coverage_status": "partial_coverage",
+          "ci_unreliable": true,
           "ci_excludes_point": false,
           "sparse_coverage": false,
           "ci_flag_basis": "measured-exclusion-or-partial-coverage"
         }
       ],
-      "ci_unreliable_any_buffer": false,
-      "coverage_status": "normal"
+      "ci_unreliable_any_buffer": true,
+      "coverage_status": "partial_coverage"
     }
   ]
 }

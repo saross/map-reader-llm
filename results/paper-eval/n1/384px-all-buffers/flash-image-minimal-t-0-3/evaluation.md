@@ -1,13 +1,15 @@
 # Evaluation: Flash Image MINIMAL T=0.3
 
-**Generated**: 2026-04-30T06:55:08.995164+00:00  
+**Generated**: 2026-08-21T13:33:16.935997+00:00  
 **Runs**: 3  
 **Detections**: —  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |
 |---|---|---|---|---|---|---|
-| 20m | 0.593 | [0.584, 0.603] | 0.469 | [0.460, 0.479] | 0.807 | [0.798, 0.817] |
-| 30m | 0.653 | [0.645, 0.662] | 0.516 | [0.507, 0.526] | 0.888 | [0.881, 0.895] |
-| 40m | 0.671 | [0.663, 0.679] | 0.530 | [0.521, 0.540] | 0.913 | [0.907, 0.919] |
-| 50m | 0.677 | [0.669, 0.685] | 0.535 | [0.526, 0.545] | 0.921 | [0.915, 0.927] |
+| 20m | 0.593 | N/A * | 0.469 | N/A * | 0.807 | N/A * |
+| 30m | 0.653 | N/A * | 0.516 | N/A * | 0.888 | N/A * |
+| 40m | 0.671 | N/A * | 0.530 | N/A * | 0.913 | N/A * |
+| 50m | 0.677 | N/A * | 0.535 | N/A * | 0.921 | N/A * |
+
+\* **Partial coverage** — the detection set does not cover the evaluation bounds it is scored against (tile-level detail not retained in this aggregation). Ground-truth mounds on unprocessed tiles are counted as artificial false negatives, so the POINT ESTIMATE is deflated as well as the interval; neither is comparable with a full-coverage cell. Re-score both arms against bounds the data actually covers. See erratum E72 in `docs/methodology/preregistration/protocol-errata.md` and `results/evaluation-scopes.md` § 12.
 

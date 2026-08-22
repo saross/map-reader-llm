@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-30T06:54:28.071849+00:00",
+  "timestamp": "2026-08-21T13:28:17.374983+00:00",
   "summary": {
     "label": "P2d Image terse",
     "n_detections": 773,
@@ -9,35 +9,39 @@
         "buffer_metres": 30,
         "f1": 0.6494,
         "f1_point": 0.6494,
-        "f1_ci_lower": 0.6423,
-        "f1_ci_upper": 0.6573,
+        "f1_ci_lower": 0.6055,
+        "f1_ci_upper": 0.6919,
         "f1_ci_method": "BCa",
         "precision": 0.5511,
         "p_point": 0.5511,
-        "p_ci_lower": 0.5418,
-        "p_ci_upper": 0.5598,
+        "p_ci_lower": 0.5007,
+        "p_ci_upper": 0.599,
         "p_ci_method": "BCa",
         "recall": 0.7904,
         "r_point": 0.7904,
-        "r_ci_lower": 0.7829,
-        "r_ci_upper": 0.7974,
+        "r_ci_lower": 0.742,
+        "r_ci_upper": 0.8333,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 340,
           "n_zero_count_tiles": 11,
           "zero_fraction": 0.03235294117647059,
           "threshold": 0.5,
-          "coverage_status": "normal"
+          "coverage_status": "partial_coverage",
+          "coverage_source": "processed_tiles",
+          "n_processed_tiles": 339,
+          "n_unprocessed_tiles": 1,
+          "coverage_detail": "partial: 1/340 tiles unprocessed"
         },
-        "coverage_status": "normal",
-        "ci_unreliable": false,
+        "coverage_status": "partial_coverage",
+        "ci_unreliable": true,
         "ci_excludes_point": false,
         "sparse_coverage": false,
         "ci_flag_basis": "measured-exclusion-or-partial-coverage"
       }
     ],
-    "ci_unreliable_any_buffer": false,
-    "coverage_status": "normal",
+    "ci_unreliable_any_buffer": true,
+    "coverage_status": "partial_coverage",
     "tile_classification": {
       "confusion": {
         "tp": 204,
@@ -47,40 +51,40 @@
       },
       "mcc": {
         "point": 0.2239,
-        "mean": 0.2242,
-        "ci_lower": 0.21,
-        "ci_upper": 0.235,
-        "method": "BCa"
+        "mean": 0.2218,
+        "ci_lower": 0.1516,
+        "ci_upper": 0.2891,
+        "method": "percentile_fallback"
       },
       "sensitivity": {
         "point": 1.0,
         "mean": 1.0,
         "ci_lower": 1.0,
         "ci_upper": 1.0,
-        "method": "BCa"
+        "method": "percentile_fallback"
       },
       "specificity": {
         "point": 0.0809,
         "mean": 0.081,
-        "ci_lower": 0.0718,
-        "ci_upper": 0.0892,
+        "ci_lower": 0.0423,
+        "ci_upper": 0.1377,
         "method": "BCa"
       }
     }
   },
   "_metadata": {
-    "metadata_version": "1.1",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "66272391",
+    "script_git_commit": "349cdd1b6",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-30T06:54:24.729153+00:00",
+    "generated_at_utc": "2026-08-21T13:28:13.925564+00:00",
     "cli_args": {
       "detections": [
         "outputs/retest/phase2d/track1-image/terse/run_1/detections_terse_run01.geojson"
       ],
       "detections_dir": null,
       "batch": null,
-      "glob": "*/detections_*.geojson",
+      "glob": null,
       "buffers": [
         30
       ],
@@ -88,16 +92,22 @@
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/paper-eval/mcc/512px/p2d-image-terse",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpmkkpftri/out",
       "label": "P2d Image terse",
-      "mcc": true
+      "mcc": true,
+      "workers": 1
     },
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
-      "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
+      "method": "mixed",
+      "methods_measured": [
+        "BCa",
+        "percentile_fallback"
+      ]
     },
     "input_files": {
       "detections": [
@@ -105,6 +115,12 @@
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    },
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
     }
   }
 }

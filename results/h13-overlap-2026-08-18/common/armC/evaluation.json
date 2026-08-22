@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-19T06:14:03.253070+00:00",
+  "timestamp": "2026-08-20T13:12:03.390357+00:00",
   "summary": {
     "label": "h13-armC-common",
     "n_runs": 3,
@@ -22,10 +22,7 @@
         "coverage_status": "normal",
         "ci_unreliable": false,
         "ci_zero_fraction": 0.029412,
-        "ci_n_tiles": 340,
-        "ci_excludes_point": false,
-        "sparse_coverage": false,
-        "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+        "ci_n_tiles": 340
       }
     ],
     "ci_unreliable_any_buffer": false,
@@ -65,11 +62,11 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.2",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "fe7f6d648",
+    "script_git_commit": "9c82d3fa0",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-19T06:13:52.804826+00:00",
+    "generated_at_utc": "2026-08-20T13:11:50.241984+00:00",
     "cli_args": {
       "detections": [
         "outputs/h13/scoring/common/armC/run_1/detections_dedup.geojson",
@@ -86,7 +83,7 @@
       "bounds": "outputs/h13/scoring/bounds/h13_common_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "/home/shawn/cc-scratch/tmp/tmphrhemh_d",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpsqvai250/out",
       "label": "h13-armC-common",
       "mcc": true,
       "workers": 1
@@ -95,8 +92,13 @@
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
-      "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
+      "method": "mixed",
+      "methods_measured": [
+        "BCa",
+        "percentile_fallback"
+      ]
     },
     "input_files": {
       "detections": [

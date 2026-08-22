@@ -1,2 +1,2 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-h8v2-scale-8,20,0.71,0.7012,0.72,0.808,0.7986,0.8161,0.6332,0.6227,0.6461,0.75,0.7372,0.7606,0.7806,0.9535,sparse_cross_grid,True,0.5504587155963303,327
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,mcc_boot_mean,sensitivity_boot_mean,specificity_boot_mean,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+h8v2-scale-8,20,0.71,0.6511,0.7641,0.808,0.7533,0.8569,0.6332,0.5603,0.7026,0.75,0.6756,0.8104,0.7806,0.9535,0.7505,0.7812,0.9536,sparse_cross_grid,False,0.5504587155963303,327,zero_fraction_heuristic,

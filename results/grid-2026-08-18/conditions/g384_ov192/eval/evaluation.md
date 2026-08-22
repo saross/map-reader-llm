@@ -1,6 +1,6 @@
 # Evaluation: detections
 
-**Generated**: 2026-08-19T01:46:16.989261+00:00  
+**Generated**: 2026-08-20T13:11:23.514440+00:00  
 **Detections**: 488  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

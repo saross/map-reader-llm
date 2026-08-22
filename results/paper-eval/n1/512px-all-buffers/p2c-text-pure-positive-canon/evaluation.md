@@ -1,12 +1,14 @@
 # Evaluation: P2c Text pure-positive-canon
 
-**Generated**: 2026-04-30T06:57:06.506609+00:00  
+**Generated**: 2026-08-21T13:39:03.861206+00:00  
 **Detections**: 887  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |
 |---|---|---|---|---|---|---|
-| 20m | 0.605 | [0.595, 0.615] | 0.486 | [0.474, 0.497] | 0.800 | [0.790, 0.808] |
-| 30m | 0.641 | [0.631, 0.651] | 0.515 | [0.503, 0.526] | 0.848 | [0.840, 0.854] |
-| 40m | 0.651 | [0.641, 0.660] | 0.523 | [0.511, 0.534] | 0.861 | [0.854, 0.867] |
-| 50m | 0.655 | [0.645, 0.664] | 0.526 | [0.515, 0.538] | 0.866 | [0.859, 0.872] |
+| 20m | 0.605 | N/A * | 0.486 | N/A * | 0.800 | N/A * |
+| 30m | 0.641 | N/A * | 0.515 | N/A * | 0.848 | N/A * |
+| 40m | 0.651 | N/A * | 0.523 | N/A * | 0.861 | N/A * |
+| 50m | 0.655 | N/A * | 0.526 | N/A * | 0.866 | N/A * |
+
+\* **Partial coverage** — the detection set does not cover the evaluation bounds it is scored against (partial: 1/340 tiles unprocessed). Ground-truth mounds on unprocessed tiles are counted as artificial false negatives, so the POINT ESTIMATE is deflated as well as the interval; neither is comparable with a full-coverage cell. Re-score both arms against bounds the data actually covers. See erratum E72 in `docs/methodology/preregistration/protocol-errata.md` and `results/evaluation-scopes.md` § 12.
 

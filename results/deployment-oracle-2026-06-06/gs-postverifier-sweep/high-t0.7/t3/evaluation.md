@@ -1,11 +1,9 @@
 # Evaluation: postverif_t3
 
-**Generated**: 2026-06-06T13:54:22.341921+00:00  
+**Generated**: 2026-08-20T13:09:12.096075+00:00  
 **Detections**: 443  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 20m | 0.847 | N/A * | 0.840 | N/A * | 0.855 | N/A * | 0.792 | N/A * | 0.838 | 0.946 |
-
-\* Bootstrap CI suppressed for sparse-coverage buffers (56.3% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
+| 20m | 0.847 | [0.814, 0.877] | 0.840 | [0.798, 0.876] | 0.855 | [0.817, 0.889] | 0.792 | [0.735, 0.842] | 0.838 | 0.946 |
 

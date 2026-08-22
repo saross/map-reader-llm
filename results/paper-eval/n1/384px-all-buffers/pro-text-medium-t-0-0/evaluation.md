@@ -1,6 +1,6 @@
 # Evaluation: Pro Text MEDIUM T=0.0
 
-**Generated**: 2026-04-30T06:55:20.780608+00:00  
+**Generated**: 2026-08-21T13:36:52.834475+00:00  
 **Detections**: 430  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |
@@ -10,5 +10,5 @@
 | 40m | 0.795 | N/A * | 0.800 | N/A * | 0.791 | N/A * |
 | 50m | 0.802 | N/A * | 0.807 | N/A * | 0.798 | N/A * |
 
-\* Bootstrap CI suppressed for sparse-coverage buffers (55.0%, 55.2%, 55.2%, 55.4% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
+\* **Partial coverage** — the detection set does not cover the evaluation bounds it is scored against (partial: 26/487 tiles unprocessed). Ground-truth mounds on unprocessed tiles are counted as artificial false negatives, so the POINT ESTIMATE is deflated as well as the interval; neither is comparable with a full-coverage cell. Re-score both arms against bounds the data actually covers. See erratum E72 in `docs/methodology/preregistration/protocol-errata.md` and `results/evaluation-scopes.md` § 12.
 

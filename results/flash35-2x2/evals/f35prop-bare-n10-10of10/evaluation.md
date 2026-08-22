@@ -1,6 +1,6 @@
 # Evaluation: f35prop-bare-n10-10of10
 
-**Generated**: 2026-08-19T05:03:56.829104+00:00  
+**Generated**: 2026-08-20T13:10:43.752664+00:00  
 **Detections**: 598  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |

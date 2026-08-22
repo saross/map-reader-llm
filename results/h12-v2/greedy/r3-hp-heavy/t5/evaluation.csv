@@ -1,5 +1,5 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-r3-hp-heavy-greedy-t5,20,0.4834,0.472,0.4967,0.8639,0.8521,0.8747,0.3356,0.3246,0.3475,sparse_cross_grid,True,0.5831622176591376,487
-r3-hp-heavy-greedy-t5,30,0.5199,0.5081,0.5322,0.929,0.9197,0.9367,0.3609,0.35,0.373,sparse_cross_grid,True,0.5831622176591376,487
-r3-hp-heavy-greedy-t5,40,0.5265,0.5144,0.5392,0.9408,0.9319,0.9478,0.3655,0.3539,0.3773,sparse_cross_grid,True,0.5831622176591376,487
-r3-hp-heavy-greedy-t5,50,0.5298,0.5172,0.5427,0.9467,0.9392,0.954,0.3678,0.356,0.3797,sparse_cross_grid,True,0.5831622176591376,487
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+r3-hp-heavy-greedy-t5,20,0.4834,0.4253,0.5404,0.8639,0.8066,0.9101,0.3356,0.2838,0.3906,sparse_cross_grid,False,0.5831622176591376,487,zero_fraction_heuristic,
+r3-hp-heavy-greedy-t5,30,0.5199,0.4596,0.5757,0.929,0.8851,0.9613,0.3609,0.3058,0.4163,sparse_cross_grid,False,0.5831622176591376,487,zero_fraction_heuristic,
+r3-hp-heavy-greedy-t5,40,0.5265,0.4649,0.5847,0.9408,0.8967,0.9706,0.3655,0.3096,0.4228,sparse_cross_grid,False,0.5831622176591376,487,zero_fraction_heuristic,
+r3-hp-heavy-greedy-t5,50,0.5298,0.4675,0.5877,0.9467,0.9044,0.9748,0.3678,0.3107,0.4245,sparse_cross_grid,False,0.5831622176591376,487,zero_fraction_heuristic,

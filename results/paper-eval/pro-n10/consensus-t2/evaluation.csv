@@ -1,5 +1,5 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-pro-high-text-consensus-pool-t2,20,0.7987,0.7903,0.8072,0.7697,0.7579,0.781,0.8299,0.8201,0.8407,0.7344,0.7196,0.7484,0.8035,0.9225,sparse_cross_grid,True,0.5482546201232033,487
-pro-high-text-consensus-pool-t2,30,0.8164,0.8087,0.824,0.7868,0.7751,0.7966,0.8483,0.8387,0.8585,0.7344,0.7196,0.7484,0.8035,0.9225,sparse_cross_grid,True,0.5503080082135524,487
-pro-high-text-consensus-pool-t2,40,0.823,0.8157,0.8301,0.7932,0.7813,0.8036,0.8552,0.8459,0.8648,0.7344,0.7196,0.7484,0.8035,0.9225,sparse_cross_grid,True,0.5503080082135524,487
-pro-high-text-consensus-pool-t2,50,0.823,0.8157,0.8301,0.7932,0.7813,0.8036,0.8552,0.8459,0.8648,0.7344,0.7196,0.7484,0.8035,0.9225,sparse_cross_grid,True,0.5503080082135524,487
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,mcc_boot_mean,sensitivity_boot_mean,specificity_boot_mean,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+pro-high-text-consensus-pool-t2,20,0.7987,0.7603,0.8326,0.7697,0.7162,0.8137,0.8299,0.7786,0.871,0.7344,0.6701,0.7895,0.8035,0.9225,0.7342,0.8033,0.9225,sparse_cross_grid,False,0.5482546201232033,487,zero_fraction_heuristic,
+pro-high-text-consensus-pool-t2,30,0.8164,0.7785,0.8489,0.7868,0.7333,0.831,0.8483,0.7973,0.888,0.7344,0.6701,0.7895,0.8035,0.9225,0.7342,0.8033,0.9225,sparse_cross_grid,False,0.5503080082135524,487,zero_fraction_heuristic,
+pro-high-text-consensus-pool-t2,40,0.823,0.7859,0.854,0.7932,0.7395,0.8364,0.8552,0.8042,0.8935,0.7344,0.6701,0.7895,0.8035,0.9225,0.7342,0.8033,0.9225,sparse_cross_grid,False,0.5503080082135524,487,zero_fraction_heuristic,
+pro-high-text-consensus-pool-t2,50,0.823,0.7859,0.854,0.7932,0.7395,0.8364,0.8552,0.8042,0.8935,0.7344,0.6701,0.7895,0.8035,0.9225,0.7342,0.8033,0.9225,sparse_cross_grid,False,0.5503080082135524,487,zero_fraction_heuristic,

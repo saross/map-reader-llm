@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-18T13:08:11.286464+00:00",
+  "timestamp": "2026-08-20T13:13:44.976411+00:00",
   "summary": {
     "label": "P2a Verbose text",
     "n_runs": 3,
@@ -8,19 +8,25 @@
       {
         "buffer_metres": 30,
         "f1": 0.5552,
-        "f1_ci_lower": 0.5451,
-        "f1_ci_upper": 0.5648,
+        "f1_point": 0.5552,
+        "f1_ci_lower": 0.4967,
+        "f1_ci_upper": 0.612,
         "precision": 0.4348,
-        "p_ci_lower": 0.4231,
-        "p_ci_upper": 0.445,
+        "p_point": 0.4348,
+        "p_ci_lower": 0.3738,
+        "p_ci_upper": 0.4965,
         "recall": 0.7681,
-        "r_ci_lower": 0.7581,
-        "r_ci_upper": 0.7763,
+        "r_point": 0.7681,
+        "r_ci_lower": 0.7103,
+        "r_ci_upper": 0.8161,
+        "coverage_status": "normal",
         "ci_unreliable": false,
-        "ci_excludes_point": false,
-        "ci_flag_basis": "measured-exclusion-only"
+        "ci_zero_fraction": 0.002941,
+        "ci_n_tiles": 340
       }
     ],
+    "ci_unreliable_any_buffer": false,
+    "coverage_status": "normal",
     "tile_classification": {
       "mcc": {
         "mean": 0.0811,
@@ -41,7 +47,7 @@
       "specificity": {
         "mean": 0.0049,
         "ci_lower": 0.0,
-        "ci_upper": 0.0157,
+        "ci_upper": 0.027,
         "point": 0.0049,
         "n_runs": 3,
         "n_runs_defined": 3
@@ -56,11 +62,11 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.1",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "66272391",
+    "script_git_commit": "9c82d3fa0",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-30T06:54:02.278059+00:00",
+    "generated_at_utc": "2026-08-20T13:13:34.924993+00:00",
     "cli_args": {
       "detections": null,
       "detections_dir": "outputs/retest/phase2a/verbose-text",
@@ -73,26 +79,34 @@
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/paper-eval/mcc/512px/p2a-verbose-text",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpln22c66h/out",
       "label": "P2a Verbose text",
-      "mcc": true
+      "mcc": true,
+      "workers": 1
     },
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
-      "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
+      "method": "mixed",
+      "methods_measured": [
+        "BCa",
+        "percentile_fallback",
+        "undefined"
+      ]
     },
     "input_files": {
       "detections": "outputs/retest/phase2a/verbose-text",
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
     },
-    "e81_reemission": {
-      "erratum": "E81",
-      "scope": "summary.tile_classification and per_run[*].tile_classification only; F1, precision, recall, coverage, and CI fields carried through unchanged",
-      "script_path": "scripts/rescore_tile_mcc_e81.py"
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
     }
   },
   "per_run": [
@@ -104,25 +118,29 @@
           "buffer_metres": 30,
           "f1": 0.5537,
           "f1_point": 0.5537,
-          "f1_ci_lower": 0.5449,
-          "f1_ci_upper": 0.5639,
+          "f1_ci_lower": 0.4964,
+          "f1_ci_upper": 0.6097,
           "f1_ci_method": "BCa",
           "precision": 0.4372,
           "p_point": 0.4372,
-          "p_ci_lower": 0.4268,
-          "p_ci_upper": 0.4476,
+          "p_ci_lower": 0.3771,
+          "p_ci_upper": 0.4984,
           "p_ci_method": "BCa",
           "recall": 0.7551,
           "r_point": 0.7551,
-          "r_ci_lower": 0.745,
-          "r_ci_upper": 0.7639,
+          "r_ci_lower": 0.695,
+          "r_ci_upper": 0.8052,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 340,
             "n_zero_count_tiles": 1,
             "zero_fraction": 0.0029411764705882353,
             "threshold": 0.5,
-            "coverage_status": "normal"
+            "coverage_status": "normal",
+            "coverage_source": "processed_tiles",
+            "n_processed_tiles": 340,
+            "n_unprocessed_tiles": 0,
+            "coverage_detail": null
           },
           "coverage_status": "normal",
           "ci_unreliable": false,
@@ -158,8 +176,8 @@
           "point": 0.0074,
           "mean": 0.0073,
           "ci_lower": 0.0,
-          "ci_upper": 0.0236,
-          "method": "percentile_fallback"
+          "ci_upper": 0.0405,
+          "method": "BCa"
         }
       }
     },
@@ -171,25 +189,29 @@
           "buffer_metres": 30,
           "f1": 0.5509,
           "f1_point": 0.5509,
-          "f1_ci_lower": 0.5396,
-          "f1_ci_upper": 0.5601,
+          "f1_ci_lower": 0.4916,
+          "f1_ci_upper": 0.6068,
           "f1_ci_method": "BCa",
           "precision": 0.4295,
           "p_point": 0.4295,
-          "p_ci_lower": 0.417,
-          "p_ci_upper": 0.4396,
+          "p_ci_lower": 0.3684,
+          "p_ci_upper": 0.4895,
           "p_ci_method": "BCa",
           "recall": 0.7681,
           "r_point": 0.7681,
-          "r_ci_lower": 0.7576,
-          "r_ci_upper": 0.7759,
+          "r_ci_lower": 0.7116,
+          "r_ci_upper": 0.8148,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 340,
             "n_zero_count_tiles": 0,
             "zero_fraction": 0.0,
             "threshold": 0.5,
-            "coverage_status": "normal"
+            "coverage_status": "normal",
+            "coverage_source": "processed_tiles",
+            "n_processed_tiles": 340,
+            "n_unprocessed_tiles": 0,
+            "coverage_detail": null
           },
           "coverage_status": "normal",
           "ci_unreliable": false,
@@ -238,25 +260,29 @@
           "buffer_metres": 30,
           "f1": 0.561,
           "f1_point": 0.561,
-          "f1_ci_lower": 0.5509,
-          "f1_ci_upper": 0.5704,
+          "f1_ci_lower": 0.502,
+          "f1_ci_upper": 0.6195,
           "f1_ci_method": "BCa",
           "precision": 0.4376,
           "p_point": 0.4376,
-          "p_ci_lower": 0.4256,
-          "p_ci_upper": 0.4478,
+          "p_ci_lower": 0.3758,
+          "p_ci_upper": 0.5015,
           "p_ci_method": "BCa",
           "recall": 0.7811,
           "r_point": 0.7811,
-          "r_ci_lower": 0.7717,
-          "r_ci_upper": 0.7892,
+          "r_ci_lower": 0.7243,
+          "r_ci_upper": 0.8282,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 340,
             "n_zero_count_tiles": 1,
             "zero_fraction": 0.0029411764705882353,
             "threshold": 0.5,
-            "coverage_status": "normal"
+            "coverage_status": "normal",
+            "coverage_source": "processed_tiles",
+            "n_processed_tiles": 340,
+            "n_unprocessed_tiles": 0,
+            "coverage_detail": null
           },
           "coverage_status": "normal",
           "ci_unreliable": false,
@@ -292,8 +318,8 @@
           "point": 0.0074,
           "mean": 0.0073,
           "ci_lower": 0.0,
-          "ci_upper": 0.0236,
-          "method": "percentile_fallback"
+          "ci_upper": 0.0405,
+          "method": "BCa"
         }
       }
     }

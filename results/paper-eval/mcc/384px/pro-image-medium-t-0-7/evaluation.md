@@ -1,9 +1,11 @@
 # Evaluation: Pro Image MEDIUM T=0.7
 
-**Generated**: 2026-04-30T06:53:57.058256+00:00  
+**Generated**: 2026-08-20T13:13:01.516179+00:00  
 **Detections**: 941  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 30m | 0.538 | [0.526, 0.548] | 0.393 | [0.382, 0.404] | 0.851 | [0.842, 0.858] | 0.598 | [0.587, 0.610] | 0.996 | 0.550 |
+| 30m | 0.538 | N/A * | 0.393 | N/A * | 0.851 | N/A * | 0.598 | N/A * | 0.996 | 0.550 |
+
+\* **Partial coverage** — the detection set does not cover the evaluation bounds it is scored against (partial: 1/487 tiles unprocessed). Ground-truth mounds on unprocessed tiles are counted as artificial false negatives, so the POINT ESTIMATE is deflated as well as the interval; neither is comparable with a full-coverage cell. Re-score both arms against bounds the data actually covers. See erratum E72 in `docs/methodology/preregistration/protocol-errata.md` and `results/evaluation-scopes.md` § 12.
 

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-06-06T13:54:22.341362+00:00",
+  "timestamp": "2026-08-20T13:09:12.095688+00:00",
   "summary": {
     "label": "postverif_t3",
     "n_detections": 443,
@@ -9,25 +9,29 @@
         "buffer_metres": 20,
         "f1": 0.8474,
         "f1_point": 0.8474,
-        "f1_ci_lower": 0.8235,
-        "f1_ci_upper": 0.8662,
+        "f1_ci_lower": 0.8143,
+        "f1_ci_upper": 0.877,
         "f1_ci_method": "BCa",
         "precision": 0.8397,
         "p_point": 0.8397,
-        "p_ci_lower": 0.8106,
-        "p_ci_upper": 0.8652,
+        "p_ci_lower": 0.7977,
+        "p_ci_upper": 0.8759,
         "p_ci_method": "BCa",
         "recall": 0.8552,
         "r_point": 0.8552,
-        "r_ci_lower": 0.8289,
-        "r_ci_upper": 0.8773,
+        "r_ci_lower": 0.8169,
+        "r_ci_upper": 0.8892,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
           "n_zero_count_tiles": 274,
           "zero_fraction": 0.5626283367556468,
           "threshold": 0.5,
-          "coverage_status": "sparse_cross_grid"
+          "coverage_status": "sparse_cross_grid",
+          "coverage_source": "zero_fraction_heuristic",
+          "n_processed_tiles": null,
+          "n_unprocessed_tiles": null,
+          "coverage_detail": null
         },
         "coverage_status": "sparse_cross_grid",
         "ci_unreliable": false,
@@ -47,58 +51,62 @@
       },
       "mcc": {
         "point": 0.7922,
-        "mean": 0.7917,
-        "ci_lower": 0.7528,
-        "ci_upper": 0.8291,
+        "mean": 0.7921,
+        "ci_lower": 0.7354,
+        "ci_upper": 0.8415,
         "method": "BCa"
       },
       "sensitivity": {
         "point": 0.8384,
-        "mean": 0.8377,
-        "ci_lower": 0.8077,
-        "ci_upper": 0.8727,
+        "mean": 0.8382,
+        "ci_lower": 0.7879,
+        "ci_upper": 0.8826,
         "method": "BCa"
       },
       "specificity": {
         "point": 0.9457,
         "mean": 0.9458,
-        "ci_lower": 0.9259,
-        "ci_upper": 0.9638,
+        "ci_lower": 0.9132,
+        "ci_upper": 0.9692,
         "method": "BCa"
       }
     }
   },
   "_metadata": {
-    "metadata_version": "1.2",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "891a1c7c5",
+    "script_git_commit": "9c82d3fa0",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-06-06T13:54:18.261786+00:00",
+    "generated_at_utc": "2026-08-20T13:09:09.707175+00:00",
     "cli_args": {
       "detections": [
         "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/postverif_t3.geojson"
       ],
       "detections_dir": null,
       "batch": null,
-      "glob": "*/detections_*.geojson",
+      "glob": null,
       "buffers": [
         20
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-      "bootstrap": 1000,
+      "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.7/t3",
-      "label": null,
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpat4wbfu9/out",
+      "label": "postverif_t3",
       "mcc": true,
       "workers": 1
     },
     "bootstrap": {
-      "n_iterations": 1000,
+      "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
       "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "methods_measured": [
+        "BCa"
+      ]
     },
     "input_files": {
       "detections": [

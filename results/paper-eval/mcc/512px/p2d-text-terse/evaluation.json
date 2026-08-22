@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-18T13:08:39.380953+00:00",
+  "timestamp": "2026-08-21T13:28:18.166514+00:00",
   "summary": {
     "label": "P2d Text terse",
     "n_detections": 868,
@@ -9,25 +9,29 @@
         "buffer_metres": 30,
         "f1": 0.6269,
         "f1_point": 0.6269,
-        "f1_ci_lower": 0.6173,
-        "f1_ci_upper": 0.6374,
+        "f1_ci_lower": 0.5685,
+        "f1_ci_upper": 0.6795,
         "f1_ci_method": "BCa",
         "precision": 0.5081,
         "p_point": 0.5081,
-        "p_ci_lower": 0.4972,
-        "p_ci_upper": 0.5218,
+        "p_ci_lower": 0.4417,
+        "p_ci_upper": 0.5718,
         "p_ci_method": "BCa",
         "recall": 0.8182,
         "r_point": 0.8182,
-        "r_ci_lower": 0.8089,
-        "r_ci_upper": 0.8259,
+        "r_ci_lower": 0.7669,
+        "r_ci_upper": 0.8597,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 340,
           "n_zero_count_tiles": 0,
           "zero_fraction": 0.0,
           "threshold": 0.5,
-          "coverage_status": "normal"
+          "coverage_status": "normal",
+          "coverage_source": "processed_tiles",
+          "n_processed_tiles": 340,
+          "n_unprocessed_tiles": 0,
+          "coverage_detail": null
         },
         "coverage_status": "normal",
         "ci_unreliable": false,
@@ -69,18 +73,18 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.1",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "66272391",
+    "script_git_commit": "349cdd1b6",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-30T06:54:26.825334+00:00",
+    "generated_at_utc": "2026-08-21T13:28:14.720268+00:00",
     "cli_args": {
       "detections": [
         "outputs/retest/phase2d/track2-text/terse/run_1/detections_terse_run01.geojson"
       ],
       "detections_dir": null,
       "batch": null,
-      "glob": "*/detections_*.geojson",
+      "glob": null,
       "buffers": [
         30
       ],
@@ -88,16 +92,23 @@
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/paper-eval/mcc/512px/p2d-text-terse",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmppf02iwlz/out",
       "label": "P2d Text terse",
-      "mcc": true
+      "mcc": true,
+      "workers": 1
     },
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
-      "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
+      "method": "mixed",
+      "methods_measured": [
+        "BCa",
+        "percentile_fallback",
+        "undefined"
+      ]
     },
     "input_files": {
       "detections": [
@@ -106,10 +117,11 @@
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson"
     },
-    "e81_reemission": {
-      "erratum": "E81",
-      "scope": "summary.tile_classification and per_run[*].tile_classification only; F1, precision, recall, coverage, and CI fields carried through unchanged",
-      "script_path": "scripts/rescore_tile_mcc_e81.py"
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
     }
   }
 }

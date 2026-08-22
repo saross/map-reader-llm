@@ -1,5 +1,5 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-MINIMAL-t0.3-4of10,20,0.5271,0.5146,0.5405,0.3757,0.363,0.3888,0.8828,0.8748,0.8903,0.0907,0.0729,0.1101,0.9301,0.124,normal,False,0.09650924024640657,487
-MINIMAL-t0.3-4of10,30,0.534,0.5211,0.5464,0.3806,0.368,0.3932,0.8943,0.8862,0.9011,0.0907,0.0729,0.1101,0.9301,0.124,normal,False,0.09856262833675565,487
-MINIMAL-t0.3-4of10,40,0.5422,0.5292,0.5553,0.3865,0.3737,0.3986,0.908,0.9006,0.914,0.0907,0.0729,0.1101,0.9301,0.124,normal,False,0.09856262833675565,487
-MINIMAL-t0.3-4of10,50,0.5422,0.5292,0.5553,0.3865,0.3737,0.3986,0.908,0.9006,0.914,0.0907,0.0729,0.1101,0.9301,0.124,normal,False,0.09856262833675565,487
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,mcc_boot_mean,sensitivity_boot_mean,specificity_boot_mean,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+MINIMAL-t0.3-4of10,20,0.5271,0.4687,0.5846,0.3757,0.3199,0.4338,0.8828,0.8404,0.9139,0.0907,0.0021,0.1742,0.9301,0.124,0.0899,0.93,0.1238,normal,False,0.09650924024640657,487,zero_fraction_heuristic,
+MINIMAL-t0.3-4of10,30,0.534,0.4756,0.5919,0.3806,0.3254,0.4395,0.8943,0.8511,0.9238,0.0907,0.0021,0.1742,0.9301,0.124,0.0899,0.93,0.1238,normal,False,0.09856262833675565,487,zero_fraction_heuristic,
+MINIMAL-t0.3-4of10,40,0.5422,0.4827,0.5997,0.3865,0.3298,0.4456,0.908,0.8667,0.9357,0.0907,0.0021,0.1742,0.9301,0.124,0.0899,0.93,0.1238,normal,False,0.09856262833675565,487,zero_fraction_heuristic,
+MINIMAL-t0.3-4of10,50,0.5422,0.4827,0.5997,0.3865,0.3298,0.4456,0.908,0.8667,0.9357,0.0907,0.0021,0.1742,0.9301,0.124,0.0899,0.93,0.1238,normal,False,0.09856262833675565,487,zero_fraction_heuristic,

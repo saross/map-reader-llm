@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-19T05:07:01.806065+00:00",
+  "timestamp": "2026-08-22T14:35:09.708683+00:00",
   "summary": {
     "label": "verified-384-ge3of5-t0-3-n5",
     "n_detections": 398,
@@ -515,11 +515,11 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.2",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "fe7f6d648",
+    "script_git_commit": "142f2c5c9",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-19T05:06:47.032319+00:00",
+    "generated_at_utc": "2026-08-22T14:34:51.242100+00:00",
     "cli_args": {
       "detections": [
         "results/verifier-robustness/matrix-sets/min-T0.3.geojson"
@@ -547,7 +547,7 @@
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "/home/shawn/cc-scratch/tmp/tmpkotit9kx",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpcwdy5680/out",
       "label": "verified-384-ge3of5-t0-3-n5",
       "mcc": true,
       "workers": 1
@@ -556,8 +556,12 @@
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
       "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "methods_measured": [
+        "BCa"
+      ]
     },
     "input_files": {
       "detections": [

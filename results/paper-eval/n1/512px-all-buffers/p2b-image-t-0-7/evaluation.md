@@ -1,13 +1,15 @@
 # Evaluation: P2b Image T=0.7
 
-**Generated**: 2026-04-30T06:56:42.989720+00:00  
+**Generated**: 2026-08-21T13:38:22.963590+00:00  
 **Runs**: 3  
 **Detections**: —  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI |
 |---|---|---|---|---|---|---|
-| 20m | 0.537 | [0.528, 0.545] | 0.452 | [0.443, 0.461] | 0.660 | [0.650, 0.668] |
-| 30m | 0.634 | [0.626, 0.642] | 0.534 | [0.524, 0.542] | 0.779 | [0.771, 0.787] |
-| 40m | 0.673 | [0.665, 0.681] | 0.567 | [0.558, 0.576] | 0.828 | [0.820, 0.835] |
-| 50m | 0.699 | [0.691, 0.705] | 0.589 | [0.579, 0.597] | 0.859 | [0.853, 0.865] |
+| 20m | 0.537 | N/A * | 0.452 | N/A * | 0.660 | N/A * |
+| 30m | 0.634 | N/A * | 0.534 | N/A * | 0.779 | N/A * |
+| 40m | 0.673 | N/A * | 0.567 | N/A * | 0.828 | N/A * |
+| 50m | 0.699 | N/A * | 0.589 | N/A * | 0.859 | N/A * |
+
+\* **Partial coverage** — the detection set does not cover the evaluation bounds it is scored against (tile-level detail not retained in this aggregation). Ground-truth mounds on unprocessed tiles are counted as artificial false negatives, so the POINT ESTIMATE is deflated as well as the interval; neither is comparable with a full-coverage cell. Re-score both arms against bounds the data actually covers. See erratum E72 in `docs/methodology/preregistration/protocol-errata.md` and `results/evaluation-scopes.md` § 12.
 

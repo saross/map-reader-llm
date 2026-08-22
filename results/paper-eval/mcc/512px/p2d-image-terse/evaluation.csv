@@ -1,2 +1,2 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-P2d Image terse,30,0.6494,0.6423,0.6573,0.5511,0.5418,0.5598,0.7904,0.7829,0.7974,0.2239,0.21,0.235,1.0,0.0809,normal,False,0.03235294117647059,340
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,mcc_boot_mean,sensitivity_boot_mean,specificity_boot_mean,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+P2d Image terse,30,0.6494,0.6055,0.6919,0.5511,0.5007,0.599,0.7904,0.742,0.8333,0.2239,0.1516,0.2891,1.0,0.0809,0.2218,1.0,0.081,partial_coverage,True,0.03235294117647059,340,processed_tiles,1

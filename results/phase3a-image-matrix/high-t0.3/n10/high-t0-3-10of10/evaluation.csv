@@ -1,5 +1,5 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-HIGH-t0.3-10of10,20,0.6779,0.6648,0.6871,0.8674,0.8573,0.8771,0.5563,0.5413,0.5665,0.6585,0.644,0.6706,0.6594,0.9612,sparse_cross_grid,True,0.5708418891170431,487
-HIGH-t0.3-10of10,30,0.7087,0.6965,0.7172,0.9068,0.8984,0.9149,0.5816,0.5667,0.5922,0.6585,0.644,0.6706,0.6594,0.9612,sparse_cross_grid,True,0.5708418891170431,487
-HIGH-t0.3-10of10,40,0.7171,0.7045,0.7258,0.9176,0.9089,0.9253,0.5885,0.5733,0.5995,0.6585,0.644,0.6706,0.6594,0.9612,sparse_cross_grid,True,0.5708418891170431,487
-HIGH-t0.3-10of10,50,0.7171,0.7045,0.7258,0.9176,0.9089,0.9253,0.5885,0.5733,0.5995,0.6585,0.644,0.6706,0.6594,0.9612,sparse_cross_grid,True,0.5708418891170431,487
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,mcc_boot_mean,sensitivity_boot_mean,specificity_boot_mean,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+HIGH-t0.3-10of10,20,0.6779,0.6271,0.7265,0.8674,0.8149,0.9058,0.5563,0.4999,0.6135,0.6585,0.5955,0.7175,0.6594,0.9612,0.6582,0.6593,0.9611,sparse_cross_grid,False,0.5708418891170431,487,zero_fraction_heuristic,
+HIGH-t0.3-10of10,30,0.7087,0.662,0.7559,0.9068,0.8625,0.9391,0.5816,0.5255,0.6388,0.6585,0.5955,0.7175,0.6594,0.9612,0.6582,0.6593,0.9611,sparse_cross_grid,False,0.5708418891170431,487,zero_fraction_heuristic,
+HIGH-t0.3-10of10,40,0.7171,0.6696,0.763,0.9176,0.875,0.9478,0.5885,0.5317,0.6457,0.6585,0.5955,0.7175,0.6594,0.9612,0.6582,0.6593,0.9611,sparse_cross_grid,False,0.5708418891170431,487,zero_fraction_heuristic,
+HIGH-t0.3-10of10,50,0.7171,0.6696,0.763,0.9176,0.875,0.9478,0.5885,0.5317,0.6457,0.6585,0.5955,0.7175,0.6594,0.9612,0.6582,0.6593,0.9611,sparse_cross_grid,False,0.5708418891170431,487,zero_fraction_heuristic,

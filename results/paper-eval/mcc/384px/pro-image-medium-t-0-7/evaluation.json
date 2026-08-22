@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-30T06:53:57.037284+00:00",
+  "timestamp": "2026-08-20T13:13:01.515809+00:00",
   "summary": {
     "label": "Pro Image MEDIUM T=0.7",
     "n_detections": 941,
@@ -9,35 +9,39 @@
         "buffer_metres": 30,
         "f1": 0.5378,
         "f1_point": 0.5378,
-        "f1_ci_lower": 0.5263,
-        "f1_ci_upper": 0.5482,
+        "f1_ci_lower": 0.485,
+        "f1_ci_upper": 0.5852,
         "f1_ci_method": "BCa",
         "precision": 0.3932,
         "p_point": 0.3932,
-        "p_ci_lower": 0.382,
-        "p_ci_upper": 0.4039,
+        "p_ci_lower": 0.3411,
+        "p_ci_upper": 0.443,
         "p_ci_method": "BCa",
         "recall": 0.8506,
         "r_point": 0.8506,
-        "r_ci_lower": 0.8424,
-        "r_ci_upper": 0.8579,
+        "r_ci_lower": 0.813,
+        "r_ci_upper": 0.8824,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
           "n_zero_count_tiles": 143,
           "zero_fraction": 0.2936344969199179,
           "threshold": 0.5,
-          "coverage_status": "normal"
+          "coverage_status": "partial_coverage",
+          "coverage_source": "processed_tiles",
+          "n_processed_tiles": 486,
+          "n_unprocessed_tiles": 1,
+          "coverage_detail": "partial: 1/487 tiles unprocessed"
         },
-        "coverage_status": "normal",
-        "ci_unreliable": false,
+        "coverage_status": "partial_coverage",
+        "ci_unreliable": true,
         "ci_excludes_point": false,
         "sparse_coverage": false,
         "ci_flag_basis": "measured-exclusion-or-partial-coverage"
       }
     ],
-    "ci_unreliable_any_buffer": false,
-    "coverage_status": "normal",
+    "ci_unreliable_any_buffer": true,
+    "coverage_status": "partial_coverage",
     "tile_classification": {
       "confusion": {
         "tp": 228,
@@ -47,40 +51,40 @@
       },
       "mcc": {
         "point": 0.5984,
-        "mean": 0.5983,
-        "ci_lower": 0.5868,
-        "ci_upper": 0.6095,
+        "mean": 0.5982,
+        "ci_lower": 0.5439,
+        "ci_upper": 0.6489,
         "method": "BCa"
       },
       "sensitivity": {
         "point": 0.9956,
         "mean": 0.9956,
-        "ci_lower": 0.9936,
-        "ci_upper": 0.9973,
+        "ci_lower": 0.9753,
+        "ci_upper": 1.0,
         "method": "BCa"
       },
       "specificity": {
         "point": 0.5504,
         "mean": 0.5504,
-        "ci_lower": 0.5367,
-        "ci_upper": 0.5631,
+        "ci_lower": 0.4886,
+        "ci_upper": 0.6094,
         "method": "BCa"
       }
     }
   },
   "_metadata": {
-    "metadata_version": "1.1",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "66272391",
+    "script_git_commit": "9c82d3fa0",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-30T06:53:52.893297+00:00",
+    "generated_at_utc": "2026-08-20T13:12:58.178428+00:00",
     "cli_args": {
       "detections": [
         "outputs/h11/n1-outstanding-384/pro-image-medium-t07/run_1/detections_pro-image-medium-t07_run01.geojson"
       ],
       "detections_dir": null,
       "batch": null,
-      "glob": "*/detections_*.geojson",
+      "glob": null,
       "buffers": [
         30
       ],
@@ -88,16 +92,21 @@
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/paper-eval/mcc/384px/pro-image-medium-t-0-7",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpincqzx4v/out",
       "label": "Pro Image MEDIUM T=0.7",
-      "mcc": true
+      "mcc": true,
+      "workers": 1
     },
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
       "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "methods_measured": [
+        "BCa"
+      ]
     },
     "input_files": {
       "detections": [
@@ -105,6 +114,12 @@
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    },
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
     }
   }
 }

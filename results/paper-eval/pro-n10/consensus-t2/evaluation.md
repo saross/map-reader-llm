@@ -1,14 +1,12 @@
 # Evaluation: pro-high-text-consensus-pool-t2
 
-**Generated**: 2026-04-30T06:57:17.163257+00:00  
+**Generated**: 2026-08-21T13:44:06.855425+00:00  
 **Detections**: 469  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 20m | 0.799 | N/A * | 0.770 | N/A * | 0.830 | N/A * | 0.734 | N/A * | 0.803 | 0.922 |
-| 30m | 0.816 | N/A * | 0.787 | N/A * | 0.848 | N/A * | 0.734 | N/A * | 0.803 | 0.922 |
-| 40m | 0.823 | N/A * | 0.793 | N/A * | 0.855 | N/A * | 0.734 | N/A * | 0.803 | 0.922 |
-| 50m | 0.823 | N/A * | 0.793 | N/A * | 0.855 | N/A * | 0.734 | N/A * | 0.803 | 0.922 |
-
-\* Bootstrap CI suppressed for sparse-coverage buffers (54.8%, 55.0%, 55.0%, 55.0% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
+| 20m | 0.799 | [0.760, 0.833] | 0.770 | [0.716, 0.814] | 0.830 | [0.779, 0.871] | 0.734 | [0.670, 0.789] | 0.803 | 0.922 |
+| 30m | 0.816 | [0.778, 0.849] | 0.787 | [0.733, 0.831] | 0.848 | [0.797, 0.888] | 0.734 | [0.670, 0.789] | 0.803 | 0.922 |
+| 40m | 0.823 | [0.786, 0.854] | 0.793 | [0.740, 0.836] | 0.855 | [0.804, 0.893] | 0.734 | [0.670, 0.789] | 0.803 | 0.922 |
+| 50m | 0.823 | [0.786, 0.854] | 0.793 | [0.740, 0.836] | 0.855 | [0.804, 0.893] | 0.734 | [0.670, 0.789] | 0.803 | 0.922 |
 

@@ -1,5 +1,5 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-HIGH-t0.7-10of10,20,0.7821,0.7727,0.7901,0.8841,0.8749,0.8917,0.7011,0.6888,0.7126,0.6604,0.6461,0.6741,0.7249,0.9186,sparse_cross_grid,True,0.5400410677618069,487
-HIGH-t0.7-10of10,30,0.7872,0.7782,0.7956,0.8899,0.8812,0.8976,0.7057,0.6936,0.7172,0.6604,0.6461,0.6741,0.7249,0.9186,sparse_cross_grid,True,0.5400410677618069,487
-HIGH-t0.7-10of10,40,0.7872,0.7782,0.7956,0.8899,0.8812,0.8976,0.7057,0.6936,0.7172,0.6604,0.6461,0.6741,0.7249,0.9186,sparse_cross_grid,True,0.5400410677618069,487
-HIGH-t0.7-10of10,50,0.7872,0.7782,0.7956,0.8899,0.8812,0.8976,0.7057,0.6936,0.7172,0.6604,0.6461,0.6741,0.7249,0.9186,sparse_cross_grid,True,0.5400410677618069,487
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,mcc_boot_mean,sensitivity_boot_mean,specificity_boot_mean,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+HIGH-t0.7-10of10,20,0.7821,0.7388,0.8198,0.8841,0.8408,0.9182,0.7011,0.6437,0.7534,0.6604,0.5918,0.7202,0.7249,0.9186,0.6604,0.7248,0.9187,sparse_cross_grid,False,0.5400410677618069,487,zero_fraction_heuristic,
+HIGH-t0.7-10of10,30,0.7872,0.7448,0.8232,0.8899,0.8482,0.9233,0.7057,0.649,0.7568,0.6604,0.5918,0.7202,0.7249,0.9186,0.6604,0.7248,0.9187,sparse_cross_grid,False,0.5400410677618069,487,zero_fraction_heuristic,
+HIGH-t0.7-10of10,40,0.7872,0.7448,0.8232,0.8899,0.8482,0.9233,0.7057,0.649,0.7568,0.6604,0.5918,0.7202,0.7249,0.9186,0.6604,0.7248,0.9187,sparse_cross_grid,False,0.5400410677618069,487,zero_fraction_heuristic,
+HIGH-t0.7-10of10,50,0.7872,0.7448,0.8232,0.8899,0.8482,0.9233,0.7057,0.649,0.7568,0.6604,0.5918,0.7202,0.7249,0.9186,0.6604,0.7248,0.9187,sparse_cross_grid,False,0.5400410677618069,487,zero_fraction_heuristic,

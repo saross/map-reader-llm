@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-04-30T06:54:01.473869+00:00",
+  "timestamp": "2026-08-20T13:13:15.542732+00:00",
   "summary": {
     "label": "Pro Text MEDIUM T=0.7",
     "n_detections": 1445,
@@ -9,25 +9,29 @@
         "buffer_metres": 30,
         "f1": 0.4277,
         "f1_point": 0.4277,
-        "f1_ci_lower": 0.4173,
-        "f1_ci_upper": 0.4409,
+        "f1_ci_lower": 0.3725,
+        "f1_ci_upper": 0.4843,
         "f1_ci_method": "BCa",
         "precision": 0.2782,
         "p_point": 0.2782,
-        "p_ci_lower": 0.2691,
-        "p_ci_upper": 0.2889,
+        "p_ci_lower": 0.2335,
+        "p_ci_upper": 0.3272,
         "p_ci_method": "BCa",
         "recall": 0.9241,
         "r_point": 0.9241,
-        "r_ci_lower": 0.9183,
-        "r_ci_upper": 0.9294,
+        "r_ci_lower": 0.8946,
+        "r_ci_upper": 0.9465,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
           "n_zero_count_tiles": 60,
           "zero_fraction": 0.12320328542094455,
           "threshold": 0.5,
-          "coverage_status": "normal"
+          "coverage_status": "normal",
+          "coverage_source": "processed_tiles",
+          "n_processed_tiles": 487,
+          "n_unprocessed_tiles": 0,
+          "coverage_detail": null
         },
         "coverage_status": "normal",
         "ci_unreliable": false,
@@ -47,40 +51,40 @@
       },
       "mcc": {
         "point": 0.3105,
-        "mean": 0.3104,
-        "ci_lower": 0.2964,
-        "ci_upper": 0.3226,
+        "mean": 0.31,
+        "ci_lower": 0.2467,
+        "ci_upper": 0.3677,
         "method": "BCa"
       },
       "sensitivity": {
         "point": 0.9825,
         "mean": 0.9825,
-        "ci_lower": 0.9787,
-        "ci_upper": 0.9859,
+        "ci_lower": 0.9576,
+        "ci_upper": 0.9956,
         "method": "BCa"
       },
       "specificity": {
         "point": 0.2248,
         "mean": 0.2249,
-        "ci_lower": 0.2112,
-        "ci_upper": 0.2338,
+        "ci_lower": 0.1767,
+        "ci_upper": 0.2797,
         "method": "BCa"
       }
     }
   },
   "_metadata": {
-    "metadata_version": "1.1",
+    "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "66272391",
+    "script_git_commit": "9c82d3fa0",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-04-30T06:53:55.257905+00:00",
+    "generated_at_utc": "2026-08-20T13:13:11.886197+00:00",
     "cli_args": {
       "detections": [
         "outputs/h11/n1-outstanding-384/pro-text-medium-t07/run_1/detections_pro-text-medium-t07_run01.geojson"
       ],
       "detections_dir": null,
       "batch": null,
-      "glob": "*/detections_*.geojson",
+      "glob": null,
       "buffers": [
         30
       ],
@@ -88,16 +92,21 @@
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
       "bootstrap": 10000,
       "seed": 42,
-      "output_dir": "results/paper-eval/mcc/384px/pro-text-medium-t-0-7",
+      "output_dir": "/home/shawn/cc-scratch/tmp/tmpvq07au26/out",
       "label": "Pro Text MEDIUM T=0.7",
-      "mcc": true
+      "mcc": true,
+      "workers": 1
     },
     "bootstrap": {
       "n_iterations": 10000,
       "seed": 42,
       "resampling_unit": "tile_level",
+      "method_requested": "BCa",
+      "library": "scipy.stats.bootstrap",
       "method": "BCa",
-      "library": "scipy.stats.bootstrap"
+      "methods_measured": [
+        "BCa"
+      ]
     },
     "input_files": {
       "detections": [
@@ -105,6 +114,12 @@
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    },
+    "spatial": {
+      "evaluation_crs": "EPSG:32635",
+      "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+      "geojson_storage_crs": "EPSG:4326",
+      "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
     }
   }
 }

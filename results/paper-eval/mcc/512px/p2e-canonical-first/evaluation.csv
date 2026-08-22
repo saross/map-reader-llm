@@ -1,2 +1,2 @@
-label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles
-P2e Canonical first,30,0.6641,0.6567,0.6719,0.5642,0.5552,0.5724,0.8071,0.7993,0.8157,0.0942,0.0786,0.1033,1.0,0.0147,normal,False,0.0058823529411764705,340
+label,buffer_metres,f1,f1_ci_lower,f1_ci_upper,precision,p_ci_lower,p_ci_upper,recall,r_ci_lower,r_ci_upper,mcc,mcc_ci_lower,mcc_ci_upper,sensitivity,specificity,mcc_boot_mean,sensitivity_boot_mean,specificity_boot_mean,coverage_status,ci_unreliable,ci_zero_fraction,ci_n_tiles,coverage_source,n_unprocessed_tiles
+P2e Canonical first,30,0.6641,0.621,0.7091,0.5642,0.5173,0.6155,0.8071,0.7519,0.8514,0.0942,0.0619,0.1562,1.0,0.0147,0.0983,1.0,0.0148,partial_coverage,True,0.0058823529411764705,340,processed_tiles,2
