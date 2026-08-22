@@ -566,9 +566,10 @@ def width_check(before: dict, after: dict) -> tuple[float | None, str | None]:
 def _accept(work_out: Path, path: Path, recipe: dict[str, Any],
             frozen: dict[str, str] | None) -> None:
     """Stage-and-replace the siblings atomically, JSON (vintage stamp) last."""
+    original = (work_out / "evaluation.json").read_text()
+    doc = json.loads(original)
+    cli = doc["_metadata"].get("cli_args") or {}
     if frozen:
-        doc = json.loads((work_out / "evaluation.json").read_text())
-        cli = doc["_metadata"].get("cli_args") or {}
         # A frozen replay ran against temp materialisations; the committed
         # artefact must record the repo-relative inputs it logically scored,
         # with the vintage pinned separately (audit B1 / provenance).
@@ -576,8 +577,14 @@ def _accept(work_out: Path, path: Path, recipe: dict[str, Any],
             if recipe.get(key) is not None and key in cli:
                 cli[key] = recipe[key]
         doc["_metadata"]["e82_input_vintage"] = frozen
-        (work_out / "evaluation.json").write_text(
-            json.dumps(doc, indent=2) + "\n")
+    # Every replay ran with --output-dir pointing at the temp workdir; the
+    # committed artefact must record its own repo-relative destination, not
+    # an ephemeral path (caught by the migration-queue round-trip test).
+    if "output_dir" in cli:
+        cli["output_dir"] = str(path.parent.relative_to(PROJECT_ROOT))
+    trailing = "\n" if original.endswith("\n") else ""
+    (work_out / "evaluation.json").write_text(
+        json.dumps(doc, indent=2) + trailing)
     for name in SIBLINGS:
         src = work_out / name
         if not src.exists():

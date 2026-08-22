@@ -437,6 +437,25 @@ def test_d41_exception_requires_the_exact_defined_pass_mean(monkeypatch, tmp_pat
     assert row["status"] == "failed"
 
 
+def test_accept_normalises_output_dir(monkeypatch, tmp_path):
+    """The committed artefact records its own destination directory, never
+    the ephemeral temp workdir the replay wrote into (caught live by the
+    migration-queue round-trip test after the 2026-08-22/23 campaign)."""
+    monkeypatch.setattr(rc, "PROJECT_ROOT", tmp_path)
+    _no_frozen(monkeypatch)
+    committed = _doc("1.2")
+    _materialise(tmp_path, "cell/evaluation.json", committed)
+    replayed = json.loads(json.dumps(committed))
+    replayed["_metadata"]["metadata_version"] = "1.3"
+    replayed["_metadata"]["cli_args"]["output_dir"] = "/tmp/ephemeral/out"
+    _fake_replay(monkeypatch, lambda out, n:
+                 (out / "evaluation.json").write_text(json.dumps(replayed)))
+    row = rc.process_one("cell/evaluation.json")
+    assert row["status"] == "ok"
+    on_disk = json.loads((tmp_path / "cell/evaluation.json").read_text())
+    assert on_disk["_metadata"]["cli_args"]["output_dir"] == "cell"
+
+
 # ── C1 label-keyed comparison + D writer-exact mean (PI ruling 2026-08-22;
 #    evidence: reports/e82-d41-widening-inspection-2026-08-22.md) ──────────
 
