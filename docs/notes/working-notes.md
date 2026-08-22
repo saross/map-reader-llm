@@ -27684,3 +27684,87 @@ corrected-F1); **Obs 362** (GS resolving power — why an instrument's
 limited resolution qualifies its evidential weight, the same logic
 used here to rank 0.815 above 0.890).
 
+## Observation 426: Replay fidelity is a property of consumption order, not just of inputs — the E82 pass-order and rounding-boundary family (Session 140, 2026-08-23)
+
+The E82 corpus re-emission's resume aborted twice more after the
+originally diagnosed D41 defect was believed closed, and both aborts
+traced to the same underlying mechanism surfacing in different guises:
+**a validation gate that compares derived aggregates without
+reproducing the writer's own order-dependent arithmetic will fail
+correct data.** Three distinct layers, all rooted in one fact — the
+committed batch scoring consumed detection passes in lexicographic
+filename order, while the campaign's canonical resolver (the D6 fix,
+**Obs 419**) replays them in numeric order, and the two diverge exactly
+when a pool holds ten or more passes.
+
+| Layer | Mechanism | Population | Fix (PI ruling) | Commit |
+| :--- | :--- | :--- | :--- | :--- |
+| 1. Per-run order | `gate()` compared each run's tile point **by list index**; a permuted-but-identical pool reads as moved measurements | 6 defect-free cells, all `results/paper-eval/n1/384px-14buf-mcc/*` | Key the comparison by run **label**, index fallback; a changed pool still fails as a label-set mismatch (C1) | `142f2c5c9` |
+| 2. Tile-mean rounding | the gate's `_reaggregated_mean` used naive `sum()/len()`; the writer uses `round(float(np.mean(vals)), 4)` — pairwise vs naive summation land on opposite sides of a 4 dp half-boundary | 2 cells corpus-wide, sharing one 10-pass pool; 1 of the 2 is genuinely D41 and re-failed its own rescue | Mirror the writer's expression exactly (D) | `142f2c5c9` |
+| 3. Buffer-mean rounding | the summary BUFFER table (f1/precision/recall per buffer) is aggregated by the identical order-sensitive `np.mean`; masked until Layer 1 was fixed and the pools' true consumption order was exposed | 8 shifted summary values (7 buffer points + 1 tile-mcc point) across 4 of the 6 order-permuted cells | Forgive a moved summary point only when the pool is order-permuted, every labelled per-run measurement reproduces exactly, and both sides equal the writer's own aggregation over their own run order | `21032037e` |
+
+Layer 1's mechanism is exact and fully enumerated
+(`reports/e82-d41-widening-inspection-2026-08-22.md` § 1.3, § 2.3):
+for `n1/384px-14buf-mcc/flash-image-minimal-t-0-7`, the committed
+`per_run` labels read `run01, run10, run02, run03, …, run09`
+(lexicographic) while the canonical resolver replays `run01, run02,
+…, run10` (numeric) — same ten files, same ten measurements, only the
+index order differs, and the pre-fix gate reported eight of them as
+"moved". Layer 2's boundary is concrete: the same pool's ten mcc
+values sum to exactly 3.2955, so naive `sum()/len()` rounds to 0.3296
+while `numpy.mean`'s pairwise summation gives 0.32954999999999995,
+rounding to 0.3295 — the writer's actual output — so the un-fixed
+helper demanded a value the writer could never produce
+(`reports/e82-d41-widening-inspection-2026-08-22.md` § 1.5). Layer 3
+was invisible until Layer 1 landed, because the D41 exception was
+gated behind `not runs_moved`; once per-run order stopped tripping
+that guard, the same rounding mechanism reappeared one level up —
+`flash-text-minimal-t-0-0`'s 40 m/45 m/50 m f1 values sum to a raw
+mean of exactly 0.52045, which rounds to 0.5204 under the committed
+(lexicographic) order and 0.5205 under the replayed (numeric) order
+(`tests/test_rerun_bca_corpus.py:585-618`).
+
+The resumed campaign completed 2026-08-23 with the final leg at
+failed = 0 and cumulative counters landing exactly on the ruling:
+**n_reaggregated = 19** (the original D41 population, unchanged by any
+of this) and **n_order_normalised = 6** (the pass-order-permuted
+population — 2 pure permutations with no derived-value shift, 4
+carrying the Layer 3 rounding flips). Data commit `43ea31b26`
+(4,965 files); campaign report
+`results/e82-corpus-reemission-2026-08-20.json`.
+
+Three lessons worth carrying forward. (a) Replay fidelity has an
+**order** component distinct from an inputs component — recording
+which files were consumed is not sufficient when any downstream
+consumer aggregates order-sensitively; the file set can be identical
+and the derived value can still move. (b) A gate that checks a derived
+aggregate must predict it with the **writer's own expression**,
+evaluated over the **replay's own consumption order** — never with a
+plausible re-implementation, and never with the writer's expression
+evaluated over a different order (the same discipline as **Obs 423**,
+one level deeper). (c) Fixed-precision rounding converts benign
+float-summation-order differences into visible one-step value flips,
+and on this campaign they surfaced in **layers**: each fix exposed the
+next masked boundary, so a full corpus-wide enumeration was needed
+before resuming rather than trusting that one fix closed the exposure
+— the widening inspection's predictive model was exact for the
+per-run and tile-mean layers, but its sweep covered tile-metric blocks
+only, so the buffer layer surfaced live, mid-campaign, on 2026-08-22.
+
+Sources: `planning/e82-corpus-reemission-2026-08-20.md` §§ "Resume
+attempt outcome", "C1 + D implemented (Session 140)", "Buffer-mean
+order artefacts: a third boundary layer", "CAMPAIGN COMPLETE; Item D
+executed (Session 140)"; `reports/e82-d41-widening-inspection-2026-08-22.md`
+(the PI-ruling evidence base, §§ 1.1–1.5, § 2); `scripts/rerun_bca_corpus.py`
+(`gate()`, `_reaggregated_mean`, `_buffer_mean`); `tests/test_rerun_bca_corpus.py`;
+`reports/defect-register-2026-08-18.md` (D41, D6 rows); commits
+`142f2c5c9` (C1 + D), `21032037e` (buffer-layer forgiveness),
+`43ea31b26` (campaign-complete data commit). Related: **Obs 419** (the
+D6 resolver fix that made the canonical numeric-order replay possible,
+and whose interaction with legacy lexicographic scoring is this Obs's
+root cause); **Obs 408** (a tolerance-based reproduction gate silently
+absorbed a real engine change — the same family of lesson: tolerance
+and order-forgiveness are for noise and artefact, never for silently
+absorbing a genuine change); **Obs 423** (the reproduce-a-committed-value
+discipline that Layers 2 and 3's fixes both had to satisfy exactly).
+
