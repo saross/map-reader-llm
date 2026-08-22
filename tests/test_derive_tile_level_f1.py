@@ -213,4 +213,4 @@ def test_report_gate_summary_is_consistent(tmp_path) -> None:
     report = build_report(tmp_path)
     assert report["validation_gate"]["n_passed"] == 0
     assert all(cell["status"] == "missing-artefact" for cell in report["cells"])
-    assert "deferred to a Principal Investigator decision" in report["registration"]
+    assert "Registered as first-class analysis 'tile-level-f1'" in report["registration"]

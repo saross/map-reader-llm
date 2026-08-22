@@ -697,9 +697,10 @@ def build_report(project_root: Path) -> dict[str, Any]:
         "cells": cells,
         "comparators": comparators,
         "registration": (
-            "Not registered in results/analyses-manifest.md or "
-            "results/conditions-manifest.md: first-class registration of this "
-            "supplemental metric is deferred to a Principal Investigator decision."
+            "Registered as first-class analysis 'tile-level-f1' in "
+            "results/analyses-manifest.md (Principal Investigator ruling "
+            "2026-08-22; spec in results/run-analyses.json). Type comparison, "
+            "class post-hoc, destination Results."
         ),
     }
 

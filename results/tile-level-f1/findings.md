@@ -1,7 +1,8 @@
 # Tile-level precision, recall, and F1: a protocol-matched comparison with the only published VLM archaeological detection study
 
-> **Last revised**: 2026-08-22 (registered as a first-class analysis by
-> Principal Investigator ruling; map-scale error corrected). See
+> **Last revised**: 2026-08-22 (JSON registration residual cleared;
+> earlier same day: registered as a first-class analysis by Principal
+> Investigator ruling, map-scale error corrected). See
 > [§ Changelog](#changelog) for revision history.
 
 **Date**: 2026-08-21
@@ -258,14 +259,14 @@ estimate over four confusion-matrix integers, so the erratum E82 bootstrap
 re-emission campaign, in flight at the time of registration, cannot move any
 number in it.
 
-One residual, recorded so it is not lost: the JSON artefact
-[`tile_level_f1.json`](tile_level_f1.json) still carries the pre-ruling string
-`"Not registered … deferred to a Principal Investigator decision"` in its
-`registration` field. That string is emitted by
-`scripts/derive_tile_level_f1.py` and asserted by
-`tests/test_derive_tile_level_f1.py`, so refreshing it is a script-plus-test
-change and is pending; the register and this section are the current authority
-until it lands.
+The residual recorded here previously — the JSON artefact carrying the
+pre-ruling `"Not registered … deferred"` string in its `registration`
+field — was cleared on 2026-08-22: `scripts/derive_tile_level_f1.py` now
+emits the registered status (analysis `tile-level-f1`, PI ruling
+2026-08-22), `tests/test_derive_tile_level_f1.py` asserts the new string,
+and [`tile_level_f1.json`](tile_level_f1.json) was regenerated with the
+MCC reproduction gate passing 10/10. The JSON, the register, and this
+section now agree.
 
 ## 7. Reproducing
 
@@ -298,6 +299,16 @@ The script exits non-zero if any registered cell fails the MCC reproduction gate
 | `scripts/lib_advanced_metrics.py` (`calculate_tile_classification`) | Canonical tile-classification and MCC implementation |
 
 ## Changelog
+
+### 2026-08-22 (later) — JSON registration residual cleared
+
+**Trigger**: the Session 139 handoff listed the stale `registration`
+string in `tile_level_f1.json` as a queued script-plus-test fix.
+`scripts/derive_tile_level_f1.py` now emits the registered status,
+`tests/test_derive_tile_level_f1.py` asserts it (17 tests green), and the
+JSON was regenerated (MCC reproduction gate 10/10). **No metric moved** —
+the diff is confined to the `registration` and `generated_at` fields.
+§ 6's residual paragraph rewritten to record the clearance.
 
 ### 2026-08-22 — Registered as a first-class analysis; map scale corrected
 
