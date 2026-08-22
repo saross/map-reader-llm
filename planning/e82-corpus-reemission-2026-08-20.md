@@ -358,6 +358,53 @@ $0 API by import graph; runtime ≈ 16–38 CPU-h → 1.6–3.8 h at 10 workers.
 
 ## Changelog
 
+### 2026-08-23 — CAMPAIGN COMPLETE; Item D executed (Session 140)
+
+**Item C closed.** The clearing resume processed the four remaining
+buffer-boundary cells: ok 4 / failed 0. Engine census reads
+**selected = 0, done_1.3 = 1657, no_recipe = 13**; cumulative
+counters exactly on ruling — **n_reaggregated = 19,
+n_order_normalised = 6**; per-leg width-ratio medians all inside
+[1.05, 6]. ONE data commit from sapphire (`43ea31b26`, 4,965 files,
+report JSON included); N1 trees untouched throughout.
+
+**Item D executed, with three findings:**
+
+1. **ci-flag basis regression (169 files)** — the re-emission
+   regressed the S138 measured-flag migration because the writer does
+   not stamp `ci_flag_basis`/`ci_excludes_point`; zero flag VALUES
+   moved. Migration re-applied idempotently (`e46f13bba`); its
+   dry-run now reports 0. Writer gap to register at Item E.
+2. **Recorded output_dir pollution (1,655 files)** — every replay
+   recorded its temp workdir as `cli_args.output_dir`; caught by the
+   migration-queue round-trip test. Engine fixed (`_accept` now
+   normalises the output path) + one-field repair sweep + regression
+   test (`70c550177`).
+3. **Item D step 4 NOT executed — the "IM-k4 gap cell" is a
+   mislabelled duplicate.** The image run's production consensus is
+   3-of-5 (`consensus-3of5.geojson`; `resolved_config.yaml`
+   `vote_threshold: 3`), so `verified/verified_detections.geojson` IS
+   the k3 set already registered as
+   `55maps-image-generalisation::verified-k3-standardised-gt`. The
+   S138 cell at `results/55maps-standardised-ref-2026-08-14/IM-k4/`
+   re-scored those same detections (identical n_det 4,680, F1@50
+   0.801, MCC 0.712 = IM-k3's rounded values). Registering it would
+   mint a duplicate condition under a false k4 label. The file stays
+   on disk, uncited; a GENUINE IM-k4 needs a 4-of-5 re-vote of the
+   image pool — a PI decision (likely $0: the k4 candidate set is a
+   subset of k3's, whose verifier verdicts already exist).
+
+**Manifests** regenerated, ALL VALID (33/337/1,138/38); scoped leaf
+diff fully accounted: ci bounds (3,414 pairs — the campaign's
+purpose), EXACTLY the eight enumerated order-artefact point values,
+1,134 `ci_unreliable` False→True flips traced to measured
+partial_coverage replacing unmeasured pre-campaign defaults (§ 1
+scope, flagged for sign-off), `last_extracted_at`, and new writer
+bookkeeping on 36 conditions. The three zero-dry-runs report 0.
+Suites: tier-1 1,892 + tier-2 27 green locally; tier-1 on sapphire.
+
+**Item E awaits operator sign-off of the campaign report** per § 2.
+
 ### 2026-08-22 (later) — Buffer-mean order artefacts: a third boundary layer
 
 The C1 + D resume surfaced ONE further, previously masked layer of the
