@@ -1,9 +1,43 @@
 # Specification: Archiving Claude Code Sessions
 
-**Version**: 1.0-draft
+**Version**: 1.0-draft (amended 2026-08-22 — see Amendment 1)
 **Date**: 2026-01-08
 **Author**: Shawn Ross (with Claude)
 **Context**: VLM Burial Mound Detection Project; RDA IG on Documenting GenAI Interactions
+
+---
+
+## Amendment 1 (2026-08-22): archive location and storage form
+
+The body of this specification is preserved as written; two of its claims
+have been superseded by deliberate migrations and are corrected here so
+that the specification, which is a methodological commitment, matches the
+system as operated.
+
+1. **Location.** §2.1 documents an in-repo `archive/cc-sessions/` tree.
+   That location no longer exists: its contents were resolved into the
+   consolidated multi-project store (SHA-256 parity verified 2026-05-21;
+   previously minuted only in a `.gitignore` comment) and the record now
+   lives at the machine-local mirrors `~/cc-archives/`, the canonical
+   union on `rpi-server:/opt/encrypted/workspace/shares/
+   cc-archives-consolidated/`, and an additive-only Cloudflare R2 offsite
+   copy. Store roles are documented in
+   `personal-assistant/data/global-claude-md/network-resources.md`.
+   The design principles of this specification (canonical completeness,
+   metadata for finding, LLM-intermediated access) are unchanged and
+   apply to the consolidated store.
+2. **Storage form.** §2.1 shows `session.jsonl`; since 2026-08-22 the
+   canonical stored form is `session.jsonl.gz` (gzip, with a recorded
+   uncompressed SHA-256 and a decompress round-trip verification at
+   archive time). Legacy uncompressed entries were normalised with
+   content verification on 2026-08-22.
+3. **Project identity.** This project's sessions are archived under two
+   names — `map-reader-llm` (canonical, ruling of 2026-08-22) and
+   `vlm-burial-mound-detection` (alias, 2026-05-23→2026-08) — because the
+   repository's `CLAUDE.md` declared the latter while the repository is
+   named the former. Any completeness or provenance claim about this
+   project's sessions must read BOTH names; the alias map is
+   `personal-assistant/data/config/project-identities.json`.
 
 ---
 

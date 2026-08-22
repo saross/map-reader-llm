@@ -4,6 +4,12 @@
 **Date**: 2026-01-08
 **Purpose**: Address open questions from main specification; incorporate feedback
 
+> **Note (2026-08-22):** paths of the form `archive/cc-sessions/…` in the
+> examples below are historical — the archive now lives in the
+> consolidated store, and the canonical transcript form is
+> `session.jsonl.gz`. See Amendment 1 at the top of the main
+> specification.
+
 ---
 
 ## A1. Thinking Block Handling

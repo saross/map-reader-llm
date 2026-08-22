@@ -1,4 +1,4 @@
-# Project: vlm-burial-mound-detection
+# Project: map-reader-llm
 
 Project-specific instructions for Claude Code. Global instructions from `~/.claude/CLAUDE.md` also apply.
 
@@ -16,15 +16,29 @@ This repository contains a preregistered study using Vision Language Models (VLM
 - `outputs/` — Raw VLM responses (gitignored, large files)
 - `results/` — Statistical analysis outputs
 - `reports/` — Internal reports produced by Claude Code concerning project decisions
-- `archive/cc-sessions/` — Claude Code session archives
 
 ## Session Archiving
 
-This project uses structured CC session archiving for research transparency:
+This project uses structured CC session archiving for research transparency.
+**Amended 2026-08-22** — the in-repo `archive/cc-sessions/` location this
+section previously documented no longer exists (contents resolved into the
+consolidated store, SHA-256 parity verified 2026-05-21; the migration was
+minuted only in a `.gitignore` comment, which is why stale pointers
+survived here):
 
-- Sessions are archived to `archive/cc-sessions/vlm-burial-mound-detection/`
-- Run `cc-session archive` to archive previous sessions
+- Sessions are archived automatically (SessionEnd/PreCompact hooks) to the
+  machine-local mirror `~/cc-archives/`, converged daily with the canonical
+  union on rpi-server and an offsite R2 backup. Store roles:
+  `~/personal-assistant/data/global-claude-md/network-resources.md`.
+- ⚠ This project's sessions live under TWO archive names: `map-reader-llm`
+  (canonical — Shawn's ruling 2026-08-22) and `vlm-burial-mound-detection`
+  (alias; this file's former `# Project:` line forked the archive).
+  **Completeness questions must read both** — the alias map is
+  `~/personal-assistant/data/config/project-identities.json`.
+- For provenance or audit work, read the ARCHIVE, never the live
+  `~/.claude/projects/` store (machine-partial by construction).
 - See `docs/methodology/transparency/` for the archiving specification
+  (amendment note at the top of the specification records this change).
 
 ## File Preservation
 
