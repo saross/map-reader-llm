@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-08-20T06:15:34Z · 337 row(s) · schema v1.0.
+> Generated 2026-08-22T14:58:46Z · 337 row(s) · schema v1.0.
 >
 > **Coverage**: 337 condition(s) across the decomposed runs (sub-step 3b in progress).
 
@@ -139,7 +139,7 @@
 | pv-diag-256::verified-adv-text-consensus-5of5 | proposer-verifier | verified | — | 1 | 0.8558 | 0.7448 | 394 |
 | pv-diag-384::baseline-flash-image-high-t-0-7 | single-pass | none | — | 1 | 0.4986 | 0.6019 | — |
 | pv-diag-384::baseline-flash-image-minimal-t-0-0 | single-pass | none | — | 1 | 0.5995 | 0.3124 | 746 |
-| pv-diag-384::baseline-flash-image-minimal-t-0-7 | single-pass | none | — | 1 | 0.5534 | 0.3295 | — |
+| pv-diag-384::baseline-flash-image-minimal-t-0-7 | single-pass | none | — | 1 | 0.5534 | 0.3296 | — |
 | pv-diag-384::baseline-flash-text-high-t-0-7 | single-pass | none | — | 1 | 0.3871 | 0.3314 | — |
 | pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline | single-pass | none | — | 1 | 0.5196 | -0.0038 | 1047 |
 | pv-diag-384::baseline-flash-text-minimal-t-0-7 | single-pass | none | — | 1 | 0.4883 | 0.0784 | — |
