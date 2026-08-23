@@ -354,14 +354,16 @@ class TestMultiRunAggregationRollup:
     min for n_tiles, and arithmetic mean for ``*_point`` aliases.
     """
 
-    def test_sparse_rollup_any_run_flags_summary(self) -> None:
-        """A single sparse run flips the aggregated cell to sparse.
+    def test_sparse_rollup_reports_but_does_not_flag(self) -> None:
+        """A sparse run surfaces in coverage but not in the flag (D42).
 
         Three-run synthetic cell where exactly one run carries
-        ``coverage_status = "sparse_cross_grid"``. The conservative
-        any-true rollup must surface that as the summary's coverage
-        status and ``ci_unreliable`` flag, mirroring the cell-level
-        any-buffer rule used for non-aggregated cells.
+        ``coverage_status = "sparse_cross_grid"``. Under the measured
+        rule (2026-08-19 policy, applied corpus-wide by the 2026-08-20
+        migration and to fresh aggregates on 2026-08-23), sparseness is
+        reported — worst-case ``coverage_status``, ``sparse_coverage``
+        true — but ``ci_unreliable`` is measured on the aggregated row
+        itself, whose intervals here contain their averaged points.
         """
         run_a = _make_run(f1_points=[0.50])
         run_b = _make_run(
@@ -378,13 +380,74 @@ class TestMultiRunAggregationRollup:
         )
         buf = summary["buffers"][0]
         assert buf["coverage_status"] == "sparse_cross_grid"
-        assert buf["ci_unreliable"] is True
-        assert summary["ci_unreliable_any_buffer"] is True
+        assert buf["sparse_coverage"] is True
+        assert buf["ci_unreliable"] is False
+        assert buf["ci_excludes_point"] is False
+        assert buf["ci_flag_basis"] == "measured-exclusion-or-partial-coverage"
+        assert summary["ci_unreliable_any_buffer"] is False
         assert summary["coverage_status"] == "sparse_cross_grid"
         # Worst-case rollups: max zero-fraction across runs (only
         # run_b is non-zero), min n_tiles across runs (run_b at 40).
         assert buf["ci_zero_fraction"] == pytest.approx(0.62)
         assert buf["ci_n_tiles"] == 40
+
+    def test_aggregated_rows_are_migration_invariant(self) -> None:
+        """Fresh aggregate rows must satisfy the migration exactly (D42).
+
+        The E82 campaign showed re-emitted multi-run cells left the
+        reliability block null, so ``migrate_ci_flag_basis`` re-touched
+        169 files after every re-score. The invariant that closes D42:
+        ``migrate_buffer_row`` returns ``None`` (no change) for every
+        summary buffer row the aggregator now writes.
+        """
+        from scripts.migrate_ci_flag_basis import migrate_buffer_row
+
+        runs = [_make_run(f1_points=[0.50, 0.70], buffers=[20, 50]),
+                _make_run(f1_points=[0.60, 0.72], buffers=[20, 50]),
+                _make_run(f1_points=[0.55, 0.68], buffers=[20, 50])]
+        summary = evaluate_multi_run_mean(runs, label="invariant")
+        for row in summary["buffers"]:
+            assert migrate_buffer_row(dict(row)) is None, row["buffer_metres"]
+
+    def test_aggregated_exclusion_flags_the_summary(self) -> None:
+        """An averaged CI excluding its averaged point sets the flag.
+
+        Constructed so each run's own interval contains its own point
+        but the averaged bounds exclude the averaged point: exclusion is
+        measured on the aggregate row, not rolled up from the runs.
+        """
+        run_a = _make_run(f1_points=[0.50])
+        run_b = _make_run(f1_points=[0.60])
+        # Skew run_b's stored bounds upward so the averaged interval
+        # [mean lower, mean upper] sits above the averaged point.
+        row_b = run_b["buffers"][0]
+        for key in ("f1_ci_lower", "p_ci_lower", "r_ci_lower"):
+            row_b[key] = 0.62
+        for key in ("f1_ci_upper", "p_ci_upper", "r_ci_upper"):
+            row_b[key] = 0.70
+        summary = evaluate_multi_run_mean([run_a, run_b], label="excl")
+        buf = summary["buffers"][0]
+        # averaged point 0.55; averaged lower (0.45 + 0.62)/2 = 0.535 —
+        # contains. Tighten run_a too so the averaged lower excludes:
+        row_a = run_a["buffers"][0]
+        for key in ("f1_ci_lower", "p_ci_lower", "r_ci_lower"):
+            row_a[key] = 0.50
+        summary = evaluate_multi_run_mean([run_a, run_b], label="excl")
+        buf = summary["buffers"][0]
+        assert buf["f1_ci_lower"] == pytest.approx(0.56)
+        assert buf["ci_excludes_point"] is True
+        assert buf["ci_unreliable"] is True
+
+    def test_partial_coverage_run_flags_the_aggregate(self) -> None:
+        """One partial-coverage run flags the aggregate (E72 ground)."""
+        runs = [_make_run(f1_points=[0.50]),
+                _make_run(f1_points=[0.60],
+                          coverage_status="partial_coverage")]
+        summary = evaluate_multi_run_mean(runs, label="partial")
+        buf = summary["buffers"][0]
+        assert buf["coverage_status"] == "partial_coverage"
+        assert buf["ci_unreliable"] is True
+        assert buf["ci_excludes_point"] is False
 
     def test_dense_pass_through_normal_status(self) -> None:
         """All-dense runs leave the summary normal and reliable.

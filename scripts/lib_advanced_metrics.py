@@ -97,6 +97,46 @@ COVERAGE_STATUS_PARTIAL: str = "partial_coverage"
 COVERAGE_SOURCE_PROCESSED_TILES: str = "processed_tiles"
 COVERAGE_SOURCE_HEURISTIC: str = "zero_fraction_heuristic"
 
+#: Which rule produced a buffer row's ``ci_unreliable`` flag (defect D42:
+#: one shared definition for the writer and the migration, so the two can
+#: never diverge again). ``BASIS_FULL`` means both measured grounds could
+#: be evaluated; ``BASIS_EXCLUSION_ONLY`` marks legacy rows whose
+#: committed artefact carries no ``coverage_status``, so only the
+#: exclusion ground could be tested.
+CI_FLAG_BASIS_FULL: str = "measured-exclusion-or-partial-coverage"
+CI_FLAG_BASIS_EXCLUSION_ONLY: str = "measured-exclusion-only"
+
+#: (point key, lower-bound key, upper-bound key) triples as committed in
+#: evaluation buffer rows.
+CI_METRIC_BOUNDS: tuple[tuple[str, str, str], ...] = (
+    ("f1", "f1_ci_lower", "f1_ci_upper"),
+    ("precision", "p_ci_lower", "p_ci_upper"),
+    ("recall", "r_ci_lower", "r_ci_upper"),
+)
+
+
+def measured_exclusion(row: dict) -> bool:
+    """True when any committed CI in a buffer row excludes its own point.
+
+    Operates on the ROW AS STORED (4 dp rounded values), which is the
+    convention the 2026-08-20 measured-flag migration established for
+    committed artefacts; metrics with any missing bound are skipped.
+
+    Args:
+        row: An evaluation buffer row carrying point estimates and CI
+            bounds under the ``CI_METRIC_BOUNDS`` key triples.
+
+    Returns:
+        Whether any metric's stored point lies outside its stored CI.
+    """
+    for point_key, lo_key, hi_key in CI_METRIC_BOUNDS:
+        point, lo, hi = row.get(point_key), row.get(lo_key), row.get(hi_key)
+        if point is None or lo is None or hi is None:
+            continue
+        if not (lo <= point <= hi):
+            return True
+    return False
+
 
 def read_processed_tiles(source: Path | str | dict) -> set[str] | None:
     """Read a detection set's ``processed_tiles`` record, if it has one.

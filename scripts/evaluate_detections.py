@@ -60,6 +60,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from scripts.lib_detection_paths import resolve_pool_passes  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
+    CI_FLAG_BASIS_FULL,
     COVERAGE_STATUS_NORMAL,
     COVERAGE_STATUS_PARTIAL,
     COVERAGE_STATUS_SPARSE,
@@ -68,6 +69,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     bootstrap_tile_classification_ci,
     calculate_f1_internal,
     calculate_tile_classification,
+    measured_exclusion,
     read_processed_tiles,
 )
 
@@ -958,10 +960,15 @@ def evaluate_multi_run_mean(
       per-run ``*_point`` values (equals ``f1`` / ``precision`` /
       ``recall`` since those are themselves averaged from per-run
       points; the alias exists for schema parity).
-    - ``coverage_status``: ``"sparse_cross_grid"`` if **any** per-run
-      buffer entry has that status, else ``"normal"``.
-    - ``ci_unreliable``: ``True`` if **any** per-run buffer entry is
-      flagged unreliable, else ``False``.
+    - ``coverage_status``: the worst status across per-run entries
+      (``partial_coverage`` > ``sparse_cross_grid`` > ``normal``).
+    - ``ci_unreliable`` / ``ci_excludes_point`` / ``sparse_coverage`` /
+      ``ci_flag_basis``: the MEASURED reliability block, evaluated on the
+      aggregated row itself (partial coverage or a CI excluding its own
+      averaged point) — the 2026-08-19 measured-flag rule, which the
+      2026-08-20 corpus migration applied to every committed aggregate
+      (defect D42). Superseded the earlier any-run-flagged rollup on
+      2026-08-23; the two never disagreed on the migrated corpus.
     - ``ci_zero_fraction``: maximum across per-run entries
       (worst-case zero-tile fraction).
     - ``ci_n_tiles``: minimum across per-run entries (worst-case
@@ -1026,13 +1033,6 @@ def evaluate_multi_run_mean(
             values = [e[key] for e in entries if key in e]
             avg[key] = round(float(np.mean(values)), 4) if values else 0.0
 
-        # Mitigation 3 (sparse-coverage transparency) rollups for
-        # aggregated cells. The contract: a single per-buffer
-        # ``ci_unreliable`` boolean answers "do you trust these CIs?"
-        # for the summary, regardless of how many runs were averaged.
-        # The any-true rule is conservative — one flagged run flags
-        # the aggregate, mirroring how single-run cells flag the
-        # whole cell when any buffer is unreliable.
         coverage_statuses = [
             e.get("coverage_status", COVERAGE_STATUS_NORMAL)
             for e in entries
@@ -1041,9 +1041,25 @@ def evaluate_multi_run_mean(
         # ``partial_coverage`` — so the rollup ranks rather than tests a
         # single literal).
         avg["coverage_status"] = _worst_coverage_status(coverage_statuses)
-        avg["ci_unreliable"] = any(
-            bool(e.get("ci_unreliable", False)) for e in entries
+        # Reliability block, MEASURED on the aggregated row itself (defect
+        # D42): the 2026-08-19 measured-flag policy defines
+        # ``ci_unreliable`` as partial-coverage-or-exclusion evaluated on
+        # the row as stored, and the 2026-08-20 corpus migration applied
+        # exactly that rule to every committed aggregate. The earlier
+        # any-run-flagged rollup is superseded — in the whole migrated
+        # corpus the two rules never disagreed (zero flag flips across
+        # 1,424 re-derived rows), but only this formulation keeps
+        # ``migrate_ci_flag_basis --dry-run`` a true zero-invariant over
+        # fresh multi-run output.
+        excludes = measured_exclusion(avg)
+        avg["ci_unreliable"] = (
+            avg["coverage_status"] == COVERAGE_STATUS_PARTIAL or excludes
         )
+        avg["ci_excludes_point"] = excludes
+        avg["sparse_coverage"] = (
+            avg["coverage_status"] == COVERAGE_STATUS_SPARSE
+        )
+        avg["ci_flag_basis"] = CI_FLAG_BASIS_FULL
 
         # Worst-case coverage diagnostics across runs: max
         # zero-fraction (highest sparsity), min n_tiles (smallest

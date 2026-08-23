@@ -55,35 +55,15 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.lib_advanced_metrics import (  # noqa: E402
+    CI_FLAG_BASIS_EXCLUSION_ONLY as BASIS_EXCLUSION_ONLY,
+    CI_FLAG_BASIS_FULL as BASIS_FULL,
+    CI_METRIC_BOUNDS as METRIC_BOUNDS,
     COVERAGE_STATUS_PARTIAL,
     COVERAGE_STATUS_SPARSE,
+    measured_exclusion,
 )
 
 REPORT_PATH = PROJECT_ROOT / "reports/ci-flag-migration-2026-08-20.json"
-
-# The two basis strings. The first matches what evaluate_detections.py writes;
-# the second marks rows where coverage_status is absent from the committed
-# artefact, so the partial-coverage ground could not be evaluated.
-BASIS_FULL = "measured-exclusion-or-partial-coverage"
-BASIS_EXCLUSION_ONLY = "measured-exclusion-only"
-
-# (point key, lower-bound key, upper-bound key) triples as committed.
-METRIC_BOUNDS = (
-    ("f1", "f1_ci_lower", "f1_ci_upper"),
-    ("precision", "p_ci_lower", "p_ci_upper"),
-    ("recall", "r_ci_lower", "r_ci_upper"),
-)
-
-
-def measured_exclusion(row: dict) -> bool:
-    """True when any committed CI excludes its own committed point estimate."""
-    for point_key, lo_key, hi_key in METRIC_BOUNDS:
-        point, lo, hi = row.get(point_key), row.get(lo_key), row.get(hi_key)
-        if point is None or lo is None or hi is None:
-            continue
-        if not (lo <= point <= hi):
-            return True
-    return False
 
 
 def migrate_buffer_row(row: dict) -> dict | None:

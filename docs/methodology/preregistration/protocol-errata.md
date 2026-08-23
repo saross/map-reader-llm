@@ -4755,11 +4755,13 @@ small-scope majority; two `no_ci` cells recorded (degenerate: n_det = 0, and
 n_det = 2 with all committed widths exactly 0).
 
 Two emergent repairs, both landed: re-scoring regressed the 2026-08-20
-measured-flag migration on 169 files because the writer does not stamp
-`ci_flag_basis`/`ci_excludes_point` (migration re-applied, `e46f13bba`;
-defect D42), and every replay recorded its temp workdir as
-`cli_args.output_dir` (engine normalisation + one-field repair on all 1 655
-files, `70c550177`). One measurement consequence to note when reading flags:
+measured-flag migration on 169 multi-run files because the summary
+aggregation path left the reliability block null — single-run rows were
+always complete (migration re-applied, `e46f13bba`; defect D42, closed
+same day by teaching the aggregator to write the measured block itself) —
+and every replay recorded its temp workdir as `cli_args.output_dir`
+(engine normalisation + one-field repair on all 1 655 files,
+`70c550177`). One measurement consequence to note when reading flags:
 1 134 buffer rows now carry `ci_unreliable = true` on measured
 `partial_coverage` where the pre-campaign artefacts recorded an unmeasured
 "normal" default — all 1 134 traced to that single mechanism, and no flag
