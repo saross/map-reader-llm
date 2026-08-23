@@ -128,3 +128,25 @@ Not applicable — this was a targeted resolve-and-verify task with no chaining,
 {"claim_id": "10.1109-cvprw63382.2024.00048-doi_resolves", "doi": "10.1109/cvprw63382.2024.00048", "status": "pass", "category": "doi_resolves", "description": "DOI resolves to expected paper for row 8", "proposer_value": true, "true_value": true, "severity": null, "failure_type": null, "fix_hint": null, "source_method": "lit-search.py metadata", "source_file": "Findings table row 8"}
 ```
 <!-- END corrections.jsonl -->
+
+## Full-text resolution addendum (2026-08-23)
+
+The PI supplied the Zhang & Zhang PDF (`10.1016/j.iintel.2024.100137`)
+and the GMFS metric loose end is CLOSED — in the old report's favour,
+against this verifier's hypothesis:
+
+- **F1 = 0.86 is genuine**, not a precision/F1 conflation: § 4.4
+  (classification performance, Table 10) states "an average precision of
+  0.83 and recall of 0.91, resulting in an average F1 score of 0.86 for
+  both rooms and doors" — the GPT-4 CLASSIFICATION stage.
+- The rival **0.87** (the ScienceDirect search rendering's "precision of
+  0.86 and recall of 0.87 → F1 0.87") is the **segmentation-stage** F1
+  (Tables 2–3, best five-reference-sample configuration).
+
+Both numbers are real, for different pipeline stages. **Citation
+guidance**: name the stage — segmentation F1 ≈ 0.87 (five-shot,
+CubiCasa/Rent3D) for the mask-extraction claim, classification F1 = 0.86
+for the GPT-4 semantic-labelling claim. The conflation hypothesis this
+report floated ("suggests the old report took the precision figure and
+labelled it F1") is falsified at source. The ArrowFormer macro-F1 0.930
+loose end remains the only unresolved quantitative item in this report.

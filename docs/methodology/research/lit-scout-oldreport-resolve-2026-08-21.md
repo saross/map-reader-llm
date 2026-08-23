@@ -138,3 +138,32 @@ For import, note that row 2 has no CrossRef record (`lit-search.py bibtex` will 
 {"claim_id": "10.1016-j.ecoinf.2022.101557-doi_resolves", "doi": "10.1016/j.ecoinf.2022.101557", "status": "pass", "category": "doi_resolves", "description": "DOI resolves to expected paper for row 9", "proposer_value": true, "true_value": true, "severity": null, "failure_type": null, "fix_hint": null, "source_method": "lit-search.py metadata", "source_file": "Findings table row 9"}
 ```
 <!-- END corrections.jsonl -->
+
+## Full-text resolution addendum (2026-08-23)
+
+The PI supplied the O'Hara et al. (2024) PDF
+(`10.1016/j.ecolind.2023.111363`) and the rows 8/9 PARTIAL is now CLOSED
+with a mechanism neither prior account had right. Both figures are real
+and come from the SAME confusion matrix (Table 1, N = 567 assessment
+points) — they are two CLASS PERSPECTIVES, not two evaluation stages,
+and there is no "validation-phase" split:
+
+- **98.2 %** (abstract, Table 2, Discussion) is the F1 of the
+  **dryland (non-wetland, majority) class**. Table 2's own derivations
+  prove the class assignment: its Sensitivity/Recall = 99.2 % equals
+  Table 1's DRYLAND producer accuracy, and P 97.3 × R 99.2 → F1 98.2.
+- **90.8 %** (Results § 3.1 prose) is the **wetland-class F1**:
+  P 95.5 (user accuracy) × R 86.6 (producer accuracy) → 90.83. This is
+  the figure that measures the task the paper is about.
+
+The paper itself concedes the imbalance flattery ("Both overall accuracy
+and F1 scores are susceptible to class imbalance which did occur in this
+accuracy assessment dataset") and offers balanced accuracy 92.9 % as the
+correction. **Citation guidance for the paper**: when O'Hara enters any
+comparator table for wetland segmentation, cite the wetland-class
+**F1 = 0.908** (or give both figures with class labels); the 0.982 the
+first report carried is the majority-class F1 and overstates the
+segmentation of the class of interest. The verifier's earlier
+"most probable reading" (two evaluation stages) and the third-party
+summaries' "validation-phase" gloss are both superseded by this
+at-source resolution.

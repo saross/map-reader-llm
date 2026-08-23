@@ -506,3 +506,18 @@ DEEPER CHAINING CANDIDATES (go/no-go required):
 {"claim_id": "10.1016-j.apgeog.2023.102967-doi_resolves", "doi": "10.1016/j.apgeog.2023.102967", "status": "pass", "category": "doi_resolves", "description": "DOI resolves to expected paper for row 37", "proposer_value": true, "true_value": true, "severity": null, "failure_type": null, "fix_hint": null, "source_method": "lit-search.py metadata", "source_file": "Findings table row 37"}
 ```
 <!-- END corrections.jsonl -->
+
+## Full-text resolution addendum (2026-08-23)
+
+The O'Hara et al. (2024) figure this report carries at **F1 98.2 %**
+(Findings table row 10; the § "segmentation cluster (0.84–0.98)" upper
+anchor) is the **majority-class (dryland) F1**, not the wetland-class
+F1. At-source resolution from the PDF (mechanism and Table-2 derivation
+in `lit-scout-oldreport-resolve-2026-08-21.md` § Full-text resolution
+addendum): the **wetland-class F1 is 90.8 %** (P 95.5 × R 86.6, same
+confusion matrix); balanced accuracy 92.9 %. When the paper cites the
+segmentation-cluster contrast, use 0.908 for O'Hara or give both figures
+with class labels — the cluster's honest upper anchor becomes Heitzler &
+Hurni's AP 0.9855 rather than O'Hara's 0.982, and the cluster range
+reads ≈ 0.84–0.91 on target-class F1. The row itself is left as banked
+(abstract-verbatim); this addendum governs citation.
