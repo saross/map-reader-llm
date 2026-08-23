@@ -358,6 +358,25 @@ $0 API by import graph; runtime ≈ 16–38 CPU-h → 1.6–3.8 h at 10 workers.
 
 ## Changelog
 
+### 2026-08-23 (later) — SIGNED OFF; Item E executed; contract CLOSED
+
+The Principal Investigator reviewed the campaign report and its briefing
+(failure accounting 32/32 attributed; flag raises 1,134/1,134 traced to
+measured partial coverage, zero lowered; census arithmetic exact at
+1,724 = 1,657 + 42 + 13 + 12), **ratified the buffer-mean gate
+extension**, and signed off on 2026-08-23. Item E landed in the same
+block: the E82 corpus execution note (`db2e1ea4e`) — including the
+correction of the data commit's pinned-vintage count (27 → 35) — the
+defect-register closures D15/D19/D41 plus new row D42 (`8db04432e`),
+and the campaign summary
+`reports/e82-corpus-reemission-summary-2026-08-23.md` (`a110fd064`).
+Final numbers: 1,655 re-emitted / failed 0 / n_reaggregated 19 /
+n_order_normalised 6 / pinned 35 / medians 4.43–5.31. Post-contract
+rider executed under the same sign-off conversation: the genuine IM-k4
+cell (derivation, scoring, registration — register at 338 conditions),
+replacing the mislabelled Item D step 4. **This contract is CLOSED**;
+the one live residual it leaves is D42's standing mitigation.
+
 ### 2026-08-23 — CAMPAIGN COMPLETE; Item D executed (Session 140)
 
 **Item C closed.** The clearing resume processed the four remaining
