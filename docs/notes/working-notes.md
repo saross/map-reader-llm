@@ -27768,3 +27768,115 @@ and order-forgiveness are for noise and artefact, never for silently
 absorbing a genuine change); **Obs 423** (the reproduce-a-committed-value
 discipline that Layers 2 and 3's fixes both had to satisfy exactly).
 
+## Observation 427: The vote-threshold penalty is modality-asymmetric — image loses 2.2–6.8× more corrected-F1 than text going 3-of-5 to 4-of-5 (Session 140, 2026-08-23)
+
+PI-requested write-up (2026-08-23) of a $0 by-product of E82 Item D
+(**Obs 426**): registering the genuine IM-k4 cell
+(`55maps-image-generalisation::verified-k4-standardised-gt`,
+`scripts/derive_im_k4_verified.py` — a pure `vote_count >= 4` filter
+over the already-verified image pool, zero re-verification, zero API
+spend) completes the k3/k4 pair for all four 55-map configurations on
+the ruling-21 standardised reference
+(`results/55maps-standardised-ref-2026-08-14/<cell>/evaluation.json`,
+ground truth `inputs/vectors/references/best-available-gt-55maps.geojson`).
+With all eight cells now on one reference, **Obs 358**'s "3-of-5 beats
+carried 4-of-5" finding can, for the first time, be compared cleanly
+across modality:
+
+| Config | k3 F1@50 m | k4 F1@50 m | ΔF1 | image Δ ÷ this Δ |
+|---|---:|---:|---:|---:|
+| TH7 (text, HIGH, T0.7) | 0.8387 | 0.8169 | −0.0218 | 2.8× |
+| T03 (text, HIGH, T0.3) | 0.8393 | 0.8303 | −0.0090 | 6.8× |
+| TM (text, MINIMAL) | 0.8109 | 0.7833 | −0.0275 | 2.2× |
+| IM (image) | 0.8010 | 0.7400 | −0.0610 | — (reference) |
+
+(`results/conditions-manifest.json`, condition_ids
+`55maps-{text-high,text-high-t0-3,text-min,image}-generalisation::verified-k{3,4}-standardised-gt`,
+`metrics.per_buffer["50"]`.)
+
+The mechanism is visible in raw detection counts. Going k3→k4 sheds a
+similar *fraction* of votes-just-below-threshold for the three text
+configs but a much larger one for image:
+
+| Config | n@k3 | n@k4 | retention (k4/k3) | shed |
+|---|---:|---:|---:|---:|
+| TH7 | 4,786 | 4,164 | 0.870 | 13.0 % |
+| T03 | 4,905 | 4,350 | 0.887 | 11.3 % |
+| TM | 4,279 | 3,865 | 0.903 | 9.7 % |
+| IM | 4,680 | 3,541 | 0.757 | 24.3 % |
+
+And the loss is recall-side throughout, as vote thinning predicts —
+but roughly twice as severe for image as for the worst text case:
+
+| Config | P@k3 | R@k3 | P@k4 | R@k4 | ΔP | ΔR |
+|---|---:|---:|---:|---:|---:|---:|
+| TH7 | 0.858 | 0.820 | 0.900 | 0.748 | +0.042 | −0.072 |
+| T03 | 0.848 | 0.831 | 0.893 | 0.776 | +0.045 | −0.055 |
+| TM | 0.880 | 0.752 | 0.899 | 0.694 | +0.019 | −0.058 |
+| IM | 0.829 | 0.775 | 0.894 | 0.632 | +0.064 | −0.143 |
+
+**Proposed mechanism** (not directly tested here — an inference from
+two independently measured facts, offered as the working explanation
+pending a dedicated check). Both runs share one `dedup_radius_m: 20.0`
+consensus-clustering radius
+(`outputs/{55maps-image,55maps-text-high}-generalisation/resolved_config.yaml`).
+**Obs 197** measured image-track centroids scattering ~10 px (~50 m)
+against text's ~6 px (~30 m) — the modality-specific localisation
+plateau, and the direct symbol measurement since done
+(`reports/symbol-footprint-measurement-2026-08-22.md`: median printed
+mound-symbol ground diameter **73 m**, IQR 65–85 m) confirms the scale
+is real, not an artefact of the estimate it replaced. A dedup ball
+smaller than image's own positional scatter more often splits one
+mound's five image passes across two clusters, thinning each
+cluster's vote count below what a tightly-clustered text detection
+would carry; raising the gate from 3 to 4 then discards clusters that
+only ever accumulated 3 genuine votes. This is offered as an
+explanation for the *asymmetry*, not a re-litigation of Obs 197 itself.
+
+**Why this matters for the paper.** When the Discussion cites the
+3-of-5 > 4-of-5 finding (Obs 358), the modality split is a distinct,
+citable point: threshold tuning is not a uniform correction — it
+matters far more for the image track, so a single deployment-wide
+vote threshold is more likely to strand image performance than text.
+It is also a clean methodological demonstration in its own right: the
+k-axis is explorable **post hoc at $0** from any already-verified
+pool, because the verifier's per-candidate `vote_count` already
+carries every re-vote a stricter threshold would need.
+
+**Caveats.** Single corpus (55-map deployment), one detection pool per
+configuration — this is a descriptive four-point comparison, not a
+significance test; no pairwise test was run on the k3→k4 deltas
+themselves (the corpus's tile-swap permutation + BH-FDR machinery
+behind Obs 358's tiering is available if the PI wants one run). The
+text-side F1 values here are on the ruling-21 standardised reference
+and differ slightly from Obs 358's canonical-GT numbers (e.g. TH7-k3
+0.8425 there vs 0.8387 here) — Obs 409 already established that
+standardisation is tier-preserving, so the direction and rough
+magnitude of the asymmetry is not an artefact of which reference is
+used, but the exact ΔF1 figures above are standardised-reference-only
+and should not be mixed with Obs 358's numbers in the same table.
+Corrected-F1's recall side also carries the Obs 361 double-miss
+epistemics (a measured ~2.5–2.7 % upper-bound understatement); that
+uncertainty applies equally to all eight cells here and so should not
+shift the cross-modality comparison, only its absolute levels.
+
+Sources: `scripts/derive_im_k4_verified.py` (the $0 vote-count filter,
+commit `4ac0eeedf`); scoring commit `c5dc6ebd4`; registration commit
+`4cd79dee5` (338 conditions); `results/conditions-manifest.json`;
+`results/55maps-standardised-ref-2026-08-14/{TH7,T03,TM,IM}-k{3,4}/evaluation.json`;
+`outputs/{55maps-image,55maps-text-high}-generalisation/resolved_config.yaml`
+(`dedup_radius_m`, `vote_threshold`); `reports/symbol-footprint-measurement-2026-08-22.md`;
+`archive/superseded-mislabelled-im-k4/README.md` (the mislabelled
+duplicate this cell replaces, discovered by the feature-count
+cross-check, cf. Session 77 memory
+`feedback_feature_count_crosscheck.md`);
+`planning/e82-corpus-reemission-2026-08-20.md` § "CAMPAIGN COMPLETE;
+Item D executed (Session 140)" (item 3, the discovery narrative).
+Related: **Obs 426** (the E82 replay-fidelity campaign whose Item D
+surfaced the mislabelled duplicate this cell corrects, same session);
+**Obs 358** (the parent "3-of-5 beats carried 4-of-5" finding this Obs
+splits by modality); **Obs 197** (the modality-specific localisation
+plateau — ~10 px image vs ~6 px text scatter — underwriting the
+proposed clustering mechanism); **Obs 361** (the corrected-F1 recall
+epistemics qualifying every absolute figure quoted above).
+
