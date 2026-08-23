@@ -40,15 +40,24 @@ project state.
 > 6. Optional review: Obs 426/427; the E82 close-out set (execution note,
 >    campaign summary, defect register D42).
 >
-> **Claude's queue** (state at S140 close recorded below): the
-> `evaluate_detections.py` pair (D40 dirty-input guard + D42 writer
-> basis-fields fix) and the Methods scaffold conversions (§§ 1–4, § 6)
-> were the unblocked overnight work — check the S140 session paragraph
-> for how far they got. Discussion prose stays deferred until earlier
-> sections are written (PI ruling). Housekeeping riders: three stale
-> self-matching monitor loops from OTHER projects still spin on sapphire
-> (inscriptions ×1 ~65 d; grid_analysis ×2 ~4 d) — kill or keep is
-> Shawn's call; all three machines are pip-synced to requirements.txt.
+> **Claude's overnight queue: ALL EXECUTED** (S140 session paragraph
+> below has the record): the O'Hara/GMFS full-text resolutions, the D42
+> aggregator fix, the D40 dirty-input guard, and the Methods scaffold
+> conversions M.8–M.12 — **every outline section now has zero-draft
+> prose**, with the § 4.3 phase-table regeneration and § 6.3
+> session-count refresh marked [PENDING] in place. Discussion prose
+> stays deferred until earlier sections are written (PI ruling); the
+> natural next write-up step is the PI's voice pass over M.8–M.12 and
+> the two pending items. **New candidate for a verdict** (add to the
+> § 3 pile): the O'Hara 98.2/90.8 finding as a distortion-not-
+> fabrication instance — both figures real, split by CLASS PERSPECTIVE
+> on one confusion matrix; neither chatbot report nor the verifier's
+> two-stage hypothesis nor the web summaries' "validation-phase" gloss
+> had the mechanism until the full text was read. Housekeeping riders:
+> three stale self-matching monitor loops from OTHER projects still
+> spin on sapphire (inscriptions ×1 ~65 d; grid_analysis ×2 ~4 d) —
+> kill or keep is Shawn's call; all three machines pip-synced and at
+> `f6899bf1f`.
 
 ## 🎯 PREVIOUS (S140 beacon, executed) — E82: IMPLEMENT C1+D, RESUME, THEN ITEM D/E
 
@@ -194,6 +203,8 @@ project state.
 > `git stash -u`** (N1). **If working from zbook away from the home network,
 > sapphire is unreachable**: it has a working venv and 144 GB free, so $0 analysis
 > can run locally, but the CLAUDE.md compute rule assumes sapphire is available.
+
+**Session 140 (2026-08-22/23, amd-tower + sapphire; US$0.00 API; Fable 5)** — **E82 CLOSED end-to-end, and the whole S139 leftovers queue with it.** (1) **C1 + D implemented** (label-keyed gate, writer-exact `np.mean` helper; `142f2c5c9`) → the resumed run surfaced a THIRD boundary layer (the summary BUFFER table's order-sensitive mean — 8 values across 4 cells, enumerated corpus-wide before resuming; gate extension `21032037e`, PI-ratified) → clearing resume **failed = 0**, census selected = 0, counters EXACT (n_reaggregated 19, n_order_normalised 6). ONE data commit from sapphire (`43ea31b26`, 4,965 files). **Item D executed with three findings**: the ci-flag regression (re-applied, `e46f13bba`), the recorded-output_dir pollution (engine fix + 1,655-file repair, `70c550177`), and **the "IM-k4 gap cell" exposed as a mislabelled DUPLICATE of IM-k3** (image production consensus is 3-of-5; feature-count cross-check caught it — NOT registered). **Item E executed after PI sign-off**: E82 execution note (incl. the pinned-count correction 27→35), D15/D19/D41 closed, D42 opened-then-FIXED same night (true mechanism: `evaluate_multi_run_mean` left the reliability block null; aggregator now writes the measured block, shared semantics in `lib_advanced_metrics`, migration-invariance test), campaign summary banked, contract CLOSED, audit-report artifact republished. (2) **Genuine IM-k4 on PI ruling**: $0 vote_count ≥ 4 filter (3,541 of 4,680, gated derivation script) → scored on sapphire (F1@50 **0.740** / MCC 0.655 vs IM-k3 0.801/0.712) → registered (**338 conditions ALL VALID**); **Obs 427**: the vote-threshold penalty is modality-asymmetric (image −0.061 vs text −0.009…−0.028; retention 0.757 vs 0.87–0.90; recall-side). **Obs 426** (replay fidelity is a property of consumption order) closed the S139-queued candidate. (3) **S139 leftovers**: symbol footprint MEASURED (38 symbols, median 73 m ⌀ / 36 m radius / 1.46 mm — 20/30 m buffers are sub-symbol; `reports/symbol-footprint-measurement-2026-08-22.md`); tile-f1 "registration deferred" residual cleared; 103 unmarked tests → tier1 + `tests/README.md` created; **provenance re-graded from the canonical archive** (357/428 headings transcript-confirmed, LOW 15→0, MED 203→48; boundary conflict Obs 249–257 → **proposed 4.6→4.7 boundary at Obs 258, PI to rule**; Opus 4.8 corroborated; evidence banked `reports/provenance-*-2026-08-23.*`); **O'Hara + GMFS resolved from PI-supplied PDFs** (98.2 = majority-class F1, wetland-class **0.908** — cite that; GMFS F1 0.86 genuine, classification stage; addenda in the three lit-scout reports). (4) **Overnight (PI direction)**: **D40 dirty-input guard** (per-input git states stamped in `_metadata.input_git_state`, warn/`--require-clean-inputs`); **Methods M.8–M.12 drafted — every outline section now has zero-draft prose** (two [PENDING] items marked). Tier-1 1,593→**1,903** across the session, green on both machines; three machines pip-synced at `f6899bf1f`. ~30 commits `142f2c5c9`→`f6899bf1f`, all pushed. **Held over for verdicts**: everything in the S141 beacon's § 3 pile, plus the new O'Hara class-perspective candidate.
 
 **Session 139 (2026-08-21/22, amd-tower, home network from evening; US$0.00 Gemini API; Fable 5)** — the Discussion structure closed and the literature arrived, verified. (1) **DD1–DD13 ALL SETTLED**: the walk (nine as recommended) plus the PI's same-day foregrounding amendment — five headline outcomes, Seeds 8–11 drafted, two-part core (Part I what-the-study-shows / Part II lessons-for-survey-practice), sections D.0–D.11; old D.4 dissolved into D.1; **prose deferred until earlier sections are written (PI)**. (2) **All eight E83 flags rewritten** to register-verified MCB values (`511f09a5a`). (3) **Literature programme**: four lit-scouts + five verifiers, 570 claims, 1 FAIL (name boundary, corrected); five verified reports + import manifests banked. Headlines: **DIGMAPPER point-F1 0.82/0.89 (confirmed at arXiv source) displaces Saxton 0.73** — Seed 8 reframed to near-parity-at-20-tile-annotation-budget; Kirsanova narrows the strand-3 absence claim to "across the map face"; **Gould et al. 2026 "adaptive preregistration" = near prior art, LLM-support the clean novelty** — D.9 naming DEFERRED pending the PI's Gould read (decision brief banked). Old-report figures UniBias "17%" and MMICES "1.2–1.5" proven absent from their papers. (4) **Zotero**: TRAP write key + canonical collections built (104 + 8 items, topic-tagged); staging cleaned; obs-writer trailer template fixed (derive, never hardcode) after a 13-commit stale-trailer corruption was mapped. (5) **Obs 424** (distortion-not-fabrication, 1/570 pipeline error rate) and **Obs 425** (the most reasonable claim, five PI corrections: annotation budget, conservative buffers, symbol family, tolerance alignment, tile-level comparability). (6) **Tile-level F1** derived (10/10 MCC-reproduction gate) and REGISTERED as analysis row 38 on PI ruling (ALL VALID, 0 drift, `bd6e94784`). (7) **E82 resumed → aborted correctly**: census exact, 588 ok + 21 pinned + 18/19 D41 rescued; inspection (`a50638832`) OVERTURNED the overnight wider-defect inference — six failures are pass-ORDER replay artefacts, one a rounding-boundary bug in the rescue helper; **PI ruling C1 + D**, implement next session; sapphire tree deliberately uncommitted. (8) **Model-provenance DRAFT** (`docs/notes/obs-model-provenance.md`): seven eras incl. Gemini/Antigravity Obs 1–47; the "12-week transcript hole" corrected same night as a wrong-store artefact (canonical archive healthy; live stores are partial populations — rule recorded). Reflections + claude-obs 71–73 committed. ~30 commits `528ba9483`→session end, all pushed. **Held over for verdicts (silence never discards)**: S138's two working-notes candidates (input-vintage drift as corpus phenomenon; calibrated coverage simulation as standing instrument) and its three user-obs candidates remain pending; S139 adds one working-notes candidate (pass-order replay artefact + rounding boundary — write after the C1+D fix verifies) and three user-obs candidates (in file, pending review).
 
