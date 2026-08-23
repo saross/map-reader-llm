@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T14:58:46Z",
+  "generated_at": "2026-08-23T12:27:31Z",
   "generator_version": "0.7.1",
   "conditions": [
     {
@@ -1064,6 +1064,272 @@
           "results/55maps-standardised-ref-2026-08-14/IM-k3/evaluation.json"
         ],
         "last_extracted_at": "2026-08-20T05:34:47Z",
+        "extractor_version": "0.7.1"
+      }
+    },
+    {
+      "condition_id": "55maps-image-generalisation::verified-k4-standardised-gt",
+      "run_id": "55maps-image-generalisation",
+      "label": "verified-k4-standardised-gt",
+      "architecture": "proposer-verifier",
+      "aggregation": "verified",
+      "proposer_pool": "library_plus-hp",
+      "n_passes": 5,
+      "vote_threshold": 4,
+      "prob_threshold": null,
+      "verifier_config": {
+        "variant": "v1",
+        "instruction_file": "verify_adversarial.md",
+        "model": "gemini-3-flash-preview",
+        "thinking_level": "minimal",
+        "temperature": 0.0
+      },
+      "scope_override": null,
+      "metrics": {
+        "per_buffer": {
+          "5": {
+            "f1": 0.0678,
+            "precision": 0.0819,
+            "recall": 0.0579,
+            "ci": {
+              "low": 0.0603,
+              "high": 0.076,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "10": {
+            "f1": 0.2278,
+            "precision": 0.2751,
+            "recall": 0.1944,
+            "ci": {
+              "low": 0.2143,
+              "high": 0.2413,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "15": {
+            "f1": 0.3939,
+            "precision": 0.4756,
+            "recall": 0.3361,
+            "ci": {
+              "low": 0.3788,
+              "high": 0.4089,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "20": {
+            "f1": 0.5251,
+            "precision": 0.634,
+            "recall": 0.4481,
+            "ci": {
+              "low": 0.5095,
+              "high": 0.54,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "25": {
+            "f1": 0.6214,
+            "precision": 0.7504,
+            "recall": 0.5303,
+            "ci": {
+              "low": 0.6069,
+              "high": 0.6358,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "30": {
+            "f1": 0.6769,
+            "precision": 0.8173,
+            "recall": 0.5776,
+            "ci": {
+              "low": 0.6634,
+              "high": 0.6903,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "35": {
+            "f1": 0.7075,
+            "precision": 0.8543,
+            "recall": 0.6038,
+            "ci": {
+              "low": 0.6949,
+              "high": 0.7207,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "40": {
+            "f1": 0.7246,
+            "precision": 0.8749,
+            "recall": 0.6184,
+            "ci": {
+              "low": 0.7123,
+              "high": 0.7372,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "45": {
+            "f1": 0.7339,
+            "precision": 0.8862,
+            "recall": 0.6263,
+            "ci": {
+              "low": 0.7217,
+              "high": 0.7461,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "50": {
+            "f1": 0.74,
+            "precision": 0.8935,
+            "recall": 0.6315,
+            "ci": {
+              "low": 0.7279,
+              "high": 0.7521,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "75": {
+            "f1": 0.7503,
+            "precision": 0.906,
+            "recall": 0.6403,
+            "ci": {
+              "low": 0.7384,
+              "high": 0.7623,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "100": {
+            "f1": 0.7531,
+            "precision": 0.9093,
+            "recall": 0.6427,
+            "ci": {
+              "low": 0.7413,
+              "high": 0.7649,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "125": {
+            "f1": 0.7548,
+            "precision": 0.9113,
+            "recall": 0.6441,
+            "ci": {
+              "low": 0.743,
+              "high": 0.7666,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          },
+          "150": {
+            "f1": 0.7552,
+            "precision": 0.9119,
+            "recall": 0.6445,
+            "ci": {
+              "low": 0.7434,
+              "high": 0.7669,
+              "method": "BCa",
+              "n_iter": 10000,
+              "seed": 42,
+              "resampling": "tile-level"
+            },
+            "coverage": null,
+            "ci_unreliable": false,
+            "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+          }
+        },
+        "tile_classification": {
+          "mcc": 0.6548,
+          "sensitivity": 0.6044,
+          "specificity": 0.9799,
+          "tp": 2130,
+          "tn": 4916,
+          "fp": 101,
+          "fn": 1394
+        }
+      },
+      "n_detections": 3541,
+      "n_candidates": null,
+      "n_reference_mounds": null,
+      "provenance": {
+        "source_files": [
+          "results/55maps-standardised-ref-2026-08-14/IM-k4/evaluation.json"
+        ],
+        "last_extracted_at": "2026-08-23T12:27:31Z",
         "extractor_version": "0.7.1"
       }
     },

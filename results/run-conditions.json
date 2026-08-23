@@ -4315,6 +4315,25 @@
      "eval_path": "results/55maps-standardised-ref-2026-08-14/IM-k3/evaluation.json",
      "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
      "_note": "IM-k3 vs the ruling-21 standardised reference (student 4,731 + extension 279 at marked centres; F1 and tile MCC share the reference — queue items 2-3, Session 132)"
+    },
+    {
+     "label": "verified-k4-standardised-gt",
+     "architecture": "proposer-verifier",
+     "aggregation": "verified",
+     "proposer_pool": "library_plus-hp",
+     "n_passes": 5,
+     "vote_threshold": 4,
+     "prob_threshold": null,
+     "verifier_config": {
+      "variant": "v1",
+      "instruction_file": "verify_adversarial.md",
+      "model": "gemini-3-flash-preview",
+      "thinking_level": "minimal",
+      "temperature": 0.0
+     },
+     "eval_path": "results/55maps-standardised-ref-2026-08-14/IM-k4/evaluation.json",
+     "detections": "results/55maps-standardised-ref-2026-08-14/IM-k4/k4_verified_detections.geojson",
+     "_note": "Genuine IM-k4 (PI ruling 2026-08-23): 4-of-5 re-vote of the verified image pool (vote_count >= 4 filter, scripts/derive_im_k4_verified.py; 3,541 of 4,680 candidates), scored against the ruling-21 standardised reference with sibling parameters. Fills the image track's k4 gap; replaces the mislabelled Session-138 cell archived at archive/superseded-mislabelled-im-k4/."
     }
    ]
   },

@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-08-22T14:58:46Z · 337 row(s) · schema v1.0.
+> Generated 2026-08-23T12:27:31Z · 338 row(s) · schema v1.0.
 >
-> **Coverage**: 337 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 338 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -12,6 +12,7 @@
 | 55maps-image-generalisation::verified | proposer-verifier | verified | 3 | 5 | 0.5082 | 0.6927 | 4680 |
 | 55maps-image-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.5081688945469975 | 0.7104103204864493 | 4680 |
 | 55maps-image-generalisation::verified-k3-standardised-gt | proposer-verifier | verified | 3 | 5 | 0.5461300309597523 | 0.7119504066553468 | 4680 |
+| 55maps-image-generalisation::verified-k4-standardised-gt | proposer-verifier | verified | 4 | 5 | 0.5251 | 0.6548 | 3541 |
 | 55maps-text-high-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.626 | 0.648 | 4164 |
 | 55maps-text-high-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6260381593714928 | 0.6666252946918438 | 4164 |
 | 55maps-text-high-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6307175828787243 | 0.679608597108498 | 4786 |
