@@ -466,6 +466,116 @@ def _git_status(repo_root: Path) -> str:
     return "clean" if proc.stdout.strip() == "" else "dirty"
 
 
+def _input_git_states(paths: list[Any]) -> dict[str, str]:
+    """Classify each recipe input's git state at scoring time (defect D40).
+
+    The E82 pre-launch audit found ~324 committed evaluations that were
+    scored against inputs later changed in git — sometimes a working tree
+    committed minutes after scoring — leaving artefacts that do not
+    reproduce from current inputs. This classifier makes that state
+    visible IN the artefact at scoring time, so input-vintage drift is
+    disclosed rather than discovered by a later replay campaign.
+
+    Classes: ``clean`` (tracked, no uncommitted changes), ``modified``
+    (tracked, uncommitted changes present), ``untracked`` (exists,
+    neither tracked nor ignored), ``ignored`` (gitignored by design —
+    e.g. the regenerable tile trees), ``outside-repo`` (not under the
+    repository root — e.g. a replay's temp materialisation), and
+    ``missing``. Any git failure yields ``unknown`` rather than blocking
+    scoring.
+
+    Args:
+        paths: Candidate input paths (str/Path/None; Nones are skipped).
+
+    Returns:
+        Mapping of repo-relative (or original, when outside the repo)
+        path → state.
+    """
+    states: dict[str, str] = {}
+    root = PROJECT_ROOT.resolve()
+    for p in paths:
+        if not p:
+            continue
+        path = Path(p)
+        try:
+            rel = str(path.resolve().relative_to(root))
+        except ValueError:
+            states[str(p)] = "outside-repo"
+            continue
+        if not (root / rel).exists():
+            states[rel] = "missing"
+            continue
+        try:
+            porcelain = subprocess.run(
+                ["git", "status", "--porcelain", "--ignored=no", "--", rel],
+                cwd=str(root), capture_output=True, text=True, check=False,
+            )
+            if porcelain.returncode != 0:
+                states[rel] = "unknown"
+                continue
+            lines = porcelain.stdout.strip().splitlines()
+            if lines:
+                states[rel] = ("untracked"
+                               if all(ln.startswith("??") for ln in lines)
+                               else "modified")
+                continue
+            tracked = subprocess.run(
+                ["git", "ls-files", "--", rel],
+                cwd=str(root), capture_output=True, text=True, check=False,
+            ).stdout.strip()
+            if tracked:
+                states[rel] = "clean"
+            else:
+                ignored = subprocess.run(
+                    ["git", "check-ignore", "-q", rel],
+                    cwd=str(root), capture_output=True, check=False,
+                ).returncode == 0
+                states[rel] = "ignored" if ignored else "untracked"
+        except (FileNotFoundError, OSError):
+            states[rel] = "unknown"
+    return states
+
+
+#: Input states that mean "this artefact will not reproduce once the
+#: pending change is committed" — the D40 drift signature.
+_DIRTY_INPUT_STATES: frozenset[str] = frozenset({"modified", "untracked"})
+
+
+def enforce_input_hygiene(metadata: dict, require_clean: bool) -> None:
+    """Warn on, or refuse, dirty recipe inputs (defect D40 forward fix).
+
+    Always warns when any input is ``modified`` or ``untracked`` (the
+    normal pipeline legitimately scores freshly generated, not-yet-
+    committed outputs — a warning plus the metadata stamp keeps that
+    workflow intact while making the drift disclosed). With
+    ``require_clean`` — the ``--require-clean-inputs`` flag, intended for
+    replay and campaign contexts — a dirty input aborts scoring instead.
+
+    Args:
+        metadata: The ``_build_metadata`` result (reads
+            ``input_git_state``).
+        require_clean: Refuse instead of warning.
+
+    Raises:
+        SystemExit: exit code 4 when ``require_clean`` and any input is
+            dirty.
+    """
+    states = (metadata.get("input_git_state") or {}).get("inputs") or {}
+    dirty = {p: s for p, s in states.items() if s in _DIRTY_INPUT_STATES}
+    if not dirty:
+        return
+    detail = ", ".join(f"{p} ({s})" for p, s in sorted(dirty.items()))
+    if require_clean:
+        logger.error(
+            "REFUSING to score against dirty inputs (--require-clean-inputs; "
+            "defect D40): %s — commit them first or drop the flag.", detail)
+        raise SystemExit(4)
+    logger.warning(
+        "Scoring against uncommitted inputs (defect D40 drift hazard): %s — "
+        "the evaluation will not reproduce once these change; their git "
+        "states are recorded in _metadata.input_git_state.", detail)
+
+
 #: CLI argument keys that hold filesystem paths, normalised to repo-relative in the
 #: serialised ``cli_args`` block (the other keys — bootstrap, seed, label, mcc — are
 #: passed through verbatim).
@@ -603,6 +713,16 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
             "detections": _repo_relative(detections_value),
             "ground_truth": _repo_relative(str(ground_truth)) if ground_truth else None,
             "bounds": _repo_relative(str(bounds)) if bounds else None,
+        },
+        # Per-input git state at scoring time (defect D40): discloses in the
+        # artefact whether any recipe input was uncommitted when scored, so
+        # input-vintage drift is visible without a replay campaign.
+        "input_git_state": {
+            "head": _git_short_hash(PROJECT_ROOT),
+            "inputs": _input_git_states(
+                (detections_value if isinstance(detections_value, list)
+                 else [detections_value])
+                + [ground_truth, bounds]),
         },
         "spatial": {
             # All geometries are reprojected to this CRS for matching/scoring; recorded
@@ -1880,6 +2000,16 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--require-clean-inputs", action="store_true",
+        help=(
+            "Refuse to score when any recipe input carries uncommitted "
+            "changes or is untracked (defect D40 input-vintage drift). "
+            "Without the flag a dirty input warns and is recorded in "
+            "_metadata.input_git_state. Intended for replay and campaign "
+            "contexts; gitignored and outside-repo inputs never trip it."
+        ),
+    )
+    parser.add_argument(
         "--workers", type=int, default=1,
         help=(
             "Number of parallel worker processes for batch mode "
@@ -2042,6 +2172,8 @@ def _run_single_mode(args: argparse.Namespace) -> int:
     # Capture run provenance once, so the same metadata block is
     # attached to every output file produced by this invocation.
     run_metadata = _build_metadata(args)
+    enforce_input_hygiene(
+        run_metadata, getattr(args, "require_clean_inputs", False))
 
     summary = _evaluate_condition(
         det_files, gdf_ref, gdf_bounds,
@@ -2250,6 +2382,8 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
     # inherits the same block, then overlays its own bootstrap/seed
     # values from the YAML below.
     run_metadata = _build_metadata(args)
+    enforce_input_hygiene(
+        run_metadata, getattr(args, "require_clean_inputs", False))
 
     # Ground-truth path shared across conditions (each worker loads its
     # own copy in parallel mode; the serial path loads it once below).

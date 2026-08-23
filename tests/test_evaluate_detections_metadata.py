@@ -509,3 +509,110 @@ class TestMultiRunAggregationRollup:
         # aggregator) must agree with the new ``f1_point`` alias to
         # within float epsilon — they are conceptually identical.
         assert buf["f1"] == pytest.approx(buf["f1_point"], abs=1e-6)
+
+
+# =========================================================================
+# D40 INPUT-HYGIENE TESTS
+# =========================================================================
+
+
+def _temp_repo(tmp_path):
+    """Initialise a throwaway git repo with one clean, one modified,
+    one untracked, and one gitignored file."""
+    import subprocess as sp
+
+    def git(*argv):
+        sp.run(["git", *argv], cwd=tmp_path, check=True,
+               capture_output=True,
+               env={"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t",
+                    "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t",
+                    "HOME": str(tmp_path), "PATH": "/usr/bin:/bin"})
+
+    git("init", "-q")
+    (tmp_path / ".gitignore").write_text("ignored.geojson\n")
+    (tmp_path / "clean.geojson").write_text("{}")
+    (tmp_path / "modified.geojson").write_text("{}")
+    git("add", ".gitignore", "clean.geojson", "modified.geojson")
+    git("commit", "-q", "-m", "init")
+    (tmp_path / "modified.geojson").write_text('{"changed": 1}')
+    (tmp_path / "untracked.geojson").write_text("{}")
+    (tmp_path / "ignored.geojson").write_text("{}")
+
+
+@pytest.mark.tier1
+class TestInputGitStates:
+    """Classification of recipe inputs at scoring time (defect D40)."""
+
+    def test_all_classes(self, tmp_path, monkeypatch) -> None:
+        from scripts import evaluate_detections as ed
+
+        _temp_repo(tmp_path)
+        monkeypatch.setattr(ed, "PROJECT_ROOT", tmp_path)
+        states = ed._input_git_states([
+            tmp_path / "clean.geojson",
+            tmp_path / "modified.geojson",
+            tmp_path / "untracked.geojson",
+            tmp_path / "ignored.geojson",
+            tmp_path / "absent.geojson",
+            "/tmp/somewhere-else.geojson",
+            None,
+        ])
+        assert states["clean.geojson"] == "clean"
+        assert states["modified.geojson"] == "modified"
+        assert states["untracked.geojson"] == "untracked"
+        assert states["ignored.geojson"] == "ignored"
+        assert states["absent.geojson"] == "missing"
+        assert states["/tmp/somewhere-else.geojson"] == "outside-repo"
+        assert None not in states
+
+    def test_build_metadata_stamps_states(self, tmp_path, monkeypatch) -> None:
+        from scripts import evaluate_detections as ed
+
+        _temp_repo(tmp_path)
+        monkeypatch.setattr(ed, "PROJECT_ROOT", tmp_path)
+        args = _make_args(
+            detections=[tmp_path / "untracked.geojson"],
+            ground_truth=tmp_path / "clean.geojson",
+            bounds=tmp_path / "modified.geojson",
+        )
+        md = ed._build_metadata(args)
+        block = md["input_git_state"]
+        assert set(block) == {"head", "inputs"}
+        assert block["inputs"]["untracked.geojson"] == "untracked"
+        assert block["inputs"]["clean.geojson"] == "clean"
+        assert block["inputs"]["modified.geojson"] == "modified"
+
+
+@pytest.mark.tier1
+class TestEnforceInputHygiene:
+    """Warn by default; refuse under --require-clean-inputs (D40)."""
+
+    @staticmethod
+    def _md(states: dict) -> dict:
+        return {"input_git_state": {"head": "abc123def", "inputs": states}}
+
+    def test_clean_inputs_pass_silently(self, caplog) -> None:
+        from scripts.evaluate_detections import enforce_input_hygiene
+
+        enforce_input_hygiene(
+            self._md({"a.geojson": "clean", "b": "ignored",
+                      "/tmp/x": "outside-repo"}),
+            require_clean=True)
+
+    def test_dirty_input_warns_without_flag(self, caplog) -> None:
+        import logging
+
+        from scripts.evaluate_detections import enforce_input_hygiene
+
+        with caplog.at_level(logging.WARNING):
+            enforce_input_hygiene(
+                self._md({"a.geojson": "modified"}), require_clean=False)
+        assert any("D40" in r.message for r in caplog.records)
+
+    def test_dirty_input_refuses_with_flag(self) -> None:
+        from scripts.evaluate_detections import enforce_input_hygiene
+
+        with pytest.raises(SystemExit) as exc:
+            enforce_input_hygiene(
+                self._md({"a.geojson": "untracked"}), require_clean=True)
+        assert exc.value.code == 4
