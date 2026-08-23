@@ -2,9 +2,12 @@
 
 > **Status**: ZERO-DRAFT (concept skeletons at target density, per the
 > drafting contract — Shawn edits voice). First section drafted S134
-> (2026-08-17): the D16 preregistration subsection. Remaining Methods
-> sections follow `docs/methods-outline.md`; the cost-basis section
-> (§ 5.4) already exists there. See [§ Changelog](#changelog).
+> (2026-08-17): the D16 preregistration subsection. **The outline is now
+> FULLY CONVERTED** (S140, 2026-08-23): §§ 1–4 and § 6 landed as
+> M.8–M.12, joining M.x and M.2–M.7; the cost-basis section (§ 5.4)
+> already exists in `docs/methods-outline.md`. Two [PENDING]/[DRAFT
+> NOTE] items gate finalisation: the § 4.3 phase table regeneration and
+> the § 6.3 session-count refresh. See [§ Changelog](#changelog).
 
 ## M.x Preregistration, amendments, and analysis status
 
@@ -280,7 +283,246 @@ boundary is that a buffer is a property of the instrument and
 reference, not of the detector: the derived radii do not transfer to
 other map series or reference constructions without re-derivation.
 
+## M.8 Study design overview (outline § 1)
+
+The study is a preregistered, sequential one-factor-at-a-time (OFAT)
+evaluation of Vision Language Model (VLM) detection of burial-mound
+symbols on historical topographic maps, registered on the Open Science
+Framework on 2026-01-31 with fifteen hypotheses — eight confirmatory
+(H1–H8) and seven exploratory (H9–H15). An earlier stranded-factorial
+design (protocol v3.5) was superseded before lodgement; the registered
+design fixes one factor per phase and carries the winning level forward
+to every subsequent phase. We chose OFAT over a full factorial on cost
+grounds: at ten runs per cell over a 60-tile evaluation set, the
+factorial crossing of the § M.10 factors would have required upwards of
+54 cells against a budget ceiling of roughly US$250, whereas the
+sequential design covers every factor's main effect within it. The
+design's known cost — blindness to interactions — is mitigated where it
+mattered by targeted exploratory tests (temperature-by-voting cells in
+Phase 3a, and the two-stage pipeline sweeps), and its central execution
+risk — a carry-forward decision that forecloses later phases —
+materialised once and was handled by an additive protocol extension
+rather than a substitution: the dual-track carry-forward described in
+§ M.11, documented as erratum E27.
+
+## M.9 Study area and materials (outline § 2)
+
+**Cartographic sources.** Four Soviet General Staff 1:50,000
+topographic map sheets covering part of the Thracian Plain in
+south-eastern Bulgaria — K-35-052-4, K-35-053-3 (Elenovo), K-35-062-2
+(Rakovski), and K-35-078-1 (Lesovo) — georeferenced in EPSG:32635 (UTM
+zone 35N) at a native scan resolution of ~5.02 m per pixel. The target
+feature is the standardised Soviet burial-mound symbol: a small
+sunburst of radiating hachures around a central mark, printed at
+~1.4 mm diameter (a measured median ground footprint of ~73 m across
+38 sampled symbols; radius ~36 m —
+`reports/symbol-footprint-measurement-2026-08-22.md`), so the 20–30 m
+evaluation buffers of § 5 demand localisation within the printed
+symbol's own face.
+
+**Tile generation.** Sheets were cut into 512 × 512-pixel tiles with a
+64-pixel overlap (stride 448 px), each covering roughly 2.57 × 2.57 km
+of ground; tiles more than 75 % background were filtered out, leaving a
+corpus of 361 tiles across the four sheets.
+
+**Ground truth.** 569 mound symbols were annotated across the corpus:
+an initial student annotation campaign using the FAIMS v2.6 mobile
+data-capture application, followed by comprehensive review and
+verification by the primary researcher. Burial mounds, settlement
+mounds, and mounds carrying benchmark or triangulation marks are all
+treated as positive detections, since the printed symbol family is what
+the detector sees. The reference is stored as GeoJSON in EPSG:32635.
+The later evaluation corpora that extend beyond this design-time
+reference — the Era-2/Era-3 gold-standard scopes and the 55-map
+deployment references — are specified in § M.2 and § M.3.
+
+**Data allocation.** Twenty tiles (five per sheet) formed the
+calibration set used for prompt development and hard-example selection;
+they are contaminated by construction and excluded from every
+evaluation. The confirmatory instrument is a 60-tile holdout (fifteen
+per sheet), stratified by mound density — thirty empty, eighteen sparse
+(one to two mounds), and twelve dense (three or more) — carrying 79
+mound symbols. The remaining 281 tiles were held untouched as a reserve
+pool for later validation. Tile selection used documented random seeds
+within the density strata.
+
+## M.10 VLM detection pipeline (outline § 3)
+
+**Model.** All detection runs used Gemini 3 Flash (Google; model
+identifier `gemini-3-flash-preview`), at `thinking_level: minimal`
+except where thinking level was itself the manipulated factor. The
+single-model focus was a deliberate scope decision: free-tier and
+low-cost access made high-replication designs (up to thirty passes per
+condition) affordable, and pilot work showed the model sufficiently
+capable that detection quality would be limited by prompt and
+aggregation design rather than raw model capacity. [DRAFT NOTE:
+cross-model cells (Flash 3.5, Pro) entered later as exploratory
+comparisons — decide whether M.10 forward-references them or leaves
+them to Results.]
+
+**Prompt architecture.** Each request assembles a system instruction
+(task definition, target-symbol description, and output-format
+specification), a configurable library of few-shot examples, and the
+target tile as a 512 × 512 px PNG. Examples are drawn from labelled
+calibration tiles in positive, negative, and null categories, and are
+presented as images, text descriptions, or both, according to the
+modality condition. Content is assembled as sequential `types.Part`
+objects via the google-genai SDK (v1alpha), with JSON output forced
+through `response_mime_type="application/json"` and an 8,192-token
+output ceiling that accommodates thinking tokens alongside the
+detection payload. The model returns detections as normalised
+bounding boxes on a 0–1000 coordinate scale.
+
+**Experimental factors.** The manipulated factors, their levels, and
+their phases: modality/elaboration (five levels from image-only to
+verbose-text-plus-image; Phase 2a), temperature (0.0–1.3 in five
+levels; Phase 2b), example-library composition (seven levels; Phase
+2c), negative-text treatment (three levels; Phase 2d), example
+ordering (four levels; Phase 2e), consensus pool size (5, 10, 30;
+Phase 3a), and single-stage versus proposer–verifier architecture
+(Phase 3d).
+
+**Output processing.** Detections are converted from normalised to
+pixel to UTM coordinates via each tile's georeferencing and saved
+incrementally as per-tile GeoJSON features, so an interrupted run
+resumes without re-querying completed tiles.
+
+**Two-stage proposer–verifier pipeline (H2).** The two-stage
+architecture couples a high-recall proposer pass with an independent
+verification stage: each candidate is cropped from the original raster
+at higher resolution and judged by the VLM under a diagnostic
+checklist prompt, with multiple verification passes (typically five)
+and a vote threshold. The registration treated this as an exploratory
+hypothesis with an expected null (single-stage at least as good as
+two-stage); the expectation did not survive contact with the data, as
+Results reports.
+
+**Consensus voting (H3).** Detection passes are aggregated in three
+steps: greedy within-pass deduplication at 20 m (removing duplicates
+from overlapping tiles), cross-pass clustering of the pooled
+detections at 20 m Euclidean distance, and a vote threshold retaining
+clusters supported by at least T distinct passes, swept over the full
+T ∈ [1, K] range. Voting was tested at multiple temperatures (0.0,
+0.3, 0.7) and pool sizes (5, 10, 30).
+
+## M.11 Execution protocol (outline § 4)
+
+**Sequential OFAT with a dual-track extension.** The registered design
+prescribes a single carry-forward path. Phase 2a broke it in an
+instructive way: the text-only condition (`brief-text`, F1 = 0.543)
+outperformed the best image-using condition (`brief-text-image`,
+F1 = 0.462), contradicting the foundational assumption that visual
+few-shot examples help. Following the carry-forward rule literally
+would have selected a winner for which Phases 2c (library composition)
+and 2e (example ordering) are undefined, since both factors operate on
+image examples. Rather than truncate the registered pipeline, we
+carried both winners forward as independent tracks (erratum E27):
+Track 1 (`brief-text-image`) ran the full registered sequence
+2b → 2c → 2d → 2e, preserving the preregistered pipeline intact, and
+Track 2 (`brief-text`) ran temperature testing and passed directly to
+the Phase 3a voting study, the image-dependent phases being
+inapplicable rather than skipped. The extension is additive — Track 1
+is the registered design, executed with three documented scope
+reductions (H5's 3 × 3 factorial collapsed to OFAT, E28; the H8
+scale-16/32 cells deferred under E11 and later re-run under E51; H2's
+condition C not executed, E59) — and its marginal cost (~US$55 of
+additional temperature cells) bought the study its most consequential
+finding: the text-only pathway.
+
+**Runs per condition.** Ten independent single-pass runs per condition
+per phase, as registered; thirty for the Phase 3a voting study. All
+Phase 2–3 runs score against the same 60-tile holdout.
+
+**Phase execution summary.** [PENDING: the outline's § 4.3 table
+carries pre-Era-2 values by its own S134 note and must be regenerated
+from the analyses register before this table lands in prose. Frame:
+one row per phase (2a–2e, 3a, 3d) with hypothesis, cells, runs per
+cell, and the carried-forward outcome.]
+
+**Errata affecting execution.** Two implementation errors affected
+data collection and analysis method respectively, both detected and
+corrected before results were interpreted. E25: the batch detection
+script failed to skip example images for text-only conditions in
+Phase 2a, sending identical images to all five modality conditions;
+the anomalously clustered results this produced are what prompted the
+investigation, and the phase was corrected and fully re-run. E26:
+reference deduplication inside bootstrap resampling produced
+confidence intervals that could exclude their own point estimates,
+fixed by pre-computing per-tile TP/FP/FN counts before resampling. The
+complete errata log — 83 entries at the time of drafting, E1–E83, with
+the by-class accounting and its counting-rule caveat in § M.x — is
+supplied in the supplementary materials alongside the registration.
+
+## M.12 Reproducibility and transparency (outline § 6)
+
+**Preregistration.** The protocol was registered at the Open Science
+Framework on 2026-01-31 (12:54 UTC), before confirmatory data
+collection. The registered content is protocol v4.7 with a versioned
+changelog; the posted file's header retains a stale v4.6 label, itself
+disclosed in the errata. Every deviation is documented in a living
+errata log (83 entries at drafting) carrying a classification and an
+impact assessment, and § M.x describes the three machine-checked
+layers — errata file, classified analysis register, and generated
+hypothesis-outcome table — through which execution is reported against
+the registration.
+
+**Software and data.** The detection pipeline is Python against the
+google-genai SDK; evaluation uses a custom spatial-matching library
+built on scipy (Hungarian assignment), geopandas, and shapely. Prompt
+configurations, system instructions, and study YAML definitions are
+version-controlled, as are the ground truth, tile manifests, and
+prompt text. Every API request logs tokens, latency, cost, a
+configuration snapshot, and retry counts, and committed evaluations
+carry a self-describing `_metadata` block (schema, bootstrap
+parameters, input files with their git states at scoring time, and
+the spatial reference).
+
+**Human–AI collaborative development.** The pipeline, evaluation
+framework, and statistical analysis were developed collaboratively
+between the primary researcher and an LLM-based coding assistant
+(Claude Code, Anthropic). [DRAFT NOTE: the outline's "50+ documented
+sessions over approximately six weeks" is the S134 figure; at drafting
+the archive records 140 sessions over roughly eight months — regenerate
+the final count from the session archive when this section is
+finalised.] The division of responsibility is the load-bearing claim:
+the human researcher held hypothesis formulation, experimental design,
+protocol-deviation judgements, domain calibration (recognising when a
+result contradicted archaeological or methodological priors), and
+interpretation; the assistant held pipeline implementation, prompt and
+configuration management, systematic error detection (the E25 modality
+bug and E26 bootstrap bias among them), statistical analysis code, and
+metadata logging. The collaboration enabled iteration and systematic
+checking at a scale impractical for a solo researcher — tens of
+configuration files, an errata log in the dozens, per-request metadata
+on every call — and living documentation, with session transcripts and
+structured reflections archived for transparency. What it could not
+replace is equally part of the record: domain expertise for
+calibrating expectations, scientific judgement on deviation decisions,
+and design choices that require understanding the research question
+rather than the implementation. Session transcripts are archived at
+[Zenodo DOI TBD]; a fuller analysis of the collaboration process is
+planned as a separate contribution.
+
 ## Changelog
+
+### 2026-08-23 (S140) — Outline §§ 1–4 and § 6 converted: M.8–M.12
+
+The four-session-queued scaffold conversions landed overnight on PI
+direction ("proceed with as much of your unblocked work as you can"):
+M.8 study design overview, M.9 study area and materials, M.10 VLM
+detection pipeline, M.11 execution protocol, and M.12 reproducibility
+and transparency — zero-draft prose at the established density, every
+number carried from the S134-curated outline except where re-verified
+this session (symbol footprint ~73 m from the 2026-08-22 measurement
+report; errata count updated 78 → 83, E1–E83; the metadata description
+extended to the D40 input-git-state stamp landed the same night).
+Deliberately NOT resolved, marked in place: the § 4.3 phase-summary
+table (the outline's own S134 note says regenerate from the analyses
+register before prose), the § 6.3 session count (S134's "50+ sessions
+/ six weeks" vs ~140 sessions / eight months at drafting), the
+cross-model forward-reference question in M.10, and the Zenodo DOI.
+With § 5's slots already drafted (M.4, M.7, and the outline's § 5.4),
+every outline section now has draft prose.
 
 ### 2026-08-17 (S135, later) — M.4 pairings + M.x tally: all slots closed
 
