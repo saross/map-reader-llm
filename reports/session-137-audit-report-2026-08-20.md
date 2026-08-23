@@ -1,8 +1,10 @@
 # Session 137 audit report
 
-> **Last revised**: 2026-08-20 (evening: remediation campaign recorded — every Part F item
-> and all register-facing findings executed same day; see the Changelog). Original
-> publication earlier the same day.
+> **Last revised**: 2026-08-23 (the E82 corpus re-emission this audit gated is
+> COMPLETE with PI sign-off; see the Changelog). Previously 2026-08-20
+> (evening: remediation campaign recorded — every Part F item and all
+> register-facing findings executed same day). Original publication earlier
+> that day.
 
 **Auditor**: Claude (Fable 5), Session 138, 2026-08-20, working from the self-contained brief
 `planning/session-137-audit-brief.md` written by the Session 137 instance. Four parallel
@@ -526,6 +528,22 @@ if operational practice runs only the tiered selections they are never exercised
    generated-file registry.
 
 ## Changelog
+
+### 2026-08-23 — E82 corpus re-emission COMPLETE (the campaign this audit gated)
+
+The corpus-wide re-emission the audit's blockers B1/B2 and majors M1–M7
+hardened finished on 2026-08-23 with failed = 0 across 1,655 evaluations,
+cumulative counters exactly on the PI rulings (n_reaggregated 19,
+n_order_normalised 6), and PI sign-off. Every guard this audit installed
+earned its keep in production: the point gate caught the D41 family and two
+further latent defect layers (pass-order replay infidelity; 4 dp
+rounding-boundary sensitivity of the writer's order-dependent mean — Obs
+426), the skip-census freeze held six legs running, the vintage-frozen
+fallback rescued the B1 stale-input cells with pins recorded, and the abort
+tripwire stopped two legs precisely when enumeration was needed. Full
+record: the E82 corpus execution note
+(`docs/methodology/preregistration/protocol-errata.md`) and
+`reports/e82-corpus-reemission-summary-2026-08-23.md`.
 
 ### 2026-08-20 (evening) — Remediation campaign executed
 
