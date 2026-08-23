@@ -24,7 +24,7 @@ artefact that carries the evidence rather than restating it.
 | D1 | Order-dependent tile assignment: `evaluate_detections.py` books a detection to the FIRST intersecting bounds tile, which depends on row order. ~0.01 F1 on 123 conditions. | E79 | RECORDED — fix is a PI decision |
 | D2 | No within-pass deduplication in the scoring path, so two scoring paths coexist; 155 of 333 conditions affected. Preregistration-compliant, but cross-path comparisons are confounded. | E80 | RECORDED — correction campaign in `dedup-correction-worklist-2026-08-18.md` |
 | D3 | Undefined tile-level MCC published as `0.0` (9 conditions), plus 4 more depressed by averaging an undefined pass into a mean. Originates in a mathematically false registered claim at `preregistration.md:392`. | E81 | RECORDED — correction OPEN, see D4/D5 |
-| D19 | Bootstrap CIs depart from Decision 10 on **method** (BCa substituted for the registered percentile method in `2026999ad`, 2026-04-30, undisclosed) and on **iteration count** (1,583 evaluations at B=10,000 against 114 at B=1,000, inverting E54's recorded split). PI ruled 2026-08-19 to standardise on 10,000 and disclose. | E82 | RECORDED — re-emission proceeds by campaign; E54 carries a correction block pointing at E82 |
+| D19 | Bootstrap CIs depart from Decision 10 on **method** (BCa substituted for the registered percentile method in `2026999ad`, 2026-04-30, undisclosed) and on **iteration count** (1,583 evaluations at B=10,000 against 114 at B=1,000, inverting E54's recorded split). PI ruled 2026-08-19 to standardise on 10,000 and disclose. **Campaign EXECUTED 2026-08-23** — all 1,655 worklist evaluations re-emitted at B = 10,000 through the fixed wrapper, failed = 0, PI signed off (E82 corpus execution note). | E82 | RECORDED — re-emission proceeds by campaign; E54 carries a correction block pointing at E82 |
 
 ## Open code defects
 
@@ -83,7 +83,8 @@ phased campaign, PI-approved 2026-08-20; statuses below are live.
 | D38 | **The Obs 280 tier-2 test writes into the committed results directory** via `analyse_obs280_shared_reference.py:307`, so any tier-2 run mutates a tracked artefact — which is also one generator-vintage stale (four fields). Probable mechanism of the flaky tier-2 failure observed in the audit. (F17e) | **FIXED 2026-08-20** — `--out` added (committed path stays the default for reproducibility); the tier-2 test writes to `tmp_path` and byte-compares against the committed artefact; artefact regenerated once (exactly the four additive fields, every shared value unchanged, rho 0.476 intact); tier-2 run twice consecutively with a clean tree. |
 | D39 | **Twelve tile-metric cells publish an observed statistic outside its own committed bootstrap interval** (5 MCC, 7 sensitivity, 8 specificity cells, counted per metric), all under the uncited `results/paper-eval/mcc/**` family — the D28 exclusion signature on tile metrics, which `assess_ci_reliability` does not cover (it tests F1/P/R only). Surfaced by the Phase 5 migration when the observed points replaced the resample means. | RECORDED 2026-08-20 — no manifest condition or analysis sources the family; the intervals are pre-fix-vintage BCa and would be re-emitted under E82's open campaign before any citation. A future extension of the measured rule to tile metrics would flag these automatically. |
 | D40 | **Input-vintage drift: 324 of 1,655 BCa-era evaluations name at least one recipe input committed AFTER the evaluation was scored** — e.g. three 55-map cells scored the morning of 2026-05-03 against a student GT that gained a curator mound that afternoon (`2e075eb99`). Surfaced by the E82 pre-launch audit (finding B1; three live replays confirmed the signature: one tile flips FP→TP). A listed cell is not wrong per se — its committed points honestly record scoring against the then-current input — but it does not reproduce from current inputs. | RECORDED 2026-08-20 — machine-readable population in `reports/input-vintage-drift-2026-08-20.json` (210 `rescore-2026-06-07`, 30 `era1-pv-stage-d`, 20 deployment-oracle, 17 `paper-eval`, 47 elsewhere). The E82 campaign preserves these cells' points via the vintage-frozen replay (inputs as of each cell's own timestamp, pinned in `_metadata.e82_input_vintage`). Whether any population should ever be re-scored to CURRENT references is a separate PI decision, deliberately unbundled; the first instalment — a **Track-3 best-available-GT completeness sweep** (mint best-available scores for paper-cited 55-map cells that lack them, as new conditions beside the historical ones) — is QUEUED per the PI's 2026-08-20 ruling. |
-| D41 | **Nineteen multi-run `results/paper-eval/mcc/**` cells commit run 1's tile point as the cell SUMMARY point** instead of the E81 defined-pass mean (superseded aggregation; run 1's confusion block makes each file look self-consistent — committed point = f(run-1 confusion) exactly, e.g. 0.3065 vs the true defined-pass mean 0.3053). Surfaced when the E82 corpus run's point gate refused all 19; diagnosed via the per-run blocks. Family cited by no condition or analysis. | **PI-ACCEPTED CORRECTION 2026-08-20** — the E82 gate is anchored to the PER-RUN tile points (the actual measurements, which must reproduce exactly) and accepts a summary point equal to the recomputed defined-pass mean, flagging each acceptance (`summary_tile_point_reaggregated`) and counting them in the campaign report. The 19 cells re-emit with corrected summaries when the campaign resumes; engine tests cover both negatives. |
+| D41 | **Nineteen multi-run `results/paper-eval/mcc/**` cells commit run 1's tile point as the cell SUMMARY point** instead of the E81 defined-pass mean (superseded aggregation; run 1's confusion block makes each file look self-consistent — committed point = f(run-1 confusion) exactly, e.g. 0.3065 vs the true defined-pass mean 0.3053). Surfaced when the E82 corpus run's point gate refused all 19; diagnosed via the per-run blocks. Family cited by no condition or analysis. | **PI-ACCEPTED CORRECTION 2026-08-20** — the E82 gate is anchored to the PER-RUN tile points (the actual measurements, which must reproduce exactly) and accepts a summary point equal to the recomputed defined-pass mean, flagging each acceptance (`summary_tile_point_reaggregated`) and counting them in the campaign report. The 19 cells re-emit with corrected summaries when the campaign resumes; engine tests cover both negatives. **EXECUTED 2026-08-23**: all 19 re-emitted with corrected summaries (cumulative `n_reaggregated` = 19 exactly; the corpus-wide signature scan found zero cells beyond the 19 — `reports/e82-d41-widening-inspection-2026-08-22.md` § 2.2). The related but distinct pass-order/rounding-boundary family (6 cells, NOT D41) is recorded in Obs 426 and the E82 execution note; gate corrections per PI ruling C1 + D (2026-08-22) and the buffer-mean extension (ratified 2026-08-23). |
+| D42 | **The evaluation writer does not emit `ci_flag_basis` / `ci_excludes_point`**, so every re-score regresses the 2026-08-20 measured-flag migration on files whose rows carry those fields — observed live when the E82 re-emission dropped them on 169 of 1,655 files (zero flag VALUES moved; the auxiliary basis fields alone). Registered 2026-08-23 (E82 Item D finding 1). | E82 execution note | RECORDED 2026-08-23 — mitigation standing: run `scripts/migrate_ci_flag_basis.py --write` after ANY re-score campaign (idempotent; re-applied `e46f13bba`, dry-run 0). Forward fix: teach `evaluate_detections.py` to stamp the basis fields natively, retiring the migration. |
 
 ## Near-misses
 
@@ -109,6 +110,22 @@ phased campaign, PI-approved 2026-08-20; statuses below are live.
 - **Decisions / Errata**: E79, E80, E81 — the three protocol-facing disclosures from this session. E75 — H13's disposition, which carried D2's mechanism before E80 took it over. E57 — the 2026-06-03 resume-merge recovery that D8 turned out to be.
 
 ## Changelog
+
+### 2026-08-23 — E82 corpus campaign COMPLETE; D15/D19/D41 closed; D42 opened
+
+The corpus re-emission finished with failed = 0 and PI sign-off (Session 140;
+full narrative in the E82 corpus execution note,
+`docs/methodology/preregistration/protocol-errata.md`, and the campaign
+summary `reports/e82-corpus-reemission-summary-2026-08-23.md`). Row updates:
+D15's re-emission residual and D19's by-campaign remediation are EXECUTED;
+D41 is EXECUTED with the population confirmed at exactly 19 corpus-wide and
+the adjacent pass-order/rounding family (Obs 426) resolved under PI rulings
+C1 + D plus the ratified buffer-mean extension. New row **D42** (writer does
+not emit the measured-flag basis fields; standing mitigation recorded).
+Related same-session finds outside this register's scope: the mislabelled
+IM-k4 cell (archived; genuine cell derived, scored, and registered — see
+`archive/superseded-mislabelled-im-k4/README.md`) and the campaign data
+commit's pinned-vintage miscount (27 → 35, corrected in the execution note).
 
 ### 2026-08-20 (evening) — Remediation campaign COMPLETE
 
@@ -147,7 +164,7 @@ the manifest generator.
 
 | Row | Before | After |
 |---|---|---|
-| D15 | VERIFIED, NOT FIXED; "every BCa interval too narrow" | FIXED (`122104b8a`) and disclosed as E82; too narrow only where `B > n` (69,663), **too wide** where `B < n` (840); zero published verdicts change |
+| D15 | VERIFIED, NOT FIXED; "every BCa interval too narrow" | FIXED (`122104b8a`) and disclosed as E82; too narrow only where `B > n` (69,663), **too wide** where `B < n` (840); zero published verdicts change. Corpus re-emission COMPLETE 2026-08-23 (1,655 evaluations, failed = 0, PI signed off — E82 corpus execution note) |
 | D16 | blocked by D15 | **FIXED** — four cells materialised, scored at B = 10,000, and registered; register now 33 runs / 337 conditions / 37 analyses, all valid |
 | D17 | not known | **FIXED AND DISCHARGED** — declaration bug fixed, then all 49 evaluations re-run at 10,000; all 337 conditions now declare it, zero point drift |
 | D18 | not known | **FIXED** — committed conditions-manifest failed its own schema on 26 counts; regeneration reverted E81 |
