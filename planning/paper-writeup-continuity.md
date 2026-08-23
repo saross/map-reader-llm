@@ -8,7 +8,49 @@ project state.
 
 ---
 
-## 🔍 START HERE (Session 140) — E82: IMPLEMENT C1+D, RESUME, THEN ITEM D/E
+## 🔍 START HERE (Session 141) — PI MORNING LIST, THEN THE WRITE-UP
+
+> **E82 IS CLOSED** (campaign complete, failed = 0, counters exact,
+> PI signed off 2026-08-22/23 evening; contract changelog has the full
+> record). The genuine IM-k4 is derived, scored, and REGISTERED (338
+> conditions; F1@50 0.740 / MCC 0.655 vs IM-k3 0.801/0.712 — Obs 427
+> carries the modality-asymmetry finding for the paper). The O'Hara and
+> GMFS full-text checks are RESOLVED (see the dated addenda in the three
+> `docs/methodology/research/lit-scout-*-2026-08-21.md` reports —
+> headline: O'Hara's 98.2 % is the MAJORITY-class F1; cite the
+> wetland-class **0.908**).
+>
+> **PI tasks for the morning (Shawn, 2026-08-24):**
+>
+> 1. **Read Gould et al.** (`~/Downloads/Gould.pdf`) → the D.9 naming
+>    decision (`reports/d9-naming-decision-brief-2026-08-21.md`).
+> 2. **Provenance rulings** (`docs/notes/obs-model-provenance.md`):
+>    (a) the Obs 258 era-boundary correction (§ 6.6 — the archive shows
+>    Obs 249–257 were written under opus-4-6); (b) the § 7 finalisation
+>    steps. Accepting both closes the census at HIGH 380 · MED 48 · LOW 0.
+> 3. **Verdicts on held-over candidates** (silence never discards): the
+>    two S138 working-notes candidates and the S138×3 + S139×3 user-obs
+>    candidates (`docs/notes/user-observations.md`).
+> 4. **Zotero chapter fixes** blocked on group write keys — Arch-repro
+>    `SRI3YFK5` (add DOI, clear bogus volume), HAVI `MMHTRQTA` (add
+>    DOI/series/url): manual edits or mint keys.
+> 5. **Send the D24 statistician brief**
+>    (`docs/methodology/mcb-critical-value-open-question.md`) — corrected,
+>    coverage-evidenced, safe to send. The standing reminder stands.
+> 6. Optional review: Obs 426/427; the E82 close-out set (execution note,
+>    campaign summary, defect register D42).
+>
+> **Claude's queue** (state at S140 close recorded below): the
+> `evaluate_detections.py` pair (D40 dirty-input guard + D42 writer
+> basis-fields fix) and the Methods scaffold conversions (§§ 1–4, § 6)
+> were the unblocked overnight work — check the S140 session paragraph
+> for how far they got. Discussion prose stays deferred until earlier
+> sections are written (PI ruling). Housekeeping riders: three stale
+> self-matching monitor loops from OTHER projects still spin on sapphire
+> (inscriptions ×1 ~65 d; grid_analysis ×2 ~4 d) — kill or keep is
+> Shawn's call; all three machines are pip-synced to requirements.txt.
+
+## 🎯 PREVIOUS (S140 beacon, executed) — E82: IMPLEMENT C1+D, RESUME, THEN ITEM D/E
 
 > **The one blocking chain**: the E82 resume aborted on two NEWLY
 > DIAGNOSED small defects (not D41 — see the corrected outcome note in
