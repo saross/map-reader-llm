@@ -4715,6 +4715,58 @@ true. `archive/` evaluations and pre-2026-04-30 artefacts that predate the BCa
 migration were deliberately left alone: neither backs a live claim, and both are
 covered as history by this entry.
 
+**Corpus execution note (2026-08-23)**: remediation item 2 is COMPLETE. The
+corpus-wide campaign (contract `planning/e82-corpus-reemission-2026-08-20.md`;
+engine `scripts/rerun_bca_corpus.py`) re-emitted **all 1,655 worklist
+evaluations** at B = 10 000 through the fixed wrapper across six legs (two
+pilots and four full legs, 2026-08-20 → 23). Final census: selected = 0,
+done = 1 657 (the worklist plus two pre-campaign cells), 42 files out of scope
+by construction (the percentile adapters, pre-metadata percentile era, and
+v1.0 cells), 13 unresolvable-recipe skips named in the report, 12
+non-canonical basenames excluded — 1 724 tracked evaluations, arithmetic
+exact. The 1e-9 point gate held on every accepted attempt; **failed = 0** at
+close.
+
+Thirty-two failure events occurred en route, every one attributed: 2 to
+input-vintage drift (D40, pilot leg; both cells later pinned and re-emitted),
+20 to the D41 mis-aggregation family (19 first-pass + 1 rounding-boundary
+re-fail), and 10 to pass-order replay infidelity (6 + 4 re-fails after the
+first fix unmasked a second layer). The gate corrections that cleared them
+loosened no measurement tolerance: per-run comparisons keyed by run label
+with a changed pool still failing as a label-set mismatch, the re-aggregation
+helper aligned to the writer's exact `round(float(np.mean), 4)`, and
+buffer-table order artefacts forgiven only when every labelled per-run
+measurement reproduces exactly and both summaries equal the writer's own
+aggregation over their own run order (PI ruling C1 + D, 2026-08-22; the
+buffer-mean extension ratified 2026-08-23). Final counters exactly on
+ruling: **n_reaggregated = 19** (the D41 population), **n_order_normalised
+= 6**; eight summary values moved by one 4 dp step (seven buffer points, one
+tile MCC) as enumerated order artefacts, and no other point estimate moved
+anywhere. Register history: Obs 426.
+
+Vintage pinning: **35** pinned-vintage re-emissions recorded by the counter
+across the three counter-era legs, plus the two pilot-era D40 rescues whose
+pins live in-file; every pin in `_metadata.e82_input_vintage`. (Erratum to
+the campaign's own record: the data commit `43ea31b26` says "27 across legs"
+— an arithmetic conflation with the 27 distinct cells that ever failed; 35
+is correct per the report JSON.) Width-ratio medians per full leg ran
+4.43–5.31, inside the [1.05, 6] band and tracking `sqrt(B/n)` for the
+small-scope majority; two `no_ci` cells recorded (degenerate: n_det = 0, and
+n_det = 2 with all committed widths exactly 0).
+
+Two emergent repairs, both landed: re-scoring regressed the 2026-08-20
+measured-flag migration on 169 files because the writer does not stamp
+`ci_flag_basis`/`ci_excludes_point` (migration re-applied, `e46f13bba`;
+defect D42), and every replay recorded its temp workdir as
+`cli_args.output_dir` (engine normalisation + one-field repair on all 1 655
+files, `70c550177`). One measurement consequence to note when reading flags:
+1 134 buffer rows now carry `ci_unreliable = true` on measured
+`partial_coverage` where the pre-campaign artefacts recorded an unmeasured
+"normal" default — all 1 134 traced to that single mechanism, and no flag
+anywhere was lowered. **Operator sign-off: PI, 2026-08-23.** Campaign report:
+`results/e82-corpus-reemission-2026-08-20.json`; summary:
+`reports/e82-corpus-reemission-summary-2026-08-23.md`.
+
 **Reference artefacts**:
 
 - Registered specification: `docs/methodology/preregistration/decisions-log.md:345`
