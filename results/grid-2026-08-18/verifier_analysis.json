@@ -1,0 +1,332 @@
+{
+  "generated_at_utc": "2026-08-24T08:21:53.247041+00:00",
+  "classification": "POST-HOC (E41-class) proposer-verifier board for the tile-size x overlap grid: the committed K = 10 unions thresholded on the committed per-candidate verifier probabilities. $0 scoring.",
+  "verifier": {
+    "config": "verify_adversarial-text",
+    "model": "gemini-3-flash-preview",
+    "temperature": 0.0,
+    "thinking_level": "minimal",
+    "n": 1,
+    "candidates_verified": 9133,
+    "failures": 0
+  },
+  "gates": {
+    "union_counts": {
+      "g512_ov064": 1402,
+      "g512_ov256": 2585,
+      "g384_ov048": 1827,
+      "g384_ov192": 3319
+    },
+    "union_scores_reproduced": {
+      "g512_ov064": 0.40765027322404374,
+      "g512_ov256": 0.26750746764022565,
+      "g384_ov048": 0.33880266075388027,
+      "g384_ov192": 0.21724045903389377
+    }
+  },
+  "board_best": {
+    "g512_ov064": {
+      "precision": 0.8798955613577023,
+      "recall": 0.7873831775700935,
+      "f1": 0.8310727496917385,
+      "mcc": 0.7936665403820272,
+      "n_detections": 383,
+      "prob_t": 0.15,
+      "min_votes": 5
+    },
+    "g512_ov256": {
+      "precision": 0.9345549738219895,
+      "recall": 0.8341121495327103,
+      "f1": 0.8814814814814814,
+      "mcc": 0.8011498028983806,
+      "n_detections": 382,
+      "prob_t": 0.15,
+      "min_votes": 9
+    },
+    "g384_ov048": {
+      "precision": 0.952513966480447,
+      "recall": 0.7967289719626168,
+      "f1": 0.8676844783715012,
+      "mcc": 0.775082871014798,
+      "n_detections": 358,
+      "prob_t": 0.2,
+      "min_votes": 7
+    },
+    "g384_ov192": {
+      "precision": 0.9275,
+      "recall": 0.866822429906542,
+      "f1": 0.8961352657004831,
+      "mcc": 0.7964527580096148,
+      "n_detections": 400,
+      "prob_t": 0.15,
+      "min_votes": 10
+    }
+  },
+  "board_pure_verifier_k1": {
+    "g512_ov064": {
+      "precision": 0.6463195691202872,
+      "recall": 0.8411214953271028,
+      "f1": 0.7309644670050761,
+      "mcc": 0.7848222636845071,
+      "n_detections": 557,
+      "prob_t": 0.15,
+      "min_votes": 1
+    },
+    "g512_ov256": {
+      "precision": 0.5482014388489208,
+      "recall": 0.8901869158878505,
+      "f1": 0.6785396260017809,
+      "mcc": 0.8120775553733034,
+      "n_detections": 695,
+      "prob_t": 0.2,
+      "min_votes": 1
+    },
+    "g384_ov048": {
+      "precision": 0.7869565217391304,
+      "recall": 0.8457943925233645,
+      "f1": 0.8153153153153153,
+      "mcc": 0.7862803940436492,
+      "n_detections": 460,
+      "prob_t": 0.2,
+      "min_votes": 1
+    },
+    "g384_ov192": {
+      "precision": 0.6611111111111111,
+      "recall": 0.8341121495327103,
+      "f1": 0.737603305785124,
+      "mcc": 0.8081582946378589,
+      "n_detections": 540,
+      "prob_t": 0.3,
+      "min_votes": 1
+    }
+  },
+  "board_consensus_only_committed": {
+    "g512_ov064": {
+      "precision": 0.6232741617357002,
+      "recall": 0.7383177570093458,
+      "f1": 0.6759358288770053,
+      "mcc": 0.5383280452430411,
+      "n_detections": 507,
+      "min_corroboration": 1,
+      "min_votes": 8
+    },
+    "g512_ov256": {
+      "precision": 0.7535211267605634,
+      "recall": 0.75,
+      "f1": 0.7517564402810304,
+      "mcc": 0.589723220740281,
+      "n_detections": 426,
+      "min_corroboration": 2,
+      "min_votes": 8
+    },
+    "g384_ov048": {
+      "precision": 0.5618556701030928,
+      "recall": 0.764018691588785,
+      "f1": 0.6475247524752474,
+      "mcc": 0.3137147222562701,
+      "n_detections": 582,
+      "min_corroboration": 1,
+      "min_votes": 10
+    },
+    "g384_ov192": {
+      "precision": 0.6762295081967213,
+      "recall": 0.7710280373831776,
+      "f1": 0.7205240174672489,
+      "mcc": 0.4908578802682087,
+      "n_detections": 488,
+      "min_corroboration": 2,
+      "min_votes": 10
+    }
+  },
+  "verifier_gain_over_consensus": {
+    "g512_ov064": 0.1551,
+    "g512_ov256": 0.1297,
+    "g384_ov048": 0.2202,
+    "g384_ov192": 0.1756
+  },
+  "bootstrap_contrasts": {
+    "overlap_at_512px (12.5% - 50%)": {
+      "delta": -0.05040873178974292,
+      "ci_lower": -0.07814425105563302,
+      "ci_upper": -0.022361839235514158,
+      "bootstrap_mean": -0.050131280258602536,
+      "p_two_sided": 0.0004,
+      "n_iterations": 10000,
+      "seed": 42,
+      "excludes_zero": true
+    },
+    "overlap_at_384px (12.5% - 50%)": {
+      "delta": -0.028450787328981875,
+      "ci_lower": -0.05304473307567732,
+      "ci_upper": -0.004488732614124228,
+      "bootstrap_mean": -0.02833448327615133,
+      "p_two_sided": 0.0208,
+      "n_iterations": 10000,
+      "seed": 42,
+      "excludes_zero": true
+    },
+    "tilesize_at_12.5pct (384 - 512)": {
+      "delta": 0.0366117286797627,
+      "ci_lower": 0.0026323783385439896,
+      "ci_upper": 0.0717155636819978,
+      "bootstrap_mean": 0.03644365723346551,
+      "p_two_sided": 0.034,
+      "n_iterations": 10000,
+      "seed": 42,
+      "excludes_zero": true
+    },
+    "tilesize_at_50pct (384 - 512)": {
+      "delta": 0.014653784219001653,
+      "ci_lower": -0.009277828660119114,
+      "ci_upper": 0.03927879302166812,
+      "bootstrap_mean": 0.014646860251014302,
+      "p_two_sided": 0.2308,
+      "n_iterations": 10000,
+      "seed": 42,
+      "excludes_zero": false
+    }
+  },
+  "interaction": {
+    "difference_of_differences": -0.021957944460761047,
+    "ci_lower": -0.058116895351343775,
+    "ci_upper": 0.01408449309020815,
+    "bootstrap_mean": -0.021796796982451207,
+    "p_two_sided": 0.2336,
+    "n_iterations": 10000,
+    "seed": 42,
+    "excludes_zero": false
+  },
+  "bootstrap_config": {
+    "n_iterations": 10000,
+    "seed": 42,
+    "method": "paired tile bootstrap, Decision 10; B per erratum E82"
+  },
+  "billing": {
+    "cells": {
+      "g512_ov064": {
+        "calls": 1402,
+        "list_usd": 1.935656,
+        "flex_usd": 0.967828,
+        "cost_basis_recorded": "list",
+        "input_tokens": 2512384,
+        "output_tokens": 226488
+      },
+      "g512_ov256": {
+        "calls": 2585,
+        "list_usd": 3.554404,
+        "flex_usd": 1.777202,
+        "cost_basis_recorded": "list",
+        "input_tokens": 4632320,
+        "output_tokens": 412748
+      },
+      "g384_ov048": {
+        "calls": 1827,
+        "list_usd": 2.510424,
+        "flex_usd": 1.255212,
+        "cost_basis_recorded": "list",
+        "input_tokens": 3273984,
+        "output_tokens": 291144
+      },
+      "g384_ov192": {
+        "calls": 3319,
+        "list_usd": 4.542317,
+        "flex_usd": 2.2711585,
+        "cost_basis_recorded": "list",
+        "input_tokens": 5947648,
+        "output_tokens": 522831
+      }
+    },
+    "total_calls": 9133,
+    "total_list_usd": 12.5428,
+    "total_flex_usd": 6.2714,
+    "flex_per_call_usd": 0.000687,
+    "costed_estimate": {
+      "total_usd": 6.33,
+      "per_call_usd": 0.000693,
+      "delta_usd": -0.0586
+    },
+    "note": "Meta cost blocks are list basis; Gemini real-time flex bills at half list, so the flex column is the billed basis (cf. the proposer-stage cost audit in findings.md \u00a7 Cost)."
+  },
+  "conditions": [
+    {
+      "cell": "g512_ov064",
+      "label": "512 px / 12.5 %",
+      "condition_label": "g512-ov064-k10-verified-p0.15-k5",
+      "prob_t": 0.15,
+      "min_votes": 5,
+      "n_detections": 383,
+      "sweep_f1_at_20m": 0.8310727496917385,
+      "rescored_f1_at_20m": 0.8311,
+      "f1_ci_lower": 0.7938,
+      "f1_ci_upper": 0.8624,
+      "f1_ci_method": "BCa",
+      "precision": 0.8799,
+      "recall": 0.7874,
+      "tile_mcc": 0.7937,
+      "bootstrap_iterations": 10000,
+      "detections": "results/grid-2026-08-18/conditions-verified/g512_ov064/detections.geojson",
+      "evaluation": "results/grid-2026-08-18/conditions-verified/g512_ov064/eval/evaluation.json",
+      "reproduces_sweep": true
+    },
+    {
+      "cell": "g512_ov256",
+      "label": "512 px / 50 %",
+      "condition_label": "g512-ov256-k10-verified-p0.15-k9",
+      "prob_t": 0.15,
+      "min_votes": 9,
+      "n_detections": 382,
+      "sweep_f1_at_20m": 0.8814814814814814,
+      "rescored_f1_at_20m": 0.8815,
+      "f1_ci_lower": 0.8518,
+      "f1_ci_upper": 0.9073,
+      "f1_ci_method": "BCa",
+      "precision": 0.9346,
+      "recall": 0.8341,
+      "tile_mcc": 0.8011,
+      "bootstrap_iterations": 10000,
+      "detections": "results/grid-2026-08-18/conditions-verified/g512_ov256/detections.geojson",
+      "evaluation": "results/grid-2026-08-18/conditions-verified/g512_ov256/eval/evaluation.json",
+      "reproduces_sweep": true
+    },
+    {
+      "cell": "g384_ov048",
+      "label": "384 px / 12.5 %",
+      "condition_label": "g384-ov048-k10-verified-p0.20-k7",
+      "prob_t": 0.2,
+      "min_votes": 7,
+      "n_detections": 358,
+      "sweep_f1_at_20m": 0.8676844783715012,
+      "rescored_f1_at_20m": 0.8677,
+      "f1_ci_lower": 0.8335,
+      "f1_ci_upper": 0.8957,
+      "f1_ci_method": "BCa",
+      "precision": 0.9525,
+      "recall": 0.7967,
+      "tile_mcc": 0.7751,
+      "bootstrap_iterations": 10000,
+      "detections": "results/grid-2026-08-18/conditions-verified/g384_ov048/detections.geojson",
+      "evaluation": "results/grid-2026-08-18/conditions-verified/g384_ov048/eval/evaluation.json",
+      "reproduces_sweep": true
+    },
+    {
+      "cell": "g384_ov192",
+      "label": "384 px / 50 %",
+      "condition_label": "g384-ov192-k10-verified-p0.15-k10",
+      "prob_t": 0.15,
+      "min_votes": 10,
+      "n_detections": 400,
+      "sweep_f1_at_20m": 0.8961352657004831,
+      "rescored_f1_at_20m": 0.8961,
+      "f1_ci_lower": 0.8657,
+      "f1_ci_upper": 0.9198,
+      "f1_ci_method": "BCa",
+      "precision": 0.9275,
+      "recall": 0.8668,
+      "tile_mcc": 0.7965,
+      "bootstrap_iterations": 10000,
+      "detections": "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson",
+      "evaluation": "results/grid-2026-08-18/conditions-verified/g384_ov192/eval/evaluation.json",
+      "reproduces_sweep": true
+    }
+  ]
+}
