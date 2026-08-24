@@ -268,3 +268,18 @@ assistant turns from subagent progress.
 Banked in Session 140 as the evidence base for the provenance-draft
 upgrade. The day-map content is the extraction subagent's output
 verbatim; the header and this changelog are the session's additions.
+
+### 2026-08-24 — Completeness re-verified after the archiving repair; boundary adopted
+
+The PI gated the Obs 258 boundary adoption on confirming the archive holds
+everything needed after the archiving-system repair. Verified on five
+grounds (full record: `docs/notes/obs-model-provenance.md` § 4.1): the
+canonical union and local mirror hold identical populations (205 + 49;
+gate 0; catalogue of 2026-08-23 22:14 agrees); none of the session log's
+120 dated entries falls inside any no-evidence window in § (a) — the gaps
+are genuine no-work periods; every Claude-era Obs heading sits on a
+covered day; the § (c) sampling stands; and the boundary coheres across
+archive, session log, and git (the trailer being the outlier). The
+boundary was ADOPTED and the census closed at HIGH 380 · MEDIUM 48 ·
+LOW 0. Post-adoption join: `provenance-obs-coverage-2026-08-24.json`
+(the 2026-08-23 file is retained as the pre-adoption record).

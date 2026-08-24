@@ -24,12 +24,14 @@ audience: "researchers and future instances"
 > needed or safe. Rule going forward: provenance work reads the
 > canonical archive, never a live store. The repo's archive docs
 > were repointed at the real location on 2026-08-22 (`703c28afc`).
-> **The upgrade itself was EXECUTED on 2026-08-23 (Session 140) —
-> see [§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)**:
-> 357 of 428 headings now carry transcript-grade archive
-> confirmation, the 15 LOW entries all upgrade, and two evidence
-> conflicts surfaced for PI ruling (the 4.6→4.7 era boundary; six
-> writing-versus-finding session divergences).
+> **The upgrade was EXECUTED on 2026-08-23 and CLOSED on 2026-08-24**
+> (see [§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)):
+> after a PI-ordered completeness re-verification (five grounds, all
+> passed — § 4.1), the PI adopted the corrected 4.6→4.7 boundary at
+> Obs 258 (§ 6.6). The census stands at **HIGH 380 · MEDIUM 48 ·
+> LOW 0**; the era table, § 3, and § 4 carry the re-graded values.
+> The document remains DRAFT only for the § 3
+> `[PI to confirm: release date]` markers.
 > Every switch boundary below is *derived from repository evidence only* (session transcripts,
 > explicit prose statements, and git trailers). No model release date has been asserted from an
 > instance's own background knowledge, because several of these releases post-date model training
@@ -81,14 +83,14 @@ Obs numbers by three because of the duplicate numbering defect in [§ 6.4](#64-t
 |---|---|---|---|---|---|
 | **Not Claude** — Antigravity IDE on Gemini 3 | pre-session-log ("Phase 1") | 1–47 (48 headings) | 2025-12-15 → 2025-12-21 | `archive/preliminary-work/ARCHIVE_MANIFEST.md`; `session-log.md:6731`; `session-reflection.md:8460`; zero `Co-Authored-By` trailers on any commit before 2025-12-23; no Claude Code transcript before 2025-12-22 | MEDIUM (48) |
 | **Opus 4.5** (`claude-opus-4-5-20251101`) | pre-session-log → S18 | 48–101 (55) | 2025-12-23 → 2026-02-05 | transcript model id on essentially every working day; trailer `Claude Opus 4.5` from 2025-12-23 15:35 (`156a9f3e0`) | HIGH (55) |
-| **Opus 4.6** (`claude-opus-4-6`) | S19 → S70 (approx.) | 102–248 (148) | 2026-02-06 → 2026-04-17 (to ~14:28 AEST) | transcript model id 2026-02-06 → 2026-04-14; trailer `Claude Opus 4.6` / `Claude Opus 4.6 (1M context)` | HIGH 85 · MED 53 · LOW 10 |
-| **Opus 4.7** (`claude-opus-4-7`) | S70/S71 → S91 (approx.) | 249–325 (77) | 2026-04-17 (from ~20:20 AEST) → 2026-05-12 | transcript model id from 2026-04-18; trailers `Claude Opus 4 (1M context)` then `Claude Opus 4.7 (1M context)`; `session-log.md:5664` "Opus 4.7 was newly released at session start" | MED 64 · HIGH 9 · LOW 4 |
-| **Opus 4.8** (no API id observed) | S91 → S110 (approx.) | 326–356 (31) | 2026-05-30 → 2026-06-09 | trailer `Claude Opus 4.8 (1M context)` from 2026-05-29; `session-reflection.md:9059` "a model switch to Opus 4.8" | MED 30 · LOW 1 |
-| **Fable 5** (`claude-fable-5`) — stint 1 | S111–S114 | 357–370 (14) | 2026-06-10 → 2026-06-13 | `session-log.md:7240`; `session-reflection.md:8926–8927`; continuity line 4; trailer `Claude Fable 5` from 2026-06-10 | HIGH 12 · MED 2 |
+| **Opus 4.6** (`claude-opus-4-6`) | S19 → S70 | 102–257 (157) | 2026-02-06 → 2026-04-18 (4.6-exclusive to 00:17 UTC; session `b089991e` ran on to 14:04 UTC) | transcript model id throughout via the canonical archive (§ 4.1); trailer `Claude Opus 4.6` / `Claude Opus 4.6 (1M context)`; boundary adopted at Obs 258 (§ 6.6, PI 2026-08-24) | HIGH (157) |
+| **Opus 4.7** (`claude-opus-4-7`) | S71 → S91 (approx.) | 258–325 (68) | 2026-04-18 (from 00:17 UTC) → 2026-05-12 | archived transcript model id from 2026-04-18T00:17Z, unbroken to 05-12 (§ 4.1); trailers `Claude Opus 4 (1M context)` then `Claude Opus 4.7 (1M context)`; `session-log.md` S70–71 combined entry "Opus 4.7 was newly released at session start" (the second session of the pair) | HIGH (68) |
+| **Opus 4.8** (`claude-opus-4-8`) | S91 → S110 (approx.) | 326–356 (31) | 2026-05-30 → 2026-06-09 | archived transcripts cover the era unbroken (§ 4.1; resolves § 6.3's id half); trailer `Claude Opus 4.8 (1M context)` from 2026-05-29; `session-reflection.md:9059` | HIGH (31) |
+| **Fable 5** (`claude-fable-5`) — stint 1 | S111–S114 | 357–370 (14) | 2026-06-10 → 2026-06-13 | `session-log.md:7240`; `session-reflection.md:8926–8927`; continuity line 4; trailer `Claude Fable 5` from 2026-06-10 | HIGH (14) |
 | **Opus 5** (`claude-opus-5`) — stint 1 | S118 | 371 (1) | 2026-07-27 | `session-reflection.md:9113–9114` "First session on Opus 5"; trailer `Claude Opus 5 (1M context)` | HIGH (1) |
-| **Fable 5** — stint 2 | S119–S126 (Obs from S121–S125) | 372–387 (16) | 2026-07-30 → 2026-08-03 | continuity `[Session 119…126 CLOSED …; ran in Fable]`; `session-log.md:7481` | HIGH 15 · MED 1 |
+| **Fable 5** — stint 2 | S119–S126 (Obs from S121–S125) | 372–387 (16) | 2026-07-30 → 2026-08-03 | continuity `[Session 119…126 CLOSED …; ran in Fable]`; `session-log.md:7481` | HIGH (16) |
 | **Opus 5** — stint 2 (the "48-hour Opus window") | S127–S129 | 388–395, 398–400 (11) | 2026-08-04 → 2026-08-06 | `session-log.md:7914` "**Model**: Opus (first session of the 48-hour Opus window; Fable credit exhausted)"; `session-log.md:8010` "**Model**: Opus 5"; continuity `[Session 129 CLOSED 2026-08-06; ran in Opus]` | HIGH (11) |
-| **Fable 5** — stint 3 | S130–S135 | 396–397, 401–415 (17) | 2026-08-10 → 2026-08-17 | continuity `[Session 130/132/133/134/135 CLOSED …; ran in Fable]`; `session-log.md:8580, 8584`; transcript model id 2026-08-10 | HIGH 12 · MED 5 |
+| **Fable 5** — stint 3 | S130–S135 | 396–397, 401–415 (17) | 2026-08-10 → 2026-08-17 | continuity `[Session 130/132/133/134/135 CLOSED …; ran in Fable]`; `session-log.md:8580, 8584`; transcript model id 2026-08-10 | HIGH (17) |
 | **Opus 5** — stint 3 | S136–S137 | 416–423 (8) | 2026-08-18 → 2026-08-19 | continuity `[Session 136 CLOSED 2026-08-19; ran on Opus 5]`, `[Session 137 CLOSED 2026-08-19; ran on Opus 5]` | HIGH (8) |
 | **Fable 5** — stint 4 | S138–S139 | 424–425 (2) | 2026-08-20 → 2026-08-21 | transcript model id `claude-fable-5` on both days; continuity S138 paragraph | HIGH (2) |
 
@@ -110,10 +112,10 @@ but that inference is his to confirm, and the record must not manufacture the da
 |---|---|---|---|
 | → **Opus 4.5** | — | transcript 2025-12-22; trailer 2025-12-23 15:35 (`156a9f3e0`) | Coincides with the "Phase 2 reset" from Antigravity to Claude Code. `[PI to confirm: release date]` |
 | Opus 4.5 → **Opus 4.6** | trailer 2026-02-05; transcript 2026-02-06 (part-day) | transcript + trailer 2026-02-06 | Same-day handover, sharp. `[PI to confirm: release date]` |
-| Opus 4.6 → **Opus 4.7** | trailer `Claude Opus 4.6 (1M context)` 2026-04-17 **14:28** (`4c3b70d7c`) | trailer `Claude Opus 4 (1M context)` 2026-04-17 **20:20** (`09fe46a7f`); transcript `claude-opus-4-7` 2026-04-18 | **Within-day**, resolved to a ~6-hour window. `[PI to confirm: release date]` |
-| Opus 4.7 → **Opus 4.8** | trailer 2026-05-29 (three commits earlier that day) | trailer `Claude Opus 4.8 (1M context)` 2026-05-29 **22:49** (`3a17575fd`) | Trailer-only — see [§ 6.3](#63-opus-48-has-no-corroborating-api-model-id). `[PI to confirm: release date]` |
-| Opus 4.8 → **Fable 5** | trailer 2026-06-09 (and again 2026-06-20/23, S114–117 tail) | trailer `Claude Fable 5` 2026-06-10 | Sharp on the trailer record; not transcript-corroborated (store gap). `[PI to confirm: release date]` |
-| → **Opus 5** | — | trailer `Claude Opus 5 (1M context)` 2026-07-27; `session-reflection.md:9113–9114` | Opus 5 **post-dates** Fable 5 in this project by ~7 weeks. `[PI to confirm: release date]` |
+| Opus 4.6 → **Opus 4.7** | archived session `b089991e`, `claude-opus-4-6` throughout its 2026-04-16T05:56 → 04-18T14:04 UTC span | archived transcript `claude-opus-4-7` from 2026-04-18T**00:17** UTC (10:17 AEST) | **ARCHIVE-RESOLVED to the minute** and PI-adopted 2026-08-24 (§ 6.6): the trailer flip at 04-17 20:20 AEST (`09fe46a7f`) preceded the model switch and is the record's outlier. Boundary Obs 258. `[PI to confirm: release date]` |
+| Opus 4.7 → **Opus 4.8** | archived `claude-opus-4-7` sessions to 2026-05-29 | archived `claude-opus-4-8` from the 05-29 transition day; trailer `Claude Opus 4.8 (1M context)` 2026-05-29 **22:49** (`3a17575fd`) | Transcript-corroborated (the 2026-08-23 re-grade resolved § 6.3's "trailer-only" premise). `[PI to confirm: release date]` |
+| Opus 4.8 → **Fable 5** | archived `claude-opus-4-8` to 2026-06-09 | archived `claude-fable-5` on the 06-10 transition day; trailer `Claude Fable 5` 2026-06-10 | Sharp, transcript-corroborated (the "store gap" was the wrong-store artefact). `[PI to confirm: release date]` |
+| → **Opus 5** | — | archived `claude-opus-5` transcript 2026-07-27; trailer `Claude Opus 5 (1M context)` same day; `session-reflection.md:9113–9114` | Opus 5 **post-dates** Fable 5 in this project by ~7 weeks. `[PI to confirm: release date]` |
 
 A ~5-week near-hiatus separates 2026-06-24 from 2026-07-26 (one commit, 2026-07-15). Whether a model
 switch happened inside that window is unknowable from repo evidence.
@@ -134,18 +136,22 @@ Confidence grades follow the brief:
 
 | Confidence | Headings | Share |
 |---|---|---|
-| HIGH | 210 | 49.1 % |
-| MEDIUM | 203 | 47.4 % |
-| LOW | 15 | 3.5 % |
+| HIGH | 380 | 88.8 % |
+| MEDIUM | 48 | 11.2 % |
+| LOW | 0 | 0 % |
 | **Total** | **428** | **100 %** |
 
-Basis breakdown: 151 headings rest on a transcript model id, 59 on an explicit prose statement,
-203 on trailers, 15 on interpolation.
+Basis breakdown: 366 headings rest on an archived transcript model id covering their introducing
+commit (day-grain or commit-instant; § 4.1), 14 on explicit prose statements (the 8
+concurrent-window headings of the 2026-08-04/06 credit-exhaustion overlap plus the 6
+draft-then-accept divergences of § 6.5), and 48 — the pre-archive Antigravity era — on the
+manifest-and-negative evidence of the § 2 table. No heading rests on trailers alone or on
+interpolation.
 
-> **Superseded by [§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)** — the table above
-> records the 2026-08-21 state, graded from the (machine-partial) live store. The canonical-archive
-> re-grading below reaches 357 HIGH / 48 MEDIUM / 0 LOW outright, with 23 headings pending the two
-> PI rulings it raises.
+> **History**: the 2026-08-21 census, graded from the (machine-partial) live store, read HIGH 210 /
+> MEDIUM 203 / LOW 15 with 203 headings resting on trailers and 15 on interpolation. The
+> canonical-archive re-grading (§ 4.1, 2026-08-23) and the PI's boundary adoption (§ 6.6,
+> 2026-08-24) produced the census above.
 
 ### 4.1 Archive-based re-grading (2026-08-23, Session 140)
 
@@ -166,7 +172,7 @@ model-transition days. Evidence artefacts:
 | Finding | Headings | Meaning |
 |---|---|---|
 | **archive-confirmed** | **357** | The introducing commit falls inside archived session span(s) of exactly one model, and that model agrees with the era table's attribution. Upgrade to **HIGH** (basis: archived transcript-grade model id). **All 15 LOW entries are in this set** — every one of their six dates (2026-03-25, 04-15, 04-24, 04-27, 04-28, 06-07) resolves to a single unambiguous model. |
-| archive-conflict | 15 | The archive disagrees with the table's attribution for the WRITING session: Obs 249–257 (the era-boundary conflict, [§ 6.6](#66-the-4647-era-boundary-is-nine-observations-early)) and Obs 398–400, 421–423 (the draft-then-accept divergence already documented in [§ 6.5](#65-other-trailer-versus-evidence-discrepancies-benign), now transcript-corroborated — attribution to the producing session stands per § 1.1). Pending PI ruling on § 6.6; tiers unchanged meanwhile. |
+| archive-conflict | 15 | The archive disagreed with the table's attribution for the WRITING session: Obs 249–257 (the era-boundary conflict — **RESOLVED 2026-08-24**: the PI adopted the Obs 258 boundary after the completeness re-verification below, moving the nine to archive-confirmed Opus 4.6, [§ 6.6](#66-the-4647-era-boundary-is-nine-observations-early)) and Obs 398–400, 421–423 (the draft-then-accept divergence of [§ 6.5](#65-other-trailer-versus-evidence-discrepancies-benign), transcript-corroborated — attribution to the producing session stands per § 1.1 on the continuity/session-log prose). Post-adoption partition: **366 archive-confirmed + 6 divergence + 8 concurrent + 48 pre-archive = 428**. |
 | prior-evidence-stands | 8 | Obs 388–395: committed while Fable 5 and Opus 5 sessions ran **concurrently** (2026-08-04/06, the credit-exhaustion window), so the instant test cannot separate them. The session-log prose ("first session of the 48-hour Opus window") remains the operative HIGH evidence. |
 | pre-archive | 48 | Obs 1–47 (Antigravity/Gemini 3): the archive starts 2025-12-22, after the era closed. MEDIUM stands on the manifest evidence. |
 
@@ -177,19 +183,31 @@ Opus 4.8 era 2026-05-30 → 06-09 is covered **unbroken** by `claude-opus-4-8` t
 "Opus 4.8" is corroborated by authoritative API model ids after all (the earlier "no coverage"
 claim was the wrong-store artefact).
 
-**Resulting census, outright** (before the two PI rulings): **HIGH 357 · MEDIUM 48 · LOW 0**, with
-23 headings graded per their prior evidence pending ruling (8 prose-HIGH concurrent-window, 9
-boundary-conflict, 6 divergence). If the PI accepts § 6.6's boundary correction and § 6.7's
-finding-session attributions, the census closes at **HIGH 380 · MEDIUM 48 · LOW 0**.
+**Resulting census** (closed 2026-08-24 with the § 6.6 adoption): **HIGH 380 · MEDIUM 48 ·
+LOW 0** — 366 archive-confirmed, 14 prose-anchored (8 concurrent-window + 6 divergence), 48
+pre-archive Antigravity.
 
-**The 15 LOW entries**, all bracketed by anchored sessions on both sides:
+**Completeness re-verification (2026-08-24, ordered by the PI before adopting the boundary).**
+Five independent grounds, all passed: (i) the canonical union on rpi-server and the local mirror
+hold IDENTICAL entry populations for both archive names (205 + 49 directories each side), with the
+completeness gate (`~/.cache/cc-archives-gate`) reading 0 and the archive catalogue (rebuilt
+2026-08-23 22:14, after the archiving-system repair converged) deduplicating to the same 230
+sessions; (ii) **the session log is an independent record of which days had sessions at all, and
+none of its 120 dated entries falls inside any archive no-evidence window** — the gaps (including
+the 33-day 2026-06-24 → 07-26 window) are genuine no-work periods matching the known travel
+breaks, not missing transcripts; (iii) every Claude-era Obs heading (380 of 428) falls on an
+archive-covered day — the no-coverage class is exactly the 48 pre-archive Antigravity headings;
+(iv) meta-versus-transcript agreement held 8/8 on the sampled sessions; (v) at the boundary
+specifically, three record types cohere — the archive (4.6-exclusive until 04-18T00:17Z), the
+session log (the combined S70–71 entry's "Opus 4.7 was newly released at session start" reading
+naturally as the second session of the pair, whose S71 confabulation observation implies real 4.7
+use on the 18th), and git — whose trailer flip at 04-17 20:20 AEST is thereby identified as the
+outlier, a CLI self-report that changed ahead of the model.
 
-- Obs 186–193 (2026-03-25, Opus 4.6) — introducing commit `8b8626a0e` carries only the generic
-  `Claude` trailer.
-- Obs 236–237 (2026-04-15, Opus 4.6) — generic `Claude` trailer.
-- Obs 276–277 (2026-04-24, Opus 4.7), Obs 290 (2026-04-27), Obs 295 (2026-04-28) — no trailer or
-  generic trailer.
-- Obs 349 (2026-06-07, Opus 4.8) — no trailer.
+**The former 15 LOW entries — all resolved to HIGH by the archive** (each of their six dates
+carries unambiguous single-model transcript coverage; § 4.1): Obs 186–193 (2026-03-25, Opus 4.6),
+Obs 236–237 (2026-04-15, Opus 4.6), Obs 276–277 (2026-04-24), Obs 290 (2026-04-27), Obs 295
+(2026-04-28, all Opus 4.7), and Obs 349 (2026-06-07, Opus 4.8).
 
 ---
 
@@ -400,7 +418,14 @@ through Obs 257; Opus 4.7 begins at Obs 258** (first 4.7 session 2026-04-18T00:1
 *Caveat*: this assumes the introducing commits came from an archived session of this project — the
 archive audit reports 0 missing sessions, and no 4.7 session exists anywhere in either archive name
 before 04-18T00:17Z, but a session archived under an unrelated project name would be invisible to
-the sweep. `[PI to confirm: adopt the Obs 258 boundary]`
+the sweep.
+
+**ADOPTED (PI, 2026-08-24)** — after the archiving-system repair had converged and the
+completeness re-verification recorded in § 4.1 passed on all five grounds (canonical = mirror,
+gate 0; no logged session in any archive gap; every Claude-era heading on a covered day; 8/8
+transcript sampling; three-record coherence at the boundary, with the git trailer identified as
+the outlier). The era table, § 3, and § 4 now carry the Obs 258 boundary; Obs 249–257 are
+archive-confirmed Opus 4.6.
 
 ## 7. How to finalise
 
