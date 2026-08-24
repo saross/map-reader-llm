@@ -31,10 +31,30 @@ project state.
 > they exist; D24 brief — REMIND AT CLOSE (standing); billing-console
 > glance; solo read of M.8–M.12 → joint edit session later.
 >
-> **Claude queue (commissioned)**: grid post-verifier scoring +
-> findings + register row (data hot, committed `8eda1e3a3`); § 4.3
-> phase-table regeneration from the analyses register → M.11; the
-> H2-C full-run proposal card; Zotero fixes on key delivery.
+> **Claude queue (commissioned, handed to S142 — none started, all
+> runnable fresh):**
+>
+> 1. **Grid post-verifier scoring** (the $6.33 is SPENT; data committed
+>    `8eda1e3a3`). Inputs: `outputs/grid-2026-08-18/verifier/<cell>/`
+>    holds `union_k10.geojson` (with per-candidate `vote_count`) and
+>    `verify/probabilities.json` for all four cells (9,133/9,133
+>    verified, zero failures). Task: threshold the probabilities →
+>    verified sets → score with `grid_analysis`'s own machinery
+>    (common footprint, `scoring/bounds/grid_common_bounds.geojson`)
+>    → answer the findings doc's two "unresolved without the
+>    verifier" questions (does the tile-size ranking survive? does
+>    the overlap reversal survive?) → findings addendum + changelog
+>    + register row + the billing reconciliation (metas record LIST
+>    $12.54; expected flex billing ≈ $6.27 — PI console check).
+> 2. **§ 4.3 phase-table regeneration** from the analyses register →
+>    M.11 (the outline's own S134 note; PI commissioned 2026-08-24).
+> 3. **H2-C full-run proposal card** (probe answered pricing:
+>    ~$0.69/1k candidates flex; card needs the registered
+>    uncertain-candidate definition to fix the count; the prereg's
+>    own 37%-recall pilot note weighs against — PI decides on card).
+> 4. Zotero: DONE this session (three-tier architecture live,
+>    measured; both chapter fixes verified; inbox row added for the
+>    PI's revocation pass — nothing left Claude-side).
 
 ## 🎯 PREVIOUS (S141 beacon) — PI MORNING LIST, THEN THE WRITE-UP
 
