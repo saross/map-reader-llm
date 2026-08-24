@@ -355,10 +355,11 @@ single-model focus was a deliberate scope decision: free-tier and
 low-cost access made high-replication designs (up to thirty passes per
 condition) affordable, and pilot work showed the model sufficiently
 capable that detection quality would be limited by prompt and
-aggregation design rather than raw model capacity. [DRAFT NOTE:
-cross-model cells (Flash 3.5, Pro) entered later as exploratory
-comparisons — decide whether M.10 forward-references them or leaves
-them to Results.]
+aggregation design rather than raw model capacity. The registered
+design is single-model throughout; later exploratory cross-model
+comparisons (Gemini 3 Flash 3.5 role permutations and a Gemini Pro
+2 × 2) are reported in Results and do not alter the pipeline
+described here.
 
 **Prompt architecture.** Each request assembles a system instruction
 (task definition, target-symbol description, and output-format
