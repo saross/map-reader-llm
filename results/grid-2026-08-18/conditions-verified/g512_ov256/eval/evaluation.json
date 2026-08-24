@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-24T08:21:47.373078+00:00",
+  "timestamp": "2026-08-24T09:01:54.581023+00:00",
   "summary": {
     "label": "detections",
     "n_detections": 382,
@@ -75,9 +75,9 @@
   "_metadata": {
     "metadata_version": "1.3",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "8f4ecdd82",
+    "script_git_commit": "57b7ad7ad",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-24T08:21:45.173820+00:00",
+    "generated_at_utc": "2026-08-24T09:01:52.405925+00:00",
     "cli_args": {
       "detections": [
         "results/grid-2026-08-18/conditions-verified/g512_ov256/detections.geojson"
@@ -117,9 +117,9 @@
       "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
     },
     "input_git_state": {
-      "head": "8f4ecdd82",
+      "head": "57b7ad7ad",
       "inputs": {
-        "results/grid-2026-08-18/conditions-verified/g512_ov256/detections.geojson": "untracked",
+        "results/grid-2026-08-18/conditions-verified/g512_ov256/detections.geojson": "modified",
         "inputs/vectors/references/mounds-reference.geojson": "clean",
         "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "clean"
       }
