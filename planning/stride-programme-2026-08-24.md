@@ -1,8 +1,10 @@
 # The stride programme: overlap/stride × tile size, discharged to a decision
 
-> **Last revised**: 2026-08-24 (original publication; PI-directed S142,
-> spend NOT yet authorised — every API phase is individually gated).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-25 (Phases B and C(part) EXECUTED overnight
+> and scored; **exit criterion MET — a plateau of tied leaders, no new
+> F1 high**; 256/50 recommendation: do not run. See
+> `results/stride-2026-08-25/findings.md`.) See
+> [§ Changelog](#changelog) for revision history.
 
 **Status**: PHASES A–C(part) IN EXECUTION. The PI directed the
 programme on 2026-08-24 and set the exit criterion; per-phase spend
@@ -154,6 +156,25 @@ PI authorises iff new F1 highs.
   expectation.
 
 ## Changelog
+
+### 2026-08-25 — Phases B + C(part) executed; exit criterion met
+
+Overnight execution under the recorded approvals: 66,080 proposer +
+16,966 verifier calls, ≈ $51.5 flex (envelope ~$63), zero unrecovered
+failures. Findings: `results/stride-2026-08-25/findings.md`. The
+programme's exit criterion resolves to **plateau, not winner**: the
+leading shelf is {384/33.3 0.8982, 384/50 0.8961} @20 m (+0.0020,
+p = 0.86 between them; the Phase A incumbents inside it at 30 m); no
+new F1 high. Iso-stride: 384 px at-or-above every alternative at
+every stride (no single contrast significant). Interior optimum at
+384 px, strides 192–256 (336→256 climb +0.0305 p = 0.020; 144 rung
+−0.0121 ns — the stop rule fired). 256/50 recommended NOT run (three
+reasons in the findings). Per the PI's decision rule, the 55-map
+condition ("if pushing new F1 highs") is NOT met; the surviving case
+for any 55-map run is deployment COST (384/33.3 at ~59 % of the
+winner's calls), which would need its own differently-motivated gate.
+Phase C's remaining cell and Phase 2/3 of the original card are
+CLOSED by this outcome.
 
 ### 2026-08-24 — Original publication
 
