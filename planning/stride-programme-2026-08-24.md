@@ -4,11 +4,24 @@
 > spend NOT yet authorised — every API phase is individually gated).
 > See [§ Changelog](#changelog) for revision history.
 
-**Status**: PROPOSED. The PI directed the programme on 2026-08-24
-("we need to discharge the entire overlap/stride study across
-different tile sizes") and set the exit criterion; per-phase spend
-still requires the standing API gate (`/phase-gate`, `/audit-config`,
-explicit approval of model / mode / call count / cost).
+**Status**: PHASES A–C(part) IN EXECUTION. The PI directed the
+programme on 2026-08-24 and set the exit criterion; per-phase spend
+runs through the standing API gate.
+
+**Approval trail (PI, 2026-08-25, session)**: Phase B proposers
+approved at the presented gate (41,250 calls, ~$25.6 flex,
+gemini-3-flash realtime flex) — launched overnight. Phase C
+restricted by the PI to the **stride-144 cell only** ("only run the
+384 px / 144 stride tonight"; ≤ $17 — actual 24,830 calls ~$14.9);
+the 256 px / 50 % cell is explicitly NOT approved, pending a
+results-based recommendation in the morning summary. Verifier stages
+pre-approved up to **double** their expected prices (B ceiling
+$15.6; stride-144 ceiling $7.4), to be launched only at measured
+candidate counts within ceiling. Aggressive-retry direction
+confirmed: runner-level 15 retries/tile + backoff, residual gaps via
+the standard one-tile recovery passes before unions. Launch audit:
+READY (one blocker — the non-512 `--tile-size` flag — caught at the
+dry-run stage, $0 lost, fixed in the v2 chain driver).
 
 ## Why this programme, now
 
