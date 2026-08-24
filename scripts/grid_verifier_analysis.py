@@ -29,17 +29,24 @@ What it does:
    and re-scoring the unthresholded union reproduces the committed sweep's
    (K = 10, c >= 1, k >= 1) row.
 
-2. **The post-verifier sweep.** Per cell, every achievable operating point:
-   verifier threshold ``prob_t`` over the cell's distinct observed
-   probabilities (keep if ``mound_probability >= prob_t``, the
-   `materialise_pv_geojson` convention) crossed with vote threshold
-   ``k`` in 1..10 (keep if ``vote_count >= k``). Undefined tile Matthews
-   Correlation Coefficient (MCC) stays ``null``, never 0.0 (erratum E81).
+2. **The post-verifier sweep.** Per cell, every achievable operating point
+   *within the c = 1 union* (the union was materialised at corroboration 1,
+   so c >= 2 subsets are unreachable here): verifier threshold ``prob_t``
+   over the cell's distinct observed probabilities (keep if
+   ``mound_probability >= prob_t``, the `materialise_pv_geojson` convention)
+   crossed with vote threshold ``k`` in 1..10 (keep if ``vote_count >= k``).
+   Undefined tile Matthews Correlation Coefficient (MCC) stays ``null``,
+   never 0.0 (erratum E81).
 
-3. **The two contrasts, post-verifier.** Paired tile bootstrap of the best-F1
-   operating points: tile size at each overlap, overlap at each tile size, and
-   the difference-of-differences interaction — the same instrument the
-   consensus-only board used, so the pre/post comparison is like for like.
+3. **The two contrasts, post-verifier — with the like-for-like baseline.**
+   Paired tile bootstrap of the best-F1 operating points: tile size at each
+   overlap, overlap at each tile size, and the difference-of-differences
+   interaction. The matching PRE-verifier arm is computed alongside on the
+   registered K = 10 best consensus-only operating points
+   (`results/grid-2026-08-18/conditions/<cell>/detections.geojson`), NOT the
+   run-averaged single-pass contrasts in `grid_analysis.json`, which hold a
+   different estimand (mean single-pass performance) and are not comparable
+   to a single aggregated operating point.
 
 4. **Verifier-versus-consensus redundancy.** The pure-verifier board (k = 1,
    best ``prob_t``) against the committed consensus-only board, per cell.
@@ -122,6 +129,10 @@ COMMON_BOUNDS = (
     PROJECT_ROOT / "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson")
 GRID_ANALYSIS = PROJECT_ROOT / "results/grid-2026-08-18/grid_analysis.json"
 GROUND_TRUTH = PROJECT_ROOT / "inputs/vectors/references/mounds-reference.geojson"
+
+#: The registered K = 10 best consensus-only operating points (the D16
+#: materialisation) — the like-for-like PRE-verifier arm for the contrasts.
+CONSENSUS_CONDITIONS_DIR = PROJECT_ROOT / "results/grid-2026-08-18/conditions"
 
 #: Bootstrap iterations: 10,000 per the 2026-08-19 PI ruling (erratum E82).
 BOOTSTRAP = 10_000
@@ -284,7 +295,7 @@ def sweep_cell(
     Returns:
         One row per operating point with precision, recall, F1, MCC and count.
     """
-    thresholds = sorted({0.0} | set(gdf["mound_probability"].round(4)))
+    thresholds = sorted({0.0} | {float(v) for v in gdf["mound_probability"]})
     rows: list[dict[str, Any]] = []
     for prob_t in thresholds:
         for k in range(1, K_TOTAL + 1):
@@ -352,20 +363,39 @@ def per_tile_counts(
 def billing() -> dict[str, Any]:
     """Sum the four verifier metas and reconcile list, flex and costed figures.
 
+    Every count is read from the metas' ``execution_stats`` — never asserted
+    from a constant — so this block doubles as an independent cross-check of
+    the documented union counts.
+
     Returns:
-        Per-cell and total spend on both bases, with the costed-estimate
-        reconciliation.
+        Per-cell and total spend on both bases, execution counters, and the
+        costed-estimate reconciliation.
+
+    Raises:
+        JoinGateError: If a meta's ``items_processed`` disagrees with the
+            documented union count.
     """
     cells: dict[str, Any] = {}
     total_list = 0.0
     total_calls = 0
+    total_requests = 0
+    total_failed = 0
+    total_retries = 0
     for cell in CELL_ORDER:
         meta = json.loads(
             (VERIFIER_DIR / cell / "verify" / "run.meta.json").read_text())
         cost = meta["cost_estimate"]
-        n = EXPECTED[cell]
+        stats = meta["execution_stats"]
+        n = int(stats["items_processed"])
+        if n != EXPECTED[cell]:
+            raise JoinGateError(
+                f"{cell}: meta records {n} items processed, documented union "
+                f"count is {EXPECTED[cell]}")
         cells[cell] = {
             "calls": n,
+            "request_count": n + int(stats["retries_total"]),
+            "items_failed": int(stats["items_failed"]),
+            "retries_total": int(stats["retries_total"]),
             "list_usd": cost["list_total_cost_usd"],
             "flex_usd": cost["list_total_cost_usd"] / FLEX_DISCOUNT_DIVISOR,
             "cost_basis_recorded": cost["cost_basis"],
@@ -374,10 +404,16 @@ def billing() -> dict[str, Any]:
         }
         total_list += cost["list_total_cost_usd"]
         total_calls += n
+        total_requests += cells[cell]["request_count"]
+        total_failed += cells[cell]["items_failed"]
+        total_retries += cells[cell]["retries_total"]
     total_flex = total_list / FLEX_DISCOUNT_DIVISOR
     return {
         "cells": cells,
         "total_calls": total_calls,
+        "total_requests_incl_retries": total_requests,
+        "total_items_failed": total_failed,
+        "total_retries": total_retries,
         "total_list_usd": round(total_list, 4),
         "total_flex_usd": round(total_flex, 4),
         "flex_per_call_usd": round(total_flex / total_calls, 6),
@@ -389,7 +425,9 @@ def billing() -> dict[str, Any]:
         "note": (
             "Meta cost blocks are list basis; Gemini real-time flex bills at "
             "half list, so the flex column is the billed basis (cf. the "
-            "proposer-stage cost audit in findings.md § Cost)."
+            "proposer-stage cost audit in findings.md § Cost). 'calls' is "
+            "items_processed; retried transient errors make request_count "
+            "larger."
         ),
     }
 
@@ -421,6 +459,9 @@ def materialise_condition(
                 "type": "Feature",
                 "geometry": {"type": "Point", "coordinates": [geom.x, geom.y]},
                 "properties": {
+                    # candidate_id is the union feature index — the join key
+                    # back to union_k10.geojson and probabilities.json.
+                    "candidate_id": int(idx),
                     "source_tile": tile,
                     "label": "mound",
                     "subtype": "mound",
@@ -428,28 +469,43 @@ def materialise_condition(
                     "mound_probability": float(prob),
                 },
             }
-            for geom, tile, votes, prob in zip(
-                subset.geometry, subset["source_tile"], subset["vote_count"],
-                subset["mound_probability"], strict=True)
+            for idx, geom, tile, votes, prob in zip(
+                subset.index, subset.geometry, subset["source_tile"],
+                subset["vote_count"], subset["mound_probability"], strict=True)
         ],
     }, indent=2))
     return len(subset)
 
 
-def evaluate(detections: Path, out_dir: Path) -> Path:
-    """Run `evaluate_detections.py` on one materialised set at B = 10,000."""
+def evaluate(detections: Path, out_dir: Path, n_bootstrap: int = BOOTSTRAP) -> Path:
+    """Run `evaluate_detections.py` on one materialised set.
+
+    Args:
+        detections: Materialised GeoJSON to score.
+        out_dir: Evaluation output directory.
+        n_bootstrap: Bootstrap iterations, passed through so the published
+            ``bootstrap_iterations`` label always matches the interval.
+
+    Returns:
+        Path to the written evaluation.json.
+    """
     cmd = [
         sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py"),
         "--detections", str(detections),
         "--ground-truth", str(GROUND_TRUTH),
         "--bounds", str(COMMON_BOUNDS),
-        "--bootstrap", str(BOOTSTRAP),
+        "--bootstrap", str(n_bootstrap),
         "--seed", str(SEED),
         "--output-dir", str(out_dir),
         "--mcc",
     ]
-    logger.info("scoring %s at B=%d", detections.name, BOOTSTRAP)
-    subprocess.run(cmd, check=True, cwd=PROJECT_ROOT, capture_output=True, text=True)
+    logger.info("scoring %s at B=%d", detections.name, n_bootstrap)
+    result = subprocess.run(
+        cmd, check=False, cwd=PROJECT_ROOT, capture_output=True, text=True)
+    if result.returncode != 0:
+        logger.error("evaluate_detections failed on %s:\n%s",
+                     detections, result.stderr[-2000:])
+        raise RuntimeError(f"evaluate_detections failed on {detections}")
     return out_dir / "evaluation.json"
 
 
@@ -529,6 +585,9 @@ def main() -> int:
         per_tile["g384_ov048"], per_tile["g384_ov192"],
         n_iter=args.bootstrap, seed=SEED,
     )
+    interaction["convention"] = (
+        "(overlap effect at 512px) - (overlap effect at 384px), "
+        "overlap effect = F1(12.5%) - F1(50%)")
     for name, res in bootstrap.items():
         logger.info("%-34s dF1=%+.4f CI95 [%+.4f, %+.4f] p=%.4f %s",
                     name, res["delta"], res["ci_lower"], res["ci_upper"],
@@ -539,6 +598,34 @@ def main() -> int:
         interaction["difference_of_differences"], interaction["ci_lower"],
         interaction["ci_upper"], interaction["p_two_sided"],
         "EXCLUDES 0" if interaction["excludes_zero"] else "includes 0")
+
+    # --- The like-for-like PRE-verifier arm --------------------------------
+    # The registered K = 10 best consensus-only operating points (the D16
+    # materialisation), NOT the run-averaged single-pass contrasts: those hold
+    # a different estimand and cannot anchor a pre/post comparison of single
+    # aggregated operating points.
+    baseline_per_tile: dict[str, dict[str, np.ndarray]] = {}
+    for cell in CELL_ORDER:
+        det_path = CONSENSUS_CONDITIONS_DIR / cell / "detections.geojson"
+        gdf_base = gpd.read_file(det_path).to_crs(CRS)
+        base_score = score(gdf_base, gdf_ref, bounds)
+        delta = abs(base_score["f1"] - consensus_best[cell]["f1"])
+        if delta > 5e-4:
+            raise JoinGateError(
+                f"{cell}: consensus baseline re-scores at {base_score['f1']:.6f}, "
+                f"committed board has {consensus_best[cell]['f1']:.6f}")
+        baseline_per_tile[cell] = per_tile_counts(gdf_base, bounds, gdf_ref)
+    baseline_bootstrap = {
+        name: paired_bootstrap(
+            baseline_per_tile[a], baseline_per_tile[b], args.bootstrap, seed=SEED)
+        for name, (a, b) in contrasts.items()
+    }
+    for name, res in baseline_bootstrap.items():
+        logger.info("[K10 consensus baseline] %-34s dF1=%+.4f CI95 [%+.4f, %+.4f] "
+                    "p=%.4f %s",
+                    name, res["delta"], res["ci_lower"], res["ci_upper"],
+                    res["p_two_sided"],
+                    "EXCLUDES 0" if res["excludes_zero"] else "includes 0")
 
     # --- Optional condition materialisation --------------------------------
     conditions: list[dict[str, Any]] | None = None
@@ -554,7 +641,8 @@ def main() -> int:
                 logger.error("%s: materialised %d features, sweep row has %d",
                              cell, n, point["n_detections"])
                 failures += 1
-            eval_path = evaluate(det, cond_root / cell / "eval")
+            eval_path = evaluate(det, cond_root / cell / "eval",
+                                 n_bootstrap=args.bootstrap)
             doc = json.loads(eval_path.read_text())
             buf = next(b for b in doc["summary"]["buffers"]
                        if b["buffer_metres"] == BUFFER_M)
@@ -591,6 +679,77 @@ def main() -> int:
                 "evaluation": str(eval_path.relative_to(PROJECT_ROOT)),
                 "reproduces_sweep": ok,
             })
+    # --- Payload -----------------------------------------------------------
+    def _board(rows: dict[str, dict[str, Any]]) -> dict[str, Any]:
+        # The union is a c = 1 materialisation, so every verified row carries
+        # min_corroboration 1 explicitly — c >= 2 points are unreachable here.
+        return {cell: {**{k: rows[cell][k] for k in
+                          ("precision", "recall", "f1", "mcc", "n_detections",
+                           "prob_t", "min_votes")},
+                       "min_corroboration": 1}
+                for cell in CELL_ORDER}
+
+    bill = billing()
+    payload: dict[str, Any] = {
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "classification": (
+            "POST-HOC (E41-class) proposer-verifier board for the tile-size x "
+            "overlap grid: the committed K = 10 unions (c = 1) thresholded on "
+            "the committed per-candidate verifier probabilities. $0 scoring."),
+        "verifier": {
+            "config": "verify_adversarial-text",
+            "model": "gemini-3-flash-preview",
+            "temperature": 0.0, "thinking_level": "minimal", "n": 1,
+            "candidates_verified": bill["total_calls"],
+            "failures": bill["total_items_failed"],
+            "retries_transient": bill["total_retries"],
+        },
+        "gates": {
+            "union_counts_measured": {c: len(unions[c]) for c in CELL_ORDER},
+            "union_scores_reproduced": {
+                c: union_scores[c]["f1"] for c in CELL_ORDER},
+        },
+        "board_best": _board(best),
+        "board_pure_verifier_k1": _board(pure),
+        "board_consensus_only_committed": {
+            cell: {k: consensus_best[cell][k] for k in
+                   ("precision", "recall", "f1", "mcc", "n_detections",
+                    "K", "min_corroboration", "min_votes")}
+            for cell in CELL_ORDER
+        },
+        "verifier_gain_over_consensus": {
+            cell: round(best[cell]["f1"] - consensus_best[cell]["f1"], 4)
+            for cell in CELL_ORDER
+        },
+        "bootstrap_contrasts": bootstrap,
+        "bootstrap_contrasts_consensus_k10_baseline": baseline_bootstrap,
+        "baseline_note": (
+            "The like-for-like pre-verifier arm: the registered K = 10 best "
+            "consensus-only operating points (D16 materialisation), scored as "
+            "single sets on the same instrument. The run-averaged single-pass "
+            "contrasts in grid_analysis.json hold a different estimand and "
+            "must not anchor pre/post comparisons of aggregated operating "
+            "points."),
+        "interaction": interaction,
+        "bootstrap_config": {"n_iterations": args.bootstrap, "seed": SEED,
+                             "method": "paired tile bootstrap, Decision 10; "
+                                       "B per erratum E82"},
+        "billing": bill,
+    }
+    if conditions is not None:
+        payload["conditions"] = conditions
+
+    if failures:
+        # The materialise-unions PI stop rule extends here: a failed
+        # reproduction gate publishes nothing (the per-cell eval subprocess
+        # outputs remain on disk for diagnosis, flagged in the log).
+        logger.error("%d condition gate(s) FAILED — refusing to write "
+                     "verifier_analysis.json / verifier_sweep.csv / "
+                     "grid_verified_conditions.json", failures)
+        return 1
+
+    if conditions is not None:
+        cond_root = args.output_dir / "conditions-verified"
         (cond_root / "grid_verified_conditions.json").write_text(json.dumps({
             "classification": (
                 "POST-HOC (E41-class); registrable proposer-verifier "
@@ -606,53 +765,6 @@ def main() -> int:
             "cells": conditions,
         }, indent=2) + "\n")
 
-    # --- Payload -----------------------------------------------------------
-    def _board(rows: dict[str, dict[str, Any]]) -> dict[str, Any]:
-        return {cell: {k: rows[cell][k] for k in
-                       ("precision", "recall", "f1", "mcc", "n_detections",
-                        "prob_t", "min_votes")}
-                for cell in CELL_ORDER}
-
-    payload: dict[str, Any] = {
-        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "classification": (
-            "POST-HOC (E41-class) proposer-verifier board for the tile-size x "
-            "overlap grid: the committed K = 10 unions thresholded on the "
-            "committed per-candidate verifier probabilities. $0 scoring."),
-        "verifier": {
-            "config": "verify_adversarial-text",
-            "model": "gemini-3-flash-preview",
-            "temperature": 0.0, "thinking_level": "minimal", "n": 1,
-            "candidates_verified": sum(EXPECTED.values()),
-            "failures": 0,
-        },
-        "gates": {
-            "union_counts": {c: EXPECTED[c] for c in CELL_ORDER},
-            "union_scores_reproduced": {
-                c: union_scores[c]["f1"] for c in CELL_ORDER},
-        },
-        "board_best": _board(best),
-        "board_pure_verifier_k1": _board(pure),
-        "board_consensus_only_committed": {
-            cell: {k: consensus_best[cell][k] for k in
-                   ("precision", "recall", "f1", "mcc", "n_detections",
-                    "min_corroboration", "min_votes")}
-            for cell in CELL_ORDER
-        },
-        "verifier_gain_over_consensus": {
-            cell: round(best[cell]["f1"] - consensus_best[cell]["f1"], 4)
-            for cell in CELL_ORDER
-        },
-        "bootstrap_contrasts": bootstrap,
-        "interaction": interaction,
-        "bootstrap_config": {"n_iterations": args.bootstrap, "seed": SEED,
-                             "method": "paired tile bootstrap, Decision 10; "
-                                       "B per erratum E82"},
-        "billing": billing(),
-    }
-    if conditions is not None:
-        payload["conditions"] = conditions
-
     out_json = args.output_dir / "verifier_analysis.json"
     out_json.write_text(json.dumps(payload, indent=2) + "\n")
 
@@ -666,9 +778,6 @@ def main() -> int:
 
     logger.info("wrote %s and %s (%d sweep rows)", out_json.name, out_csv.name,
                 len(sweep_rows))
-    if failures:
-        logger.error("%d condition gate(s) FAILED", failures)
-        return 1
     return 0
 
 
