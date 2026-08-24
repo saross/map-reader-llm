@@ -55,6 +55,13 @@ project state.
 > 4. Zotero: DONE this session (three-tier architecture live,
 >    measured; both chapter fixes verified; inbox row added for the
 >    PI's revocation pass — nothing left Claude-side).
+>
+> **Reflection set WRITTEN at close** (`f204fd72f`): session
+> reflection, llm-obs, two abductive entries, the S140–141 session-log
+> record, claude-obs 74–76, and THREE NEW user-obs candidates pending
+> review (S140-C1 evidence-vintage injection; S140-C2
+> taxonomy-by-missing-category; S140-C3 cost-of-ceremony) — silence
+> never discards. D24 REMINDED at close, still unsent.
 
 ## 🎯 PREVIOUS (S141 beacon) — PI MORNING LIST, THEN THE WRITE-UP
 
