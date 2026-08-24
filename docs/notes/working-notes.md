@@ -28230,3 +28230,110 @@ principle from an adjacent angle — what evidence a process actually
 consumes, and in what order or scope, determines whether a locally
 plausible answer is also the correct one).
 
+## Observation 431: Input-vintage drift is a corpus phenomenon, not an incident — and the fix is disclosure at scoring time (Session 141, 2026-08-24)
+
+PI-accepted write-up (2026-08-24, held over from the S138 handoff and
+strengthened by the E82 campaign's execution and the landed D40 guard) of
+the input-vintage drift defect the E82 pre-launch audit surfaced (finding
+B1) and the corpus re-emission then had to absorb at scale.
+
+**The finding.** 324 of 1,655 BCa-era committed evaluations — 19.6 % —
+name at least one recipe input committed to git *after* the evaluation was
+scored (defect D40; machine-readable population in
+`reports/input-vintage-drift-2026-08-20.json`):
+
+| Population | Drifted cells |
+|---|---:|
+| `results/rescore-2026-06-07/**` | 210 |
+| `outputs/era1-pv-stage-d/**` | 30 |
+| `results/deployment-oracle-2026-06-06/**` | 20 |
+| `results/paper-eval/**` | 17 |
+| elsewhere (`h8-v2` 7, `rescore-2026-05-31` 7, `rescore-2026-06-05` 6, `grid-2026-08-18` 4, the three 55maps-direct families 9, `h12-v2` 3, `h13-overlap-2026-08-18` 3, `phase3a-{image,text}-matrix` 6, `recovery-reeval-2026-07-30` 2) | 47 |
+| **Total** | **324** |
+
+A listed cell is not wrong per se — its committed points honestly record
+scoring against the then-current input — but it does not reproduce from
+current inputs. The canonical example: three `55maps-image-generalisation`
+cells scored 2026-05-03T02:42–02:43 UTC (~12:42 pm AEST) against
+`inputs/vectors/references/student-mounds-55maps-reviewed.geojson`, which
+then gained a curator mound at commit `2e075eb99`, committed
+2026-05-03T15:28:57+10:00 that same afternoon — a ground truth that changed
+under the evaluation on the day it was scored. The E82 pilot separately
+measured the sharpest instance of the mechanism: one case where a
+detections commit landed two minutes after its own evaluations.
+
+**Why this is a corpus phenomenon, not a set of incidents.** The drift is
+a by-product of the project's own healthy habits — score fresh outputs
+immediately, commit in focused batches — operating at high session tempo.
+Nothing was deleted or corrupted; the working tree simply moved between
+scoring and committing. At one-in-five prevalence, scattered across at
+least five distinct campaign families (rescue rescoring, era-1 PV staging,
+the deployment oracle, the paper-eval suite, and a long tail of one-off
+sweeps), this is a property of the workflow, not a set of incidents to
+patch one at a time.
+
+**How the E82 campaign handled the existing population.** Per the
+campaign contract (`planning/e82-corpus-reemission-2026-08-20.md` § 3.1)
+and the corpus execution note (`docs/methodology/preregistration/protocol-errata.md`,
+E82 entry), each cell was replayed against *current* inputs first; on a
+point-gate failure (> 1e-9 movement), against a bounded plan of committed
+input vintages adjacent to the cell's own `generated_at_utc` — the
+all-before baseline, then single-input flips to the first-after commit,
+then all-after (cap 6 vintages tried). **35** pinned-vintage re-emissions
+were recorded by the campaign counter across the three counter-era legs,
+plus **two** pilot-era D40 rescues whose pins live in-file — 37 cells in
+total, each pin recorded in `_metadata.e82_input_vintage`. Reference-vintage
+reconciliation (whether any of the 324 should ever be re-scored against
+*current* references) was deliberately **not** bundled into this campaign —
+the same E81/E82 discipline of keeping fixes separate so a future delta
+stays attributable to one cause rather than several.
+
+**The forward fix, landed 2026-08-23 (commit `0abb9e55b`).**
+`scripts/evaluate_detections.py` now classifies every recipe input's git
+state at scoring time — `clean` / `modified` / `untracked` / `ignored` /
+`outside-repo` / `missing` — and stamps the classification, together with
+HEAD, into `_metadata.input_git_state`. A dirty (`modified` or `untracked`)
+input always WARNS; under the new `--require-clean-inputs` flag (intended
+for replay and campaign contexts) it instead refuses, exiting 4. The
+design point worth recording: the default is **disclosure, not refusal**.
+The normal pipeline legitimately scores freshly generated, not-yet-committed
+outputs, so a hard gate by default would break the workflow that produces
+the data. What makes new drift harmless going forward is that the artefact
+now discloses its own input state the moment it is created — a future
+campaign can *select* on `input_git_state` rather than *discover* drift by
+replay failure, as E82 had to. Six tests on a hermetic temp repo
+(`tests/test_evaluate_detections_metadata.py`); tier-1 1,903 green at
+landing.
+
+**Generalisable lesson.** Reproducibility metadata recorded at *creation*
+time is categorically cheaper than reproducibility established by *audit*.
+The D40 population cost a pre-launch audit, a PI policy ruling, a
+bounded-vintage-search implementation, and 37 pinned replays to handle
+retrospectively; the guard turns the same information into a free field
+stamped on every new artefact, paid once at scoring time rather than in a
+future campaign's forensic reconstruction.
+
+**Caveats.** The guard is forward-only: it does not retroactively fix or
+re-flag any of the 324 cells, which remain correctly scored-against-their-
+own-vintage and are handled entirely by the E82 pinning above. Whether any
+of the 324 should ever be re-scored against current references is a
+separate, deliberately unbundled PI decision (a Track-3 best-available-GT
+completeness sweep is the first instalment). The classifier's
+`outside-repo` and `ignored` states are permissive by design — the E82
+replay's own temp-directory materialisations and the gitignored tile trees
+never trip the guard — so a future drift source living entirely outside
+git tracking would not be caught by this fix either.
+
+Sources: `reports/input-vintage-drift-2026-08-20.json` (n_worklist 1655,
+n_drifted 324, per-cell `stale_inputs`); `reports/defect-register-2026-08-18.md`
+(D40 row); `planning/e82-corpus-reemission-2026-08-20.md` § 3.1
+("Input-vintage rule"); `docs/methodology/preregistration/protocol-errata.md`
+(E82 entry, "Corpus execution note (2026-08-23)" and "Vintage pinning"
+paragraphs); commit `0abb9e55b` (`scripts/evaluate_detections.py`,
+`tests/test_evaluate_detections_metadata.py`). Related: **Obs 426** (the
+E82 campaign's replay-fidelity family — this Obs is the campaign's other
+major defect class, input vintage rather than consumption order); **Obs
+430** (the provenance settlement's parallel lesson — metadata recorded at
+creation time is what made that settlement cheap too, the same principle
+applied to model attribution rather than input vintage).
+
