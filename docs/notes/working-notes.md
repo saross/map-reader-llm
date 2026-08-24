@@ -27880,3 +27880,115 @@ plateau — ~10 px image vs ~6 px text scatter — underwriting the
 proposed clustering mechanism); **Obs 361** (the corrected-F1 recall
 epistemics qualifying every absolute figure quoted above).
 
+## Observation 428: The area-to-point difficulty gradient in map feature extraction — and what the O'Hara correction does to its top rung (Session 141, 2026-08-24)
+
+Published performance on historical-map feature extraction is not one
+scale but a **ladder ordered by task grain**, not by corpus or era.
+Restricting every cell to its *target-class* metric (the discipline
+the O'Hara correction below makes mandatory), the S139/S140 verified
+lit-scout passes resolve three rungs:
+
+| Rung | Study | Target-class metric |
+|---|---|---:|
+| Area/texture segmentation | Kramm et al. (2025), Kenyan road network, 10.1038/s41597-025-05442-6 | F1 0.84 |
+| | Ståhl & Weimann (2022), Swedish wetlands, 10.1016/j.ecoinf.2022.101557 | F1 0.886 |
+| | Maxwell et al. (2020), US surface-mine extents, 10.3390/rs12244145 | Dice 0.902 |
+| | O'Hara et al. (2024), Irish wetlands — **corrected**, 10.1016/j.ecolind.2023.111363 | F1 0.908 |
+| Best fully supervised point detection | DIGMAPPER (Duan et al. 2025), 10.1145/3748636.3764602 | F1 0.82 overall / 0.89 Excellent subset |
+| Points-competition median | DARPA CriticalMAAS, via Goldman et al. (2025), 10.1016/j.acags.2025.100274 | F1 0.35 |
+
+The area cluster's honest range is therefore **F1 ≈ 0.84–0.91**, not
+the 0.84–0.98 the pre-S140 draft carried.
+
+**The O'Hara correction, and why the top rung moved.** O'Hara et al.'s
+abstract, Table 2, and Discussion headline F1 = 98.2 %, and the
+project's own comparison document carried that figure as the area
+cluster's ceiling until 2026-08-23. Full-text resolution
+(`lit-scout-oldreport-resolve-2026-08-21.md` § "Full-text resolution
+addendum") shows 98.2 % is the **majority-class (dryland, non-wetland)
+F1** — provable from the paper's own Table 2, whose recall (99.2 %)
+equals the dryland producer accuracy in Table 1's confusion matrix
+(N = 567 assessment points) — while the **wetland-class F1**, computed
+from the same matrix (P 95.5 % user accuracy × R 86.6 % producer
+accuracy → F1 90.83 %), is 0.908. The paper concedes the
+imbalance flattery itself ("Both overall accuracy and F1 scores are
+susceptible to class imbalance which did occur in this accuracy
+assessment dataset") and offers balanced accuracy 92.9 % as its own
+correction. This was not a fabrication in either prior account: the
+verifier's first pass (S139, 2026-08-21) had already flagged the
+98.2/90.8 relationship PARTIAL rather than laundering a search-engine
+summary that read the same 90.8 into an unrelated "validation-phase"
+gloss; only the PI-supplied PDF closed it correctly, as a class split
+rather than a stage split.
+
+**Goldman et al. isolate the grain effect from map difficulty.**
+Because the DARPA CriticalMAAS competition scores every submitted
+system under one protocol, Goldman et al.'s median-across-entries
+figures — points F1 0.35 vs polygons F1 0.77 on the *same maps, same
+scoring* — show the point/area gap is a property of task grain, not
+of which corpus or era is harder. The ladder above triangulates the
+same conclusion from independent studies; Goldman's contrast is the
+one place it is demonstrated within a single evaluation.
+
+**Mechanism sketch (interpretive, not directly tested here).**
+Area/texture features offer many redundant pixels per instance and
+tolerate boundary error — a segmentation mask can be imperfect at the
+edge and still score well. Point symbols offer no such redundancy: the
+median printed burial-mound symbol at 1:50,000 measures 14 native
+pixels, a ground diameter of 73 m
+(`reports/symbol-footprint-measurement-2026-08-22.md`, IQR 65–85 m,
+n = 38 usable symbols of 80 attempted), and detection is scored
+instance-by-instance. A single confusion or displacement is therefore
+a whole false positive or false negative, not a boundary blemish
+diluted across thousands of correctly classified pixels. This is
+offered as the mechanism that would explain why grain, rather than
+corpus difficulty, drives the ladder — not a re-derivation from first
+principles.
+
+**Why this matters for the paper's positioning.** This study's
+deployment corrected-F1 cells sit at 0.80–0.85 at the k3 vote on the
+55-map standardised reference (Obs 427's four-config table: IM 0.8010,
+TM 0.8109, TH7 0.8387, T03 0.8393). Read against the pre-correction
+0.84–0.98 area range, those cells looked eighteen points below the
+cluster's apparent top. Read against the corrected 0.84–0.91 range
+while performing the harder point-detection grain, the same cells sit
+at the cluster's **foot**, not its floor's floor — a materially
+different rhetorical position. `docs/paper/discussion-seeds.md`'s
+Seed 8 S140 rider (2026-08-24) adopts exactly this framing: D.1 should
+present the ladder explicitly, rather than only disclaiming
+cross-study comparability. The gradient also explains, independently
+of any argument about comparability, why this study's like-for-like
+comparator set is deliberately points-only — Berganzo-Besga et al.
+(mound symbols, held-out) and DIGMAPPER (point-symbol detection,
+fully supervised) are the only cells on the ladder's harder rung.
+
+**Caveats.** The ladder is an ordering claim across different corpora,
+scoring protocols, and eras, not a meta-analysis — no pooling, no
+variance estimate, and no claim that the studies are otherwise
+comparable. Heitzler & Hurni (2020) report mean IoU 88.2 % and average
+precision 98.55 % rather than F1, and are excluded from the area-rung
+range rather than converted. This study's own corrected-F1 has no
+published analogue and must always be reported beside raw F1 (Obs 425
+caveat 2, unchanged by this Obs). The O'Hara wetland figure (0.908) is
+itself a class-conditional statistic on an imbalanced 567-point
+confusion matrix, not a held-out generalisation test — it is the
+correct *target-class* number, not evidence the underlying method
+generalises as well as an unconditional 98.2 % would suggest.
+
+Sources: `docs/methodology/research/lit-scout-detection-baselines-2026-08-21.md`
+(`01976a5b7`, 185/185 pass, findings table rows 9, 10, 11, 12);
+`lit-scout-oldreport-resolve-2026-08-21.md` (`c310dba41` initial
+45/45 pass; `86646d44b` the 2026-08-23 full-text resolution addendum
+that closed the O'Hara PARTIAL); `claude-comparison-with-other-research.md`
+(`86646d44b`, corrected entry, in-line correction note dated
+2026-08-23); `reports/symbol-footprint-measurement-2026-08-22.md`
+(`d7cb42deb`, symbol-footprint measurement); `docs/paper/discussion-seeds.md`
+Seed 8 S140 rider (`9163a0c0d`, 2026-08-24). Related: **Obs 424** (the
+verification discipline — distortion, not fabrication — that this Obs
+applies one level up, at the published-paper metric-selection level
+rather than the citation level); **Obs 425** (the parity claim this
+ladder repositions — near-parity with DIGMAPPER stands unchanged, but
+the area cluster it is contrasted against is now correctly bounded);
+**Obs 427** (the four deployment corrected-F1 cells, 0.7400–0.8393
+across k3/k4, that this Obs places on the ladder's harder rung).
+
