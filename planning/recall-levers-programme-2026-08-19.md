@@ -1,7 +1,8 @@
 # Recall levers: tile size versus overlap — research programme
 
-> **Last revised**: 2026-08-19 (original publication; PI-approved 2026-08-19).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-24 (Phase 1 EXECUTED — the verifier ran and was
+> scored; tile-size ranking reverses, overlap reversal survives). See
+> [§ Changelog](#changelog) for revision history.
 
 **Status**: approach approved by the PI. Phase 0 ($0) to run immediately;
 Phases 1+ carry API spend and go through `/audit-config` and the standing API
@@ -151,7 +152,19 @@ detections, 385 against 377. That is not a trade-off; it is a weaker cell.
 - This used already-verified sets, so it says nothing about how a verifier
   behaves on a common footprint. Phase 1 remains the instrument for that.
 
-## Phase 1 — verifier on the existing grid (~$6.33, gated)
+## Phase 1 — verifier on the existing grid (~$6.33, gated) — EXECUTED 2026-08-24
+
+**EXECUTED**: PI approved 2026-08-24; the verifier scored 9,133/9,133
+union candidates with zero failures ($6.27 expected flex billed) and
+the $0 scoring chain (`scripts/grid_verifier_analysis.py`) settled both
+questions — **the tile-size ranking reverses** (384 px beats 512 px at
+both overlaps post-verifier, significantly at 12.5 %) and **the overlap
+reversal survives** at roughly half the consensus-only margin. The
+design note below was vindicated: corroboration/consensus and the
+verifier are complementary (every best point keeps a vote threshold).
+Full results: `results/grid-2026-08-18/findings.md` § "The verifier
+stage, run"; register row `grid-postverifier-2026-08-18`. The original
+plan text is retained below unaltered.
 
 Run the standard verifier (v1, `verify_adversarial.md`,
 `gemini-3-flash-preview`, MINIMAL, T = 0.0, 1 iteration) over the K = 10 unions
@@ -300,6 +313,23 @@ wait. See `reports/bca-axis-defect-2026-08-18.md`.
   `reports/defect-register-2026-08-18.md`.
 
 ## Changelog
+
+### 2026-08-24 — Phase 1 executed and scored
+
+**Trigger**: PI approval of the Phase 1 spend at the 2026-08-24 decision
+walk; data landed S141 (`8eda1e3a3`), scoring S142.
+
+| Claim | Before (conditional) | After (measured) |
+|---|---|---|
+| Tile size, post-verifier | untested; "may invert once a verifier prunes" | INVERTED: 384 − 512 = +0.0366 (p = 0.034) at 12.5 %, +0.0147 (p = 0.231) at 50 % |
+| Overlap, post-verifier | untested | survives: 50 % wins both sizes (p = 0.0004 / 0.0208), margin ~halved |
+| Best grid cell | 512/50 consensus F1 0.7518 | 384/50 verified F1 0.8961 |
+| Phase 1 cost | ~$6.33 costed | $6.27 expected flex billed (metas $12.54 list) |
+
+**What did NOT change**: Phases 0/2/3 status and their designs; the
+stride reframing; hypothesis H-A. Phase 2's motivation is now partly
+discharged (the ranking question is answered on the existing grid),
+which the PI may weigh before gating further spend.
 
 ### 2026-08-19 — Original publication
 
