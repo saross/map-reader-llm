@@ -8,7 +8,35 @@ project state.
 
 ---
 
-## 🔍 START HERE (Session 141) — PI MORNING LIST, THEN THE WRITE-UP
+## 🔍 STATE AFTER THE 2026-08-24 DECISION WALK (updates the beacon below)
+
+> **The walk cleared Groups A/B/D/E/F**; C (Gould → D.9) remains. Landed:
+> provenance SETTLED (boundary Obs 258 adopted after the five-ground
+> completeness re-verification; census HIGH 380 · MED 48 · LOW 0; release
+> dates sourced+confirmed; § 6.1 adjudicated S111–112; banner dropped;
+> closing **Obs 430**); all eight candidate verdicts recorded (**Obs
+> 431/432** written; six standing collaboration rules → global
+> scratchpad 2026-08-24); H6 formally CLOSED disclose-only (E74 ruling);
+> **H2-C pricing probe RUN** ($0.0137 — 1024 px costs the same per call
+> as standard verification, ~$0.69/1k flex; full-run proposal card
+> QUEUED as a decision); **grid verifier RUN — 9,133/9,133 verified,
+> zero failures** (meta shows list rates $12.54; expected flex billing
+> ≈ $6.27, on-card — PI to glance at the billing console); ArrowFormer
+> resolved at source (benchmark-script 0.917 vs headline 0.930+NMS);
+> DD5's second pass confirmed already discharged; M.10 cross-model
+> forward-reference landed; three stale sapphire loops killed.
+>
+> **PI remaining**: Gould read → D.9; mint the two Zotero group keys
+> (Arch-repro 5396607, HAVI 5940452) — Claude applies the fixes once
+> they exist; D24 brief — REMIND AT CLOSE (standing); billing-console
+> glance; solo read of M.8–M.12 → joint edit session later.
+>
+> **Claude queue (commissioned)**: grid post-verifier scoring +
+> findings + register row (data hot, committed `8eda1e3a3`); § 4.3
+> phase-table regeneration from the analyses register → M.11; the
+> H2-C full-run proposal card; Zotero fixes on key delivery.
+
+## 🎯 PREVIOUS (S141 beacon) — PI MORNING LIST, THEN THE WRITE-UP
 
 > **E82 IS CLOSED** (campaign complete, failed = 0, counters exact,
 > PI signed off 2026-08-22/23 evening; contract changelog has the full
