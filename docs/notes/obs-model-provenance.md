@@ -375,7 +375,7 @@ trailer mechanism's fragility.
 (`session-reflection.md:9059`), and is the sole basis for attributing Obs 326–356. But the transcript
 store has **no coverage at all** between 2026-05-13 and 2026-08-06, and no `claude-opus-4-8` string
 occurs anywhere in the reachable evidence. The label rests entirely on self-report.
-`[PI to confirm: that "Opus 4.8" names a real model he used, and its release date]`
+`[RESOLVED in full, 2026-08-24: model id archive-corroborated (below); release 2026-05-28 confirmed from the sourced timeline]`
 
 **RESOLVED 2026-08-23** ([§ 4.1](#41-archive-based-re-grading-2026-08-23-session-140)): the
 "no coverage" premise was the wrong-store artefact this draft's header corrects. The canonical
