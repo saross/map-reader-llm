@@ -265,7 +265,12 @@ scientific value of understanding the text-only pathway.
 ### 4.3 Phase Execution Summary
 
 [S134 note: the table below carries pre-Era-2 values and will be
-regenerated from the analyses register before prose lands.]
+regenerated from the analyses register before prose lands.
+**REGENERATED S142 (2026-08-24)**: the register-derived table now
+lives in `docs/paper/methods-draft.md` § M.11, with five
+register-vs-old-table disagreements flagged there in a [DRAFT NOTE].
+The table below is retained unaltered as the outline-era record; do
+not cite it.]
 
 | Phase | Hypothesis | Cells | Runs/Cell | Status | Optimal Result |
 |-------|-----------|-------|-----------|--------|----------------|

@@ -5,9 +5,11 @@
 > (2026-08-17): the D16 preregistration subsection. **The outline is now
 > FULLY CONVERTED** (S140, 2026-08-23): §§ 1–4 and § 6 landed as
 > M.8–M.12, joining M.x and M.2–M.7; the cost-basis section (§ 5.4)
-> already exists in `docs/methods-outline.md`. Two [PENDING]/[DRAFT
-> NOTE] items gate finalisation: the § 4.3 phase table regeneration and
-> the § 6.3 session-count refresh. See [§ Changelog](#changelog).
+> already exists in `docs/methods-outline.md`. The § 4.3 phase table
+> was regenerated from the analyses register in S142 (2026-08-24; five
+> register-vs-old-table disagreements flagged in place); one [DRAFT
+> NOTE] item gates finalisation: the § 6.3 session-count refresh.
+> See [§ Changelog](#changelog).
 
 ## M.x Preregistration, amendments, and analysis status
 
@@ -434,11 +436,46 @@ finding: the text-only pathway.
 per phase, as registered; thirty for the Phase 3a voting study. All
 Phase 2–3 runs score against the same 60-tile holdout.
 
-**Phase execution summary.** [PENDING: the outline's § 4.3 table
-carries pre-Era-2 values by its own S134 note and must be regenerated
-from the analyses register before this table lands in prose. Frame:
-one row per phase (2a–2e, 3a, 3d) with hypothesis, cells, runs per
-cell, and the carried-forward outcome.]
+**Phase execution summary.** The table below is regenerated from the
+analyses register (S142, per the outline's own S134 note), replacing
+the outline's § 4.3 table, whose values predated the Era-1
+re-scoring. Each factor was executed twice: the registered K = 10
+single-pass runs per condition on the 60-tile holdout, then a
+re-execution on the full 340-tile corpus (E36) with replication
+scaled to the factor's observed variance — three runs where the
+60-tile stage found a live effect, one where it found none
+(sufficient for confirmation, and deterministic at the carried
+T = 0.0), thirty for the consensus study (the rationale table is in
+`reports/experimental-progression.md` § "What was re-run"). Register
+outcomes are on the Era-1 340-tile, 14-buffer + MCC basis; the
+identifiers in parentheses key into `results/analyses-manifest.json`.
+
+| Phase | Hypothesis | Cells | Runs/cell (60 → 340 tiles) | Carried forward | Register outcome (Era-1 340-tile basis) |
+|---|---|---|---|---|---|
+| 2a | H1 modality/examples | 5 | 10 → 3 | Both track winners (E27): `brief-text-image` (Track 1), `brief-text` (Track 2) | Pooled modality effect NULL — text +0.024 F1, p = 0.177, not in the FDR rejection set; the extreme pairs are individually significant (brief-text > image-only, p = 0.004) (`h1-cmt0106-pooled-modality`) |
+| 2b | H7 temperature | 5 × 2 tracks | 10 → 3 | T = 0.0, both tracks | H7 in the confirmatory rejection set (p ≤ 0.001, BH-adjusted 0.002) (`family-bh-fdr-confirmatory`) |
+| 2c | H8 library composition | 5 × 2 tracks, + 3 exploratory image cells; scale-16/32 deferred (E11), executed as run `h8-v2` (E51) | 10 → 1 | plus-hp (13 examples; reused downstream, e.g. Phase 2e's baseline) | H8 not rejected (Simes p = 0.834) (`family-bh-fdr-confirmatory`; cells sit on `era1-single-pass-baseline-matrix`) |
+| 2d | H5 negative-example text | 2 × 2 tracks (the registered 3 × 3 factorial collapsed to OFAT, E28) | 10 → 1 | Minimal treatment | H5 not rejected (p = 0.756) (`family-bh-fdr-confirmatory`) |
+| 2e | H4 example ordering | 4 | 10 → 1 | No effect to carry | H4 not rejected (p = 0.124, adjusted 0.217); `canonical-last` is nonetheless the single-pass point-estimate leader (F1 0.631) (`era1-single-pass-baseline-matrix`) |
+| 3a | H3 consensus voting | 2 tracks × 3 temperatures × N ∈ {5, 10, 30}, + 3 HIGH-thinking text cells and a HIGH-vs-MINIMAL replication pair | 30 | Consensus pooling into the two-stage pipeline | H3 rejected (p < 1e-4, `family-bh-fdr-confirmatory`). Best per track at the best-F1@20 m vote threshold: text T = 0.3, N = 30, 23-of-30, F1 0.692; image T = 0.7, N = 30, 18-of-30, F1 0.691; HIGH thinking beats MINIMAL under consensus (+0.067 F1) (`phase3a-consensus-calibration`, `phase3a-replication-thinking-calibration`) |
+| 3d | H2 two-stage (proposer-verifier) | Verifier variants over consensus pools; the Era-1 board carries 4 verified-PV cells | Verifier n = 1 over pooled proposals | Adversarial text-only verifier, T = 0.0, MINIMAL | H2 rejected as a FALSIFIED directional prediction — two-stage improves F1 by +0.076 where the registration predicted against improvement at the ≥ 0.05 stopping threshold; the verified-PV cell is the Era-1 point-estimate leader (F1 0.792, MCC 0.676, within a 10-member MCB admissible set), and a MINIMAL single-pass + verifier reaches F1 0.770 at 2 calls/tile (`family-bh-fdr-confirmatory`, `era1-leaderboard`) |
+
+[DRAFT NOTE — register-vs-old-table disagreements, flagged per the
+S142 commission. (i) Replication: the outline's table implied 10
+runs/cell throughout; that was the 60-tile stage only — the citable
+340-tile re-execution used 3 (2a, 2b) and 1 (2c–2e), per the E36
+rationale. (ii) 2c cells: the outline's "4 × 2 tracks" undercounts —
+the register decomposes 5 registered library variants per track plus
+3 exploratory image cells. (iii) 2d cells: "3 × 2 tracks" was never
+executed — 2 × 2 after the E28 collapse. (iv) 3a optimum: the
+outline's "N=30, T=0.7, F1=0.751" does not reproduce as any register
+headline; on the current basis the text-track optimum is T = 0.3
+(0.692) and the image-track T = 0.7 (0.691) — the 0.751 is a
+pre-re-scoring value at a different scope, and it also survives at
+`docs/methods-outline.md` line 462. (v) 3d: the outline's
+"+0.09–0.14 F1" does not reproduce — the registered instrument gives
++0.076, and the progression report's Flash-range figure is +0.05 to
++0.09.]
 
 **Errata affecting execution.** Two implementation errors affected
 data collection and analysis method respectively, both detected and
@@ -505,6 +542,25 @@ rather than the implementation. Session transcripts are archived at
 planned as a separate contribution.
 
 ## Changelog
+
+### 2026-08-24 (S142) — § 4.3 phase table regenerated from the register
+
+The M.11 [PENDING] block becomes the phase execution summary table,
+regenerated from `results/analyses-manifest.json` (38 analyses) with
+run decomposition from `results/run-conditions.json` and
+`results/passes-manifest.json`, per the outline's own S134 note and
+the PI's 2026-08-24 commission. The table reports the register's
+citable values (Era-1 340-tile, 14-buffer + MCC basis) and makes the
+two-stage execution explicit: registered K = 10 on the 60-tile
+holdout, then the E36 340-tile re-execution at 3/3/1/1/1/30
+replications. Five register-vs-old-table disagreements are flagged in
+a [DRAFT NOTE] for the PI rather than silently corrected: uniform-10
+replication, the 2c and 2d cell counts, the 3a "F1=0.751" optimum
+(irreproducible from the register; the current per-track optima are
+text T0.3 0.692 / image T0.7 0.691), and 3d's "+0.09–0.14" (the
+registered instrument gives +0.076). What did NOT change: every other
+M.11 claim, and the § 6.3 session-count [DRAFT NOTE], which still
+gates finalisation.
 
 ### 2026-08-23 (S140) — Outline §§ 1–4 and § 6 converted: M.8–M.12
 
