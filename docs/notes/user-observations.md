@@ -804,10 +804,10 @@ Dispositions recorded per candidate below.
    findings came from outside the brief's framing). The flagged conflict
    plus an independent auditor beats an unframed diff.
 
-## S138 candidates (2026-08-21, pending review)
+## S138 candidates (2026-08-21, reviewed 2026-08-24)
 
-Drafted at handoff; accept / edit / discard / replace. Unanswered candidates
-hold over — silence never discards.
+Answered in the structured decision walk of 2026-08-24; each answer below
+records the option the PI selected.
 
 - **Candidate 1 — the structured-question cadence.** Today carried eleven
   scope rulings through option-card questions (audit dispositions, E82 scope,
@@ -815,11 +815,18 @@ hold over — silence never discards.
   serve you better than prose proposals for decision-dense sessions — and is
   there a density past which it becomes railroading rather than steering?
 
+  **Answer (2026-08-24): keep the cards, with a guardrail** — the format is
+  the right default for decision-dense stretches, but Claude should drop to
+  prose when a decision needs genuine deliberation rather than selection.
+
 - **Candidate 2 — the context-budget call was yours, not mine.** You caught
   the 84 % context mark and proposed deferring the Discussion walk; I had not
   raised it and was about to start a ten-decision collaborative task in a
   nearly-full context. Should Claude flag context burn proactively at a
   threshold (say 70 %), with a recommendation about what still fits?
+
+  **Answer (2026-08-24): yes — flag at ~70 %**, with a recommendation of
+  what still fits. Standing practice.
 
 - **Candidate 3 — pausing versus falling back.** When sapphire dropped
   mid-campaign I reported and held rather than falling back to zbook,
@@ -827,7 +834,13 @@ hold over — silence never discards.
   context. Was hold-and-report right here, and is it the right default
   whenever an environment assumption breaks mid-run?
 
-## Pending review — Session 139 candidates (2026-08-22, drafted at handoff)
+  **Answer (2026-08-24): right call — make it the default.** Environment
+  breaks mid-run get report-and-hold; fallbacks only on explicit say-so.
+
+## Session 139 candidates (2026-08-22, reviewed 2026-08-24)
+
+Answered in the structured decision walk of 2026-08-24; answers appended
+per candidate.
 
 **S139-C1 (in-the-moment reaction, relayed per the exception rule).**
 On the Obs 425 claim draft: "Otherwise I am quite happy with your
@@ -837,12 +850,19 @@ landed exactly; candidate: drafting headline claims matter-of-fact and
 letting Shawn's corrections sharpen them is the right division of
 labour for claim language.
 
+**Answer (2026-08-24): confirmed — recorded.** Conservative-first
+drafting with the PI's sharpening pass is the standing division for
+claim language.
+
 **S139-C2.** Five mid-turn steers while agents ran (foregrounding
 concern, preprint preservation, TRAP question, collection-variable
 clarification, naming deferral) were each absorbed into the running
 pipeline without restart. Candidate: the interleaved-rulings-over-
 running-agents mode was helpful — decisions arrived as small structured
 choices at the moment evidence existed, never as blocking reviews.
+
+**Answer (2026-08-24): confirmed — recorded.** Steering-over-running-
+agents stands as the collaboration mode for multi-agent stretches.
 
 **S139-C3 (possible negative).** The provenance agent's "12-week
 transcript hole" claim triggered an infra-session audit that proved it
@@ -851,3 +871,9 @@ reached Shawn stated more confidently than its evidence base (a
 fallback store) warranted. Candidate: absence claims should arrive
 pre-caveated with the enumeration that produced them ("no transcripts
 IN STORE X globbed as Y") before any "hole" framing.
+
+**Answer (2026-08-24): adopt, and GENERALISE.** The rule extends beyond
+transcripts to ANY absence claim — files, records, literature: name the
+store searched, the method, and its known limits before any alarm
+framing. (The O'Hara/GMFS full-text episode, Obs 429, is the same
+lesson from the literature side.)
