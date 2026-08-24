@@ -28337,3 +28337,102 @@ major defect class, input vintage rather than consumption order); **Obs
 creation time is what made that settlement cheap too, the same principle
 applied to model attribution rather than input vintage).
 
+## Observation 432: A coverage simulation is a standing instrument, not a one-off check — the D24 evidence run and what future inferential changes can borrow from it (Session 138, 2026-08-20; accepted 2026-08-24)
+
+PI-accepted write-up (2026-08-24, held over from the Session 138 handoff —
+`planning/paper-writeup-continuity.md`, Session 138 entry) of the
+empirically calibrated Monte Carlo coverage simulation Session 138 built
+for the D24 open question, and of the standing-instrument argument that is
+this Obs's actual point.
+
+**What was built.** D24 asks whether the tile-level bootstrap substituted
+for Hsu's Dunnett-tabulated critical value (`scripts/selection_aware_intervals.py`)
+attains nominal simultaneous coverage. Session 138 answered with an
+empirically calibrated Monte Carlo check
+(`reports/session-137-audit-report-2026-08-20.md` Part B). Design: the
+population is the empirical joint distribution of per-tile (TP, FP, FN)
+vectors across candidates for a real committed board; truth is the
+full-data statistic vector and the true best is its argmax; each of
+S = 400 simulated datasets draws *n* tiles with replacement; on each, the
+Hsu MCB procedure runs exactly as `selection_aware_intervals.py` runs it
+(inner bootstrap critical value, 95th percentile of the max signed
+deviation); the recorded outcome is whether the true best survives into
+the admissible set (nominal ≥ 95 %).
+
+**The gate first.** Before any simulation ran, the re-implementation
+reproduced each committed artefact exactly — same seed, same *B*,
+sequential RNG — matching `hsu_w_upper` to 6 d.p., the admissible set
+exactly, and the apparent F1 to 6 d.p. on all three boards tested. This
+is the same reproduce-a-committed-value discipline Obs 423 names; here it
+doubled as an independent reproduction of the committed instruments
+before the new check was trusted.
+
+**The result.**
+
+| Board | *k* | *n* tiles | P(true best retained) | Nominal |
+|---|---:|---:|---:|---:|
+| `h12-v2-hp-hn-ratio` | 6 | 327 | 0.995 ± 0.007 | 0.95 |
+| `era1-single-pass-baseline-matrix` | 36 | 340 | 1.000 | 0.95 |
+| `era1-leaderboard` | 82 | 340 | 1.000 | 0.95 |
+
+The bootstrap-critical-value substitution errs conservative on all three
+boards tested. It is robust to the inner bootstrap count: the main sweep
+runs the inner bootstrap at *B* = 1,000, and a fresh-seed `h12-v2` re-run
+at the committed *B* = 10,000 (S = 300) gives 0.990 ± 0.011 — not an
+artefact of the cheaper inner loop. This is within-model evidence only —
+the external statistical review D24 asks for remains wanted, and answers
+a question the simulation structurally cannot (it resamples tiles under
+an iid assumption it cannot itself test). `docs/methodology/mcb-critical-value-open-question.md`
+was revised 2026-08-20 to carry this coverage evidence alongside three
+unrelated factual corrections (F8), so the brief is now current for a
+statistician's first read.
+
+**Why this Obs exists: the standing-instrument point.** The simulation is
+cheap — no API calls, pure local resampling over per-tile count arrays
+already loadable for every committed board, "400 sims in seconds via the
+board loaders" per the Session 138 handoff note
+(`planning/paper-writeup-continuity.md`). That means any FUTURE change to
+the inferential machinery — a different critical-value construction, a
+new tie-set instrument, a resampling change — can be coverage-checked
+empirically before it touches a published board, at $0 and minutes of
+wall-clock rather than an argued judgement call. This is not
+hypothetical: the project has already replaced an inferential instrument
+mid-project twice — E82 (the registered percentile bootstrap silently
+replaced by BCa, plus an axis-transposition bug in the vectorised
+adapter) and E83 (the order-dependent sequential tiering rule replaced by
+Hsu MCB, the very rule this simulation now checks) — and both changes
+were argued through rather than measured against a known-truth simulation
+at the time they landed. A cheap calibrated coverage check turns the next
+such replacement from an argued judgement into a measured one, board by
+board, before publication rather than by post hoc audit.
+
+**Scope limits, honestly stated.** Empirical calibration inherits the
+committed boards' own distributions — three boards tested
+(`h12-v2-hp-hn-ratio`, `era1-single-pass-baseline-matrix`,
+`era1-leaderboard`), not all fourteen registered boards, so the
+conservative reading is not yet shown to generalise to the smallest-*k*
+or the two MCC boards. S = 400 bounds resolution at roughly ±0.02 on the
+coverage estimates (the source's own stated figure). The check validates
+coverage, not power — it says nothing about how often a genuinely worse
+candidate is wrongly retained. And it remains within-model evidence: it
+can detect a miscalibrated critical-value substitution given tile
+exchangeability, but it cannot substitute for the external review, only
+inform it.
+
+Sources: `reports/session-137-audit-report-2026-08-20.md` Part B (design,
+gate, and per-board results table); `docs/methodology/mcb-critical-value-open-question.md`
+(§ "A first empirical read on questions 1 and 2"; Changelog, "2026-08-20 —
+Audit corrections and coverage evidence"); `docs/methodology/preregistration/protocol-errata.md`
+(E82 and E83 entries; the D24 coverage-evidence correction item in E83's
+2026-08-20 correction block); `reports/defect-register-2026-08-18.md` (D24
+row; D32 row, "Monte Carlo coverage evidence added"); `planning/paper-writeup-continuity.md`
+(Session 138 entry, held-over candidate (b); the D24 standing item at the
+file head). Related: **Obs 421** (selection optimism's candidate-correlation
+mechanism, strengthened in the same source by this session's coverage
+result — "for the same structural reason"); **Obs 422** (the
+tier-built-from-pairwise-non-significance argument that motivated E83's
+replacement of the sequential rule this coverage check now validates);
+**Obs 423** (the reproduce-a-committed-value gate this Obs's own
+re-implementation gate is an instance of); **Obs 431** (the same
+S138-handoff-held-over provenance and the same measurement-beats-audit-
+after lesson, applied to input vintage rather than inferential coverage).
