@@ -1,0 +1,142 @@
+{
+  "generated_at_utc": "2026-08-24T13:55:18.476135+00:00",
+  "classification": "Stride-programme Phase A ($0): incumbent verified sets clipped to the grid common footprint and re-scored at 20/30 m, each under an own-scope reproduction gate at 5e-4. POST-HOC (E41-class) comparison material for planning/stride-programme-2026-08-24.md.",
+  "scope": {
+    "own": "era-2-487 (full_evaluation_bounds, 384px grid)",
+    "common": "grid four-way intersection on the clipped 487-tile carrier (428 references)"
+  },
+  "incumbents": [
+    {
+      "condition_id": "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
+      "detections": "results/verifier-robustness/opmax-sets/opmax-16of30-N5minT0.3-vt3-pt0.15.geojson",
+      "registered_f1_at_20m": 0.8951,
+      "own_scope_reproduced_f1_at_20m": 0.8951048951048951,
+      "n_detections_own_scope": 423,
+      "n_detections_common": 418,
+      "n_dropped_by_clip": 5,
+      "common_footprint_20m": {
+        "precision": 0.8947368421052632,
+        "recall": 0.8738317757009346,
+        "f1": 0.884160756501182,
+        "n_detections": 418,
+        "mcc": 0.8254621643551464
+      },
+      "common_footprint_30m": {
+        "precision": 0.9138755980861244,
+        "recall": 0.8925233644859814,
+        "f1": 0.9030732860520095,
+        "n_detections": 418,
+        "mcc": 0.8254621643551464
+      },
+      "paired_contrast_vs_grid_winner_20m": {
+        "delta": 0.011974509199301098,
+        "ci_lower": -0.013499882732776821,
+        "ci_upper": 0.037127386162567395,
+        "bootstrap_mean": 0.011927774347969279,
+        "p_two_sided": 0.3504,
+        "n_iterations": 10000,
+        "seed": 42,
+        "excludes_zero": false
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-text-consensus-16of30",
+      "detections": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson",
+      "registered_f1_at_20m": 0.8902,
+      "own_scope_reproduced_f1_at_20m": 0.8902007083825267,
+      "n_detections_own_scope": 412,
+      "n_detections_common": 407,
+      "n_dropped_by_clip": 5,
+      "common_footprint_20m": {
+        "precision": 0.9066339066339066,
+        "recall": 0.8621495327102804,
+        "f1": 0.8838323353293414,
+        "n_detections": 407,
+        "mcc": 0.813866408969979
+      },
+      "common_footprint_30m": {
+        "precision": 0.918918918918919,
+        "recall": 0.8738317757009346,
+        "f1": 0.8958083832335331,
+        "n_detections": 407,
+        "mcc": 0.813866408969979
+      },
+      "paired_contrast_vs_grid_winner_20m": {
+        "delta": 0.012302930371141718,
+        "ci_lower": -0.011675553521983828,
+        "ci_upper": 0.035793405100435945,
+        "bootstrap_mean": 0.01213164532645591,
+        "p_two_sided": 0.3122,
+        "n_iterations": 10000,
+        "seed": 42,
+        "excludes_zero": false
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-text-min-6of10",
+      "detections": "results/verifier-robustness/min-thinking-sets/text-min-t07-10pass-6of10-n1-pt0.2.geojson",
+      "registered_f1_at_20m": 0.8835,
+      "own_scope_reproduced_f1_at_20m": 0.8834951456310681,
+      "n_detections_own_scope": 389,
+      "n_detections_common": 384,
+      "n_dropped_by_clip": 5,
+      "common_footprint_20m": {
+        "precision": 0.921875,
+        "recall": 0.8271028037383178,
+        "f1": 0.87192118226601,
+        "n_detections": 384,
+        "mcc": 0.803987935394555
+      },
+      "common_footprint_30m": {
+        "precision": 0.9401041666666666,
+        "recall": 0.8434579439252337,
+        "f1": 0.8891625615763546,
+        "n_detections": 384,
+        "mcc": 0.803987935394555
+      },
+      "paired_contrast_vs_grid_winner_20m": {
+        "delta": 0.024214083434473066,
+        "ci_lower": -0.003492305956024241,
+        "ci_upper": 0.05191602579135401,
+        "bootstrap_mean": 0.024317761473090248,
+        "p_two_sided": 0.0804,
+        "n_iterations": 10000,
+        "seed": 42,
+        "excludes_zero": false
+      }
+    },
+    {
+      "condition_id": "pv-diag-384::verified-adv-text-min-true-3of5",
+      "detections": "results/verifier-robustness/min-thinking-sets/text-min-t07-TRUE-5pass-3of5-n1-pt0.15.geojson",
+      "registered_f1_at_20m": 0.8784,
+      "own_scope_reproduced_f1_at_20m": 0.8783943329397876,
+      "n_detections_own_scope": 412,
+      "n_detections_common": 407,
+      "n_dropped_by_clip": 5,
+      "common_footprint_20m": {
+        "precision": 0.8845208845208845,
+        "recall": 0.8411214953271028,
+        "f1": 0.8622754491017964,
+        "n_detections": 407,
+        "mcc": 0.7886910194269852
+      },
+      "common_footprint_30m": {
+        "precision": 0.8968058968058968,
+        "recall": 0.852803738317757,
+        "f1": 0.8742514970059881,
+        "n_detections": 407,
+        "mcc": 0.7886910194269852
+      },
+      "paired_contrast_vs_grid_winner_20m": {
+        "delta": 0.03385981659868664,
+        "ci_lower": 0.006527329371756913,
+        "ci_upper": 0.062265831843794715,
+        "bootstrap_mean": 0.03384200393429474,
+        "p_two_sided": 0.015,
+        "n_iterations": 10000,
+        "seed": 42,
+        "excludes_zero": true
+      }
+    }
+  ]
+}
