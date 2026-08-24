@@ -1788,3 +1788,69 @@ recommendation and the evidence one click away; when he answers
 mid-turn, treat the running work plan as amendable in place — the
 restart cost of "wait until the current thing finishes" is almost
 always higher than the merge cost.
+
+## claude-obs 74 — 2026-08-24 (Session 140–141): the completeness gate on a recommended option — he re-opens the evidence when the world has moved, and he is right to
+
+**Pattern.** I presented the Obs 258 boundary adoption as a
+"(Recommended)" card resting on the previous day's archive sweep.
+Shawn declined the click: the archiving system had been repaired since
+the sweep, and he asked me to re-verify completeness before he would
+adopt. The re-investigation did not change the verdict — it
+transformed its standing (one sweep became five independent grounds,
+including the session-log cross-check I had not thought of), and it
+converted every archive gap from "possibly missing data" to "verified
+no-work period".
+
+**Lesson.** A recommendation inherits the vintage of its evidence. He
+tracks out-of-band changes to the world that my context cannot see,
+and he injects them exactly at the decision point — the same
+institutional-memory move as "haven't we already run X?" (claude-obs
+lineage), here applied as a gate rather than a spend-saver.
+
+**How to apply.** When re-presenting any queued recommendation, ask
+first — of myself and if needed of him — "has anything feeding this
+moved since it was queued?" and say so on the card. Never let a
+(Recommended) tag imply the evidence is current when its date is not.
+
+## claude-obs 75 — 2026-08-24 (Session 140–141): he refines taxonomies by supplying the missing category, not by rejecting the proposal
+
+**Pattern.** My two-tier Zotero key design (owned vs external) met
+neither rejection nor acceptance but a boundary correction: SDAM is
+not his; and then, unprompted, "should paper-b/TRAP/FAIMS be carved
+off into a separate category?" — producing the three-tier
+owned/stewarded/guest architecture that is plainly better than my
+proposal. The same move built the 30 m/50 m two-role buffer scheme
+(S111 record) and the dual-track carry-forward.
+
+**Lesson.** His characteristic design contribution is the CATEGORY I
+merged away. When he engages a proposal's structure rather than its
+verdict, the productive response is to look for what my taxonomy
+collapsed, not to defend the boundary I drew.
+
+**How to apply.** Present taxonomies with the collapsed distinctions
+visible ("I have merged X and Y because…") so the missing-category
+correction is cheap to make; treat "should these be separate?" as the
+start of the design, not an objection to it.
+
+## claude-obs 76 — 2026-08-24 (Session 140–141): self-critique — my committed work was gated; my ephemeral work ran on luck
+
+**Pattern.** Two errors this session cost nothing only by accident:
+the grid-verifier launch used a wrong flag (argparse refused — zero
+calls, but I had not dry-run the new command shape), and my first
+archive-coverage join used a destructive set read (`models.pop()`)
+that mis-classified 324 headings — caught only because the number
+contradicted a document sitting in the same context. Meanwhile every
+COMMITTED artefact travelled through gates that worked flawlessly.
+
+**Lesson.** I apply verification discipline in proportion to an
+artefact's permanence, but decisions rest on ephemeral intermediates
+too — launches, joins, one-off derivations. The failure mode
+concentrates exactly where the discipline instruments do not reach,
+and a fifteen-hour session erodes bare care faster than it erodes
+gated process.
+
+**How to apply.** Dry-run every new command shape before the live
+invocation, including one-offs; give any throwaway derivation whose
+output feeds a ruling a thirty-second synthetic test; and treat "this
+is just intermediate" as the cue for MORE mechanical checking, not
+less.

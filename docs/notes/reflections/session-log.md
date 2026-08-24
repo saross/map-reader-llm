@@ -459,6 +459,7 @@ Reviewed and iteratively refined prompt text derived from the hard example libra
 ### Commits
 
 No commits this session. All prompt text changes exist as proposed text in the conversation, pending:
+
 1. User's manual review completion
 2. Opus review feedback
 3. Implementation across 10 prompt files
@@ -871,6 +872,7 @@ The H1 prediction was that image-based conditions would outperform text-only con
 - The difference is consistent across all 10 runs per condition
 
 Possible explanations:
+
 1. Images anchor to specific visual patterns that don't generalise well
 2. Negative examples (hard negatives) make the model too conservative
 3. Text descriptions allow more flexible matching
@@ -919,6 +921,7 @@ positive inflation = precision deflation = downward-biased F1 CIs.
 Fix: Pre-compute TP/FP/FN per tile once, aggregate in bootstrap loop
 with proper duplicate handling. Added `compute_per_tile_tp_fp_fn()` and
 `aggregate_tile_metrics()` helpers. Refactored all 7 bootstrap functions
+
 + 2 tile classification bootstrap functions.
 
 ### Key Results
@@ -1832,13 +1835,13 @@ yet approved — session ended for context clearing.
 
 ### Accomplishments (continued)
 
-6. **Created `scripts/analyse_tolerance_sensitivity.py`** — spatial
+1. **Created `scripts/analyse_tolerance_sensitivity.py`** — spatial
    tolerance sweep across all 33 Phase 2 conditions at 5 buffer sizes
-7. **Generated tolerance sensitivity outputs** in
+2. **Generated tolerance sensitivity outputs** in
    `results/tolerance-sensitivity/`:
    - `tolerance-sensitivity.csv` — 165-row results table
    - `tolerance-sensitivity.json` — structured results
-8. **Drafted Phase 3a plan** — K=30 at T=0.3/T=0.7 with plus-hp,
+3. **Drafted Phase 3a plan** — K=30 at T=0.3/T=0.7 with plus-hp,
    erratum E32 for temperature deviation, saved to plan file
 
 ### Commits
@@ -2312,6 +2315,7 @@ Full 4×4 matrix (condition × tolerance):
 | T2 Txt HIGH | 0.751 | 0.804 | 0.821 | 0.831 |
 
 Key findings:
+
 - Image tracks gain 14–15 pp from 20→50 m (spatial imprecision)
 - Text tracks gain 8–10 pp (better localisation)
 - Thinking-level interaction robust across all tolerances
@@ -3379,10 +3383,10 @@ strategy.
 
 ### Session 60 continuation — Analysis phase (different CC instance)
 
-7. **N=1 tolerance sweep** — evaluated all 51 N=1 conditions (18 at
+1. **N=1 tolerance sweep** — evaluated all 51 N=1 conditions (18 at
    384px + 33 at 512px) at 20/30/40/50m buffers on sapphire.
 
-8. **Pairwise permutation tests** — wrote `run_pairwise_tests.py`
+2. **Pairwise permutation tests** — wrote `run_pairwise_tests.py`
    orchestrator and `apply_fdr_correction.py`. Ran 335 comparisons:
    - 32 hypothesis-driven (7 groups): 18/26 confirmatory significant,
      3/6 exploratory significant after BH FDR at 30m
@@ -3390,7 +3394,7 @@ strategy.
      9 performance tiers identified
    - 20m sensitivity: directionally consistent (20/26 confirmatory)
 
-9. **Paper tables** — produced 7 tables:
+3. **Paper tables** — produced 7 tables:
    - N=1 leaderboard (51 conditions × 4 buffers)
    - Pipeline progression (F1: 0.406 → 0.904)
    - Pairwise hypothesis table with 20m cross-check
@@ -3399,23 +3403,23 @@ strategy.
    - Pro 2×2 temperature × thinking matrix
    - Cost retrospective (~$195–203 total, $0.34/mound)
 
-10. **MCC completeness** — 16 additional conditions (5 PV + 11
+4. **MCC completeness** — 16 additional conditions (5 PV + 11
     consensus). Image baseline + PV achieved MCC=0.877 (highest).
 
-11. **H9 diversity cross-track comparison** — null result on both
+5. **H9 diversity cross-track comparison** — null result on both
     tracks. Parametric diversity fails where structural diversity
     (PV pipeline) succeeds.
 
-12. **Tile-size comparison** — `/review-implementation` identified
+6. **Tile-size comparison** — `/review-implementation` identified
     McNemar + per-map F1 as the correct approach (tile-swap permutation
     invalid for cross-grid). Finding: 384px has higher recall (McNemar
     p≤0.017), 512px has higher F1 (better precision). Divergence
     explains why 384px suits the consensus+PV pipeline (Obs 203).
 
-13. **Defensive model check** — `validate_model_consistency()` in
+7. **Defensive model check** — `validate_model_consistency()` in
     run_phase2.py and run_pv.py. Checks CLI vs YAML vs output dir.
 
-14. **Commits and cleanup** — 22 commits pushed, 171.7 GB freed on
+8. **Commits and cleanup** — 22 commits pushed, 171.7 GB freed on
     sapphire (319 batch_working dirs), all to-do items complete.
 
 ## Session 61 — 2026-03-29 to 2026-04-02 (map-reader-llm)
@@ -3474,7 +3478,7 @@ Transition from analysis to paper argumentation. 14 commits pushed.
     architecture comparisons (ΔF1 +0.047 to +0.141). Gap amplifies
     through pipeline stages. Corrected earlier underestimate and ran
     2 missing permutation tests (Pro text vs image ***, baseline PV
-    text vs image ***).
+    text vs image***).
 
 11. **Thinking-level crossover** — HIGH is worse at N=1 (ΔF1=-0.101)
     but better at consensus (+0.139). The diversity mechanism: HIGH's
@@ -3537,36 +3541,36 @@ infrastructure.
 
 ### QGIS sanity check
 
-5. **Export script created** — `scripts/export_qgis_sanity_check.py`.
+1. **Export script created** — `scripts/export_qgis_sanity_check.py`.
    Produces classified TP/FP/FN/rejected GeoJSON layers from N=1
    PV output (572 candidates from `proposer-verifier-384`).
 
-6. **Spatial accuracy** (Obs 210): Median match distance 5.0m
+2. **Spatial accuracy** (Obs 210): Median match distance 5.0m
    (exactly 1 pixel at 5.02 m/px). 88% within 10m. VLM precision
    exceeds human volunteer digitisation accuracy.
 
-7. **FP taxonomy** (Obs 211): 82 FPs decomposed into three explained
+3. **FP taxonomy** (Obs 211): 82 FPs decomposed into three explained
    categories — spot heights (29), overlap duplicates (18), water
    features (3). Remainder are high-confidence detections near
    reference mounds (overlap boundary effects).
 
-8. **Composite symbol offset**: "Bench mark on burial mound" (fid 445)
+4. **Composite symbol offset**: "Bench mark on burial mound" (fid 445)
    detected at 23.2m — just outside 20m buffer. Systematic centroid
    pull from adjacent symbols on composite map features.
 
 ### Prompt refinement (v2)
 
-9. **v2 prompts created** — `propose_brief_v2.md` and
+1. **v2 prompts created** — `propose_brief_v2.md` and
    `verify_adversarial_v2.md`. Added size criterion for spot heights
    (~5–7px vs ≥12px mounds) and colour exclusion for water features
    (blue = never a mound).
 
-10. **v2 verifier effect** (Obs 212): Re-verified 572 candidates.
+2. **v2 verifier effect** (Obs 212): Re-verified 572 candidates.
     At threshold 0.15: ΔF1=+0.071, ΔP=+0.129, ΔR=+0.046. The
     "adversarial budget" mechanism — concrete rejection criteria
     make the verifier more confident about real mounds too.
 
-11. **Scale-dependent FP populations** (Obs 213): Spot height FPs
+3. **Scale-dependent FP populations** (Obs 213): Spot height FPs
     are specific to 384px tiles — at 512px the symbols are below
     the VLM's detection threshold. Calibration at 512px correctly
     addressed 512px FPs; the 384px FP population is a legitimate
@@ -3574,66 +3578,66 @@ infrastructure.
 
 ### Erratum E47 and controlled testing
 
-12. **E47: Proposer prompt substitution** — discovered that all PV
+1. **E47: Proposer prompt substitution** — discovered that all PV
     experiments used `detect_brief-text.md` instead of preregistered
     `propose_brief.md`. Created on 2026-01-20, refined 2026-02-03,
     never used. The H2 pilot reused Phase 2d detection outputs to
     save cost, and the pattern persisted.
 
-13. **2×2 prompt matrix** (Obs 214): Initial ad-hoc test showed
+2. **2×2 prompt matrix** (Obs 214): Initial ad-hoc test showed
     +21pp F1 from proposer framing. Controlled test (identical
     17-example config, 569-mound evaluation) showed ΔF1=−0.013
     (null). The ad-hoc result was confounded by example set
     difference (9 vs 17 examples). **Retracted** the framing
     claim; v2 verifier finding (Obs 212) unaffected.
 
-14. **`propose_brief-text.json` config created** — clones
+3. **`propose_brief-text.json` config created** — clones
     `detect_brief-text.json` changing only the instruction file.
     Isolates the E47 instruction change.
 
-15. **E47 N=1 evaluation** — `propose_brief` proposer + v1 verifier:
+4. **E47 N=1 evaluation** — `propose_brief` proposer + v1 verifier:
     F1=0.800 [0.765–0.831] vs original detect F1=0.813
     [0.780–0.844]. CIs overlapping. No significant difference.
 
 ### Code hardening
 
-16. **Tile-size validation** — `4_detect_mounds_batch.py` and
+1. **Tile-size validation** — `4_detect_mounds_batch.py` and
     `lib_batch_api.py` now check first tile dimensions against
     configured tile_size. Errors on mismatch with actionable
     message. Prevents the 512/384 coordinate corruption bug.
 
-17. **Batch mode added** — `4_detect_mounds_batch.py` now supports
+2. **Batch mode added** — `4_detect_mounds_batch.py` now supports
     `--mode batch` using `lib_batch_api.run_batch_unit()`. Full
     lifecycle: JSONL build → upload → submit → poll → retrieve →
     parse. Includes `--run N` for multi-pass consensus.
 
-18. **Audit** — `/audit` on both modified scripts. 1 critical
+3. **Audit** — `/audit` on both modified scripts. 1 critical
     (test breakage from validation), 4 medium, 4 low. All critical
     and medium issues fixed. 97/97 batch API tests pass.
 
-19. **Output directory standard** — spec document at
+4. **Output directory standard** — spec document at
     `docs/methodology/output-directory-standard.md`. Defines
     artefact types, gitignore policy, naming conventions.
 
 ### 55-map production run preparation
 
-20. **Rasters reprojected** — 55 maps from EPSG:4326 to EPSG:32635
+1. **Rasters reprojected** — 55 maps from EPSG:4326 to EPSG:32635
     via gdalwarp. 65 seconds on zbook. Output: 2.4 GB in
     `inputs/rasters/Russian1981_32635/`.
 
-21. **Tiles generated** — 8,541 tiles at 384px (stride 336).
+2. **Tiles generated** — 8,541 tiles at 384px (stride 336).
     4 minutes 38 seconds on zbook. Output: 2.0 GB in
     `inputs/tiles_384_55maps/`.
 
-22. **Ground truth built** — 4,770 hairy-only student mounds in
+3. **Ground truth built** — 4,770 hairy-only student mounds in
     EPSG:32635. Output: `inputs/vectors/references/student-mounds-55maps.geojson`.
 
-23. **Manifest and bounds** — tile manifest (8,541 entries) and
+4. **Manifest and bounds** — tile manifest (8,541 entries) and
     evaluation bounds GeoJSON (8,541 polygons) generated.
 
 ### E47 N=5 batch run
 
-24. **5-pass consensus run launched** — `propose_brief-text` proposer,
+1. **5-pass consensus run launched** — `propose_brief-text` proposer,
     Flash HIGH, T=0.7, 384px, batch mode. Run 1 complete (1,614
     detections). Runs 2–5 initially failed (network outage),
     resubmitted. Consensus → verify → evaluate pipeline deferred
@@ -3695,62 +3699,62 @@ hardening, and statistical correction framework.
 
 ### Code changes (13 commits)
 
-7. **Evaluation generalisation** — `get_map_name()` regex (was
+1. **Evaluation generalisation** — `get_map_name()` regex (was
    hardcoded 4-map list), `--ground-truth` flag for
    `evaluate_pv_results.py`, auto-detect reference column.
 
-8. **Incremental verifier write** (Issue #10) — `_save_probabilities_
+2. **Incremental verifier write** (Issue #10) — `_save_probabilities_
    incremental()` every 100 candidates + resume logic. Prevents the
    530/607 data loss that occurred during gold-standard v2 run.
 
-9. **Cleanup subcommand** (Task #11) — `run_pv.py cleanup` with
+3. **Cleanup subcommand** (Task #11) — `run_pv.py cleanup` with
    iterative retries, safe-mode escalation, audit trail, dry-run.
    6 unit tests.
 
-10. **Failure threshold scaling** — `MAX_ACCEPTABLE_TILE_FAILURE_RATE
+4. **Failure threshold scaling** — `MAX_ACCEPTABLE_TILE_FAILURE_RATE
     = 0.20` (was hardcoded 10 tiles). `MAX_SYNC_RETRIES` 0 → 3
     (restored default).
 
-11. **Test fixes** — 5 pre-existing test failures resolved
+5. **Test fixes** — 5 pre-existing test failures resolved
     (`missing_tiles` → `missing_sources`, xfail for bootstrap
     interaction zeros, updated non-georeferenced tile assertions).
 
-12. **Gitignore overhaul** — principled rule: track anything that
+6. **Gitignore overhaul** — principled rule: track anything that
     costs API money, ignore locally regenerable. Selective unignore
     for 55-map and gold-standard outputs.
 
 ### E47 v1 vs v2 verifier analysis
 
-13. **Full grid sweep** — 5 consensus levels × 4 buffers × threshold
+1. **Full grid sweep** — 5 consensus levels × 4 buffers × threshold
     sweeps for both v1 and v2 verifiers on the E47 `propose_brief`
     data. v2 wins 8/8 at every level (sign test p=0.004).
 
-14. **Pairwise permutation** — at 4-of-5: ΔF1=+0.017, p=0.039.
+2. **Pairwise permutation** — at 4-of-5: ΔF1=+0.017, p=0.039.
     Suggestive but doesn't survive multiple-comparison correction.
 
-15. **Gold-standard recreation** — 5-pass `detect_brief-text` +
+3. **Gold-standard recreation** — 5-pass `detect_brief-text` +
     both verifiers on 4-map data. v2 F1=0.885 vs v1 0.873 (+0.012)
     at 50m. Confirms v2 improvement on the optimal pipeline.
 
-16. **55-map v1 vs v2** — ΔF1=+0.001 at 50m. v2 effect diminishes
+4. **55-map v1 vs v2** — ΔF1=+0.001 at 50m. v2 effect diminishes
     on broader datasets (Obs 217).
 
 ### 55-map generalisation results
 
-17. **Primary result** (50m, T=0.15 carry-forward):
+1. **Primary result** (50m, T=0.15 carry-forward):
     F1=0.790, P=0.858, R=0.732.
 
-18. **Generalisation gap**: −0.101 from gold standard (F1=0.891).
+2. **Generalisation gap**: −0.101 from gold standard (F1=0.891).
     Primarily recall loss (−0.112).
 
-19. **Carry-forward threshold validated**: T=0.15 tied with T=0.20
+3. **Carry-forward threshold validated**: T=0.15 tied with T=0.20
     as optimal. No re-optimisation needed.
 
-20. **Buffer sensitivity**: 20m→30m F1 jump of +0.132 (vs +0.027 on
+4. **Buffer sensitivity**: 20m→30m F1 jump of +0.132 (vs +0.027 on
     gold standard) reveals student GT spatial imprecision. 50m is
     the most meaningful tolerance for this comparison.
 
-21. **Correction for student errors** (Obs 220): Adjusting for
+5. **Correction for student errors** (Obs 220): Adjusting for
     documented 5% student FN rate, corrected F1 ∈ [0.790, 0.810].
     Generalisation gap narrows to 0.081–0.101.
 
@@ -3852,6 +3856,7 @@ Tile-size-agnostic, dataset-agnostic. Seed of the automated
 ### H10/H12 experiment execution
 
 **Calibration discovery** (API gate 1, $0.80):
+
 - K=5 detection passes on 160 calibration tiles
 - 63 HP candidates (48 borderline + 15 consistent FN) — 16×
   expansion from the 20-tile Phase 2 calibration
@@ -3859,6 +3864,7 @@ Tile-size-agnostic, dataset-agnostic. Seed of the automated
 - Unlocked all 3 deferred experiments (H8 Scale-16/32, H9-C)
 
 **Example pools** (no API):
+
 - Baseline: pool_160_hp4hn4 (H8 Scale-8)
 - H12 HN-heavy: pool_160_hp2hn6 (1:3)
 - H12 HP-heavy: pool_160_hp6hn2 (3:1)
@@ -3867,16 +3873,19 @@ Tile-size-agnostic, dataset-agnostic. Seed of the automated
 - All 5 crop sets extracted successfully, 0 failures
 
 **Proposer runs** (API gate 2, $22.32):
+
 - K=10 per config × 327 test tiles = 16,350 calls
 - 88 parse failures across 50 runs (0.5%)
 - 3-round retry cleanup: 88 → 11 → 4 → 2 remaining (99.99% recovery)
 
 **Verifier runs** (API gate 3, $10.69):
+
 - Adversarial verifier (v1) on vote≥2 candidates = 7,766 calls
 - Zero failures
 - Per config: ~1,500-1,600 candidates, ~$2 each
 
 **Full sweep evaluation** (no API):
+
 - 9 vote thresholds × 9 probability thresholds × 5 configs
 - 315 evaluation points at 20m buffer
 - Best F1: 0.885 for baseline and Scale-32, 0.883 HN-heavy,
@@ -3884,6 +3893,7 @@ Tile-size-agnostic, dataset-agnostic. Seed of the automated
 
 **Statistical analysis** (no API, ran on laptop as one-time
 exception to sapphire rule — user was travelling):
+
 - K=5 replicate sweeps (runs 1-5 and runs 6-10 independently)
 - Bootstrap 95% CIs at vote≥6, prob≥0.15
 - Round-robin pairwise permutation tests (10k iterations each)
@@ -4651,35 +4661,35 @@ The flex-tier overspend occurred because the google-genai SDK v1.67.0 didn't sup
 
 ### Cross-hypothesis library-design closure
 
-5. **45-pair cross-hypothesis matrix** (all H8 v2 + H12 v2 conditions) run on sapphire. Zero significant after BH-FDR; pooled adj-p ceiling 0.966 (Obs 240).
-6. **WBF H12 pairwise**: also null under secondary aggregation.
-7. Combined with H8 v2 null (Obs 238) and H10 v2 null (Obs 236): **library-design axis definitively closed**.
+1. **45-pair cross-hypothesis matrix** (all H8 v2 + H12 v2 conditions) run on sapphire. Zero significant after BH-FDR; pooled adj-p ceiling 0.966 (Obs 240).
+2. **WBF H12 pairwise**: also null under secondary aggregation.
+3. Combined with H8 v2 null (Obs 238) and H10 v2 null (Obs 236): **library-design axis definitively closed**.
 
 ### Scale-4 vs Scale-8 post-verifier comparison
 
-8. **Scale-4 advanced** for generalisation run on parsimony grounds.
-9. **Greedy verifier** (Scale-4 $2.16 API): 1551 candidates verified, 0 failed. Initial 1D sweep gave artificially low F1 (0.525) because the t=1 union is too noisy for a single-threshold sweep.
-10. **2D sweep** (vote_t × prob_t) recovered F1 to 0.737 (Scale-4) / 0.722 (Scale-8).
-11. **WBF verifier** (Scale-4 $1.52 + Scale-8 $1.39): same story — WBF matches greedy within 0.0005 F1.
-12. **Three-pipeline comparison** (Obs 241): Scale-4 leads by +0.015 in all three pipelines, none significant. Parsimony choice confirmed.
+1. **Scale-4 advanced** for generalisation run on parsimony grounds.
+2. **Greedy verifier** (Scale-4 $2.16 API): 1551 candidates verified, 0 failed. Initial 1D sweep gave artificially low F1 (0.525) because the t=1 union is too noisy for a single-threshold sweep.
+3. **2D sweep** (vote_t × prob_t) recovered F1 to 0.737 (Scale-4) / 0.722 (Scale-8).
+4. **WBF verifier** (Scale-4 $1.52 + Scale-8 $1.39): same story — WBF matches greedy within 0.0005 F1.
+5. **Three-pipeline comparison** (Obs 241): Scale-4 leads by +0.015 in all three pipelines, none significant. Parsimony choice confirmed.
 
 ### Evaluation scope discovery
 
-13. User questioned whether H1–H7 were re-run at 384 px. Investigation revealed: retest was at 512 px over 340 tiles (not 384 px), correcting my assumption.
-14. **Three production test tile sets** identified and locked in: Era 1 (340 × 512), Era 2 (487 × 384), Era 3 (327 × 384). Fully nested, verified by spatial intersection.
-15. Key finding: the 487-tile 384-px set already excludes the 512-px calibration footprint (zero overlap confirmed). The pool_160 exclusion for Era 3 is geographically separate.
-16. Coverage quantified: 80.8% / 73.0% / 59.0%. Documented in `results/evaluation-scopes.md`. Decision (Obs 242): era-first leaderboards (primary) + consolidated via spatial re-tiling (secondary).
+1. User questioned whether H1–H7 were re-run at 384 px. Investigation revealed: retest was at 512 px over 340 tiles (not 384 px), correcting my assumption.
+2. **Three production test tile sets** identified and locked in: Era 1 (340 × 512), Era 2 (487 × 384), Era 3 (327 × 384). Fully nested, verified by spatial intersection.
+3. Key finding: the 487-tile 384-px set already excludes the 512-px calibration footprint (zero overlap confirmed). The pool_160 exclusion for Era 3 is geographically separate.
+4. Coverage quantified: 80.8% / 73.0% / 59.0%. Documented in `results/evaluation-scopes.md`. Decision (Obs 242): era-first leaderboards (primary) + consolidated via spatial re-tiling (secondary).
 
 ### Archiving
 
-17. **~2.1 GB archived** across 5 categories: 60-tile validation results, 256-px data, pre-retest outputs, experimental pilots, intermediate calibration. Manifest at `archive/ARCHIVE-MANIFEST.md`.
+1. **~2.1 GB archived** across 5 categories: 60-tile validation results, 256-px data, pre-retest outputs, experimental pilots, intermediate calibration. Manifest at `archive/ARCHIVE-MANIFEST.md`.
 
 ### Leaderboard planning
 
-18. Architecture grid: 2 × 2 (single-pass / consensus × no-PV / +PV) × 3 tracks.
-19. Sweep convention locked: consensus threshold (1-of-K..K-of-K) × verifier probability (0.0–1.0) × spatial buffer (20/30/40/50 m).
-20. **Condition inventory built**: 144 conditions (96 Era 1, 34 Era 2, 14 Era 3). 81 need consensus building; 67 already have pre-computed F1 data in aggregate bootstrap-CIs files.
-21. Externalised to `planning/leaderboard-construction-plan.md`.
+1. Architecture grid: 2 × 2 (single-pass / consensus × no-PV / +PV) × 3 tracks.
+2. Sweep convention locked: consensus threshold (1-of-K..K-of-K) × verifier probability (0.0–1.0) × spatial buffer (20/30/40/50 m).
+3. **Condition inventory built**: 144 conditions (96 Era 1, 34 Era 2, 14 Era 3). 81 need consensus building; 67 already have pre-computed F1 data in aggregate bootstrap-CIs files.
+4. Externalised to `planning/leaderboard-construction-plan.md`.
 
 ### Decisions and observations
 
@@ -4709,7 +4719,6 @@ The flex-tier overspend occurred because the google-genai SDK v1.67.0 didn't sup
 
 The 2D sweep (vote_t × prob_t) resolution of the "verifier looks broken" false alarm is important context. The 1D sweep on consensus_t1 (the union of all detections) produces artificially low F1 because the verifier cannot substitute for the proposer's vote-count filter. Any future PV pipeline that takes the consensus_t1 union as input MUST be evaluated with a 2D sweep, not a 1D verifier-probability sweep alone. This lesson is documented in Obs 241 and should prevent future confusion.
 
-
 ## Session 70–71 — 2026-04-17/18 (map-reader-llm): Two 55-map generalisation runs, paired permutation test split decision, publishable launcher infrastructure matured
 
 ### Work completed
@@ -4727,7 +4736,7 @@ The 2D sweep (vote_t × prob_t) resolution of the "verifier looks broken" false 
 
 **Post-run analysis on image run**:
 
-- Dawid-Skene correction: F1 0.771 → **0.795** (ΔF1 = +0.024). 
+- Dawid-Skene correction: F1 0.771 → **0.795** (ΔF1 = +0.024).
 - Per-map heterogeneity analysis: SD @ 50 m widens from 0.021 (4-map calibration) → 0.094 (55-map out-of-sample), ~4.4× wider. K-35-075-3 is a persistent low-outlier (F1 = 0.286 all buffers) — diagnosed as under-annotation (2 refs vs 58-142 adjacent), not pipeline failure. Excluding it tightens SD to 0.069.
 - Obs 256 (image headline + D-S) and Obs 257 (heterogeneity + K-35-075-3 diagnostic) written to working-notes.md.
 - Pre-launch audit, post-run report, and heterogeneity script `analyse_55maps_heterogeneity.py` all committed.
@@ -6429,6 +6438,7 @@ passes + 1 analysis, ALL VALID**; tier-1 **1058 passed**. One background agent
 `scripts/n1_baseline_leaderboard_tiering.py`: round-robin paired tile-swap permutation on
 **pass-averaged per-tile** counts (the replicate-mean statistic the bootstrap CIs use, so it
 ranks what the board ranks; cross-check ≤0.0003 F1 across 1–30 replicates), 10k perms seed 42,
+
 + Benjamini-Hochberg FDR (q=0.05) + greedy-clique tiering at 20 m, on **zbook** (\$0 API;
 sapphire saturated). Result: 112/153 pairs significant → **6 tiers**; **tie_set (Tier 1) =
 `pro-text-medium-t-0-0` (0.763) + `pro-text-high-t-0-7` (0.745)**, BH-adj p=0.50 between them,
@@ -6909,13 +6919,13 @@ delta), the home of the calibrate-then-test framing; phase3a/3a-high/3a-replicat
   session from "run a test" to "run a test + correct a methodological framing across the finding,
   E56, and the docs." The numbers were unchanged by the reframe; only the framing moved.
 
-
 ## Session 104 — 2026-06-06/07 — the 55-map deployment-oracle analysis (carry-forward vs oracle)
 
 Executed the deferred TODO #2: the 55-map deployment-generalisation analysis, then followed
 Shawn's methodological steers through three successive GT refinements.
 
 **What was done**
+
 - **vote=3 shell verifier run** (the only API spend): 10,622 candidates, `gemini-3-flash`
   text-adversarial, real-time **flex**, prob_t=0.15, **0 failures**, ≈ $7.4 billed (manifest
   records ~$15 standard; flex halves at billing). Smoke + one-tile tests first, per Shawn.
@@ -6943,6 +6953,7 @@ GS plateau, p<0.001. Full write-up: `results/deployment-oracle-2026-06-06/deploy
 ≥2-config vote=2 set (2,417, 10× budget); the paper write-up itself.
 
 ### Contextual assumptions
+
 - **Session 104**, 2026-06-06 into 2026-06-07, resuming from the Session-103 beacon. Compute
   split across **zbook** and **sapphire** — sapphire became contended mid-session by another
   session (load 13), which drove the load-check backstop and a kill-and-move-to-zbook.
@@ -7072,7 +7083,6 @@ full 256/384/512 sweep.
 - Only carried-open item: CRS-contract Stages 1–2 (deferred to the generalised-pipeline build,
   `planning/generalised-pipeline-roadmap.md` WS1). Next session executes the Era-1 leaderboard
   plan (incl. the gated Stage-D verifier run).
-
 
 ## Session 107 — 2026-06-08 — Era-1 (Gold-Standard) definitive leaderboard: Stages A/B/C/D complete, incl. a gated ~$5 PV run
 
@@ -7675,7 +7685,7 @@ rejects that class; 8 committed claims in 029/052 queued for repair).
 **PI rulings** (interactive, `phase3-rulings-2026-07-31.md`): (1)
 dated session reports = snapshots (ledger + banner-where-material;
 bodies never edited); (2) clobber guards fixed now
-(analyse_dawid_skene_v2, run_experiment_e → _autogen; pinned by
+(analyse_dawid_skene_v2, run_experiment_e →_autogen; pinned by
 tests); (3) MCC-means Obs approved (→ Obs 376); (4) Sonnet permitted
 for the fleet's mechanical tail.
 
@@ -8305,7 +8315,6 @@ resolution rules. `outputs/h10/wbf/` (65 MB, 1,470 files, April WBF
 verifier outputs for pool_160_hp4hn4_variant_c) remains untracked —
 PI decision pending on gitignore/commit/archive.
 
-
 ## Session 131 — 2026-08-10/14 — ruling-21 applied end to end; queue item 1 closed blind-verified; the pre-run review born
 
 One conversation across five days and three resumptions (amd-tower
@@ -8320,8 +8329,8 @@ app, 8/8 green; tier-1 defect tests + tier-2 committed-state test.
 **Ruling-21 instruction set derived** (`7fc85b920`): 1,432 instructions
 from the 1,317 verdicts. Load-bearing correction mid-derivation: mound
 identity from mark position clusters, never claim chains (a 170 m
-chain would have merged two real mounds). Census: student 4,746 − 17
-+ 2 = 4,731; extension 278 + 1; grades 527/114/4,090 (after walk).
+chain would have merged two real mounds). Census: student 4,746 − 17 +
+2 = 4,731; extension 278 + 1; grades 527/114/4,090 (after walk).
 Spec `planning/ruling21-application-spec.md`; all seven open decisions
 walked with the PI (2–7 ratified 2026-08-10; decision 1 became the
 six-item cross-cluster walk, installed as the canonical re-review
@@ -8857,3 +8866,90 @@ unreachable — lit programme deliberately chosen for it); Shawn ruled
 interleaved with running agents throughout; wound down at low context
 with E82 C1+D implementation, Item D/E, the Gould read, and the
 O'Hara/GMFS full-text checks as the explicit next-session queue.
+
+## Session 140–141 — 2026-08-22/24 (amd-tower + sapphire; ~US$6.35 API expected billed; Fable 5)
+
+One continuous conversation spanning the S140 overnight autonomous
+stretch and the S141 morning decision walk.
+
+**E82 closed end-to-end.** C1 + D implemented (label-keyed gate,
+writer-exact mean; `142f2c5c9`); the resume surfaced a third boundary
+layer (the summary buffer table's order-sensitive mean — eight values,
+four cells, enumerated corpus-wide before resuming; `21032037e`,
+PI-ratified); clearing run failed = 0, census selected = 0, counters
+exact (n_reaggregated 19, n_order_normalised 6). ONE data commit from
+sapphire (`43ea31b26`, 4,965 files). Item D: three findings (ci-flag
+regression re-applied; output_dir pollution engine-fixed + 1,655-file
+repair; the "IM-k4 gap cell" exposed as a mislabelled duplicate of
+IM-k3 and NOT registered). Item E after sign-off: execution note
+(pinned-count correction 27 → 35), D15/D19/D41 closed, D42
+opened-then-FIXED same day (true mechanism: the multi-run aggregation
+left the reliability block null; aggregator now writes the measured
+block; migration-invariance test), campaign summary, contract CLOSED,
+audit artifact republished.
+
+**Genuine IM-k4** (PI ruling): $0 vote_count ≥ 4 filter (3,541 of
+4,680, gated derivation) → scored on sapphire (F1@50 0.740 / MCC 0.655
+vs IM-k3 0.801/0.712) → registered (338 conditions ALL VALID). Obs 427:
+the vote-threshold penalty is modality-asymmetric (image −0.061 vs text
+−0.009…−0.028; retention 0.757 vs 0.87–0.90).
+
+**Provenance SETTLED.** Archive re-grade (357/428 transcript-confirmed)
+→ PI-gated completeness re-verification on five grounds (canonical ==
+mirror; none of the session log's 120 dated entries in any archive gap;
+every Claude-era heading on a covered day; 8/8 sampling; three-record
+boundary coherence) → Obs 258 boundary ADOPTED (Obs 249–257
+re-attributed to 4.6; the 04-17 20:20 AEST trailer flip identified as
+the outlier, explained by 4.7's 04-16 release) → census HIGH 380 ·
+MED 48 · LOW 0 → all six release dates sourced and PI-confirmed →
+§ 6.1 adjudicated (S111–112 first Fable session) → DRAFT banner
+dropped. Obs 430.
+
+**Lit programme completed.** O'Hara resolved at source (98.2 =
+majority-class F1; wetland-class 0.908 — cite that), GMFS (0.86
+genuine, classification stage), ArrowFormer (0.917 benchmark-script vs
+0.930 + NMS): class-, stage-, and protocol-relative instances of one
+metric-identity family. Seed 8 S140 rider (corrected area cluster
+0.84–0.91; the area→point ladder with Goldman's grain isolation; GMFS
+novelty qualifiers; metric-hygiene inoculation) + D.1 pointer; Obs
+428/429.
+
+**Methods complete at zero-draft.** M.8–M.12 drafted (every outline
+section now has prose); M.10 cross-model forward-reference per PI
+ruling; § 4.3 phase-table regeneration commissioned to S142.
+
+**Pipeline hardening.** D40 dirty-input guard (per-input git states in
+`_metadata.input_git_state`; warn / `--require-clean-inputs`); D42
+aggregator fix; 103 unmarked tests → tier1; `tests/README.md` created.
+Tier-1 1,593 → 1,903 over the session, green both machines.
+
+**The decision walk (S141)** cleared groups A/B/D/E/F (~20 rulings):
+eight candidate verdicts (Obs 431/432 written; six standing
+collaboration rules → global scratchpad); H6 formally closed
+disclose-only (E74); H2-C pricing probe RUN ($0.0137 — 1024 px prices
+identically to standard verification; full-run card queued); grid
+verifier RUN (9,133/9,133 verified, zero failures; scoring handed to
+S142); three stale sapphire loops killed. Group C (Gould → D.9) awaits
+the PI's read.
+
+**Zotero three-tier key architecture** (Shawn's design): broad
+fail-safe key measured via `/keys/current`; both blocked chapter fixes
+applied and verified (SRI3YFK5, MMHTRQTA); reference table rewritten;
+retirement list + inbox row for the revocation pass.
+
+**Register at Obs 432** (426–432 all this session; all obs-writer
+entries source-verified, two of them correcting the coordinator's
+briefs). ~60 commits `142f2c5c9` → session close, all pushed.
+
+### Contextual assumptions
+
+- API spend: probe $0.0137 + grid verifier expected ≈ $6.27 billed
+  (metas record LIST $12.54; flex halves it — the known S113 pattern).
+  PI billing-console corroboration pending.
+- The grid verifier DATA is committed but UNSCORED — the two paper
+  headlines (tile-size ranking, overlap reversal) remain conditional
+  until S142 scores it; the runbook is in the continuity beacon.
+- The three machines were pip-synced and at the same HEAD mid-session;
+  amd-tower carried later doc commits.
+- The H6 ~$48 re-run was DECLINED (disclose-only) with A-06/A-07/A-09
+  as the stated substitute evidence — a deliberate spend-scope trade.

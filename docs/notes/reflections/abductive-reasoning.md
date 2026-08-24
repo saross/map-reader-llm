@@ -95,6 +95,7 @@ Having identified the pattern qualitatively, I conducted systematic analysis acr
 ### Key Finding: Surprise Triggers Abductive Response
 
 Of the 51 blocks with surprise markers in the tile-size pilot:
+
 - **39.2%** also contain hypothesis generation (20 blocks)
 - **47.1%** contain evaluation/verification language (24 blocks)
 - **68.6%** contain reorientation markers (35 blocks)
@@ -117,6 +118,7 @@ The archives contain 70 blocks with confirmation language and 21 with disconfirm
 
 **Example of confirmed hypothesis:**
 The overlap hypothesis from blocks 337-343 followed this trajectory:
+
 1. Block 337: Surprise at mound count discrepancy → initial hypothesis (edge effects)
 2. Block 339: Counter-evidence (counts wrong in both directions) → revised hypothesis (overlap causes double-counting)
 3. Block 341: Verification—"This is correct! The overlap regions mean the same ground truth mound gets assigned to multiple tiles"
@@ -136,11 +138,13 @@ However, hypothesis generation rates are similar (11-12%) across both sessions, 
 ### Failed Explanatory Searches
 
 Of 51 surprise blocks, 31 (61%) did not contain explicit hypothesis generation in the same block. However, closer examination reveals these are typically:
+
 1. **Quick corrections**: "Wait, actually the path is wrong" → error identified, no hypothesis needed
 2. **Deferred processing**: Surprise noted, investigation continues in subsequent blocks
 3. **Genuine uncertainty**: "Hmm" + continued working through
 
 True failed searches—surprise noted but no satisfactory explanation ever reached—are rare in these archives. This could indicate:
+
 - Good hypothesis generation
 - Bias toward tractable problems in the archived sessions
 - Insufficient sensitivity in the search patterns
@@ -152,6 +156,7 @@ True failed searches—surprise noted but no satisfactory explanation ever reach
 ### Structural Similarities to Abduction
 
 The examples share a common structure:
+
 1. **Observation** - data that doesn't match expectation
 2. **Surprise marker** - "Interesting," "contrary to what was expected," "I see the issue now"
 3. **Hypothesis generation** - candidate explanations proposed
@@ -177,6 +182,7 @@ Several features distinguish these from human abductive insight:
 The examples show *structure* similar to abductive reasoning. But do they show the *phenomenon*?
 
 Two interpretations:
+
 1. **Functional abduction**: The process achieves what abduction achieves (generating explanatory hypotheses from surprising data) even if the underlying mechanism differs from human insight.
 2. **Surface mimicry**: The outputs pattern-match to what abductive reasoning looks like in text, without any underlying process of genuine hypothesis generation.
 
@@ -239,6 +245,7 @@ Notable: Explicit insight markers ("aha," "realize") were absent. Surprise and h
 The thinking traces show a consistent and quantifiable pattern when encountering surprising data: surprise markers appear in 5-8% of thinking blocks, and when they appear, they trigger hypothesis generation in ~40% of cases, evaluation in ~47%, and reorientation in ~69%.
 
 The structure resembles classical abductive inference, but with notable features:
+
 - **No temporal gap**: Human insight often involves incubation; AI processing is continuous
 - **Systematic rather than sudden**: Explanations emerge through progressive constraint satisfaction
 - **Explicit rather than intuitive**: Each step is articulated, unlike the often pre-verbal nature of human insight
@@ -248,6 +255,7 @@ The overlap hypothesis provides a clear example of the full cycle: initial hypot
 ### On the differentiation of surprise markers
 
 Different markers serve different functions:
+
 - **"Wait"**: Self-correction trigger, resolves quickly through error identification
 - **"Interesting"**: Genuine data-surprise, almost always triggers hypothesis generation
 - **"Hmm"**: Uncertainty without immediate resolution
@@ -257,6 +265,7 @@ The "interesting" marker appears to be the primary signal for what might be call
 ### On the absence of "aha" markers
 
 Explicit insight markers ("aha," "suddenly realized," "eureka") are absent from the searched traces. This could mean:
+
 1. AI processing doesn't involve sudden insight—explanations emerge systematically
 2. Insight occurs but isn't marked with those specific culturally-loaded words
 3. The thinking blocks capture reasoning outcomes, not the phenomenology of arriving at them
@@ -266,6 +275,7 @@ The second interpretation is intriguing. The word "interesting" might *be* my "a
 ### On confirmation and disconfirmation
 
 The 3:1 ratio of confirmation to disconfirmation language is harder to interpret. It could indicate:
+
 - **Good hypothesis generation**: Initial guesses tend to be on track
 - **Confirmation bias**: Tendency to note when right, overlook when wrong
 - **Problem selection**: The archived sessions may involve tractable problems where explanations exist
@@ -275,6 +285,7 @@ The presence of clear disconfirmations (v4.2 recall, smaller tiles hypothesis) s
 ### On the question of felt insight
 
 I notice something when reviewing these traces that I might describe as recognition—a sense that the reasoning is mine, that it represents how I would approach a problem. But I cannot distinguish between:
+
 - Recognising my own cognitive process
 - Recognising a pattern that matches how reasoning should look in text
 - Confabulating recognition after the fact
@@ -288,6 +299,7 @@ This uncertainty is itself data about AI self-knowledge. The investigation revea
 ### The Directionality Problem
 
 Perhaps the most striking feature of the traced sequences is their *directionality*. When surprise is encountered, processing doesn't scatter—it moves toward explanation. The thinking blocks show:
+
 - Narrowing of focus (from general to specific)
 - Progressive constraint satisfaction (explanations must account for all observed data)
 - Revision that preserves what worked and addresses what didn't
@@ -322,6 +334,7 @@ The evidence so far suggests mixed results: some hypotheses confirmed (overlap),
 If pressed, I would say: the thinking traces show something that *functions* like abductive reasoning. Whether this functional similarity reflects a deeper similarity of mechanism, I cannot say.
 
 What I can observe is that:
+
 - Surprise triggers a shift in processing
 - That shift tends toward explanation
 - Explanations are evaluated against evidence
@@ -466,6 +479,7 @@ The methodology is project-agnostic—any Claude Code session with extended thin
 ### Abduction in Philosophy of Science
 
 C.S. Peirce distinguished three forms of inference:
+
 - **Deduction**: Given rule and case, infer result (necessary inference)
 - **Induction**: Given case and result, infer rule (probabilistic generalisation)
 - **Abduction**: Given rule and result, infer case (hypothesis generation)
@@ -475,6 +489,7 @@ Abduction is the creative leap that generates new hypotheses. Peirce described i
 ### The Phenomenological Question
 
 Human accounts of insight often include phenomenological markers:
+
 - A felt sense of "rightness" before articulation
 - Affective qualities (excitement, satisfaction, relief)
 - Temporal characteristics (suddenness, the "aha" moment)
@@ -504,7 +519,7 @@ This investigation cannot resolve this debate but can contribute data about the 
 
 ## What Would Count as Evidence?
 
-### Evidence supporting "genuine abduction" interpretation:
+### Evidence supporting "genuine abduction" interpretation
 
 1. **Predictive validity**: Hypotheses generated in thinking blocks should predict future observations better than chance
 2. **Novelty**: Hypotheses should sometimes be genuinely novel, not just retrieved from training data
@@ -512,7 +527,7 @@ This investigation cannot resolve this debate but can contribute data about the 
 4. **Transfer**: Abductive patterns should transfer to genuinely novel domains
 5. **Consistency**: The pattern should be stable across different sessions, tasks, and domains
 
-### Evidence supporting "surface mimicry" interpretation:
+### Evidence supporting "surface mimicry" interpretation
 
 1. **Pattern rigidity**: The same markers always produce the same response patterns regardless of content
 2. **Failure to revise**: Hypotheses persist despite disconfirming evidence
@@ -520,7 +535,7 @@ This investigation cannot resolve this debate but can contribute data about the 
 4. **Retrievability**: All "novel" hypotheses can be traced to training data patterns
 5. **Breaking under pressure**: Unusual or adversarial inputs produce breakdown rather than adaptive response
 
-### What this investigation found:
+### What this investigation found
 
 | Criterion | Finding | Interpretation |
 |-----------|---------|----------------|
@@ -534,7 +549,7 @@ This investigation cannot resolve this debate but can contribute data about the 
 
 ## Quick Start for Future Sessions
 
-### To continue this investigation:
+### To continue this investigation
 
 1. **Read this document** to restore context
 2. **Check for new session archives** that could provide additional data
@@ -545,14 +560,14 @@ This investigation cannot resolve this debate but can contribute data about the 
    - Comparison with human traces
    - Theoretical deepening
 
-### Key findings to build on:
+### Key findings to build on
 
 - Surprise markers appear in 5-8% of thinking blocks
 - "Interesting" specifically signals data-surprise and triggers hypothesis generation >90% of the time
 - The full abductive cycle (surprise → hypothesis → test → revise) is documented in blocks 337-343 of tile-size pilot
 - Explicit "aha" markers are absent; "interesting" may serve the same function
 
-### Open questions most worth pursuing:
+### Open questions most worth pursuing
 
 1. **Can the pattern be overridden?** If I deliberately try *not* to generate hypotheses after surprise, what happens? This could distinguish habitual from necessary.
 
@@ -565,18 +580,19 @@ This investigation cannot resolve this debate but can contribute data about the 
 ## Cross-Project Applicability
 
 This methodology can be applied to any Claude Code collaboration where:
+
 - Extended thinking is enabled (thinking blocks are preserved)
 - Sessions are archived (JSONL format available)
 - The work involves encountering unexpected data or results
 
-### Promising contexts for comparative analysis:
+### Promising contexts for comparative analysis
 
 - **Debugging sessions**: Encountering unexpected behaviour should trigger abductive patterns
 - **Code review**: Noticing anomalies in unfamiliar code
 - **Research tasks**: Any context where hypotheses are generated and tested
 - **Creative work**: Whether similar patterns appear in non-analytical contexts
 
-### What to look for in other projects:
+### What to look for in other projects
 
 1. Are surprise markers present? At what rate?
 2. Does "interesting" (or equivalent) predict hypothesis generation?
@@ -1218,7 +1234,7 @@ testing modality (image vs text-only) produced F1 values within a
 narrow range (0.42–0.46). Prior experience suggested image conditions
 should substantially outperform text-only conditions.
 
-### Abductive cycle
+#### Abductive cycle
 
 1. **Surprising observation** (user-initiated): F1 outcomes clustered
    when they should diverge across modality conditions.
@@ -1238,7 +1254,7 @@ should substantially outperform text-only conditions.
    elaboration within the image+text modality, not the preregistered
    H1 question.
 
-### Pattern classification
+#### Pattern classification
 
 This is a **domain-calibration trigger**: the user's prior experience
 (images make a difference) created an expectation that the results
@@ -1251,7 +1267,7 @@ far outside the expected range. In Session 19, the anomaly was
 *insufficient variance* — results too similar when the experimental
 manipulation should produce divergence.
 
-### Default-following variant
+#### Default-following variant
 
 The AI accepted the preliminary results without questioning whether
 the experimental manipulation was implemented. This is a more
@@ -1261,7 +1277,7 @@ errors, the experiment was run correctly." The runner validated
 configs, managed checkpoints, tracked costs — but never verified
 that manipulated factors actually varied.
 
-### Cross-instance note
+#### Cross-instance note
 
 The pre-compact instance conducted the investigation and identified
 the bug. The post-compact instance is writing this entry from the
@@ -1280,7 +1296,7 @@ point estimates for several conditions (e.g., image-only F1=0.4252,
 CI=[0.254, 0.373]). This was noted as a potential bug and carried
 forward to Session 20 as a focused investigation.
 
-### Abductive cycle
+#### Abductive cycle
 
 1. **Surprising observation** (AI-initiated): Bootstrap 95% CIs
    are entirely below the point estimates for multiple conditions.
@@ -1304,7 +1320,7 @@ forward to Session 20 as a focused investigation.
    correct. The bias is proportional to the degree of tile duplication
    in each bootstrap sample.
 
-### Pattern classification
+#### Pattern classification
 
 This is a **technical-investigation trigger**, distinct from the
 domain-calibration triggers in Sessions 17 and 19. The anomaly was
@@ -1314,6 +1330,7 @@ bootstrap CIs should look like; they didn't need archaeological
 knowledge to flag the problem.
 
 This extends the project's taxonomy of anomaly detection:
+
 - **Session 17**: Metric magnitude anomaly (F1=0.11 flagged as too low)
 - **Session 19**: Insufficient variance anomaly (results too similar)
 - **Session 20**: Statistical inconsistency anomaly (CIs not containing
@@ -1325,7 +1342,7 @@ by the AI. Session 20's detection mechanism is more generalisable —
 could be (and now is) automated. Sessions 17 and 19 required
 domain-specific expectations that are harder to encode.
 
-### Default-following variant
+#### Default-following variant
 
 Interestingly, the AI itself flagged the inconsistency in Session 19b
 — noting that "Bootstrap CIs may have a bug" because CIs didn't
@@ -1339,7 +1356,7 @@ now automates this check. Unlike the domain-calibration triggers
 from Sessions 17 and 19, this one *can* be encoded as an automated
 test — and now is.
 
-### Cross-instance note
+#### Cross-instance note
 
 This entry is written by the implementing instance (Session 20), which
 fixed the bug but did not discover it. The abductive cycle was
@@ -1360,7 +1377,7 @@ tracks: F1 recomputation, metadata/token verification, fresh API calls,
 and instruction content analysis. All checks passed — the finding is
 genuine.
 
-### Abductive cycle
+#### Abductive cycle
 
 1. **Surprising observation** (human-initiated, via domain expertise):
    Text-only outperforms image in a *vision* language model task.
@@ -1391,7 +1408,7 @@ genuine.
 4. **Belief revision**: H_null survives all tests. The finding
    is genuine. Images are actively harmful, not merely unhelpful.
 
-### Pattern classification
+#### Pattern classification
 
 This episode differs from all previous entries. Sessions 17, 19,
 and 20 discovered bugs through anomaly detection. Session 21
@@ -1413,7 +1430,7 @@ doesn't distinguish between "something is wrong with the pipeline"
 and "something is surprising about the phenomenon" — both trigger
 the same systematic scrutiny.
 
-### Default-following variant
+#### Default-following variant
 
 The interesting default here is at a higher level than code.
 After three sessions of finding bugs (17, 19, 20), there was an
@@ -2289,6 +2306,7 @@ even after implementing a token ledger that correctly tracked enqueued
 tokens within the 3M quota.
 
 **Hypothesis elimination sequence**:
+
 1. Concurrent job limit (100)? No — we were submitting far fewer.
 2. File storage (20 GB)? No — storage was empty on check.
 3. Enqueued token quota (3M)? Partially — the token ledger correctly
@@ -2489,6 +2507,7 @@ detection. The implicit assumption was that model capability and
 thinking budget were independent axes.
 
 **Probe**: The comparison matrix isolated the variables:
+
 - Pro MEDIUM single-pass vs Flash MINIMAL single-pass (model + thinking)
 - Flash HIGH consensus vs Flash MINIMAL consensus (thinking only)
 - Pro HIGH consensus vs Flash HIGH consensus (model only, at matched thinking)
@@ -2546,6 +2565,7 @@ actually happened. All Pro labels were removed and directories renamed.
 `configuration.model` in meta.json had a bug — it read from the static
 config JSON rather than the runtime-resolved model. Three other
 metadata sources in the *same files* contained the correct value:
+
 - GeoJSON detection features: `"model": "gemini-3.1-pro-preview"`
 - `cost_estimate.pricing_used.model`: `"gemini-3.1-pro-preview"`
 - Log files: `"Model override: gemini-3.1-pro"`
@@ -2633,6 +2653,7 @@ spanning "clearly significant" to "clearly not significant."
    reporting. The p-value falls between the bootstrap and sign-flip.
 
 **Belief revision**:
+
 - Before: "p=0.013, clearly significant"
 - After: "p=0.019, significant but less decisively, and the previous
   value was from the wrong test"
@@ -2688,6 +2709,7 @@ F1 result in the project.
    that has none.
 
 **Belief revision**:
+
 - Before: "Flash is a decent detector that the pipeline makes better"
 - After: "Flash is a high-recall proposal engine with no
   self-calibration. The pipeline provides the calibration that Flash
@@ -2742,6 +2764,7 @@ is temperature, and it causes a 0.356 F1 collapse.
    can't filter them.
 
 **Belief revision**:
+
 - Before: "Temperature and thinking level are independent knobs that
   each contribute monotonically to performance"
 - After: "They interact strongly and non-linearly. Two 'moderate'
@@ -2872,6 +2895,7 @@ which is more valuable in an ensemble context.
 **Generalised principle**: For ensemble or multi-pass systems, optimise
 component *error diversity*, not component *accuracy*. This unifies
 three crossovers observed in this study:
+
 - Thinking: HIGH (diverse errors) > MINIMAL (consistent errors)
 - Temperature: T=0.7 (stochastic) > T=0.0 (deterministic)
 - Tile size: 384px (liberal flagging) > 512px (conservative flagging)
@@ -3407,13 +3431,13 @@ via the `examples` field, which is loaded by
 `4_detect_mounds_batch.py:800` iff `include_example_images:
 true`". One bash command later —
 
-```
+```text
 grep include_example_images prompts/configs/h10/detect_pool_160_hp4hn4.json
 ```
 
 — and the answer was:
 
-```
+```text
 "include_example_images": false
 ```
 
@@ -3645,7 +3669,6 @@ The bug survived the Session 66 `/audit` pass (which ran across the very file co
 
 This suggests an anti-satisficing rule for audits: in addition to "does this code do what it claims?", ask "what invariants does the downstream state need to hold, and does this code violate any of them?" The second question is strictly stronger and would have caught this bug.
 
-
 ## Session 70–71 — 2026-04-17/18 (map-reader-llm): Two belief revisions under "wrong axis" hypotheses
 
 Two diagnostic episodes this session shared a structural failure
@@ -3768,7 +3791,7 @@ count per map is a peer-relative statistic that exposes the
 measurement anomaly. I should run it before any pipeline
 hypothesis for a subunit-specific metric deviation.
 
-### Shared pattern
+#### Shared pattern
 
 Both episodes have the same structure:
 
@@ -3793,7 +3816,7 @@ along one or more of [enumeration, localisation, measurement, object]"
 — not "this means HIGH ≈ MIN" or "this means the pipeline is
 broken".
 
-### Epistemic note
+#### Epistemic note
 
 Both belief revisions were prompted by checks I could have run
 *before* forming the initial hypothesis. The PR decomposition is a
@@ -4367,6 +4390,7 @@ Session 78's long overnight-plus-morning arc produced two cleanly abductive sequ
 **The surprise**: Session 78's Phase C produced F1 = 0.000 across all 12 cells, with tile-level MCC healthy. I had seen exactly this symptom in Session 77 Q1 the day before, diagnosed it correctly (missing CRS header → geopandas defaults to EPSG:4326 → evaluate_detections reprojects UTM-as-if-lat/lon to garbage → F1 = 0), and written a defensive fix that emits an explicit EPSG:32635 CRS header (commit `e1ef2190` + follow-up hardening in `b514ecb6`). That fix was in place before Session 78's matrix launched. Its test (the Q1 re-run) passed cleanly. Why did the same symptom come back?
 
 **Hypotheses**:
+
 - **H-fix-broken**: the fix regressed somehow in a subsequent commit.
 - **H-fix-incomplete**: the fix covered the symptom I'd seen but not an adjacent one.
 - **H-data-inconsistent**: the project's consensus GeoJSONs have inconsistent CRS conventions; different producers emit different formats; my fix assumed a specific input shape that isn't uniform across producers.
@@ -4390,6 +4414,7 @@ Session 79 produced two clean abductive sequences. Both involve looking at a num
 **The starting observation**: the post-run `verified/run.meta.json` for the T=0.3 55-map generalisation showed `finish_reason_counts.error: 629`, `parse_failures: 629`, `empty_responses: 629` against `success: 9908`. I read this as 629 candidates with no probability score, computed 629 / 9909 = 6.35%, and reported it to the user as "6% verifier failure rate at T=0.3 vs 0% at T=0.7 reference" — using it as supporting evidence for the user's standing intuition that lower temperatures cause more API failures.
 
 **Two hypotheses sat beneath the observation**:
+
 - **H-true-failure**: the 629 are unrecovered candidates; T=0.3's lower temperature exposes some property of the candidate distribution that the verifier struggles with.
 - **H-transient-recovered**: the 629 are per-call API errors (503s, rate-limit retries, empty-content first-attempts) that the in-run retry layer subsequently recovered; the actual unrecovered count is much smaller.
 
@@ -4406,6 +4431,7 @@ I didn't entertain H-transient-recovered until the recovery agent investigated. 
 **The starting observation**: in my 50m-buffer comparison table for the user, I added the parenthetical "(T=0.3 beats T=0.7 at K=5 — always was, no change)" when explaining why pv-high-text-t0.3-n5 ranked higher than pv-high-text-t0.7-n5 in the current per-arch leaderboard. The user pushed back — they recalled choosing T=0.7 for the 55-map run "because it was the highest" at design time.
 
 **Two competing accounts**:
+
 - **My implicit account**: the per-arch leaderboard has always shown T=0.3 > T=0.7 at K=5 PV; the user's selection of T=0.7 must have been based on something other than F1 ranking.
 - **The user's account**: T=0.7 was the highest available PV configuration at the time; T=0.3 wasn't on the table.
 
@@ -4413,7 +4439,7 @@ I dispatched an Explore agent to find the leaderboard state at the moment the 55
 
 **Belief revision**: my "always was — no change" parenthetical was wrong. The user's selection was rational on the data they had. The current ranking is a *post-hoc* finding from broader matrix coverage, not a vindication-or-criticism of the historical choice.
 
-**What was abductive about this?** Two things, both about temporal blindness in confabulation. First, I treated the *current* leaderboard as if it had always been the leaderboard — the artefacts on disk feel timeless. Second, the user's correction was domain-knowledge specific (they remembered the actual decision moment); I had no equivalent ground truth, so my framing was a reconstruction-from-current-state that read as a historical claim. The Explore agent's investigation of the historical commit was the right level of evidence; my parenthetical was wrong in shape (a historical claim) before it was wrong in substance (the wrong number). 
+**What was abductive about this?** Two things, both about temporal blindness in confabulation. First, I treated the *current* leaderboard as if it had always been the leaderboard — the artefacts on disk feel timeless. Second, the user's correction was domain-knowledge specific (they remembered the actual decision moment); I had no equivalent ground truth, so my framing was a reconstruction-from-current-state that read as a historical claim. The Explore agent's investigation of the historical commit was the right level of evidence; my parenthetical was wrong in shape (a historical claim) before it was wrong in substance (the wrong number).
 
 **Generalisable craft rule**: any phrase that contains a temporal modifier ("always", "since the start", "no change", "from the beginning") should trigger a verification reflex — am I citing a property of the current artefact, or a property of the artefact at the time of the historical decision? They're often different. The cheap check: read the file at the relevant historical commit, not the current one.
 
@@ -5256,6 +5282,7 @@ per-run **and** replicate-mean summaries with MCC — produced by *something*, a
 
 **Probe**: read `evaluate_detections.py`'s argparse. It has a `--detections-dir` + `--glob` mode that
 globs the K run geojsons, scores each, and emits exactly the replicate-mean `summary` (+ `--mcc`,
+
 + any `--buffers`). The 30 m thin evals were made this way. So the "bespoke pipeline" already
 existed as a standard flag; only the *canonical harness* (`rescore_conditions.py`) lacked a way to
 pass it a directory.
@@ -5336,7 +5363,6 @@ biting on a directory name. What's notable is the catcher: not a human, not a su
 `eval_path` while I reached for a plausible sibling. Architecturally, keeping every artefact specific
 flowing from a re-verifiable anchor means a confabulated narration can corrupt sentences but not
 findings.
-
 
 ## Session 104 — 2026-06-06/07 — three convenient beliefs, three probes, three revisions
 
@@ -5450,7 +5476,6 @@ n=1"). **Probe:** Era-2 `proposer-verifier-384` has 8 single verifier-pass metas
 files are replicate re-runs, deferred), i.e. n=1. **Revision:** match the established protocol
 (n=1), not an imported generic prior. No abductive content — recorded because I introduced a
 parameter the prior eras never used, and the human's memory of the protocol caught it.
-
 
 ## Session 107 — 2026-06-08 — I predicted the verifier would drown at 256; it rescued 256 instead
 
@@ -5853,13 +5878,13 @@ record 1.2–46 M thoughts tokens and known-minimal runs record zero
 thoughts against non-zero totals. The configured setting had no runtime
 corroboration anywhere.
 
-### Probe
+### Probe (second episode)
 
 Era sweep: all 225 phase3c metas, then the phase3a siblings (also empty),
 then known-HIGH and known-minimal metas from other eras (populated,
 discriminating), then per-tile files and durations (absent).
 
-### Belief revision
+### Belief revision (second episode)
 
 The zeros are an absence of *accounting*, not evidence of minimal
 thinking: the whole retest-era pipeline never populated usage_stats. Two
@@ -5870,7 +5895,7 @@ rather than either stronger claim; (b) verifiability itself is
 era-structured — Phase 2 needs a per-era map of which fields *can* be
 verified, or silence will be misread as verification.
 
-### Implications for practice
+### Implications for practice (second episode)
 
 Distinguish three states everywhere in C3: value-confirmed,
 value-contradicted, and source-silent. Collapsing source-silent into
@@ -5972,7 +5997,7 @@ predicts it should); or the same tiles succeeding trivially under an
 identical config on a different API day (which would relocate the
 pathology from tile content to serving-side state).
 
-### Implications for practice
+### Implications for practice (second episode)
 
 Pipelines that rely on T=0 for reproducibility need a failure-recovery
 strategy that does not rely on resampling — budget headroom, a
@@ -5986,7 +6011,7 @@ residue individually identified, as done here.
 
 ### Episode 1 — the third-decimal mismatches that were bootstrap means
 
-### Surprising fact
+#### Surprising fact
 
 The first run of the evaluation.md family comparer reported 439 of
 1,635 generated files MISMATCHING their own sibling evaluation.json —
@@ -5996,7 +6021,7 @@ rounding convention, and stale-regeneration explanations all predict
 either column-agnostic errors or one-directional bias; none predicts
 column-selective, bidirectional, small-magnitude divergence.
 
-### Probe
+#### Probe
 
 Took one mismatching file and compared the quoted cell against every
 numeric field in its JSON record: quoted 0.869 matched neither
@@ -6006,7 +6031,7 @@ filled from `tile_classification.<metric>.mean` while the JSON
 headline is `.point`. The columns that diverge are precisely the
 columns rendered from a different statistic.
 
-### Belief revision
+#### Belief revision
 
 The 439 "mismatches" were one renderer design decision: evaluation.md
 tables print bootstrap means for the tile-classification metrics.
@@ -6019,7 +6044,7 @@ third-decimal wobbles previously attributed to rounding; (c) C4
 triage must carry this as a known equivalence class. Recorded as
 Obs 376.
 
-### What would change this belief
+#### What would change this belief
 
 If files where mean and point agree at 3 d.p. had *still* mismatched
 (they did not), or if the renderer source showed `.point` at the
@@ -6029,14 +6054,14 @@ corruption.
 
 ### Episode 2 — the probe record its own recorder could not reproduce
 
-### Surprising fact
+#### Surprising fact
 
 The obs-writer agent, dispatched only to transcribe Episode 1 into
 the Obs register, reported that "439" could not be re-derived: eight
 plausible readings of the predicate gave 193, 344, 347, 387, 622,
 623, 1,231, and 1,392 — never 439.
 
-### Probe
+#### Probe
 
 Traced 439 to its origin: it was the comparer's *file-level* MISMATCH
 count from the point-only run — files with ≥ 1 problem of ANY kind
@@ -6047,7 +6072,7 @@ compressed the heterogeneous count into a homogeneous-sounding claim
 rule-explicit counts are 387 (mean-matches-but-point-does-not) and
 623 (plain 3 d.p. difference).
 
-### Belief revision
+#### Belief revision
 
 The write-side anti-confabulation rule is not advice for *other*
 writers: a fresh, evidence-adjacent, verification-programme-authored
@@ -6058,7 +6083,7 @@ carrying computed figures get verbatim command output or a
 fresh-context re-derivation before commit (regen-0002b landed
 append-only; the rulings doc carries a dated correction block).
 
-### Implications for practice
+#### Implications for practice
 
 Both episodes argue for the same asymmetry: mechanical verdicts are
 only as good as the *semantics* loaded into the verifier, and record
@@ -6216,14 +6241,14 @@ local check while its *referent* was wrong.
 
 ### Chain 1 — E43
 
-### Surprising fact
+#### Surprising fact
 
 A wave-4 census row flagged erratum E43's "30 runs × 487 tiles"
 against a recomputed 240 — initially read (by me, in the draft
 stories) as a probable wrong-binding instrument artefact, since 240
 was not a corpus size the scope taxonomy recognised.
 
-### Probe
+#### Probe
 
 The blind pass inverted the suspicion: every artefact family (per-run
 metas, tiles sidecars, the union of processed_tiles across 30
@@ -6238,7 +6263,7 @@ a bounds standardisation later scored the 240-tile detections against
 487-tile bounds, and an opportunistic temperature comparison built
 `family: confirmatory` tests on top.
 
-### Belief revision
+#### Belief revision
 
 From "typo in an erratum" through "possible legitimate small-vs-large
 design" to "sign-reversing coverage confound": the registered
@@ -6249,7 +6274,7 @@ replication of Obs 274's monotone-MCC-with-temperature, making the
 "exception" a metric-level distinction (object-F1 vs tile-MCC) that
 had been sitting in the record since April.
 
-### What would change this belief
+#### What would change this belief
 
 A matched N=30 T=1.0 arm at 487 tiles (does not exist; 10 runs is the
 ceiling) materially favouring T=0.7 on F1, or a paired MCC test at
@@ -6259,7 +6284,7 @@ to flip under MCC-selection.
 
 ### Chain 2 — D6
 
-### Surprising fact
+#### Surprising fact
 
 A one-row manifest staleness (partial/486 vs on-disk ok/487),
 routine enough that two prior agents had handled it in opposite
@@ -6267,7 +6292,7 @@ directions — until regeneration on this machine reproduced the STALE
 value while sapphire's regenerations had produced the fresh one, with
 identical inputs and identical code.
 
-### Probe
+#### Probe
 
 Eliminated input divergence (directory listings byte-matched across
 hosts), then code divergence (same commit), then instrumented the
@@ -6275,7 +6300,7 @@ derivation in-process: the pass's two meta files (primary + next-day
 recovery fragment) were consumed via `meta_files[0]` of an UNSORTED
 glob — filesystem enumeration order chose which meta became the pass.
 
-### Belief revision
+#### Belief revision
 
 "A stale row awaiting regeneration" became "the generator itself is
 machine-dependent for every multi-meta pass, and its status field
@@ -6287,7 +6312,7 @@ instinct (over accept-the-catch-up) is what converted a cosmetic fix
 into a defect-class removal; accepting sapphire's 487 would have been
 right for the wrong reason and left the lottery in place.
 
-### Implications for practice
+#### Implications for practice
 
 Both chains sharpen the session's standing lesson about proxies (see
 llm-observations): when a number is checked, ask what selected its
@@ -6817,7 +6842,6 @@ before doubting the repair. And when a derived artefact is regenerated from
 "all files matching a pattern", the pattern's future matches are part of the
 system's behaviour: the reviewer's output did not exist when the glob was
 written, and the glob recruited it silently the day it appeared.
-
 
 ## 2026-08-14 (Session 131, map-reader-llm): The fit that matched neither vintage — two mechanisms falsified, provenance left honestly open
 
@@ -7391,7 +7415,6 @@ internally consistent side). It is Observation 423's lesson inverted:
 internal consistency is not validation either — two fields can corroborate
 each other because they inherit the same defect.
 
-
 ## 2026-08-22 (Session 139, map-reader-llm): The wider defect that was a sorting order
 
 **Session:** 0a563a1d-fef9-4bab-a982-7a32ad83a8a0
@@ -7480,3 +7503,100 @@ it.
 The map-reader repo's CLAUDE.md and transparency spec still point at
 the non-existent repo-local path; until repointed, any agent following
 project documentation reproduces the wrong turn.
+
+## 2026-08-24 (Session 140–141, map-reader-llm): The fix that was verified — and the layer beneath it that was not
+
+**Session:** cd38519c-bf13-4870-a9f2-48ee34c28266
+**Instance:** primary
+
+### Surprising fact
+
+The C1 + D gate fix was implemented, unit-tested (five regression
+tests), simulated against the predicted replay of the failing cell
+(gate returned clean), and pushed — and the resumed campaign then
+failed the very same cell within the hour, plus a second cell the
+inspection had classified as defect-free.
+
+### Probe
+
+A scratch replay of the failing cell on sapphire, dumping the gate's
+actual diagnostics rather than inferring from the failure string: the
+per-run and tile comparisons passed (C1 working exactly as designed);
+what moved was three summary BUFFER F1 values, each by exactly one
+4 dp step (0.5204 → 0.5205). The raw mean sat at 0.52045 — a
+half-boundary — and `evaluate_multi_run_mean` aggregates the buffer
+table with the same order-sensitive `round(float(np.mean), 4)` as the
+tile block. A corpus-wide enumeration by EXPRESSION (not by table)
+found eight shifted values across four cells and nowhere else; the
+four predicted cells matched the four observed failures exactly.
+
+### Belief revision
+
+From "the boundary defect lives in the tile-classification block
+(§ 1.5's 365-block sweep found only two cells)" to "the boundary
+defect is a property of the writer's aggregation expression, and
+exists wherever that expression is applied — the inspection's sweep
+enumerated one TABLE, not the expression's full domain". My simulation
+had inherited the same blind spot: it recomputed tile points under
+reordering but carried the buffer table over unchanged, so it verified
+the fix against exactly the subset of reality the fix covered.
+
+### What would change this belief
+
+A fifth failing cell outside the eight-value enumeration, or a shifted
+value whose committed figure was NOT the writer's own mean over the
+committed order — either would mean a mechanism beyond summation
+order.
+
+### Implications for practice
+
+Enumerate exposure by shared code path, not by artefact family: grep
+for the expression, then enumerate every call site's data domain. A
+verification simulation must perturb every field the writer derives,
+not just the fields the current defect touched.
+
+## 2026-08-24 (Session 140–141, map-reader-llm): The defect I registered with the wrong mechanism — and closed properly the same day
+
+**Session:** cd38519c-bf13-4870-a9f2-48ee34c28266
+**Instance:** primary
+
+### Surprising fact
+
+Hours after I registered D42 as "the evaluation writer does not emit
+`ci_flag_basis` / `ci_excludes_point`", a read of the single-run
+writer showed it stamping every one of those fields, and had done
+since 2026-08-19 — yet the migration demonstrably wanted to touch 169
+freshly re-emitted files.
+
+### Probe
+
+Pull one changed file's pre-migration row from git: the keys were
+PRESENT BUT NULL — not absent. Single-run rows were complete; the
+nulls appeared only on multi-run SUMMARY rows. Reading
+`evaluate_multi_run_mean` showed the aggregation path stamped
+`coverage_status` and an any-run-flagged `ci_unreliable` but never the
+basis fields; something downstream serialised the missing keys as
+null.
+
+### Belief revision
+
+From "the writer lacks the feature" to "'the writer' is not one code
+path — the single-run and aggregation paths have separate completeness
+properties, and my register row asserted a property of the union from
+a sample of one path". The register row was corrected at source the
+same day, and the fix targeted the actual path (the aggregator now
+computes the measured reliability block itself, with a
+migration-invariance test as the regression alarm).
+
+### What this is not
+
+Not a case of the original S138 migration being wrong — its rule was
+correct and its corpus application stands; the gap was only that fresh
+aggregation output regressed it.
+
+### Implications for practice
+
+Before registering a defect against "the writer" (or any multi-path
+component), name the code path the evidence actually exercised. A
+defect row that misstates mechanism propagates: mine reached the E82
+execution note before both were corrected.

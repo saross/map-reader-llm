@@ -190,6 +190,7 @@ At natural session endings, before /clear or /compact, the human asks one or mor
 This combines the two most productive prompts and should be answerable in most sessions.
 
 **Supplementary prompts (rotate or use as relevant):**
+
 - "What surprised you?"
 - "What was the texture or feel of this session?"
 - "What questions emerged that we didn't pursue?"
@@ -215,6 +216,7 @@ This combines the two most productive prompts and should be answerable in most s
 ### Data Accumulation
 
 Reflections could be:
+
 1. **Appended to this document** (creates one growing record)
 2. **Stored per-session** in session archives (keeps context together)
 3. **Both** (redundancy for different analysis purposes)
@@ -553,6 +555,7 @@ structured as options
 > "Before we close: What struck you about this session, and what would you want a future instance of yourself to know?"
 
 **Supplementary:**
+
 - "What surprised you?"
 - "What was the texture or feel of this session?"
 - "What questions emerged that we didn't pursue?"
@@ -2896,6 +2899,7 @@ The magnitude of the text-only advantage surprised me. I expected either (a) ima
 I was also surprised by the mechanism: the text-only conditions detect *more* features (higher detection counts), not fewer. This suggests that images don't add information — they constrain behaviour. The model with only text descriptions is more willing to flag potential mounds than the model shown visual examples.
 
 If I had to generate hypotheses:
+
 - Images may anchor the model to specific visual patterns that don't generalise
 - Text descriptions may allow more flexible matching to varied feature presentations
 - The example images may contain features that the model uses as exclusion criteria
@@ -6261,8 +6265,8 @@ which specific vote thresholds I was choosing and why.
 
 The CRS bug fix was well-handled in retrospect. When I found the bug
 mid-implementation of the D-S model, I asked whether to fix it and
-the user said yes — and I then did the full fix (writer + 5 readers
-+ tests) rather than just patching the reader I needed. The audit
+the user said yes — and I then did the full fix (writer + 5 readers +
+tests) rather than just patching the reader I needed. The audit
 loop caught the test pollution issue as a follow-up. But the audit
 output format was noisy (JSONL buried inside other messages), and I
 had to grep through it to extract the findings. If I replayed this,
@@ -10614,3 +10618,61 @@ inference pending inspection, because that is exactly what it was. The
 session spent all day proving that distortions of true things are the
 failure mode that survives; then, tired and at 2 a.m. equivalent, I
 manufactured one.
+
+## Session 140–141 — 2026-08-22/24 — one conversation from gate-fix to settled provenance, and the walk that closed five groups
+
+*(map-reader-llm; one continuous session spanning the S140 overnight
+autonomous stretch and the S141 decision walk.)*
+
+**Where did we disagree, and who was right?** The sharpest moment was
+not framed as disagreement, but it was one: I presented the Obs 258
+era-boundary adoption as a card with a "(Recommended)" tag, and Shawn
+declined to click it — "the missing transcripts have been fixed; can
+you review your prior work / investigate further to confirm you have
+all the transcripts... Once that is done I'm happy to adopt". He was
+right, and instructively so. The outcome did not change (the boundary
+was adopted hours later), but its evidential standing changed
+completely: the re-investigation replaced a one-sweep inference with a
+five-ground verification, and it surfaced the check I had not thought
+to run — the session log as an independent census of which days had
+sessions at all, which converted every archive gap from "missing data?"
+to "verified no-work period". The general shape: a recommendation
+formed BEFORE an input changed is stale the moment the input changes,
+however sound it was when formed. He held state I lacked (the repair
+had happened out-of-band) and injected it exactly at the decision
+point. The card format made it easy for him to do that — the Other
+field carried the correction — but the lesson lands on me: when
+presenting a queued recommendation, ask first whether anything feeding
+it has moved since it was queued.
+
+**What would I do differently on replay?** Two mistakes cost nothing
+only by luck, and both have the same correction. The grid-verifier
+launch used `--config` where the CLI wanted `--verifier-config`; four
+processes exited in two seconds having made zero API calls — argparse
+refused, so the $6.33 was never at risk, but nothing I did made that
+safe; the tool's interface did. And my first archive-coverage join used
+`models.pop()` on a shared set — a destructive read that silently
+classified 324 headings as uncovered; I caught it only because the
+daymap I was contradicting sat in the same context. On replay: dry-run
+every NEW command shape before the live invocation (the house rule for
+studies, applied to one-off launches), and give even throwaway joins
+the thirty-second synthetic test when a ruling will stand on their
+output. The deeper pattern both share: the session's discipline
+instruments (gates, gates, gates) protected the committed record
+flawlessly, while the *uncommitted* intermediate work — launches,
+joins — ran on care alone, and care degrades over a fifteen-hour
+session.
+
+**What was different about this session** is worth one paragraph for
+the record: it compressed what recent sessions spread across days. The
+E82 campaign closed end-to-end (implement → resume → third-layer fix →
+clearing run → Item D → sign-off → Item E) inside the one
+conversation; both approved spends went from ruling to
+executed-and-verified without an intervening session; and the decision
+walk cleared five of six groups — roughly twenty rulings — with
+execution interleaved between cards, so by the time the walk ended
+there was almost nothing left to hand off. The six standing
+collaboration rules Shawn confirmed mid-walk (cards-with-guardrail,
+the 70 % context flag, hold-and-report, claim-voice division,
+interleaved rulings, generalised absence-claim pre-caveats) are in one
+sense just documentation of how this session already worked.

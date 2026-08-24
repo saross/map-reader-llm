@@ -877,3 +877,32 @@ transcripts to ANY absence claim — files, records, literature: name the
 store searched, the method, and its known limits before any alarm
 framing. (The O'Hara/GMFS full-text episode, Obs 429, is the same
 lesson from the literature side.)
+
+## Pending review — Session 140–141 candidates (2026-08-24, drafted at close)
+
+Drafted at the reflection close; accept / edit / discard / replace.
+Unanswered candidates hold over — silence never discards.
+
+**S140-C1 — the mid-walk evidence-vintage injection.** On the Obs 258
+card you declined the recommended option and instead supplied the fact
+my context lacked (the archiving repair) with an instruction to
+re-verify before adopting. Candidate: your memory of out-of-band
+changes is a standing input the walk format should actively solicit —
+a "has anything changed since this was queued?" beat before
+recommendation cards whose evidence has aged.
+
+**S140-C2 — taxonomy-by-missing-category.** The three-tier Zotero
+architecture emerged from you twice refining my proposal by supplying
+a category I had collapsed (SDAM is guest, not owned; stewarded
+project groups are neither). Candidate: when you engage a proposal's
+structure, the correction is usually a missing category — worth my
+presenting taxonomies with the merged distinctions made visible so the
+correction stays cheap.
+
+**S140-C3 (in-the-moment reaction, relayed per the exception rule).**
+"'One key per group' (other than external groups I'm part of) seems a
+little excessive" — the cost-of-ceremony instinct, applied to security
+architecture: granularity must buy protection proportional to its
+management burden. Candidate: the same lens you apply to statistical
+and spend decisions governs infrastructure design, and proposals
+should arrive pre-weighed against it.

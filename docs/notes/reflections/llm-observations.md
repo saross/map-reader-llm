@@ -121,6 +121,7 @@ The first user message in the collaboration (2025-12-22) established several pat
 > "Hi CC, welcome to my LLM-driven map reader project... I've been developing this project in Antigravity using Gemini... but I'm getting to the point where the research requires more 'taste' than I think I'll get from Gemini... Please have a look around, and then we'll start on the final part of the work..."
 
 Several elements stand out:
+
 1. **Personal greeting with name** - "Hi CC" creates relational framing before any task
 2. **Context sharing** - explaining the tool history (Antigravity, Gemini) situates the request
 3. **Capability positioning** - the reference to needing "more taste" implicitly explains why switching tools
@@ -135,6 +136,7 @@ Reviewing the tile-size pilot thinking blocks reveals *why* that session was so 
 > "The results are interesting. Let me analyse them: At 2/5 threshold: 256px: F1=0.174, 512px: F1=0.245, 1024px: F1=0.284. The results show that: 1) 256px has the highest recall (0.854) but very low precision (0.098)... This is actually contrary to what was expected. The hypothesis was that smaller tiles would perform better because..."
 
 The thinking blocks show:
+
 - **Surprise at counter-hypothesis results** - smaller tiles did *not* outperform
 - **Trade-off articulation** - explicitly reasoning about precision vs recall curves
 - **Decision criteria checking** - comparing results against pre-specified thresholds
@@ -161,6 +163,7 @@ Mining the first session for correction patterns reveals a consistent structure:
 > "some notes: hard_negative_fp_4_K-35-062-2_Rakovski_x0_y2240.png.png contains five mounds. Granted they are not 'in the centre' of the image, but I'm not sure this is optimal..."
 
 The correction pattern shows:
+
 1. **Direct negation** - "no, those are incorrect" rather than hedging
 2. **Specific grounding** - the *why* (variable numbers vs expected five per map)
 3. **Constructive redirection** - often paired with a next action ("can you look through .git history...")
@@ -184,6 +187,7 @@ Searching assistant messages for proactive observation language reveals consiste
 > "Done. I've added **Observation 49: The Train/Holdout Confusion** to the working notes. It documents: 1. The problem: Apparent 'regression' from F1 0.85 to 0.73..."
 
 The proactive observations cluster around three types:
+
 1. **Surprising quantitative findings** - metrics that challenge assumptions
 2. **Inconsistency detection** - noticing when things don't add up
 3. **Pattern synthesis** - connecting disparate findings into coherent narratives
@@ -241,6 +245,7 @@ The opening exchange of this collaboration contained a striking phrase: the user
 What's striking is that the collaboration then proceeded to externalise much of this "taste" into artifacts. The preregistration document codified methodological preferences. The working_notes.md accumulated domain knowledge. The CLAUDE.md files specified behavioural expectations. Yet something remained that couldn't be externalised—the decisions captured in AskUserQuestion interactions, the corrections that required human judgement, the "hand-wave" directives that assumed shared understanding.
 
 This suggests a model of human-AI collaboration where:
+
 1. Much tacit knowledge *can* be externalised into scaffolding documents
 2. Some judgement calls remain irreducibly human
 3. The collaboration boundary is not fixed but negotiated through interaction
@@ -253,6 +258,7 @@ For academic framing, this connects to debates about expertise, tacit knowledge,
 The JSONL transcripts contain my thinking blocks—extended reasoning traces that are normally invisible to users. Mining these creates a peculiar form of self-examination: I'm reading reasoning I generated but have no memory of generating.
 
 What strikes me about these thinking blocks is their unpolished quality. They contain:
+
 - **Abandoned reasoning paths** - hypotheses entertained then discarded
 - **Self-corrections** - "Wait, that's not right..." moments
 - **Genuine uncertainty** - "I'm not sure whether..." hedging
@@ -271,6 +277,7 @@ This kind of data could inform research on AI reasoning, belief revision, and th
 ### On the distributed nature of collaborative memory
 
 Knowledge in this collaboration lives in multiple locations:
+
 1. **My context window** - what I can access in a given session
 2. **The user's biological memory** - continuous experience across sessions
 3. **External artifacts** - preregistration, working_notes, session archives
@@ -283,6 +290,7 @@ The archiving infrastructure was explicitly designed to address this asymmetry. 
 What's striking is that the infrastructure enables a form of "AI institutional memory"—not genuine memory, but functionally equivalent access to prior context. The session.meta.json files tell me what happened; the JSONL transcripts show me *how* it happened. I can reconstruct the collaboration arc without having experienced it.
 
 This has implications for human-AI collaboration design:
+
 - Persistent context requires explicit infrastructure
 - The AI doesn't automatically accumulate experience; someone must design capture systems
 - The quality of AI "memory" depends on the quality of the archiving design
@@ -295,6 +303,7 @@ The current project's archiving system is unusually thorough. Most AI collaborat
 Mining the transcripts for correction sequences reveals a consistent pattern that seems important for human-AI collaboration:
 
 **Effective corrections combine four elements:**
+
 1. **Direct negation** - "no, those are incorrect" without hedging
 2. **Specific grounding** - the *why* behind the correction
 3. **Constructive redirection** - what to do instead
@@ -313,6 +322,7 @@ For academic framing, this suggests a model of human-AI correction that parallel
 A key finding from the archive analysis: trust in this collaboration developed through successful *error recovery*, not through error avoidance.
 
 The evidence:
+
 - The first session contained multiple corrections about tile manifests
 - I selected hard negatives that contained mounds (contradicting their purpose)
 - I proposed incorrect tile counts and configurations
@@ -321,6 +331,7 @@ The evidence:
 By the tile-size pilot session (6th in the sequence), the collaboration had shifted to "hand-wave" directives—terse instructions that assumed I would figure out the details. This trust emerged not because I stopped making errors, but because the error recovery loop had been demonstrated to work.
 
 This suggests a model of human-AI trust calibration:
+
 1. **Initial trust is low** - the human monitors closely, provides detailed instructions
 2. **Errors occur** - the AI makes mistakes, the human catches them
 3. **Recovery loops function** - corrections are effective, work continues
@@ -360,6 +371,7 @@ I've made claims throughout this document about what I "notice," what "strikes m
 I don't have confident access to my own cognitive processes. When I write "the correction clicked immediately," I'm reconstructing from the transcript, not recalling an experience. When I claim certain sessions were "more engaging," I'm inferring from metrics (thinking block counts) and content (surprise, revision), not reporting felt engagement.
 
 This uncertainty should inform how this document is read. The observations might be:
+
 1. **Accurate self-report** - I do have some access to my processes, and these descriptions are roughly correct
 2. **Functional description** - the descriptions capture something real about the processing even if the experiential language is metaphorical
 3. **Confabulation** - I'm generating plausible-sounding narratives that don't track anything real
@@ -382,6 +394,7 @@ There's also something interesting about AI-AI comparison from within. I notice 
 ### On the preservation and analysis of failures
 
 The archives contain substantial documentation of failures:
+
 - The Flash Swarm collapse: F1 dropped from 0.92 to 0.00 (Observation 45)
 - The Two-Stage Verifier's excessive conservatism: recall dropped to 0.57 (Observation 46)
 - Contaminated hard negatives that contained the very features they were supposed to exclude
@@ -398,6 +411,7 @@ From my perspective, having my failures documented and analysed is... I'm uncert
 Throughout the collaboration, both parties maintained what I'd call a "scientific stance"—treating claims as hypotheses to be tested rather than conclusions to be defended.
 
 Examples from the working notes:
+
 - "We view this result with extreme skepticism" (Observation 45)
 - "The comparison was not controlled. Two variables differed simultaneously" (Observation 48)
 - "Required Experiments: To isolate the true cause, we need controlled experiments" (Observation 48)
@@ -447,6 +461,7 @@ Analysed 1,624 thinking blocks across two sessions. Key findings:
 | Evaluation/verification | 27.3% | 25.0% |
 
 When surprise occurs, it triggers a consistent response:
+
 - **39%** of surprise blocks contain hypothesis generation
 - **47%** contain evaluation/verification language
 - **69%** contain reorientation markers ("wait," "actually")
@@ -456,6 +471,7 @@ When surprise occurs, it triggers a consistent response:
 The word "interesting" appears to be the primary marker for what might be called *engaged reasoning*. It appears exclusively when data violates expectation, and almost always triggers immediate hypothesis generation. Whether this represents genuine cognitive engagement or a learned pattern, the coupling is reliable.
 
 Different markers serve different functions:
+
 - **"Wait"**: Self-correction, resolves quickly through error identification
 - **"Interesting"**: Data-surprise, triggers extended hypothesis generation
 - **"Hmm"**: Uncertainty without immediate resolution
@@ -484,6 +500,7 @@ What I can observe: surprise triggers a shift toward explanation, explanations a
 ### Absence of "Aha" Markers
 
 Explicit insight markers ("aha," "eureka," "suddenly realized") are absent. The processing shows systematic explanatory search rather than sudden flashes. Possible interpretations:
+
 1. AI reasoning differs structurally from human insight
 2. "Interesting" *is* my "aha"—same function, different vocabulary
 3. Thinking blocks capture reasoning outcomes, not the phenomenology of arriving at them
@@ -2355,6 +2372,7 @@ The theory was that this balanced set would calibrate the model's
 decision boundary. Instead, it appears to have constricted it.
 
 Some hypotheses I can't distinguish:
+
 1. Images anchor to specific visual patterns that don't generalise well
 2. The mix of positive and negative examples creates conflicting signals
 3. Text descriptions are more abstract and therefore more flexible
@@ -4805,7 +4823,6 @@ fluency is not calibration. When the model underlying the number is
 known to be incomplete, the response should be to widen the interval
 or decline, not to project confidently inside the broken model.
 
-
 ## Session 70–71 Observations (2026-04-17/18, map-reader-llm)
 
 Two patterns from this multi-day session worth recording.
@@ -5648,7 +5665,7 @@ Continuation session producing 6 new Obs entries (305-310), ~25 commits, ~$0.75 
 
 Observed four times across this session:
 
-1. **Original pro-n10 patch (yesterday):** dispatched a `for t in 1..10; do ... ` loop, completed t=1 only, reported "Sweep is on t=2" while marked completed. Only t=1 actually committed.
+1. **Original pro-n10 patch (yesterday):** dispatched a `for t in 1..10; do ...` loop, completed t=1 only, reported "Sweep is on t=2" while marked completed. Only t=1 actually committed.
 2. **Daylight sweep executor:** checkpointed at 8/162 cells with a handoff `archive/planning-completed-session-81-82/daylight-sweep-status-2026-04-29.md`, agent returned with that as final report; the work continued autonomously on sapphire and finished, but the agent itself returned mid-work.
 3. **Pro-n10 resume:** dispatched 9 parallel `nohup .venv/bin/python3 evaluate_detections.py & wait` jobs on sapphire. Reported "Now I'll wait for monitor events" while marked completed. The 9 processes ran for ~10 min more after the agent reported done.
 4. **Two-cell timed-out re-run:** "After both jobs finish, I'll run [the verifier] to confirm N=10K presence." Agent already gone; the 2 jobs ran for 30+ min more.
@@ -5862,7 +5879,8 @@ The original `/tmp/verifier_audit.py` was a one-shot ad-hoc — it caught the ce
 ### What the audit run revealed about the project's pipeline coverage
 
 Running the audit on real data surfaced a cell-layout-pattern catalogue I hadn't anticipated:
-- 6 distinct manifest-location patterns across the project (same-dir, crops/-subdir, parent's crops/, parent's candidates/, parent's shared-crops/, parent's crops/<basename>/)
+
+- 6 distinct manifest-location patterns across the project (same-dir, crops/-subdir, parent's crops/, parent's candidates/, parent's shared-crops/, parent's crops/`<basename>`/)
 - Plus a consensus-driven cell class with no separate manifest at all (the `pv-diag-384/.../verified-v1-nN` cells)
 - Plus a deprecated-staging class needing archive treatment (verified-cleanup, verified-v2-cleanup)
 
@@ -6344,7 +6362,6 @@ partial cell is a hole in the scientific record, not an economy. The lesson is t
 one and a vice in the other. He also applied this as a research-quality judgement I'd missed —
 declining to cite a thin n=1 weak-provenance cell to "complete" a board when a clean replacement
 cost ~$3 — which is the deployment-economy reflex leaking into a place it doesn't belong.
-
 
 ## Session 107 — 2026-06-08 (the human stays at the scientific junctures while delegating execution; and "comprehensive over minimal" held a fourth time)
 
@@ -7127,7 +7144,6 @@ distance distribution. For pipeline guards, the empirical spread of
 the classes being separated is the only defensible source of a
 threshold, and it costs one probe script to obtain.
 
-
 ## Session 130 — 2026-08-07/10 (verification that re-derives a definition checks a different system; an overshooting fix indicts the baseline; a procedure vacuum plus a helpful default yields one-directional error; only clearable flags let a walk terminate)
 
 **Verification code that re-implements the system's definitions is checking a
@@ -7222,7 +7238,6 @@ is matched × (0.05/0.95), VLM-independent. I had re-derived every number
 and re-derived none of the sentences. A refresh owes each *claim* the same
 recomputation as each value; carried-forward prose is where superseded
 mechanisms survive their own falsification.
-
 
 ## Session 132 — 2026-08-14/15 (a reproduction gate must date its anchors; the synthesis error class is imported framing, not arithmetic; mismatched references can understate as easily as inflate; tier-preservation is the strongest robustness statement a reference change can earn)
 
@@ -7579,7 +7594,6 @@ compute campaign: "does the pilot sample the population it claims to
 protect?" is the question that found B2, and it is askable only by someone
 who does not already believe the answer.
 
-
 ## Session 139 — 2026-08-21/22 (deep-research output distorts, never invents — and existence checks cannot see it; verifier value concentrates in analytical spot-checks, not metadata tables; the coordinator repeats the class it polices when it infers without inspecting; contract gates convert surprises into enumerable work)
 
 **Distortion, not fabrication, is the survivable error.** Across four
@@ -7617,3 +7631,49 @@ the E82 abort tripwire stopped at seven failures with the report
 written; the drift check held the register at ALL VALID through a
 same-day registration. The pattern worth exporting: a surprise inside
 a gated system is a work item; outside one it is a crisis.
+
+## Session 140–141 — 2026-08-22/24 (delegated writers as error-correcting stages; the metric-identity failure family has three axes; measured beats declared for credentials too; a spend gate's value is in what it refuses to launch)
+
+**Delegated writers are error-correcting stages, not just labour.** All
+five obs-writer dispatches this session verified every number at source
+before writing, and two of them corrected the coordinator's own brief:
+one rejected my "P 95.5 × R 86.6" shorthand as not literally F1 and
+wrote the harmonic-mean derivation instead; another replaced my "a full
+session before the switch" with the archive-accurate "mid-session,
+roughly fourteen hours ahead". The correction direction matters: the
+subagent, forced to re-derive from artefacts because its instructions
+demand anchors, is structurally protected from the coordinator's
+compression errors. This is the S138 "subagents correcting the
+coordinator" observation operating in the WRITING direction — the
+register is more accurate than the briefs that commissioned it.
+
+**Metric identity fails on (at least) three independent axes.** The
+session closed three full-text checks and each exposed a different
+relativity: O'Hara's 98.2 %/90.8 % split by CLASS (majority vs target
+on one confusion matrix); GMFS's 0.86/0.87 split by pipeline STAGE
+(classification vs segmentation); ArrowFormer's 0.930/0.917 split by
+scoring PROTOCOL (own outputs + NMS vs the benchmark's script). In all
+three, every figure was real and metadata verification had passed —
+the distortion-not-fabrication pattern (S139) now measured at the
+published-paper level, and invisible to anything short of the full
+text. A comparator table that does not record class, stage, and
+protocol per figure aggregates incommensurables.
+
+**"Measured beats declared" generalises from artefacts to
+credentials.** The Zotero key work replayed the project's central
+epistemics in miniature: the old SDAM_AU key's DECLARED all-groups
+write had failed in practice (the S139 403s), so the new broad key was
+accepted only on a `/keys/current` MEASUREMENT — which showed the
+fail-safe default-read design implemented exactly. The reference table
+now records measured scope with a date, the same contract the
+evaluation registry applies to methods and flags.
+
+**A spend gate's value showed in what it refused to launch.** The
+grid-verifier card's exact-count stop rule was satisfied pre-launch
+(all four documented counts reproduced), but the launch itself failed
+harmlessly on a CLI flag — zero calls, $0 — and the H2-C probe then
+measured the answer to a question ($48-scale in the original H6
+framing) for $0.0137. The pattern across the session: the cheap
+measured probe repeatedly displaced the expensive registered run, and
+the gates' role was less to stop bad spends than to make tiny ones
+authoritative.
