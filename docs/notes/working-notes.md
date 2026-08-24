@@ -28084,3 +28084,149 @@ and **Obs 246** (the tile-level MCC-alongside-F1 discipline this
 episode vindicates as a general hygiene practice, not just a
 project-specific choice).
 
+## Observation 430: Nine months, seven authoring configurations: the provenance settlement — and the correction of three 'first Fable session' claims (Session 141, 2026-08-24)
+
+This is the closing entry mandated by `docs/notes/obs-model-provenance.md`
+§ 7 step 6, minted now that the document itself is marked **SETTLED**
+(2026-08-24). The register's 428 `## Observation N` headings — 425 distinct
+numbers, three used twice (Obs 45, 66, and 234; § 6.4) — were, in the
+provenance document's own framing, "written across nine months by a
+succession of different Claude models — and, at the start, by a non-Claude
+agent" (§ 1). Counted from the era table (§ 2), that succession is **seven**
+authoring configurations: Antigravity IDE on Gemini 3 (non-Claude, Obs 1–47,
+2025-12-15 → 12-21), then Opus 4.5, Opus 4.6, Opus 4.7, Opus 4.8, Fable 5, and
+Opus 5, the last two interleaved as stints rather than a one-way switch from
+2026-06-10 onward (Fable 5 became the PI's preferred driver, with Opus
+substituted whenever Fable credit was exhausted).
+
+**The census, closed.** The 2026-08-21 draft — graded against a
+machine-partial live transcript store — read HIGH 210 / MEDIUM 203 / LOW 15,
+with 203 of 428 headings (47.4 %) resting on `Co-Authored-By` commit trailers
+alone. The 2026-08-23 canonical-archive re-grading (`~/cc-archives`, 253
+sessions across both project names) and the PI's 2026-08-24 boundary adoption
+closed it at:
+
+| Grade | Headings | Basis |
+|---|---:|---|
+| HIGH | 380 | 366 archive-transcript-confirmed + 14 explicit-prose-anchored (8 concurrent-window + 6 draft-then-accept divergences) |
+| MEDIUM | 48 | Pre-archive Antigravity era (Obs 1–47, 48 headings; archive coverage starts 2025-12-22, after the era closed) |
+| LOW | 0 | — |
+
+No heading now rests on a trailer alone or on interpolation.
+
+**What the exercise found about evidence classes.** Commit trailers — sole
+evidence for nearly half the draft register — proved demonstrably corrupt in
+12 of the 215 Obs-introducing commits (5.6 %; § 6.2), all carrying a stale
+`Claude Opus 4.7 (1M context)` trailer inherited from an agent template while
+the producing session was, on transcript or prose evidence, Fable 5. Worse
+than isolated corruption: at the Opus 4.6→4.7 boundary the trailer changed
+before the model did. The flip lands at 2026-04-17T20:20 AEST / 10:20 UTC
+(commit `09fe46a7f`, introducing Obs 249–252) — roughly fourteen hours ahead
+of the archived model switch at 2026-04-18T00:17 UTC, and, on the
+session-log's own combined S70–71 framing, mid-way through the still-4.6
+session `b089991e` (04-16T05:56 → 04-18T14:04 UTC), not at the genuine
+handover the following session brought. The mechanism is now understood, not
+just observed: Opus 4.7 was publicly released 2026-04-16, and the CLI's
+self-reported name updated during that session, two days before the PI's
+session actually moved onto the new model. Archived session transcripts were
+the only evidence class the exercise never had to correct.
+
+**The era boundary correction (§ 6.6, PI-adopted 2026-08-24).** The Opus
+4.6 → 4.7 boundary moves from Obs 249 to **Obs 258** — nine headings
+(249–257) re-attributed from 4.7 to 4.6, each promoted to archive-transcript
+HIGH — after a five-ground completeness re-verification the PI ordered before
+adopting it: (i) the canonical union on rpi-server and the local mirror hold
+identical entry populations, completeness gate reading 0; (ii) none of the
+session log's 120 dated entries falls inside an archive no-evidence window,
+so the gaps (including the 33-day 2026-06-24 → 07-26 travel break) are
+genuine no-work periods, not missing transcripts; (iii) all 380 Claude-era
+headings sit on an archive-covered day, the no-coverage class being exactly
+the 48 pre-archive Antigravity headings; (iv) meta-versus-transcript
+agreement held 8/8 on sampled sessions; (v) at the boundary itself, three
+independent record types cohere — the archive, the session log, and git —
+with git's trailer flip identified as the outlier.
+
+**§ 6.1 adjudicated — the correction this entry carries.** The repository
+asserts, in five places, that three *different* sessions were each the
+"first Fable session":
+
+| Claim | Session | Date | Source |
+|---|---|---|---|
+| "first Fable 5 session on this project" | S111–112 | 2026-06-10/11 | `session-log.md:7240`; `session-reflection.md:8926–8927`; `paper-writeup-continuity.md:4` |
+| "First Fable session … convened for a cross-model second opinion" | S119 | 2026-07-28/29 | `session-log.md:7481`; `session-reflection.md:9178–9180` |
+| "first Fable session" / "First session of this project on Fable" | S138 | 2026-08-20/21 | `paper-writeup-continuity.md:114`; `session-reflection.md:10516` |
+
+**PI ruling, 2026-08-24: S111–112 is the first Fable session.** The
+archive's first `claude-fable-5` transcript lands 2026-06-10 — the
+4.8→Fable transition day in the § 4.1 day-map — agreeing with the first
+`Claude Fable 5` commit trailer and the era table, one day after Fable 5's
+public release (2026-06-09, `anthropic.com/news/claude-fable-5-mythos-5`).
+The S119 claim stands, but only under its own qualifier: both its sources
+describe it as convened for a cross-model second opinion, which reads as
+first-of-the-verification-programme rather than an absolute first. **The
+S138 claim is wrong** — `claude-fable-5` appears in surviving transcripts
+from 2026-08-07, and continuity records Fable sessions from S119 onward,
+both weeks before S138. The mechanism is the one the provenance document
+hypothesised and the PI has now adopted as the explanation: each instance
+reconstructed "first" from what it could see of its own session rather than
+checking at source — the identical failure shape documented at **Obs 423**
+(a re-derivation that looked plausible and was wrong, caught only by
+reproducing a committed value it did not itself consume) and **Obs 424**
+(chatbot output that distorts real, checkable material rather than inventing
+it — wrong through under-checking, not fabrication). Per the register's
+append-only rule, the three original statements are left untouched; this
+entry is the correction of record.
+
+**Release dates, sourced and PI-confirmed (2026-08-24).** All six
+model-switch boundaries now carry a public release date, fetched from
+sourced announcements rather than any compiling instance's background
+knowledge — several of these releases post-date model training cutoffs, so
+an invented date would seed exactly the class of confabulation this project
+has spent months clearing:
+
+| Boundary | Public release | Repo first use | Lag |
+|---|---|---|---|
+| → Opus 4.5 | 2025-11-24 | 2025-12-23 (trailer) | ~4 weeks — the deliberate Phase-2 platform reset, not release-chasing |
+| → Opus 4.6 | 2026-02-05 | 2026-02-06 | 1 day |
+| → Opus 4.7 | 2026-04-16 | 2026-04-18T00:17 UTC | 2 days |
+| → Opus 4.8 | 2026-05-28 | 2026-05-29 | 1 day |
+| → Fable 5 | 2026-06-09 | 2026-06-10 | 1 day |
+| → Opus 5 | 2026-07-24 | 2026-07-27 | 3 days |
+
+Every boundary except the deliberate Opus 4.5 reset trails its public
+release by one to three days — corroborating, not deriving, the
+archive-based boundaries above.
+
+**Forward lesson (§ 7 step 7, standing).** The settlement's cost was
+concentrated entirely in the period before anyone consulted the canonical
+archive: once `~/cc-archives`'s per-session `session.meta.json` (`model_id`
+across 253 sessions, two project names) was actually read, re-grading all
+428 headings and resolving five open conflicts took one session. The rule
+this leaves standing, already written into the document's own header
+banner: provenance work reads the canonical archive, never a live
+per-machine store.
+
+**Caveats.** This entry re-derives nothing itself — it carries forward
+numbers verified in `docs/notes/obs-model-provenance.md` (re-read in full
+for this entry) and the PI's 2026-08-24 rulings. The § 6.6 boundary caveat
+still applies in principle: the archive audit reports zero missing sessions
+and no 4.7 session anywhere before 2026-04-18T00:17 UTC, but a session
+archived under an unrelated project name would be invisible to the sweep.
+Nothing in `working-notes.md` has been edited to produce this entry, per the
+project's append-only rule; the S111–112, S119, and S138 statements this
+entry corrects remain exactly as originally written.
+
+Sources: `docs/notes/obs-model-provenance.md` (SETTLED 2026-08-24; §§ 1, 2,
+4, 4.1, 6.1, 6.2, 6.6, 7; commits `2569fe4e5` boundary adoption + census
+close, `4543d38e2` settlement banner, `3f6f812c5` residual-marker
+resolution); `reports/provenance-archive-daymap-2026-08-23.md`,
+`reports/provenance-archive-timeline-2026-08-23.json`,
+`reports/provenance-obs-coverage-2026-08-23.json` (the 2026-08-23
+re-grading evidence). Related: **Obs 423** and **Obs 424** (the
+wrong-but-plausible / distortion-not-fabrication failure shape the § 6.1
+mechanism repeats one level up, at session self-identification rather than
+at numerical derivation or literature citation); **Obs 426** (the same
+principle from an adjacent angle — what evidence a process actually
+consumes, and in what order or scope, determines whether a locally
+plausible answer is also the correct one).
+
