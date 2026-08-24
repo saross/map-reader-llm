@@ -28574,3 +28574,123 @@ constraint — the same ceiling logic, here favouring the smaller tile);
 volume-versus-discrimination reason a vote threshold still helps at
 k ≥ 5); **Obs 417** (stride as the cost variable — the price side of the
 geometry choice this Obs re-ranks on quality).
+
+## Observation 434: The tile-size reversal was benchmarked against the wrong baseline — the like-for-like arm leaves the reversal standing at about a third of the claimed strength (Session 142, 2026-08-24)
+
+A corrective rider on **Obs 433**, written earlier the same day. Obs 433
+stands as the record of the post-verifier board; this entry corrects one
+comparison inside it and should be read with it. A same-day two-lens
+adversarial audit of the scoring chain (finding **C1**; code `57b7ad7ad`,
+rerun `0a6bde47f`, doc corrections `864b203c7`) found that Obs 433
+benchmarked the post-verifier tile-size contrasts against the
+**single-pass** paired contrasts (−0.0824 at 12.5 %, −0.0972 at 50 %,
+both excluding zero) while benchmarking overlap against the K = 10
+board. Those single-pass figures run-average ten passes and hold a
+different estimand from a single aggregated operating point, so they
+cannot anchor a pre/post claim about one.
+
+**The finding — the like-for-like pre-verifier arm.** The proper
+pre-verifier comparator is the registered K = 10 best consensus-only
+operating points (the D16 materialisation), scored as single sets on the
+same instrument. It is now computed and published
+(`verifier_analysis.json`, key
+`bootstrap_contrasts_consensus_k10_baseline`; paired tile bootstrap,
+B = 10,000, seed 42):
+
+| Contrast | Single-pass (cited by Obs 433) | **K = 10 baseline (correct arm)** | Post-verifier (unchanged) |
+|---|---|---|---|
+| Tile size at 12.5 % (384 − 512) | −0.0824, excludes 0 | **−0.0284 [−0.0813, +0.0233], p = 0.281 — ns** | **+0.0366 [+0.0026, +0.0717], p = 0.034** |
+| Tile size at 50 % (384 − 512) | −0.0972, excludes 0 | **−0.0312 [−0.0695, +0.0052], p = 0.089 — ns** | +0.0147 [−0.0093, +0.0393], p = 0.231 |
+| Overlap at 512 px (12.5 % − 50 %) | — | −0.0758 [−0.1204, −0.0310], p = 0.0004 | −0.0504 [−0.0781, −0.0224], p = 0.0004 |
+| Overlap at 384 px (12.5 % − 50 %) | — | −0.0730 [−0.1185, −0.0284], p = 0.0026 | −0.0285 [−0.0530, −0.0045], p = 0.0208 |
+
+**The corrected statement of the reversal.** Aggregation alone already
+erodes 512 px's significant single-pass advantage to non-significance;
+the verifier then flips the sign, significantly at 12.5 % and unresolved
+at 50 %. The reversal **stands** — sign flip plus a CI clearing zero at
+12.5 % — but it is weaker than Obs 433's framing implied: "reverses a
+significant −0.0824" overstates the pre-verifier deficit by roughly
+**3×** (−0.0824 / −0.0284 = 2.9; −0.0972 / −0.0312 = 3.1). The overlap
+conclusion is untouched: 50 % wins at both tile sizes before *and* after
+the verifier, at a margin that roughly halves.
+
+**What did not change.** Every post-verifier board value, every
+post-verifier contrast, both headline answers, the billing totals, and
+the four registered conditions are identical after the rerun. The audit
+also verified the probability↔feature join at source over all **9,133**
+candidates (1,402 / 2,585 / 1,827 / 3,319) against the now-committed
+candidate manifests: ids contiguous in feature order, and centroids
+agreeing to **≤ 0.069 m** against a **5.6–8.0 m** minimum inter-candidate
+spacing — three orders of magnitude of headroom, so the join is not a
+live risk. Chain hardening landed alongside: billing counters, failure
+and retry counts now derive from the run metas (121 transient retries
+surfaced, `items_failed` 0 confirmed at source), the c = 1 union
+restriction is declared on every verified board row, `candidate_id`
+provenance is written into the materialised conditions, and the
+reproduction gate now refuses to write any summary artefact on failure.
+
+**A second correction and a new caveat.** Audit finding **X2**: the § 3
+contrasts table carried B = 1,000 confidence intervals under a
+B = 10,000 heading — a leftover from the 2026-08-19 re-run that updated
+the changelog but not the body table (deltas identical; CI edges move at
+the third decimal; p floors 0.0010 → 0.0001). And a **selection-space
+caveat** now stands in the findings doc: each arm's operating point is
+F1-selected on the same 487 tiles it is scored on, and the post-verifier
+sweep offers roughly **4–5×** the consensus sweep's selection space, so
+the contrasts condition on that selection and the post-verifier arm gets
+the more generous search.
+
+**Why this matters.** The paper-load-bearing sentence changes shape. The
+defensible claim is *"a non-significant 512 px lead at the aggregated
+consensus stage becomes a significant 384 px lead at 12.5 % overlap once
+the verifier runs"* — not *"the verifier reverses a significant 512 px
+advantage"*. The generalisable discipline is that a pre/post comparison
+must hold the **estimand** fixed, not merely the metric: run-averaged
+single-pass performance and a single aggregated operating point are
+different quantities, and pairing them silently inflates whatever sits
+downstream. The error was invisible from inside the result because both
+numbers were correct, published, and about tile size — only their
+juxtaposition was wrong, which is exactly the class of defect that
+survives self-review.
+
+**The method lesson.** A same-session, fresh-context adversarial audit
+caught a baseline-comparability error the author's own context could
+not. That is at least the third recorded instance of this pattern in the
+project (**Obs 406**, **Obs 419**), and it is the reason the pre-run
+review protocol instructs a project-embedded agent to hand the
+dependency-structure sections to a fresh-context reviewer rather than
+answer them from familiarity
+(`~/.claude/skills/pre-run-review/SKILL.md:37-40`).
+
+**Caveats.** This rider corrects a comparison, not a measurement: no
+verifier call was re-made and no threshold re-swept, so the scope limits
+Obs 433 carried (four map sheets, one proposer configuration, one model,
+T = 0.7, one verifier configuration at n = 1) apply unchanged. Obs 433's
+§ on overlap quotes the 512 px consensus margin as 0.0759 where the
+published baseline is 0.0758 — a fourth-decimal difference, immaterial
+to the claim, recorded here so a future reader does not re-derive it as a
+discrepancy. Note also that `verifier_analysis.json` was rewritten in
+place by the rerun: its `generated_at_utc` now reads
+**2026-08-24T09:02:00Z**, where Obs 433 cites the pre-rerun
+2026-08-24T08:21:53Z.
+
+Sources: `results/grid-2026-08-18/findings.md` § Changelog entry
+"2026-08-24 (later) — Audit corrections: the like-for-like baseline and a
+stale table" (items 1–3) and § "Question 1" as restated
+(`findings.md:351-387`);
+`results/grid-2026-08-18/verifier_analysis.json`
+(`bootstrap_contrasts_consensus_k10_baseline`, `baseline_note`,
+`gates.union_counts_measured`); the `[REVISED 2026-08-24, same-day
+audit]` note on register row `grid-postverifier-2026-08-18` in
+`results/analyses-manifest.json`; commits `57b7ad7ad` (chain hardening),
+`0a6bde47f` (hardened rerun, baseline added), and `864b203c7` (doc
+corrections). Related: **Obs 433** (the post-verifier board and the
+reversal this rider corrects — its board, contrasts, and conclusions
+otherwise stand); **Obs 416** (the consensus-only grid board, which
+supplies the K = 10 operating points the correct baseline is built from);
+**Obs 419** (the two-lens audit finding three defects in the fix it was
+auditing — the same author-blindness result on the code side);
+**Obs 406** (the verifier stack catching a material error its own
+designer had just written, in prose both humans had confirmed);
+**Obs 352** (the Era-1 verifier rescuing 256 px — the mechanism behind
+the reversal, unaffected by this correction).
